@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
+package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
-import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
+import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
+import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
+import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
+import org.fenixedu.academic.util.report.ReportsUtils;
 
 public abstract class DocumentRequest extends DocumentRequest_Base implements IDocumentRequest {
     public static Comparator<AcademicServiceRequest> COMPARATOR_BY_REGISTRY_NUMBER = new Comparator<AcademicServiceRequest>() {

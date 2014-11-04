@@ -20,15 +20,15 @@
  * Created on 28/Jul/2003
  *
  */
-package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
+package org.fenixedu.academic.service.strategy.groupEnrolment.strategys;
 
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.StudentGroup;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.StudentGroup;
 
 /**
  * @author scpo and asnr

@@ -19,7 +19,7 @@
 /*
  * Created on Feb 2, 2006
  */
-package net.sourceforge.fenixedu.domain.curricularRules;
+package org.fenixedu.academic.domain.curricularRules;
 
 public enum CurricularRuleType {
 

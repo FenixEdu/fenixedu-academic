@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
+package org.fenixedu.academic.ui.struts.action.gep.inquiries;
 
 import org.fenixedu.bennu.portal.StrutsApplication;
 

@@ -39,8 +39,8 @@ response.setDateHeader ("Expires", 0);
 	
 <logic:notEmpty name="studentTestQuestionList" >
 	
-	<logic:iterate id="testQuestion" name="studentTestQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
-	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
+	<logic:iterate id="testQuestion" name="studentTestQuestionList" type="org.fenixedu.academic.domain.onlineTests.StudentTestQuestion"/>
+	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.domain.onlineTests.DistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="externalId"/>
 	<bean:define id="testScope" name="distributedTest" property="testScope"/>
 	<bean:define id="domainObject" name="testScope" property="executionCourse"/>

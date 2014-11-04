@@ -26,7 +26,7 @@
 
 <logic:present name="executionCourse">
 	
-	<logic:equal name="executionCourse" property="class.name" value="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
+	<logic:equal name="executionCourse" property="class.name" value="org.fenixedu.academic.dto.InfoExecutionCourse">
 		<h3>
 			<bean:write name="executionCourse" property="nome"/>
 			(<bean:write name="executionCourse" property="sigla"/>)
@@ -36,7 +36,7 @@
 		</p>
 	</logic:equal>
 	
-	<logic:equal name="executionCourse" property="class.name" value="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	<logic:equal name="executionCourse" property="class.name" value="org.fenixedu.academic.domain.ExecutionCourse">
 		<h3>
 			<bean:write name="executionCourse" property="nome"/>
 			(<bean:write name="executionCourse" property="sigla"/>)

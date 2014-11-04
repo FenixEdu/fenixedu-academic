@@ -22,8 +22,8 @@
 <%@page import="com.google.common.base.Strings"%>
 <%@page import="com.google.common.base.Joiner"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
-<%@page import="net.sourceforge.fenixedu.domain.Employee"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Student"%>
+<%@page import="org.fenixedu.academic.domain.Employee"%>
+<%@page import="org.fenixedu.academic.domain.student.Student"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -40,7 +40,7 @@
 <fr:edit id="searchForm" name="bean"
 	action="/findPerson.do?method=findPerson">
 	<fr:schema bundle="APPLICATION_RESOURCES"
-		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.FindPersonBean">
+		type="org.fenixedu.academic.ui.struts.action.messaging.FindPersonBean">
 
 		<fr:slot name="roleType" layout="menu-postback" key="label.type">
 			<fr:property name="includedValues"
@@ -59,7 +59,7 @@
 				<logic:present name="bean" property="degreeType">
 					<fr:slot name="degree" layout="menu-select-postback" key="label.degree.name">
 						<fr:property name="providerClass"
-							value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.PersonSearchDegreeProvider" />
+							value="org.fenixedu.academic.ui.renderers.providers.person.PersonSearchDegreeProvider" />
 						<fr:destination name="postback"
 							path="/findPerson.do?method=postback" />
 						<fr:property name="destination" value="postback" />
@@ -72,7 +72,7 @@
 			<logic:equal name="bean" property="roleType" value="TEACHER">
 				<fr:slot name="department" layout="menu-select-postback" key="label.teacher.finalWork.department">
 					<fr:property name="providerClass"
-						value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveDepartmentsProvider" />
+						value="org.fenixedu.academic.ui.renderers.providers.ActiveDepartmentsProvider" />
 					<fr:destination name="postback"
 						path="/findPerson.do?method=postback" />
 					<fr:property name="destination" value="postback" />
@@ -133,7 +133,7 @@
 	</p>
 
 	<logic:iterate id="personalInfo" name="personListFinded"
-		indexId="personIndex" type="net.sourceforge.fenixedu.domain.Person">
+		indexId="personIndex" type="org.fenixedu.academic.domain.Person">
 		<bean:define id="personID" name="personalInfo" property="externalId" />
 		<% 
 			String username = personalInfo.getUser() !=null ? personalInfo.getUser().getUsername() : null;

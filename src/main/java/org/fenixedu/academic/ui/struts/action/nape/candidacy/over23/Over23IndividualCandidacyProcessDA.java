@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.nape.candidacy.over23;
+package org.fenixedu.academic.ui.struts.action.nape.candidacy.over23;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -27,5 +27,5 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "intro", path = "/nape/candidacy/mainCandidacyProcess.jsp"),
         @Forward(name = "list-allowed-activities", path = "/nape/candidacy/over23/listIndividualCandidacyActivities.jsp") })
 public class Over23IndividualCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23.Over23IndividualCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.over23.Over23IndividualCandidacyProcessDA {
 }

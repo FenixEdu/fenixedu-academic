@@ -20,7 +20,7 @@
  * Created on Oct 19, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation;
+package org.fenixedu.academic.ui.faces.bean.coordinator.evaluation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,23 +31,22 @@ import java.util.List;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Evaluation;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.dto.InfoExecutionPeriod;
+import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
+import org.fenixedu.academic.service.services.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
+import org.fenixedu.academic.service.services.coordinator.ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 
 import pt.ist.fenixframework.FenixFramework;
 

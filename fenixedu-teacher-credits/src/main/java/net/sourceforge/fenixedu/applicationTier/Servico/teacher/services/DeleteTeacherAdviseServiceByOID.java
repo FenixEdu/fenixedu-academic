@@ -19,14 +19,14 @@
 /**
  * Nov 29, 2005
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
+package org.fenixedu.academic.service.services.teacher.services;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
+import org.fenixedu.academic.service.filter.DepartmentAdministrativeOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.filter.DepartmentMemberAuthorizationFilter;
+import org.fenixedu.academic.service.filter.ScientificCouncilAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.teacher.TeacherAdviseService;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

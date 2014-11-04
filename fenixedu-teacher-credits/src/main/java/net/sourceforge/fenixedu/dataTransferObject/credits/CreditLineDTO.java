@@ -19,20 +19,20 @@
 /**
  * Dec 5, 2005
  */
-package net.sourceforge.fenixedu.dataTransferObject.credits;
+package org.fenixedu.academic.dto.credits;
 
 import java.text.ParseException;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherCredits;
-import net.sourceforge.fenixedu.domain.TeacherCreditsDocument;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.OtherService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.TeacherCredits;
+import org.fenixedu.academic.domain.TeacherCreditsDocument;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.domain.teacher.OtherService;
+import org.fenixedu.academic.domain.teacher.TeacherService;
 
 /**
  * @author Ricardo Rodrigues

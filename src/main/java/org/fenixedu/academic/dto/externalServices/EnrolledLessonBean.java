@@ -19,11 +19,11 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.externalServices;
+package org.fenixedu.academic.dto.externalServices;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.Lesson;
+import org.fenixedu.academic.domain.Lesson;
 
 public class EnrolledLessonBean {
 

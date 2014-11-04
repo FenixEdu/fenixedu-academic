@@ -20,7 +20,7 @@
  * Created on Oct 11, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.validators;
+package org.fenixedu.academic.ui.faces.validators;
 
 import javax.faces.validator.Validator;
 import javax.faces.webapp.ValidatorTag;

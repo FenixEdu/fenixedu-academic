@@ -21,17 +21,18 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
+package org.fenixedu.academic.service.services.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Summary;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.service.ServiceMonitoring;
+import org.fenixedu.academic.service.filter.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.filter.SummaryManagementToTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.contacts;
-
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
+package org.fenixedu.academic.domain.contacts;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.PhoneUtil;

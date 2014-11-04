@@ -24,10 +24,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation" %>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation" %>
-<%@ page import="net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation" %>
-<%@ page import="net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.InstitutionPrecedentDegreeInformation" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.ExternalPrecedentDegreeInformation" %>
+<%@ page import="org.fenixedu.academic.domain.student.PrecedentDegreeInformation" %>
+<%@ page import="org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy" %>
 
 
 <html:xhtml/>
@@ -39,7 +39,7 @@
 <strong><bean:message key="label.personal.ingression.data.viewer.student.data" bundle="GEP_RESOURCES" /></strong>
 
 <fr:view name="student">
-	<fr:schema type="net.sourceforge.fenixedu.domain.student.Student" bundle="GEP_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.student.Student" bundle="GEP_RESOURCES">
 		<fr:slot name="number" key="label.personal.ingression.data.viewer.student.number" />
 		<fr:slot name="person.name" key="label.personal.ingression.data.viewer.student.name" />
 	</fr:schema>
@@ -62,7 +62,7 @@
 	<logic:iterate id="registration" name="registrationList">
 	
 		<fr:view name="registration">
-			<fr:schema type="net.sourceforge.fenixedu.domain.student.Registration" bundle="GEP_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.student.Registration" bundle="GEP_RESOURCES">
 				<fr:slot name="number" key="label.personal.ingression.data.viewer.student.number" />
 				<fr:slot name="degree.presentationName" key="label.personal.ingression.data.viewer.registration.degree" />
 				<fr:slot name="startExecutionYear.name" key="label.personal.ingression.data.viewer.registration.startExecutionYear" />
@@ -142,7 +142,7 @@
 	<logic:iterate id="phdIndividualProgramProcess" name="phdIndividualProgramProcessList">
 		
 		<fr:view name="phdIndividualProgramProcess">
-			<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="GEP_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="GEP_RESOURCES">
 				<fr:slot name="phdProgram.name" layout="null-as-label" key="label.personal.ingression.data.viewer.phd.program.name"/>
 				<fr:slot name="executionYear.name" layout="null-as-label" key="label.personal.ingression.data.viewer.phd.start.execution.year" />
 			</fr:schema>
@@ -197,7 +197,7 @@
 	<logic:iterate id="pid" name="personalIngressionDataList">
 	
 		<fr:view name="pid">
-			<fr:schema type="net.sourceforge.fenixedu.domain.student.PersonalIngressionData" bundle="GEP_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.student.PersonalIngressionData" bundle="GEP_RESOURCES">
 	
 				<logic:notEmpty name="pid" property="dislocatedFromPermanentResidence">
 					<fr:slot name="dislocatedFromPermanentResidence" layout="null-as-label" key="label.personal.ingression.data.viewer.dislocatedFromPermanentResidence" />
@@ -356,7 +356,7 @@
 	<logic:iterate id="candidacy" name="studentCandidacies">
 	
 		<fr:view name="candidacy">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy" bundle="GEP_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.candidacy.StudentCandidacy" bundle="GEP_RESOURCES">
 				
 				
 				<logic:notEmpty name="candidacy" property="contigent">
@@ -549,7 +549,7 @@
 		<bean:define id="individualCandidacy" name="individualCandidaciesPersonalDetails" property="candidacy" />
 	
 		<fr:view name="individualCandidacy">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy" bundle="GEP_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy" bundle="GEP_RESOURCES">
 				
 				<fr:slot name="externalId"/>
 				<fr:slot name="class.simpleName"/>
@@ -663,7 +663,7 @@
 				<bean:define id="precedentDegreeInformation" name="individualCandidacy" property="precedentDegreeInformation" />
 				
 				<fr:view name="precedentDegreeInformation">
-					<fr:schema type="net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation" bundle="GEP_RESOURCES" >
+					<fr:schema type="org.fenixedu.academic.domain.student.PrecedentDegreeInformation" bundle="GEP_RESOURCES" >
 					
 						<logic:notEmpty name="precedentDegreeInformation" property="schoolLevel">
 							<fr:slot name="schoolLevel.localizedName" layout="null-as-label" key="label.personal.ingression.data.viewer.schoolLevel" />

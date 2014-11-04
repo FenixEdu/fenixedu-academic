@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.person;
+package org.fenixedu.academic.ui.struts.action.person;
 
 import java.util.Date;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.util.Bundle;
 import org.joda.time.Interval;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

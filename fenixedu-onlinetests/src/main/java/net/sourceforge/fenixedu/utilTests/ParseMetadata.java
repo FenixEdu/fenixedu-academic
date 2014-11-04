@@ -33,7 +33,7 @@ import java.util.Vector;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import org.fenixedu.academic.domain.onlineTests.Metadata;
 
 import org.apache.commons.lang.CharEncoding;
 import org.xml.sax.Attributes;

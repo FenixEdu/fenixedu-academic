@@ -20,8 +20,8 @@
 --%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.google.common.base.Joiner"%>
-<%@page import="net.sourceforge.fenixedu.domain.Employee"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Student"%>
+<%@page import="org.fenixedu.academic.domain.Employee"%>
+<%@page import="org.fenixedu.academic.domain.student.Student"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
 <%@page import="org.fenixedu.bennu.core.domain.UserProfile"%>
 <%@page import="org.fenixedu.bennu.core.groups.DynamicGroup"%>
@@ -104,7 +104,7 @@ function check(e,v){
 	<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 	<br /><br />
 		
-	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex" type="net.sourceforge.fenixedu.domain.Person">	   
+	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex" type="org.fenixedu.academic.domain.Person">	   
 		<bean:define id="personID" name="personalInfo" property="externalId"/>
 		<% 
 			String username = personalInfo.getUser() !=null ? personalInfo.getUser().getUsername() : null;

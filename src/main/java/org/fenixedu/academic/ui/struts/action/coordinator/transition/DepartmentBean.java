@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.transition;
+package org.fenixedu.academic.ui.struts.action.coordinator.transition;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Department;
+import org.fenixedu.academic.domain.Department;
 
 public class DepartmentBean implements Serializable {
 

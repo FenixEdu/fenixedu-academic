@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.manager;
+package org.fenixedu.academic.service.services.manager;
 
-import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
+import org.fenixedu.academic.domain.CurricularCourseEquivalence;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

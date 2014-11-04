@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
+import org.fenixedu.academic.domain.caseHandling.Process;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class ApprovedLearningAgreementDocumentUploadBean extends CandidacyProcessDocumentUploadBean {
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult;
+package org.fenixedu.academic.ui.struts.action.externalSupervision.consult;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,16 +25,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.interfaces.HasDegreeType;
-import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.interfaces.HasDegreeType;
+import org.fenixedu.academic.domain.interfaces.HasExecutionYear;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
 
 public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYear, HasDegreeType {
 

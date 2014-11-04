@@ -19,12 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;

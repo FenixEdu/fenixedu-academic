@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="title.phd.candidacy.periods" bundle="PHD_RESOURCES" /></h2>
@@ -45,7 +45,7 @@
 <p><strong><bean:message  key="title.phd.candidacy.periods" bundle="PHD_RESOURCES"/></strong></p>
 
 <fr:view name="phdCandidacyPeriod">
-	<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod" bundle="PHD_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod" bundle="PHD_RESOURCES">
 			<fr:slot name="type" />
 			<fr:slot name="executionInterval.name" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod.executionYear"/>
 			<fr:slot name="start" />
@@ -72,7 +72,7 @@
 			<td></td>
 		</tr>
 		<logic:iterate id="process" name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses"
-				type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess">
+				type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess">
 			<tr>
 				<td><bean:write name="process" property="processNumber"/></td>
 				<td><bean:write name="process" property="person.name"/></td>

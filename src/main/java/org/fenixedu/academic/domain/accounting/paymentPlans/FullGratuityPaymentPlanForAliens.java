@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
+package org.fenixedu.academic.domain.accounting.paymentPlans;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.FirstTimeInstitutionStudentsPaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.IsAlienRule;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleFactory;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.FirstTimeInstitutionStudentsPaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsAlienRule;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRuleFactory;
+import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class FullGratuityPaymentPlanForAliens extends FullGratuityPaymentPlanForAliens_Base {
 

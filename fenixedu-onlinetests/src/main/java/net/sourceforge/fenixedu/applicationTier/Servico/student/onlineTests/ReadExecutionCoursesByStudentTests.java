@@ -20,20 +20,20 @@
  * Created on 28/Ago/2003
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
+package org.fenixedu.academic.service.services.student.onlineTests;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.predicate.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**

@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy;
+package org.fenixedu.academic.domain.candidacy;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.predicate.AccessControl;
 
 public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base {
 

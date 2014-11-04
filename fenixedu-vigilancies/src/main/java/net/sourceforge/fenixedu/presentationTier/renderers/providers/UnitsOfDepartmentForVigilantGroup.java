@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean;
 
 import org.apache.commons.beanutils.BeanComparator;
 

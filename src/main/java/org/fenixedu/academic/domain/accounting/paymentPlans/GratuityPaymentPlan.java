@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
+package org.fenixedu.academic.domain.accounting.paymentPlans;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class GratuityPaymentPlan extends GratuityPaymentPlan_Base {
 

@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
+package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
-import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
+import org.fenixedu.academic.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
+import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
+import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.student.Registration;
 
 public class SeniorStatuteSpecialSeasonEnrolmentScopeExecutor extends CurricularRuleExecutor {
 

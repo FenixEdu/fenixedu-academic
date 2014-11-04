@@ -19,7 +19,7 @@
 /**
  * Nov 14, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits;
+package org.fenixedu.academic.ui.struts.action.credits;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,16 +31,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.teacher.services.UpdateDegreeTeachingServices;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.teacher.DegreeTeachingService;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

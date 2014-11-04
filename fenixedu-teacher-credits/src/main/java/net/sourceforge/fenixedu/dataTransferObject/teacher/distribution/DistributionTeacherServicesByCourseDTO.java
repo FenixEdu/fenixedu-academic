@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.distribution;
+package org.fenixedu.academic.dto.teacher.distribution;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
+import org.fenixedu.academic.dto.DataTranferObject;
 
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;

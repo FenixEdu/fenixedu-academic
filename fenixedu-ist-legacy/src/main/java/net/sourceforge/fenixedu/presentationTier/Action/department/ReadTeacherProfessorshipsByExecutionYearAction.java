@@ -20,7 +20,7 @@
  * Created on Nov 21, 2003 by jpvl
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.department;
+package org.fenixedu.academic.ui.struts.action.department;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,18 +34,18 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForSummariesManagement;
-import net.sourceforge.fenixedu.util.PeriodState;
+import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.teacher.ReadTeacherByOID;
+import org.fenixedu.academic.service.services.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionYear;
+import org.fenixedu.academic.dto.InfoDepartment;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.dto.InfoTeacher;
+import org.fenixedu.academic.dto.teacher.professorship.DetailedProfessorship;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.ui.struts.action.departmentAdmOffice.TeacherSearchForSummariesManagement;
+import org.fenixedu.academic.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;

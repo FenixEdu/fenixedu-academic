@@ -21,10 +21,9 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

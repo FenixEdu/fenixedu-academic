@@ -123,7 +123,7 @@
 			<td><fr:view name="tutorshipSummary" property="problemsR9" layout="boolean-icon" /></td>
 			<td>Avaliação (ex.: metodologia, datas de exames; etc.)</td>
 			<td><fr:view name="tutorshipSummary" property="problemsR10" layout="boolean-icon" /></td>
-			<td>Adaptação ao <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></td>
+			<td>Adaptação ao <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -168,7 +168,7 @@
 		</tr>
 		<tr>
 			<td><fr:view name="tutorshipSummary" property="gainsR9" layout="boolean-icon" /></td>
-			<td>Melhor adaptação ao <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></td>
+			<td>Melhor adaptação ao <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></td>
 			<td><fr:view name="tutorshipSummary" property="gainsR10" layout="boolean-icon" /></td>
 			<td>Apoio na tomada de decisões/Resolução de problemas</td>
 			<td></td>
@@ -197,7 +197,7 @@
 	<table class="tstyle1 thlight mtop0 mbottom15 tdleft">
 		<tr>
 			<td>Apreciação Global do Programa:</td>
-			<td><fr:view name="tutorshipSummary" property="tutorshipSummaryProgramAssessment" type="net.sourceforge.fenixedu.domain.TutorshipSummaryProgramAssessment" /></td>
+			<td><fr:view name="tutorshipSummary" property="tutorshipSummaryProgramAssessment" type="org.fenixedu.academic.domain.TutorshipSummaryProgramAssessment" /></td>
 		</tr>
 	</table>
 	

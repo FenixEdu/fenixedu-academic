@@ -20,15 +20,15 @@
  * Created on Oct 10, 2003
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
-import net.sourceforge.fenixedu.util.State;
+import org.fenixedu.academic.domain.masterDegree.MasterDegreeClassification;
+import org.fenixedu.academic.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;

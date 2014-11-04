@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers;
+package org.fenixedu.academic.ui.struts.action.phd.coordinator.providers;
 
-import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
+import org.fenixedu.academic.domain.phd.ManageEnrolmentsBean;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

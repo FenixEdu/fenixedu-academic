@@ -19,11 +19,10 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.activities;
+package org.fenixedu.academic.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.bennu.core.domain.User;
 
 public class DownloadProvisionalThesisDocument extends PhdThesisActivity {

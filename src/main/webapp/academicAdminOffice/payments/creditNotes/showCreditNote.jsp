@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 
-<%@ page import="net.sourceforge.fenixedu.util.Money" %>
+<%@ page import="org.fenixedu.academic.util.Money" %>
 
 <bean:define id="receiptYear" name="creditNote" property="receipt.year" />
 <bean:define id="receiptNumber" name="creditNote" property="receipt.numberWithSeries" />
@@ -67,7 +67,7 @@
 
 
 <e:labelValues id="creditNoteStates"
-	enumeration="net.sourceforge.fenixedu.domain.accounting.CreditNoteState"
+	enumeration="org.fenixedu.academic.domain.accounting.CreditNoteState"
 	bundle="ENUMERATION_RESOURCES" />
 
 <logic:equal name="creditNote" property="allowedToChangeState" value="true">

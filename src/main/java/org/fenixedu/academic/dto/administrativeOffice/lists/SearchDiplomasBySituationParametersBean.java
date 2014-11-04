@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
+package org.fenixedu.academic.dto.administrativeOffice.lists;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
+import org.fenixedu.academic.predicate.AccessControl;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 

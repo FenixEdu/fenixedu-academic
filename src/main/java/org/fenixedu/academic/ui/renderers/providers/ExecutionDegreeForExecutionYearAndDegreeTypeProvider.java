@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.interfaces.HasDegreeType;
-import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.interfaces.HasDegreeType;
+import org.fenixedu.academic.domain.interfaces.HasExecutionYear;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

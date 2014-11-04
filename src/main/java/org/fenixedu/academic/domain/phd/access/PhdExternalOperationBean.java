@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.access;
+package org.fenixedu.academic.domain.phd.access;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
 
 public class PhdExternalOperationBean implements Serializable {
 

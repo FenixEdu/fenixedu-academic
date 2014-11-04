@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits;
+package org.fenixedu.academic.dto.administrativeOffice.externalUnits;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 
 public class ExternalUnitsSearchBean implements Serializable {
 

@@ -16,30 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
-import net.sourceforge.fenixedu.domain.curriculum.IGrade;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
-import net.sourceforge.fenixedu.domain.log.EnrolmentEvaluationLog;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.FenixDigestUtils;
-import net.sourceforge.fenixedu.util.MarkType;
-
+import org.fenixedu.academic.domain.curriculum.CurriculumValidationEvaluationPhase;
+import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.curriculum.GradeFactory;
+import org.fenixedu.academic.domain.curriculum.IGrade;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
+import org.fenixedu.academic.domain.log.EnrolmentEvaluationLog;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EnrolmentEvaluationState;
+import org.fenixedu.academic.util.FenixDigestUtils;
+import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

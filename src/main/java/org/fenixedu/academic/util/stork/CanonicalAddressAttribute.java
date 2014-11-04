@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.stork;
+package org.fenixedu.academic.util.stork;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -25,12 +25,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
-import net.sourceforge.fenixedu.util.stork.exceptions.StorkRuntimeException;
-
 import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributeType;
+import org.fenixedu.academic.util.stork.exceptions.StorkRuntimeException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;

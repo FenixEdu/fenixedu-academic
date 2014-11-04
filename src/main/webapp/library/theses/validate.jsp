@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<%@page import="net.sourceforge.fenixedu.domain.thesis.Thesis"%><html:xhtml />
+<%@page import="org.fenixedu.academic.domain.thesis.Thesis"%><html:xhtml />
 
 <bean:define id="thesisId" name="thesis" property="externalId" />
 <bean:define id="thesisState" name="thesis" property="libraryState.name" />
@@ -90,7 +90,7 @@
 	<logic:equal name="thesisState" value="ARCHIVE">
 		<div class="mtop05 mbottom15"><fr:form
 			action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
-			<fr:create id="cancel" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryCancelOperation"
+			<fr:create id="cancel" type="org.fenixedu.academic.domain.thesis.ThesisLibraryCancelOperation"
 				schema="library.thesis.cancel">
 				<fr:hidden slot="thesisId" name="thesis" property="externalId" />
 				<fr:hidden slot="performerId" name="person" property="externalId" />
@@ -104,7 +104,7 @@
 
 <logic:present name="validate">
 	<fr:create id="validate"
-		type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryArchiveOperation"
+		type="org.fenixedu.academic.domain.thesis.ThesisLibraryArchiveOperation"
 		schema="library.thesis.validate"
 		action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
 		<fr:hidden slot="thesisId" name="thesis" property="externalId" />
@@ -118,7 +118,7 @@
 </logic:present>
 
 <logic:present name="pending">
-	<fr:create id="pending" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
+	<fr:create id="pending" type="org.fenixedu.academic.domain.thesis.ThesisLibraryPendingOperation"
 		schema="library.thesis.pending"
 		action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
 		<fr:hidden slot="thesisId" name="thesis" property="externalId" />
@@ -132,7 +132,7 @@
 </logic:present>
 
 <logic:present name="editPending">
-    <fr:create id="edit" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
+    <fr:create id="edit" type="org.fenixedu.academic.domain.thesis.ThesisLibraryPendingOperation"
         schema="library.thesis.pending"
         action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
         <fr:hidden slot="thesisId" name="thesis" property="externalId" />

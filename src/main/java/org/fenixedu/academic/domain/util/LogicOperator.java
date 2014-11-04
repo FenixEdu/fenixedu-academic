@@ -19,11 +19,10 @@
 /*
  * Created on Feb 2, 2006
  */
-package net.sourceforge.fenixedu.domain.util;
+package org.fenixedu.academic.domain.util;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum LogicOperator {

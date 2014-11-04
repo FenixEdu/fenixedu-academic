@@ -16,21 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate;
+package org.fenixedu.academic.service.services.masterDegree.commons.candidate;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
-import net.sourceforge.fenixedu.domain.CandidateEnrolment;
-import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import org.fenixedu.academic.service.filter.ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.dto.InfoCandidateEnrolment;
+import org.fenixedu.academic.dto.InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
+import org.fenixedu.academic.domain.CandidateEnrolment;
+import org.fenixedu.academic.domain.MasterDegreeCandidate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

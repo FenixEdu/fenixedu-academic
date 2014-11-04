@@ -67,7 +67,7 @@
 <html:form action="/announcements/announcementsStartPageHandler.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="news"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.howManyAnnouncementsToShow" property="howManyAnnouncementsToShow"/>
-	<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.presentationTier.Action.messaging.RecentBoardsTimeSpanSelection" /> 
+	<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="org.fenixedu.academic.ui.struts.action.messaging.RecentBoardsTimeSpanSelection" /> 
 	<table class="tstyle5 mvert05">
 		<tr>
 			<td>Mostrar canais criados nos últimos:</td>

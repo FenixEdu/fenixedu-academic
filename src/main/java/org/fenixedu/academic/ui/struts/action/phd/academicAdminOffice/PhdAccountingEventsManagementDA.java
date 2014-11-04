@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
+package org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -25,22 +25,21 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean;
-import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
-import net.sourceforge.fenixedu.util.InvocationResult;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainExceptionWithInvocationResult;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessState;
+import org.fenixedu.academic.domain.phd.debts.PhdGratuityEvent;
+import org.fenixedu.academic.domain.phd.debts.PhdRegistrationFee;
+import org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessDA;
+import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

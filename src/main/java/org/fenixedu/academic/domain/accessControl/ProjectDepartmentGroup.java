@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accessControl;
+package org.fenixedu.academic.domain.accessControl;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.Teacher;
-
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;

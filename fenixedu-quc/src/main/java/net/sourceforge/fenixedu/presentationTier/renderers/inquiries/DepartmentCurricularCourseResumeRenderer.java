@@ -19,13 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+package org.fenixedu.academic.ui.renderers.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseResultsResume;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
+import org.fenixedu.academic.dto.inquiries.BlockResumeResult;
+import org.fenixedu.academic.dto.inquiries.CompetenceCourseResultsResume;
+import org.fenixedu.academic.dto.inquiries.CurricularCourseResumeResult;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;

@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting;
+package org.fenixedu.academic.domain.accounting;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,22 +30,21 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
+import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
+import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;

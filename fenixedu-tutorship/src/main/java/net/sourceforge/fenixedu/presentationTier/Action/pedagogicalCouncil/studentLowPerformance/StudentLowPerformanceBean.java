@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.studentLowPerformance;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.student.Student;
 
 public class StudentLowPerformanceBean implements Serializable {
 

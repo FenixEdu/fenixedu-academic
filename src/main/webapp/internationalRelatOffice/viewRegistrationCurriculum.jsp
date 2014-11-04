@@ -23,17 +23,17 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Registration"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.curriculum.AverageType"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.student.Registration"%>
+<%@page import="org.fenixedu.academic.domain.student.curriculum.AverageType"%>
+<%@page import="org.fenixedu.academic.domain.student.curriculum.ICurriculum"%>
 
 <html:xhtml/>
 
 
 <h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="registrationCurriculumBean" name="registrationCurriculumBean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationCurriculumBean"/>
+<bean:define id="registrationCurriculumBean" name="registrationCurriculumBean" type="org.fenixedu.academic.dto.student.RegistrationCurriculumBean"/>
 <%
 	final Registration registration = registrationCurriculumBean.getRegistration();
 	request.setAttribute("registration", registration);
@@ -127,7 +127,7 @@
 			<p class="mvert05"><strong>Atenção:</strong><br/> <bean:message key="following.info.refers.to" bundle="ACADEMIC_OFFICE_RESOURCES"/><bean:message key="begin.of.execution.year" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="executionYear" property="year"/>.</p>
 			<br/>
 			<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="mvert05"><strong><bean:message key="rules.info" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p class="mvert05"><strong><bean:message key="rules.info" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 
 			<p class="mtop1 mbottom05"><strong>Cálculo da <bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 			<p class="pleft1 mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="weightedAverage"/></b></p>
@@ -158,7 +158,7 @@
 				</logic:equal>
 
 				<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-				<p class="mvert05"><strong><bean:message key="rules.info" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+				<p class="mvert05"><strong><bean:message key="rules.info" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	
 				<p class="mtop1 mbottom05"><strong>Cálculo da <bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 				<p class="pleft1 mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="weightedAverage"/></b></p>
@@ -278,7 +278,7 @@
 				</td>
 			</tr>
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
 					<tr class="scplanenrollment">
 						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.code"/></td>
 						<td class=" scplancolcurricularcourse"><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
@@ -304,7 +304,7 @@
 				</logic:equal>
 			</logic:iterate>				
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.GivenCreditsEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.GivenCreditsEntry">
 					<tr class="scplanenrollment">
 						<td class="acenter">-</td>
 						<td class=" scplancolcurricularcourse"><bean:message bundle="APPLICATION_RESOURCES" key="label.givenCredits"/></td>

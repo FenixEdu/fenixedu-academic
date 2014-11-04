@@ -22,7 +22,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.util.AdvisoryRecipients" %>
+<%@ page import="org.fenixedu.academic.util.AdvisoryRecipients" %>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="link.new.advisory"/></h2>
 <br />

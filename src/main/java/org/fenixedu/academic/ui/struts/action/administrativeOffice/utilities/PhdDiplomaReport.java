@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities;
 
-import net.sourceforge.fenixedu.util.StringFormatter;
+import org.fenixedu.academic.util.StringFormatter;
 
 public class PhdDiplomaReport extends DiplomaReport {
 
@@ -37,7 +37,7 @@ public class PhdDiplomaReport extends DiplomaReport {
 
     @Override
     public String getReportTemplateKey() {
-        return "net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest.BOLONHA_PHD_PROGRAM";
+        return "org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest.BOLONHA_PHD_PROGRAM";
     }
 
 }

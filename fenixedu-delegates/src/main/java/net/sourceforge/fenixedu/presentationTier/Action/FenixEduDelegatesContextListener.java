@@ -1,13 +1,13 @@
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.student.Student;
 import pt.ist.fenixframework.FenixFramework;
 
 @WebListener

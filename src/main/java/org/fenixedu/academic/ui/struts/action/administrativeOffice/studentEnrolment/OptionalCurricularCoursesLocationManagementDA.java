@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,21 +26,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.curriculumLines.MoveCurriculumLines;
-import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.OptionalCurricularCoursesLocationManagementDA.OptionalCurricularCoursesLocationForm;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
+import org.fenixedu.academic.dto.student.OptionalCurricularCoursesLocationBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.student.curriculumLines.MoveCurriculumLines;
+import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment.OptionalCurricularCoursesLocationManagementDA.OptionalCurricularCoursesLocationForm;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

@@ -29,9 +29,9 @@
 
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.MeasurementTestRoom"%>
 <%@page import="java.util.Locale"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Registration"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
+<%@page import="org.fenixedu.academic.domain.student.Registration"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
 
 <html:xhtml/>
 
@@ -67,7 +67,7 @@ margin-left: 0px;
 		</p>
 		
 		<p>
-		O <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> em associação com a Sociedade Portuguesa de Matemática promove 
+		O <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%> em associação com a Sociedade Portuguesa de Matemática promove 
 		este ano lectivo uma prova de aferição para todos os alunos ingressados no
 		1º ano. Esta prova é obrigatória e terá influência na classificação da 
 		cadeira de Cálculo Diferencial e Integral I ou Matemática I.

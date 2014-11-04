@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator;
+package org.fenixedu.academic.ui.struts.action.phd.coordinator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,20 +29,19 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
-import net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.phd.ManageEnrolmentsBean;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRendererConfig;
+import org.fenixedu.academic.ui.struts.action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

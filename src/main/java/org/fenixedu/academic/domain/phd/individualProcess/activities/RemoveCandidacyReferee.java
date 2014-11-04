@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
+package org.fenixedu.academic.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
-
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
 import org.fenixedu.bennu.core.domain.User;
 
 public class RemoveCandidacyReferee extends PhdIndividualProgramProcessActivity {

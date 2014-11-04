@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers;
+package org.fenixedu.academic.ui.renderers;
 
-import net.sourceforge.fenixedu.util.StringFormatter;
+import org.fenixedu.academic.util.StringFormatter;
+
 import pt.ist.fenixWebFramework.renderers.StringRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 

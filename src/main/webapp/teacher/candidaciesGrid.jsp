@@ -116,7 +116,7 @@
 											<html:option value="-1" key="label.case1.candidaciesGrid.select">
 												<bean:message key="label.case1.candidaciesGrid.select"/>
 											</html:option>
-											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
+											<logic:iterate name="cases" id="caseStudy" type="org.fenixedu.academic.dto.Seminaries.InfoCaseStudy">
 												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
@@ -134,7 +134,7 @@
 											<html:option value="-1" key="label.case2.candidaciesGrid.select">
 												<bean:message key="label.case2.candidaciesGrid.select"/>
 											</html:option>
-											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
+											<logic:iterate name="cases" id="caseStudy" type="org.fenixedu.academic.dto.Seminaries.InfoCaseStudy">
 												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
@@ -152,7 +152,7 @@
 											<html:option value="-1" key="label.case3.candidaciesGrid.select">
 												<bean:message key="label.case3.candidaciesGrid.select"/>
 											</html:option>
-											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
+											<logic:iterate name="cases" id="caseStudy" type="org.fenixedu.academic.dto.Seminaries.InfoCaseStudy">
 												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
@@ -170,7 +170,7 @@
 											<html:option value="-1" key="label.case4.candidaciesGrid.select">
 												<bean:message key="label.case4.candidaciesGrid.select"/>
 											</html:option>
-											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
+											<logic:iterate name="cases" id="caseStudy" type="org.fenixedu.academic.dto.Seminaries.InfoCaseStudy">
 												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
@@ -188,7 +188,7 @@
 											<html:option value="-1" key="label.case5.candidaciesGrid.select">
 												<bean:message key="label.case5.candidaciesGrid.select"/>
 											</html:option>
-											<logic:iterate name="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
+											<logic:iterate name="cases" id="caseStudy" type="org.fenixedu.academic.dto.Seminaries.InfoCaseStudy">
 												<option value="<bean:write name="caseStudy" property="externalId"/>"
 														title="<bean:write name="caseStudy" property="name"/>">
 													<bean:write name="caseStudy" property="code"/>
@@ -304,7 +304,7 @@
 								
 				<logic:present name="candidacies">
 						<logic:notEmpty name="candidacies">
-							<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails">
+							<logic:iterate name="candidacies" id="candidacy" type="org.fenixedu.academic.dto.Seminaries.InfoCandidacyDetails">
 								<tr>
 									<td>
 										<html:link page="/candidacyDetails.do" 
@@ -418,7 +418,7 @@
 										%>
 									</td>
 										<bean:size id="selectedCasesSize" name="candidacy" property="cases"/>
-									<logic:iterate indexId="index" name="candidacy" property="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
+									<logic:iterate indexId="index" name="candidacy" property="cases" id="caseStudy" type="org.fenixedu.academic.dto.Seminaries.InfoCaseStudy">
 										<td  title="<bean:write name="caseStudy" property="name"/>">
 										<html:link page="/showCandidacies.do"
 														paramId="<%="case" + (index.intValue()+1) +"ID"%>"

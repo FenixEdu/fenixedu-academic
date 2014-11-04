@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.servlets;
+package org.fenixedu.academic.servlet;
 
 import java.util.Set;
 
@@ -24,9 +24,6 @@ import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HandlesTypes;
-
-import net.sourceforge.fenixedu.presentationTier.candidacydocfiller.PdfFiller;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ProcessCandidacyPrintAllDocumentsFilter;
 
 @HandlesTypes({ PdfFiller.class })
 public class FenixContainerInitializer implements ServletContainerInitializer {

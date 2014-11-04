@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.studentCurriculum;
+package org.fenixedu.academic.domain.studentCurriculum;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.log.OptionalDismissalLog;
-import net.sourceforge.fenixedu.util.EnrolmentAction;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.log.OptionalDismissalLog;
+import org.fenixedu.academic.util.EnrolmentAction;
 
 public class OptionalDismissal extends OptionalDismissal_Base {
 

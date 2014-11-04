@@ -24,19 +24,19 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters"%>
-<%@page import="net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ConcludePhdProcess" %>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.DownloadProvisionalThesisDocument"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.DownloadFinalThesisDocument"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.DownloadThesisRequirement"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.RequestJuryElements"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.RequestJuryReviews"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.RemindJuryReviewToReporters"%>
+<%@page import="org.fenixedu.academic.service.services.thesis.SubmitThesis"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.ScheduleThesisDiscussion"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.RatifyFinalThesis"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.SetFinalGrade"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.RejectJuryElementsDocuments"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.JuryReporterFeedbackUpload" %>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.ConcludePhdProcess" %>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">

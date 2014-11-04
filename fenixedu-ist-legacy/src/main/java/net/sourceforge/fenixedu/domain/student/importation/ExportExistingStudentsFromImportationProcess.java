@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student.importation;
+package org.fenixedu.academic.domain.student.importation;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -24,12 +24,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.QueueJob;
+import org.fenixedu.academic.domain.QueueJobResult;
+import org.fenixedu.academic.domain.person.RoleType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;

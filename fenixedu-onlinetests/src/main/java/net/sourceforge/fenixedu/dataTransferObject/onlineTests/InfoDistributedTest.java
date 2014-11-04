@@ -19,14 +19,14 @@
 /*
  * Created on 20/Ago/2003
  */
-package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
+package org.fenixedu.academic.dto.onlineTests;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
-import net.sourceforge.fenixedu.util.tests.TestType;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.util.tests.CorrectionAvailability;
+import org.fenixedu.academic.util.tests.TestType;
 
 /**
  * @author Susana Fernandes

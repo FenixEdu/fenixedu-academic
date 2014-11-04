@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityCoordinator;
 
 public class ErasmusCoordinatorBean implements Serializable {
     private Teacher teacher;

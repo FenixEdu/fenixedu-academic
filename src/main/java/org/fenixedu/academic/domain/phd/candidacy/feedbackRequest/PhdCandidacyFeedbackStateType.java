@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
+package org.fenixedu.academic.domain.phd.candidacy.feedbackRequest;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.phd.PhdProcessStateType;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

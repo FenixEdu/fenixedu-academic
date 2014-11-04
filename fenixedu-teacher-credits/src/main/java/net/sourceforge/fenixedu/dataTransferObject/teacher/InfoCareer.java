@@ -20,16 +20,16 @@
  * Created on 13/Nov/2003
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher;
+package org.fenixedu.academic.dto.teacher;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.dto.InfoTeacher;
+import org.fenixedu.academic.domain.CareerType;
+import org.fenixedu.academic.domain.teacher.Career;
+import org.fenixedu.academic.domain.teacher.ProfessionalCareer;
+import org.fenixedu.academic.domain.teacher.TeachingCareer;
 
 /**
  * @author Leonor Almeida

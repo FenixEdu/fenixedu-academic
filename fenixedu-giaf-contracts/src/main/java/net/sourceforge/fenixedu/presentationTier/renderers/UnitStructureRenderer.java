@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers;
+package org.fenixedu.academic.ui.renderers;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.Accountability;
+import org.fenixedu.academic.domain.organizationalStructure.Contract;
+import org.fenixedu.academic.domain.organizationalStructure.EmployeeContract;
+import org.fenixedu.academic.domain.organizationalStructure.Function;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 
 import org.joda.time.YearMonthDay;
 

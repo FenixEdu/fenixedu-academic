@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
+package org.fenixedu.academic.service.services.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.StudentThesisAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
-
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.ThesisVisibilityType;
+import org.fenixedu.academic.service.filter.student.thesis.StudentThesisAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

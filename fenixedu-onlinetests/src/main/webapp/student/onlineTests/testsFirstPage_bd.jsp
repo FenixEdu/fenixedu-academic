@@ -37,9 +37,9 @@
 				<th><bean:message key="label.testEndDate"/></th>
 				<th><bean:message key="message.studentTestLog.checksumReport"/></th>
 			</tr>
-			<logic:iterate id="registrationDistributedTests" name="tests" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.RegistrationDistributedTests">
+			<logic:iterate id="registrationDistributedTests" name="tests" type="org.fenixedu.academic.dto.onlineTests.RegistrationDistributedTests">
 				<bean:define id="student" name="registrationDistributedTests" property="registration.externalId"/>
-				<logic:iterate id="distributedTest" name="registrationDistributedTests" property="distributedTestsToDo" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
+				<logic:iterate id="distributedTest" name="registrationDistributedTests" property="distributedTestsToDo" type="org.fenixedu.academic.domain.onlineTests.DistributedTest">
 					<bean:define id="testCode" name="distributedTest" property="externalId"/>
 					<tr>
 						<td>
@@ -52,7 +52,7 @@
 						<td class="acenter">
 							<% 
 							org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
-							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
+							org.fenixedu.academic.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 							<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
@@ -75,9 +75,9 @@
 				<th><bean:message key="label.testEndDate"/></th>
 				<th><bean:message key="message.studentTestLog.checksumReport"/></th>
 			</tr>
-			<logic:iterate id="registrationDistributedTests" name="tests" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.RegistrationDistributedTests">
+			<logic:iterate id="registrationDistributedTests" name="tests" type="org.fenixedu.academic.dto.onlineTests.RegistrationDistributedTests">
 				<bean:define id="student" name="registrationDistributedTests" property="registration.externalId"/>
-				<logic:iterate id="distributedTest" name="registrationDistributedTests" property="distributedTestsDone" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
+				<logic:iterate id="distributedTest" name="registrationDistributedTests" property="distributedTestsDone" type="org.fenixedu.academic.domain.onlineTests.DistributedTest">
 					<bean:define id="testCode" name="distributedTest" property="externalId"/>
 					<tr>
 						<td>
@@ -90,7 +90,7 @@
 						<td class="acenter">
 							<% 
 							org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
-							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
+							org.fenixedu.academic.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 							<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
@@ -117,7 +117,7 @@
 				<th><bean:message key="label.testEndDate"/></th>
 				<th><bean:message key="message.studentTestLog.checksumReport"/></th>
 			</tr>
-			<logic:iterate id="distributedTest" name="testToDoList" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
+			<logic:iterate id="distributedTest" name="testToDoList" type="org.fenixedu.academic.domain.onlineTests.DistributedTest">
 				<bean:define id="student" name="distributedTest" property="student"/>
 				<bean:define id="testCode" name="distributedTest" property="externalId"/>
 				<tr>
@@ -131,7 +131,7 @@
 					<td class="acenter">
 						<% 
 						org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
-						net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
+						org.fenixedu.academic.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 							if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 						<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 						<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
@@ -156,7 +156,7 @@
 			<th><bean:message key="label.testEndDate"/></th>
 			<th><bean:message key="message.studentTestLog.checksumReport"/></th>
 		</tr>
-		<logic:iterate id="distributedTest" name="doneTestsList" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
+		<logic:iterate id="distributedTest" name="doneTestsList" type="org.fenixedu.academic.domain.onlineTests.DistributedTest">
 		<tr>
 			<td>
 				<html:link page="/studentTests.do?method=showTestCorrection" paramId="testCode" paramName="distributedTest" paramProperty="externalId">
@@ -168,7 +168,7 @@
 			<td class="acenter">
 				<% 
 				org.fenixedu.bennu.core.domain.User user = Authenticate.getUser();
-				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
+				org.fenixedu.academic.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(user.getPerson().getStudent().getNumber());
 					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 				<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 				<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">

@@ -16,24 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess;
+package org.fenixedu.academic.domain.candidacyProcess;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.collections.CollectionUtils;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.PublicCandidacyHashCode;
+import org.fenixedu.academic.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplate;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

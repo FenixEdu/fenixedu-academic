@@ -19,7 +19,7 @@
 /*
  * Created on Dec 7, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans;
+package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,25 +28,24 @@ import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCourseGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCourseGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromDegreeModule;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.OrderDegreeModule;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.bolonhaManager.AddContextToCourseGroup;
+import org.fenixedu.academic.service.services.bolonhaManager.CreateCourseGroup;
+import org.fenixedu.academic.service.services.bolonhaManager.DeleteContextFromDegreeModule;
+import org.fenixedu.academic.service.services.bolonhaManager.EditCourseGroup;
+import org.fenixedu.academic.service.services.bolonhaManager.OrderDegreeModule;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

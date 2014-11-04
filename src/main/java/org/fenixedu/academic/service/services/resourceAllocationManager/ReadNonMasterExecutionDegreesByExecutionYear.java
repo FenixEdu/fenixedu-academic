@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.academic.service.services.resourceAllocationManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ReadNonMasterExecutionDegreesByExecutionYear {

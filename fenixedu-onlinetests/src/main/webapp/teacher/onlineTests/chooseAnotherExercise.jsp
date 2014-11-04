@@ -67,7 +67,7 @@
 					<th class="listClasses-header"><bean:message key="label.test.difficulty" /></th>
 					<th width="90" class="listClasses-header"><bean:message key="label.test.quantidadeExercicios" /></th>
 				</tr>
-				<logic:iterate id="metadata" name="metadataList" type="net.sourceforge.fenixedu.domain.onlineTests.Metadata">
+				<logic:iterate id="metadata" name="metadataList" type="org.fenixedu.academic.domain.onlineTests.Metadata">
 					<tr>
 						<logic:notEqual name="metadata" property="description" value="">
 							<td class="listClasses"><bean:write name="metadata" property="description" /></td>

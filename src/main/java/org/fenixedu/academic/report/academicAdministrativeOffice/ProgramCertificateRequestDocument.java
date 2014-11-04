@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
+package org.fenixedu.academic.report.academicAdministrativeOffice;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -24,24 +24,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
-import net.sourceforge.fenixedu.util.NumberToWordsConverter;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Curriculum;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.HtmlToTextConverterUtil;
+import org.fenixedu.academic.util.NumberToWordsConverter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocument {

@@ -19,9 +19,9 @@
 
 --%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRoom" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.dto.InfoRoom" %>
+<%@ page import="org.fenixedu.academic.dto.InfoViewExamByDayAndShift" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>

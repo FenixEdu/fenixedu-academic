@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.conclusion;
+package org.fenixedu.academic.domain.phd.conclusion;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.joda.time.LocalDate;
 
 public class PhdConclusionProcessBean implements Serializable {

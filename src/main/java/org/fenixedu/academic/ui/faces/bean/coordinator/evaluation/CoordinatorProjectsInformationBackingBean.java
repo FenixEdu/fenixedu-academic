@@ -20,7 +20,7 @@
  * Created on Nov 9, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation;
+package org.fenixedu.academic.ui.faces.bean.coordinator.evaluation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,12 +30,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.ui.faces.components.util.CalendarLink;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class CoordinatorProjectsInformationBackingBean extends CoordinatorEvaluationManagementBackingBean {

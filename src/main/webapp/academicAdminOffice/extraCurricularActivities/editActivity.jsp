@@ -27,7 +27,7 @@
 
 <fr:edit name="extraCurricularActivityType" action="/manageExtraCurricularActivities.do?method=list">
     <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
-        type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType">
+        type="org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType">
         <fr:slot name="namePt" key="label.extraCurricularActivityTypes.namePt" required="true" />
         <fr:slot name="nameEn" key="label.extraCurricularActivityTypes.nameEn" required="true" />
     </fr:schema>

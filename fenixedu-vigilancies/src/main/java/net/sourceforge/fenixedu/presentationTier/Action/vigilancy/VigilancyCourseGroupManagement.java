@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
+package org.fenixedu.academic.ui.struts.action.vigilancy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +24,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExecutionCourseToGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExecutionCoursesFromGroup;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.service.services.person.vigilancy.AddExecutionCourseToGroup;
+import org.fenixedu.academic.service.services.person.vigilancy.RemoveExecutionCoursesFromGroup;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

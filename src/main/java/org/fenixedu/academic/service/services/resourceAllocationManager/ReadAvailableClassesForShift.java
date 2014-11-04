@@ -21,23 +21,24 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.dto.InfoClass;
+import org.fenixedu.academic.predicate.RolePredicates;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

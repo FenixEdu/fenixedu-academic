@@ -16,19 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
+package org.fenixedu.academic.domain.accounting.paymentPlans;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.PaymentPlan;
+import org.fenixedu.academic.domain.accounting.ServiceAgreement;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementPaymentPlan;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {

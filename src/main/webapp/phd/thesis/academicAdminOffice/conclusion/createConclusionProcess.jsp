@@ -77,7 +77,7 @@
 		</logic:equal>
 		
 		<fr:view name="phdProgramInformation">
-			<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramInformation" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.phd.PhdProgramInformation" bundle="PHD_RESOURCES">
 				<fr:slot name="beginDate" />
 				<fr:slot name="minThesisEctsCredits" />
 				<fr:slot name="maxThesisEctsCredits" />
@@ -92,7 +92,7 @@
 	</logic:notEmpty>
 	
 	<fr:edit id="phdConclusionProcessBean.edit" name="phdConclusionProcessBean" >
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcessBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcessBean">
 			<fr:slot name="conclusionDate" required="true" />
 			<fr:slot name="grade" required="true" />
 			<fr:slot name="thesisEctsCredits" required="true" >

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.alumni;
+package org.fenixedu.academic.ui.struts.action.alumni;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,19 +24,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Formation;
-import net.sourceforge.fenixedu.domain.Job;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Formation;
+import org.fenixedu.academic.domain.Job;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.MobilePhone;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionUnit;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

@@ -19,9 +19,9 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.inquiries;
+package org.fenixedu.academic.domain.inquiries;
 
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

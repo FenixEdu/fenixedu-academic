@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy.degree;
+package org.fenixedu.academic.domain.candidacy.degree;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {

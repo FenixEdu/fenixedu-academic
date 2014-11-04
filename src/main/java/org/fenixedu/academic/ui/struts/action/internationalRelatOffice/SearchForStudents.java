@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice;
+package org.fenixedu.academic.ui.struts.action.internationalRelatOffice;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,14 +24,13 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean;
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.student.StudentsSearchBean;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 

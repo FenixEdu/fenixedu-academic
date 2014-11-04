@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.candidacy.degreeChange;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.candidacy.degreeChange;
 
-import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificApplicationsApp;
-
+import org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA;
+import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificApplicationsApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -32,6 +31,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards(@Forward(name = "intro", path = "/scientificCouncil/candidacy/mainCandidacyProcess.jsp"))
 public class DegreeChangeCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange.DegreeChangeCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.degreeChange.DegreeChangeCandidacyProcessDA {
 
 }

@@ -23,7 +23,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 	   	<table width="98%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoselected"><p>O curso seleccionado &eacute;:</p>
@@ -57,7 +57,7 @@
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="addShiftToClasses"/>  	
 <bean:define id="classesList" name="component" property="infoClasses"/>
-<logic:iterate id="infoClass" name="component" property="infoClasses" type="net.sourceforge.fenixedu.dataTransferObject.InfoClass">
+<logic:iterate id="infoClass" name="component" property="infoClasses" type="org.fenixedu.academic.dto.InfoClass">
 <bean:define id="externalId" name="infoClass" property="externalId"/>
 <tr>
 	<td class="listClasses">

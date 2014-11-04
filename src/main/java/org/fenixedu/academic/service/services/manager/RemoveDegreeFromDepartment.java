@@ -16,12 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.manager;
+package org.fenixedu.academic.service.services.manager;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import static org.fenixedu.academic.predicate.AccessControl.check;
+
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.predicate.RolePredicates;
+
 import pt.ist.fenixframework.Atomic;
 
 public class RemoveDegreeFromDepartment {

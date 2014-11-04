@@ -23,27 +23,27 @@
 <!DOCTYPE renderers-config SYSTEM "../fenix-renderers-config.dtd">
 
 <renderers-config>
-	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-textbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesTextBoxQuestionRenderer" >
+	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-textbox" class="org.fenixedu.academic.ui.renderers.inquiries.InquiriesTextBoxQuestionRenderer" >
 		<property name="maxLength" value="100"/>
 	</renderer>		
-	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-checkbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesCheckBoxQuestionRenderer" />
+	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-checkbox" class="org.fenixedu.academic.ui.renderers.inquiries.InquiriesCheckBoxQuestionRenderer" />
 		
-	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryGroupQuestionBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupQuestionRenderer"/>
-	<renderer mode="input" type="java.lang.String" layout="inquiry-textbox-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryTextBoxQuestionRenderer" >
+	<renderer mode="input" type="org.fenixedu.academic.dto.inquiries.InquiryGroupQuestionBean" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryGroupQuestionRenderer"/>
+	<renderer mode="input" type="java.lang.String" layout="inquiry-textbox-question" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryTextBoxQuestionRenderer" >
 		<property name="maxLength" value="200"/>
 		<property name="defaultSize" value="50"/>
 	</renderer>
-	<renderer mode="input" type="java.lang.String" layout="inquiry-radiogroup-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryRadioGroupQuestionRenderer" />
-	<renderer mode="input" type="java.lang.String" layout="inquiry-checkbox-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCheckBoxQuestionRenderer" />
-	<renderer type="java.util.Collection" layout="delegate-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryDelegateCoursesResumeRenderer"/>
-	<renderer mode="output" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupResultsResumeRenderer"/>
-	<renderer mode="input" layout="inquiry-group-resume-input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupResultsResumeInputRenderer"/>	
-	<renderer mode="output" layout="general-result-resume" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGeneralResultsResumeRenderer"/>
-    <renderer mode="output" layout="teachers-result-resume" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryTeachersResultsResumeRenderer"/>
-    <renderer type="java.util.Collection" mode="output" layout="teacher-shiftType-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryTeacherShiftTypeResumeRenderer"/>
-    <renderer type="java.util.Collection" mode="output" layout="course-degrees-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCourseDegreesResumeRenderer"/>
-    <renderer type="java.util.Collection" mode="output" layout="regent-teachers-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryRegentTeachersResumeRenderer"/>
-    <renderer type="java.util.Collection" mode="output" layout="coordinator-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCoordinatorResumeRenderer"/>
-    <renderer type="java.util.Collection" mode="output" layout="department-teachers-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.DepartmentTeacherResumeRenderer"/>
-    <renderer type="java.util.Collection" mode="output" layout="department-curricularCourses-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.DepartmentCurricularCourseResumeRenderer"/>
+	<renderer mode="input" type="java.lang.String" layout="inquiry-radiogroup-question" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryRadioGroupQuestionRenderer" />
+	<renderer mode="input" type="java.lang.String" layout="inquiry-checkbox-question" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryCheckBoxQuestionRenderer" />
+	<renderer type="java.util.Collection" layout="delegate-inquiry-resume" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryDelegateCoursesResumeRenderer"/>
+	<renderer mode="output" type="org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryGroupResultsResumeRenderer"/>
+	<renderer mode="input" layout="inquiry-group-resume-input" type="org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryGroupResultsResumeInputRenderer"/>	
+	<renderer mode="output" layout="general-result-resume" type="org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryGeneralResultsResumeRenderer"/>
+    <renderer mode="output" layout="teachers-result-resume" type="org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryTeachersResultsResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="teacher-shiftType-inquiry-resume" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryTeacherShiftTypeResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="course-degrees-inquiry-resume" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryCourseDegreesResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="regent-teachers-inquiry-resume" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryRegentTeachersResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="coordinator-inquiry-resume" class="org.fenixedu.academic.ui.renderers.inquiries.InquiryCoordinatorResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="department-teachers-resume" class="org.fenixedu.academic.ui.renderers.inquiries.DepartmentTeacherResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="department-curricularCourses-resume" class="org.fenixedu.academic.ui.renderers.inquiries.DepartmentCurricularCourseResumeRenderer"/>
 </renderers-config>

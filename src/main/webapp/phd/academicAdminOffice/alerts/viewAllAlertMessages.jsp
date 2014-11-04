@@ -40,7 +40,7 @@
 
 <logic:notEmpty name="alertMessages">
 	<fr:view name="alertMessages">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+		<fr:schema type="org.fenixedu.academic.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 			<fr:slot name="whenCreated" layout="no-time" />
 			<fr:slot name="process" layout="link">
 				<fr:property name="contextRelative" value="true"/>

@@ -50,9 +50,9 @@
 					<fr:property name="classes" value="mtop05 mbottom1 thlight thmiddle"/>
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>
-				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
+				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"/>
 						<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
 					</fr:slot>										
 				</fr:schema>
@@ -88,9 +88,9 @@
 					<fr:property name="classes" value="mtop05 mbottom1 thlight thmiddle"/>
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>	
-				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
+				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"/>
 						<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
 					</fr:slot>									
 				</fr:schema>
@@ -133,7 +133,7 @@ padding-right: 3px;
 		</logic:equal>
 			
 		<fr:view name="departmentResumeList">
-			<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">													
+			<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement">													
 				<fr:slot name="numberOfExecutionCoursesWithin020" layout="link" key="label.summary.0to20">				
 					<fr:property name="contextRelative" value="true"/>
 				    <fr:property name="moduleRelative" value="true"/>
@@ -197,7 +197,7 @@ padding-right: 3px;
 			<p><em><bean:message key="message.summary.noExecutionCourses" bundle="PEDAGOGICAL_COUNCIL"/></em></p>
 		</logic:empty>
 		<logic:notEmpty name="departmentResume" property="executionCourses">
-			<bean:define id="departmentResume" name="departmentResume" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement"/>
+			<bean:define id="departmentResume" name="departmentResume" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement"/>
 			
 			<%
 				String sortCriteria = request.getParameter("sortBy");
@@ -220,7 +220,7 @@ padding-right: 3px;
 					<fr:property name="sortableSlots" value="numberOfLessonInstances,numberOfLessonInstancesWithSummary,percentageOfLessonsWithSummary,numberOfLessonInstancesWithNotTaughtSummary,percentageOfLessonsWithNotTaughtSummary"/>
 					<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 				</fr:layout>
-				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement">
+				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.directiveCouncil.ExecutionCourseSummaryElement">
 					<fr:slot name="executionCourse.nome" layout="link" key="label.executionCourse.name">
 						<fr:property name="contextRelative" value="true"/>
 				        <fr:property name="moduleRelative" value="true"/>

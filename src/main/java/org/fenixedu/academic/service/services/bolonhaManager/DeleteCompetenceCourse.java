@@ -19,11 +19,13 @@
 /*
  * Created on Dec 9, 2005
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
+package org.fenixedu.academic.service.services.bolonhaManager;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import static org.fenixedu.academic.predicate.AccessControl.check;
+
+import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.predicate.RolePredicates;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

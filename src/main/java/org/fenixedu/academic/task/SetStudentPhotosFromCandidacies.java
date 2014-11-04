@@ -1,17 +1,16 @@
 package org.fenixedu.academic.task;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PhotoState;
-import net.sourceforge.fenixedu.domain.PhotoType;
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.photograph.Picture;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.ContentType;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PhotoState;
+import org.fenixedu.academic.domain.PhotoType;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.photograph.Picture;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;

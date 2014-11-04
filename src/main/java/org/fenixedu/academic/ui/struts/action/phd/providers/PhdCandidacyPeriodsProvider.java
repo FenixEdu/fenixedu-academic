@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.providers;
+package org.fenixedu.academic.ui.struts.action.phd.providers;
 
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
 public class PhdCandidacyPeriodsProvider extends AbstractDomainObjectProvider {
 

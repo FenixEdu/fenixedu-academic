@@ -20,14 +20,14 @@
  * Created on Sep 26, 2005
  *	by mrsp
  */
-package net.sourceforge.fenixedu.domain.organizationalStructure;
+package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.Employee;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 

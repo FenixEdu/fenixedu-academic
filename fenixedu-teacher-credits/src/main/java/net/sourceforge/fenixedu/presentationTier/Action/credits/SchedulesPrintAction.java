@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits;
+package org.fenixedu.academic.ui.struts.action.credits;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +24,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.util.WeekDay;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.OccupationPeriod;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonContractSituation;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.util.WeekDay;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

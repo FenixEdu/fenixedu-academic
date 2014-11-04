@@ -396,7 +396,7 @@
 				<strong><bean:message key="label.employeeWorkingUnits" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
 			<fr:view name="workingUnits">
-				<fr:schema type="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract" bundle="CONTRACTS_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.organizationalStructure.EmployeeContract" bundle="CONTRACTS_RESOURCES">
 					<fr:slot name="beginDate"/>
 					<fr:slot name="endDate"/>
 					<fr:slot name="parentParty.presentationName" key="label.unit">

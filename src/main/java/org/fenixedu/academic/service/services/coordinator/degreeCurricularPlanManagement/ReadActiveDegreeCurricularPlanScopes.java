@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement;
+package org.fenixedu.academic.service.services.coordinator.degreeCurricularPlanManagement;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.filter.CoordinatorAuthorizationFilter;
+import org.fenixedu.academic.service.services.coordinator.ReadDegreeCurricularPlanBaseService;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.time.chronologies.durationFields;
+package org.fenixedu.academic.domain.time.chronologies.durationFields;
 
-import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
-
+import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
 import org.joda.time.Chronology;
 import org.joda.time.DurationField;
 import org.joda.time.DurationFieldType;

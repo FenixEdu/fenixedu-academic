@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
+package org.fenixedu.academic.dto.serviceRequests;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.student.RegistrationSelectExecutionYearBean;
 import org.joda.time.DateTime;
 
 public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutionYearBean {

@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.phd.thesis;
+package org.fenixedu.academic.report.phd.thesis;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
+import org.fenixedu.academic.report.FenixReport;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 

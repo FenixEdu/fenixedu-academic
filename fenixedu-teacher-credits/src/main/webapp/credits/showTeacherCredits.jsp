@@ -36,7 +36,7 @@
 	<table class="headerTable"><tr>
 	<td><img src="<%= request.getContextPath() + url %>"/></td>
 	<td ><fr:view name="teacherBean" property="teacher">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Teacher">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.Teacher">
 			<fr:slot name="person.presentationName" key="label.name"/>
 			<fr:slot name="department.name" key="label.department" layout="null-as-label"/>
 		</fr:schema>
@@ -50,9 +50,9 @@
 
 	<logic:notEmpty name="teacherBean" property="annualTeachingCredits">
 		<fr:view name="teacherBean" property="annualTeachingCredits">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.TeacherCreditsBean">
 				<fr:slot name="executionYear" key="label.executionYear" layout="link">
-					<fr:property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
+					<fr:property name="subSchema" value="org.fenixedu.academic.domain.ExecutionYear.view"/>
 					<fr:property name="subLayout" value="values"/>
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="moduleRelative" value="true" />

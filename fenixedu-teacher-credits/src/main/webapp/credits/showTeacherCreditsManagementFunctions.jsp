@@ -36,7 +36,7 @@
 	<table class="headerTable"><tr>
 	<td><img src="<%= request.getContextPath() + url %>"/></td>
 	<td ><fr:view name="teacher">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Teacher">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.Teacher">
 			<fr:slot name="person.presentationName" key="label.name"/>
 			<fr:slot name="department.name" key="label.department" layout="null-as-label"/>
 		</fr:schema>
@@ -65,7 +65,7 @@
 				<td><bean:write name="personFunction" property="function.unit.name"/></td>
 				<td><bean:write name="personFunction" property="beginDate"/></td>
 				<td><bean:write name="personFunction" property="endDate"/></td>
-				<% if(personFunction instanceof net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunctionShared){ %>
+				<% if(personFunction instanceof org.fenixedu.academic.domain.organizationalStructure.PersonFunctionShared){ %>
 					<td align="center"><bean:write name="personFunction" property="percentage"/></td>
 				<% } else { %>
 					<td align="center">-</td>

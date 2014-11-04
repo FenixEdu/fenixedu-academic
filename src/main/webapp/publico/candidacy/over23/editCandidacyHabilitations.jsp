@@ -31,7 +31,7 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>"><bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<a href='<%= fullPath + "?method=beginCandidacyProcessIntro" %>'><bean:write name="application.name"/> </a> &gt;
@@ -204,7 +204,7 @@
 		</div>	
 
 		
-		<h2 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
+		<h2 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 		
 		<fr:edit 	id='PublicCandidacyProcessBean.degrees'
 					name="individualCandidacyProcessBean"
@@ -220,7 +220,7 @@
 		<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees" indexId="index">
 			<li>
 				<fr:view name="degree" >
-				    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+				    <fr:schema type="org.fenixedu.academic.domain.Degree" bundle="APPLICATION_RESOURCES">
 						<fr:slot name="nameI18N" key="label.degree.name" />
 						<fr:slot name="sigla" key="label.sigla" />
 					</fr:schema>

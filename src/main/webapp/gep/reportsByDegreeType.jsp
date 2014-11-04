@@ -64,7 +64,7 @@
 	<h3 class="mtop15 mbottom05"><bean:message key="label.gep.new.request" bundle="GEP_RESOURCES" /></h3>
 	
 	<fr:form action="/reportsByDegreeType.do?method=selectDegreeType">
-		<fr:edit name="reportBean" id="reportBean" type="net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA$ReportBean" 
+		<fr:edit name="reportBean" id="reportBean" type="org.fenixedu.academic.ui.struts.action.gep.ReportsByDegreeTypeDA$ReportBean" 
 				schema="select.degree.type">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thlight thmiddle mtop05"/>
@@ -74,7 +74,7 @@
 	</fr:form>
 
 <logic:present name="job">
-	<bean:define id="job" name="job" type="net.sourceforge.fenixedu.domain.reports.GepReportFile"/>
+	<bean:define id="job" name="job" type="org.fenixedu.academic.domain.reports.GepReportFile"/>
 		<div class="success0 mtop0" style="width:600px;">
 			<logic:present name="reportBean" property="executionYear">
 			<logic:present name="reportBean" property="degreeType">
@@ -587,7 +587,7 @@
 	</tr>
 	<%-- tr>
 		<td style="width: 350px;">
-			<bean:message key="label.report.teachersList.from.aplica" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
+			<bean:message key="label.report.teachersList.from.aplica" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
 		</td>
 		<td>
 			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeachersFromAplica" filter="false"/>&amp;format=csv&amp;type=17</bean:define>
@@ -608,7 +608,7 @@
 	</tr--%>
 	<tr>
 		<td style="width: 350px;">
-			<bean:message key="label.report.teachersList.from.giaf" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
+			<bean:message key="label.report.teachersList.from.giaf" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
 		</td>
 		<td>
 			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeachersFromGiaf" filter="false"/>&amp;format=csv&amp;type=17</bean:define>
@@ -629,7 +629,7 @@
 	</tr>
 	<tr>
 		<td style="width: 350px;">
-			<bean:message key="label.report.teacherCredits" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
+			<bean:message key="label.report.teacherCredits" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/>
 		</td>
 		<td>
 			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeacherCreditsReportFile" filter="false"/>&amp;format=csv&amp;type=23</bean:define>

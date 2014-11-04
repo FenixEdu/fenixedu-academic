@@ -79,7 +79,7 @@
   	<p><strong><bean:message key="label.phd.rejectCandidacyProcess.question" bundle="PHD_RESOURCES" /></strong></p>
 
   	<fr:edit id="stateBean-generateAlert" name="stateBean">
-  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean">
+  		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean">
   			<fr:slot name="generateAlert" layout="radio-postback">
   				<fr:property name="destination" value="postback" />
   			</fr:slot>

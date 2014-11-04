@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities;
 
 import java.io.IOException;
 import java.io.InputStream;

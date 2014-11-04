@@ -26,11 +26,11 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
-<%@ page import="net.sourceforge.fenixedu.util.Data" %>
-<%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.domain.person.RoleType" %>
+<%@ page import="org.fenixedu.academic.util.Data" %>
+<%@ page import="org.fenixedu.academic.util.SituationName" %>
+<%@ page import="org.fenixedu.academic.dto.InfoMasterDegreeCandidate" %>
 <html:form action="/editCandidate?method=change">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>  
    	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidateID" property="candidateID" />  
@@ -55,7 +55,7 @@
         <tr>
          <td width="30%"><bean:message key="label.person.maritalStatus" /></td>
          <td>
-            <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus"/>
+            <e:labelValues id="values" enumeration="org.fenixedu.academic.domain.person.MaritalStatus"/>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.maritalStatus" property="maritalStatus">
         		<html:option key="dropDown.Default" value=""/>
             	<html:options collection="values" property="value" labelProperty="label"/>
@@ -150,7 +150,7 @@
         <tr>
          <td width="30%"><bean:message key="label.person.identificationDocumentType" /></td>
          <td>
-         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
+         	<e:labelValues id="values" enumeration="org.fenixedu.academic.domain.person.IDDocumentType"/>
             <html:select bundle="HTMLALT_RESOURCES" altKey="select.identificationDocumentType" property="identificationDocumentType">
             	<html:option key="dropDown.Default" value=""/>
                 <html:options collection="values" property="value" labelProperty="label"/>

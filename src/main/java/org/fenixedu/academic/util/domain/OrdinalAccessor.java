@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.domain;
+package org.fenixedu.academic.util.domain;
 
 import java.util.Collection;
 
 /**
  * Provides an interface to obtain all the information required by the
- * {@link net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter
+ * {@link org.fenixedu.academic.util.domain.OrderedRelationAdapter
  * OrderedRelationAdapter}.
  * 
  * @author cfgi

@@ -23,7 +23,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
+<%@ page import="org.fenixedu.academic.domain.degree.DegreeType" %>
 <bean:define id="infoPerson" name="infoPerson" scope="request" />
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoPerson" property="nome"/><br />
@@ -36,7 +36,7 @@
 
 </p>
 <div class="infoop2">
-	<bean:message bundle="HTMLALT_RESOURCES" key="label.teacher.auth" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" />
+	<bean:message bundle="HTMLALT_RESOURCES" key="label.teacher.auth" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" />
 </div>
 <logic:messagesPresent>
 	<html:errors/>

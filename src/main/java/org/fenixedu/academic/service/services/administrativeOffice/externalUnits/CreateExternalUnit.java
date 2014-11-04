@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits;
+package org.fenixedu.academic.service.services.administrativeOffice.externalUnits;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalUnitBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.CreateUnit;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

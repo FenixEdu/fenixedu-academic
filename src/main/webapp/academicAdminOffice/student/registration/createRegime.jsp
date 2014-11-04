@@ -53,7 +53,7 @@
 
 <bean:define id="registrationId" name="registration" property="externalId" />
 
-<fr:create schema="RegistrationRegime.create" type="net.sourceforge.fenixedu.domain.student.RegistrationRegime"
+<fr:create schema="RegistrationRegime.create" type="org.fenixedu.academic.domain.student.RegistrationRegime"
 	action='<%= "/registration.do?method=showRegimes&amp;registrationId=" + registrationId.toString() %>'>
 	<fr:hidden slot="registration" name="registration"/>
 	<fr:layout name="tabular">

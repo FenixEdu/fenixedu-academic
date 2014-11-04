@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.paymentPlanRules;
+package org.fenixedu.academic.domain.accounting.paymentPlanRules;
 
 import java.util.Collection;
 import java.util.HashMap;

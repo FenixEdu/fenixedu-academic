@@ -24,11 +24,11 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.DownloadProvisionalThesisDocument"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.DownloadFinalThesisDocument"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.DownloadThesisRequirement"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.JuryReporterFeedbackUpload"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.ScheduleThesisMeeting"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">

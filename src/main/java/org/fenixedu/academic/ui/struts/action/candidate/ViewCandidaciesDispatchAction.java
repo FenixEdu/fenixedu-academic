@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.candidate;
+package org.fenixedu.academic.ui.struts.action.candidate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +27,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SaveCandidacyDocumentFiles;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.candidate.CandidateApplication.CandidateCandidaciesApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.candidacy.Candidacy;
+import org.fenixedu.academic.domain.candidacy.CandidacyDocument;
+import org.fenixedu.academic.dto.candidacy.CandidacyDocumentUploadBean;
+import org.fenixedu.academic.service.services.administrativeOffice.candidacy.SaveCandidacyDocumentFiles;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.candidate.CandidateApplication.CandidateCandidaciesApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

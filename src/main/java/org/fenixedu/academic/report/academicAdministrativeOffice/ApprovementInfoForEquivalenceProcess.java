@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
+package org.fenixedu.academic.report.academicAdministrativeOffice;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -27,26 +27,25 @@ import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.OptionalEnrolment;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
-import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.IEnrolment;
+import org.fenixedu.academic.domain.OptionalEnrolment;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.curriculum.Curriculum;
+import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
+import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.HtmlToTextConverterUtil;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

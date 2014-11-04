@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
+package org.fenixedu.academic.service.services.person.vigilancy;
 
-import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.EvaluationManagementLog;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.vigilancy.AttendingStatus;
+import org.fenixedu.academic.domain.vigilancy.Vigilancy;
+import org.fenixedu.academic.util.Bundle;
 import pt.ist.fenixframework.Atomic;
 
 public class ChangeConvokeStatus {

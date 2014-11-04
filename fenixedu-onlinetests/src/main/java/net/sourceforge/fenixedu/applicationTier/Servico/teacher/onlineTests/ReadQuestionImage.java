@@ -20,19 +20,19 @@
  * Created on 4/Ago/2003
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
+package org.fenixedu.academic.service.services.teacher.onlineTests;
 
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
-import net.sourceforge.fenixedu.domain.onlineTests.Test;
-import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.util.tests.QuestionOption;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.dto.onlineTests.InfoQuestion;
+import org.fenixedu.academic.dto.onlineTests.InfoStudentTestQuestion;
+import org.fenixedu.academic.domain.onlineTests.Question;
+import org.fenixedu.academic.domain.onlineTests.Test;
+import org.fenixedu.academic.domain.onlineTests.TestQuestion;
+import org.fenixedu.academic.domain.onlineTests.utils.ParseSubQuestion;
+import org.fenixedu.academic.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;

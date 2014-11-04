@@ -1,9 +1,9 @@
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-enum net.sourceforge.fenixedu.domain.TutorshipParticipationType                                                           as TutorshipParticipationType;
-enum net.sourceforge.fenixedu.domain.TutorshipSummarySatisfaction                                                         as TutorshipSummarySatisfaction;
-enum net.sourceforge.fenixedu.domain.TutorshipSummaryProgramAssessment                                                    as TutorshipSummaryProgramAssessment;
-enum net.sourceforge.fenixedu.domain.teacher.WishesTutor                                                                  as WishesTutor;
+enum org.fenixedu.academic.domain.TutorshipParticipationType                                                           as TutorshipParticipationType;
+enum org.fenixedu.academic.domain.TutorshipSummarySatisfaction                                                         as TutorshipSummarySatisfaction;
+enum org.fenixedu.academic.domain.TutorshipSummaryProgramAssessment                                                    as TutorshipSummaryProgramAssessment;
+enum org.fenixedu.academic.domain.teacher.WishesTutor                                                                  as WishesTutor;
 
 class TutorshipIntention  {
     AcademicInterval academicInterval (REQUIRED);

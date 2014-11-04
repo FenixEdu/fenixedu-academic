@@ -382,7 +382,7 @@
 
   <tag>
     <name>hidden</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixHiddenSlotTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.renderers.taglib.FenixHiddenSlotTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       Permites the user to supply slots that are context dependant and are nor present

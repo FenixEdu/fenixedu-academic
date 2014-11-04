@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.candidate;
+package org.fenixedu.academic.ui.struts.action.candidate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
-import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.candidacy.Candidacy;
+import org.fenixedu.academic.domain.candidacy.CandidacyOperationType;
+import org.fenixedu.academic.domain.candidacy.CandidacySituation;
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
+import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
+import org.fenixedu.academic.domain.candidacy.IMDCandidacy;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

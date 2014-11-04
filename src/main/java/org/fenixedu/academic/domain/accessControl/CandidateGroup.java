@@ -1,12 +1,11 @@
-package net.sourceforge.fenixedu.domain.accessControl;
+package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.Candidacy;
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;

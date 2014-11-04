@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.log;
+package org.fenixedu.academic.domain.phd.log;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
+import org.fenixedu.academic.domain.phd.PhdProgramProcess;
+import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 

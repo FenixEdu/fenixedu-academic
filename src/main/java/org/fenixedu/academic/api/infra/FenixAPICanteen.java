@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.webServices.jersey.api;
+package org.fenixedu.academic.api.infra;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
@@ -24,9 +24,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager.ConfigurationProperties;
-
+import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.util.FenixConfigurationManager.ConfigurationProperties;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

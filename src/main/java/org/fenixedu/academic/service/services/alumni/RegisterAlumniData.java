@@ -16,29 +16,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
+package org.fenixedu.academic.service.services.alumni;
 
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni.AlumniNotificationService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniAddressBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPasswordBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
-import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
-import net.sourceforge.fenixedu.domain.AlumniManager;
-import net.sourceforge.fenixedu.domain.Job;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
-import net.sourceforge.fenixedu.domain.contacts.Phone;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.Alumni;
+import org.fenixedu.academic.domain.AlumniIdentityCheckRequest;
+import org.fenixedu.academic.domain.AlumniManager;
+import org.fenixedu.academic.domain.Job;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.PartyContactType;
+import org.fenixedu.academic.domain.contacts.Phone;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.alumni.AlumniAddressBean;
+import org.fenixedu.academic.dto.alumni.AlumniIdentityCheckRequestBean;
+import org.fenixedu.academic.dto.alumni.AlumniJobBean;
+import org.fenixedu.academic.dto.alumni.publicAccess.AlumniPasswordBean;
+import org.fenixedu.academic.dto.alumni.publicAccess.AlumniPublicAccessBean;
+import org.fenixedu.academic.service.services.commons.alumni.AlumniNotificationService;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class RegisterAlumniData extends AlumniNotificationService {

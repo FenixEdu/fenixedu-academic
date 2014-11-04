@@ -18,9 +18,9 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess"%>
+<%@page import="org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess"%>
 <%@page import="org.joda.time.DateTime"%>
-<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
+<%@page import="org.fenixedu.academic.domain.Installation"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -29,7 +29,7 @@
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <%@ page import="java.util.Locale"%>
 
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
 
 <html:xhtml/>
 
@@ -93,14 +93,14 @@
 </script>
 
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<% 
 		Locale locale = I18N.getLocale();
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 	%>
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>pt/candidatos/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>pt/candidatos/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<% } else { %>
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>en/prospective-students/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>en/prospective-students/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<% } %>
 
 	<% 
@@ -135,7 +135,7 @@
 		
 		<% } %>
 		
-		<p><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
+		<p><bean:message key="message.ist.conditions.note" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
 	</div>
 </div>
 </logic:equal>
@@ -162,7 +162,7 @@
 <logic:equal name="individualCandidacyProcess" property="candidacy.eventClosedButWithDebt" value="true">
 <div class="h_box_alt error0" style="font-size: 1.2em;">
 	<strong>
-		<bean:define id="amountToPay" name="individualCandidacyProcess" property="candidacy.event.amountToPay" type="net.sourceforge.fenixedu.util.Money" />
+		<bean:define id="amountToPay" name="individualCandidacyProcess" property="candidacy.event.amountToPay" type="org.fenixedu.academic.util.Money" />
 		<bean:message key="message.second.cycle.candidacy.still.in.debt" bundle="CANDIDATE_RESOURCES" arg0="<%= amountToPay.toPlainString() %>" />
 	</strong>
 	
@@ -410,14 +410,14 @@
 	}
 %>
 
-<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
+<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <logic:notEmpty name="individualCandidacyProcessBean" property="selectedDegreeList">
 	<ol class="mtop05">
 		<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegreeList" indexId="index">
 			<li>				
 				<fr:view name="degree" >
-				    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+				    <fr:schema type="org.fenixedu.academic.domain.Degree" bundle="APPLICATION_RESOURCES">
 						<fr:slot name="nameI18N" key="label.degree.name" />
 						<fr:slot name="sigla" key="label.sigla" />
 					</fr:schema>			
@@ -472,6 +472,6 @@
 </logic:notEmpty>
 
 
-<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Installation.getInstance().getInstituitionalEmailAddress("da") %>" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Installation.getInstance().getInstituitionalEmailAddress("da") %>" bundle="CANDIDATE_RESOURCES"/></div>
 
 

@@ -20,27 +20,26 @@
  * Created on 27/Ago/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student;
+package org.fenixedu.academic.ui.struts.action.student;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupStudentEnrolment;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.dto.InfoSiteStudentGroup;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidSituationServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.student.GroupStudentEnrolment;
+import org.fenixedu.academic.service.services.student.ReadStudentGroupInformation;
+import org.fenixedu.academic.service.services.student.VerifyStudentGroupAtributes;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
+package org.fenixedu.academic.dto.serviceRequests;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,22 +24,21 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.domain.student.MobilityProgram;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.util.Money;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.domain.student.MobilityProgram;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 

@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
+	import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <h2><bean:message key="label.execution.course.groupings" bundle="SOP_RESOURCES" /></h2>
 

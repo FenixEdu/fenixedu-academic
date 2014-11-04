@@ -21,16 +21,15 @@
  *
  * by gedl@rnl.ist.utl.pt
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
+package org.fenixedu.academic.servlet.taglib.sop.v3;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoLessonInstance;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;

@@ -27,7 +27,7 @@
 <%@ page language="java" %>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer"%>
+<%@page import="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer"%>
 <html:xhtml/>
 
 <!-- showStudentCurriculum.jsp -->
@@ -56,7 +56,7 @@
 
 <logic:present name="registration">
 
-	<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+	<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
 	
 	<p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
 	
@@ -189,7 +189,7 @@
 			<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.creditsConcluded" bundle="APPLICATION_RESOURCES"/></em></p>	
 			<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.approvedCredits" bundle="APPLICATION_RESOURCES"/></em></p>
 			<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.maxCredits" bundle="APPLICATION_RESOURCES"/></em></p>
-		    <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
+		    <e:labelValues id="enrolmentEvaluationTypes" enumeration="org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType" />
 			<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
 				<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
 			</logic:iterate>

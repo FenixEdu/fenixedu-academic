@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

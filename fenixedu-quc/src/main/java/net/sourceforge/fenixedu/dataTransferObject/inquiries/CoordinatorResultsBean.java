@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.QUCResultsLog;
-import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.QUCResultsLog;
+import org.fenixedu.academic.domain.inquiries.CurricularCourseInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryGlobalComment;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 

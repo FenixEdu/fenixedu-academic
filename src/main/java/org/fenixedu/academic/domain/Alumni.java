@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,22 +28,21 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
-import net.sourceforge.fenixedu.domain.contacts.Phone;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.MobilePhone;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.contacts.PartyContactType;
+import org.fenixedu.academic.domain.contacts.Phone;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.alumni.AlumniSearchBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 

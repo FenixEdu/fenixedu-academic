@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.payments;
+package org.fenixedu.academic.ui.struts.action.academicAdministration.payments;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,33 +25,32 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulAccountingTransaction;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulReceipt;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelEvent;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.DepositAmountOnEvent;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.OpenEvent;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.TransferPaymentsToOtherEventAndCancel;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AnnulAccountingTransactionBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.CancelEventBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.DepositAmountBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.TransferPaymentsToOtherEventAndCancelBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
-import net.sourceforge.fenixedu.domain.accounting.Discount;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPaymentsApp;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.AccountingTransaction;
+import org.fenixedu.academic.domain.accounting.Discount;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.Receipt;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean;
+import org.fenixedu.academic.dto.accounting.CancelEventBean;
+import org.fenixedu.academic.dto.accounting.DepositAmountBean;
+import org.fenixedu.academic.dto.accounting.TransferPaymentsToOtherEventAndCancelBean;
+import org.fenixedu.academic.dto.person.SimpleSearchPersonWithStudentBean;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.academic.service.services.accounting.AnnulAccountingTransaction;
+import org.fenixedu.academic.service.services.accounting.AnnulReceipt;
+import org.fenixedu.academic.service.services.accounting.CancelEvent;
+import org.fenixedu.academic.service.services.accounting.DepositAmountOnEvent;
+import org.fenixedu.academic.service.services.accounting.OpenEvent;
+import org.fenixedu.academic.service.services.accounting.TransferPaymentsToOtherEventAndCancel;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPaymentsApp;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

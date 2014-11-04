@@ -22,7 +22,7 @@
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code Template
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
+package org.fenixedu.academic.service.services.exceptions;
 
 /**
  * 

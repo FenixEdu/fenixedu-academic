@@ -19,16 +19,15 @@
 /*
  * Created on Jan 26, 2006
  */
-package net.sourceforge.fenixedu.domain.degreeStructure;
+package org.fenixedu.academic.domain.degreeStructure;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 
 public class Externalization {
 

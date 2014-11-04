@@ -23,7 +23,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <logic:present name="siteView"> 
 	<bean:define id="component" name="siteView" property="component"/>
@@ -81,7 +81,7 @@
 		</table>	
 	</html:form>
 
-	<logic:iterate id="summary" name="component" property="infoSummaries" type="net.sourceforge.fenixedu.dataTransferObject.InfoSummary">
+	<logic:iterate id="summary" name="component" property="infoSummaries" type="org.fenixedu.academic.dto.InfoSummary">
 		<bean:define id="summaryCode" name="summary" property="externalId" />
 		<div id="s<%= summary.getExternalId().toString() %>">
 			<logic:present name="summary" property="infoShift">

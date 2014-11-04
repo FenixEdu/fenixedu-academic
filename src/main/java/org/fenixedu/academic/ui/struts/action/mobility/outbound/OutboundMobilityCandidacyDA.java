@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
+package org.fenixedu.academic.ui.struts.action.mobility.outbound;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -28,27 +28,26 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
-import net.sourceforge.fenixedu.domain.util.email.EmailBean;
-import net.sourceforge.fenixedu.domain.util.email.PersonSender;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacy;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
+import org.fenixedu.academic.domain.util.email.EmailBean;
+import org.fenixedu.academic.domain.util.email.PersonSender;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UnionGroup;
 import org.fenixedu.bennu.core.groups.UserGroup;

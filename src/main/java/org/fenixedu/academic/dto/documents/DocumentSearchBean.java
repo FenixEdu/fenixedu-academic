@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.documents;
+package org.fenixedu.academic.dto.documents;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.documents.GeneratedDocumentType;
+import org.fenixedu.academic.dto.person.PersonBean;
 import org.joda.time.LocalDate;
 
 /**

@@ -36,7 +36,7 @@
 	<fr:form action="/manageEnrolementPeriods.do?method=selectSemester">
 		<fr:edit id="executionSemester" name="executionSemester">
 			<fr:schema bundle="MANAGER_RESOURCES"
-				type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodBean">
+				type="org.fenixedu.academic.ui.struts.action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodBean">
 				<fr:slot name="semester" key="label.choose.execution.period" layout="menu-select-postback">
 					<fr:property name="from" value="semesters" />
 					<fr:property name="format" value="${qualifiedName}" />
@@ -74,7 +74,7 @@
 		</h3>
 		<fr:view name="configuration" property="configurations">
 			<fr:schema bundle="MANAGER_RESOURCES"
-				type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodConfigurationForEdit">
+				type="org.fenixedu.academic.ui.struts.action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodConfigurationForEdit">
 				<fr:slot name="interval.start" key="label.enrolment.period.startDate" />
 				<fr:slot name="interval.end" key="label.enrolment.period.endDate" />
 				<fr:slot name="degrees" key="label.manager.degree.names" />

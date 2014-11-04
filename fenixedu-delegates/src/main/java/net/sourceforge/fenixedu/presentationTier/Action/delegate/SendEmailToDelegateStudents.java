@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.delegate;
+package org.fenixedu.academic.ui.struts.action.delegate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,27 +29,27 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
-import net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean;
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.DelegateStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication.DelegateMessagingApp;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
+import org.fenixedu.academic.dto.commons.ExecutionYearBean;
+import org.fenixedu.academic.dto.delegate.DelegateCurricularCourseBean;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeModuleScope;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.DelegateStudentsGroup;
+import org.fenixedu.academic.domain.accessControl.StudentGroup;
+import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.student.Delegate;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.delegate.DelegateApplication.DelegateMessagingApp;
+import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

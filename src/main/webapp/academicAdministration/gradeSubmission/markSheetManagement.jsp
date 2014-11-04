@@ -44,7 +44,7 @@
 
 <fr:edit id="search"
 		 name="edit"
-		 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
+		 type="org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
 		 schema="markSheet.search"
 		 action="/markSheetManagement.do?method=searchMarkSheets">
 	<fr:layout name="tabular">

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan;
+package org.fenixedu.academic.dto.accounting.paymentPlan;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,13 +24,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
-import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
-import net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents;
+import org.fenixedu.academic.domain.accounting.installments.InstallmentWithMonthlyPenalty;
+import org.fenixedu.academic.domain.accounting.installments.PartialRegimeInstallment;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.YearMonthDay;
 
 public class InstallmentBean implements Serializable {

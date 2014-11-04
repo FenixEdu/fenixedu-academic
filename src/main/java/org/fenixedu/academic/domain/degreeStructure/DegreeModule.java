@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.degreeStructure;
+package org.fenixedu.academic.domain.degreeStructure;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -31,25 +31,24 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.EquivalencePlan;
-import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
-import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
-import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.EquivalencePlan;
+import org.fenixedu.academic.domain.EquivalencePlanEntry;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
+import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
+import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 

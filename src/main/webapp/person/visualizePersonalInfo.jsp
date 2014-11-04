@@ -564,7 +564,7 @@
 		<fr:edit name="person" id="edit-person">
 			<fr:layout name="tabular-editable">
 			</fr:layout>
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.Person">
 				<fr:slot name="disableSendEmails" bundle="APPLICATION_RESOURCES" key="person.disable.send.emails" layout="option-select-postback"></fr:slot>
 			</fr:schema>
 		</fr:edit>
@@ -578,7 +578,7 @@
 		<bean:message key="label.homepage.contact.emergency.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	</p>
 	<fr:edit id="emergencyContact" name="emergencyContactBean">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA$EmergencyContactBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.ui.struts.action.person.UpdateEmergencyContactDA$EmergencyContactBean">
 			<fr:slot name="contact" key="label.contact">
 				<fr:property name="size" value="50"/>
 			</fr:slot>
@@ -605,7 +605,7 @@
 	<p class="mtop15">
 		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	</p>
-	<fr:edit id="nickname" name="personBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean.nickname">
+	<fr:edit id="nickname" name="personBean" schema="org.fenixedu.academic.dto.person.PersonBean.nickname">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
@@ -616,7 +616,7 @@
 	</html:submit>
 </fr:form>
 
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.personal.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
 	</fr:layout>	
@@ -630,7 +630,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
 	</tr>
 </table>
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
+<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.user.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
@@ -644,7 +644,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
 	</tr>
 </table>
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
+<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.family">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	

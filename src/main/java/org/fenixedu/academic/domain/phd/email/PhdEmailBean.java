@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.email;
+package org.fenixedu.academic.domain.phd.email;
 
 import java.util.StringTokenizer;
 
-import net.sourceforge.fenixedu.domain.Person;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Person;
 import org.joda.time.DateTime;
 
 public abstract class PhdEmailBean implements java.io.Serializable {

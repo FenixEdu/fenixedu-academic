@@ -47,7 +47,7 @@
 	<bean:define id="forumId" name="forum" property="externalId"/>
 	
 	<fr:create id="createThreadAndMessage"
-			type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean" 
+			type="org.fenixedu.academic.dto.messaging.CreateConversationThreadAndMessageBean" 
            	schema="conversationThreadAndMessage.create"
            	action="<%= contextPrefix + "method=createThreadAndMessage&amp;forumId="+forumId %>">
 

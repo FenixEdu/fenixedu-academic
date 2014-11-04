@@ -20,7 +20,7 @@
  * Created on Nov 7, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,13 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
-import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EvaluationType;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.GroupEnrolment;
+import org.fenixedu.academic.domain.util.icalendar.EvaluationEventBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;

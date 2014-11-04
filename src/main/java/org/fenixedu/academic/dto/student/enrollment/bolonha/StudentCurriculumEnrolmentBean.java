@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
+package org.fenixedu.academic.dto.student.enrollment.bolonha;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
+import org.fenixedu.academic.domain.Enrolment;
 
 public class StudentCurriculumEnrolmentBean extends StudentCurriculumModuleBean {
 

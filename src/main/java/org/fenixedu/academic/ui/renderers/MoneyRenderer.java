@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers;
+package org.fenixedu.academic.ui.renderers;
 
 import java.text.DecimalFormat;
 
-import net.sourceforge.fenixedu.util.Money;
+import org.fenixedu.academic.util.Money;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;

@@ -19,26 +19,26 @@
 /**
  * Nov 24, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits;
+package org.fenixedu.academic.ui.struts.action.credits;
 
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteTeacherAdviseServiceByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherAdviseService;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.teacher.services.DeleteTeacherAdviseServiceByOID;
+import org.fenixedu.academic.service.services.teacher.services.EditTeacherAdviseService;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.Advise;
-import net.sourceforge.fenixedu.domain.teacher.Advise.AdvisePercentageException;
-import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.teacher.Advise;
+import org.fenixedu.academic.domain.teacher.Advise.AdvisePercentageException;
+import org.fenixedu.academic.domain.teacher.AdviseType;
+import org.fenixedu.academic.domain.teacher.TeacherAdviseService;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

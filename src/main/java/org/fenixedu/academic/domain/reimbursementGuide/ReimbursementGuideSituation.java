@@ -21,12 +21,11 @@
  *  
  */
 
-package net.sourceforge.fenixedu.domain.reimbursementGuide;
+package org.fenixedu.academic.domain.reimbursementGuide;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-
+import org.fenixedu.academic.domain.gratuity.ReimbursementGuideState;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**

@@ -20,12 +20,12 @@
  * Created on Dec 14, 2003 by jpvl
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro.student.tests;
+package org.fenixedu.academic.service.filter.student.tests;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
 import pt.ist.fenixframework.FenixFramework;
 
 /**

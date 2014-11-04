@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EvaluationType;
-
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 

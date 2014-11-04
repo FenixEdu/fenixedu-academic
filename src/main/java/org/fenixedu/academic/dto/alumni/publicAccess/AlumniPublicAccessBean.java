@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess;
+package org.fenixedu.academic.dto.alumni.publicAccess;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniAddressBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
-import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.Job;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.contacts.Phone;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.Alumni;
+import org.fenixedu.academic.domain.Job;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.contacts.Phone;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.dto.alumni.AlumniAddressBean;
+import org.fenixedu.academic.dto.alumni.AlumniJobBean;
 
 public class AlumniPublicAccessBean implements Serializable {
 

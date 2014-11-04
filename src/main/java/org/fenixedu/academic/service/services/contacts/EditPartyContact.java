@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.contacts;
+package org.fenixedu.academic.service.services.contacts;
 
-import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.WebAddress;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.WebAddress;
+import org.fenixedu.academic.dto.contacts.PartyContactBean;
+
 import pt.ist.fenixframework.Atomic;
 
 public class EditPartyContact {

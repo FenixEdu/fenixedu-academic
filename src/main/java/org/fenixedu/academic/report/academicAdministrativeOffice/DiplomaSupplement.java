@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
+package org.fenixedu.academic.report.academicAdministrativeOffice;
 
 import java.math.BigDecimal;
 import java.text.Collator;
@@ -31,32 +31,31 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
-import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity;
-import net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType;
-import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.StringFormatter;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.DegreeOfficialPublication;
+import org.fenixedu.academic.domain.DegreeSpecializationArea;
+import org.fenixedu.academic.domain.IEnrolment;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
+import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivity;
+import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType;
+import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
+import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

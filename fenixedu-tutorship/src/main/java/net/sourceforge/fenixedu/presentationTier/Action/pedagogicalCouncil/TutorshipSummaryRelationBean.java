@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil;
 
 import java.io.Serializable;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.TutorshipParticipationType;
-import net.sourceforge.fenixedu.domain.TutorshipSummary;
-import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.domain.TutorshipParticipationType;
+import org.fenixedu.academic.domain.TutorshipSummary;
+import org.fenixedu.academic.domain.TutorshipSummaryRelation;
 
 public class TutorshipSummaryRelationBean implements Serializable {
 

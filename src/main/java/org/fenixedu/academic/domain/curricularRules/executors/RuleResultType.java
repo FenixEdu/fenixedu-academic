@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.curricularRules.executors;
+package org.fenixedu.academic.domain.curricularRules.executors;
 
 public enum RuleResultType {
     FALSE(0), TRUE(1), NA(2), WARNING(3);

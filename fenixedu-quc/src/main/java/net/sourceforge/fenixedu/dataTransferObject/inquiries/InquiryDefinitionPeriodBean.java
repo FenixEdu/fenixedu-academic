@@ -16,19 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.inquiries.CurricularCourseInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryResponsePeriodType;
+import org.fenixedu.academic.domain.inquiries.InquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryTemplate;
+import org.fenixedu.academic.predicate.RolePredicates;
 
 import org.joda.time.DateTime;
 

@@ -20,21 +20,21 @@
  * Created on Oct 26, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation;
+package org.fenixedu.academic.ui.faces.bean.coordinator.evaluation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.DeleteWrittenEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.EditWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.WrittenTest;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.DegreeModuleScope;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.WrittenTest;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.resourceAllocationManager.exams.CreateWrittenEvaluation;
+import org.fenixedu.academic.service.services.resourceAllocationManager.exams.DeleteWrittenEvaluation;
+import org.fenixedu.academic.service.services.resourceAllocationManager.exams.EditWrittenEvaluation;
 
 public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWrittenTestsInformationBackingBean {
 

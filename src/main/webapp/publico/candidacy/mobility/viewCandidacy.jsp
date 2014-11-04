@@ -26,9 +26,9 @@
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <%@ page import="java.util.Locale"%>
 
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" %>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion" %>
 
 <%!
 	static String f(String value, Object ... args) {
@@ -59,13 +59,13 @@
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
-<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean"/>
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean"/>
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess" type="MobilityIndividualApplicationProcess"/>
 <bean:define id="processId" name="individualCandidacyProcess" property="externalId"/>
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -84,8 +84,8 @@
 				<strong>
 				The Erasmus web application allowed you to authenticate using your National citizen identification. 
 				By using such method you would be able to access all the information of your course (schedules, classes, etc.) 
-				before arriving to <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %> (in fact you would be receiving an email just now to inform on how to proceed), 
-				however you choose not to use it. <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> would like to know the reason for that choice, please choose one of the available reasons:
+				before arriving to <%= org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent() %> (in fact you would be receiving an email just now to inform on how to proceed), 
+				however you choose not to use it. <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%> would like to know the reason for that choice, please choose one of the available reasons:
 				</strong>
 			</p>
 			
@@ -93,7 +93,7 @@
 				<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 				
 				<fr:edit id="individualCandidacyProcessBean-question" name="individualCandidacyProcessBean">
-					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="CANDIDATE_RESOURCES">
+					<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="CANDIDATE_RESOURCES">
 						<fr:slot name="nationalIdCardAvoidanceQuestion" required="true" layout="radio-postback">
 							<fr:property name="excludedValues" value="UNANSWERED" />
 							<fr:property name="bundle" value="CANDIDATE_RESOURCES" />
@@ -114,7 +114,7 @@
 
 				<% if(NationalIdCardAvoidanceQuestion.OTHER_REASON.equals(individualCandidacyProcessBean.getNationalIdCardAvoidanceQuestion())) { %>
 				<fr:edit id="individualCandidacyProcessBean-otherReason" name="individualCandidacyProcessBean">
-					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="CANDIDATE_RESOURCES">
+					<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="CANDIDATE_RESOURCES">
 						<fr:slot name="idCardAvoidanceOtherReason" required="true" layout="longText" >
 							<fr:property name="columnClasses" value="somewidth,nopadding,tderror1" />
 							<fr:property name="columns" value="50" />
@@ -160,7 +160,7 @@
 	<p><span class="infoop2"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></span></p>
 	
 	<ul>
-		<li><b>Passport photo</b> - The photo will be used to generate <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> student card.</li>
+		<li><b>Passport photo</b> - The photo will be used to generate <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%> student card.</li>
 		<li><b>Passport or identity card</b></li>
 		<li><b>Learning agreement</b> - You're required to download, sign, stamp and reupload the document.</li>
 		<li><b>Curriculum vitae</b></li>
@@ -168,7 +168,7 @@
 		<li><b>Declaration of your english level</b></li>
 	</ul>
 			
-	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>
+	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>
 </logic:equal>
 
 <% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
@@ -373,7 +373,7 @@
 
 
 <div class="mtop2" id="contacts">
-	<bean:message key="erasmus.contacts.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
+	<bean:message key="erasmus.contacts.text" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 

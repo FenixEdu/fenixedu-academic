@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.phd;
+package org.fenixedu.academic.dto.phd;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.IFormation;
-import net.sourceforge.fenixedu.util.Month;
-
+import org.fenixedu.academic.dto.alumni.formation.IFormation;
+import org.fenixedu.academic.util.Month;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;

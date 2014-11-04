@@ -16,31 +16,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
+package org.fenixedu.academic.ui.struts.action.manager.personManagement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewInvitedPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewPersonInvitation;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteInvitation;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditInvitationHostUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditInvitationResponsible;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPersonManagementApp;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.manager.CreateNewInvitedPerson;
+import org.fenixedu.academic.service.services.manager.CreateNewPersonInvitation;
+import org.fenixedu.academic.service.services.manager.DeleteInvitation;
+import org.fenixedu.academic.service.services.manager.EditInvitationHostUnit;
+import org.fenixedu.academic.service.services.manager.EditInvitationResponsible;
+import org.fenixedu.academic.service.services.person.SearchPerson;
+import org.fenixedu.academic.service.services.person.SearchPerson.SearchParameters;
+import org.fenixedu.academic.service.services.person.SearchPerson.SearchPersonPredicate;
+import org.fenixedu.academic.dto.person.InvitedPersonBean;
+import org.fenixedu.academic.dto.person.PersonBean;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Invitation;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerPersonManagementApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;

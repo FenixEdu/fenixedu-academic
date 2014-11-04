@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.util.email;
+package org.fenixedu.academic.domain.util.email;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.Person;
-
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class ReplyTo extends ReplyTo_Base {

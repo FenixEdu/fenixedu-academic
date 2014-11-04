@@ -29,10 +29,10 @@
 
 <table class="tstyle4 thlight">
 	<tr>
-		<th><bean:message key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.number" /></th>
-		<th><bean:message key="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" /></th>
-		<th><bean:message key="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.executionDegree.executionYear.year" /></th>
-		<th><bean:message key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.activeCandidacySituation.candidacySituationType" /></th>
+		<th><bean:message key="org.fenixedu.academic.domain.candidacy.Candidacy.number" /></th>
+		<th><bean:message key="org.fenixedu.academic.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" /></th>
+		<th><bean:message key="org.fenixedu.academic.domain.candidacy.StudentCandidacy.executionDegree.executionYear.year" /></th>
+		<th><bean:message key="org.fenixedu.academic.domain.candidacy.Candidacy.activeCandidacySituation.candidacySituationType" /></th>
 		<th></th>
 	</tr>
 	
@@ -53,17 +53,17 @@
 			<bean:message name="candidacy" property="activeCandidacySituation.candidacySituationType.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
 		</td>
 		<td>
-			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy">
+			<logic:equal name="candidacy" property="class.name" value="org.fenixedu.academic.domain.candidacy.DegreeCandidacy">
 				<html:link action="<%="/degreeCandidacyManagement.do?method=showCandidacyDetails&amp;candidacyID=" + externalId%>">
 					<bean:message key="link.viewCandidacyDetails"/>
 				</html:link>
 			</logic:equal>
-			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy">
+			<logic:equal name="candidacy" property="class.name" value="org.fenixedu.academic.domain.candidacy.IMDCandidacy">
 				<html:link action="<%="/degreeCandidacyManagement.do?method=showCandidacyDetails&amp;candidacyID=" + externalId%>">
 					<bean:message key="link.viewCandidacyDetails"/>
 				</html:link>
 			</logic:equal>
-			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.DFACandidacy">
+			<logic:equal name="candidacy" property="class.name" value="org.fenixedu.academic.domain.candidacy.DFACandidacy">
 				<html:link action="<%="/viewCandidacies.do?method=viewDetail&amp;candidacyID=" + externalId%>">
 					<bean:message key="link.viewCandidacyDetails"/>
 				</html:link>

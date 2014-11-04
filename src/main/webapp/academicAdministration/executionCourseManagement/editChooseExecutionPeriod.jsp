@@ -29,10 +29,10 @@
 
 <fr:form action="/editExecutionCourseChooseExPeriod.do?method=secondPrepareEditExecutionCourse">
 	<fr:edit id="sessionBeanJSP" name="sessionBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
 			<fr:slot name="executionSemester" layout="menu-select" key="label.manager.executionCourseManagement.executionPeriod" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 		</fr:schema>

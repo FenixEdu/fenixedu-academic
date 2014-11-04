@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.executionCourse.ExecutionCourseSearchBean;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.InquiryResultType;
 
 public class ExecutionCourseQucAuditSearchBean extends ExecutionCourseSearchBean {
 

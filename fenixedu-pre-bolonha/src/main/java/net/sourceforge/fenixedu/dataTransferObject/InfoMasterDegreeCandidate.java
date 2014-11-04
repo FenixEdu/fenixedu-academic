@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.domain.MasterDegreeCandidate;
+import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
 
 /*
  * InfoMasterDegreeCandidate.java

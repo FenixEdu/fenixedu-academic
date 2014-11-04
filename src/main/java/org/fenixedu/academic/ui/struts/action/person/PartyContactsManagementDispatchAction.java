@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.person;
+package org.fenixedu.academic.ui.struts.action.person;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -24,34 +24,33 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact;
-import net.sourceforge.fenixedu.applicationTier.Servico.contacts.DeletePartyContact;
-import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressValidationBean;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonInformationLog;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PersonInformationLog;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.contacts.PartyContactValidation;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.WebAddress;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.dto.contacts.EmailAddressBean;
+import org.fenixedu.academic.dto.contacts.MobilePhoneBean;
+import org.fenixedu.academic.dto.contacts.PartyContactBean;
+import org.fenixedu.academic.dto.contacts.PhoneBean;
+import org.fenixedu.academic.dto.contacts.PhysicalAddressBean;
+import org.fenixedu.academic.dto.contacts.PhysicalAddressValidationBean;
+import org.fenixedu.academic.dto.contacts.WebAddressBean;
+import org.fenixedu.academic.dto.person.PersonBean;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.services.contacts.CreatePartyContact;
+import org.fenixedu.academic.service.services.contacts.DeletePartyContact;
+import org.fenixedu.academic.service.services.contacts.EditPartyContact;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

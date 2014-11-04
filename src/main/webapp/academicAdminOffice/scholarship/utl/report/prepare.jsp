@@ -30,11 +30,11 @@
 	<fr:edit id="bean" name="bean" visible="false" />
 	
 	<fr:edit id="bean-selection-year" name="bean" >
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidatesBean" 
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidatesBean" 
 			bundle="ACADEMIC_OFFICE_RESOURCES">
 			
 			<fr:slot name="executionYear" required="true" layout="menu-select" >
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
 				<fr:property name="format" value="${year}" />
 				<fr:property name="sortBy" value="year=desc" />
 			</fr:slot>

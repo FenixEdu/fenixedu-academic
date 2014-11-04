@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 public class PhdDA extends FenixDispatchAction {
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
+package org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,13 +25,13 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import org.fenixedu.academic.service.filter.CoordinatorAuthorizationFilter;
+import org.fenixedu.academic.service.filter.ManagerAuthorizationFilter;
+import org.fenixedu.academic.service.filter.MasterDegreeAdministrativeOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;

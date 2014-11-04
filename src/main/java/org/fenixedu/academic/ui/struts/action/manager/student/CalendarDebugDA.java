@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.student;
+package org.fenixedu.academic.ui.struts.action.manager.student;
 
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
-import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
-
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
+import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerStudentsApp;
+import org.fenixedu.academic.ui.struts.action.student.ICalStudentTimeTable;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

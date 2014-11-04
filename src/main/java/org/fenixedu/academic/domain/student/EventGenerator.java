@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student;
+package org.fenixedu.academic.domain.student;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
-import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
+import org.fenixedu.academic.domain.accounting.events.dfa.DfaRegistrationEvent;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 
 public class EventGenerator {
 

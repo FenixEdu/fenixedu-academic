@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity;
+package org.fenixedu.academic.service.services.accounting.gratuity;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption;
+import org.fenixedu.academic.dto.accounting.gratuityExemption.CreateGratuityExemptionBean;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateGratuityExemption {

@@ -27,7 +27,7 @@
 
 <h2><bean:message key="label.vigilancy.addIncompatibilityToVigilant.title" bundle="VIGILANCY_RESOURCES"/></h2>
 
-<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>
+<bean:define id="bean" name="bean" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean"/>
 
 <ul>
 	<li>
@@ -60,7 +60,7 @@ action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompati
 		<p class="mtop05"><em><bean:message key="label.vigilancy.noIncompatiblePerson" bundle="VIGILANCY_RESOURCES"/></em></p>
 	</logic:empty>  
 
-	<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>
+	<bean:define id="bean" name="bean" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean"/>
 	<fr:view 
 		name="bean"
 		property="vigilants"

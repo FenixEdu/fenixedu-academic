@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib;
+package org.fenixedu.academic.servlet.taglib;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -27,9 +27,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
-
 import org.apache.struts.taglib.TagUtils;
+import org.fenixedu.academic.ui.struts.StrutsMessageResourceProvider;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 

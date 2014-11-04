@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accessControl;
+package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType.Scope;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType.Scope;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.bennu.core.groups.Group;
 
 import com.google.common.collect.Sets;

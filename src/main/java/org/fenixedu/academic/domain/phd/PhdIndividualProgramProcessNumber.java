@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd;
+package org.fenixedu.academic.domain.phd;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProcessNumber_Base implements

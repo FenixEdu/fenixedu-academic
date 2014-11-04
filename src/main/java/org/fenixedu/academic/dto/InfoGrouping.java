@@ -20,14 +20,14 @@
  * Created on 22/Jul/2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo

@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.phd;
+package org.fenixedu.academic.servlet.taglib;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
-
 import org.apache.struts.taglib.logic.ConditionalTagBase;
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.caseHandling.Process;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class ActivityAvailableTag extends ConditionalTagBase {

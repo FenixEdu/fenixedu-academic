@@ -20,9 +20,9 @@
  * Created on 19/Jul/2004 by Tânia Pousão
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro;
+package org.fenixedu.academic.service.filter;
 
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import org.fenixedu.academic.domain.person.RoleType;
 
 /**
  * @author Tânia Pousão

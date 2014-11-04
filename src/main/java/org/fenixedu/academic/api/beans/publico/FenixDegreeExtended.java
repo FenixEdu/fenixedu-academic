@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
+package org.fenixedu.academic.api.beans.publico;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
+import org.fenixedu.academic.domain.Degree;
 
 public class FenixDegreeExtended extends FenixDegree {
 

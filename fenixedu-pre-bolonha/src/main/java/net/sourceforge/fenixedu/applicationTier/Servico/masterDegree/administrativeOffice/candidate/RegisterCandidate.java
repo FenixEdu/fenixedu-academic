@@ -16,43 +16,43 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
+package org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.CandidateEnrolment;
-import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.GratuityValues;
-import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.State;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidChangeServiceException;
+import org.fenixedu.academic.service.services.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
+import org.fenixedu.academic.dto.InfoCandidateRegistration;
+import org.fenixedu.academic.dto.InfoEnrolment;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidateWithInfoPerson;
+import org.fenixedu.academic.dto.InfoStudentCurricularPlan;
+import org.fenixedu.academic.domain.Branch;
+import org.fenixedu.academic.domain.CandidateEnrolment;
+import org.fenixedu.academic.domain.CandidateSituation;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.GratuitySituation;
+import org.fenixedu.academic.domain.GratuityValues;
+import org.fenixedu.academic.domain.MasterDegreeCandidate;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Qualification;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.SituationName;
+import org.fenixedu.academic.util.State;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;

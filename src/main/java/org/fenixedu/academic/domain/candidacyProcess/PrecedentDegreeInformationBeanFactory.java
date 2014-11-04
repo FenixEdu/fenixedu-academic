@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess;
+package org.fenixedu.academic.domain.candidacyProcess;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
-import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
+import org.fenixedu.academic.domain.student.curriculum.AverageType;
+import org.fenixedu.academic.domain.student.curriculum.Curriculum;
+import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 

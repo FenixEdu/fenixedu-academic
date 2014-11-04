@@ -34,9 +34,9 @@
 		<fr:edit id="importation.bean" name="importationBean" visible="false" />
 		
 		<fr:edit id="importation.bean.edit" name="importationBean">
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.student.importation.DgesStudentImportationProcessDA$DgesBaseProcessBean">
+			<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.student.importation.DgesStudentImportationProcessDA$DgesBaseProcessBean">
 				<fr:slot name="executionYear" layout="menu-select" key="label.dges.importation.process.execution.year" required="true" >
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
 					<fr:property name="format" value="${name}" />
 					<fr:property name="sortBy" value="name=desc"/>
 				</fr:slot>
@@ -54,7 +54,7 @@
 		
 	<logic:notEmpty name="importationJobsDone" >
 		<fr:view name="importationJobsDone" >
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess">
+			<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.student.importation.DgesStudentImportationProcess">
 				<fr:slot name="filename" key="label.dges.importation.process.filename" />
 				<fr:slot name="requestDate" key="label.dges.importation.process.request.date" />
 				<fr:slot name="jobStartTime" key="label.dges.importation.process.start.time" />
@@ -79,7 +79,7 @@
 	
 	<logic:notEmpty name="importationJobsPending">
 		<fr:view name="importationJobsPending" >
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess">
+			<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.student.importation.DgesStudentImportationProcess">
 				<fr:slot name="requestDate" key="label.dges.importation.process.request.date" />
 				<fr:slot name="jobStartTime" key="label.dges.importation.process.start.time" />
 				<fr:slot name="jobEndTime" key="label.dges.importation.process.end.time" />
@@ -117,7 +117,7 @@
 		
 	<logic:notEmpty name="exportationPasswordsDone" >
 		<fr:view name="exportationPasswordsDone" >
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration">
+			<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration">
 				<fr:slot name="filename" key="label.dges.exportation.degree.candidacies.for.passwords.filename" />
 				<fr:slot name="requestDate" key="label.exportation.degree.candidacies.for.passwords.request.date" />
 				<fr:slot name="jobStartTime" key="label.exportation.degree.candidacies.for.passwords.start.time" />
@@ -141,7 +141,7 @@
 	
 	<logic:notEmpty name="exportationPasswordsPending">
 		<fr:view name="exportationPasswordsPending" >
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration">
+			<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration">
 				<fr:slot name="requestDate" key="label.dges.exportation.degree.candidacies.for.passwords.request.date" />
 				<fr:slot name="jobStartTime" key="label.dges.exportation.degree.candidacies.for.passwords.start.time" />
 				<fr:slot name="jobEndTime" key="label.dges.exportation.degree.candidacies.for.passwords.end.time" />

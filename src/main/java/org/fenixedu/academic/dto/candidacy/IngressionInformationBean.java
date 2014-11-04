@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.candidacy;
+package org.fenixedu.academic.dto.candidacy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.EntryPhase;
-import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-
+import org.fenixedu.academic.domain.EntryPhase;
+import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.joda.time.YearMonthDay;
 
 /**

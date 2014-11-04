@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico;
+package org.fenixedu.academic.ui.struts.action.publico;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,29 +26,28 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
-import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.spaces.FindSpacesDA;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.PeriodState;
-
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.dto.InfoExecutionPeriod;
+import org.fenixedu.academic.dto.InfoSiteRoomTimeTable;
+import org.fenixedu.academic.dto.RoomKey;
+import org.fenixedu.academic.service.Factory.RoomSiteComponentBuilder;
+import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
+import org.fenixedu.academic.service.services.commons.ReadExecutionPeriodByOID;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.ui.struts.action.base.FenixContextDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.NonExistingActionException;
+import org.fenixedu.academic.ui.struts.action.publico.spaces.FindSpacesDA;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

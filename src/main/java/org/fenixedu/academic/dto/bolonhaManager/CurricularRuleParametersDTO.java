@@ -19,11 +19,11 @@
 /*
  * Created on Feb 6, 2006
  */
-package net.sourceforge.fenixedu.dataTransferObject.bolonhaManager;
+package org.fenixedu.academic.dto.bolonhaManager;
 
-import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
+import org.fenixedu.academic.dto.DataTranferObject;
 
 public class CurricularRuleParametersDTO extends DataTranferObject {
 

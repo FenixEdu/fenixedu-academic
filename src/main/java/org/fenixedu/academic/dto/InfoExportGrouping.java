@@ -19,9 +19,9 @@
 /*
  * Created on 17/Ago/2004
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.ExportGrouping;
+import org.fenixedu.academic.domain.ExportGrouping;
 
 /**
  * @author joaosa & rmalo
@@ -108,7 +108,7 @@ public class InfoExportGrouping extends InfoObject {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * org.fenixedu.academic.dto.InfoObject#copyFromDomain
      * (Dominio.DomainObject)
      */
     public void copyFromDomain(ExportGrouping groupingExecutionCourse) {

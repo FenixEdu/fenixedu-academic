@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus;
+package org.fenixedu.academic.ui.struts.action.internationalRelatOffice.candidacy.erasmus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,34 +28,33 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.InternationalRelationsApplication.InternRelationsMobilityApp;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.SendReceptionEmailBean;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityCoordinator;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplate;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateBean;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityQuota;
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.internationalRelatOffice.InternationalRelationsApplication.InternRelationsMobilityApp;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -90,7 +89,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "manageEmailTemplates", path = "/candidacy/erasmus/emailTemplates/manageEmailTemplates.jsp"),
         @Forward(name = "previewEmailTemplate", path = "/candidacy/erasmus/emailTemplates/previewEmailTemplate.jsp") })
 public class ErasmusCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

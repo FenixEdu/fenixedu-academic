@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.events;
+package org.fenixedu.academic.ui.renderers.providers.accounting.events;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean;
+import org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

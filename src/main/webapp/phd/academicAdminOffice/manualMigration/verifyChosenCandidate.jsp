@@ -73,7 +73,7 @@
 	</fr:view>
 
 	<fr:view name="chosenCandidate">
-		<fr:schema bundle="PHD_RESOURCES" type="<%= net.sourceforge.fenixedu.domain.Person.class.getName() %>">
+		<fr:schema bundle="PHD_RESOURCES" type="<%= org.fenixedu.academic.domain.Person.class.getName() %>">
 			<fr:slot name="name">
 				<fr:property name="classes" value="bold nowrap"/>
 			</fr:slot>

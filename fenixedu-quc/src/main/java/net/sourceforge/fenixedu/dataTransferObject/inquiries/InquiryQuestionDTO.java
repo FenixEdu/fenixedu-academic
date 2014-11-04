@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.inquiries.InquiryAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCheckBoxQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTextBoxQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
+import org.fenixedu.academic.domain.inquiries.InquiryAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryCheckBoxQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryTextBoxQuestion;
+import org.fenixedu.academic.domain.inquiries.QuestionAnswer;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryRegistry;
 
 public class InquiryQuestionDTO implements Serializable {
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.degreeStructure;
+package org.fenixedu.academic.domain.degreeStructure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +28,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

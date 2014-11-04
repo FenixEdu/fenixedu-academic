@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
+import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

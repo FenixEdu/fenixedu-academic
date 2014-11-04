@@ -19,7 +19,7 @@
 /*
  * Created on Jan 10, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package org.fenixedu.academic.ui.struts.action.teacher;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,20 +32,19 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.commons.StringNormalizer;

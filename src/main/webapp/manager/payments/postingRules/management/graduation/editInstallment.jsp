@@ -47,12 +47,12 @@
 	
 	<fr:edit id="installmentBean-edit" name="installmentBean">
 		<fr:schema
-			type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean"
+			type="org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean"
 			bundle="APPLICATION_RESOURCES">
 			<fr:slot name="amount" />
 			<fr:slot name="ectsForAmount" />
 			<fr:slot name="executionSemesters" layout="option-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.paymentPlans.ExecutionSemestersForInstallmentCreationProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.accounting.paymentPlans.ExecutionSemestersForInstallmentCreationProvider" />
 				<fr:property name="format" value="${name}" />
 		        <fr:property name="saveOptions" value="true" />        
 				<fr:property name="eachSchema" value="ExecutionSemester.view.name.only"/>

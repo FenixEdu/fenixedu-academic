@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.converters;
+package org.fenixedu.academic.ui.renderers.converters;
 
-import net.sourceforge.fenixedu.domain.Teacher;
+import org.fenixedu.academic.domain.Teacher;
+
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 import com.google.common.base.Strings;

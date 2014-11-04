@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans;
+package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,13 +24,12 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateBranchCourseGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.degreeStructure.BranchType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.bolonhaManager.CreateBranchCourseGroup;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

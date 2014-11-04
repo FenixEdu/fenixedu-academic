@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
+package org.fenixedu.academic.ui.struts.action.credits.departmentAdmOffice;
 
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
-import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherInstitutionWorkingTimeDispatchAction;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.teacher.InstitutionWorkTime;
+import org.fenixedu.academic.ui.struts.action.credits.ManageTeacherInstitutionWorkingTimeDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -45,8 +45,8 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(module = "departmentAdmOffice", path = "/institutionWorkingTimeManagement",
         input = "/institutionWorkingTimeManagement.do?method=prepareEdit&page=0", formBean = "teacherInstitutionWorkingTimeForm",
         scope = "request", parameter = "method", functionality = DepartmentAdmOfficeViewTeacherCreditsDA.class)
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
+@Exceptions(value = { @ExceptionHandling(type = org.fenixedu.academic.domain.exceptions.DomainException.class,
+        handler = org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchAction extends
         ManageTeacherInstitutionWorkingTimeDispatchAction {
     @Override

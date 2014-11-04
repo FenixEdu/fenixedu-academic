@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.serviceRequests;
+package org.fenixedu.academic.domain.serviceRequests;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.joda.time.LocalDate;
 
 public interface IRegistryDiplomaRequest extends IDocumentRequest {

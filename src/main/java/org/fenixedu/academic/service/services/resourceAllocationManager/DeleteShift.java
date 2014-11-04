@@ -21,13 +21,15 @@
  * Created on 2003/08/15
  */
 
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import static org.fenixedu.academic.predicate.AccessControl.check;
+
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.thesis;
+package org.fenixedu.academic.domain.thesis;
 
 public enum ThesisParticipationType {
     STATE_CREATOR(true), STATE_SUBMITTER(true), STATE_PROPOSAL_APPROVER(true), STATE_CONFIRMER(true), STATE_EVALUATION_APPROVER(

@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.reports;
+package org.fenixedu.academic.domain.reports;
 
-import net.sourceforge.fenixedu.domain.CourseLoad;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.Teacher;
-
+import org.fenixedu.academic.domain.CourseLoad;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.LessonInstance;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 

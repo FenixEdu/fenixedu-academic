@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.operator;
+package org.fenixedu.academic.ui.struts.action.operator;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,21 +24,20 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PhotoType;
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ContentType;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PhotoType;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.person.PhotographUploadBean;
+import org.fenixedu.academic.dto.person.PhotographUploadBean.UnableToProcessTheImage;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

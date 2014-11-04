@@ -20,7 +20,7 @@
  * Created on 14/Out/2003
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,10 +31,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.date.IntervalTools;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.CalendarUtil;
+import org.fenixedu.academic.util.date.IntervalTools;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;

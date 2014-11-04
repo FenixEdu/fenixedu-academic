@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.accounting;
+package org.fenixedu.academic.report.accounting;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accounting.Entry;
-import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-
+import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.domain.accounting.Receipt;
+import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 

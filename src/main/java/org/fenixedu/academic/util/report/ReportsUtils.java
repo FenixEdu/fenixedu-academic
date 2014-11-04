@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.report;
+package org.fenixedu.academic.util.report;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.fenixedu.util.report.ReportPrinter.ReportDescription;
+import org.fenixedu.academic.util.report.ReportPrinter.ReportDescription;
+
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class ReportsUtils {

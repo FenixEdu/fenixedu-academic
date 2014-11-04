@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>

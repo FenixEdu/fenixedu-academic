@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.person;
+package org.fenixedu.academic.ui.struts.action.person;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PersonFileSourceGroupBean implements PersonFileSource {

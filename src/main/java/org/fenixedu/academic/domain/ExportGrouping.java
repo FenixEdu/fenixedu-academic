@@ -19,7 +19,7 @@
 /*
  * Created on 17/Ago/2004
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

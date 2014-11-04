@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.nape.candidacy.degreeTransfer;
+package org.fenixedu.academic.ui.struts.action.nape.candidacy.degreeTransfer;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
-import net.sourceforge.fenixedu.presentationTier.Action.nape.NapeApplication.NapeCandidaciesApp;
-
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA;
+import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
+import org.fenixedu.academic.ui.struts.action.nape.NapeApplication.NapeCandidaciesApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -37,7 +36,7 @@ import pt.ist.fenixframework.FenixFramework;
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/scientificCouncil/candidacy/mainCandidacyProcess.jsp") })
 public class DegreeTransferCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeTransfer.DegreeTransferCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.degreeTransfer.DegreeTransferCandidacyProcessDA {
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
         final String degreeCurricularPlanOID = DegreeCoordinatorIndex.findDegreeCurricularPlanID(request);

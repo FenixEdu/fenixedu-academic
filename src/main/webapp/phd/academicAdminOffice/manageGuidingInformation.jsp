@@ -147,7 +147,7 @@ function toggle(obj) {
 		<%-- ### detailed view ### --%>
 		<div id="<%= divId + "2" %>" style="display:none;">
 			<fr:view name="guiding">
-				<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipant"  bundle="PHD_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.phd.PhdParticipant"  bundle="PHD_RESOURCES">
 					<fr:slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle">
 						<fr:property name="classes" value="bold nowrap"/>
 					</fr:slot>

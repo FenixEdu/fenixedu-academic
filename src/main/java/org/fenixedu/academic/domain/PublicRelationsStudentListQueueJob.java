@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport.StudentReportPredicate;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.service.services.student.reports.GenerateStudentReport;
+import org.fenixedu.academic.service.services.student.reports.GenerateStudentReport.StudentReportPredicate;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;

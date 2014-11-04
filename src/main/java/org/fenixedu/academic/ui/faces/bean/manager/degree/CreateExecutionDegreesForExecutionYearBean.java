@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree;
+package org.fenixedu.academic.ui.faces.bean.manager.degree;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,19 +27,18 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionDegreesForExecutionYear;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.Data;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.manager.CreateExecutionDegreesForExecutionYear;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Data;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 

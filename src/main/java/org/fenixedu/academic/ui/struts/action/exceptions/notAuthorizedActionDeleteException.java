@@ -21,7 +21,7 @@
  *
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
+package org.fenixedu.academic.ui.struts.action.exceptions;
 
 /**
  * @author João Mota

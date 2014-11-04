@@ -20,12 +20,10 @@
  * Created on 13/Mar/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.validator.form;
+package org.fenixedu.academic.ui.struts.validator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-
-import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
@@ -33,6 +31,7 @@ import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.util.ValidatorUtils;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.Resources;
+import org.fenixedu.academic.util.Data;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

@@ -19,18 +19,18 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.IDDocumentType" %>
+<%@page import="org.fenixedu.academic.domain.candidacy.util.GenericApplicationRecommendationBean"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.GenericApplicationRecomentation"%>
+<%@page import="org.fenixedu.academic.domain.person.IDDocumentType" %>
 <%@page import="org.apache.struts.action.ActionMessages"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.GenericApplicationFile"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.GenericApplication"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod"%>
+<%@page import="org.fenixedu.academic.domain.period.GenericApplicationPeriod"%>
 <%@page import="java.util.SortedSet"%>
 
 <html:xhtml/>
@@ -327,7 +327,7 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormName" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 								<fr:property name="size" value="50"/>
 							</fr:slot>
@@ -369,7 +369,7 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGender" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 						</fr:schema>
 						<fr:layout name="flow">
@@ -392,7 +392,7 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormDateOfBirth" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="dateOfBirthYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
@@ -426,10 +426,10 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderIdNumber" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+								<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 									<fr:property name="type" value="character"/>
 									<fr:property name="length" value="50"/>
 								</fr:validator>
@@ -444,7 +444,7 @@
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
 					<fr:edit id="genericApplicationFormGenderIdDocType" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 						</fr:schema>
 						<fr:layout name="flow">
@@ -470,10 +470,10 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderNationality" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 									layout="menu-select">
-								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+								<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/>
 								<fr:property name="format" value="${localizedName}" />
 								<fr:property name="sortBy" value="localizedName"/>
 							</fr:slot>
@@ -498,9 +498,9 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderFiscalCode" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="fiscalCode">
-								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+								<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 									<fr:property name="type" value="character"/>
 									<fr:property name="length" value="50"/>
 								</fr:validator>			 	
@@ -532,9 +532,9 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderAddress" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="longText">
-								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+								<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 									<fr:property name="type" value="character"/>
 									<fr:property name="length" value="100"/>
 								</fr:validator>			 	
@@ -566,9 +566,9 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderAreaCode" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+								<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 									<fr:property name="type" value="character"/>
 									<fr:property name="length" value="20"/>
 								</fr:validator>			 	
@@ -583,9 +583,9 @@
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
 					<fr:edit id="genericApplicationFormGenderArea" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+								<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 									<fr:property name="type" value="character"/>
 									<fr:property name="length" value="50"/>
 								</fr:validator>			 	
@@ -618,7 +618,7 @@
 			<td>
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderPhone" name="application">
-						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
+						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="telephoneContact" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             						<fr:property name="regexp" value="(\+?\d{4,15})?"/>
@@ -742,7 +742,7 @@
 		<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
 
 		<fr:edit id="genericApplicationDocumentUploadFormFile" name="uploadBean">
-			<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
+			<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.candidacy.util.GenericApplicationUploadBean">
 				<fr:slot name="displayName" key="label.description" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50" />
 					<fr:property name="maxLength" value="50" />
@@ -906,7 +906,7 @@
 		<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
 
 		<fr:edit id="recommendationBean" name="recommendationBean">
-			<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
+			<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.candidacy.util.GenericApplicationUploadBean">
 				<fr:slot name="title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="10"/>
 				</fr:slot>

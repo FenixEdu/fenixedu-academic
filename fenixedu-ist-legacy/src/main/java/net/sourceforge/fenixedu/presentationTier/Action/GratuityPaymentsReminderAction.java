@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import java.util.Collection;
 import java.util.Set;
@@ -24,16 +24,16 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.Money;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentPlan;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
+import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.paymentCodes.InstallmentPaymentCode;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Money;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

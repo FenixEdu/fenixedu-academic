@@ -20,9 +20,9 @@
  * Created on 22/Dez/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.personnelSection;
+package org.fenixedu.academic.ui.struts.action.personnelSection;
 
-import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.FindPersonAction;
+import org.fenixedu.academic.ui.struts.action.manager.personManagement.FindPersonAction;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

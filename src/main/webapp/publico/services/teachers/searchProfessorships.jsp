@@ -35,7 +35,7 @@
 				<p>
 					Ano Lectivo: 		
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId" onchange="this.form.submit()">
-						<logic:iterate id="executionYear" name="executionYears" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear"> 
+						<logic:iterate id="executionYear" name="executionYears" type="org.fenixedu.academic.dto.InfoExecutionYear"> 
 							<bean:define    id="executionYearId"   name="executionYear" property="externalId"/>
 								<html:option value="<%= executionYearId.toString() %>">  
 									<bean:write name="executionYear" property="year"/>

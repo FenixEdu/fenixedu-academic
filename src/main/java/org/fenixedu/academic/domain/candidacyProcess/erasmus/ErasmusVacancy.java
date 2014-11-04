@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityStudentData;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;

@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
+package org.fenixedu.academic.ui.struts.action.coordinator.thesis;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.thesis.Thesis;
+
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public enum ThesisPresentationState {

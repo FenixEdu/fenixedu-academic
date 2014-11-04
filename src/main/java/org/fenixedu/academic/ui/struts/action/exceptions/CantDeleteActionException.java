@@ -19,7 +19,7 @@
 /*
  * Created on 19/Mai/2003
  */
-package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
+package org.fenixedu.academic.ui.struts.action.exceptions;
 
 /**
  * @author lmac1

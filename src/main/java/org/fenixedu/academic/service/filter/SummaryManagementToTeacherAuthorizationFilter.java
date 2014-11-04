@@ -19,13 +19,12 @@
 /*
  * Created on 19/Mai/2003
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro;
+package org.fenixedu.academic.service.filter;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 

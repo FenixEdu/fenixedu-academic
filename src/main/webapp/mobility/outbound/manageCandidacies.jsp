@@ -19,23 +19,23 @@
 
 --%>
 <%@ page language="java"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.CandidacyGroupContestState.CandidacyGroupContestStateStage"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.CandidacyGroupContestState"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.CandidacyGroupContestState.CandidacyGroupContestStateStage"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.CandidacyGroupContestState"%>
 <%@page import="java.math.BigDecimal"%>
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
-<%@page import="net.sourceforge.fenixedu.domain.Grade"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
-<%@page import="net.sourceforge.fenixedu.domain.Country"%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Registration"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
-<%@page import="net.sourceforge.fenixedu.domain.Person"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.domain.Grade"%>
+<%@page import="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
+<%@page import="org.fenixedu.academic.domain.Country"%>
+<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacy"%>
+<%@page import="org.fenixedu.academic.domain.student.Registration"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
+<%@page import="org.fenixedu.academic.domain.Person"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -43,7 +43,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 <html:xhtml />
 
-<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean"/>
+<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean"/>
 
 <%
 	final OutboundMobilityCandidacyContestGroup mobilityGroup = outboundMobilityContextBean.getMobilityGroups().iterator().next();
@@ -284,7 +284,7 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.upload.candidate.classification.instructions"/>
 	</div>
 	<fr:edit id="uploadClassification" name="outboundMobilityContextBean" action="/outboundMobilityCandidacy.do?method=uploadClassifications">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="stream" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.stream"
 					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     			<fr:property name="fileNameSlot" value="fileName"/>

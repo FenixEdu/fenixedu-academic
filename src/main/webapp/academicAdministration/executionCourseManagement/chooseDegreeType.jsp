@@ -52,7 +52,7 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="message.degreeType" />:
 			</td>
 			<td>
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
+				<e:labelValues id="values" enumeration="org.fenixedu.academic.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" size="1">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>

@@ -93,7 +93,7 @@
 		</logic:greaterThan>
 
 		<fr:view name="enrolmentList">
-			<fr:schema type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="studentCurricularPlan.registration.number" key="label.number" readOnly="true" layout="link">
 					<fr:property name="linkFormat"
 						value="/academicAdministration/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${studentCurricularPlan.registration.externalId}" />

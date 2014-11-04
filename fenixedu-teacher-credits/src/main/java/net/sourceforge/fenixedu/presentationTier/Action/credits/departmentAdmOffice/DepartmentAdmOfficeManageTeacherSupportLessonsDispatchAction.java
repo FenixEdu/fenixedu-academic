@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
+package org.fenixedu.academic.ui.struts.action.credits.departmentAdmOffice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.SupportLesson;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.ui.struts.action.credits.ManageTeacherSupportLessonsDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -58,11 +58,11 @@ import pt.ist.fenixframework.FenixFramework;
 @Exceptions(
         value = {
                 @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction.InvalidPeriodException.class,
+                        type = org.fenixedu.academic.ui.struts.action.credits.ManageTeacherSupportLessonsDispatchAction.InvalidPeriodException.class,
                         key = "message.invalidPeriod", handler = org.apache.struts.action.ExceptionHandler.class,
                         path = "/supportLessonsManagement.do?method=prepareEdit&page=0", scope = "request"),
-                @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class,
+                @ExceptionHandling(type = org.fenixedu.academic.domain.exceptions.DomainException.class,
+                        handler = org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler.class,
                         scope = "request") })
 public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extends ManageTeacherSupportLessonsDispatchAction {
 

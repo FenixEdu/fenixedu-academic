@@ -16,16 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission;
+package org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.MarkSheetType;
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.domain.MarkSheet;
+import org.fenixedu.academic.domain.MarkSheetType;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {

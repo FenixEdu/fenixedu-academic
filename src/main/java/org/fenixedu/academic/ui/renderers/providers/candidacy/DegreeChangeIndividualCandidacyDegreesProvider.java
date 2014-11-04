@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy;
+package org.fenixedu.academic.ui.renderers.providers.candidacy;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.ChooseDegreeBean;
-
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import org.fenixedu.academic.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.ChooseDegreeBean;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.time.calendarStructure;
+package org.fenixedu.academic.domain.time.calendarStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,16 +25,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeFieldType;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.DayType;
-import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
-
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
+import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
+import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeFieldType;
+import org.fenixedu.academic.dto.GenericPair;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DayType;
+import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

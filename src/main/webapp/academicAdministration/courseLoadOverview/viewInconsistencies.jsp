@@ -32,9 +32,9 @@
 
 <fr:form action="/courseLoadOverview.do?method=viewInconsistencies">
 	<fr:edit id="courseLoadOverviewBean" name="courseLoadOverviewBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.CourseLoadOverviewBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.CourseLoadOverviewBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="executionSemester" layout="menu-select-postback" key="label.semester" bundle="ACADEMIC_OFFICE_RESOURCES">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ExecutionSemesterProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.ExecutionSemesterProvider" />
 					<fr:property name="destination" value="viewInconsistencies" />
 					<fr:property name="format" value="${name} - ${executionYear.name}" />
 				</fr:slot>

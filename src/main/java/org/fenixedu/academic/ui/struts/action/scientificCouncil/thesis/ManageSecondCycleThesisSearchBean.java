@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -27,19 +27,18 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
+import org.fenixedu.academic.service.services.person.SearchPerson;
+import org.fenixedu.academic.service.services.person.SearchPerson.SearchParameters;
+import org.fenixedu.academic.service.services.person.SearchPerson.SearchPersonPredicate;
+import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 

@@ -26,9 +26,9 @@
 <!DOCTYPE renderers-config SYSTEM "../fenix-renderers-config.dtd">
 
 <renderers-config>
-	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodLinkRenderer"/>
+	<renderer type="org.fenixedu.academic.domain.elections.DelegateElectionPeriod" layout="delegate-election-period-link" class="org.fenixedu.academic.ui.renderers.DelegateElectionPeriodLinkRenderer"/>
 	
-<!--	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="candidacy-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.CandidacyPeriodLinkRenderer"/>-->
+<!--	<renderer type="org.fenixedu.academic.domain.elections.DelegateElectionPeriod" layout="candidacy-period-link" class="org.fenixedu.academic.ui.renderers.CandidacyPeriodLinkRenderer"/>-->
 	
-	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodRenderer" />
+	<renderer type="org.fenixedu.academic.domain.elections.DelegateElectionPeriod" layout="delegate-election-period" class="org.fenixedu.academic.ui.renderers.DelegateElectionPeriodRenderer" />
 </renderers-config>

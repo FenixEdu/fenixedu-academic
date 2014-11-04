@@ -43,7 +43,7 @@
 
 	<logic:notEmpty name="lessonPlanningBean">
 		<h2><bean:message key="link.create.lessonPlanning"/></h2>
-		<fr:edit id="lessonPlanningBeanID" name="lessonPlanningBean" action="<%= createLessonPlanningPath %>" type="net.sourceforge.fenixedu.dataTransferObject.teacher.CreateLessonPlanningBean" schema="CreateLessonPlanning">	
+		<fr:edit id="lessonPlanningBeanID" name="lessonPlanningBean" action="<%= createLessonPlanningPath %>" type="org.fenixedu.academic.dto.teacher.CreateLessonPlanningBean" schema="CreateLessonPlanning">	
 			<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>
 			<fr:layout name="tabular">
 	    	    <fr:property name="classes" value="tstyle5 thtop thlight thright mbottom1"/>
@@ -54,7 +54,7 @@
 
 	<logic:empty name="lessonPlanningBean">
 		<h2><bean:message key="link.edit.lessonPlanning"/></h2>		
-		<fr:edit id="lessonPlanningBeanID_" name="lessonPlanning" action="<%= showLessonPlannings %>" type="net.sourceforge.fenixedu.domain.LessonPlanning" schema="EditLessonPlanning">
+		<fr:edit id="lessonPlanningBeanID_" name="lessonPlanning" action="<%= showLessonPlannings %>" type="org.fenixedu.academic.domain.LessonPlanning" schema="EditLessonPlanning">
 			<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>		
 			
 			<fr:layout name="tabular">

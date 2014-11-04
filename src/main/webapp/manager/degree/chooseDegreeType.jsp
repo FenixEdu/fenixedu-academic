@@ -22,7 +22,7 @@
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$CreateExecutionDegree" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.manager.ManagerApplications$CreateExecutionDegree" />
 
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>

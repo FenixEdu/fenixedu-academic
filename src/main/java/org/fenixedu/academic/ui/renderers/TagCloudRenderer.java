@@ -16,14 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers;
+package org.fenixedu.academic.ui.renderers;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.UnitFileTag;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.UnitFileTag;
+import org.fenixedu.academic.predicate.AccessControl;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;

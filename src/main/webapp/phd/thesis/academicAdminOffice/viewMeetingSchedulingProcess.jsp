@@ -25,12 +25,12 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeeting"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeeting"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeeting"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean"%>
 
 <bean:define id="individualProcess" name="process" property="individualProgramProcess" />
 <bean:define id="meetingProcess" name="process" property="meetingProcess" />

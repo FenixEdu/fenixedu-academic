@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Spaces.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.core.ui.teacher;
+package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.EnrolmentGroupPolicyType;
 import org.fenixedu.spaces.core.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

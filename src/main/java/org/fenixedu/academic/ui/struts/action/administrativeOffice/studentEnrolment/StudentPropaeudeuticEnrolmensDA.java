@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentPropaeudeuticEnrolmentsBean;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentPropaeudeuticEnrolmentsBean;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

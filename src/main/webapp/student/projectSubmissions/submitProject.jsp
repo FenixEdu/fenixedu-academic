@@ -45,7 +45,7 @@
 <bean:define id="projectId" name="project" property="externalId" />
 
 <fr:edit id="createProjectSubmission" name="projectSubmission" action="<%="/projectSubmission.do?method=submitProject&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
-	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean" bundle="STUDENT_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.dto.projectSubmission.CreateProjectSubmissionBean" bundle="STUDENT_RESOURCES">
 		<fr:slot name="inputStream" key="label.projectSubmission.projectFile" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<fr:property name="fileNameSlot" value="filename"/>
 			<fr:property name="maxSize" value="63mb"/>

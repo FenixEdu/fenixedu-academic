@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.student.importation;
+package org.fenixedu.academic.domain.student.importation;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -27,22 +27,22 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.EntryPhase;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
-import net.sourceforge.fenixedu.domain.contacts.Phone;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.HumanName;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
-import net.sourceforge.fenixedu.util.StringFormatter;
+import org.fenixedu.academic.domain.EntryPhase;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.contacts.MobilePhone;
+import org.fenixedu.academic.domain.contacts.PartyContactType;
+import org.fenixedu.academic.domain.contacts.Phone;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
+import org.fenixedu.academic.domain.person.Gender;
+import org.fenixedu.academic.domain.person.HumanName;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.person.MaritalStatus;
+import org.fenixedu.academic.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;

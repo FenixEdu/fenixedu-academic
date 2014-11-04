@@ -33,7 +33,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
 	<description>Phd Program Application Tag Library</description>
 	<tag>
 		<name>activityAvailable</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.phd.ActivityAvailableTag</tag-class>
+		<tag-class>org.fenixedu.academic.servlet.taglib.ActivityAvailableTag</tag-class>
 		<body-content>JSP</body-content>
 		<description>Check if given activity can be executed by logged person. Activity list must be present in request</description>
 		<attribute>
@@ -51,7 +51,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
 	</tag>
 	<tag>
 		<name>accessTypeAvailable</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.phd.AccessTypeAvailableTag</tag-class>
+		<tag-class>org.fenixedu.academic.servlet.taglib.AccessTypeAvailableTag</tag-class>
 		<body-content>JSP</body-content>
 		<description>Check if given activity can be executed by logged person. Activity list must be present in request</description>
 		<attribute>
@@ -67,7 +67,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
 	</tag>
 	<tag>
 		<name>filterProcesses</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.phd.FilterProcessesTag</tag-class>
+		<tag-class>org.fenixedu.academic.servlet.taglib.FilterProcessesTag</tag-class>
 		<body-content>JSP</body-content>
 		<description>Filters all PhdIndividualProgramProcess'es by a given PredicateContainer and a SearchPhdIndividualProgramProcessBean</description>
 		<attribute>
@@ -93,7 +93,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
 	</tag>
 	<tag>
 		<name>filterProcessesForEmail</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.phd.FilterProcessesForEmailTag</tag-class>
+		<tag-class>org.fenixedu.academic.servlet.taglib.FilterProcessesForEmailTag</tag-class>
 		<body-content>JSP</body-content>
 		<description>Filters all PhdIndividualProgramProcess'es by a given PredicateContainer and a PhdProgramEmailBean</description>
 		<attribute>

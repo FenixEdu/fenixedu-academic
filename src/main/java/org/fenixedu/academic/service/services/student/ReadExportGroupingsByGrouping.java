@@ -16,16 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student;
+package org.fenixedu.academic.service.services.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
-import net.sourceforge.fenixedu.domain.ExportGrouping;
-import net.sourceforge.fenixedu.domain.Grouping;
+import org.fenixedu.academic.domain.ExportGrouping;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoExportGrouping;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

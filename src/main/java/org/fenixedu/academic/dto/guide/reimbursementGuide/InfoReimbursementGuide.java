@@ -20,22 +20,21 @@
  * Created on 12/Nov/2003
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide;
+package org.fenixedu.academic.dto.guide.reimbursementGuide;
 
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
-import net.sourceforge.fenixedu.util.State;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.academic.domain.reimbursementGuide.ReimbursementGuide;
+import org.fenixedu.academic.domain.reimbursementGuide.ReimbursementGuideEntry;
+import org.fenixedu.academic.domain.reimbursementGuide.ReimbursementGuideSituation;
+import org.fenixedu.academic.dto.InfoGuide;
+import org.fenixedu.academic.dto.InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.util.State;
 
 /**
  * 

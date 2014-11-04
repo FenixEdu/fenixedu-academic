@@ -69,9 +69,9 @@
 			<legend><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES" /></legend>
 
 			<fr:edit id="individualProcessBean" name="individualProcessBean" schema="Public.PhdIndividualProgramProcessBean.editDetails">
-				<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
 					<fr:slot name="phdProgram" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution.PhdProgramsProviderForPublicCandidacy" />
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.institution.PhdProgramsProviderForPublicCandidacy" />
 						<fr:property name="format" value="${name}" />
 						<fr:property name="sortBy" value="name" /> 
 					</fr:slot>

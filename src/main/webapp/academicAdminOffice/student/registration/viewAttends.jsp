@@ -100,7 +100,7 @@
 					<bean:write name="executionPeriod" property="semester"/>
 				</th>
 			</tr>
-			<logic:iterate id="attends" name="attendsSet" type="net.sourceforge.fenixedu.domain.Attends">
+			<logic:iterate id="attends" name="attendsSet" type="org.fenixedu.academic.domain.Attends">
 				<% boolean hasAnyShiftEnrolments = attends.hasAnyShiftEnrolments(); %>
 				<tr>
 					<td>

@@ -26,7 +26,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
 
 <h2><bean:message key="label.teacher.tutor.viewStudentsByTutor"/></h2>
 
@@ -50,9 +50,9 @@
 
 	<fr:form action="/viewStudentsByTutor.do?method=viewStudentsByTutor">
 		<fr:edit id="performanceBean" name="performanceBean">
-			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean$StudentsPerformanceInfoNullEntryYearBean">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.dto.teacher.tutor.StudentsPerformanceInfoBean$StudentsPerformanceInfoNullEntryYearBean">
 				<fr:slot name="studentsEntryYear" key="label.studentsEntryYear" layout="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$TutorshipEntryExecutionYearProviderByTeacher"/> 
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$TutorshipEntryExecutionYearProviderByTeacher"/> 
 					<fr:property name="format" value="${year}"/>
 					<fr:property name="defaultText" value="<%= "-- " + BundleUtil.getMessageFromModuleOrApplication("application", "label.view.all") +  " --" %>"/>
 				</fr:slot>

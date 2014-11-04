@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.resourceAllocationManager;
+package org.fenixedu.academic.ui.struts.action.commons.curriculumHistoric.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction;
-
+import org.fenixedu.academic.ui.struts.action.commons.curriculumHistoric.ShowCurriculumHistoricAction;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "resourceAllocationManager", path = "/showCurriculumHistoric",

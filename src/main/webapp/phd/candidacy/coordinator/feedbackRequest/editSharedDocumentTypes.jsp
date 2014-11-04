@@ -23,8 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcessBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.coordinator.feedbackRequest.PhdCandidacyFeedbackRequestDA"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcessBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.candidacy.coordinator.feedbackRequest.PhdCandidacyFeedbackRequestDA"%>
 
 <logic:notPresent name="feedbackRequestBean">
 	<logic:notEmpty name="sharedDocumentTypes">

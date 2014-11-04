@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType"%><html:xhtml/>
 
 <bean:define id="phdIndividualProgramProcess" name="phdIndividualProgramProcess" />
 <bean:define id="phdIndividualProgramProcessId" name="phdIndividualProgramProcess" property="externalId" /> 
@@ -45,7 +45,7 @@
 </logic:messagesPresent>
 
 <fr:view name="phdAcademicServiceRequest" >
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest">
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest">
 		<fr:slot name="serviceRequestNumberYear" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />
 		<fr:slot name="academicServiceRequestType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
 		<fr:slot name="requestDate" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.requestDate" />

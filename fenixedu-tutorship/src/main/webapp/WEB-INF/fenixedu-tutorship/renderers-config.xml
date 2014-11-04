@@ -26,7 +26,7 @@
 <!DOCTYPE renderers-config SYSTEM "../fenix-renderers-config.dtd">
 
 <renderers-config>
-	<renderer type="java.util.Collection" layout="student-performance-table" class="net.sourceforge.fenixedu.presentationTier.renderers.PerformanceGridRenderer">
+	<renderer type="java.util.Collection" layout="student-performance-table" class="org.fenixedu.academic.ui.renderers.PerformanceGridRenderer">
     	<property name="emptySpace" value="emptySpace"/> <!-- span without border and #FFFFFF color  -->
     	<property name="approvedMonitoringYear" value="approvedMonitoringYear"/> <!-- span without border and with #003333 color  -->
     	<property name="approvedAnotherYear" value="approvedAnotherYear"/> <!-- span without border and with #CCCC66 color  -->

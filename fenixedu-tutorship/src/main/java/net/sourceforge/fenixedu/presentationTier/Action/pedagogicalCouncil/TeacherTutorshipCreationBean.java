@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.TutorshipIntention;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.domain.TutorshipIntention;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

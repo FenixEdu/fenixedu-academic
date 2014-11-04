@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager.base;
 
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.ui.struts.action.base.FenixContextDispatchAction;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 
 public abstract class FenixDateAndTimeDispatchAction extends FenixContextDispatchAction {
 

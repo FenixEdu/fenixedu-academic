@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
+package org.fenixedu.academic.ui.struts.action.student.thesis;
 
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.Thesis;
 
 public class ThesisFileBean implements Serializable {
 

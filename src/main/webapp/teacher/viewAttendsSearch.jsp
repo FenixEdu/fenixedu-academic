@@ -20,7 +20,7 @@
 --%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean"%>
+<%@page import="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>

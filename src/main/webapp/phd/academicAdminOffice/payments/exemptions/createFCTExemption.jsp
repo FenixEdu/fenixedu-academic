@@ -74,9 +74,9 @@
 			<fr:edit id="exemptionBean" name="exemptionBean">
 			
 				
-			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionBean">
+			<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.ui.struts.action.phd.PhdEventExemptionBean">
 				<fr:slot name="justificationType" layout="menu-postback" required="true">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionJustificationTypeForGratuityProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdEventExemptionJustificationTypeForGratuityProvider" />
 			        <fr:property name="saveOptions" value="true"/>
 			        <fr:property name="defaultOptionHidden" value="true" />
 				</fr:slot>

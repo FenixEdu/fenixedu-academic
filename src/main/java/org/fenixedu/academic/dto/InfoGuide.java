@@ -20,14 +20,14 @@
  * Created on 21/Mar/2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
-import net.sourceforge.fenixedu.domain.transactions.PaymentType;
+import org.fenixedu.academic.domain.Guide;
+import org.fenixedu.academic.domain.masterDegree.GuideRequester;
+import org.fenixedu.academic.domain.transactions.PaymentType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -329,7 +329,7 @@ public class InfoGuide extends InfoObject {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * org.fenixedu.academic.dto.InfoObject#copyFromDomain
      * (Dominio.DomainObject)
      */
     public void copyFromDomain(Guide guide) {

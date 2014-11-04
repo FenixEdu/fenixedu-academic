@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.activities;
+package org.fenixedu.academic.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
-import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
+import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess;
+import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.bennu.core.domain.User;
 
 public class ConcludePhdProcess extends PhdThesisActivity {

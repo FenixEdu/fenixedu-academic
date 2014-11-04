@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
+package org.fenixedu.academic.service.factoryExecutors;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
+import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

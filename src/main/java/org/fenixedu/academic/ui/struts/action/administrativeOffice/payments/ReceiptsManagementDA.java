@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.payments;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,30 +28,29 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceipt;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.RegisterReceiptPrint;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.accounting.Entry;
-import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
-import net.sourceforge.fenixedu.presentationTier.docs.accounting.ReceiptDocument;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.domain.accounting.Receipt;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.documents.ReceiptGeneratedDocument;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.PartySocialSecurityNumber;
+import org.fenixedu.academic.dto.accounting.CreateReceiptBean;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.report.accounting.ReceiptDocument;
+import org.fenixedu.academic.service.services.accounting.CreateReceipt;
+import org.fenixedu.academic.service.services.accounting.EditReceipt;
+import org.fenixedu.academic.service.services.accounting.RegisterReceiptPrint;
+import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

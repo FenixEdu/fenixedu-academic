@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil;
 
-import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.util.Month;
+import org.fenixedu.academic.dto.coordinator.tutor.StudentsByEntryYearBean;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.util.Month;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;

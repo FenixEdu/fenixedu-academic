@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
-import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.Employee;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.domain.vigilancy.VigilantWrapper;
+import org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

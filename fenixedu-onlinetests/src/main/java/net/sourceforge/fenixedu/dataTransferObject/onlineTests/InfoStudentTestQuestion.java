@@ -19,14 +19,14 @@
 /*
  * Created on 28/Ago/2003
  */
-package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
+package org.fenixedu.academic.dto.onlineTests;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
-import net.sourceforge.fenixedu.util.tests.Response;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.dto.InfoStudent;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.util.tests.CorrectionFormula;
+import org.fenixedu.academic.util.tests.Response;
 
 /**
  * @author Susana Fernandes

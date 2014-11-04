@@ -16,19 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionCondition;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestion;
+import org.fenixedu.academic.domain.inquiries.MandatoryCondition;
+import org.fenixedu.academic.domain.inquiries.QuestionCondition;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryTemplate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

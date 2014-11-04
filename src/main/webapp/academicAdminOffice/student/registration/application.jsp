@@ -18,20 +18,20 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.period.CandidacyPeriod"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy"%>
+<%@page import="org.fenixedu.academic.domain.period.CandidacyPeriod"%>
+<%@page import="org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess"%>
+<%@page import="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess"%>
+<%@page import="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Registration"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.curriculum.AverageType"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.student.Registration"%>
+<%@page import="org.fenixedu.academic.domain.student.curriculum.AverageType"%>
+<%@page import="org.fenixedu.academic.domain.student.curriculum.ICurriculum"%>
 <html:xhtml />
 
 <h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
@@ -118,7 +118,7 @@
 		<th>
 		</th>
 	</tr>
-	<logic:iterate id="document" name="registration" property="individualCandidacy.documentsSet" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile">
+	<logic:iterate id="document" name="registration" property="individualCandidacy.documentsSet" type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile">
 		<tr>
 			<td>
 				<bean:write name="document" property="candidacyFileType.localizedName"/>

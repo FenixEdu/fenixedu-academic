@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
+package org.fenixedu.academic.service.services.coordinator;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.service.filter.CoordinatorAuthorizationFilter;
+import org.fenixedu.academic.service.filter.ManagerAuthorizationFilter;
+import org.fenixedu.academic.service.filter.MasterDegreeAdministrativeOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;

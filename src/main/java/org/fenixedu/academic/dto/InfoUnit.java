@@ -20,9 +20,9 @@
  * Created on Sep 22, 2005
  *	by mrsp
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 
 public class InfoUnit extends InfoObject {
 

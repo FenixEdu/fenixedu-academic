@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.person;
+package org.fenixedu.academic.domain.person;
 
 import java.util.ArrayList;
 import java.util.Arrays;

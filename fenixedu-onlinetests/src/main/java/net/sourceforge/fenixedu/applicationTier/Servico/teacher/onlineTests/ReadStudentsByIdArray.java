@@ -20,24 +20,24 @@
  * Created on 19/Ago/2003
  */
 
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
+package org.fenixedu.academic.service.services.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.dto.InfoStudent;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.Bundle;
 
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.i18n.BundleUtil;

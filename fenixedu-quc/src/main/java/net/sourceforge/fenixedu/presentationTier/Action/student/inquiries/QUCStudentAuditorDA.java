@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
+package org.fenixedu.academic.ui.struts.action.student.inquiries;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.QUCAuditorDA;
-import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.inquiries.ExecutionCourseAudit;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.departmentMember.QUCAuditorDA;
+import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentParticipateApp;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

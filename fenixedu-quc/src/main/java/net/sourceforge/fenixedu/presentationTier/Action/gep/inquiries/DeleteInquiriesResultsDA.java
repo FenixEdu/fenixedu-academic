@@ -19,15 +19,15 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
+package org.fenixedu.academic.ui.struts.action.gep.inquiries;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DeleteExecutionCourseResultsBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DeleteProfessorshipResultsBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.dto.inquiries.DeleteExecutionCourseResultsBean;
+import org.fenixedu.academic.dto.inquiries.DeleteProfessorshipResultsBean;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

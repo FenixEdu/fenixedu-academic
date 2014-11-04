@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.academicAdministration.curricularPlans;
+package org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.DegreeManagementBackingBean;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeManagementBackingBean;
 
 public class AcademicAdministrationDegreeManagementBackingBean extends DegreeManagementBackingBean {
 

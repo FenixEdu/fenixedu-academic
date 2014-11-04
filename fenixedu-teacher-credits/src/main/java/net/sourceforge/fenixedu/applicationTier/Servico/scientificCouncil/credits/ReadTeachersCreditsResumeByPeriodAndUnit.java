@@ -19,9 +19,9 @@
 /**
  * Jan 23, 2006
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
+package org.fenixedu.academic.service.services.scientificCouncil.credits;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -31,15 +31,15 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherCredits;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.TeacherCredits;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalData;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.predicate.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**

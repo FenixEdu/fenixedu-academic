@@ -20,10 +20,9 @@
  * 
  */
 
-package net.sourceforge.fenixedu.injectionCode;
+package org.fenixedu.academic.predicate;
 
-import net.sourceforge.fenixedu.domain.Person;
-
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 

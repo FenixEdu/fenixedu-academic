@@ -19,12 +19,12 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+package org.fenixedu.academic.ui.renderers.inquiries;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean;
+import org.fenixedu.academic.dto.inquiries.QuestionResultsSummaryBean;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

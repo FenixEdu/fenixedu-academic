@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting;
+package org.fenixedu.academic.dto.accounting;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.Entry;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
-import net.sourceforge.fenixedu.util.Money;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.PartySocialSecurityNumber;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.YearMonthDay;
 
 public class CreateReceiptBean implements Serializable {

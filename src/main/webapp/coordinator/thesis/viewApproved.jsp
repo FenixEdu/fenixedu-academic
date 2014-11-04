@@ -28,7 +28,7 @@
 <bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="externalId"/>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%>
 
 
 <html:xhtml/>

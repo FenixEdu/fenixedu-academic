@@ -25,8 +25,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RejectCandidacyProcess"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
 
 <logic:present role="role(COORDINATOR)">
 
@@ -122,7 +122,7 @@
 
 <%--  ### End Of Documents  ### --%>
 
-<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class %>">
+<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.RequestRatifyCandidacy.class %>">
 
 	<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 	<fr:form action="/phdProgramCandidacyProcess.do" encoding="multipart/form-data">

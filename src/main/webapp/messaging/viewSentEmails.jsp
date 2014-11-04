@@ -29,7 +29,7 @@
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
 
 <logic:present name="sender">
-	<fr:view name="sender" schema="net.sourceforge.fenixedu.domain.util.email.Sender.info">
+	<fr:view name="sender" schema="org.fenixedu.academic.domain.util.email.Sender.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thleft thtop ulmvert0 ulindent075"/>
 			<fr:property name="rowClasses" value=",tdbold"/>
@@ -52,7 +52,7 @@
 	url="<%="/messaging/viewSentEmails.do?method=viewSentEmails" + "&amp;senderId=" + request.getAttribute("senderId")%>" 
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" />
 	
-	<fr:view name="messages" schema="net.sourceforge.fenixedu.domain.util.email.Message.list">
+	<fr:view name="messages" schema="org.fenixedu.academic.domain.util.email.Message.list">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
@@ -68,7 +68,7 @@
 </logic:present>
 
 <logic:present name="sendersGroups">
-	<fr:view name="sendersGroups" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list"  >
+	<fr:view name="sendersGroups" schema="org.fenixedu.academic.domain.util.email.Sender.list"  >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
@@ -83,7 +83,7 @@
 </logic:present>
 
 <logic:present name="sendersGroupsCourses">
-	<fr:view name="sendersGroupsCourses" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list.courses"  >
+	<fr:view name="sendersGroupsCourses" schema="org.fenixedu.academic.domain.util.email.Sender.list.courses"  >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
@@ -100,8 +100,8 @@
 	<form action="<%= request.getContextPath() + "/messaging/viewSentEmails.do" %>" method="post">
 		<html:hidden property="method" value="viewSentEmails"/>
 
-		<fr:edit id="searchSendersBean" name="searchSendersBean" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.SearchSendersBean">
-			<fr:schema bundle="MESSAGING_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.SearchSendersBean">
+		<fr:edit id="searchSendersBean" name="searchSendersBean" type="org.fenixedu.academic.ui.struts.action.messaging.SearchSendersBean">
+			<fr:schema bundle="MESSAGING_RESOURCES" type="org.fenixedu.academic.ui.struts.action.messaging.SearchSendersBean">
 				<fr:slot name="searchString" bundle="MESSAGING_RESOURCES" key="label.searchString"/>
 			</fr:schema>
 			<fr:layout name="tabular">
@@ -116,7 +116,7 @@
 
 	<bean:define id="searchResult" name="searchSendersBean" property="result"/>
 	<logic:notEmpty name="searchResult">
-		<fr:view name="searchResult" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list"  >
+		<fr:view name="searchResult" schema="org.fenixedu.academic.domain.util.email.Sender.list"  >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 				<fr:property name="columnClasses" value=",,aleft,"/>

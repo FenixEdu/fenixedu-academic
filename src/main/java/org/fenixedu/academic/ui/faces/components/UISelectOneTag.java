@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import javax.faces.component.UIComponent;
 
@@ -24,7 +24,7 @@ import com.sun.faces.taglib.html_basic.SelectOneMenuTag;
 
 public class UISelectOneTag extends SelectOneMenuTag {
 
-    private static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne";
+    private static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.UISelectOne";
 
     @Override
     protected void setProperties(UIComponent component) {

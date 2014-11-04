@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil;
+package org.fenixedu.academic.ui.struts.action.credits.scientificCouncil;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
-import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDepartmentCreditsPool;
-import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.credits.util.DepartmentCreditsBean;
+import org.fenixedu.academic.ui.struts.action.credits.ManageDepartmentCreditsPool;
+import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
 
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;

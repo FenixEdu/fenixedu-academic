@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryStudentCycleAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionCondition;
-import net.sourceforge.fenixedu.domain.inquiries.StudentCycleInquiryTemplate;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryStudentCycleAnswer;
+import org.fenixedu.academic.domain.inquiries.MandatoryCondition;
+import org.fenixedu.academic.domain.inquiries.QuestionAnswer;
+import org.fenixedu.academic.domain.inquiries.QuestionCondition;
+import org.fenixedu.academic.domain.inquiries.StudentCycleInquiryTemplate;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

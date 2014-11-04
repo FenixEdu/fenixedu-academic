@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ErasmusIndividualCandidacyProcessExecutedAction extends ErasmusIndividualCandidacyProcessExecutedAction_Base {

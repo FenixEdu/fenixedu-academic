@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
+package org.fenixedu.academic.service.services.alumni;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionUnit;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 public class SearchOtherFormationInstitutions implements AutoCompleteProvider<AcademicalInstitutionUnit> {

@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.academicAdministration;
+package org.fenixedu.academic.dto.academicAdministration;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.IDocumentRequestBean;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.serviceRequests.IDocumentRequestBean;
 
 public class DocumentRequestSearchBean implements Serializable, IDocumentRequestBean {
 

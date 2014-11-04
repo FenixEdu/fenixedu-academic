@@ -16,23 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.YearDelegate;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.InquiryResultComment;
+import org.fenixedu.academic.domain.inquiries.InquiryResultType;
+import org.fenixedu.academic.domain.inquiries.ResultClassification;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.domain.student.Delegate;
+import org.fenixedu.academic.domain.student.YearDelegate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

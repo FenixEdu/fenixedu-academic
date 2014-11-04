@@ -16,21 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
+package org.fenixedu.academic.service.services.fileManager;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PhotoType;
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.ContentType;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PhotoType;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.dto.person.PhotographUploadBean;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.service.services.ExcepcaoInexistente;
+import org.fenixedu.academic.util.ContentType;
+
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.io.ByteStreams;

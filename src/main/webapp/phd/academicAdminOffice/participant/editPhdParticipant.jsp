@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdParticipant"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -55,14 +55,14 @@
 	
 		<fr:edit name="phdParticipantBean">
 			<logic:equal name="phdParticipantBean" property="participant.internal" value="true">
-				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant">
+				<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.InternalPhdParticipant">
 					<fr:slot name="title" />
 					<fr:slot name="category" />
 				</fr:schema>
 			</logic:equal>
 			
 			<logic:equal name="phdParticipantBean" property="participant.internal" value="false">
-				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.ExternalPhdParticipant">
+				<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.ExternalPhdParticipant">
 					<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 					<fr:slot name="title" />
 					<fr:slot name="qualification" />

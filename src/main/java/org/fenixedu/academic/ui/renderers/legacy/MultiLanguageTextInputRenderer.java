@@ -1,7 +1,6 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.legacy;
+package org.fenixedu.academic.ui.renderers.legacy;
 
-import net.sourceforge.fenixedu.presentationTier.renderers.legacy.MultiLanguageStringInputRenderer.MultiLanguageStringConverter;
-
+import org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringInputRenderer.MultiLanguageStringConverter;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixWebFramework.rendererExtensions.LocalizedTextInputRenderer;

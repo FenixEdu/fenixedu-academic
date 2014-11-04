@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.validators;
+package org.fenixedu.academic.ui.renderers.validators;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;

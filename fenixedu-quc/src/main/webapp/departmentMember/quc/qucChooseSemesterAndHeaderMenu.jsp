@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<bean:define id="executionSemesterBean" name="executionSemesterBean" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentExecutionSemester"/>
+<bean:define id="executionSemesterBean" name="executionSemesterBean" type="org.fenixedu.academic.dto.inquiries.DepartmentExecutionSemester"/>
 <bean:define id="departmentParam" value="&departmentUnitOID="/>
 
 <logic:present name="fromPedagogicalCouncil">
@@ -54,9 +54,9 @@
 <p class="mvert15">
 	<fr:form>
 		<fr:edit id="executionSemesterBean" name="executionSemesterBean">
-			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentExecutionSemester">
+			<fr:schema bundle="INQUIRIES_RESOURCES" type="org.fenixedu.academic.dto.inquiries.DepartmentExecutionSemester">
 				<fr:slot name="executionSemester" key="label.inquiries.semester" layout="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider" />
 					<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
 					<fr:property name="nullOptionHidden" value="true"/>
 					<fr:property name="destination" value="resumePostBack"/>

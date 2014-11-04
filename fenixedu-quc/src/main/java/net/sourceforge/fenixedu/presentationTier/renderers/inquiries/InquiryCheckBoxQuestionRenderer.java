@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+package org.fenixedu.academic.ui.renderers.inquiries;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;

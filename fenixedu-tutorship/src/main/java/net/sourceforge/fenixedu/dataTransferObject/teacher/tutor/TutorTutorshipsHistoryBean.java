@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
+package org.fenixedu.academic.dto.teacher.tutor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Teacher;
+import org.fenixedu.academic.domain.Teacher;
 
 public class TutorTutorshipsHistoryBean implements Serializable {
 

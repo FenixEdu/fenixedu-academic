@@ -20,13 +20,12 @@
  * Created on 6/Jan/2004
  *  
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**

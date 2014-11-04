@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
+package org.fenixedu.academic.ui.struts.action.departmentMember;
 
 import java.io.Serializable;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeDegreeCourseStatistics;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeExecutionCourseStatistics;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseStatisticsDTO;
-import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatisticsDTO;
-import net.sourceforge.fenixedu.dataTransferObject.department.ExecutionCourseStatisticsDTO;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.dto.department.CompetenceCourseStatisticsDTO;
+import org.fenixedu.academic.dto.department.DegreeCourseStatisticsDTO;
+import org.fenixedu.academic.dto.department.ExecutionCourseStatisticsDTO;
+import org.fenixedu.academic.service.services.department.ComputeCompetenceCourseStatistics;
+import org.fenixedu.academic.service.services.department.ComputeDegreeCourseStatistics;
+import org.fenixedu.academic.service.services.department.ComputeExecutionCourseStatistics;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 public class CourseStatisticsBean implements Serializable {
 

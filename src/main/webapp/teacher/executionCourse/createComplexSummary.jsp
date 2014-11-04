@@ -119,7 +119,7 @@ function check(e,v){
 		<%-- Lessons --%>
 		<h3 class="mbottom0"><bean:message key="label.lesson.or.lessons"/></h3>
 		<logic:notEmpty name="summariesManagementBean" property="nextPossibleSummaryLessonsAndDatesBean">
-			<logic:iterate name="summariesManagementBean" property="nextPossibleSummaryLessonsAndDatesBean" id="lesson" indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">				
+			<logic:iterate name="summariesManagementBean" property="nextPossibleSummaryLessonsAndDatesBean" id="lesson" indexId="index" type="org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">				
 				<fr:hasMessages for="<%= "nextPossibleLessonsDatesBean" + String.valueOf(index.intValue() + 1) %>">
 					<p>
 						<span class="error0">			

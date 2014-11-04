@@ -19,10 +19,9 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.student.registrationStates;
+package org.fenixedu.academic.domain.student.registrationStates;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**

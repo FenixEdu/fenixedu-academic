@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,31 +28,30 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.dataTransferObject.phd.YearMonth;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
-import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuidanceDocument;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceDocument;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean;
-import net.sourceforge.fenixedu.util.Month;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.alert.PhdAlertMessage;
+import org.fenixedu.academic.domain.phd.guidance.PhdGuidanceDocument;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteGuidanceDocument;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.UploadGuidanceDocument;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import org.fenixedu.academic.dto.phd.YearMonth;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdRegistrationConclusionBean;
+import org.fenixedu.academic.util.Month;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;

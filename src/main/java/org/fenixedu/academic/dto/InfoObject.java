@@ -20,7 +20,7 @@
  * Created on 4/Mai/2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import pt.ist.fenixframework.DomainObject;
 

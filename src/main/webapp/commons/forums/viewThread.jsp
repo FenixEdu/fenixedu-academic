@@ -63,7 +63,7 @@
 					 
 					<logic:equal name="showReplyBox" value="true">						
 						<fr:create id="createMessage"
-								type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean"
+								type="org.fenixedu.academic.dto.messaging.CreateConversationMessageBean"
 					           schema="conversationMessage.create"
 					           action="<%= contextPrefix + "method=createMessage&amp;forumId=" + forumId + "&amp;threadId=" + threadId + "&amp;showReplyBox=false" %>">
 					           
@@ -89,7 +89,7 @@
 										pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="pageNumbers" numberOfVisualizedPages="10"/>
 					</p>
 					
-					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="org.fenixedu.academic.domain.messaging.ConversationMessage">
 						<html:link linkName="<%="ID_" + currentMessageId.toString()%>"/>
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
 							<fr:layout>

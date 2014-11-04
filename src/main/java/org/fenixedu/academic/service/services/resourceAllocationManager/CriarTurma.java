@@ -22,14 +22,15 @@
  * Created on 25 de Outubro de 2002, 18:34
  */
 
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.dto.InfoClass;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

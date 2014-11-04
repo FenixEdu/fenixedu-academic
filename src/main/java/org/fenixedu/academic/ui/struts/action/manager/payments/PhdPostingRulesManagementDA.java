@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
+package org.fenixedu.academic.ui.struts.action.manager.payments;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,17 +25,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPR;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPaymentPeriod;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPriceQuirk;
-import net.sourceforge.fenixedu.util.Money;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.accounting.PostingRule;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.debts.PhdGratuityPR;
+import org.fenixedu.academic.domain.phd.debts.PhdGratuityPaymentPeriod;
+import org.fenixedu.academic.domain.phd.debts.PhdGratuityPriceQuirk;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

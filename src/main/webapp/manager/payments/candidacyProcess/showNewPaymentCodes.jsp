@@ -31,7 +31,7 @@
 	
 	<fr:view name="newPaymentCodes">
 	
-		<fr:schema type="net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" bundle="MANAGER_RESOURCES" >
+		<fr:schema type="org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" bundle="MANAGER_RESOURCES" >
 			<fr:slot name="code" />
 			<fr:slot name="startDate" />
 			<fr:slot name="endDate" />

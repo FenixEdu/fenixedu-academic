@@ -34,7 +34,7 @@
 
 <bean:define id="url">/alumniCerimony.do?method=viewInquiry&amp;cerimonyInquiryId=<bean:write name="cerimonyInquiryAnswer" property="cerimonyInquiry.externalId"/></bean:define>
 <fr:edit id="cerimonyInquiryAnswer" name="cerimonyInquiryAnswer" action="<%= url %>">
-	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
+	<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.alumni.CerimonyInquiry">
 		<fr:slot name="text" key="label.publicRelationOffice.alumniCerimonyInquiry.answer">
 			<fr:property name="size" value="40"/>
 		</fr:slot>

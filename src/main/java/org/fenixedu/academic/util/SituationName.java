@@ -23,7 +23,7 @@
  *  
  */
 
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.debts;
+package org.fenixedu.academic.domain.phd.debts;
 
-import net.sourceforge.fenixedu.domain.accounting.Account;
-import net.sourceforge.fenixedu.domain.accounting.AccountType;
-import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.accounting.Account;
+import org.fenixedu.academic.domain.accounting.AccountType;
+import org.fenixedu.academic.domain.accounting.EntryType;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.PostingRule;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 

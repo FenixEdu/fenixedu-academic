@@ -20,7 +20,7 @@
  * Created on 23/Jul/2003
  *
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 /**
  * @author asnr and scpo

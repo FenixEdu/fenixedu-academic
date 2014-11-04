@@ -40,7 +40,7 @@
 
 <fr:edit id="edit"
 		 name="edit"
-		 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
+		 type="org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
 		 schema="oldMarkSheet.create.step.one"
 		 action='<%= "/oldCreateMarkSheet.do?method=createMarkSheetStepOne" + urlPath %>'>
 	<fr:destination name="postBack" path="/oldCreateMarkSheet.do?method=prepareSearchMarkSheetPostBack"/>

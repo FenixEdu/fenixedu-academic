@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager;
+package org.fenixedu.academic.dto.resourceAllocationManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,11 +24,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.OccupationPeriodReference;
-import net.sourceforge.fenixedu.domain.OccupationPeriodType;
-
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.OccupationPeriodReference;
+import org.fenixedu.academic.domain.OccupationPeriodType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import com.google.common.base.Predicate;

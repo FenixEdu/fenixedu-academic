@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.coordinator;
+package org.fenixedu.academic.ui.struts.action.phd.thesis.coordinator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,21 +27,20 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.PhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.PhdDocumentsZip;
+import org.fenixedu.academic.ui.struts.action.phd.coordinator.PhdIndividualProgramProcessDA;
+import org.fenixedu.academic.ui.struts.action.phd.thesis.CommonPhdThesisProcessDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
+package org.fenixedu.academic.ui.faces.bean.departmentMember;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,26 +31,26 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentTeachersByDepartmentIDAndExecutionYearID;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.advise.ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.teacher.Advise;
-import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionYear;
+import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
+import org.fenixedu.academic.service.services.department.ReadDepartmentTeachersByDepartmentIDAndExecutionYearID;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
+import org.fenixedu.academic.service.services.teacher.ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType;
+import org.fenixedu.academic.service.services.teacher.ReadTeacherByOID;
+import org.fenixedu.academic.service.services.teacher.advise.ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.dto.InfoTeacher;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.teacher.Advise;
+import org.fenixedu.academic.domain.teacher.AdviseType;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
+import org.fenixedu.academic.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -29,21 +29,20 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
-import net.sourceforge.fenixedu.domain.exceptions.InDebtEnrolmentsException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.FenixDigestUtils;
-
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
+import org.fenixedu.academic.domain.exceptions.InDebtEnrolmentsException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import org.fenixedu.academic.predicate.MarkSheetPredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EnrolmentEvaluationState;
+import org.fenixedu.academic.util.FenixDigestUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

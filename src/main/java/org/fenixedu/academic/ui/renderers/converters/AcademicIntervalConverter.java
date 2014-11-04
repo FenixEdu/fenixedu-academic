@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.converters;
+package org.fenixedu.academic.ui.renderers.converters;
 
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 
 public class AcademicIntervalConverter extends BiDirectionalConverter {

@@ -20,17 +20,17 @@
  * 
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.department;
+package org.fenixedu.academic.service.services.department;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.department.CourseStatisticsDTO;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
-import net.sourceforge.fenixedu.domain.curriculum.IGrade;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.domain.curriculum.GradeFactory;
+import org.fenixedu.academic.domain.curriculum.IGrade;
+import org.fenixedu.academic.dto.department.CourseStatisticsDTO;
 
 /**
  * @author pcma

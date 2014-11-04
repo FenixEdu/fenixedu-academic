@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 
@@ -182,7 +182,7 @@ public class Metadata extends Metadata_Base {
 
     @Deprecated
     public java.util.Date getLearningTimeDate() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getLearningTimeDateHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getLearningTimeDateHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -191,7 +191,7 @@ public class Metadata extends Metadata_Base {
         if (date == null) {
             setLearningTimeDateHourMinuteSecond(null);
         } else {
-            setLearningTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setLearningTimeDateHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

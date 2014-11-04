@@ -20,13 +20,13 @@
  * Created on 30/Jan/2004
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.generateFiles;
+package org.fenixedu.academic.ui.struts.action.manager.generateFiles;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.dto.InfoGratuitySituation;
 
 /**
  * @author Tânia Pousão

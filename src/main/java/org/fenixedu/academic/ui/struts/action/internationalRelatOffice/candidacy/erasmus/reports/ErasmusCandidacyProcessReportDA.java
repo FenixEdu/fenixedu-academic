@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus.reports;
+package org.fenixedu.academic.ui.struts.action.internationalRelatOffice.candidacy.erasmus.reports;
 
-import net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus.ErasmusCandidacyProcessDA;
-
+import org.fenixedu.academic.ui.struts.action.internationalRelatOffice.candidacy.erasmus.ErasmusCandidacyProcessDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -28,6 +27,6 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
         functionality = ErasmusCandidacyProcessDA.class)
 @Forwards({ @Forward(name = "list", path = "/candidacy/erasmus/reports/list.jsp") })
 public class ErasmusCandidacyProcessReportDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.report.ErasmusCandidacyProcessReportDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.erasmus.report.ErasmusCandidacyProcessReportDA {
 
 }

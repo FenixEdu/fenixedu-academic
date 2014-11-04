@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus;
+package org.fenixedu.academic.report.candidacy.erasmus;
 
 import java.util.Locale;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import net.sourceforge.fenixedu.util.FenixStringTools;
-
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.report.FenixReport;
+import org.fenixedu.academic.util.FenixStringTools;
 import org.jsoup.helper.StringUtil;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

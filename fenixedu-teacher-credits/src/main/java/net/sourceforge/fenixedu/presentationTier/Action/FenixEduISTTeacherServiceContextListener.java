@@ -1,18 +1,18 @@
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.service.services.manager.MergeExecutionCourses;
+import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

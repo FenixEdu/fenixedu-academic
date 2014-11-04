@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 </logic:present>
@@ -40,7 +40,7 @@
 	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<table>
 	   <!-- MasterDegree -->
-		<logic:iterate id="masterDegreeElem" name="<%= PresentationConstants.DEGREE_LIST %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree">
+		<logic:iterate id="masterDegreeElem" name="<%= PresentationConstants.DEGREE_LIST %>" type="org.fenixedu.academic.dto.InfoExecutionDegree">
 			<tr>
 				<td>
 					<logic:present name="jspTitle">

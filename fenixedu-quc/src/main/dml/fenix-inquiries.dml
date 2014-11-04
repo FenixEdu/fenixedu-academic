@@ -1,16 +1,16 @@
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-enum net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState                                                     as InquiriesRegistryState;
-enum net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification                                            as InquiryNotAnsweredJustification;
-enum net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType                                                  as InquiryResponsePeriodType;
-enum net.sourceforge.fenixedu.domain.inquiries.GroupResultType                                                            as GroupResultType;
-enum net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval                                                      as InquiryGradesInterval;
-enum net.sourceforge.fenixedu.domain.inquiries.InquiryResultType                                                          as InquiryResultType;
-enum net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType                                                      as InquiryConnectionType;
-enum net.sourceforge.fenixedu.domain.inquiries.ResultClassification                                                       as ResultClassification;
-enum net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory                                                       as ResultPersonCategory;
+enum org.fenixedu.academic.domain.inquiries.InquiriesRegistryState                                                     as InquiriesRegistryState;
+enum org.fenixedu.academic.domain.inquiries.InquiryNotAnsweredJustification                                            as InquiryNotAnsweredJustification;
+enum org.fenixedu.academic.domain.inquiries.InquiryResponsePeriodType                                                  as InquiryResponsePeriodType;
+enum org.fenixedu.academic.domain.inquiries.GroupResultType                                                            as GroupResultType;
+enum org.fenixedu.academic.domain.inquiries.InquiryGradesInterval                                                      as InquiryGradesInterval;
+enum org.fenixedu.academic.domain.inquiries.InquiryResultType                                                          as InquiryResultType;
+enum org.fenixedu.academic.domain.inquiries.InquiryConnectionType                                                      as InquiryConnectionType;
+enum org.fenixedu.academic.domain.inquiries.ResultClassification                                                       as ResultClassification;
+enum org.fenixedu.academic.domain.inquiries.ResultPersonCategory                                                       as ResultPersonCategory;
 
-valueType net.sourceforge.fenixedu.domain.inquiries.QuestionScale as QuestionScale {
+valueType org.fenixedu.academic.domain.inquiries.QuestionScale as QuestionScale {
     externalizeWith {
         String exportAsString();
     }

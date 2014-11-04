@@ -22,7 +22,7 @@
  * Created on 28 de Novembro de 2002, 3:41
  */
 
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.math.BigDecimal;
 import java.text.Collator;
@@ -30,13 +30,12 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
-import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
-
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
+import org.fenixedu.academic.domain.degreeStructure.RegimeType;
+import org.fenixedu.academic.util.CurricularCourseExecutionScope;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

@@ -19,8 +19,8 @@
 
 --%>
 <%@page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
+<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
+<%@page import="org.fenixedu.academic.domain.Installation"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>

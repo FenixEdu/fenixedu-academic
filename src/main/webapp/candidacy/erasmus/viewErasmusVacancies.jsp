@@ -48,11 +48,11 @@
 	
 	<fr:edit id="erasmusVacancyBean-edit" name="erasmusVacancyBean">
 		
-		<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusVacancyBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			
 			<fr:slot name="mobilityProgram" layout="menu-select-postback">
 				<fr:property name="destination" value="postback" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramAllProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.MobilityProgramAllProvider" />
 				<fr:property name="format" value="${name}" />
 				<fr:property name="sortBy" value="name"/>
 			</fr:slot>
@@ -94,7 +94,7 @@
 	
 	<fr:view name="quotas">
 	
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityQuota" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="mobilityAgreement.universityUnit.country.localizedName" key="label.erasmus.country" />
 				<fr:slot name="mobilityAgreement.universityUnit.nameI18n" key="label.erasmus.university" />
 				<fr:slot name="degree.presentationName" key="label.erasmus.degrees" />

@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.nape.candidacy.degreeCandidacyForGraduatedPerson;
+package org.fenixedu.academic.ui.struts.action.nape.candidacy.degreeCandidacyForGraduatedPerson;
 
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-
+import org.fenixedu.academic.ui.struts.FenixActionForm;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -33,6 +32,6 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
                 path = "/scientificCouncil/candidacy/graduatedPerson/listIndividualCandidacyActivities.jsp") })
 public class DegreeCandidacyForGraduatedPersonIndividualProcessDA
         extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcessDA {
 
 }

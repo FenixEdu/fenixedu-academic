@@ -18,11 +18,11 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.util.Money"%>
+<%@page import="org.fenixedu.academic.util.Money"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.List"%>
-<%@page import="net.sourceforge.fenixedu.domain.accounting.Event"%>
+<%@page import="org.fenixedu.academic.domain.accounting.Event"%>
 <%@page import="java.util.Set"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -38,7 +38,7 @@
 		<table><tr>
 			<td>
 				<fr:edit id="searchPersonForm" name="manageSecondCycleThesisSearchBean">
-					<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean"
+					<fr:schema type="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean"
 							   bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 						<fr:slot name="searchString" key="label.thesis.search.student.string.field">
 							<fr:property name="size" value="15"/>

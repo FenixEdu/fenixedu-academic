@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.contacts;
+package org.fenixedu.academic.dto.contacts;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.domain.contacts.Phone;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.MobilePhone;
+import org.fenixedu.academic.domain.contacts.Phone;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 
 public class PendingPartyContactBean {
     private Person person;

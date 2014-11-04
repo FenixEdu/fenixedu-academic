@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle;
+package org.fenixedu.academic.ui.struts.action.candidacy.secondCycle;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+import org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
 public class SecondCycleNextCandidacyProcesses extends AbstractDomainObjectProvider {
 

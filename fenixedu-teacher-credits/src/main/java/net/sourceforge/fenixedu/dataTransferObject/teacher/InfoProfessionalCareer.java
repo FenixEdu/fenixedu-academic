@@ -20,11 +20,11 @@
  * Created on 13/Nov/2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher;
+package org.fenixedu.academic.dto.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import org.fenixedu.academic.dto.InfoTeacher;
+import org.fenixedu.academic.domain.CareerType;
+import org.fenixedu.academic.domain.teacher.ProfessionalCareer;
 
 /**
  * @author Leonor Almeida
@@ -77,7 +77,7 @@ public class InfoProfessionalCareer extends InfoCareer {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain
+     * org.fenixedu.academic.dto.teacher.InfoCareer#copyFromDomain
      * (Dominio.teacher.Career)
      */
     public void copyFromDomain(ProfessionalCareer professionalCareer) {

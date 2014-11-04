@@ -16,51 +16,50 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean.QualificationExamsResult;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingInformation;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.CancelPhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditQualificationExams;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicThesisPresentation;
-import net.sourceforge.fenixedu.domain.phd.migration.activities.SkipThesisJuryActivities;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.FinalEstimatedStateNotReachedException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationException;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SkipScheduleThesisDiscussion;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
-import net.sourceforge.fenixedu.util.Bundle;
+package org.fenixedu.academic.domain.phd.migration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.PhdParticipantBean;
+import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
+import org.fenixedu.academic.domain.phd.PhdStudyPlanBean;
+import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean.QualificationExamsResult;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
+import org.fenixedu.academic.domain.phd.candidacy.RatifyCandidacyBean;
+import org.fenixedu.academic.domain.phd.candidacy.RegistrationFormalizationBean;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.AddGuidingInformation;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.AddStudyPlan;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.CancelPhdProgramProcess;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.EditQualificationExams;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.RequestPublicThesisPresentation;
+import org.fenixedu.academic.domain.phd.migration.activities.SkipThesisJuryActivities;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.FinalEstimatedStateNotReachedException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.PersonNotFoundException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.PhdMigrationException;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.activities.RatifyFinalThesis;
+import org.fenixedu.academic.domain.phd.thesis.activities.SetFinalGrade;
+import org.fenixedu.academic.domain.phd.thesis.activities.SkipScheduleThesisDiscussion;
+import org.fenixedu.academic.domain.phd.thesis.activities.SubmitThesis;
+import org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
+import org.fenixedu.academic.service.services.caseHandling.CreateNewProcess;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -469,14 +468,14 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         reviewBean.setGenerateAlert(false);
         ExecuteProcessActivity
                 .run(candidacyProcess,
-                        net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
+                        org.fenixedu.academic.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
                         reviewBean);
 
         final PhdProgramCandidacyProcessStateBean requestRatifyBean = new PhdProgramCandidacyProcessStateBean(individualProcess);
         requestRatifyBean.setGenerateAlert(false);
         requestRatifyBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
         ExecuteProcessActivity.run(candidacyProcess,
-                net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class.getSimpleName(),
+                org.fenixedu.academic.domain.phd.candidacy.activities.RequestRatifyCandidacy.class.getSimpleName(),
                 requestRatifyBean);
     }
 
@@ -485,7 +484,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         final RatifyCandidacyBean ratifyBean = new RatifyCandidacyBean(candidacyProcess);
         ratifyBean.setWhenRatified(getProcessBean().getRatificationDate());
         ExecuteProcessActivity.run(candidacyProcess,
-                net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class.getSimpleName(), ratifyBean);
+                org.fenixedu.academic.domain.phd.candidacy.activities.RatifyCandidacy.class.getSimpleName(), ratifyBean);
     }
 
     private void formalizeRegistration(final User userView, final PhdIndividualProgramProcess individualProcess) {
@@ -503,7 +502,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         formalizationBean.setWhenStartedStudies(getMostAccurateStartDevelopmentDate());
         formalizationBean.setSelectRegistration(false);
         ExecuteProcessActivity.run(candidacyProcess,
-                net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization.class.getSimpleName(),
+                org.fenixedu.academic.domain.phd.candidacy.activities.RegistrationFormalization.class.getSimpleName(),
                 formalizationBean);
     }
 

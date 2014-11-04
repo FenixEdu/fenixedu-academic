@@ -20,8 +20,8 @@
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
@@ -77,7 +77,7 @@
 <br/>
 <br/>
 
-<strong>Presidente:</strong> Presidente do Conselho Científico do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
+<strong>Presidente:</strong> Presidente do Conselho Científico do <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
 
 <br/>
 <strong><bean:message  key="label.phd.thesis.elements" bundle="PHD_RESOURCES"/>:</strong>

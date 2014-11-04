@@ -30,9 +30,9 @@
 
 <fr:form action="/manageCapacityAndLockers.do?method=selectLibraryToUpdate">
 	<fr:edit id="libraryInformation" name="libraryInformation">
-		<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryInformation">
+		<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryInformation">
 			<fr:slot name="library" key="label.library" layout="menu-select-postback" required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.library.LibraryProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.library.LibraryProvider" />
 				<fr:property name="format" value="Biblioteca \${parent.parent.presentationName}" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
@@ -50,7 +50,7 @@
 	<fr:form action="/manageCapacityAndLockers.do?method=updateCapacityAndLockers">
 		<fr:edit id="libraryUpdate" name="libraryInformation">
 			<fr:schema bundle="LIBRARY_RESOURCES"
-				type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryInformation">
+				type="org.fenixedu.academic.ui.struts.action.library.LibraryInformation">
 				<fr:slot name="capacity" key="label.library.capacity">
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />

@@ -16,21 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events.export;
+package org.fenixedu.academic.domain.accounting.events.export;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
-import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
-import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.ResidenceEvent;
+import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
+import org.fenixedu.academic.domain.residence.ResidenceMonth;
+import org.fenixedu.academic.domain.residence.ResidenceYear;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 
 public abstract class DebtsFile extends DebtsFile_Base {
 

@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
-import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType;
+import org.fenixedu.academic.domain.phd.debts.PhdEventExemptionJustificationType;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;

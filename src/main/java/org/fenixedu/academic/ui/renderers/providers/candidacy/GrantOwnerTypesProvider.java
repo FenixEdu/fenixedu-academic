@@ -16,14 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy;
+package org.fenixedu.academic.ui.renderers.providers.candidacy;
 
 import java.util.Arrays;
 
-import net.sourceforge.fenixedu.domain.GrantOwnerType;
-import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.GrantOwnerType;
+import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;

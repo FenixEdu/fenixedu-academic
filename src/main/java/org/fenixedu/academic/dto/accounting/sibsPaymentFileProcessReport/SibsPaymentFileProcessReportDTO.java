@@ -16,30 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting.sibsPaymentFileProcessReport;
+package org.fenixedu.academic.dto.accounting.sibsPaymentFileProcessReport;
 
-import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
-import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFile;
-import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
-
+import org.fenixedu.academic.domain.GratuitySituation;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.ResidenceEvent;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
+import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
+import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
+import org.fenixedu.academic.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
+import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import org.fenixedu.academic.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
+import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
+import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
+import org.fenixedu.academic.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyEvent;
+import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFile;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.YearMonthDay;
 
 public class SibsPaymentFileProcessReportDTO {

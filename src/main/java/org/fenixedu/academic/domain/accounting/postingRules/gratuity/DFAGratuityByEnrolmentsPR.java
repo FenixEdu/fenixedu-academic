@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
+package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.accounting.EntryType;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
 public class DFAGratuityByEnrolmentsPR extends DFAGratuityByEnrolmentsPR_Base {

@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.util.DiaSemana;
+import org.fenixedu.academic.domain.FrequencyType;
+import org.fenixedu.academic.util.DiaSemana;
 
 public class InfoRoomOccupationEditor extends InfoObject {
 

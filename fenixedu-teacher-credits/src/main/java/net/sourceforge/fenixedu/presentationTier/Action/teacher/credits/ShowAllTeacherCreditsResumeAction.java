@@ -19,7 +19,7 @@
 /**
  * Dec 13, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.credits;
+package org.fenixedu.academic.ui.struts.action.teacher.credits;
 
 import java.util.Iterator;
 import java.util.List;
@@ -27,11 +27,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
+import org.fenixedu.academic.service.services.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.credits.CreditLine;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.credits.CreditLine;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

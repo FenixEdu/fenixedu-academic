@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.alumni;
+package org.fenixedu.academic.dto.alumni;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.BusinessArea;
-import net.sourceforge.fenixedu.domain.ContractType;
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Job;
-import net.sourceforge.fenixedu.domain.JobApplicationType;
-import net.sourceforge.fenixedu.domain.SalaryType;
-
+import org.fenixedu.academic.domain.Alumni;
+import org.fenixedu.academic.domain.BusinessArea;
+import org.fenixedu.academic.domain.ContractType;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Job;
+import org.fenixedu.academic.domain.JobApplicationType;
+import org.fenixedu.academic.domain.SalaryType;
 import org.joda.time.LocalDate;
 
 public class AlumniJobBean implements Serializable {

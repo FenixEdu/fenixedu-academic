@@ -20,7 +20,7 @@
  * Created on Jul 29, 2006
  *
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.units;
+package org.fenixedu.academic.servlet.taglib;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,10 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events;
+package org.fenixedu.academic.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class InsuranceExemptionJustification extends InsuranceExemptionJustification_Base {

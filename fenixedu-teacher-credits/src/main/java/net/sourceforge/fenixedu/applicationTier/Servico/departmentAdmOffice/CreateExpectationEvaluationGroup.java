@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
+package org.fenixedu.academic.service.services.departmentAdmOffice;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import static org.fenixedu.academic.predicate.AccessControl.check;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.ExpectationEvaluationGroup;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.predicate.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateExpectationEvaluationGroup {

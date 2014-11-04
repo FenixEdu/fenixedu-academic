@@ -1,13 +1,12 @@
-package org.fenixedu.core.ui.teacher;
+package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.util.Optional;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
-import org.fenixedu.core.ui.StrutsFunctionalityController;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.spring.StrutsFunctionalityController;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 

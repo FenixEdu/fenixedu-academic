@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.AccessControl;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -56,7 +55,7 @@ public class ErasmusAlert extends ErasmusAlert_Base {
 
         if (whenToFire == null) {
             throw new DomainException(
-                    "net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess.fireDate.cannot.be.null",
+                    "org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess.fireDate.cannot.be.null",
                     args);
         }
 

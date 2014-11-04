@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
+package org.fenixedu.academic.service.services.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.WrittenTest;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.WrittenTest;
+import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;

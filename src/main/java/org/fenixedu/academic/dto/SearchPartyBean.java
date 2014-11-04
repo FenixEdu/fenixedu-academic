@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
 
 public class SearchPartyBean implements Serializable {
 

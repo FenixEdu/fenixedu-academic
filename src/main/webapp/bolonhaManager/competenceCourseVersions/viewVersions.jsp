@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="org.fenixedu.academic.predicate.AccessControl"%>
 
 <bean:define id="competenceCourseID" value="<%= request.getParameter("competenceCourseID") %>"/>
 <em><bean:message key="bolonhaManager" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
@@ -87,12 +87,12 @@
 		<th></th>
 	</tr>
 	
-	<logic:iterate id="changeRequest" name="competenceCourse" property="competenceCourseInformationChangeRequests" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest">
+	<logic:iterate id="changeRequest" name="competenceCourse" property="competenceCourseInformationChangeRequests" type="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest">
 		<bean:define id="changeRequestID" name="changeRequest" property="externalId"/>
 		<tr>
 			<td><fr:view name="changeRequest" property="executionPeriod.executionYear.year"/></td>			
 			<td><fr:view name="changeRequest" property="executionPeriod.name"/></td>
-			<td><fr:view name="changeRequest" property="requester" type="net.sourceforge.fenixedu.domain.Person">
+			<td><fr:view name="changeRequest" property="requester" type="org.fenixedu.academic.domain.Person">
 					<fr:layout name="null-as-label">
 						<fr:property name="label" value="-"/>
 						<fr:property name="subLayout" value="values"/>
@@ -101,7 +101,7 @@
 				</fr:view>
 			</td>
 			<td>
-				<fr:view name="changeRequest" property="analizedBy" type="net.sourceforge.fenixedu.domain.Person">
+				<fr:view name="changeRequest" property="analizedBy" type="org.fenixedu.academic.domain.Person">
 					<fr:layout name="null-as-label">
 						<fr:property name="label" value="-"/>
 						<fr:property name="subLayout" value="values"/>

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
+package org.fenixedu.academic.ui.struts.action.vigilancy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,30 +31,30 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinatorsToVigilantGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddIncompatiblePerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddVigilantsToGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateVigilantGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteVigilantGroupByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExamCoordinatorsFromVigilantGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveIncompatiblePerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveVigilantsFromGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.UpdateVigilantGroup;
-import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.examCoordination.ExamCoordinationApplication;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.person.vigilancy.AddExamCoordinatorsToVigilantGroup;
+import org.fenixedu.academic.service.services.person.vigilancy.AddIncompatiblePerson;
+import org.fenixedu.academic.service.services.person.vigilancy.AddVigilantsToGroup;
+import org.fenixedu.academic.service.services.person.vigilancy.CreateVigilantGroup;
+import org.fenixedu.academic.service.services.person.vigilancy.DeleteVigilantGroupByOID;
+import org.fenixedu.academic.service.services.person.vigilancy.RemoveExamCoordinatorsFromVigilantGroup;
+import org.fenixedu.academic.service.services.person.vigilancy.RemoveIncompatiblePerson;
+import org.fenixedu.academic.service.services.person.vigilancy.RemoveVigilantsFromGroup;
+import org.fenixedu.academic.service.services.person.vigilancy.UpdateVigilantGroup;
+import org.fenixedu.academic.dto.WrittenEvaluationVigilancyView;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.Employee;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.vigilancy.ExamCoordinator;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.domain.vigilancy.VigilantWrapper;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.vigilancy.examCoordination.ExamCoordinationApplication;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;

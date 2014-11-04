@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
+package org.fenixedu.academic.ui.struts.action.academicAdministration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,10 +24,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class DegreeJurisdictionManagementBean implements Serializable {

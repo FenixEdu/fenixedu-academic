@@ -20,13 +20,13 @@
  * Created on Jun 28, 2004
  *
  */
-package net.sourceforge.fenixedu.domain.degree.enrollment;
+package org.fenixedu.academic.domain.degree.enrollment;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
  * @author João Mota

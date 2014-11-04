@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
+package org.fenixedu.academic.ui.struts.action.departmentMember;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,31 +30,31 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseResultsResume;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentExecutionSemester;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDetailsBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherResultsResume;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGroupsResumeResult;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoot;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
+import org.fenixedu.academic.dto.inquiries.CompetenceCourseResultsResume;
+import org.fenixedu.academic.dto.inquiries.CurricularCourseResumeResult;
+import org.fenixedu.academic.dto.inquiries.DepartmentExecutionSemester;
+import org.fenixedu.academic.dto.inquiries.DepartmentTeacherDetailsBean;
+import org.fenixedu.academic.dto.inquiries.DepartmentTeacherResultsResume;
+import org.fenixedu.academic.dto.inquiries.DepartmentUCResultsBean;
+import org.fenixedu.academic.dto.inquiries.TeacherShiftTypeGroupsResumeResult;
+import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.inquiries.InquiriesRoot;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.ResultClassification;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.publico.ViewTeacherInquiryPublicResults;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;

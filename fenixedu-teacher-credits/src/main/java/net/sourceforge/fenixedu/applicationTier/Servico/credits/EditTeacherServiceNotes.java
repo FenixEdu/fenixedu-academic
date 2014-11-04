@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.credits;
+package org.fenixedu.academic.service.services.credits;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
+import org.fenixedu.academic.service.filter.DepartmentAdministrativeOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.filter.DepartmentMemberAuthorizationFilter;
+import org.fenixedu.academic.service.filter.TeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.domain.teacher.TeacherServiceNotes;
 
 import org.apache.commons.lang.StringUtils;
 

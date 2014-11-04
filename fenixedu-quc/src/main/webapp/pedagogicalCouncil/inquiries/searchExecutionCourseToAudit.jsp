@@ -39,7 +39,7 @@
 </logic:present>
 <logic:notEmpty name="executionCoursesAudits">
 	<fr:view name="executionCoursesAudits">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">
+		<fr:schema bundle="INQUIRIES_RESOURCES" type="org.fenixedu.academic.domain.inquiries.ExecutionCourseAudit">
 			<fr:slot name="executionCourse.name" key="label.executionCourse.name" bundle="APPLICATION_RESOURCES"/>
 			<fr:slot name="teacherAuditor.person.name" key="teacher.docente" bundle="APPLICATION_RESOURCES"/>
 			<fr:slot name="studentAuditor.person.name" key="student" bundle="APPLICATION_RESOURCES"/>
@@ -77,13 +77,13 @@
 
 <fr:form action="/qucAudit.do?method=searchExecutionCourse">		
 	<fr:edit id="executionCourseSearchBean" name="executionCourseSearchBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.ExecutionCourseQucAuditSearchBean" bundle="APPLICATION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.dto.inquiries.ExecutionCourseQucAuditSearchBean" bundle="APPLICATION_RESOURCES">
 			<fr:slot name="executionPeriod" key="label.executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider"/>
 				<fr:property name="format" value="${semester}º Semestre ${executionYear.year}" />
 			</fr:slot>
 			<fr:slot name="executionDegree" key="label.executionDegree" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegree1stAnd2ndCycleProviderForExecutionCourseSearchBean" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionDegree1stAnd2ndCycleProviderForExecutionCourseSearchBean" />
 				<fr:property name="format" value="${presentationName}" />
 				<fr:property name="defaultText" value="label.inquiry.executionCoursesToImprove"/>
 				<fr:property name="key" value="true" />
@@ -100,7 +100,7 @@
 
 <logic:present name="executionCourses">
 	<fr:view name="executionCourses">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.ExecutionCourse">
 			<fr:slot name="departments" key="label.department" layout="flowLayout">
 				<fr:property name="eachSchema" value="show.department"/>
 				<fr:property name="eachLayout" value="values" />

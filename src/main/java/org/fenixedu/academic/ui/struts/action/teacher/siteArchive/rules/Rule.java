@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules;
+package org.fenixedu.academic.ui.struts.action.teacher.siteArchive.rules;
 
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
 
 /**
  * A <tt>Rule</tt> has the responsability of transforming urls present in a page

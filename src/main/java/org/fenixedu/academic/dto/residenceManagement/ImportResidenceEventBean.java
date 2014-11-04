@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
+package org.fenixedu.academic.dto.residenceManagement;
 
-import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
-import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
-import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SimpleFileBean;
+import org.fenixedu.academic.domain.residence.ResidenceMonth;
+import org.fenixedu.academic.domain.residence.ResidenceYear;
+import org.fenixedu.academic.ui.struts.action.webSiteManager.SimpleFileBean;
 
 public class ImportResidenceEventBean extends SimpleFileBean {
 

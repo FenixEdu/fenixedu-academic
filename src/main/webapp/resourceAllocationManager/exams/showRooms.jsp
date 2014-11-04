@@ -22,12 +22,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
  
 <html:form action="/roomSearch">
 		
-	<logic:iterate indexId="i" id="room" name="availableRooms" type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom">
+	<logic:iterate indexId="i" id="room" name="availableRooms" type="org.fenixedu.academic.dto.InfoRoom">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableRoomsId" property="availableRoomsId" value="<%= room.getExternalId().toString() %>" />
 	</logic:iterate>
 

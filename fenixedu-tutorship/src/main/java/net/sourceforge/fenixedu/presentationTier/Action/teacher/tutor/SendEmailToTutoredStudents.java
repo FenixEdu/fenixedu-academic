@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor;
+package org.fenixedu.academic.ui.struts.action.teacher.tutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +24,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorshipBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.util.email.PersonSender;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTutorApp;
+import org.fenixedu.academic.dto.teacher.tutor.StudentsByTutorBean;
+import org.fenixedu.academic.dto.teacher.tutor.TutorshipBean;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.domain.util.email.PersonSender;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.Sender;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
+import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherTutorApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

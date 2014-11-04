@@ -126,14 +126,14 @@ width: 1%;
 	
 	<div class="box">
 		<logic:equal name="campus" value="Alameda">
-			<p style="margin: 5px 0"><span class="label">Estabelecimento de ensino:</span> <span class="data"><%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></span> </p>
+			<p style="margin: 5px 0"><span class="label">Estabelecimento de ensino:</span> <span class="data"><%= org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></span> </p>
 			<p style="margin: 5px 0"><span class="label">Morada das actividades lectivas</span> <span class="data">Avenida Rovisco Pais, I</span> </p>
 			<p style="margin: 5px 0"><span class="label">Freguesia:</span> <span class="data">São João de Deus</span> <span class="label">Concelho:</span> <span class="data">Lisboa</span></p>
 			<p style="margin: 5px 0"><span class="label">Código Postal:</span> <span class="data">1049-001 Lisboa</span></p>
 			<p style="margin: 5px 0"><span class="label">Telefone:</span> <span class="data">21 841 70 00</span></p>
 		</logic:equal>
 		<logic:equal name="campus" value="Taguspark">
-			<p style="margin: 5px 0"><span class="label">Estabelecimento de ensino:</span> <span class="data"><%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></span></p>
+			<p style="margin: 5px 0"><span class="label">Estabelecimento de ensino:</span> <span class="data"><%= org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></span></p>
 			<p style="margin: 5px 0"><span class="label">Morada das actividades lectivas</span> <span class="data">Avenida Professor Cavaco Silva</span></p>
 			<p style="margin: 5px 0"><span class="label">Freguesia:</span> <span class="data">Porto Salvo</span> <span class="label">Concelho:</span> <span class="data">Oeiras</span></p>
 			<p style="margin: 5px 0"><span class="label">Código Postal:</span> <span class="data">2780-990 Oeiras</span></p>

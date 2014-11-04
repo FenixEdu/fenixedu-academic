@@ -105,8 +105,8 @@
 
 <br/>
 <br/>
-<fr:edit name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"
-		 schema="net.sourceforge.fenixedu.domain.ExecutionDegree.annotation">
+<fr:edit name="executionDegree" type="org.fenixedu.academic.domain.ExecutionDegree"
+		 schema="org.fenixedu.academic.domain.ExecutionDegree.annotation">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4"/>
 	    <fr:property name="columnClasses" value="listClasses,,"/>

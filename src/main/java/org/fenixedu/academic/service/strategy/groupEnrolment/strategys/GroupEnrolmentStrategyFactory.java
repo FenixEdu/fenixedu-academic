@@ -20,10 +20,10 @@
  * Created on 28/Jul/2003
  *
  */
-package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
+package org.fenixedu.academic.service.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo

@@ -16,19 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement;
+package org.fenixedu.academic.service.services.coordinator.degreeCurricularPlanManagement;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.CurrentDegreeCoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Curriculum;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.dto.InfoCurriculum;
+import org.fenixedu.academic.service.filter.CurrentDegreeCoordinatorAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

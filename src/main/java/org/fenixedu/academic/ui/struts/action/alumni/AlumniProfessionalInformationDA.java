@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.alumni;
+package org.fenixedu.academic.ui.struts.action.alumni;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.alumni.CreateProfessionalInformation;
-import net.sourceforge.fenixedu.applicationTier.Servico.alumni.DeleteProfessionalInformation;
-import net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditProfessionalInformation;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
-import net.sourceforge.fenixedu.domain.Job;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniApplication.AlumniProfessionalInfoApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Job;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.alumni.AlumniJobBean;
+import org.fenixedu.academic.service.services.alumni.CreateProfessionalInformation;
+import org.fenixedu.academic.service.services.alumni.DeleteProfessionalInformation;
+import org.fenixedu.academic.service.services.alumni.EditProfessionalInformation;
+import org.fenixedu.academic.ui.struts.action.alumni.AlumniApplication.AlumniProfessionalInfoApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

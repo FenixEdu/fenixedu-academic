@@ -43,8 +43,8 @@
 	<fr:form action="/evaluationMethodControl.do?method=search">
 		<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean1"
 				 name="executionCourseWithNoEvaluationMethodSearchBean"
-				 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
-				 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
+				 type="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+				 schema="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thright thmiddle thlight inobullet"/>
 	  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -70,8 +70,8 @@
 				<fr:form action="/evaluationMethodControl.do?method=exportToCSV">
 					<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean2"
 							 name="executionCourseWithNoEvaluationMethodSearchBean"
-							 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
-							 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
+							 type="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+							 schema="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
 					</fr:edit>
 					<html:submit><bean:message key="button.download.csv"/></html:submit>
 				</fr:form>
@@ -80,8 +80,8 @@
 				<fr:form action="/evaluationMethodControl.do?method=exportToXLS">
 					<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean3"
 							 name="executionCourseWithNoEvaluationMethodSearchBean"
-							 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
-							 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
+							 type="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+							 schema="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
 					</fr:edit>
 					<html:submit><bean:message key="button.download.xls"/></html:submit>
 				</fr:form>

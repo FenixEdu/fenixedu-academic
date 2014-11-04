@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.studentCurriculum;
+package org.fenixedu.academic.domain.studentCurriculum;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,14 +27,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
-import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
-import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
+import org.fenixedu.academic.domain.curricularRules.ImprovementOfApprovedEnrolment;
+import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
+import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
+import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
+import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends StudentCurricularPlanEnrolment {
 

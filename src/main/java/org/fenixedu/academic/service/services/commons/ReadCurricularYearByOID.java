@@ -21,11 +21,12 @@
  *
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.commons;
+package org.fenixedu.academic.service.services.commons;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.domain.CurricularYear;
+import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.dto.InfoCurricularYear;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

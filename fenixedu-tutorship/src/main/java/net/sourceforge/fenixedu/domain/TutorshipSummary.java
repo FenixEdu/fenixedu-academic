@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.CreateSummaryBean;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.CreateSummaryBean;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorshipSummaryRelationBean;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;

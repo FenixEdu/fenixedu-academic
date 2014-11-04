@@ -20,9 +20,9 @@
  * @(#)ExecutionCourseView.java Created on Nov 7, 2004
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.SchoolClass;
+import org.fenixedu.academic.domain.SchoolClass;
 
 /**
  * 

@@ -20,7 +20,7 @@
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
@@ -61,7 +61,7 @@
 	<fr:edit id="requestPublicPresentationSeminarComissionBean" name="requestPublicPresentationSeminarComissionBean" visible="false" />
 	
 	<fr:edit id="requestPublicPresentationSeminarComissionBean-generateAlert" name="requestPublicPresentationSeminarComissionBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean">
 			<fr:slot name="presentationRequestDate" required="true" />
 			<fr:slot name="generateAlert" layout="radio-postback">
 				<fr:property name="destination" value="postback"/>
@@ -81,7 +81,7 @@
 	<logic:equal name="requestPublicPresentationSeminarComissionBean" property="generateAlert" value="true">
 		<fr:edit id="requestPublicPresentationSeminarComissionBean-remarks"
 			name="requestPublicPresentationSeminarComissionBean">
-			<fr:schema type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
 				<fr:slot name="remarks" layout="longText">
 					<fr:property name="columns" value="80"/>
 					<fr:property name="rows" value="8"/>

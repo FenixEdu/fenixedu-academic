@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager;
+package org.fenixedu.academic.ui.renderers.providers.spaceManager;
 
 import java.text.Collator;
 import java.util.stream.Collectors;

@@ -16,24 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration;
+package org.fenixedu.academic.domain.phd.migration;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.BirthdayMismatchException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.GivenNameMismatchException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MultiplePersonFoundByDocumentIdException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonSearchByNameMismatchException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PossiblePersonCandidatesException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.SocialSecurityNumberMismatchException;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.BirthdayMismatchException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.GivenNameMismatchException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.MultiplePersonFoundByDocumentIdException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.PersonNotFoundException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.PersonSearchByNameMismatchException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.PossiblePersonCandidatesException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.SocialSecurityNumberMismatchException;
+import org.fenixedu.academic.dto.person.PersonBean;
 import org.joda.time.YearMonthDay;
 
 public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPersonalData_Base {

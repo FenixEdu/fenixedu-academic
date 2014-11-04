@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
+package org.fenixedu.academic.domain.phd.individualProcess.activities;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
-
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdParticipantBean;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 import org.fenixedu.bennu.core.domain.User;
 
 public class AddGuidingsInformation extends PhdIndividualProgramProcessActivity {

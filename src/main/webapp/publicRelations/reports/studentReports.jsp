@@ -46,7 +46,7 @@
 
 <fr:edit name="studentReportPredicate"
 		 schema="student.report.predicate"
-		 type="net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport$StudentReportPredicate"
+		 type="org.fenixedu.academic.service.services.student.reports.GenerateStudentReport$StudentReportPredicate"
 		 action="/studentReports.do?method=search"
 		 >
 	<fr:layout name="tabular">
@@ -59,7 +59,7 @@
 <br/>
 
 <logic:present name="job">
-	<bean:define id="job" name="job" type="net.sourceforge.fenixedu.domain.PublicRelationsStudentListQueueJob"/>
+	<bean:define id="job" name="job" type="org.fenixedu.academic.domain.PublicRelationsStudentListQueueJob"/>
 	<div class="success0" style="width:440px;">
 		<logic:present name="job" property="degreeType">
 			<p class="mvert05"><bean:message key="label.grp.request.listing.success.with.degreetype" bundle="APPLICATION_RESOURCES" arg0="<%= job.getExecutionYear().getYear().toString() %>" arg1="<%= job.getDegreeType().getLocalizedName().toString() %>"/></p>

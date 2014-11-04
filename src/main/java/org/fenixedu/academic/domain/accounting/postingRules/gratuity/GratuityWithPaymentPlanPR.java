@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
+package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,26 +27,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.Account;
-import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
-import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.Account;
+import org.fenixedu.academic.domain.accounting.AccountingTransaction;
+import org.fenixedu.academic.domain.accounting.EntryType;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.domain.accounting.PaymentPlan;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
+import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

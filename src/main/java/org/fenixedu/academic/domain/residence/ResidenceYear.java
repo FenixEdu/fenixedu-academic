@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.residence;
+package org.fenixedu.academic.domain.residence;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
-import net.sourceforge.fenixedu.util.Month;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.organizationalStructure.ResidenceManagementUnit;
+import org.fenixedu.academic.util.Month;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;

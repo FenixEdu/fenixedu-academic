@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
+package org.fenixedu.academic.ui.struts.action.departmentAdmOffice;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,11 +24,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeViewApp;
-import net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.ui.struts.action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeViewApp;
+import org.fenixedu.academic.ui.struts.action.directiveCouncil.SummariesControlAction;
 
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;

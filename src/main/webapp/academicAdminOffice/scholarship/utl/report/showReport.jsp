@@ -32,7 +32,7 @@
 	<p><strong><bean:message key="title.academicAdminOffice.scholarship.utl.report.failed.student.lines" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	
 	<fr:view name="erroneousStudentLines">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.StudentLine" 
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.StudentLine" 
 			bundle="ACADEMIC_OFFICE_RESOURCES" >
 			
 			<fr:slot name="institutionCode" />
@@ -74,7 +74,7 @@
 
 
 	<fr:view name="correctStudentLines">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.StudentLine" 
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.StudentLine" 
 			bundle="ACADEMIC_OFFICE_RESOURCES" >
 			
 			<fr:slot name="institutionCode" />

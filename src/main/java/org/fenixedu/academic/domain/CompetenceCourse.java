@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -33,27 +33,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.CompetenceCoursePredicates;
-import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
+import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
+import org.fenixedu.academic.domain.degreeStructure.RegimeType;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.CompetenceCoursePredicates;
+import org.fenixedu.academic.util.UniqueAcronymCreator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;

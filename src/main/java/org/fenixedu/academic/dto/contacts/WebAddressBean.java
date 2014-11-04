@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.contacts;
+package org.fenixedu.academic.dto.contacts;
 
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
-import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.contacts.PartyContactType;
+import org.fenixedu.academic.domain.contacts.WebAddress;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+
 import pt.ist.fenixframework.Atomic;
 
 public class WebAddressBean extends PartyContactBean {

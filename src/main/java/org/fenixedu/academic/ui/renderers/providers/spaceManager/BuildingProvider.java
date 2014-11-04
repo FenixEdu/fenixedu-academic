@@ -1,10 +1,9 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager;
+package org.fenixedu.academic.ui.renderers.providers.spaceManager;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean;
-
+import org.fenixedu.academic.dto.spaceManager.FindSpacesBean;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
 

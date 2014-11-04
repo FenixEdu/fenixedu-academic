@@ -25,8 +25,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 
-<%@ page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
-<%@ page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@ page import="org.fenixedu.academic.util.FenixDigestUtils"%>
+<%@ page import="org.fenixedu.academic.util.BundleUtil"%>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.remove.grades"/></h2>
 <logic:messagesPresent message="true">
@@ -72,7 +72,7 @@
 	</table>
 
 	<p class="mtop15 mbottom1">
-		<bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
+		<bean:define id="mark" name="markSheet" type="org.fenixedu.academic.domain.MarkSheet"/>
 		<bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
 		<span class="highlight1">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.checksum"/>: <bean:write name="checksum"/>

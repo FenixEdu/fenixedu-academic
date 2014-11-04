@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
+package org.fenixedu.academic.domain.candidacyProcess.standalone;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,22 +24,21 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
-
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessBean;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.caseHandling.StartActivity;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.period.StandaloneCandidacyPeriod;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 

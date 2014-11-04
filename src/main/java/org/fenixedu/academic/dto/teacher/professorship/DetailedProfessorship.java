@@ -20,16 +20,16 @@
  * Created on Dec 12, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.professorship;
+package org.fenixedu.academic.dto.teacher.professorship;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
+import org.fenixedu.academic.dto.DataTranferObject;
+import org.fenixedu.academic.dto.InfoCurricularCourse;
+import org.fenixedu.academic.dto.InfoDegree;
+import org.fenixedu.academic.dto.InfoProfessorship;
 
 /**
  * @author jpvl

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,25 +26,24 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseScopesByExecutionCourseID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByExecutionCourseID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SearchExecutionCourses;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
-import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMExecutionCoursesApp;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionCourseOccupancy;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.InfoShiftGroupStatistics;
+import org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean;
+import org.fenixedu.academic.service.services.commons.ReadCurricularCourseScopesByExecutionCourseID;
+import org.fenixedu.academic.service.services.commons.ReadExecutionCourseByOID;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadShiftsByExecutionCourseID;
+import org.fenixedu.academic.service.services.resourceAllocationManager.SearchExecutionCourses;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMExecutionCoursesApp;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

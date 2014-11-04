@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.enrolment;
+package org.fenixedu.academic.domain.enrolment;
 
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.degreeStructure.Context;
 
 public class ExternalDegreeEnrolmentWrapper extends EnroledEnrolmentWrapper {
 

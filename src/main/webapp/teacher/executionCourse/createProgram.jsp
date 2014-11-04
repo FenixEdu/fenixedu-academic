@@ -58,9 +58,9 @@
 		</logic:present>
 		<logic:notPresent name="curricularCourse" property="findLatestCurriculum">
 			<%
-			net.sourceforge.fenixedu.domain.ExecutionCourse executionCourse = (net.sourceforge.fenixedu.domain.ExecutionCourse) pageContext.findAttribute("executionCourse");
-			net.sourceforge.fenixedu.domain.CurricularCourse curricularCourse = (net.sourceforge.fenixedu.domain.CurricularCourse) pageContext.findAttribute("curricularCourse");
-			net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryInsertCurriculum curriculumFactoryInsertCurriculum = new net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryInsertCurriculum(curricularCourse, executionCourse); 
+			org.fenixedu.academic.domain.ExecutionCourse executionCourse = (org.fenixedu.academic.domain.ExecutionCourse) pageContext.findAttribute("executionCourse");
+			org.fenixedu.academic.domain.CurricularCourse curricularCourse = (org.fenixedu.academic.domain.CurricularCourse) pageContext.findAttribute("curricularCourse");
+			org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryInsertCurriculum curriculumFactoryInsertCurriculum = new org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryInsertCurriculum(curricularCourse, executionCourse); 
 			request.setAttribute("curriculumFactoryInsertCurriculum", curriculumFactoryInsertCurriculum);
 			%>
 			<fr:edit name="curriculumFactoryInsertCurriculum"

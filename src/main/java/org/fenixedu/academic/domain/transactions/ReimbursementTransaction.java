@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.transactions;
+package org.fenixedu.academic.domain.transactions;
 
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PersonAccount;
+import org.fenixedu.academic.domain.reimbursementGuide.ReimbursementGuideEntry;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

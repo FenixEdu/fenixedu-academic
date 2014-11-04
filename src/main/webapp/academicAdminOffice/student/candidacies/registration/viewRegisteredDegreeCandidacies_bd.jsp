@@ -29,13 +29,13 @@
 	
 	<fr:edit id="bean-edit" name="bean">
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" 
-			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.candidacy.registrations.RegisteredDegreeCandidaciesSelectionBean">
+			type="org.fenixedu.academic.ui.struts.action.administrativeOffice.student.candidacy.registrations.RegisteredDegreeCandidaciesSelectionBean">
 			<fr:slot name="executionYear" layout="menu-select" required="true" >
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
 			<fr:slot name="campus" layout="menu-select" required="true" >
-			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider" />
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.spaceManager.CampusProvider" />
 			<fr:property name="format" value="${name}" />
 			</fr:slot>
 			<fr:slot name="entryPhase" required="true" />
@@ -71,7 +71,7 @@
 		</p>
 		
 		<fr:view name="studentCandidacies">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacy.StudentCandidacy">
 				<fr:slot name="activeCandidacySituation.situationDate" key="label.registeredDegreeCandidacies.registrationDate" />
 				<fr:slot name="executionDegree.degree.nameI18N" key="label.registeredDegreeCandidacies.degreeName" />
 				<fr:slot name="registration.number" key="label.registeredDegreeCandidacies.studentNumber" />

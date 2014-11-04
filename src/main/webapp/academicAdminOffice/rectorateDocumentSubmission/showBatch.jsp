@@ -85,7 +85,7 @@
 <logic:notEmpty name="requests">
 	<fr:view name="requests">
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
-			type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry">
+			type="org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry">
 			<fr:slot name="registryCode.code" key="label.rectorateSubmission.registryCode" />
 			<fr:slot name="documentRequestType" key="label.rectorateSubmission.registryCode" />
 			<fr:slot name="requestedCycle" key="label.rectorateSubmission.requestedCycle" />

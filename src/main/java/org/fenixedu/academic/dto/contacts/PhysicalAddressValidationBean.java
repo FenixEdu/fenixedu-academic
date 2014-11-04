@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.contacts;
+package org.fenixedu.academic.dto.contacts;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
+import org.fenixedu.academic.domain.contacts.PartyContactValidationState;
+import org.fenixedu.academic.domain.contacts.PhysicalAddressValidation;
 
 public class PhysicalAddressValidationBean implements Serializable {
     private static final long serialVersionUID = 1L;

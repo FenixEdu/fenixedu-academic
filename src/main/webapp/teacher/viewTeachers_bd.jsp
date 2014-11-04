@@ -19,7 +19,7 @@
 
 --%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -29,7 +29,7 @@
 
 <div class="infoop2">
 	<bean:message key="label.teachers.explanation" />
-	<p><bean:message key="label.teachers.specialTeacherWarning" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></p>
+	<p><bean:message key="label.teachers.specialTeacherWarning" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></p>
 </div>
 
 <bean:define id="isResponsible" name="professorship" property="responsibleFor" />

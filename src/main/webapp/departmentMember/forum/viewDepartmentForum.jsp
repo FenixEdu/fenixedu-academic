@@ -28,7 +28,7 @@
 <h2><bean:message key="title.departmentForum"/></h2>
 
 <table>
-	<logic:iterate id="forum" name="foruns" type="net.sourceforge.fenixedu.domain.messaging.DepartmentForum">
+	<logic:iterate id="forum" name="foruns" type="org.fenixedu.academic.domain.messaging.DepartmentForum">
 		
 		<bean:size id="threadsCount" name="forum" property="conversationThreads"/>
 	

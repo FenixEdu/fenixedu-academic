@@ -26,13 +26,13 @@
 
 <%@ page import="java.util.Locale"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess"%>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess" %>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" %>
-<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess"%>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess" %>
+<%@ page import="org.fenixedu.academic.domain.person.RoleType" %>
 
 
-<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess"%><html:xhtml/>
 
 <%!
 	static String f(String value, Object ... args) {
@@ -48,7 +48,7 @@
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en">NCMI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -68,7 +68,7 @@
 	<p><span class="infoop2"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></span></p>
 	
 	<ul class="mbottom15">
-		<li><b>Passport photo</b> - The photo will be used to generate <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> student card.</li>
+		<li><b>Passport photo</b> - The photo will be used to generate <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%> student card.</li>
 		<li><b>Passport or identity card</b></li>
 		<li><b>Learning agreement</b> - The learning agreement will be available in your application process page after the form submission. You're required to download, sign, stamp and reupload the document.</li>
 		<li><b>Curriculum vitae</b></li>
@@ -92,5 +92,5 @@
 <p>Please note that the learning agreement must be signed and stamped by your school before you uploaded it.</p>
 
 <div class="h_box" id="contacts">
-	<bean:message key="erasmus.contacts.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
+	<bean:message key="erasmus.contacts.text" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
 </div>

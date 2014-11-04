@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
 
 <html:xhtml/>
 
@@ -215,7 +215,7 @@
 					<bean:write name="hash" property="email"/>
 				</td>
 				<td>
-					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas 1º Ciclo</a>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas 1ï¿½ Ciclo</a>
 				</td>
 				<td>
 					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/segundo_ciclo/submissao?hash=<%= code %>">Candidatura Segundo Ciclo</a>

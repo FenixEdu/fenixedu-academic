@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons;
+package org.fenixedu.academic.ui.struts.action.commons;
 
 import java.io.File;
 import java.io.InputStream;
@@ -27,22 +27,22 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.research.CreatePersistentGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.CreateUnitFile;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.DeletePersistentGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.EditPersistentGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile;
-import net.sourceforge.fenixedu.domain.UnitFile;
-import net.sourceforge.fenixedu.domain.UnitFileTag;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.PersistentGroupMembersBean;
-import net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.UnitFileBean;
-import net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.UnitFileUploadBean;
+import org.fenixedu.academic.service.services.research.CreatePersistentGroup;
+import org.fenixedu.academic.service.services.research.CreateUnitFile;
+import org.fenixedu.academic.service.services.research.DeletePersistentGroup;
+import org.fenixedu.academic.service.services.research.DeleteUnitFile;
+import org.fenixedu.academic.service.services.research.EditPersistentGroup;
+import org.fenixedu.academic.service.services.research.EditUnitFile;
+import org.fenixedu.academic.domain.UnitFile;
+import org.fenixedu.academic.domain.UnitFileTag;
+import org.fenixedu.academic.domain.accessControl.PersistentGroupMembers;
+import org.fenixedu.academic.domain.accessControl.PersistentGroupMembersType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.research.researchUnit.PersistentGroupMembersBean;
+import org.fenixedu.academic.ui.struts.action.research.researchUnit.UnitFileBean;
+import org.fenixedu.academic.ui.struts.action.research.researchUnit.UnitFileUploadBean;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

@@ -19,9 +19,9 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.injectionCode;
+package org.fenixedu.academic.predicate;
 
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.Person;
 
 public class IllegalDataAccessException extends RuntimeException {
     private static final long serialVersionUID = 2264135195805915798L;

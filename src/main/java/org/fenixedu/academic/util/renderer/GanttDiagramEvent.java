@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.renderer;
+package org.fenixedu.academic.util.renderer;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.DayType;
-
+import org.fenixedu.academic.util.DayType;
 import org.joda.time.Interval;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

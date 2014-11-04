@@ -20,9 +20,9 @@
  * Created on 6/Jul/2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.Curriculum;
+import org.fenixedu.academic.domain.Curriculum;
 
 /**
  * @author Tânia Pousão
@@ -34,7 +34,7 @@ public class InfoCurriculumWithInfoCurricularCourse extends InfoCurriculum {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum#copyFromDomain
+     * org.fenixedu.academic.dto.InfoCurriculum#copyFromDomain
      * (Dominio.Curriculum)
      */
     @Override

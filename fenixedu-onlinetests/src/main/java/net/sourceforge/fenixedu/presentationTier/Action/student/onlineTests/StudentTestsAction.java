@@ -20,7 +20,7 @@
  * Created on 27/Ago/2003
  */
 
-package net.sourceforge.fenixedu.presentationTier.Action.student.onlineTests;
+package org.fenixedu.academic.ui.struts.action.student.onlineTests;
 
 import java.io.OutputStream;
 import java.text.DecimalFormat;
@@ -35,40 +35,40 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuthorizedStudentToDoTestException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.CleanSubQuestions;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.GiveUpQuestion;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.InsertStudentTestResponses;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadExecutionCoursesByStudentTests;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTest;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTestQuestionImage;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.RegistrationDistributedTests;
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSubmitApp;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-import net.sourceforge.fenixedu.util.tests.CardinalityType;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.Response;
-import net.sourceforge.fenixedu.util.tests.ResponseLID;
-import net.sourceforge.fenixedu.util.tests.ResponseNUM;
-import net.sourceforge.fenixedu.util.tests.ResponseSTR;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.exceptions.tests.NotAuthorizedStudentToDoTestException;
+import org.fenixedu.academic.service.services.student.onlineTests.CleanSubQuestions;
+import org.fenixedu.academic.service.services.student.onlineTests.GiveUpQuestion;
+import org.fenixedu.academic.service.services.student.onlineTests.InsertStudentTestResponses;
+import org.fenixedu.academic.service.services.student.onlineTests.ReadExecutionCoursesByStudentTests;
+import org.fenixedu.academic.service.services.student.onlineTests.ReadStudentTest;
+import org.fenixedu.academic.service.services.student.onlineTests.ReadStudentTestQuestionImage;
+import org.fenixedu.academic.dto.comparators.CalendarDateComparator;
+import org.fenixedu.academic.dto.comparators.CalendarHourComparator;
+import org.fenixedu.academic.dto.onlineTests.InfoSiteStudentTestFeedback;
+import org.fenixedu.academic.dto.onlineTests.RegistrationDistributedTests;
+import org.fenixedu.academic.dto.student.RegistrationSelectExecutionYearBean;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.onlineTests.StudentTestLog;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentSubmitApp;
+import org.fenixedu.academic.util.report.ReportsUtils;
+import org.fenixedu.academic.util.tests.CardinalityType;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.Response;
+import org.fenixedu.academic.util.tests.ResponseLID;
+import org.fenixedu.academic.util.tests.ResponseNUM;
+import org.fenixedu.academic.util.tests.ResponseSTR;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -466,7 +466,7 @@ public class StudentTestsAction extends FenixDispatchAction {
                 studentTestLogs.add(studentTestLog);
                 byte[] data =
                         ReportsUtils.exportToPdfFileAsByteArray(
-                                "net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog.checksumReport", null,
+                                "org.fenixedu.academic.domain.onlineTests.StudentTestLog.checksumReport", null,
                                 studentTestLogs);
                 response.setContentType("application/pdf");
                 response.addHeader("Content-Disposition", "attachment; filename=" + studentTestLog.getStudent().getNumber()

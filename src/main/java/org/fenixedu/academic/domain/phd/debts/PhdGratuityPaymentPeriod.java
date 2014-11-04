@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.debts;
+package org.fenixedu.academic.domain.phd.debts;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;

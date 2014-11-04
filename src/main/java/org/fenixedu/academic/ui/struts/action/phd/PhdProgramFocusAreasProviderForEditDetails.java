@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
-
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PhdProgramFocusAreasProviderForEditDetails extends AbstractDomainObjectProvider {

@@ -16,13 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
+package org.fenixedu.academic.ui.struts.action.externalServices;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
@@ -32,6 +30,7 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.fenixedu.bennu.core.rest.SystemResource;
 import org.fenixedu.bennu.core.util.CoreConfiguration;

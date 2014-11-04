@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.studentCurriculum;
+package org.fenixedu.academic.domain.studentCurriculum;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
+import org.fenixedu.academic.domain.CurricularCourse;
 
 public class InternalCreditsSourceCurriculumGroup extends InternalCreditsSourceCurriculumGroup_Base {
 

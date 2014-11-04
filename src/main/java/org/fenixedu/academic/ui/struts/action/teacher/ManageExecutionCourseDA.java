@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package org.fenixedu.academic.ui.struts.action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,38 +28,37 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateLessonPlanning;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteLessonPlanning;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportBibliographicReferences;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportEvaluationMethod;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlannings;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.CreateLessonPlanningBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean.ImportType;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.LessonPlanning;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTeachingApp;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
-
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Curriculum;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.LessonPlanning;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.person.PersonBean;
+import org.fenixedu.academic.dto.teacher.CreateLessonPlanningBean;
+import org.fenixedu.academic.dto.teacher.ImportLessonPlanningsBean;
+import org.fenixedu.academic.dto.teacher.ImportLessonPlanningsBean.ImportType;
+import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
+import org.fenixedu.academic.service.services.enrollment.shift.EnrollStudentInShifts;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.teacher.CreateLessonPlanning;
+import org.fenixedu.academic.service.services.teacher.DeleteLessonPlanning;
+import org.fenixedu.academic.service.services.teacher.ImportBibliographicReferences;
+import org.fenixedu.academic.service.services.teacher.ImportEvaluationMethod;
+import org.fenixedu.academic.service.services.teacher.ImportLessonPlannings;
+import org.fenixedu.academic.service.services.teacher.MoveLessonPlanning;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherTeachingApp;
+import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;

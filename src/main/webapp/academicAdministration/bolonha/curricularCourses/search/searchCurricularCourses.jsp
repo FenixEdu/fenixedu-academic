@@ -36,17 +36,17 @@
 	<fr:edit id="searchBean" name="searchBean" visible="false" />
 	
 	<fr:edit id="searchBean-form" name="searchBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.manager.curricularCourses.SearchCurricularCourseBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="name" required="true" bundle="ACADEMIC_OFFICE_RESOURCES"
 					 key="label.net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean.name"/>
 			<fr:slot name="beginExecutionYear" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES"
 					 key="label.net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean.beginExecutionYear">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
 			<fr:slot name="endExecutionYear" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES"
 					 key="label.net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean.endExecutionYear">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
 		</fr:schema>
@@ -67,7 +67,7 @@
 
 <logic:notEmpty name="results">
 	<fr:view name="results">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.degreeStructure.Context">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.degreeStructure.Context">
 			<fr:slot name="childDegreeModule.nameI18N" />
 			<fr:slot name="beginExecutionPeriod.executionYear.name" />
 			<fr:slot name="beginExecutionPeriod.name" />

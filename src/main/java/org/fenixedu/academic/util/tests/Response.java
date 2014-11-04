@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.tests;
+package org.fenixedu.academic.util.tests;
 
-import net.sourceforge.fenixedu.util.FenixUtil;
+import org.fenixedu.academic.util.FenixUtil;
 
 /**
  * This is not compliant with what a value type should be, but take our word

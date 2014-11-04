@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.masterDegree;
+package org.fenixedu.academic.domain.masterDegree;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

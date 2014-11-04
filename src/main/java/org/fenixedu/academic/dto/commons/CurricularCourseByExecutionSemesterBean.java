@@ -16,14 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.commons;
+package org.fenixedu.academic.dto.commons;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class CurricularCourseByExecutionSemesterBean implements Serializable, Comparable<CurricularCourseByExecutionSemesterBean> {

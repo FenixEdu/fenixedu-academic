@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.report;
+package org.fenixedu.academic.domain.accounting.report;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.util.Money;
 import org.joda.time.LocalDate;
 
 public class GratuityReport {

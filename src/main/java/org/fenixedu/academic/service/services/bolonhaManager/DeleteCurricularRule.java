@@ -19,10 +19,11 @@
 /*
  * Created on Feb 6, 2006
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
+package org.fenixedu.academic.service.services.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

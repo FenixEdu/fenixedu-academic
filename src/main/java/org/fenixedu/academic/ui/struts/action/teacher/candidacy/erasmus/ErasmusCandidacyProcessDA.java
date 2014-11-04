@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus;
+package org.fenixedu.academic.ui.struts.action.teacher.candidacy.erasmus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,22 +25,21 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherMobilityApp;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
+import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherMobilityApp;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -57,7 +56,7 @@ import pt.ist.fenixframework.FenixFramework;
         formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp") })
 public class ErasmusCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

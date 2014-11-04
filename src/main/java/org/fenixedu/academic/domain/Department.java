@@ -26,7 +26,7 @@
  * @author Nuno Nunes & Joana Mota
  */
 
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -40,20 +40,19 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.messaging.DepartmentForum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.messaging.DepartmentForum;
+import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
@@ -284,7 +283,7 @@ public class Department extends Department_Base {
         if (StringUtils.isNumeric(departmentCode)) {
             final Unit unit = Unit.readByCostCenterCode(new Integer(departmentCode));
             if (unit != null) {
-                final net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit departmentUnit =
+                final org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit departmentUnit =
                         unit.getDepartmentUnit();
                 return departmentUnit == null ? null : departmentUnit.getDepartment();
             }

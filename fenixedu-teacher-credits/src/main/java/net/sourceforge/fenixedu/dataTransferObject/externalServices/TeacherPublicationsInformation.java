@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.externalServices;
+package org.fenixedu.academic.dto.externalServices;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import net.sourceforge.fenixedu.domain.Teacher;
+import org.fenixedu.academic.domain.Teacher;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;

@@ -40,7 +40,7 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.onlineTests.OnlineTest'}">
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.onlineTests.OnlineTest'}">
 				<h:outputText value="#{bundle['lable.test']}: "/>
 				<h:outputText value="<b>#{evaluationManagementBackingBean.evaluation.distributedTest.evaluationTitle}</b> " escape="false"/>
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">
@@ -52,7 +52,7 @@
 				</h:outputFormat>
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.WrittenTest'}">
 				<h:outputText value="#{bundle['label.written.test']}: " escape="false"/>
 				<h:outputText value="<b>#{evaluationManagementBackingBean.evaluation.description}</b> " escape="false"/>
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">
@@ -64,7 +64,7 @@
 				</h:outputFormat>
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}">
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.Exam'}">
 				<h:outputText value="#{bundle['label.exam']}: "/>
 				<h:outputText value="<b>#{evaluationManagementBackingBean.evaluation.season}</b>, " escape="false"/>
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">

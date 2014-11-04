@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components.util;
+package org.fenixedu.academic.ui.faces.components.util;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,14 +26,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.WrittenTest;
+import org.fenixedu.academic.util.Bundle;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 

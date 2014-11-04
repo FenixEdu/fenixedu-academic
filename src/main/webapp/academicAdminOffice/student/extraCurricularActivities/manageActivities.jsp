@@ -75,7 +75,7 @@
 <h3 class="mtop15 mbottom025"><bean:message key="label.addNewActivity" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 <fr:form action="/studentExtraCurricularActivities.do?method=createActivity">
     <fr:create schema="student.createExtraCurricularActivity"
-        type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity">
+        type="org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivity">
         <fr:hidden slot="student" name="student" />
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 thright thlight" />

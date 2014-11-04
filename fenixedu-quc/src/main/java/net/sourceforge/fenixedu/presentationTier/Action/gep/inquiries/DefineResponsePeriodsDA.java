@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
+package org.fenixedu.academic.ui.struts.action.gep.inquiries;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryDefinitionPeriodBean;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.dto.inquiries.InquiryDefinitionPeriodBean;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.inquiries.InquiryResponsePeriodType;
+import org.fenixedu.academic.domain.inquiries.InquiryTemplate;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

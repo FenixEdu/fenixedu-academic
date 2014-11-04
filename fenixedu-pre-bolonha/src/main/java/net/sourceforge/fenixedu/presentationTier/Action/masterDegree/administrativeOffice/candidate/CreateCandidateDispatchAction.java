@@ -20,7 +20,7 @@
  * Created on 14/Mar/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
+package org.fenixedu.academic.ui.struts.action.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,23 +29,23 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.CreateMasterDegreeCandidate;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.MasterDegreeOfficeApplication.MasterDegreeCandidatesApp;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate.CreateMasterDegreeCandidate;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidate;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.NonExistingActionException;
+import org.fenixedu.academic.ui.struts.action.masterDegree.administrativeOffice.MasterDegreeOfficeApplication.MasterDegreeCandidatesApp;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;

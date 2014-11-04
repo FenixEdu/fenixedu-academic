@@ -20,9 +20,9 @@
  * Created on 22/Mar/2004
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests;
+package org.fenixedu.academic.service.services.exceptions.tests;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 /**
  * @author Susana Fernandes

@@ -140,7 +140,7 @@
 					
 					<div class="period-edit">
 						<fr:edit name="period">
-							<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.OccupationPeriodBean" bundle="SOP_RESOURCES">
+							<fr:schema type="org.fenixedu.academic.dto.resourceAllocationManager.OccupationPeriodBean" bundle="SOP_RESOURCES">
 							<fr:slot name="occupationPeriodType" key="label.occupation.period.type">
 										<fr:property name="defaultOptionHidden" value="true"/>
 										<fr:property name="onChange" 
@@ -374,7 +374,7 @@
 						</div>
 						<div class="modal-body">
 							<fr:edit name="managementBean">
-								<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.PeriodsManagementBean">
+								<fr:schema bundle="SOP_RESOURCES" type="org.fenixedu.academic.dto.resourceAllocationManager.PeriodsManagementBean">
 									<fr:slot name="newPeriodType" layout="radio" key="label.occupation.period.type" />
 								</fr:schema>
 							</fr:edit>
@@ -399,7 +399,7 @@
 					<div class="modal-body">
 						<fr:form action="/periods.do?method=managePeriods">
 							<fr:edit id="managementBean2" name="managementBean">
-								<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.PeriodsManagementBean">
+								<fr:schema bundle="SOP_RESOURCES" type="org.fenixedu.academic.dto.resourceAllocationManager.PeriodsManagementBean">
 									<fr:slot name="executionYear" layout="menu-select-postback">
 										<fr:property name="from" value="years"/>
 										<fr:property name="format" value="\${year}" />

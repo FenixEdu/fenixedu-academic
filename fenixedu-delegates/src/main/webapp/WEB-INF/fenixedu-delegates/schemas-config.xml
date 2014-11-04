@@ -27,9 +27,9 @@
 
 <schemas>
 
-<schema name="elections.selectDegreeType" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.selectDegreeType" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degreeType" key="label.degreeType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
 		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="academicPeriod"/>
 		<property name="saveOptions" value="true" />
@@ -39,7 +39,7 @@
 </schema>
 
 <!-- SCHEMAS FOR CANDIDACY PERIODS -->
-<schema name="BOLONHA_MASTER_DEGREE.elections.createEditPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_MASTER_DEGREE.elections.createEditPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="firstYearLastCandidacyPeriod" key="label.firstYear" layout="null-as-label">
 		<property name="label" value="label.createPeriod" />
@@ -63,7 +63,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_DEGREE.elections.createEditPeriods" extends="BOLONHA_MASTER_DEGREE.elections.createEditPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_DEGREE.elections.createEditPeriods" extends="BOLONHA_MASTER_DEGREE.elections.createEditPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="thirdYearLastCandidacyPeriod" key="label.thirdYear" layout="null-as-label">
 		<property name="label" value="label.createPeriod" />
 		<property name="key" value="true"/>
@@ -76,7 +76,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.createEditPeriods" extends="BOLONHA_DEGREE.elections.createEditPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.createEditPeriods" extends="BOLONHA_DEGREE.elections.createEditPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="fourthYearLastCandidacyPeriod" key="label.fourthYear" layout="null-as-label">
 		<property name="label" value="label.createPeriod" />
@@ -100,7 +100,7 @@
 	</slot>
 </schema>
 
-<schema name="electionPeriod.resume" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.elections.DelegateElection">
+<schema name="electionPeriod.resume" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.elections.DelegateElection">
 	<slot name="candidacyPeriod" layout="delegate-election-period-link">
 		<property name="pastPeriodClasses" value="smalltxt color888" />
 		<property name="currentPeriodClasses" value="bold" />
@@ -121,7 +121,7 @@
 	</slot>
 </schema>
 
-<schema name="elections.singleElectionPeriod" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.singleElectionPeriod" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="curricularYear.year" key="label.curricularYear"	read-only="true" />
 	<slot name="startDate" key="label.startDate"> 
@@ -134,9 +134,9 @@
 	</slot>
 </schema>
 
-<schema name="elections.electionsPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.electionsPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="curricularYear" key="label.curricularYear" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
 		<property name="nullOptionHidden" value="true"/>
@@ -151,9 +151,9 @@
 	</slot>
 </schema>
 
-<schema name="elections.deleteElectionsPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.deleteElectionsPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="curricularYear" key="label.curricularYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
 		<property name="nullOptionHidden" value="false"/>
@@ -162,7 +162,7 @@
 
 
 <!-- SCHEMAS FOR VOTING PERIODS -->
-<schema name="BOLONHA_MASTER_DEGREE.elections.createEditVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_MASTER_DEGREE.elections.createEditVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="firstYearVotingPeriod" key="label.firstYear" layout="null-as-label">
 		<property name="label" value="-" />
@@ -176,7 +176,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_DEGREE.elections.createEditVotingPeriods" extends="BOLONHA_MASTER_DEGREE.elections.createEditVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_DEGREE.elections.createEditVotingPeriods" extends="BOLONHA_MASTER_DEGREE.elections.createEditVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="thirdYearVotingPeriod" key="label.thirdYear" layout="null-as-label">
 		<property name="label" value="-" />
 		<property name="subLayout" value="values"/>
@@ -184,7 +184,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.createEditVotingPeriods" extends="BOLONHA_DEGREE.elections.createEditVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.createEditVotingPeriods" extends="BOLONHA_DEGREE.elections.createEditVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="fourthYearVotingPeriod" key="label.fourthYear" layout="null-as-label">
 		<property name="label" value="-" />
@@ -198,7 +198,7 @@
 	</slot>
 </schema>
 
-<schema name="electionVotingPeriod.resume" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.elections.DelegateElection">
+<schema name="electionVotingPeriod.resume" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.elections.DelegateElection">
 	<slot name="lastElectionPeriod" layout="delegate-election-period-link">
 		<property name="pastPeriodClasses" value="smalltxt color888" />
 		<property name="currentPeriodClasses" value="bold" />
@@ -225,9 +225,9 @@
 	</slot>
 </schema>
 
-<schema name="elections.electionsVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.electionsVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="curricularYear" key="label.curricularYear" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
 		<property name="nullOptionHidden" value="true"/>
@@ -236,7 +236,7 @@
 	<slot name="endDate" key="label.endVotingDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 </schema>
 
-<schema name="elections.createSingleElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.createSingleElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="curricularYear.year" key="label.curricularYear"	read-only="true" />
 	<slot name="election.candidacyPeriod" layout="delegate-election-period" key="label.candidacyPeriod" read-only="true" >
@@ -252,7 +252,7 @@
 	 </slot>
 </schema>
 
-<schema name="elections.createSecondRoundElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean"  >
+<schema name="elections.createSecondRoundElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean"  >
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="curricularYear.year" key="label.curricularYear"	read-only="true" />
 	<slot name="election.candidacyPeriod" layout="delegate-election-period" key="label.candidacyPeriod" read-only="true" >
@@ -270,7 +270,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 	 </slot>
 </schema>
-<schema name="elections.editSingleElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.editSingleElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="curricularYear.year" key="label.curricularYear"	read-only="true" />
 	<slot name="election.candidacyPeriod" layout="delegate-election-period" key="label.candidacyPeriod" read-only="true" >
@@ -280,9 +280,9 @@
 	<slot name="endDate" key="label.endVotingDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 </schema>
 
-<schema name="elections.editElectionsVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.editElectionsVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="curricularYear" key="label.curricularYear" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
 		<property name="nullOptionHidden" value="true"/>
@@ -297,12 +297,12 @@
 	</slot>
 </schema>
 
-<schema name="elections.deleteElectionsVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.deleteElectionsVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="delegateElectionVotingPeriod" layout="menu-select"> 
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.elections.DelegateElectionVotingPeriodProvider"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.elections.DelegateElectionVotingPeriodProvider"/>
 	</slot>
 	<slot name="curricularYear" key="label.curricularYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.CurricularYearsGivenDegreeTypeProvider"/> 
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
 		<property name="nullOptionHidden" value="false"/>
@@ -310,7 +310,7 @@
 	<slot name="removeCandidacyPeriod" key="label.removeCandidacy" />
 </schema>
 
-<schema name="elections.deleteSingleElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.deleteSingleElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="curricularYear.year" key="label.curricularYear"	read-only="true" />
 	<slot name="election.candidacyPeriod" layout="delegate-election-period" key="label.candidacyPeriod" read-only="true" >
@@ -323,9 +323,9 @@
 </schema>
 
 <!-- SCHEMAS FOR ELECTIONS PERIODS CONSULTING -->
-<schema name="elections.selectDegreeTypeAndExecutionYear" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="elections.selectDegreeTypeAndExecutionYear" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degreeType" key="label.degreeType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
 		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="academicPeriod"/>
 		<property name="saveOptions" value="true" />
@@ -333,7 +333,7 @@
 		<property name="destination" value="post-back"/>
 	</slot>
 	<slot name="executionYear" key="label.executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/> 
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
 		<property name="saveOptions" value="true" />
@@ -342,7 +342,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_MASTER_DEGREE.elections.showCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_MASTER_DEGREE.elections.showCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="firstYearElections" key="label.firstYear" layout="flowLayout">
 		<property name="eachLayout" value="values"/>
@@ -362,7 +362,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_DEGREE.elections.showCandidacyPeriods" extends="BOLONHA_MASTER_DEGREE.elections.showCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_DEGREE.elections.showCandidacyPeriods" extends="BOLONHA_MASTER_DEGREE.elections.showCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="thirdYearElections" key="label.thirdYear" layout="flowLayout">
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="electionPeriod.candidates"/>
@@ -373,7 +373,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.showCandidacyPeriods" extends="BOLONHA_DEGREE.elections.showCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.showCandidacyPeriods" extends="BOLONHA_DEGREE.elections.showCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="fourthYearElections" key="label.fourthYear" layout="flowLayout">
 		<property name="eachLayout" value="values"/>
@@ -393,7 +393,7 @@
 	</slot>
 </schema>
 
-<schema name="electionPeriod.candidates" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.elections.DelegateElection">
+<schema name="electionPeriod.candidates" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.elections.DelegateElection">
 	<slot name="candidacyPeriod" layout="delegate-election-period">
 		<property name="currentPeriodClasses" value="bold" />
 		<property name="dateFormat" value="dd/MM/yyyy" />
@@ -407,12 +407,12 @@
 	</slot>
 </schema>
 
-<schema name="yearDelegateElection.candidates" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="yearDelegateElection.candidates" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.student.Student">
 	<slot name="number" key="label.studentNumber" />
 	<slot name="person.name" key="label.name" />
 </schema>
 
-<schema name="BOLONHA_MASTER_DEGREE.elections.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_MASTER_DEGREE.elections.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="firstYearElections" key="label.firstYear" layout="flowLayout">
 		<property name="eachLayout" value="values"/>
@@ -432,7 +432,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_DEGREE.elections.showVotingPeriods" extends="BOLONHA_MASTER_DEGREE.elections.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_DEGREE.elections.showVotingPeriods" extends="BOLONHA_MASTER_DEGREE.elections.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="thirdYearElections" key="label.thirdYear" layout="flowLayout">
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="electionPeriod.votingResults"/>
@@ -443,7 +443,7 @@
 	</slot>
 </schema>
 
-<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.showVotingPeriods" extends="BOLONHA_DEGREE.elections.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
+<schema name="BOLONHA_INTEGRATED_MASTER_DEGREE.elections.showVotingPeriods" extends="BOLONHA_DEGREE.elections.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean">
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="fourthYearElections" key="label.fourthYear" layout="flowLayout">
 		<property name="eachLayout" value="values"/>
@@ -463,7 +463,7 @@
 	</slot>
 </schema>
 
-<schema name="electionPeriod.votingResults" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.elections.DelegateElection">
+<schema name="electionPeriod.votingResults" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.elections.DelegateElection">
 	<slot name="lastVotingPeriod" layout="delegate-election-period">
 		<property name="currentPeriodClasses" value="bold" />
 		<property name="dateFormat" value="dd/MM/yyyy" />
@@ -477,7 +477,7 @@
 	</slot>
 </schema>
 
-<schema name="yearDelegateElection.showResults.completeInfo" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO">
+<schema name="yearDelegateElection.showResults.completeInfo" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.elections.DelegateElectionResultsByStudentDTO">
 	<slot name="student.number" key="label.studentNumber" />
 	<slot name="student.person.name" key="label.name" />
 	<slot name="student.person.email" key="label.email" layout="link" >
@@ -493,18 +493,18 @@
 	<slot name="votesRelativePercentage" key="label.votesRelativePercentage" />
 </schema>
 
-<schema name="student.mobilePhone.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone">
+<schema name="student.mobilePhone.number" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.contacts.MobilePhone">
 	<slot name="number"/>
 </schema>
 
-<schema name="yearDelegateElection.showResults" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO">
+<schema name="yearDelegateElection.showResults" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.elections.DelegateElectionResultsByStudentDTO">
 	<slot name="student.number" key="label.studentNumber" />
 	<slot name="student.person.name" key="label.name" />
 	<slot name="votesNumber" key="label.votes" />
 	<slot name="votesRelativePercentage" key="label.votesRelativePercentage" />
 </schema>
 
-<schema name="electionPeriod.showResults.resume" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="electionPeriod.showResults.resume" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degree.name" key="label.degree" read-only="true" />
 	<slot name="executionYear.year" key="label.selectedExecutionYear"	/>
 	<slot name="curricularYear.year" key="label.curricularYear"	/>
@@ -521,16 +521,16 @@
 	</slot>
 </schema>
 
-<schema name="election.secondRoundElections.candidates.show"  bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.NewRoundElectionBean">
+<schema name="election.secondRoundElections.candidates.show"  bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.NewRoundElectionBean">
 	<slot name="candidates" layout="tabular-option" schema="election.secondRoundElections.show">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.elections.NewRoundElectionsCandidatesProvider"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.elections.NewRoundElectionsCandidatesProvider"/>
 		<property name="classes" value="tstyle1 acenter"/>
 		<property name="columnClasses" value=",,width200px aleft,,width100px,width100px"/>
 		<property name="saveOptions" value="true"/>
 	</slot>
 </schema>
 
-<schema name="election.secondRoundElections.show"  bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="election.secondRoundElections.show"  bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.student.Student">
 		<slot name="number" key="label.studentNumber"/>
 		<slot name="person.name" key="label.name"/>
 		<slot name="nrVotesLastElection" key="label.votes"/>
@@ -539,9 +539,9 @@
 
 <!-- SCHEMAS FOR DELEGATES MANAGEMENT-->
 
-<schema name="delegates.selectDegreeTypeAndDegree" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegates.selectDegreeTypeAndDegree" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="degreeType" key="label.degreeType" layout="menu-select-postback" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
 		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="academicPeriod"/>
 		<property name="saveOptions" value="true" />
@@ -549,7 +549,7 @@
 		<property name="destination" value="post-back-degree-type"/>
 	</slot>
 	<slot name="degree" key="label.degree" layout="menu-select-postback" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreesGivenDegreeTypeForDelegatesManagement"/> 
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.DegreesGivenDegreeTypeForDelegatesManagement"/> 
 		<property name="format" value="${name}"/>
 		<property name="saveOptions" value="true" />
 		<property name="nullOptionHidden" value="true" />
@@ -557,7 +557,7 @@
 	</slot>
 </schema>
 
-<schema name="delegate.student" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegate.student" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="studentNumber" key="label.studentNumber" />
 	<slot name="studentName" key="label.name" />
 	<slot name="delegate" key="label.email" layout="null-as-label">
@@ -567,7 +567,7 @@
 	</slot>
 </schema>
 
-<schema name="delegates.delegatesFromDegree" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegates.delegatesFromDegree" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="delegateType" key="label.functionType"/>
 	<slot name="curricularYear" key="label.curricularYear" layout="null-as-label" >
 		<property name="label" value="-" />
@@ -593,7 +593,7 @@
 	</slot>
 </schema>
 
-<schema name="delegateFunctionDates" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" >
+<schema name="delegateFunctionDates" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.organizationalStructure.PersonFunction" >
 	<slot name="beginDate">
 		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year}" />
 	</slot>
@@ -602,22 +602,22 @@
 	</slot>
 </schema>
 
-<schema name="delegatesManagement.curricularYear.year" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.CurricularYear" >
+<schema name="delegatesManagement.curricularYear.year" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.CurricularYear" >
 	<slot name="year" />
 </schema>
 
-<schema name="student.person.email"  bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="student.person.email"  bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.student.Student">
 	<slot name="person.email" key="label.email" layout="link" >
 		<property name="useParent" value="true" />
 		<property name="linkFormat" value="mailto:${person.email}"/>
 	</slot>
 </schema>
 
-<schema name="student.person.name"  bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="student.person.name"  bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.student.Student">
 	<slot name="person.name" />
 </schema>
 
-<schema name="delegates.electionPeriod.resume" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
+<schema name="delegates.electionPeriod.resume" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degree.name" key="label.degree" read-only="true" />
 	<slot name="executionYear.year" key="label.executionYear"	/>
 	<slot name="curricularYear.year" key="label.curricularYear"	/>
@@ -634,7 +634,7 @@
 	</slot>
 </schema>
 
-<schema name="delegate.studentNumber" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegate.studentNumber" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="studentNumber" key="label.studentNumber">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -642,14 +642,14 @@
 	</slot>
 </schema>
 
-<schema name="delegate.insertNewDelegate" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegate.insertNewDelegate" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="delegateType" key="label.functionType" read-only="true" />
 	<slot name="studentNumber" key="label.studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator">
 		<property name="size" value="10" />
 	</slot>
 </schema>
 
-<schema name="delegate.insertNewYearDelegate" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegate.insertNewYearDelegate" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
 	<slot name="delegateType" key="label.functionType" read-only="true"/>
 	<slot name="curricularYear.year" key="label.curricularYear" read-only="true" />
 	<slot name="studentNumber" key="label.studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator">
@@ -657,7 +657,7 @@
 	</slot>
 </schema>
 
-<schema name="delegates.createEditGGAEDelegate.insertPersonUsername" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegates.createEditGGAEDelegate.insertPersonUsername" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="ggaeDelegateFunction.name" key="label.delegateRole" read-only="true"  />
 	<slot name="personUsername" key="label.username" layout="input-with-comment" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL"/>
@@ -666,12 +666,12 @@
 	</slot>
 </schema>
 
-<schema name="delegates.createEditGGAEDelegate.confirmPerson" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegates.createEditGGAEDelegate.confirmPerson" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="personUsername" key="label.username" read-only="true" />
 	<slot name="ggaeDelegate.name" key="label.name" read-only="true" />
 </schema>
 
-<schema name="delegates.ggaeDelegates" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
+<schema name="delegates.ggaeDelegates" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean" >
 	<slot name="ggaeDelegateFunction.name" key="label.delegateRole" />
 	<slot name="personUsername" key="label.username" layout="null-as-label">
 		<property name="label" value="-" />
@@ -686,30 +686,30 @@
 	</slot>
 </schema>
 
-<schema name="delegates.person.email"  bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="delegates.person.email"  bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.Person">
 	<slot name="email" key="label.email" layout="link" >
 		<property name="useParent" value="true" />
 		<property name="linkFormat" value="mailto:${email}"/>
 	</slot>
 </schema>
 
-<schema name="delegates.selectedDelegateType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.selectedDelegateType" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegateType" key="label.delegateType" />
 </schema>
 
-<schema name="delegates.selectedDelegateTypeAndYear" extends="delegates.selectedDelegateType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.selectedDelegateTypeAndYear" extends="delegates.selectedDelegateType" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="curricularYear.year" key="label.curricularYear" />
 </schema>
 
-<schema name="delegates.selectedDelegate.name" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.selectedDelegate.name" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegateName" key="label.name" />
 </schema>
 
-<schema name="delegates.selectedStudent.number" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.selectedStudent.number" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="studentNumber" key="label.studentNumber" />
 </schema>
 
-<schema name="delegates.selectedStudent.studentInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.selectedStudent.studentInfo" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegate.name" key="label.name" />
     <slot name="delegate.student.lastActiveRegistration.degreeName" key="label.degree" />
     <slot name="delegate.email" key="label.email" layout="link" >
@@ -723,7 +723,7 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.searchByNumber.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByNumber.delegateResume" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegateFunction.function.name" key="label.delegate.role" />
     <slot name="delegateType" key="label.delegateType" />
     <slot name="curricularYear" key="label.curricularYear" layout="null-as-label" >
@@ -737,11 +737,11 @@
     </slot>
 </schema>
 
-<schema name="delegate.mobilePhone.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone">
+<schema name="delegate.mobilePhone.number" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.contacts.MobilePhone">
     <slot name="number"/>
 </schema>
 
-<schema name="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegate.student.number" key="label.studentNumber" />
     <slot name="delegate.name" key="label.name" />
     <slot name="delegate.email" key="label.email" layout="link" >
@@ -750,7 +750,7 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.searchByDegree.delegateResume" extends="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByDegree.delegateResume" extends="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegate.mobilePhones" key="label.phone" layout="flowLayout">
         <property name="htmlSeparator" value="," />
         <property name="eachLayout" value="values" />
@@ -758,7 +758,7 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.delegateResume" extends="delegates.searchDelegates.searchByDegree.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.delegateResume" extends="delegates.searchDelegates.searchByDegree.delegateResume" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="degree.name" key="label.degree" />
     <slot name="delegateType" key="label.delegateType" />
     <slot name="curricularYear" key="label.curricularYear" layout="null-as-label" >
@@ -768,7 +768,7 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.searchByName.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByName.delegateResume" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegate.name" key="label.name" />
     <slot name="delegate.username" key="label.username" />
     <slot name="delegateType" key="label.delegateType" />
@@ -793,11 +793,11 @@
     </slot>
 </schema>
 
-<schema name="delegates.curricularYear.year" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.domain.CurricularYear" >
+<schema name="delegates.curricularYear.year" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.domain.CurricularYear" >
     <slot name="year" />
 </schema>
 
-<schema name="delegates.searchDelegates.searchByDelegateType.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByDelegateType.delegateResume" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegate.name" key="label.name" />
     <slot name="delegate.username" key="label.username" />
     <slot name="degreeName" key="label.degree" />
@@ -815,7 +815,7 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegatesForStudent.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegatesForStudent.delegateResume" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegateFunctionNameIfGgaeDelegate" key="label.delegate.role" />
     <slot name="delegate.name" key="label.name" />
     <slot name="delegate.username" key="label.username" />
@@ -827,9 +827,9 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.selectDegreeTypeAndDegree" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.selectDegreeTypeAndDegree" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="degreeType" key="label.degreeType" layout="menu-select-postback" >
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
         <property name="format" value="${localizedName}"/>
         <property name="sortBy" value="academicPeriod"/>
         <property name="saveOptions" value="true" />
@@ -837,20 +837,20 @@
         <property name="destination" value="post-back-degree-type"/>
     </slot>
     <slot name="degree" key="label.degree" layout="menu-select" >
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreesGivenDegreeTypeForDelegatesManagement"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil.DegreesGivenDegreeTypeForDelegatesManagement"/> 
         <property name="format" value="${name}"/>
         <property name="saveOptions" value="true" />
         <property name="nullOptionHidden" value="true" />
     </slot>
     <slot name="executionYear" key="label.executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/> 
         <property name="format" value="${year}"/>
         <property name="sortBy" value="year"/>
         <property name="nullOptionHidden" value="true"/>
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.searchByName" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByName" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegateName" key="label.name"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="45" />
     </slot>
@@ -859,16 +859,16 @@
     </slot> 
 </schema>
 
-<schema name="delegates.selectedExecutionYear" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.selectedExecutionYear" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="executionYear.year" key="label.executionYear" />
 </schema>
 
-<schema name="delegates.selectedDegreeTypeAndDegree" extends="delegates.selectedExecutionYear" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.selectedDegreeTypeAndDegree" extends="delegates.selectedExecutionYear" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="degreeName" key="label.degree" />
     <slot name="degreeType.localizedName" key="label.degreeType" />
 </schema>
 
-<schema name="delegates.searchDelegates.searchByNumber" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByNumber" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="studentNumber" key="label.studentNumber">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -879,9 +879,9 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.searchByDelegateType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.searchByDelegateType" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegateType" key="label.delegateType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.delegate.FunctionTypesForDelegates"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.delegate.FunctionTypesForDelegates"/> 
         <property name="eachLayout" value=""/>
     </slot>
     <slot name="delegateSearchType" key="label.delegateSearchType" layout="radio">
@@ -889,20 +889,20 @@
     </slot>
 </schema>
 
-<schema name="delegates.searchDelegates.selectDelegateYearType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="delegates.searchDelegates.selectDelegateYearType" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="delegateType" key="label.delegateType" read-only="true"/>
     <slot name="delegateSearchType" key="label.delegateSearchType" layout="radio">
         <property name="classes" value="nobullet liinline"/>
     </slot>
     <slot name="curricularYear" key="label.curricularYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearsProvider"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CurricularYearsProvider"/> 
         <property name="format" value="${year}"/>
         <property name="sortBy" value="year"/>
         <property name="nullOptionHidden" value="true"/>
     </slot>
 </schema>
 
-<schema name="delegates.showStudents.studentInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="delegates.showStudents.studentInfo" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.domain.student.Student">
     <slot name="number" key="label.studentNumber" />
     <slot name="person.name" key="label.name" />
     <slot name="person.email" key="label.email" layout="link" >
@@ -911,7 +911,7 @@
     </slot>
 </schema>
 
-<schema name="delegates.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
+<schema name="delegates.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.delegate.DelegateCurricularCourseBean">
     <slot name="curricularCourse.name" key="label.curricularCourse" layout="link" >
         <property name="useParent" value="true" />
         <property name="linkFormat" value="/viewStudents.do?method=showStudentsByCurricularCourse&amp;curricularCourseID=${curricularCourse.externalId}&amp;curricularYear=${curricularYear}&amp;executionPeriodOID=${executionPeriod.externalId}&amp;year=${executionPeriod.executionYear.year}"/>
@@ -923,35 +923,35 @@
     <slot name="enrolledStudentsNumber" key="label.studentsNumber" />
 </schema>
 
-<schema name="delegates.showStudents.selectedCurricularCourse" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
+<schema name="delegates.showStudents.selectedCurricularCourse" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.delegate.DelegateCurricularCourseBean">
     <slot name="curricularCourse.name" key="label.curricularCourse" />
     <slot name="curricularYear" key="label.curricularYear" />
     <slot name="curricularSemester" key="label.semester" />
 </schema>
 
-<schema name="delegates.sendMail.curricularCourse" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.domain.CurricularCourse">
+<schema name="delegates.sendMail.curricularCourse" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.domain.CurricularCourse">
     <slot name="name" key="label.curricularCourse" />
 </schema>
 
-<schema name="delegates.sendEmail.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
+<schema name="delegates.sendEmail.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.delegate.DelegateCurricularCourseBean">
     <slot name="curricularCourse.name" key="label.curricularCourse" />
     <slot name="curricularYear" key="label.curricularYear" />
     <slot name="curricularSemester" key="label.semester" />
     <slot name="enrolledStudentsNumber" key="label.studentsNumber" />
 </schema>
 
-<schema name="choose.execution.year" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
+<schema name="choose.execution.year" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.VariantBean">
     <slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider"/> 
         <property name="format" value="${year}"/>
         <property name="nullOptionHidden" value="true" />
         <property name="destination" value="postBackChooseExecutionYear"/>
     </slot>
 </schema>
 
-<schema name="choose.execution.year.domain.object" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
+<schema name="choose.execution.year.domain.object" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.VariantBean">
     <slot name="domainObject" key="label.executionYear" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider"/> 
         <property name="format" value="${year}"/>
         <property name="nullOptionHidden" value="true" />
         <property name="destination" value="postBackChooseExecutionYear"/>
@@ -961,31 +961,31 @@
     <slot name="presentationName" layout="label"/>
 </schema>
 
-<schema name="delegates.show.recipients" type="net.sourceforge.fenixedu.presentationTier.Action.delegate.GroupsBean">
+<schema name="delegates.show.recipients" type="org.fenixedu.academic.ui.struts.action.delegate.GroupsBean">
         <slot name="selected" layout="option-select" bundle="MESSAGING_RESOURCES" key="label.receiversGroup">
             <property name="saveOptions" value="true"/>
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DelegatesGroupsProvider"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DelegatesGroupsProvider"/>
             <property name="eachSchema" value="delegates.show.eachGroup"/>
             <property name="eachLayout" value="values"/>
             <property name="classes" value="nobullet noindent"/>
         </slot>
 </schema>
 
-<schema name="student.yearDelegateElection.candidates" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="student.yearDelegateElection.candidates" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.student.Student">
     <slot name="number" key="label.studentNumber" />
     <slot name="person.name" key="label.name" />
 </schema>
 
-<schema name="student.yearDelegateElection.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+<schema name="student.yearDelegateElection.vote" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.dto.student.elections.StudentVoteBean">
     <slot name="student"  key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearDelegateManagementProvider"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.YearDelegateManagementProvider"/>
         <property name="eachSchema" value="student.vote"/>
         <property name="eachLayout" value="values-dash" />
         
     </slot> 
 </schema>
 
-<schema name="student.yearDelegateElection.photo" bundle="APPLICATION_RESOURCES"  type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="student.yearDelegateElection.photo" bundle="APPLICATION_RESOURCES"  type="org.fenixedu.academic.domain.student.Student">
     <slot name="number">
         <property name="classes" value="column1"/>
     </slot> 
@@ -999,14 +999,14 @@
     </slot>     
 </schema>
 
-<schema name="student.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+<schema name="student.vote" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.student.Student">
     <slot name="number" read-only="true"/>
     <slot name="person.name" read-only="true"/>
 </schema>
 
-<schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+<schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.dto.student.elections.StudentVoteBean">
     <slot name="student" key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" >
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearCandidateDelegateManagementProvider"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.YearCandidateDelegateManagementProvider"/>
         <property name="eachSchema" value="student.yearDelegateElection.photo"/>
         <property name="eachLayout" value="values-dash" />
         <property name="nullOptionKey" value="label.elections.votingPeriod.blankVote" />
@@ -1014,7 +1014,7 @@
     </slot>
 </schema>
 
-<schema name="student.elections.electionPeriod" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+<schema name="student.elections.electionPeriod" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.elections.YearDelegateElection" >
     <slot name="degree.name" key="label.Degree" read-only="true" />
     <slot name="executionYear.year" key="label.executionYear"   />
     <slot name="curricularYear.year" key="label.curricularYear" />
@@ -1026,13 +1026,13 @@
     </slot>
 </schema>
 
-<schema name="student.candidated.year.delegate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+<schema name="student.candidated.year.delegate" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.elections.YearDelegateElection" >
     <slot name="degree.name" key="label.Degree" read-only="true" />
     <slot name="executionYear.year" key="label.executionYear"   />
     <slot name="curricularYear.year" key="label.curricularYear" />
 </schema>
 
-<schema name="student.delegates.yearDelegate" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+<schema name="student.delegates.yearDelegate" type="org.fenixedu.academic.domain.student.Student" bundle="APPLICATION_RESOURCES">
     <slot name="person.name" key="label.name" />
     <slot name="number" key="label.studentNumber"/>
     <slot name="person.email" key="label.email" layout="link">
@@ -1041,14 +1041,14 @@
     </slot>
 </schema>
 
-<schema name="student.yearDelegateElection.showResults" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO">
+<schema name="student.yearDelegateElection.showResults" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.elections.DelegateElectionResultsByStudentDTO">
     <slot name="student.number" key="label.student.elections.results.studentNumber" />
     <slot name="student.person.name" key="label.name" />
     <slot name="votesNumber" key="label.student.elections.results.votes" />
     <!--<slot name="votesRelativePercentage" key="label.student.elections.results.votesRelativePercentage" />-->
 </schema>
 
-<schema name="student.electionPeriod.showResults.resume" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+<schema name="student.electionPeriod.showResults.resume" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.elections.YearDelegateElection" >
     <slot name="degree.name" key="label.Degree" read-only="true" />
     <slot name="executionYear.year" key="label.executionYear"   />
     <slot name="curricularYear.year" key="label.curricularYear" />
@@ -1065,16 +1065,16 @@
     </slot>
 </schema>
 
-<schema name="student.searchDelegates.selectDegreeTypeAndDegree" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+<schema name="student.searchDelegates.selectDegreeTypeAndDegree" bundle="DELEGATES_RESOURCES" type="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean" >
     <slot name="executionYear" key="label.executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/> 
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/> 
         <property name="format" value="${year}"/>
         <property name="sortBy" value="year=desc"/>
         <property name="nullOptionHidden" value="true"/>
         <property name="destination" value="post-back-executionyear"/>
     </slot>
     <slot name="degreeType" key="label.degreeType" layout="menu-select-postback" >
-        <property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean$DegreeTypesGivenExecutionYear"/> 
+        <property name="providerClass" value="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean$DegreeTypesGivenExecutionYear"/> 
         <property name="format" value="${localizedName}"/>
         <property name="sortBy" value="academicPeriod"/>
         <property name="saveOptions" value="true" />
@@ -1082,7 +1082,7 @@
         <property name="destination" value="post-back-degree-type"/>
     </slot>
     <slot name="degree" key="label.degree" layout="menu-select-postback" >
-        <property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean$DegreesGivenDegreeType"/> 
+        <property name="providerClass" value="org.fenixedu.academic.dto.commons.delegates.DelegateSearchBean$DegreesGivenDegreeType"/> 
         <property name="format" value="${name}"/>
         <property name="sortBy" value="name"/>
         <property name="saveOptions" value="true" />

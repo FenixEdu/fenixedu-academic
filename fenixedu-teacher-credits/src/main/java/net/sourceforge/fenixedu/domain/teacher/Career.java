@@ -20,7 +20,7 @@
  * Created on 13/Nov/2003
  *  
  */
-package net.sourceforge.fenixedu.domain.teacher;
+package org.fenixedu.academic.domain.teacher;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,9 +29,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.CareerType;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;

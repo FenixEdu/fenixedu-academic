@@ -20,7 +20,7 @@
 --%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry"%>
+<%@page import="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>

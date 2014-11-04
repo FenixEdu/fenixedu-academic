@@ -40,7 +40,7 @@
 	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<table>
 		<!-- CurricularCourse -->
-		<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
+		<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="org.fenixedu.academic.dto.InfoCurricularCourse">
 		   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
 				<tr>
 					<td>

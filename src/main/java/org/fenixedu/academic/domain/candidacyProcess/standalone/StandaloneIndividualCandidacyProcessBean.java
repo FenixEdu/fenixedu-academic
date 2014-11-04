@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
+package org.fenixedu.academic.domain.candidacyProcess.standalone;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean;
-import net.sourceforge.fenixedu.dataTransferObject.commons.SearchCurricularCourseByDegree;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
+import org.fenixedu.academic.dto.commons.SearchCurricularCourseByDegree;
 import org.joda.time.LocalDate;
 
 public class StandaloneIndividualCandidacyProcessBean extends IndividualCandidacyProcessBean {

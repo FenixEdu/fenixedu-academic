@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student;
+package org.fenixedu.academic.domain.student;
 
-import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
+import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 
 public class StudentDataShareStudentsAssociationAuthorization extends StudentDataShareStudentsAssociationAuthorization_Base {
 

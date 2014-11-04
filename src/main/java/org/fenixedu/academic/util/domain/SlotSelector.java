@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.domain;
+package org.fenixedu.academic.util.domain;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.apache.commons.beanutils.PropertyUtils;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import pt.ist.fenixframework.core.WriteOnReadError;
 

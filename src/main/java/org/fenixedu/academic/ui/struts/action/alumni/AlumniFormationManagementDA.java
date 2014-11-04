@@ -16,25 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.alumni;
+package org.fenixedu.academic.ui.struts.action.alumni;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.alumni.CreateFormation;
-import net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditFormation;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormationBean;
-import net.sourceforge.fenixedu.domain.EducationArea;
-import net.sourceforge.fenixedu.domain.Formation;
-import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniApplication.AlumniFormationApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.EducationArea;
+import org.fenixedu.academic.domain.Formation;
+import org.fenixedu.academic.domain.Qualification;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.alumni.formation.AlumniFormation;
+import org.fenixedu.academic.dto.alumni.formation.AlumniFormationBean;
+import org.fenixedu.academic.service.services.alumni.CreateFormation;
+import org.fenixedu.academic.service.services.alumni.EditFormation;
+import org.fenixedu.academic.service.services.person.qualification.DeleteQualification;
+import org.fenixedu.academic.ui.struts.action.alumni.AlumniApplication.AlumniFormationApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

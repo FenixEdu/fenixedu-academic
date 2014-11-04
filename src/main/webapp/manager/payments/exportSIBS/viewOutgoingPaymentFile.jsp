@@ -28,7 +28,7 @@
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.sibs.outgoing.payment.file.detail" /></h2>
 
 <fr:view	name="sibsPaymentFile" >
-	<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentFile">
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.events.export.SIBSOutgoingPaymentFile">
 		<fr:slot name="filename" key="label.sibs.outgoing.payment.file.name" />
 		<fr:slot name="uploadTime" key="label.sibs.outgoing.payment.upload.time" />
 		<fr:slot name="successfulSentDate" key="label.sibs.outgoing.payment.successfulSent" />

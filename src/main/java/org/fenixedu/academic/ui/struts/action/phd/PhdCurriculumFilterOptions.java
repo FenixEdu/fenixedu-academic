@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType;
-import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType;
-import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType;
+import org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType;
+import org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

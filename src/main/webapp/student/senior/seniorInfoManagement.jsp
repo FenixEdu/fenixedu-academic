@@ -31,7 +31,7 @@
 	<h2><bean:message key="label.title.seniorInfo"/></h2>
 	
 	<logic:empty name="senior">
-		<bean:message key="error.senior.studentNotASenior" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
+		<bean:message key="error.senior.studentNotASenior" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 	</logic:empty>
 
 	<logic:notEmpty name="senior">

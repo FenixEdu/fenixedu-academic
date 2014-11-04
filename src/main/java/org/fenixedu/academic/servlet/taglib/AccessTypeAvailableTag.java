@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.phd;
+package org.fenixedu.academic.servlet.taglib;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.taglib.logic.ConditionalTagBase;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.access.PhdProcessAccessType;
 
 public class AccessTypeAvailableTag extends ConditionalTagBase {
 

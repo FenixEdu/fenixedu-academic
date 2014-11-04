@@ -20,12 +20,12 @@
  * Created on Oct 24, 2003
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
+package org.fenixedu.academic.dto.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.dto.DataTranferObject;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
 
 /**
  * @author Susana Fernandes

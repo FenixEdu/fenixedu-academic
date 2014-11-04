@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,20 +27,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.student.YearDelegate;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.inquiries.CurricularCourseInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.DelegateInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryDelegateAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.InquiryResultComment;
+import org.fenixedu.academic.domain.inquiries.QuestionAnswer;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.domain.student.YearDelegate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

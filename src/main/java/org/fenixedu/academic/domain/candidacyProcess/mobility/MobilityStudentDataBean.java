@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
+package org.fenixedu.academic.domain.candidacyProcess.mobility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.SchoolLevelType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgramme;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.SchoolLevelType;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.TypeOfProgramme;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.TypeOfProgrammeList;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.joda.time.LocalDate;
 
 public class MobilityStudentDataBean implements Serializable {

@@ -61,7 +61,7 @@
 
 		<fr:view name="phdEventExemption">
 
-			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemption">
+			<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdEventExemption">
 				<fr:slot name="description" />
 				<fr:slot name="value" />
 				<fr:slot name="exemptionJustification.dispatchDate" key="label.net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemption.exemptionJustification.dispatchDate"/>

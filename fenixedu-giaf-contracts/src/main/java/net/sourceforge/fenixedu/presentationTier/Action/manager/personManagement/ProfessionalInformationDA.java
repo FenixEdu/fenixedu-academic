@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
+package org.fenixedu.academic.ui.struts.action.manager.personManagement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,22 +24,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonAbsence;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonFunctionsAccumulation;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonGrantOwnerEquivalent;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalContract;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRegime;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRelation;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonSabbatical;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonServiceExemption;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.domain.Employee;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.Contract;
+import org.fenixedu.academic.domain.personnelSection.contracts.GiafProfessionalData;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonAbsence;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonContractSituation;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonFunctionsAccumulation;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonGrantOwnerEquivalent;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalCategory;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalContract;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalExemption;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalRegime;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalRelation;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonSabbatical;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonServiceExemption;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

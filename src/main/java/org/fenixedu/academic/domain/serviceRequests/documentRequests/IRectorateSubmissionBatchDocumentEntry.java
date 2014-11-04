@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
+package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.documents.GeneratedDocument;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
+import org.fenixedu.academic.domain.student.Student;
 
 public interface IRectorateSubmissionBatchDocumentEntry {
     public RegistryCode getRegistryCode();

@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission;
+package org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.curriculum.CurriculumValidationEvaluationPhase;
+import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class MarkSheetEnrolmentEvaluationBean implements Serializable {

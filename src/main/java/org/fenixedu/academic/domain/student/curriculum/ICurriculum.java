@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student.curriculum;
+package org.fenixedu.academic.domain.student.curriculum;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 
 public interface ICurriculum {
 

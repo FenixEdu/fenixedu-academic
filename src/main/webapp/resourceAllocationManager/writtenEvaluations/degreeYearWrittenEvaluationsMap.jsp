@@ -51,7 +51,7 @@
                
                 <bean:define id="semester" type="java.lang.Integer" name="semester" />
 
-				<bean:define id="degreeCurricularPlan" name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
+				<bean:define id="degreeCurricularPlan" name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan"/>
 			</strong>
 			<br/>
 			<bean:define id="iS"><%= i + 1 %></bean:define>
@@ -88,8 +88,8 @@
 					<logic:iterate id="evaluation" name="executionCourse" property="orderedAssociatedEvaluations">
 						<bean:define id="className" name="evaluation" property="class.name"/>
 						<% if (evaluationType == null || evaluationType.length() == 0 || evaluationType.equals(className)) { %>
-						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.WrittenTest">
-							<bean:define id="writtenTest" name="evaluation" type="net.sourceforge.fenixedu.domain.WrittenTest"/>
+						<logic:equal name="className" value="org.fenixedu.academic.domain.WrittenTest">
+							<bean:define id="writtenTest" name="evaluation" type="org.fenixedu.academic.domain.WrittenTest"/>
 							<% if (writtenTest.hasScopeFor(year, semester, degreeCurricularPlan)) { %>
 							<tr>
 								<td>
@@ -124,8 +124,8 @@
 							</tr>
 							<% } %>
 						</logic:equal>
-						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.Exam">
-							<bean:define id="writtenTest" name="evaluation" type="net.sourceforge.fenixedu.domain.Exam"/>
+						<logic:equal name="className" value="org.fenixedu.academic.domain.Exam">
+							<bean:define id="writtenTest" name="evaluation" type="org.fenixedu.academic.domain.Exam"/>
 							<% if (writtenTest.hasScopeFor(year, semester, degreeCurricularPlan)) { %>
 							<tr>
 								<td>

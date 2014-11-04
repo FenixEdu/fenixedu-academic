@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.manager;
+package org.fenixedu.academic.ui.struts.action.coordinator.manager;
 
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencyPlanDA;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerBolonhaTransitionApp;
-
+import org.fenixedu.academic.ui.struts.action.coordinator.EquivalencyPlanDA;
+import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerBolonhaTransitionApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="java.util.Calendar" %>
-<%@ page import="net.sourceforge.fenixedu.util.Mes" %>
+<%@ page import="org.fenixedu.academic.util.Mes" %>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="infoWebSiteSection">
 	<table width="100%" align="center">

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
+package org.fenixedu.academic.dto.teacher.executionCourse;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,15 +25,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
-
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;

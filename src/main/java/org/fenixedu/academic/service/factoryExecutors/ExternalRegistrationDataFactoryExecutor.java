@@ -19,13 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
+package org.fenixedu.academic.service.factoryExecutors;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
-import net.sourceforge.fenixedu.dataTransferObject.student.ExternalRegistrationDataBean;
-import net.sourceforge.fenixedu.domain.student.ExternalRegistrationData;
+import org.fenixedu.academic.domain.student.ExternalRegistrationData;
+import org.fenixedu.academic.dto.student.ExternalRegistrationDataBean;
+import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

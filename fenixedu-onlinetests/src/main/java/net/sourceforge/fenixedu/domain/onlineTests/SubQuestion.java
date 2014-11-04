@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.tests.QuestionOption;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
+import org.fenixedu.academic.util.tests.QuestionOption;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
 
 import org.apache.struts.util.LabelValueBean;
 

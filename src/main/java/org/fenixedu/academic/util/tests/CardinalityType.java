@@ -20,14 +20,13 @@
  * Created on 8/Apr/2004
  */
 
-package net.sourceforge.fenixedu.util.tests;
+package org.fenixedu.academic.util.tests;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.FenixUtil;
-
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.util.FenixUtil;
 
 /**
  * @author Susana Fernandes

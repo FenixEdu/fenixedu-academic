@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
+package org.fenixedu.academic.domain.candidacyProcess.standalone;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState;
 
 public class StandaloneIndividualCandidacyResultBean implements Serializable {
 

@@ -27,7 +27,7 @@
 <%@page import="org.apache.struts.action.ActionMessages" %>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <%@ page import="java.util.Locale"%>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType"%>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType"%>
 
 <%!
 	static String f(String value, Object ... args) {
@@ -65,7 +65,7 @@
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -127,7 +127,7 @@
 		</fr:edit>
 		
 		<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-		<p><em>Specify the date of arrival and departure. Also specify the types of study you're going to do at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>.</em></p>
+		<p><em>Specify the date of arrival and departure. Also specify the types of study you're going to do at <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>.</em></p>
 		<fr:edit	id="erasmusIndividualCandidacyProcessBean.period.of.study"
 					name="individualCandidacyProcessBean"
 					schema="ErasmusIndividualCandidacyProcess.period.of.study.edit" >

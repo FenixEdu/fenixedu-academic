@@ -20,11 +20,11 @@
  * @(#)ExecutionCourseView.java Created on Nov 5, 2004
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
 
 /**
  * 

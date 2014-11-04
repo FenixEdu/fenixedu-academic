@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.academicAdministration;
+package org.fenixedu.academic.dto.academicAdministration;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
-import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.student.RegistrationRegimeType;
+import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 
 /**
  * 

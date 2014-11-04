@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher;
+package org.fenixedu.academic.domain.teacher;
 
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;

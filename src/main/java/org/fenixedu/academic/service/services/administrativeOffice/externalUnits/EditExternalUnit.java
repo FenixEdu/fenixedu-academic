@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits;
+package org.fenixedu.academic.service.services.administrativeOffice.externalUnits;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalUnitBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.EditExternalUnitBean;
+
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 

@@ -64,7 +64,7 @@
 <%-- ### List of Process States ### --%>
 <strong><bean:message key="label.phd.states" bundle="PHD_RESOURCES" /></strong>
 <fr:view name="process" property="states">
-	<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState" bundle="PHD_RESOURCES" >
+	<fr:schema type="org.fenixedu.academic.domain.phd.PhdProgramProcessState" bundle="PHD_RESOURCES" >
 		<fr:slot name="whenCreated" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.whenCreated" />
 		<fr:slot name="stateDate" layout="null-as-label"/>
 		<fr:slot name="type.localizedName" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.type" />
@@ -93,9 +93,9 @@
 <fr:form action="<%= "/publicPresentationSeminarProcess.do?method=addState&processId=" + processId %>">
 
 	<fr:edit id="processBean" name="processBean" >
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
 			<fr:slot name="processState" required="true" layout="menu-select" >
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PublicPresentationSeminarStateProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.providers.PublicPresentationSeminarStateProvider" />
 				<fr:property name="format" value="${localizedName}" />
 			</fr:slot>
 			<fr:slot name="stateDate" required="true" >

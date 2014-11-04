@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.serviceRequests;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,28 +32,27 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
-import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
-import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.IDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch;
+import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
+import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

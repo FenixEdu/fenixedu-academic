@@ -43,8 +43,8 @@
       <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <action forward="/manageSpaces.do?method=viewSpaces" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/index"></action>
-            <action forward="show-create-space-form" scope="request" name="spaceContextForm" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/showCreateSpaceForm"></action>
+            <action forward="/manageSpaces.do?method=viewSpaces" type="org.fenixedu.academic.ui.struts.action.commons.VoidAction" path="/index"></action>
+            <action forward="show-create-space-form" scope="request" name="spaceContextForm" type="org.fenixedu.academic.ui.struts.action.commons.VoidAction" path="/showCreateSpaceForm"></action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>

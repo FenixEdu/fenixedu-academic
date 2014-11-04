@@ -19,7 +19,7 @@
 
 --%>
 <%@ page language="java"%>
-<%@ page import="net.sourceforge.fenixedu.domain.ScientificCouncilSite"%>
+<%@ page import="org.fenixedu.academic.domain.ScientificCouncilSite"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -54,7 +54,7 @@
 	<th><bean:message key="label.authorized.by"/></th>
 </tr>
 <logic:iterate id="obj" name="auths">
-<bean:define id="auth" name="obj" type="net.sourceforge.fenixedu.domain.TeacherAuthorization" />
+<bean:define id="auth" name="obj" type="org.fenixedu.academic.domain.TeacherAuthorization" />
 <tr>
 <td>
 	<bean:write name="auth" property="teacher.person.user.username"/>

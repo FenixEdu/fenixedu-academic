@@ -20,9 +20,9 @@
  * Created on 8/Jul/2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.GratuityValues;
+import org.fenixedu.academic.domain.GratuityValues;
 
 /**
  * @author Tânia Pousão
@@ -34,7 +34,7 @@ public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValue
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues#copyFromDomain
+     * org.fenixedu.academic.dto.InfoGratuityValues#copyFromDomain
      * (Dominio.GratuityValues)
      */
     @Override

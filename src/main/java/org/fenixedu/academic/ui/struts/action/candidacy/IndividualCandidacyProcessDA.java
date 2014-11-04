@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
+package org.fenixedu.academic.ui.struts.action.candidacy;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,37 +26,36 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
-import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import org.fenixedu.academic.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
+import org.fenixedu.academic.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.caseHandling.Process;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
+import org.fenixedu.academic.dto.person.ChoosePersonBean;
+import org.fenixedu.academic.dto.person.PersonBean;
+import org.fenixedu.academic.service.services.caseHandling.CreateNewProcess;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.casehandling.CaseHandlingDispatchAction;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.security.Authenticate;
 

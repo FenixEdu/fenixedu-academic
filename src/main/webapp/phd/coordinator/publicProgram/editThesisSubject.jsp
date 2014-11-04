@@ -29,7 +29,7 @@
 
 <h2><bean:message key="label.phd.focusAreas" bundle="PHD_RESOURCES" /></h2>
 
-<bean:define id="focusArea" name="focusArea" type="net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea"/>
+<bean:define id="focusArea" name="focusArea" type="org.fenixedu.academic.domain.phd.PhdProgramFocusArea"/>
 
 <%--  ### Error Messages  ### --%>
 <jsp:include page="/phd/errorsAndMessages.jsp" />
@@ -42,7 +42,7 @@
 
 <fr:form action="<%= String.format("/candidacies/phdProgramCandidacyProcess.do?method=editThesisSubject&focusAreaId=%s&thesisSubjectId=%s", focusAreaId, thesisSubjectId) %>">
 	<fr:edit id="bean" name="bean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$ThesisSubjectBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.ui.struts.action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$ThesisSubjectBean">
 			<fr:slot name="name" key="label.phd.name" >
 				<fr:property name="size" value="80" />
 				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator" />
@@ -51,7 +51,7 @@
 				<fr:property name="size" value="80"/>
 				<fr:property name="labelField" value="person.name"/>
 				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachers"/>
+				<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchTeachers"/>
 				<fr:property name="args" value="slot=person.name"/>
 				<fr:property name="minChars" value="3"/>
 				<fr:property name="errorStyleClass" value="error0"/>

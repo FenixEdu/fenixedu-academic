@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.validators;
+package org.fenixedu.academic.ui.faces.validators;
 
 import java.text.MessageFormat;
 
@@ -30,8 +30,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
@@ -46,7 +45,7 @@ public class DateValidator implements Validator, StateHolder {
 
     private boolean _transient = false;
 
-    private final String INVALID_DATE = "net.sourceforge.fenixedu.presentationTier.jsf.validators.dateValidator.INVALID_DATE";
+    private final String INVALID_DATE = "org.fenixedu.academic.ui.faces.validators.dateValidator.INVALID_DATE";
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {

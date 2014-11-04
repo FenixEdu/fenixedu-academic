@@ -28,7 +28,7 @@
 
 <fr:edit id="search"
 		 name="createCandidacyBean"
-		 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
+		 type="org.fenixedu.academic.dto.administrativeOffice.candidacy.CreateDFACandidacyBean"
 		 schema="candidacy.choose.person"
 		 action="/dfaCandidacy.do?method=searchMarkSheets">
 </fr:edit>

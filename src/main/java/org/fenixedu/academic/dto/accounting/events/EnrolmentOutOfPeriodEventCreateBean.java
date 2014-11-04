@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting.events;
+package org.fenixedu.academic.dto.accounting.events;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 
 public class EnrolmentOutOfPeriodEventCreateBean extends AccountingEventCreateBean {
 

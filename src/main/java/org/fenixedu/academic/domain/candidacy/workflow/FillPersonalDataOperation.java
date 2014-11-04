@@ -16,33 +16,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy.workflow;
+package org.fenixedu.academic.domain.candidacy.workflow;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.SchoolLevelType;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ContactsForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.FiliationForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.FillPersonalDataWelcomeForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.HouseholdInformationForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
-import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.SchoolLevelType;
+import org.fenixedu.academic.domain.candidacy.CandidacyOperationType;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.candidacy.workflow.form.ContactsForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.FiliationForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.FillPersonalDataWelcomeForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.HouseholdInformationForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.OriginInformationForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.PersonalInformationForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm;
+import org.fenixedu.academic.domain.candidacy.workflow.form.ResidenceInformationForm;
+import org.fenixedu.academic.domain.contacts.PartyContactType;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.PersonalIngressionData;
+import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 
 public class FillPersonalDataOperation extends CandidacyOperation {
 

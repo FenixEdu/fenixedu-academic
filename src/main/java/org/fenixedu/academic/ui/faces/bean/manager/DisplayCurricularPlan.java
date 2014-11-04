@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.manager;
+package org.fenixedu.academic.ui.faces.bean.manager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,22 +25,21 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveDegreeCurricularPlansByDegreeType;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.CurricularCourseScopesForPrintDTO;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.academic.domain.DegreeModuleScope;
+import org.fenixedu.academic.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.dto.CurricularCourseScopesForPrintDTO;
+import org.fenixedu.academic.dto.InfoCurricularCourseScope;
+import org.fenixedu.academic.dto.InfoDegreeCurricularPlan;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.service.services.commons.ReadActiveDegreeCurricularPlansByDegreeType;
+import org.fenixedu.academic.service.services.commons.ReadExecutionYearByID;
+import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
+import org.fenixedu.academic.service.services.commons.curriculumHistoric.ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 
 /**
  * 

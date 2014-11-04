@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons.student;
+package org.fenixedu.academic.ui.struts.action.commons.student;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -24,24 +24,23 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
-import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.Candidacy;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacy;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
+import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;

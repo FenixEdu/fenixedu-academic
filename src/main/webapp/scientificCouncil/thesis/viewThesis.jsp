@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisVisibilityType"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -253,9 +253,9 @@
 	<logic:present name="editThesisAbstract">
 		<bean:define id="url">/scientificCouncilManageThesis.do?method=viewThesis&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
    	    <fr:edit id="editThesisAbstract" name="thesis" action="<%= url %>">
-			<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="STUDENT_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.thesis.Thesis" bundle="STUDENT_RESOURCES">
     			<fr:slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt">
-        			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+        			<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
             			<fr:property name="type" value="word"/>
             			<fr:property name="length" value="250"/>
         			</fr:validator>
@@ -264,7 +264,7 @@
         			<fr:property name="rows" value="12"/>
     			</fr:slot>
     			<fr:slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en">
-        			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+        			<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
             			<fr:property name="type" value="word"/>
             			<fr:property name="length" value="250"/>
         			</fr:validator>
@@ -351,14 +351,14 @@
     (<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>)
 </logic:notEmpty>
 
-<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
+<logic:equal name="thesis" property="visibility" value="<%= org.fenixedu.academic.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
 	<p>
 		<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeThesisFilesVisibility&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
 			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPublic" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
    	    </html:link>
 	</p>
 </logic:equal>
-<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
+<logic:equal name="thesis" property="visibility" value="<%= org.fenixedu.academic.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
 	<p>
 		<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeThesisFilesVisibility&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
 			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPrivate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
@@ -420,7 +420,7 @@
                         <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=editProposal&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsOrientator" name="thesis" slot="orientatorCreditsDistribution">
                                 <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-                                <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+                                <fr:validator name="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
                                     <fr:property name="upperBound" value="100"/>
                                 </fr:validator>
@@ -490,7 +490,7 @@
                     <td class="width35em">
                         <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=editProposal&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsCoorientator" name="thesis" slot="coorientatorCreditsDistribution">
-                                <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+                                <fr:validator name="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
                                     <fr:property name="upperBound" value="100"/>
                                 </fr:validator>
@@ -585,7 +585,7 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="vowels">
-    <logic:iterate id="vowel" name="thesis" property="vowels" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <logic:iterate id="vowel" name="thesis" property="vowels" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant">
         <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
             <fr:layout name="tabular">
             		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>

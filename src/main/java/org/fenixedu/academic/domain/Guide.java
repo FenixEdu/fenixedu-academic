@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -29,11 +29,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.State;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.State;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting;
+package org.fenixedu.academic.domain.accounting;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
-import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGeneratorFactory;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import net.sourceforge.fenixedu.util.Money;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.util.PaymentCodeGenerator;
+import org.fenixedu.academic.domain.accounting.util.PaymentCodeGeneratorFactory;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

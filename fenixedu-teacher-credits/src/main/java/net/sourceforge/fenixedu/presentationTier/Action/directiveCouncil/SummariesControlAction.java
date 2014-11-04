@@ -20,7 +20,7 @@
  * Created on Jan 16, 2006
  *	by mrsp
  */
-package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
+package org.fenixedu.academic.ui.struts.action.directiveCouncil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -39,27 +39,27 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement;
-import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory;
-import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DetailSummaryElement;
-import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement;
+import org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory;
+import org.fenixedu.academic.dto.directiveCouncil.DetailSummaryElement;
+import org.fenixedu.academic.dto.directiveCouncil.ExecutionCourseSummaryElement;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.LessonInstance;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.domain.teacher.DegreeTeachingService;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

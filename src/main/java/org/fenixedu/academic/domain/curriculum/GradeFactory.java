@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.curriculum;
-
-import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+package org.fenixedu.academic.domain.curriculum;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 class Grade implements IGrade {
     private Object gradeValue;

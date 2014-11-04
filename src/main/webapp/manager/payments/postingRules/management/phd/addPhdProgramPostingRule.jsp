@@ -53,7 +53,7 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		<fr:schema bundle="MANAGER_RESOURCES"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">
+			type="org.fenixedu.academic.ui.struts.action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">
 			<fr:slot name="startDate" key="label.phd.gratuity.startDate"
 				required="true" />
 			<fr:slot name="endDate" key="label.phd.gratuity.endDate" />
@@ -70,7 +70,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thright" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
-	<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdPRPeriodBean">
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdPRPeriodBean">
 		<fr:slot name="periodStartDate" layout="month-day"  key="label.period.start">
 			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
 				<fr:property name="regexp" value="(\d{1,2}/\d{1,2})?"/>
@@ -149,7 +149,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thright" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
-	<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdPRQuickBean">
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdPRQuickBean">
 		<fr:slot name="year" key="label.manager.curricularCourseScope.curricularYear" />
 		<fr:slot name="gratuity" key="label.phd.gratuity.value" />
 	</fr:schema>

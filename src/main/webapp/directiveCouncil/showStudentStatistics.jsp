@@ -30,7 +30,7 @@
 
 <logic:present name="contextBean">
 	<fr:form>
-		<fr:edit name="contextBean" id="contextBean" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.StudentStatisticsDA$ContextBean" 
+		<fr:edit name="contextBean" id="contextBean" type="org.fenixedu.academic.ui.struts.action.directiveCouncil.StudentStatisticsDA$ContextBean" 
 				schema="student.statistics.bean">
 			<fr:layout>
 				<fr:property name="classes" value="thlight mbottom1"/>
@@ -42,7 +42,7 @@
 <logic:present name="statisticsBean">
 	<logic:equal name="statisticsBean" property="showResult" value="true">
 		<br/>
-		<fr:view name="statisticsBean" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.StudentStatisticsDA$StatisticsBean" 
+		<fr:view name="statisticsBean" type="org.fenixedu.academic.ui.struts.action.directiveCouncil.StudentStatisticsDA$StatisticsBean" 
 				schema="student.statistics.bean.results">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight"/>

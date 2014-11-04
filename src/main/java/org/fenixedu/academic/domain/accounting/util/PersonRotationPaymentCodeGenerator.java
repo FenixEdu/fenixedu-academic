@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.util;
+package org.fenixedu.academic.domain.accounting.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 
 /**
  * Code Format: <numericPartOfIstId{6}><typeDigit{1}><controlDigits{2}>

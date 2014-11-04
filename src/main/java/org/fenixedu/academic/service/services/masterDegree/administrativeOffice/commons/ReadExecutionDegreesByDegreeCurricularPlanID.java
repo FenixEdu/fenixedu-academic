@@ -20,15 +20,16 @@
  * Created on Feb 20, 2004
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons;
+package org.fenixedu.academic.service.services.masterDegree.administrativeOffice.commons;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

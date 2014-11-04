@@ -39,7 +39,7 @@
 
 <h2><bean:message key="title.curriculum.validation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"/>
+<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="org.fenixedu.academic.domain.StudentCurricularPlan"/>
 <bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
 <bean:define id="registrationId" name="studentCurricularPlan" property="registration.externalId" />
 

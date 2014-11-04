@@ -19,25 +19,25 @@
 /**
  * Nov 21, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits;
+package org.fenixedu.academic.ui.struts.action.credits;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.DeleteSupportLesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLesson;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.WeekDay;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.teacher.professorship.DeleteSupportLesson;
+import org.fenixedu.academic.service.services.teacher.professorship.EditSupportLesson;
+import org.fenixedu.academic.dto.teacher.professorship.SupportLessonDTO;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.SupportLesson;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.WeekDay;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMessage;

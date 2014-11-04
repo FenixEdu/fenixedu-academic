@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
+package org.fenixedu.academic.domain.candidacyProcess.secondCycle;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGradeState;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState;
 
 public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 

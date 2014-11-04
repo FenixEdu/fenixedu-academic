@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import java.io.IOException;
 import java.text.DateFormatSymbols;
@@ -32,13 +32,14 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import org.fenixedu.academic.ui.faces.components.util.CalendarLink;
+
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class UIFenixCalendar extends UIInput {
-    public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.UIFenixCalendar";
+    public static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.UIFenixCalendar";
 
-    public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.UIFenixCalendar";
+    public static final String COMPONENT_FAMILY = "org.fenixedu.academic.ui.faces.components.UIFenixCalendar";
 
     public UIFenixCalendar() {
         super();

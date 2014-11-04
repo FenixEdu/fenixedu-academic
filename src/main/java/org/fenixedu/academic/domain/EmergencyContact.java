@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import org.fenixedu.bennu.core.domain.UserProfile;
 

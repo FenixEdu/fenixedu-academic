@@ -19,7 +19,7 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.PersonalInformationBean"%>
 <%@page import="org.joda.time.LocalDate"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -58,13 +58,13 @@
 
 <div class="infoop2 mtop2">
 	<strong>
-		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
+		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
 	</strong>	
 </div>
 
 <br/>
 
-<bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"/>
+<bean:define id="personalInformationBean" name="personalInformationBean" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean"/>
 <div id="skip">
 <% if (!PersonalInformationBean.isPastLimitDate()) { %>
 	<span class="warning0"><bean:message key="label.RAIDES.skip.enabled" bundle="STUDENT_RESOURCES"/> <%= personalInformationBean.getLimitDate().toString() %>.</span>
@@ -77,7 +77,7 @@
 
 <br/>
 
-<bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" />
+<bean:define id="personalInformationBean" name="personalInformationBean" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean" />
 
 <logic:messagesPresent message="true">
 	<ul class="nobullet list6">
@@ -106,21 +106,21 @@
 	<span class="warning0"><bean:message key="label.RAIDES.check.schoolLevel" bundle="STUDENT_RESOURCES"/></span>
 		
 	<fr:edit id="personalInformationBean.editPrecedentDegreeInformation" name="personalInformationBean">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean">
 			<fr:slot name="schoolLevel" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
 			<fr:slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 				<fr:property name="format" value="${localizedName}"/>
 				<fr:property name="sortBy" value="name=asc" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>	
 			<% if (personalInformationBean.isHightSchoolCountryFieldRequired()) { %>
 				<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="format" value="${localizedName}"/>
 					<fr:property name="sortBy" value="name=asc" />
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				</fr:slot>
 			<% } %>
 			<% if (personalInformationBean.isUnitFromRaidesListMandatory()) { %>
@@ -128,7 +128,7 @@
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeUnits"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchRaidesDegreeUnits"/>
 					<fr:property name="args" value="slot=name,size=50"/>
 					<fr:property name="minChars" value="4"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
@@ -138,7 +138,7 @@
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="description"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchRaidesDegreeDesignations"/>
 					<fr:property name="args" value="<%="slot=description,size=50,filterSchoolLevelName=" + ((personalInformationBean.getSchoolLevel() != null) ? personalInformationBean.getSchoolLevel().getName() : "null") + ",filterUnitOID=" + ((personalInformationBean.getInstitution() != null) ? personalInformationBean.getInstitution().getExternalId() : "null") %>"/>
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
@@ -147,7 +147,7 @@
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnitsWithScore"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalUnitsWithScore"/>
 					<fr:property name="args" value="slot=name,size=20"/>
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
@@ -157,11 +157,11 @@
 					<fr:property name="maxLength" value="255"/>
 			    </fr:slot>
 		    <% } %>
-			<fr:slot name="conclusionGrade" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionGradeRegexpValidator">
+			<fr:slot name="conclusionGrade" validator="org.fenixedu.academic.ui.struts.action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionGradeRegexpValidator">
 		    	<fr:property name="size" value="2"/>
 				<fr:property name="maxLength" value="2"/>
 			</fr:slot>		    
-		    <fr:slot name="conclusionYear" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionYearRegexpValidator">
+		    <fr:slot name="conclusionYear" validator="org.fenixedu.academic.ui.struts.action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionYearRegexpValidator">
 		       	<fr:property name="size" value="4"/>
 				<fr:property name="maxLength" value="4"/>
 		    </fr:slot>				
@@ -183,17 +183,17 @@
 	<div><bean:message  key="label.personal.information.details" bundle="STUDENT_RESOURCES"/></div>
 	
 	<fr:edit id="personalInformationBean.editPersonalInformation" name="personalInformationBean">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean">
 			<fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="format" value="${localizedName}"/>
 					<fr:property name="sortBy" value="name=asc" />
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				</fr:slot>
 				<fr:slot name="districtSubdivisionOfResidence" layout="autoComplete">
 					<fr:property name="size" value="50"/>
 					<fr:property name="format" value="${name} - (${district.name})"/>
 					<fr:property name="indicatorShown" value="true"/>		
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchDistrictSubdivisions"/>
 					<fr:property name="args" value="slot=name,size=50"/>
 					<fr:property name="minChars" value="1"/>
 				</fr:slot>
@@ -204,25 +204,25 @@
 					<fr:property name="size" value="50"/>
 					<fr:property name="format" value="${name} - (${district.name})"/>
 					<fr:property name="indicatorShown" value="true"/>		
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchDistrictSubdivisions"/>
 					<fr:property name="args" value="slot=name,size=50"/>
 					<fr:property name="minChars" value="1"/>
 				</fr:slot>
 				<fr:slot name="grantOwnerType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.GrantOwnerTypesProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.GrantOwnerTypesProvider" />
 				</fr:slot>
 			   	<fr:slot name="grantOwnerProviderUnitName" layout="autoComplete">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalUnits"/>
 					<fr:property name="args" value="slot=name,size=50"/>
 					<fr:property name="minChars" value="1"/>
 					<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
 				</fr:slot>
 				<% if ((personalInformationBean.getSchoolLevel() != null) && (personalInformationBean.getSchoolLevel().isHighSchoolOrEquivalent())) { %>
 					<fr:slot name="highSchoolType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.HighSchoolTypesProvider" />
 						<fr:property name="eachLayout" value="this-does-not-exist" />
 					</fr:slot>
 				<% } %>
@@ -230,30 +230,30 @@
 					<fr:property name="excludedValues" value="UNKNOWN" />
 				</fr:slot>
 				<fr:slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 				</fr:slot>
 				<fr:slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
 				</fr:slot>
 				<fr:slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 					<fr:property name="eachLayout" value="this-does-not-exist" />
 				</fr:slot>	
 				<fr:slot name="motherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 				</fr:slot>
 				<fr:slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
 				</fr:slot>
 				<fr:slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 					<fr:property name="eachLayout" value="this-does-not-exist" />
 				</fr:slot>
 				<fr:slot name="fatherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 				</fr:slot>
 				<fr:slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
 				</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">
@@ -269,7 +269,7 @@
 
 <br/>
 
-<bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"/>
+<bean:define id="personalInformationBean" name="personalInformationBean" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean"/>
 <div id="skip">
 <% if (!PersonalInformationBean.isPastLimitDate()) { %>
 	<form action="<%= request.getContextPath() + "/home.do" %>">

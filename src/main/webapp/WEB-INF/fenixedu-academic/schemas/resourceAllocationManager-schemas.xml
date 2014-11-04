@@ -20,7 +20,7 @@
 -->
 <!-- ExecutionCourse CourseLoad Management Schemas -->
 
-<schema name="ExecutionCourseCourseLoadManagement" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean" bundle="SOP_RESOURCES">
+<schema name="ExecutionCourseCourseLoadManagement" type="org.fenixedu.academic.dto.resourceAllocationManager.CourseLoadBean" bundle="SOP_RESOURCES">
 	<slot name="type" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.course.load.type">
 		<property name="bundle" value="SOP_RESOURCES"/>
 		<property name="destination" value="postBack"/>	
@@ -29,7 +29,7 @@
 	<slot name="unitQuantity" key="label.course.load.unitQuantity"/>	
 </schema>	
 
-<schema name="ExecutionCourseCourseLoadView" type="net.sourceforge.fenixedu.domain.CourseLoad" bundle="SOP_RESOURCES">
+<schema name="ExecutionCourseCourseLoadView" type="org.fenixedu.academic.domain.CourseLoad" bundle="SOP_RESOURCES">
 	<slot name="type" key="label.course.load.type" >
 		<property name="bundle" value="SOP_RESOURCES" />
 	</slot>			 
@@ -38,7 +38,7 @@
 	<slot name="weeklyHours" key="label.course.load.weeklyQuantity"/>	
 </schema>	
 
-<schema name="ExecutionCourseWeeklyCourseLoadView" type="net.sourceforge.fenixedu.domain.CourseLoad" bundle="SOP_RESOURCES">
+<schema name="ExecutionCourseWeeklyCourseLoadView" type="org.fenixedu.academic.domain.CourseLoad" bundle="SOP_RESOURCES">
 	<slot name="type" key="label.course.load.type" >
 		<property name="bundle" value="SOP_RESOURCES" />
 	</slot>			 
@@ -47,7 +47,7 @@
 
 <!-- Lesson Dates Management -->
 
-<schema name="LessonDatesList" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="SOP_RESOURCES">
+<schema name="LessonDatesList" type="org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="SOP_RESOURCES">
 	<slot name="date.dayOfMonth" key="label.lesson.day"/>
 	<slot name="monthString" key="label.lesson.month"/>
 	<slot name="date.year" key="label.lesson.year"/>
@@ -61,12 +61,12 @@
 <!-- Access Groups Management -->
 
 <schema name="academicIntervalSelectionBean.choosePostBack"
-	type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+	type="org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean"
 	bundle="SOP_RESOURCES">
 	<slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
+			value="org.fenixedu.academic.ui.renderers.providers.ActiveAcademicIntervalProvider" />
 		<property name="format" value="${pathName}" />
 		<property name="destination" value="intervalPostBack" />
 		<property name="nullOptionHidden" value="true" />
@@ -74,24 +74,24 @@
 </schema>
 
 <schema name="academicIntervalSelectionBean.choose"
-    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+    type="org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean"
     bundle="SOP_RESOURCES">
     <slot name="academicInterval" layout="menu-select" key="property.executionPeriod"
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.ActiveAcademicIntervalProvider" />
         <property name="format" value="${pathName}" />
         <property name="nullOptionHidden" value="true" />
     </slot>
 </schema>
 
 <schema name="degreeContext.choose"
-	type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+	type="org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean"
 	bundle="SOP_RESOURCES">
 	<slot name="executionDegree" layout="menu-select-postback" key="property.context.degree"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForAcademicSemesterSelectionBeanProvider" />
+			value="org.fenixedu.academic.ui.renderers.providers.ExecutionDegreeForAcademicSemesterSelectionBeanProvider" />
 		<property name="format" value="${presentationName}" />
 		<property name="sortBy" value="presentationName" />
 		<property name="destination" value="degreePostBack" />
@@ -100,7 +100,7 @@
 	<slot name="curricularYear" layout="menu-select-postback" key="property.context.curricular.year"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearForExecutionDegreeProvider" />
+			value="org.fenixedu.academic.ui.renderers.providers.CurricularYearForExecutionDegreeProvider" />
 		<property name="format" value="${year} º" />
 		<property name="sortBy" value="year" />
 		<property name="destination" value="yearPostBack" />
@@ -109,12 +109,12 @@
 </schema>
 
 <schema name="executionCourseContext.choose"
-    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+    type="org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean"
     bundle="SOP_RESOURCES">
     <slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.AcademicIntervalProvider" />
         <property name="format" value="${pathName}" />
         <property name="destination" value="intervalPostBack" />
         <property name="nullOptionHidden" value="true" />
@@ -122,7 +122,7 @@
     <slot name="executionDegree" layout="menu-select-postback" key="property.context.degree"
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForAcademicSemesterSelectionBeanProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.ExecutionDegreeForAcademicSemesterSelectionBeanProvider" />
         <property name="format" value="${presentationName}" />
         <property name="sortBy" value="presentationName" />
         <property name="destination" value="degreePostBack" />
@@ -130,7 +130,7 @@
     </slot>
 	<slot name="curricularYear" layout="menu-select-postback" key="property.context.curricular.year">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearForExecutionDegreeProvider" />
+			value="org.fenixedu.academic.ui.renderers.providers.CurricularYearForExecutionDegreeProvider" />
 		<property name="format" value="${year} º" />
 		<property name="sortBy" value="year" />
 		<property name="destination" value="yearPostBack" />
@@ -141,19 +141,19 @@
 </schema>
 
 <schema name="academicInterval.chooseWithPostBack"
-    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+    type="org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean"
     bundle="SOP_RESOURCES">
     <slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.AcademicIntervalProvider" />
         <property name="format" value="${pathName}" />
         <property name="nullOptionHidden" value="true" />
         <property name="destination" value="academicIntervalPostBack" />
     </slot>
 </schema>
 
-<schema name="SpaceOccupationEventBean" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.SpaceOccupationEventBean" bundle="SPACE_RESOURCES">
+<schema name="SpaceOccupationEventBean" type="org.fenixedu.academic.dto.resourceAllocationManager.SpaceOccupationEventBean" bundle="SPACE_RESOURCES">
 	<slot name="day" key="label.search.spaces.events.day"/>
 	<slot name="startTime" key="label.search.spaces.events.start"/>
 	<slot name="endTime" key="label.search.spaces.events.end"/>
@@ -162,17 +162,17 @@
 	<slot name="description" key="label.search.spaces.events.description"/>
 </schema>
 
-<schema name="SearchSpaceEvents" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.SearchOccupationEventsBean" bundle="SPACE_RESOURCES">
+<schema name="SearchSpaceEvents" type="org.fenixedu.academic.dto.resourceAllocationManager.SearchOccupationEventsBean" bundle="SPACE_RESOURCES">
 	<slot name="start" layout="picker" key="label.search.spaces.events.start" 
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="end" layout="picker" key="label.search.spaces.events.end" 
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="building" key="label.search.spaces.events.building" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.AllBuildingsProvider"/>		
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.spaceManager.AllBuildingsProvider"/>		
 		<property name="format"	value="${presentationName}" />	
 	</slot>
 	<slot name="types" key="label.search.spaces.events.occupationType" layout="option-select">
-		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.OccupationTypeProvider" />
+		<property name="providerClass"	value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple.OccupationTypeProvider" />
 		<property name="classes" value="list2"/>
 	</slot>	
 </schema>

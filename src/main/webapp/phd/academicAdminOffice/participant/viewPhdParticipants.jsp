@@ -57,7 +57,7 @@
 	<br/>
 	
 	<fr:view name="process" property="participants">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdParticipant">
 			<fr:slot name="name" />
 			<fr:slot name="title" />
 			<fr:slot name="category" />

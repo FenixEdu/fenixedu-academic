@@ -29,7 +29,7 @@
 
 <fr:view name="activityTypes">
     <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
-        type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType">
+        type="org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType">
         <fr:slot name="namePt" key="label.extraCurricularActivityTypes.namePt" />
         <fr:slot name="nameEn" key="label.extraCurricularActivityTypes.nameEn" />
     </fr:schema>

@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.photograph;
+package org.fenixedu.academic.domain.photograph;
 
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.util.ContentType;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.util.ContentType;
 
 public class PictureOriginal extends PictureOriginal_Base {
 

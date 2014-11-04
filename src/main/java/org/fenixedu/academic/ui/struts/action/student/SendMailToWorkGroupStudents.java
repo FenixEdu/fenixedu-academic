@@ -20,26 +20,25 @@
  * @author Sérgio Silva ist152416
  */
 
-package net.sourceforge.fenixedu.presentationTier.Action.student;
+package org.fenixedu.academic.ui.struts.action.student;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupingGroup;
-import net.sourceforge.fenixedu.domain.accessControl.StudentGroupGroup;
-import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.accessControl.GroupingGroup;
+import org.fenixedu.academic.domain.accessControl.StudentGroupGroup;
+import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.Sender;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
+import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 

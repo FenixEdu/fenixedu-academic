@@ -1,11 +1,10 @@
-package org.fenixedu.core.service;
+package org.fenixedu.academic.service;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.contacts.Phone;
-
+import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.ui.services.UserInformationService;

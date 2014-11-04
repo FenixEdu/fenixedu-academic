@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
+package org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,14 +28,14 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.UpdateDegreeCurricularPlanMembersGroup;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.scientificCouncil.UpdateDegreeCurricularPlanMembersGroup;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.Employee;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
+import org.fenixedu.academic.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

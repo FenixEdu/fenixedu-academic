@@ -20,7 +20,7 @@
  * Created on Nov 21, 2005
  *	by mrsp
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.manager.organizationalStructureManagement;
+package org.fenixedu.academic.ui.faces.bean.manager.organizationalStructureManagement;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,37 +36,37 @@ import java.util.Set;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.AddParentInherentFunction;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.AssociateParentUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateFunction;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteFunction;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DisassociateParentUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditFunction;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.RemoveParentInherentFunction;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.SetRootUnit;
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.AddParentInherentFunction;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.AssociateParentUnit;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.CreateFunction;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.CreateUnit;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.DeleteFunction;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.DeleteUnit;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.DisassociateParentUnit;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.EditFunction;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.EditUnit;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.RemoveParentInherentFunction;
+import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.SetRootUnit;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Accountability;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Function;
+import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
+import org.fenixedu.academic.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -81,7 +81,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private static final String ORG_UNIT_PACKAGE =
-            "net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement";
+            "org.fenixedu.academic.service.services.manager.organizationalStructureManagement";
 
     private String unitName, unitCostCenter, unitTypeName, unitBeginDate, unitEndDate, unitAcronym, administrativeOfficeID;
 

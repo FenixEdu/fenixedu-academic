@@ -16,28 +16,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram;
+package org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram;
 
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.PartySocialSecurityNumber;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import org.fenixedu.academic.dto.person.PersonBean;
+import org.fenixedu.academic.ui.struts.action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.commons.i18n.I18N;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {

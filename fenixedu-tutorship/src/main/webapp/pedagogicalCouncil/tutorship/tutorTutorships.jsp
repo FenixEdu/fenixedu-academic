@@ -37,7 +37,7 @@ Definir Período de Preenchimento das Fichas
 <fr:form action="/tutorshipSummary.do?method=exportSummaries">
     <fr:edit id="tutorateBean" name="tutorateBean">
         <fr:schema bundle="PEDAGOGICAL_COUNCIL"
-            type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSummaryBean">
+            type="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorSummaryBean">
             <fr:slot name="searchType" key="label.searchType" layout="radio-postback">
                 <fr:property name="trueLabel" value="label.department" />
                 <fr:property name="falseLabel" value="label.degree" />
@@ -49,12 +49,12 @@ Definir Período de Preenchimento das Fichas
                     <fr:slot name="executionSemester" bundle="APPLICATION_RESOURCES" layout="menu-select-postback"
                         key="label.semestre">
                         <fr:property name="providerClass"
-                            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+                            value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider" />
                         <fr:property name="format" value="${semester} - ${executionYear.year}" />
                         <fr:property name="destination" value="postback" />
                     </fr:slot>
                     <fr:slot name="department" layout="menu-select-postback" key="label.teacher.department">
-                        <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
+                        <fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
                         <fr:property name="key" value="true" />
                         <fr:property name="defaultText" value="label.dropDown.all" />
                         <fr:property name="bundle" value="PEDAGOGICAL_COUNCIL" />
@@ -65,7 +65,7 @@ Definir Período de Preenchimento das Fichas
                     <fr:slot name="teacher" layout="menu-select-postback" key="label.teacher"
                         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
                         <fr:property name="providerClass"
-                            value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
+                            value="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
                         <fr:property name="format" value="${teacherId} - ${employee.person.name}" />
                         <fr:property name="sortBy" value="teacherId" />
                         <fr:property name="destination" value="postback" />
@@ -75,13 +75,13 @@ Definir Período de Preenchimento das Fichas
                     <fr:slot name="executionSemester" bundle="APPLICATION_RESOURCES" layout="menu-select-postback"
                         key="label.semestre">
                         <fr:property name="providerClass"
-                            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+                            value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider" />
                         <fr:property name="format" value="${semester} - ${executionYear.year}" />
                         <fr:property name="destination" value="postback" />
                     </fr:slot>
                     <fr:slot name="degree" layout="menu-select-postback" key="label.degree">
                         <fr:property name="providerClass"
-                            value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSummaryBean$DegreesProvider" />
+                            value="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorSummaryBean$DegreesProvider" />
                         <fr:property name="format" value="${presentationName}" />
                         <fr:property name="destination" value="postback" />
                     </fr:slot>

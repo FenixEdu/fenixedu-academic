@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.curriculum;
+package org.fenixedu.academic.domain.curriculum;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScale;
 
 public enum GradeType {
     GRADETWENTY {

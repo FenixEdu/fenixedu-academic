@@ -94,7 +94,7 @@
 	
 	<logic:notEmpty name="individualProgramProcess" property="thesisSubjectOrdersSorted">
 		<fr:view name="individualProgramProcess" property="thesisSubjectOrdersSorted">
-			<fr:schema type="net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.phd.ThesisSubjectOrder" bundle="PHD_RESOURCES">
 				<fr:slot name="subjectOrder" key="label.order"/>
 				<fr:slot name="thesisSubject.name" key="label.phd.name"/>
 				<fr:slot name="thesisSubject.description" key="label.phd.description"/>

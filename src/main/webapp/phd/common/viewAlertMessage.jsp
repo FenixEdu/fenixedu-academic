@@ -78,7 +78,7 @@
 <br/>
 
 <fr:view name="alertMessage">
-	<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+	<fr:schema type="org.fenixedu.academic.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 		<fr:slot name="subject">
 			<fr:property name="classes" value="bold"/>
 		</fr:slot>

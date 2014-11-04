@@ -20,7 +20,7 @@
  * @(#)RequestUtils.java Created on Oct 24, 2004
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.utils;
+package org.fenixedu.academic.ui.struts.action.utils;
 
 import java.io.IOException;
 import java.text.Collator;
@@ -36,14 +36,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.dto.InfoDegree;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**

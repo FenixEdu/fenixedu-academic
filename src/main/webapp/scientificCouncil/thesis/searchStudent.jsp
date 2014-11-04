@@ -26,8 +26,8 @@
 
 
 <%@page import="java.util.TreeSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.Enrolment"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%><html:xhtml/>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
@@ -77,8 +77,8 @@
 
 		    <bean:define id="studentId" name="bean" property="student.externalId"/>
 		    <bean:define id="enrolmentId" name="proposalEnrolment" property="externalId"/>
-		    <bean:define id="executionYear" name="proposalEnrolment" property="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
-			<bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
+		    <bean:define id="executionYear" name="proposalEnrolment" property="executionYear" type="org.fenixedu.academic.domain.ExecutionYear"/>
+			<bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan"/>
 
 	<% if (degreeCurricularPlan.isCurrentUserScientificCommissionMember(executionYear)) { %>
 
@@ -100,7 +100,7 @@
 	    </p>
 	</div>
 
-		<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="bean" property="student"/>
+		<bean:define id="student" type="org.fenixedu.academic.domain.student.Student" name="bean" property="student"/>
 		<% 
 			final TreeSet<Enrolment> enrolments = student.getDissertationEnrolments(null);
 			request.setAttribute("enrolments", enrolments);
@@ -127,7 +127,7 @@
 		<th>
 		</th>
 	</tr>
-	<logic:iterate id="enrolment" type="net.sourceforge.fenixedu.domain.Enrolment" name="enrolments">
+	<logic:iterate id="enrolment" type="org.fenixedu.academic.domain.Enrolment" name="enrolments">
 		<tr>
 			<td>
 				<bean:write name="enrolment" property="executionYear.year"/>
@@ -185,10 +185,10 @@
 
 			<bean:define id="degreeCurricularPlan" name="thesis"
 					property="enrolment.degreeCurricularPlanOfDegreeModule"
-					type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
+					type="org.fenixedu.academic.domain.DegreeCurricularPlan"/>
 			<bean:define id="executionYear" name="thesis"
 					property="enrolment.executionYear"
-					type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
+					type="org.fenixedu.academic.domain.ExecutionYear"/>
 			<% if (degreeCurricularPlan.isCurrentUserScientificCommissionMember(executionYear)) { %>
             		<bean:define id="thesisId" name="thesis" property="externalId"/>
             		<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">

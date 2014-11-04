@@ -96,7 +96,7 @@
 		</logic:equal>
 		<fr:form id="sharedUnitCreditsForm" action="<%=action %>">
 			<fr:edit name="teacherCreditsBean">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.dto.teacherCredits.TeacherCreditsPeriodBean">
 					<fr:slot name="sharedUnitCreditsBeginDate" key="label.beginDate" layout="null-as-label" readOnly="<%=Boolean.valueOf(readOnly.toString())%>"/>
 					<fr:slot name="sharedUnitCreditsEndDate" key="label.endDate" layout="null-as-label"  readOnly="<%=Boolean.valueOf(readOnly.toString()) %>"/>
 				</fr:schema>
@@ -124,7 +124,7 @@
 		</logic:equal>
 		<fr:form id="unitCreditsForm" action="<%=action %>">
 			<fr:edit name="teacherCreditsBean">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.dto.teacherCredits.TeacherCreditsPeriodBean">
 					<fr:slot name="unitCreditsBeginDate" key="label.beginDate" layout="null-as-label" readOnly="<%=Boolean.valueOf(readOnly.toString()) %>"/>
 					<fr:slot name="unitCreditsEndDate" key="label.endDate" layout="null-as-label" readOnly="<%=Boolean.valueOf(readOnly.toString()) %>"/>
 				</fr:schema>
@@ -145,7 +145,7 @@
 			
 		<h3 class="mtop15 mbottom05">Outras datas</h3>
 		<fr:edit name="teacherCreditsBean" property="annualCreditsState">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.AnnualCreditsState">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.AnnualCreditsState">
 				<fr:slot name="orientationsCalculationDate" layout="null-as-label"/>
 				<fr:slot name="finalCalculationDate" layout="null-as-label"/>
 				<fr:slot name="closeCreditsDate" layout="null-as-label"/>

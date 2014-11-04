@@ -20,7 +20,7 @@
 --%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.SortedSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.LessonInstance"%>
+<%@page import="org.fenixedu.academic.domain.LessonInstance"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -30,17 +30,17 @@
 <%@page import="org.joda.time.Weeks"%>
 <%@page import="org.joda.time.Days"%>
 <%@page import="org.joda.time.Period"%>
-<%@page import="net.sourceforge.fenixedu.domain.OccupationPeriodReference"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
+<%@page import="org.fenixedu.academic.domain.OccupationPeriodReference"%>
+<%@page import="org.fenixedu.academic.dto.InfoLesson"%>
 <%@page import="org.joda.time.Interval"%>
 <%@page import="java.util.HashSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
 <%@page import="java.util.Set"%>
-<%@page import="net.sourceforge.fenixedu.domain.OccupationPeriod"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
+<%@page import="org.fenixedu.academic.domain.OccupationPeriod"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionCourse"%>
 <%@page import="org.joda.time.YearMonthDay"%>
-<%@page import="net.sourceforge.fenixedu.domain.Lesson"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@page import="org.fenixedu.academic.domain.Lesson"%>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%>
 <html:xhtml/>
 
 <h2><bean:message key="title.show.all.lesson.dates" bundle="SOP_RESOURCES"/></h2>
@@ -237,7 +237,7 @@
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.instance"/></th>
 				<th></th>
 			</tr>
-			<logic:iterate id="lessonDate" name="lessonDates" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">
+			<logic:iterate id="lessonDate" name="lessonDates" type="org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">
 				<bean:define id="selectableValue" name="lessonDate" property="checkBoxValue"/>
 				<tr>
 					<td>

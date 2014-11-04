@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
+package org.fenixedu.academic.ui.struts.action.departmentAdmOffice;
 
 import java.util.List;
 import java.util.Map;
@@ -25,18 +25,18 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.CreateExpectationEvaluationGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteExpectationEvaluationGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
-import net.sourceforge.fenixedu.dataTransferObject.department.ExpectationEvaluationGroupBean;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExpectationsApp;
+import org.fenixedu.academic.service.services.departmentAdmOffice.CreateExpectationEvaluationGroup;
+import org.fenixedu.academic.service.services.departmentAdmOffice.DeleteExpectationEvaluationGroup;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.dto.commons.ExecutionYearBean;
+import org.fenixedu.academic.dto.department.ExpectationEvaluationGroupBean;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.ExpectationEvaluationGroup;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExpectationsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

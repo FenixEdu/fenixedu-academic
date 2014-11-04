@@ -61,7 +61,7 @@
 		</html:messages>
 	
 		<bean:define id="authorized" value="false"/>
-		<bean:define id="registrationConclusionBean" name="registrationConclusionBean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean"/>
+		<bean:define id="registrationConclusionBean" name="registrationConclusionBean" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean"/>
 		<academic:allowed operation="REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION" program="<%= registrationConclusionBean.getRegistration().getDegree() %>">			
 			<bean:define id="authorized" value="true"/>
 			<p class="mvert2">
@@ -228,7 +228,7 @@
 							</td>
 						</tr>
 						<logic:iterate id="curriculumEntry" name="curriculumEntries">
-							<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
+							<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
 								<tr class="scplanenrollment">
 									<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.code"/></td>
 									<td class=" scplancolcurricularcourse"><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
@@ -254,7 +254,7 @@
 							</logic:equal>
 						</logic:iterate>				
 						<logic:iterate id="curriculumEntry" name="curriculumEntries">
-							<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.GivenCreditsEntry">
+							<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.GivenCreditsEntry">
 								<tr class="scplanenrollment">
 									<td class="acenter">-</td>
 									<td class=" scplancolcurricularcourse"><bean:message bundle="APPLICATION_RESOURCES" key="label.givenCredits"/></td>
@@ -298,7 +298,7 @@
 					
 					<strong><bean:message  key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 					<fr:edit id="registrationConclusionBean-manage" name="registrationConclusionBean">
-						<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean">
+						<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean">
 							<fr:slot name="calculatedConclusionDate" readOnly="true">
 								<fr:property name="classes" value="bold" />
 							</fr:slot>

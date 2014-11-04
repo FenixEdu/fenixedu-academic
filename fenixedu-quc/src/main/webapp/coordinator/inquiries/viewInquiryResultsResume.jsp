@@ -25,14 +25,14 @@
 
 <link href="<%= request.getContextPath() %>/CSS/quc_resume_boards.css" rel="stylesheet" type="text/css" />
 
-<bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
+<bean:define id="executionDegree" name="executionDegree" type="org.fenixedu.academic.domain.ExecutionDegree"/>
 <h3><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.coordinator.resume.inquiry.begin" bundle="INQUIRIES_RESOURCES"/></p>
 
 <logic:equal name="isResponsible" value="true">	
 
-	<bean:define id="coordinator" name="coordinator" type="net.sourceforge.fenixedu.domain.Coordinator"/>
+	<bean:define id="coordinator" name="coordinator" type="org.fenixedu.academic.domain.Coordinator"/>
 	<logic:equal name="readMode" value="false">
 		<logic:equal name="coursesToAudit" value="true">
 			<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
@@ -63,7 +63,7 @@
 
 <%--
 <logic:notEqual name="isResponsible" value="true">	
-	<bean:define id="coordinator" name="coordinator" type="net.sourceforge.fenixedu.domain.Coordinator"/>
+	<bean:define id="coordinator" name="coordinator" type="org.fenixedu.academic.domain.Coordinator"/>
 	<logic:equal name="readMode" value="true">	
 		<html:link action="<%= "/viewQUCInquiryAnswers.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() 
 				+ "&coordinatorOID=" + coordinator.getExternalId() %>"

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager;
+package org.fenixedu.academic.dto.resourceAllocationManager;
 
 public enum OccupationType {
     EVALUATION, LESSON, GENERIC;

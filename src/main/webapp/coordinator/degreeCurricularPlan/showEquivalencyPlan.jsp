@@ -47,8 +47,8 @@
 </logic:present>
 
 <logic:present name="degreeCurricularPlan" property="equivalencePlan">
-	<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
-	<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
+	<bean:define id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+	<bean:define id="equivalencePlan" type="org.fenixedu.academic.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
 
 	<logic:notPresent name="viewTable">
 		<p>
@@ -94,7 +94,7 @@
 <logic:notPresent name="degreeCurricularPlan">
 	<p class="mbottom05"><bean:message key="label.equivalency.plan.choose.degree" bundle="APPLICATION_RESOURCES"/>:</p>
 	<table class="tstyle4 mtop05">
-		<logic:iterate id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlans">
+		<logic:iterate id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlans">
 			<tr>
 				<td>
 					<bean:write name="degreeCurricularPlan" property="name"/>

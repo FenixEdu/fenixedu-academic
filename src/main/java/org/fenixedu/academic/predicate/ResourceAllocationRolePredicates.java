@@ -16,17 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.predicates;
+package org.fenixedu.academic.predicate;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.LessonInstance;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.person.RoleType;
 
 public class ResourceAllocationRolePredicates {
 

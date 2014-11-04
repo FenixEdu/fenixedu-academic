@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy;
+package org.fenixedu.academic.domain.candidacy;
 
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;

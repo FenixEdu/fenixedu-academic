@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.commons;
+package org.fenixedu.academic.service.services.commons;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

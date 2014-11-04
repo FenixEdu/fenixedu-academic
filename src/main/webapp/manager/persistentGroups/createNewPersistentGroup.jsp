@@ -40,7 +40,7 @@
 	</logic:messagesPresent>	
 		
 	<logic:empty name="persistentGroup">		
-		<fr:create type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers"
+		<fr:create type="org.fenixedu.academic.domain.accessControl.PersistentGroupMembers"
 			 action="/accessControlPersistentGroupsManagement.do?method=listAllGroups" schema="ViewPersistentGroup">
 			<fr:layout name="tabular">      			
 		   		<fr:property name="classes" value="tstyle4 thlight mtop05"/>
@@ -60,7 +60,7 @@
 		</ul>
 		
 		<logic:notEmpty name="persistentGroup" property="persons">	
-			<bean:define id="persistentGroup" name="persistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers"/>
+			<bean:define id="persistentGroup" name="persistentGroup" type="org.fenixedu.academic.domain.accessControl.PersistentGroupMembers"/>
 			
 			<p><strong><bean:message key="label.persistent.group.members" bundle="MANAGER_RESOURCES"/></strong></p>	
 			<fr:view name="persistentGroup" property="persons" schema="PersonInfoWithUsername">

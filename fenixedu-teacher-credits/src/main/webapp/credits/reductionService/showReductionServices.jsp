@@ -32,9 +32,9 @@
 
 <em><bean:message key="label.teacherService.credits"/></em>
 <h3><bean:message key="label.credits.creditsReduction.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
-<%net.sourceforge.fenixedu.domain.ExecutionSemester executionSemester = net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester(); 
-Boolean canAproveReductionServiceCredits = executionSemester.isInValidCreditsPeriod(net.sourceforge.fenixedu.domain.person.RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-Boolean canInsertReductionServiceCredits = canAproveReductionServiceCredits && !executionSemester.isInValidCreditsPeriod(net.sourceforge.fenixedu.domain.person.RoleType.DEPARTMENT_MEMBER);
+<%org.fenixedu.academic.domain.ExecutionSemester executionSemester = org.fenixedu.academic.domain.ExecutionSemester.readActualExecutionSemester(); 
+Boolean canAproveReductionServiceCredits = executionSemester.isInValidCreditsPeriod(org.fenixedu.academic.domain.person.RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+Boolean canInsertReductionServiceCredits = canAproveReductionServiceCredits && !executionSemester.isInValidCreditsPeriod(org.fenixedu.academic.domain.person.RoleType.DEPARTMENT_MEMBER);
 
 %>
 <bean:define id="executionSemesterName" value="<%= executionSemester.getQualifiedName()%>"/>
@@ -50,7 +50,7 @@ Boolean canInsertReductionServiceCredits = canAproveReductionServiceCredits && !
 
 <logic:present name="creditsReductions">
 	<fr:view name="creditsReductions">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.ReductionService">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.teacher.ReductionService">
 			<fr:slot name="teacherService.teacher.person" key="label.empty" layout="view-as-image">
 				<fr:property name="classes" value="column3" />
 				<fr:property name="moduleRelative" value="false" />

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons.ects;
+package org.fenixedu.academic.ui.struts.action.commons.ects;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +25,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.AcademicIntervalConverter;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.ui.renderers.converters.AcademicIntervalConverter;
 import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;

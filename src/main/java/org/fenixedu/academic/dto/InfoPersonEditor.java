@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
+import org.fenixedu.academic.domain.person.Gender;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.person.MaritalStatus;
 
 public class InfoPersonEditor extends InfoObject {
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis;
+package org.fenixedu.academic.service.services.scientificCouncil.thesis;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -24,16 +24,15 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.PersonSender;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.domain.util.email.PersonSender;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.Sender;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;

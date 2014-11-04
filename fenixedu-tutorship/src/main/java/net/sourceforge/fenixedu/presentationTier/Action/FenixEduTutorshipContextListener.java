@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +7,13 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.TutorshipIntention;
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation.RegistrationCreatedByCandidacy;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.domain.TutorshipIntention;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.candidacy.workflow.RegistrationOperation.RegistrationCreatedByCandidacy;
+import org.fenixedu.academic.domain.student.Registration;
 
 import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.LocalDate;

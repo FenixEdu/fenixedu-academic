@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis;
 
 import java.io.Serializable;
 import java.util.SortedSet;
@@ -24,31 +24,30 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisDiscussion;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisAbstractFile;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
-import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
-import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
-import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
-import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.domain.thesis.ThesisFile;
+import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
+import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
+import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
+import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisDiscussion;
+import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisProposal;
+import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
+import org.fenixedu.academic.service.services.thesis.CreateThesisAbstractFile;
+import org.fenixedu.academic.service.services.thesis.CreateThesisDissertationFile;
+import org.fenixedu.academic.service.services.thesis.MakeThesisDocumentsAvailable;
+import org.fenixedu.academic.service.services.thesis.MakeThesisDocumentsUnavailable;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
+import org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

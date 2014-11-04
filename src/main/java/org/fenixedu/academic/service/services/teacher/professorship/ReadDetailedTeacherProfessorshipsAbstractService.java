@@ -20,22 +20,21 @@
  * Created on Dec 17, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
+package org.fenixedu.academic.service.services.teacher.professorship;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.dto.InfoCurricularCourse;
+import org.fenixedu.academic.dto.InfoProfessorship;
+import org.fenixedu.academic.dto.teacher.professorship.DetailedProfessorship;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.FenixFramework;
 

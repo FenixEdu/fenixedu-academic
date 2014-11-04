@@ -59,7 +59,7 @@
 <fr:form action="<%= "/projectSubmissionsManagement.do?method=prepareSelectiveDownload&amp;executionCourseID=" + executionCourseID + "&amp;projectOID=" + projectOID %>">
 <fr:edit id="selectiveDownload" name="bean" slot="integer" type="java.lang.Integer">
 	<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+	<fr:validator name="org.fenixedu.academic.ui.renderers.validators.NumberRangeValidator">
 		<fr:property name="lowerBound" value="1"/>
 	</fr:validator>
 </fr:edit>
@@ -71,7 +71,7 @@
  
 <logic:notEmpty name="projectSubmissions">
 <ul>
-  <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean"/>
+  <bean:define id="bean" name="bean" type="org.fenixedu.academic.dto.VariantBean"/>
 	<bean:size id="size" name="projectSubmissions"/>
   <bean:define id="lastShown" value="0"/>
 	<logic:iterate id="project" name="projectSubmissions" indexId="index">

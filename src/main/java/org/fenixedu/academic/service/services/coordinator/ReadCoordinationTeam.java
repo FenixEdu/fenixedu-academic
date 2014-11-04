@@ -20,19 +20,20 @@
  * Created on 17/Set/2003
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
+package org.fenixedu.academic.service.services.coordinator;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeCoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.dto.InfoCoordinator;
+import org.fenixedu.academic.service.filter.DegreeCoordinatorAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

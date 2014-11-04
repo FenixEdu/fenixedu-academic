@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.branch;
+package org.fenixedu.academic.domain.branch;
 
 public enum BranchType {
     COMNBR, SPECBR, SECNBR;

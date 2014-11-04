@@ -16,13 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.predicates;
+package org.fenixedu.academic.predicate;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.PersistentGroupMembers;
+import org.fenixedu.academic.domain.person.RoleType;
 
 public class PersistentGroupMembersPredicates {
 

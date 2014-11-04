@@ -16,29 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.student;
 
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact;
-import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonInformationLog;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.person.PartyContactsManagementDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PersonInformationLog;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.contacts.PartyContactValidationState;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.WebAddress;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.contacts.PartyContactBean;
+import org.fenixedu.academic.service.services.contacts.CreatePartyContact;
+import org.fenixedu.academic.service.services.contacts.EditPartyContact;
+import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.ui.struts.action.person.PartyContactsManagementDispatchAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

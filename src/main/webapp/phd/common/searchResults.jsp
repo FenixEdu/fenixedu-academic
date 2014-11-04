@@ -25,7 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean"%>
 
 <bean:define id="searchProcessBean" name="searchProcessBean"/>
 
@@ -34,7 +34,7 @@
 	<p class="mbottom05"><bean:message key="label.phd.number.searchResults.found.for" bundle="PHD_RESOURCES" arg0="<%= size.toString() %>" arg1="<%= ((SearchPhdIndividualProgramProcessBean) searchProcessBean).getSearchValue() %>"/></p>
 
 	<fr:view name="processes" schema="PhdIndividualProgramProcess.view.resume">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 			<fr:slot name="phdIndividualProcessNumber">
 				<fr:property name="format" value="${number}/${year}" />
 			</fr:slot>

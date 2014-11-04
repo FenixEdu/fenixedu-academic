@@ -20,7 +20,7 @@
  * Created on 10/Fev/2004
  *  
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,14 +29,13 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-
 import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.dto.InfoDegree;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
 import org.fenixedu.commons.i18n.I18N;
 
 /**

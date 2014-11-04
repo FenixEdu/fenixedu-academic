@@ -42,11 +42,11 @@
 	<fr:edit id="searchParametersBean" name="searchParametersBean" visible="false" />
 	<fr:edit id="chosenDegree" name="searchParametersBean">
 		<fr:schema
-			type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByDegreeParametersBean"
+			type="org.fenixedu.academic.dto.academicAdministration.SearchStudentsByDegreeParametersBean"
 			bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="executionYear" key="label.executionYear.notCapitalized" layout="menu-select-postback" required="true">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${year}" />
 				<fr:property name="destination" value="postBack" />
 			</fr:slot>
@@ -63,13 +63,13 @@
 			<fr:slot name="regime" key="registration.regime" />
 			<fr:slot name="nationality" layout="menu-select" key="label.nationality">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.CountryProvider" />
 				<fr:property name="format" value="${nationality}" />
 				<fr:property name="sortBy" value="nationality" />
 			</fr:slot>
 			<fr:slot name="ingression" layout="menu-select" key="label.ingression.short">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.IngressionProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.IngressionProvider" />
 				<fr:property name="eachLayout" value="" />
 			</fr:slot>
 			<fr:slot name="ingressedInChosenYear" key="label.ingressedInChosenYear" />
@@ -89,22 +89,22 @@
 
 	<fr:edit id="chosenParameters" name="searchParametersBean">
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
-			type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByDegreeParametersBean">
+			type="org.fenixedu.academic.dto.academicAdministration.SearchStudentsByDegreeParametersBean">
 			<fr:slot name="registrationProtocols" key="label.registrationAgreement" layout="option-select">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.RegistrationAgreementProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple.RegistrationAgreementProvider" />
 				<fr:property name="classes" value="list2" />
 				<fr:property name="eachSchema" value="RegistrationProtocol.view.name.only"/>
 				<fr:property name="eachLayout" value="values"/>
 			</fr:slot>
 			<fr:slot name="registrationStateTypes" key="label.registrationState" layout="option-select">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.RegistrationStateTypeProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple.RegistrationStateTypeProvider" />
 				<fr:property name="classes" value="list2" />
 			</fr:slot>
 			<fr:slot name="studentStatuteTypes" key="label.statutes" layout="option-select">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.StudentStatuteTypeProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple.StudentStatuteTypeProvider" />
 				<fr:property name="classes" value="list2" />
 			</fr:slot>
 		</fr:schema>
@@ -157,7 +157,7 @@
 			</p>
 		</logic:greaterThan>
 		<fr:view name="studentCurricularPlanList">
-			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean"
+			<fr:schema type="org.fenixedu.academic.dto.student.RegistrationWithStateForExecutionYearBean"
 				bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="registration.number" key="label.number" layout="link">
 					<fr:property name="linkFormat"

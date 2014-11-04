@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,22 +26,21 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean;
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean;
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetToConfirmSendMailBean;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.accessControl.TeachersWithGradesToSubmitGroup;
-import net.sourceforge.fenixedu.domain.accessControl.TeachersWithMarkSheetsToConfirmGroup;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.MarkSheet;
+import org.fenixedu.academic.domain.accessControl.TeachersWithGradesToSubmitGroup;
+import org.fenixedu.academic.domain.accessControl.TeachersWithMarkSheetsToConfirmGroup;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.UnitBasedSender;
+import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean;
+import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean;
+import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetToConfirmSendMailBean;
+import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

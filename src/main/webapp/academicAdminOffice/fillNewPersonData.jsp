@@ -40,7 +40,7 @@
 	
 	<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<fr:edit id="personData" name="personBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="size" value="50" />
 			</fr:slot>
@@ -54,7 +54,7 @@
 			<fr:slot name="socialSecurityNumber" />
 			<fr:slot name="professionType" />
 			<fr:slot name="professionalCondition" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 			</fr:slot>
 			<fr:slot name="profession" />
 			<fr:slot name="maritalStatus">
@@ -109,13 +109,13 @@
 		</fr:layout>
 	</fr:edit>
 	
-	<bean:define id="precedentDegreeInformationBean" name="precedentDegreeInformationBean" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean"/>
+	<bean:define id="precedentDegreeInformationBean" name="precedentDegreeInformationBean" type="org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean"/>
 	<h3 class="mtop1 mbottom025"><bean:message key="label.person.title.previousCompleteDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<a name="precedentDegree"></a>
-	<fr:edit name="precedentDegreeInformationBean" id="precedentDegreeInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	<fr:edit name="precedentDegreeInformationBean" id="precedentDegreeInformation" type="org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean">
+		<fr:schema type="org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 			<fr:slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 				<fr:property name="eachLayout" value="this-does-not-exist" />
 				<fr:property name="destination" value="schoolLevel-postback" />
 			</fr:slot>
@@ -123,14 +123,14 @@
 			<fr:slot name="country" layout="menu-select-postback" key="label.countryOfPrecedenceDegree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
 				<fr:property name="format" value="${name}"/>
 				<fr:property name="sortBy" value="name=asc" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				<fr:property name="destination" value="schoolLevel-postback" />
 			</fr:slot>
 			<% if (precedentDegreeInformationBean.isHighSchoolCountryFieldRequired()) { %>
 				<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="format" value="${localizedName}"/>
 					<fr:property name="sortBy" value="name=asc" />
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				</fr:slot>
 			<% } %>
 			<% if(precedentDegreeInformationBean.isUnitFromRaidesListMandatory()) { %>
@@ -138,7 +138,7 @@
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeUnits"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchRaidesDegreeUnits"/>
 					<fr:property name="args" value="slot=name,size=50"/>
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
@@ -148,7 +148,7 @@
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="description"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchRaidesDegreeDesignations"/>
 					<fr:property name="args" value="<%="slot=description,size=50,filterSchoolLevelName=" + ((precedentDegreeInformationBean.getSchoolLevel() != null) ? precedentDegreeInformationBean.getSchoolLevel().getName() : "null") + ",filterUnitOID=" + ((precedentDegreeInformationBean.getInstitution() != null) ? precedentDegreeInformationBean.getInstitution().getExternalId() : "null") %>"/>
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
@@ -157,7 +157,7 @@
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>		
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalUnits"/>
 					<fr:property name="args" value="slot=name,size=20"/>
 					<fr:property name="minChars" value="2"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
@@ -203,13 +203,13 @@
 	
 	<% if(precedentDegreeInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) { %>
 		<h3 class="mtop1 mbottom025"><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-		<fr:edit name="precedentDegreeInformationBean" id="precedentDegreeInformationExternal" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >		
+		<fr:edit name="precedentDegreeInformationBean" id="precedentDegreeInformationExternal" type="org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean">
+			<fr:schema type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >		
 				<fr:slot name="precedentInstitutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnitsWithScore"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalUnitsWithScore"/>
 					<fr:property name="args" value="slot=name,size=20"/>
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="rawSlotName" value="precedentInstitutionName"/>
@@ -219,7 +219,7 @@
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="description"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchRaidesDegreeDesignations"/>
 					<fr:property name="args" value="slot=description,size=50"/>
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="rawSlotName" value="precedentDegreeDesignation"/>
@@ -229,7 +229,7 @@
 					</fr:validator>
 			    </fr:slot>
 			    <fr:slot name="precedentSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			    	<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+			    	<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 			    </fr:slot>
 			    <fr:slot name="otherPrecedentSchoolLevel" />
 			    <fr:slot name="numberOfPreviousYearEnrolmentsInPrecedentDegree">

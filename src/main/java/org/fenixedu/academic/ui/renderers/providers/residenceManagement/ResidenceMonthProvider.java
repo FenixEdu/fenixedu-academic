@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.residenceManagement;
+package org.fenixedu.academic.ui.renderers.providers.residenceManagement;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
-import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
+import org.fenixedu.academic.domain.residence.ResidenceYear;
+import org.fenixedu.academic.dto.residenceManagement.ImportResidenceEventBean;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

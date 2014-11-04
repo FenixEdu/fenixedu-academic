@@ -22,7 +22,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusAlert" %>
 
 <%!
 

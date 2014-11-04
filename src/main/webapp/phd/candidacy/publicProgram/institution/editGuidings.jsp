@@ -71,7 +71,7 @@
 			<legend><bean:message key="label.phd.public.candidacy.createCandidacy.edit.guidings" bundle="PHD_RESOURCES"/></legend>
 			
 				<fr:edit id="guidingBean.form" name="guidingBean" >
-					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
+					<fr:schema type="org.fenixedu.academic.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 						<fr:slot name="name" required="true">
 							<fr:property name="size" value="50"/>
 						</fr:slot>
@@ -120,7 +120,7 @@
 		<logic:notEmpty name="process" property="individualProgramProcess.guidings">
 			<logic:iterate id="guiding" name="process" property="individualProgramProcess.guidings" >
 				<fr:view name="guiding">
-					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES" >
+					<fr:schema type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES" >
 						<fr:slot name="name" />
 						<fr:slot name="qualification" />
 						<fr:slot name="institution" />
@@ -161,7 +161,7 @@
 			<legend><bean:message key="label.phd.public.candidacy.createCandidacy.edit.assistant.guidings" bundle="PHD_RESOURCES"/></legend>
 		
 				<fr:edit id="assistantGuidingBean.form" name="assistantGuidingBean" >
-					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
+					<fr:schema type="org.fenixedu.academic.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 						<fr:slot name="name" required="true">
 							<fr:property name="size" value="50"/>
 						</fr:slot>
@@ -209,7 +209,7 @@
 		<logic:notEmpty name="process" property="individualProgramProcess.assistantGuidings">
 			<logic:iterate id="guiding" name="process" property="individualProgramProcess.assistantGuidings" >
 				<fr:view name="guiding">
-					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES" >
+					<fr:schema type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES" >
 						<fr:slot name="name" />
 						<fr:slot name="qualification" />
 						<fr:slot name="institution" />

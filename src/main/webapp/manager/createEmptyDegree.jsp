@@ -31,7 +31,7 @@
 <h2>Create Empty Degree</h2>
 	<fr:edit id="admOffice" name="bean" action="/manageAssociatedObjects.do?method=createEmptyDegree">
 		<fr:schema bundle="MANAGER_RESOURCES"
-		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
+		type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
 			<fr:slot name="office" layout="menu-select" key="label.username" >
 				<fr:property name="from" value="offices" />
 				<fr:property name="format" value="${administrativeOfficeType.description}" />

@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy;
+package org.fenixedu.academic.domain.phd.candidacy;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.phd.ThesisSubject;
+import org.fenixedu.academic.domain.phd.ThesisSubject;
 
 public class PhdThesisSubjectOrderBean implements Serializable {
 

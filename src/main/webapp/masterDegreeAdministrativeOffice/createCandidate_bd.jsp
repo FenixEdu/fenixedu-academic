@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <h2><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></h2>
 
@@ -55,7 +55,7 @@
        <tr>
          <td><bean:message key="label.candidate.specialization"/>:</td>
          <td>
-         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
+         	<e:labelValues id="values" enumeration="org.fenixedu.academic.domain.studentCurricularPlan.Specialization" excludedFields="STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
          	<html:select bundle="HTMLALT_RESOURCES" altKey="select.specialization" property="specialization">
          		<html:option key="dropDown.Default" value=""/>
                 <html:options collection="values" property="value" labelProperty="label"/>
@@ -81,7 +81,7 @@
        <tr>
          <td><bean:message key="label.candidate.identificationDocumentType"/>:</td>
          <td>
-         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
+         	<e:labelValues id="values" enumeration="org.fenixedu.academic.domain.person.IDDocumentType"/>
          	<html:select bundle="HTMLALT_RESOURCES" altKey="select.identificationDocumentType" property="identificationDocumentType">
          		<html:option key="dropDown.Default" value=""/>
                 <html:options collection="values" property="value" labelProperty="label"/>

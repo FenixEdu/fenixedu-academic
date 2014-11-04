@@ -16,21 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.credits.util;
+package org.fenixedu.academic.domain.credits.util;
 
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherCredits;
-import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
+import org.fenixedu.academic.dto.credits.CreditLineDTO;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.TeacherCredits;
+import org.fenixedu.academic.domain.credits.AnnualTeachingCredits;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalData;
 
 public class TeacherCreditsBean implements Serializable {
     private Teacher teacher;

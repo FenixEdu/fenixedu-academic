@@ -43,9 +43,9 @@
 <div style="background: #f5f5f5; color: #444; border: 1px solid #ddd; padding: 0.75em 1em;">
 
 <p style="line-height: 1.9em;">
-    <strong><%= name %></strong>, aluno do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> nº <strong><%= number %></strong>, autor da
+    <strong><%= name %></strong>, aluno do <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> nº <strong><%= number %></strong>, autor da
     dissertação para obtenção do <strong>Grau de Mestre em <%= degree %></strong> com o
-    título <strong><%= title %></strong>, autorizo o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
+    título <strong><%= title %></strong>, autorizo o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
     em formato pdf, a versão final desta dissertação e o seu resumo alargado na sua
     <strong><fr:view name="thesis" property="visibility"/></strong>
     , possibilitando assim o seu conhecimento a todos os que
@@ -56,7 +56,7 @@
 </p>
 
 <p style="line-height: 1.9em;">
-    Mais autorizo, com carácter de não exclusividade, o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> a
+    Mais autorizo, com carácter de não exclusividade, o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> a
     reproduzir, no todo ou em parte, aquela minha dissertação para assim responder a
     pedidos que lhe sejam formulados, por parte de instituições de ensino ou de
     investigação bem como por parte de Centros de Documentação ou de Bibliotecas, e

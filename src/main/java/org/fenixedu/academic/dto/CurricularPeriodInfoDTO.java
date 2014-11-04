@@ -19,9 +19,9 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

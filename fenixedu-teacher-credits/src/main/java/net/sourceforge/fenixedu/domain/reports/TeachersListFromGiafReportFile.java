@@ -16,26 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.reports;
+package org.fenixedu.academic.domain.reports;
 
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherCategory;
-import net.sourceforge.fenixedu.domain.TeacherCredits;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRelation;
-import net.sourceforge.fenixedu.domain.teacher.CategoryType;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Qualification;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.TeacherCategory;
+import org.fenixedu.academic.domain.TeacherCredits;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.personnelSection.contracts.GiafProfessionalData;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonContractSituation;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalData;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalRegime;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalRelation;
+import org.fenixedu.academic.domain.teacher.CategoryType;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Period;

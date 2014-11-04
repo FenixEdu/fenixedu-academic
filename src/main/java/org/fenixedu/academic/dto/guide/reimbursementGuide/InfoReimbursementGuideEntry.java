@@ -21,11 +21,11 @@
  *  
  */
 
-package net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide;
+package org.fenixedu.academic.dto.guide.reimbursementGuide;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import org.fenixedu.academic.domain.reimbursementGuide.ReimbursementGuideEntry;
+import org.fenixedu.academic.dto.InfoGuideEntry;
+import org.fenixedu.academic.dto.InfoObject;
 
 /**
  * 

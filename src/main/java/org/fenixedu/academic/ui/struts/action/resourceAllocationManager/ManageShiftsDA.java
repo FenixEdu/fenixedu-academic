@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,28 +27,6 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurno;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteShift;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteShifts;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
-import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -56,6 +34,27 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.InfoCurricularYear;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.InfoShiftEditor;
+import org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceMultipleException;
+import org.fenixedu.academic.service.services.resourceAllocationManager.CriarTurno;
+import org.fenixedu.academic.service.services.resourceAllocationManager.DeleteShift;
+import org.fenixedu.academic.service.services.resourceAllocationManager.DeleteShifts;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear;
+import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.RequestUtils;
+import org.fenixedu.academic.ui.struts.action.utils.ContextUtils;
+import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.ExceptionHandling;
 import org.fenixedu.bennu.struts.annotations.Exceptions;

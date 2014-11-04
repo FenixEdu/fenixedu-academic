@@ -34,7 +34,7 @@
     </html:link>
 
     <fr:view name="student" property="studentDataShareAuthorizationSet">
-        <fr:schema bundle="STUDENT_RESOURCES" type="net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization">
+        <fr:schema bundle="STUDENT_RESOURCES" type="org.fenixedu.academic.domain.student.StudentDataShareAuthorization">
             <fr:slot name="since" key="label.student.dataShareAuthorizationDate" />
             <fr:slot name="authorizationChoice" key="label.student.dataShareAuthorization" />
         </fr:schema>

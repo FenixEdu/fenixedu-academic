@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
+package org.fenixedu.academic.service.services.teacher.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.WeekDay;
+import org.fenixedu.academic.service.filter.DepartmentAdministrativeOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.filter.DepartmentMemberAuthorizationFilter;
+import org.fenixedu.academic.service.filter.ScientificCouncilAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.dto.teacher.professorship.SupportLessonDTO;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.SupportLesson;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.domain.teacher.TeacherServiceLog;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.WeekDay;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

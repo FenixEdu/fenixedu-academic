@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
+package org.fenixedu.academic.api.beans.publico;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExportGrouping;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExportGrouping;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.util.EnrolmentGroupPolicyType;
 import org.joda.time.DateTime;
 
 public class FenixCourseGroup {

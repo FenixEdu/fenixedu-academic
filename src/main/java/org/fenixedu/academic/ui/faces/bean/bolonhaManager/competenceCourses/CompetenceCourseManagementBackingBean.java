@@ -19,9 +19,9 @@
 /*
  * Created on Dec 8, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses;
+package org.fenixedu.academic.ui.faces.bean.bolonhaManager.competenceCourses;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,41 +32,40 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourse;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourse;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourse;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourseLoad;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CompetenceCourseType;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.CompetenceCourseType;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
+import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
+import org.fenixedu.academic.domain.degreeStructure.RegimeType;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.dto.bolonhaManager.CourseLoad;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.service.services.bolonhaManager.CreateCompetenceCourse;
+import org.fenixedu.academic.service.services.bolonhaManager.DeleteCompetenceCourse;
+import org.fenixedu.academic.service.services.bolonhaManager.EditCompetenceCourse;
+import org.fenixedu.academic.service.services.bolonhaManager.EditCompetenceCourseLoad;
+import org.fenixedu.academic.service.services.exceptions.ExistingCompetenceCourseInformationException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;

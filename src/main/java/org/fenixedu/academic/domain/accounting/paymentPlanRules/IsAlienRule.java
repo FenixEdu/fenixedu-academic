@@ -1,9 +1,9 @@
-package net.sourceforge.fenixedu.domain.accounting.paymentPlanRules;
+package org.fenixedu.academic.domain.accounting.paymentPlanRules;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
 
 public class IsAlienRule implements PaymentPlanRule {
 

@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.postingRules.gratuity;
+package org.fenixedu.academic.ui.renderers.providers.accounting.postingRules.gratuity;
 
 import java.util.Arrays;
 
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

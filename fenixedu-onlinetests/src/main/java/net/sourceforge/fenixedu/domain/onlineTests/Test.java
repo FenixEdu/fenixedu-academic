@@ -20,13 +20,13 @@
  * Created on 28/Jul/2003
  *
  */
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
+import org.fenixedu.academic.util.tests.CorrectionFormula;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;

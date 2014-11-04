@@ -22,9 +22,9 @@
  * Created on 13 de Dezembro de 2002, 16:28
  */
 
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.Country;
+import org.fenixedu.academic.domain.Country;
 
 /**
  * @author tfc130

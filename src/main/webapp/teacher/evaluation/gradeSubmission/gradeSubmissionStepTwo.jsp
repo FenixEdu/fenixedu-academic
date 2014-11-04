@@ -61,7 +61,7 @@
 
 	<fr:view name="submissionBean"
 			 schema="markSheet.teacher.gradeSubmission.step.two.view"
-			 type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
+			 type="org.fenixedu.academic.dto.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 		</fr:layout>

@@ -47,7 +47,7 @@
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 
 <fr:view name="referee" property="letter">
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" >
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter" >
 		<fr:slot name="howLongKnownApplicant" layout="null-as-label" />
 		<fr:slot name="capacity" layout="null-as-label" />
 		<fr:slot name="comparisonGroup" layout="null-as-label" />

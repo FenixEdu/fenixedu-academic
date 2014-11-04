@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.util.date;
+package org.fenixedu.academic.util.date;
 
 import java.util.Comparator;
 import java.util.Date;

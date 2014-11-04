@@ -19,11 +19,12 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.commons;
+package org.fenixedu.academic.service.services.commons;
 
-import net.sourceforge.fenixedu.domain.util.workflow.IState;
-import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
-import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
+import org.fenixedu.academic.domain.util.workflow.IState;
+import org.fenixedu.academic.domain.util.workflow.StateBean;
+import org.fenixedu.academic.domain.util.workflow.StateMachine;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

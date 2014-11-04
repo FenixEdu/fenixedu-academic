@@ -31,7 +31,7 @@
 
 <h2>Associate Person to Units</h2>
 	<fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=associatePersonUnit">
-		<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
+		<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
 			<fr:slot name="username" key="label.username"></fr:slot>
 			<fr:slot name="accTypeEnum" key="label.username"></fr:slot>
 			<fr:slot name="teacher" key="label.username"></fr:slot>

@@ -32,14 +32,14 @@
     <p><bean:message key="label.info.dislocatedStudent.inquiry" /></p>
     </div>
 
-    <p class="mtop2 mbottom05"><bean:message key="label.enrollment.personalData.authorization" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" /></p>
+    <p class="mtop2 mbottom05"><bean:message key="label.enrollment.personalData.authorization" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" /></p>
 
     <fr:form action="/studentEnrollmentManagement.do?method=choosePersonalDataAuthorizationChoice">
 
         <fr:edit name="student" schema="Student.editPersonalDataAuthorization">
-            <fr:schema type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+            <fr:schema type="org.fenixedu.academic.domain.student.Student" bundle="APPLICATION_RESOURCES">
                 <fr:slot name="personalDataAuthorization" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-                    <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.PersonalDataAuthorizationProvider" />
+                    <fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.PersonalDataAuthorizationProvider" />
                 </fr:slot>
             </fr:schema>
             <fr:layout name="tabular">

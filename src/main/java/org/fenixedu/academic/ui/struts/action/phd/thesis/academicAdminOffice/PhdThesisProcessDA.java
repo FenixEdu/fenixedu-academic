@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice;
+package org.fenixedu.academic.ui.struts.action.phd.thesis.academicAdminOffice;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,52 +25,51 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcessBean;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddState;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ConcludePhdProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditPhdThesisProcessInformation;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemoveLastState;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ReplaceDocument;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetPhdJuryElementRatificationEntity;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
-import net.sourceforge.fenixedu.presentationTier.docs.phd.thesis.PhdThesisJuryElementsDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.PhdProgramInformation;
+import org.fenixedu.academic.domain.phd.alert.AlertService;
+import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcessBean;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisJuryElementBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
+import org.fenixedu.academic.domain.phd.thesis.activities.AddJuryElement;
+import org.fenixedu.academic.domain.phd.thesis.activities.AddPresidentJuryElement;
+import org.fenixedu.academic.domain.phd.thesis.activities.AddState;
+import org.fenixedu.academic.domain.phd.thesis.activities.ConcludePhdProcess;
+import org.fenixedu.academic.domain.phd.thesis.activities.DeleteJuryElement;
+import org.fenixedu.academic.domain.phd.thesis.activities.EditJuryElement;
+import org.fenixedu.academic.domain.phd.thesis.activities.EditPhdThesisProcessInformation;
+import org.fenixedu.academic.domain.phd.thesis.activities.MoveJuryElementOrder;
+import org.fenixedu.academic.domain.phd.thesis.activities.RatifyFinalThesis;
+import org.fenixedu.academic.domain.phd.thesis.activities.RejectJuryElements;
+import org.fenixedu.academic.domain.phd.thesis.activities.RejectJuryElementsDocuments;
+import org.fenixedu.academic.domain.phd.thesis.activities.RemindJuryReviewToReporters;
+import org.fenixedu.academic.domain.phd.thesis.activities.RemoveLastState;
+import org.fenixedu.academic.domain.phd.thesis.activities.ReplaceDocument;
+import org.fenixedu.academic.domain.phd.thesis.activities.RequestJuryElements;
+import org.fenixedu.academic.domain.phd.thesis.activities.RequestJuryReviews;
+import org.fenixedu.academic.domain.phd.thesis.activities.ScheduleThesisDiscussion;
+import org.fenixedu.academic.domain.phd.thesis.activities.SetFinalGrade;
+import org.fenixedu.academic.domain.phd.thesis.activities.SetPhdJuryElementRatificationEntity;
+import org.fenixedu.academic.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
+import org.fenixedu.academic.domain.phd.thesis.activities.SubmitThesis;
+import org.fenixedu.academic.domain.phd.thesis.activities.SwapJuryElementsOrder;
+import org.fenixedu.academic.domain.phd.thesis.activities.ValidateJury;
+import org.fenixedu.academic.report.phd.thesis.PhdThesisJuryElementsDocument;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
+import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
+import org.fenixedu.academic.ui.struts.action.phd.thesis.CommonPhdThesisProcessDA;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -1029,7 +1028,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward deleteDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         prepareDocumentsToUpload(request);
-        return executeActivity(net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteDocument.class,
+        return executeActivity(org.fenixedu.academic.domain.phd.thesis.activities.DeleteDocument.class,
                 getDomainObject(request, "documentId"), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
                 "message.document.deleted.successfuly");
     }
@@ -1066,7 +1065,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
         }
 
         final ActionForward result =
-                executeActivity(net.sourceforge.fenixedu.domain.phd.thesis.activities.UploadDocuments.class,
+                executeActivity(org.fenixedu.academic.domain.phd.thesis.activities.UploadDocuments.class,
                         getDocumentsToUpload(), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
                         "message.documents.uploaded.with.success");
 

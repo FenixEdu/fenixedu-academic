@@ -19,16 +19,17 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
+package org.fenixedu.academic.service.services.messaging;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias.ForwardMailsReport.AliasExpandingStatus;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Professorship;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.messaging.ExpandExecutionCourseMailAlias.ForwardMailsReport.AliasExpandingStatus;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

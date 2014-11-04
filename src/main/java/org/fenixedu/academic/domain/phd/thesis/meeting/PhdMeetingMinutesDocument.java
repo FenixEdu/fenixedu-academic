@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
+package org.fenixedu.academic.domain.phd.thesis.meeting;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
-import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
+import org.fenixedu.academic.domain.accessControl.CoordinatorGroup;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.PhdProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
 import org.fenixedu.bennu.core.groups.Group;
 
 public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {

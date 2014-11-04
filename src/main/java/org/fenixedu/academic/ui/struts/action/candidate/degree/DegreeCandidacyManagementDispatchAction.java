@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.candidate.degree;
+package org.fenixedu.academic.ui.struts.action.candidate.degree;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,32 +31,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
-import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
-import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.workflow.Form;
-import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.candidate.ViewCandidaciesDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -64,6 +38,31 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCodeType;
+import org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents;
+import org.fenixedu.academic.domain.accounting.paymentCodes.InstallmentPaymentCode;
+import org.fenixedu.academic.domain.candidacy.CandidacyOperationType;
+import org.fenixedu.academic.domain.candidacy.CandidacySummaryFile;
+import org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.candidacy.workflow.CandidacyOperation;
+import org.fenixedu.academic.domain.candidacy.workflow.PrintAllDocumentsOperation;
+import org.fenixedu.academic.domain.candidacy.workflow.form.ResidenceInformationForm;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.util.workflow.Form;
+import org.fenixedu.academic.domain.util.workflow.Operation;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.service.services.candidacy.ExecuteStateOperation;
+import org.fenixedu.academic.service.services.candidacy.LogFirstTimeCandidacyTimestamp;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.student.ReadStudentTimeTable;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.candidate.ViewCandidaciesDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

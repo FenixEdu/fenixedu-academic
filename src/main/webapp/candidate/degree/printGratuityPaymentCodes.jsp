@@ -26,7 +26,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents" %>
+<%@ page import="org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents" %>
 
 
 <html:xhtml/>
@@ -140,7 +140,7 @@ width: 1%;
 	<div class="box">
 		<table>
 			<tr>
-		<logic:iterate id="paymentCode" name="installmentPaymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
+		<logic:iterate id="paymentCode" name="installmentPaymentCodes" indexId="i" type="org.fenixedu.academic.domain.accounting.PaymentCode">
 			<% final String style = i > 0 ? "padding-left: 20px; border-left-color: black; border-left-width: thin; border-left-style: solid;" : ""; %>
 				<td style="<%= style %>">
 			<p style="margin: 0.15em 0; width: auto;"><span class="label"><%= (i + 1)  + "º prestação" %></span></p>

@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>

@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor;
+package org.fenixedu.academic.ui.struts.action.teacher.tutor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSummaryBean;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTutorApp;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorSummaryBean;
+import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherTutorApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -42,7 +42,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
         @Forward(name = "processCreateSummary", path = "/pedagogicalCouncil/tutorship/processCreateSummary.jsp"),
         @Forward(name = "confirmCreateSummary", path = "/pedagogicalCouncil/tutorship/confirmCreateSummary.jsp"),
         @Forward(name = "viewSummary", path = "/pedagogicalCouncil/tutorship/viewSummary.jsp") })
-public class TutorshipSummaryDA extends net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryDA {
+public class TutorshipSummaryDA extends org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorshipSummaryDA {
 
     @Override
     @EntryPoint

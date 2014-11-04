@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.elections;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateCandidacyPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateVotingPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
-import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.elections.DelegateElection;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalDelegateElectionsEntryPoint;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.pedagogicalCouncil.elections.CreateDelegateCandidacyPeriod;
+import org.fenixedu.academic.service.services.pedagogicalCouncil.elections.CreateDelegateVotingPeriod;
+import org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean;
+import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.elections.DelegateElection;
+import org.fenixedu.academic.domain.elections.YearDelegateElection;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalDelegateElectionsEntryPoint;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

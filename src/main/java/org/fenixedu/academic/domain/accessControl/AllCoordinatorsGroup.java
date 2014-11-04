@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accessControl;
+package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Set;
 import java.util.stream.Collectors;

@@ -19,18 +19,17 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SendReceptionEmailBean implements java.io.Serializable {

@@ -20,8 +20,7 @@ package org.fenixedu.academic.task;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;

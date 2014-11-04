@@ -22,7 +22,7 @@
  * Created on 28 de Novembro de 2002, 3:41
  */
 
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.io.Serializable;
 import java.text.Collator;
@@ -32,14 +32,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
+import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 /**
  * 

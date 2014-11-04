@@ -19,7 +19,7 @@
 /*
  * Created on Apr 19, 2006
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 public enum MarkSheetState {
 

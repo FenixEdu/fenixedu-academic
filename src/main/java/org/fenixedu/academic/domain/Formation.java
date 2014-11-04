@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionUnit;
+import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
+import org.fenixedu.academic.dto.alumni.formation.AlumniFormation;
 import org.joda.time.DateTime;
 
 public class Formation extends Formation_Base {

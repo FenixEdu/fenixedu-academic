@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy.util;
+package org.fenixedu.academic.domain.candidacy.util;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
+import org.fenixedu.academic.domain.candidacy.GenericApplication;
+import org.fenixedu.academic.domain.candidacy.GenericApplicationRecomentation;
+
 import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationRecommendationBean implements Serializable {

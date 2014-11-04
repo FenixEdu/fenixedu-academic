@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule;
+package org.fenixedu.academic.dto.accounting.postingRule;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.util.Money;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.util.Money;
 
 public class CreateSpecializationDegreeGratuityPostingRuleBean extends CreatePostingRuleBean {
 

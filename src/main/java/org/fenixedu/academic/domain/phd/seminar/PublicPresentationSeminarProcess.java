@@ -16,25 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.seminar;
+package org.fenixedu.academic.domain.phd.seminar;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.caseHandling.StartActivity;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
+import org.fenixedu.academic.domain.phd.alert.AlertService;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
@@ -709,7 +708,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
     @Override
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarState> getStates() {
+    public java.util.Set<org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarState> getStates() {
         return getStatesSet();
     }
 

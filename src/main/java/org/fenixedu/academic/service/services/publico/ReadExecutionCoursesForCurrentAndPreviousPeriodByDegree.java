@@ -16,16 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.publico;
+package org.fenixedu.academic.service.services.publico;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.util.PeriodState;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.dto.ExecutionCourseView;
+import org.fenixedu.academic.util.PeriodState;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree {

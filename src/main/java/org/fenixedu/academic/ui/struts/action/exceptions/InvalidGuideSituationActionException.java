@@ -20,7 +20,7 @@
  * Created on 21/Abr/2004
  *  
  */
-package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
+package org.fenixedu.academic.ui.struts.action.exceptions;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForward;

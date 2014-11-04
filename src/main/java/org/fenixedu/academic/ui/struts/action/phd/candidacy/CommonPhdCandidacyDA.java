@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy;
+package org.fenixedu.academic.ui.struts.action.phd.candidacy;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -25,24 +25,23 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
+import org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
+import org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.PhdDocumentsZip;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessDA;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -116,7 +115,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 
         try {
             ExecuteProcessActivity.run(getProcess(request),
-                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadCandidacyReview.class,
+                    org.fenixedu.academic.domain.phd.candidacy.activities.UploadCandidacyReview.class,
                     Collections.singletonList(bean));
             addSuccessMessage(request, "message.document.uploaded.with.success");
 
@@ -155,7 +154,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
             final PhdProgramCandidacyProcessStateBean bean = getRenderedObject("stateBean");
             bean.setState(PhdProgramCandidacyProcessState.REJECTED);
             ExecuteProcessActivity.run(getProcess(request),
-                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess.class, bean);
+                    org.fenixedu.academic.domain.phd.candidacy.activities.RejectCandidacyProcess.class, bean);
         } catch (final DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
             return rejectCandidacyProcessInvalid(mapping, actionForm, request, response);
@@ -178,7 +177,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
         try {
             final PhdProgramCandidacyProcess process = getProcess(request);
             ExecuteProcessActivity.run(process,
-                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class,
+                    org.fenixedu.academic.domain.phd.candidacy.activities.RequestRatifyCandidacy.class,
                     getRenderedObject("stateBean"));
             return viewIndividualProgramProcess(request, process);
 
@@ -193,7 +192,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 
         try {
             ExecuteProcessActivity.run(getProcess(request),
-                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteCandidacyReview.class, getDocument(request));
+                    org.fenixedu.academic.domain.phd.candidacy.activities.DeleteCandidacyReview.class, getDocument(request));
             addSuccessMessage(request, "message.document.deleted.successfuly");
 
         } catch (DomainException e) {

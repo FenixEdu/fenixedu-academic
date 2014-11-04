@@ -38,7 +38,7 @@
 	<h2><bean:message key="title.manager.qualification.createQualification" bundle="MANAGER_RESOURCES" /></h2>
 	
 	<fr:create id="qualification"  action="<%="/qualification.do?method=backToShowQualifications&personID=" + personId %>" 
-	type="net.sourceforge.fenixedu.domain.Qualification" 
+	type="org.fenixedu.academic.domain.Qualification" 
 	schema="manager.qualification.qualification">
 	   <fr:hidden  slot="person" name="person"/>
 	   <fr:layout name="tabular-editable">
@@ -54,7 +54,7 @@
 <logic:present name="qualification">
 	<h2><bean:message key="title.manager.qualification.editQualification" bundle="MANAGER_RESOURCES" /></h2> 
 	<fr:edit id="qualification" name="qualification"  action="<%=String.format("/qualification.do?method=backToShowQualifications&personID=%s", personId) %>" 
-	type="net.sourceforge.fenixedu.domain.Qualification" 
+	type="org.fenixedu.academic.domain.Qualification" 
 	schema="manager.qualification.qualification">
 	  
 	   <fr:layout name="tabular-editable">

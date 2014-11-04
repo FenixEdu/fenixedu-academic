@@ -64,7 +64,7 @@
 
 <logic:notEmpty name="process" property="individualProgramProcess.phdConclusionProcesses">
 	<fr:view name="process" property="individualProgramProcess.phdConclusionProcesses">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess">
 			<fr:slot name="version" />
 			<fr:slot name="whenCreated" />
 			<fr:slot name="conclusionDate" />

@@ -20,15 +20,12 @@
  * Created on Dec 19, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler;
+package org.fenixedu.academic.ui.struts.action.teacher.professorship.exception.handler;
 
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
@@ -36,6 +33,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
+import org.fenixedu.academic.dto.InfoProfessorship;
+import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 
 /**
  * @author jpvl

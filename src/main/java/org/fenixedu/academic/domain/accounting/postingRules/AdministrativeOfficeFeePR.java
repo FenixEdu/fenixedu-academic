@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.postingRules;
+package org.fenixedu.academic.domain.accounting.postingRules;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,17 +24,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
-import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
-import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.accounting.AccountingTransaction;
+import org.fenixedu.academic.domain.accounting.EntryType;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 

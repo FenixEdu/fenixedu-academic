@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers;
+package org.fenixedu.academic.ui.renderers;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
-
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean;
+import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;

@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess;
+package org.fenixedu.academic.domain.candidacyProcess;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.Person;
-
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.dto.person.ChoosePersonBean;
+import org.fenixedu.academic.dto.person.PersonBean;
 import org.joda.time.LocalDate;
 
 abstract public class IndividualCandidacyProcessBean implements Serializable {

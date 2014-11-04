@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.report.events;
+package org.fenixedu.academic.domain.accounting.report.events;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
+import org.fenixedu.academic.domain.student.Registration;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AcademicServiceRequestEventWrapper implements Wrapper {

@@ -19,20 +19,21 @@
 /*
  * Created on May 4, 2006
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
+package org.fenixedu.academic.service.services.administrativeOffice.gradeSubmission;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.MarkSheetType;
-import net.sourceforge.fenixedu.domain.Teacher;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.MarkSheet;
+import org.fenixedu.academic.domain.MarkSheetType;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
+import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class SearchMarkSheets {

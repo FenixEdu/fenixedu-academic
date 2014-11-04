@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement;
+package org.fenixedu.academic.service.services.residenceManagement;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCodeType;
+import org.fenixedu.academic.domain.accounting.ResidenceEvent;
+import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateResidencePaymentCodes {

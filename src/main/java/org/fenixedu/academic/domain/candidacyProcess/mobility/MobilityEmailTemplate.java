@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
+package org.fenixedu.academic.domain.candidacyProcess.mobility;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;

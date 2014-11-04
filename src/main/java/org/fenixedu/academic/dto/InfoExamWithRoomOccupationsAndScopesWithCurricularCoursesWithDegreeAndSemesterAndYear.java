@@ -20,16 +20,15 @@
  * Created on 14/Jul/2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.Exam;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.academic.domain.CurricularCourseScope;
+import org.fenixedu.academic.domain.Exam;
 
 /**
  * @author Tânia Pousão

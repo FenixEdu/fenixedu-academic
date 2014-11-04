@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.servlets.startup;
+package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
 
@@ -27,14 +27,13 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Installation;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
-import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-
+import org.fenixedu.academic.domain.Installation;
+import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
+import org.fenixedu.academic.dto.InfoExecutionPeriod;
+import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
+import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.rest.Healthcheck;

@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
+package org.fenixedu.academic.ui.struts.action.BolonhaManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 
 public class CreateReferenceBean implements Serializable {
 

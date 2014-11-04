@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -26,26 +26,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
-import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
-import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.teacher.OtherService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.WeekDay;
+import org.fenixedu.academic.service.services.credits.ReadAllTeacherCredits;
+import org.fenixedu.academic.dto.credits.CreditLineDTO;
+import org.fenixedu.academic.domain.accessControl.UnitGroup;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonContractSituation;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.domain.teacher.AdviseType;
+import org.fenixedu.academic.domain.teacher.DegreeTeachingService;
+import org.fenixedu.academic.domain.teacher.InstitutionWorkTime;
+import org.fenixedu.academic.domain.teacher.OtherService;
+import org.fenixedu.academic.domain.teacher.TeacherAdviseService;
+import org.fenixedu.academic.domain.teacher.TeacherMasterDegreeService;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;

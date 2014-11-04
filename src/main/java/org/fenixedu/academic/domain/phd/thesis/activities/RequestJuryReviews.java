@@ -19,22 +19,21 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.activities;
+package org.fenixedu.academic.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdReporterReviewAlert;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
-import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
-
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.caseHandling.Process;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.access.PhdProcessAccessType;
+import org.fenixedu.academic.domain.phd.alert.AlertService;
+import org.fenixedu.academic.domain.phd.alert.PhdReporterReviewAlert;
+import org.fenixedu.academic.domain.phd.alert.AlertService.AlertMessage;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType;
+import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
+import org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;

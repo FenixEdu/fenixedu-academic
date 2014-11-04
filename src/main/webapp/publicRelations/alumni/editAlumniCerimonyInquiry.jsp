@@ -36,7 +36,7 @@
 
 <fr:form action="<%= url %>">
 	<fr:edit id="cerimonyInquiry" name="cerimonyInquiry">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.alumni.CerimonyInquiry">
 			<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"
 					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="size" value="50"/>

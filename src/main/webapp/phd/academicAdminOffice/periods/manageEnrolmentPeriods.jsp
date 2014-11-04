@@ -24,9 +24,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"%>
-<%@page import="net.sourceforge.fenixedu.domain.EnrolmentPeriod"%>
+<%@page import="org.fenixedu.academic.domain.phd.ManageEnrolmentsBean"%>
+<%@page import="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"%>
+<%@page import="org.fenixedu.academic.domain.EnrolmentPeriod"%>
 
 <html:xhtml/>
 

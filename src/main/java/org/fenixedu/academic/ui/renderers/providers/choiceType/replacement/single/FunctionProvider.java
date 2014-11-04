@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single;
-
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -48,7 +47,7 @@ public class FunctionProvider implements DataProvider {
     }
 
     private boolean isFunction(final AccountabilityType type) {
-        return type instanceof net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+        return type instanceof org.fenixedu.academic.domain.organizationalStructure.Function;
     }
 
 }

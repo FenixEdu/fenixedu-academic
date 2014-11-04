@@ -29,7 +29,7 @@
 <fr:form action="/selectDFACandidacies.do?method=listCandidacies" >
 	<fr:edit id="executionDegree"
 			 name="candidacyBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
+			 type="org.fenixedu.academic.dto.administrativeOffice.candidacy.CreateDFACandidacyBean"
 			 schema="candidacy.choose.executionDegree">
 		<fr:destination name="degreePostBack" path="/selectDFACandidacies.do?method=chooseDegreePostBack"/>
 		<fr:destination name="degreeCurricularPlanPostBack" path="/selectDFACandidacies.do?method=chooseDegreeCurricularPlanPostBack"/>	

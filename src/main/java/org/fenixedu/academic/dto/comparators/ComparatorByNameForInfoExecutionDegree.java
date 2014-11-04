@@ -20,11 +20,11 @@
  * Created on Mar 14, 2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject.comparators;
+package org.fenixedu.academic.dto.comparators;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
 
 /**
  * @author Luis Cruz e Sara Ribeiro

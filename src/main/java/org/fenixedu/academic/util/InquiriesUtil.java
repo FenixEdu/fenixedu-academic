@@ -20,7 +20,7 @@
  * Created on Nov 30, 2004
  * 
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -28,9 +28,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.dto.InfoObject;
 
 /**
  * @author João Fialho & Rita Ferreira

@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.accountingTransactions;
+package org.fenixedu.academic.domain.accounting.accountingTransactions;
 
-import net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail;
-import net.sourceforge.fenixedu.domain.accounting.Entry;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
+import org.fenixedu.academic.domain.accounting.AccountingTransactionDetail;
+import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.User;
 
 public class InstallmentAccountingTransaction extends InstallmentAccountingTransaction_Base {

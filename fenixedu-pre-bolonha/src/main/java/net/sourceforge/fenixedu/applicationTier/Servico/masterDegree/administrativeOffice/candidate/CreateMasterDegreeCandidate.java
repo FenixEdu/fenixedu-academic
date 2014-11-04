@@ -20,27 +20,27 @@
  * Created on 14/Mar/2003
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
+package org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.State;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidate;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidateWithInfoPerson;
+import org.fenixedu.academic.domain.CandidateSituation;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.MasterDegreeCandidate;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.person.Gender;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.SituationName;
+import org.fenixedu.academic.util.State;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

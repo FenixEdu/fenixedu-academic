@@ -24,7 +24,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="c"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication$WrittenEvaluationsByRoom" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication$WrittenEvaluationsByRoom" />
 
 <link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
 <style type="text/css">

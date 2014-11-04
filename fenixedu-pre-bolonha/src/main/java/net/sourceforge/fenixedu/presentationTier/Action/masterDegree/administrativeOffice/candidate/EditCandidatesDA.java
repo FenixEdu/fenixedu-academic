@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
+package org.fenixedu.academic.ui.struts.action.masterDegree.administrativeOffice.candidate;
 
-import net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearToEditCandidatesDA;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
+import org.fenixedu.academic.ui.struts.action.commons.ChooseExecutionYearToEditCandidatesDA;
+import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
+import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 
 import org.fenixedu.bennu.struts.annotations.ExceptionHandling;
 import org.fenixedu.bennu.struts.annotations.Exceptions;

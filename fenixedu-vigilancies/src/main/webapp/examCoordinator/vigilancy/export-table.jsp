@@ -24,7 +24,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="date"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean"/>
+<bean:define id="bean" name="bean" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean"/>
 
 <html:html xhtml="true">
 <head>

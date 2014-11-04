@@ -21,13 +21,11 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.config;
+package org.fenixedu.academic.ui.struts.config;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
@@ -37,6 +35,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 
 /**
  * @author João Mota

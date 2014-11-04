@@ -20,7 +20,7 @@
  * Created on 19/Ago/2003
  */
 
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,13 +34,13 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.tests.Response;
-import net.sourceforge.fenixedu.util.tests.TestType;
+import org.fenixedu.academic.domain.EvaluationManagementLog;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.tests.Response;
+import org.fenixedu.academic.util.tests.TestType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -468,7 +468,7 @@ public class DistributedTest extends DistributedTest_Base {
 
     @Deprecated
     public java.util.Date getBeginHourDate() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourDateHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getBeginHourDateHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -477,7 +477,7 @@ public class DistributedTest extends DistributedTest_Base {
         if (date == null) {
             setBeginHourDateHourMinuteSecond(null);
         } else {
-            setBeginHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setBeginHourDateHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
@@ -498,7 +498,7 @@ public class DistributedTest extends DistributedTest_Base {
 
     @Deprecated
     public java.util.Date getEndHourDate() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourDateHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEndHourDateHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -507,7 +507,7 @@ public class DistributedTest extends DistributedTest_Base {
         if (date == null) {
             setEndHourDateHourMinuteSecond(null);
         } else {
-            setEndHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEndHourDateHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

@@ -19,7 +19,7 @@
 /*
  * Created on 17/Fev/2004
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.io.Serializable;
 

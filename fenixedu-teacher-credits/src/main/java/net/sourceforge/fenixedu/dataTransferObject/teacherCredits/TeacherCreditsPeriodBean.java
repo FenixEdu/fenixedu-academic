@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacherCredits;
+package org.fenixedu.academic.dto.teacherCredits;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.credits.AnnualCreditsState;
+import org.fenixedu.academic.domain.time.calendarStructure.TeacherCreditsFillingCE;
+import org.fenixedu.academic.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
+import org.fenixedu.academic.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;

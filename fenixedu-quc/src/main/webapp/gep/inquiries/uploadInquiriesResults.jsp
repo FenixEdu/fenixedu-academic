@@ -35,7 +35,7 @@
 <h2><bean:message key="title.inquiries.uploadResults" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <fr:edit id="uploadFileBean" name="uploadFileBean" action="/uploadInquiriesResults.do?method=submitResultsFile" >
-	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.ResultsFileBean" bundle="INQUIRIES_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.dto.inquiries.ResultsFileBean" bundle="INQUIRIES_RESOURCES">
 		<fr:slot name="inputStream" required="true" key="label.inquiries.result.file"/>
 		<fr:slot name="resultsDate" required="true" key="label.inquiries.result.date"/>
 		<fr:slot name="newResults" required="true" key="label.inquiries.result.uploadType" layout="radio">

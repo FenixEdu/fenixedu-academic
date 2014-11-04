@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher;
+package org.fenixedu.academic.domain.teacher;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.credits.util.ProjectTutorialServiceBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.credits.util.ProjectTutorialServiceBean;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;

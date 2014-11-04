@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
+package org.fenixedu.academic.ui.struts.action.publicRelationsOffice;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,27 +29,26 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniInfoNotUpdatedBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniMailSendToBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
-import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.Formation;
-import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.alumni.AlumniReportFile;
-import net.sourceforge.fenixedu.domain.alumni.AlumniReportFileBean;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.email.EmailBean;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice.PublicRelationsApplication.PublicRelationsAlumniApp;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Alumni;
+import org.fenixedu.academic.domain.Formation;
+import org.fenixedu.academic.domain.Qualification;
+import org.fenixedu.academic.domain.QueueJob;
+import org.fenixedu.academic.domain.alumni.AlumniReportFile;
+import org.fenixedu.academic.domain.alumni.AlumniReportFileBean;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.util.email.EmailBean;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.Sender;
+import org.fenixedu.academic.dto.alumni.AlumniInfoNotUpdatedBean;
+import org.fenixedu.academic.dto.alumni.AlumniMailSendToBean;
+import org.fenixedu.academic.dto.alumni.AlumniSearchBean;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.publicRelationsOffice.PublicRelationsApplication.PublicRelationsAlumniApp;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student.elections;
+package org.fenixedu.academic.service.services.student.elections;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionBlankVote;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.Bundle;
+import static org.fenixedu.academic.predicate.AccessControl.check;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.elections.DelegateElectionBlankVote;
+import org.fenixedu.academic.domain.elections.DelegateElectionVote;
+import org.fenixedu.academic.domain.elections.DelegateElectionVotingPeriod;
+import org.fenixedu.academic.domain.elections.YearDelegateElection;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.util.email.ConcreteReplyTo;
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;

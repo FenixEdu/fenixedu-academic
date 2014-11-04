@@ -24,10 +24,10 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean" %>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdThesisJuryElementBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA" %>
+<%@page import="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean" %>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manage.emails.create" bundle="PHD_RESOURCES" /></h2>
@@ -128,7 +128,7 @@ div.compose-email table .col2 { width: 700px; }
 						</p>
 					
 						<fr:edit id='<%= "emailBean.groups.edit." + group.toString() %>' name="emailBean">
-							<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
+							<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean">
 								<fr:slot name="selectedParticipants" layout="option-select">
 									<fr:property name="providerClass" value='<%= group.getClass().getName() %>' />
 									<fr:property name="eachSchema" value="PhdParticipant.view.name.with.title"/>
@@ -158,8 +158,8 @@ div.compose-email table .col2 { width: 700px; }
 	</table>
 
 	<fr:edit id="emailBean.individuals" name="emailBean" >
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
-			<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy" validator="net.sourceforge.fenixedu.presentationTier.Action.phd.validator.EmailListValidator">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean">
+			<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy" validator="org.fenixedu.academic.ui.struts.action.phd.validator.EmailListValidator">
 				<fr:property name="size" value="60" />
 			</fr:slot>
 		</fr:schema>
@@ -171,7 +171,7 @@ div.compose-email table .col2 { width: 700px; }
 	</fr:edit>
 	
 	<fr:edit id="emailBean.template" name="emailBean" >
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean">
 			<fr:slot name="template" layout="menu-postback" >
 				<fr:property name="destination" value="template-postBack"/>
 				<fr:property name="layout" value="phd-enum-renderer" />
@@ -188,7 +188,7 @@ div.compose-email table .col2 { width: 700px; }
 	
 	<fr:edit id="emailBean.create" name="emailBean" >
 		
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean">
 			<fr:slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="size" value="60" />
 			</fr:slot>

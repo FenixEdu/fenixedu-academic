@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.student.curriculum;
+package org.fenixedu.academic.domain.student.curriculum;
 
 public enum AverageType {
     SIMPLE, WEIGHTED, BEST;

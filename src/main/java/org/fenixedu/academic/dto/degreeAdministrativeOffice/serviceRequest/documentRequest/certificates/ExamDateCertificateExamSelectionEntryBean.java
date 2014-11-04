@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates;
+package org.fenixedu.academic.dto.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates;
 
 import java.io.Serializable;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Exam;
+import org.fenixedu.academic.domain.DegreeModuleScope;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.Exam;
 
 public class ExamDateCertificateExamSelectionEntryBean implements Serializable {
 

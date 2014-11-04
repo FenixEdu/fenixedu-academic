@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student.curriculum;
+package org.fenixedu.academic.domain.student.curriculum;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
+import org.fenixedu.academic.domain.CurricularCourse;
 
 abstract public class SimpleCurriculumEntry extends CurriculumEntry {
 

@@ -41,10 +41,10 @@
 <%-- ### End of Title ### --%>
 
 <logic:present name="has-letter">
-	<p><bean:message key="message.phd.public.candidacy.referee.letter.submited" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES" />
+	<p><bean:message key="message.phd.public.candidacy.referee.letter.submited" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES" />
 	
 	<fr:view name="letter">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter">
 			<fr:slot name="howLongKnownApplicant" />
 			<fr:slot name="capacity" />
 			<fr:slot name="comparisonGroup" />
@@ -63,7 +63,7 @@
 </logic:present>
 
 <logic:present name="created-with-success">
-	<p><bean:message key="message.phd.institution.public.candidacy.referee.letter.submited.with.success" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES" />
+	<p><bean:message key="message.phd.institution.public.candidacy.referee.letter.submited.with.success" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES" />
 </logic:present>
 
 <logic:present name="no-information">

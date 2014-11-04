@@ -25,14 +25,14 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicThesisPresentation"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration" %>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.AddStudyPlan"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.RequestPublicThesisPresentation"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess" %>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.DissociateRegistration" %>
 
 
 <%-- ### Title #### --%>
@@ -174,7 +174,7 @@
 				</html:link>
 			</li>
 			<logic:present name="process" property="phdProgram">
-				<bean:define id="program" name="process" property="phdProgram" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" />
+				<bean:define id="program" name="process" property="phdProgram" type="org.fenixedu.academic.domain.phd.PhdProgram" />
 				<academic:allowed operation="MANAGE_STUDENT_PAYMENTS" program="<%= program %>">
 					<li>
 						<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.externalId">
@@ -293,7 +293,7 @@
 
 <%-- Academic Service Requests --%>
 <logic:present name="process" property="phdProgram">
-	<bean:define id="program" name="process" property="phdProgram" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" />
+	<bean:define id="program" name="process" property="phdProgram" type="org.fenixedu.academic.domain.phd.PhdProgram" />
 	<academic:allowed operation="SERVICE_REQUESTS" program="<%= program %>">
 		<jsp:include page="viewAcademicServiceRequests.jsp" />
 	</academic:allowed>

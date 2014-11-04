@@ -25,7 +25,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <html:xhtml/>
 
-<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
 
 <h2><bean:message bundle="STUDENT_RESOURCES" key="message.student.shift.enrollment" /></h2>
 
@@ -110,7 +110,7 @@
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.tutorialOrientation"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.tutorialOrientation"/></th>
 
 			</tr>			
-			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromEnroledExecutionCourses" type="net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol">
+			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromEnroledExecutionCourses" type="org.fenixedu.academic.dto.ShiftToEnrol">
 				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.externalId"/>
 				<tr>
 					<td class="disciplina">
@@ -263,7 +263,7 @@
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.trainingPeriod"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.trainingPeriod"/></th>
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.tutorialOrientation"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.tutorialOrientation"/></th>
 			</tr>			
-			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromUnenroledExecutionCourses" type="net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol">
+			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromUnenroledExecutionCourses" type="org.fenixedu.academic.dto.ShiftToEnrol">
 				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.externalId"/>
 				<tr>
 					<td class="disciplina">
@@ -413,7 +413,7 @@
 	
 	<table class="tstyle2 thlight mtop05">
 		<bean:define id="elem" value="" type="java.lang.String"/>
-		<logic:iterate id="shift" name="studentShifts" type="net.sourceforge.fenixedu.domain.Shift">
+		<logic:iterate id="shift" name="studentShifts" type="org.fenixedu.academic.domain.Shift">
 			<%-- COURSES --%>
 			<logic:present name="elem">
 				<logic:notEqual name="elem" value="<%=shift.getDisciplinaExecucao().getNome()%>">

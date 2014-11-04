@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
+package org.fenixedu.academic.ui.struts.action.manager.personManagement;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.PersistentGroupMembers;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+
 import pt.ist.fenixframework.Atomic;
 
 public class MergePersonsOperations {

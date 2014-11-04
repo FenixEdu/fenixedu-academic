@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
+package org.fenixedu.academic.ui.struts.action.departmentMember;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.TeacherEvaluationDA;
+import org.fenixedu.academic.ui.struts.action.teacher.evaluation.TeacherEvaluationDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

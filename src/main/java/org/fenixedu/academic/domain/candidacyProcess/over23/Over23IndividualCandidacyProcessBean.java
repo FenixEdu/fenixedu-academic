@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
+package org.fenixedu.academic.domain.candidacyProcess.over23;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,12 +24,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import org.fenixedu.academic.domain.candidacyProcess.FormationBean;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import org.joda.time.LocalDate;
 
 public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyProcessBean {

@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.manager.gratuity;
+package org.fenixedu.academic.ui.faces.bean.manager.gratuity;
 
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

@@ -23,12 +23,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
 
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
-<bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess" />
+<bean:define id="process" name="process" type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess" />
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="childProcessName" name="childProcessName" />
 

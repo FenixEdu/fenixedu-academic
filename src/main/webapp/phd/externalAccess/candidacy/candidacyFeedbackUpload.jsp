@@ -24,18 +24,18 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.access.PhdProcessAccessType"%>
+<%@page import="org.fenixedu.academic.domain.phd.access.PhdExternalOperationBean"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
 
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument"%>
 
 <html:xhtml/>
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<bean:message key="label.phds" bundle="PHD_RESOURCES"/>
 </div>
 <br/>

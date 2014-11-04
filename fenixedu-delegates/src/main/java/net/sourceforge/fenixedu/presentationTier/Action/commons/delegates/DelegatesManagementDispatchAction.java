@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons.delegates;
+package org.fenixedu.academic.ui.struts.action.commons.delegates;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -31,26 +31,26 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates.AddNewDelegate;
-import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates.RemoveDelegate;
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean;
-import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.elections.DelegateElection;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.YearDelegate;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.pedagogicalCouncil.delegates.AddNewDelegate;
+import org.fenixedu.academic.service.services.pedagogicalCouncil.delegates.RemoveDelegate;
+import org.fenixedu.academic.dto.pedagogicalCouncil.delegates.DelegateBean;
+import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.elections.DelegateElection;
+import org.fenixedu.academic.domain.elections.YearDelegateElection;
+import org.fenixedu.academic.domain.organizationalStructure.DegreeUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Function;
+import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.student.Delegate;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.student.YearDelegate;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

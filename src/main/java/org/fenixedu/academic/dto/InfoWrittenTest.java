@@ -20,13 +20,13 @@
  * Created on Feb 18, 2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.EvaluationType;
+import org.fenixedu.academic.domain.WrittenTest;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.EvaluationType;
 
 /**
  * @author Luis&Nuno

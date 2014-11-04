@@ -19,14 +19,14 @@
 /*
  * Created on 25/Jul/2003
  */
-package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
+package org.fenixedu.academic.dto.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.domain.onlineTests.Question;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
 
 /**
  * @author Susana Fernandes

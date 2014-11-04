@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
+package org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Shift;
-
 import org.apache.struts.action.ActionForm;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Shift;
 
 import pt.ist.fenixframework.FenixFramework;
 

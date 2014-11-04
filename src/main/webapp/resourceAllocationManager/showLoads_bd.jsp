@@ -24,14 +24,14 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@page import="net.sourceforge.fenixedu.domain.ShiftType"%>
+<%@page import="org.fenixedu.academic.domain.ShiftType"%>
 <html:xhtml/>
 
 <h2><bean:message key="label.hours.load.total" bundle="SOP_RESOURCES"/></h2>
 
 <logic:present name="infoExecutionCourse">
 		
-	<bean:define id="executionCourse" name="infoExecutionCourse" property="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse" toScope="request"/>
+	<bean:define id="executionCourse" name="infoExecutionCourse" property="executionCourse" type="org.fenixedu.academic.domain.ExecutionCourse" toScope="request"/>
 	<jsp:include page="contextExecutionCourse.jsp"/>
 		
 	<logic:notEmpty name="executionCourse" property="courseLoads">
@@ -47,7 +47,7 @@
 
 		<h3 class="mtop15"><bean:message key="label.curricularCourses" /></h3>
 
-			<logic:iterate id="curricularCourse" name="curricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
+			<logic:iterate id="curricularCourse" name="curricularCourses" type="org.fenixedu.academic.dto.InfoCurricularCourse">
 				<p>
 					<p><bean:message key="label.curricularCourse"/>: <strong><bean:write name="curricularCourse" property="name" /></strong></p>
 					Curso :	<strong><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome" /></strong>

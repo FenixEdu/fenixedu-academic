@@ -19,9 +19,9 @@
 /*
  * Created on 13/Mai/2003
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro;
+package org.fenixedu.academic.service.filter;
 
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import org.fenixedu.academic.domain.person.RoleType;
 
 /**
  * @author lmac1

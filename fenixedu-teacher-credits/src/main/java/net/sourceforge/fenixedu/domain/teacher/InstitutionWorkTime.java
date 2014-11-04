@@ -16,19 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher;
+package org.fenixedu.academic.domain.teacher;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.WeekDay;
-import net.sourceforge.fenixedu.util.date.TimePeriod;
+import org.fenixedu.academic.dto.teacher.workTime.InstitutionWorkTimeDTO;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.time.calendarStructure.TeacherCreditsFillingCE;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.CalendarUtil;
+import org.fenixedu.academic.util.WeekDay;
+import org.fenixedu.academic.util.date.TimePeriod;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -128,7 +128,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 
     @Deprecated
     public java.util.Date getEndTime() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndTimeHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEndTimeHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -137,13 +137,13 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
         if (date == null) {
             setEndTimeHourMinuteSecond(null);
         } else {
-            setEndTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEndTimeHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
     @Deprecated
     public java.util.Date getStartTime() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getStartTimeHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getStartTimeHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -152,7 +152,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
         if (date == null) {
             setStartTimeHourMinuteSecond(null);
         } else {
-            setStartTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setStartTimeHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

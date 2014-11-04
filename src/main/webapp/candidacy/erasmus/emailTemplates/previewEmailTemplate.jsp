@@ -34,7 +34,7 @@
 	
 	<fr:view name="mobilityEmailTemplateBean">
 	
-		<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="subject" />
 			<fr:slot name="body" />
 		</fr:schema>

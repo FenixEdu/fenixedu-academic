@@ -29,7 +29,7 @@
 
 
 <bean:message bundle="SOP_RESOURCES" key="label.firstYearShiftsCapacity.description"/>
-<bean:define id="executionYear" name="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
+<bean:define id="executionYear" name="executionYear" type="org.fenixedu.academic.domain.ExecutionYear"/>
 <br/>
 <br/>
 

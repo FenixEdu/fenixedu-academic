@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
+package org.fenixedu.academic.ui.struts.action.departmentMember;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDetailsBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import org.fenixedu.academic.dto.inquiries.DepartmentTeacherDetailsBean;
+import org.fenixedu.academic.dto.inquiries.DepartmentUCResultsBean;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.predicate.AccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

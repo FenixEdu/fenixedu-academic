@@ -16,30 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
+package org.fenixedu.academic.service.services.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ManagementCouncilUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
+import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
+import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
+import org.fenixedu.academic.domain.organizationalStructure.DegreeUnit;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ManagementCouncilUnit;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.PlanetUnit;
+import org.fenixedu.academic.domain.organizationalStructure.SchoolUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificCouncilUnit;
+import org.fenixedu.academic.domain.organizationalStructure.SectionUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.service.ServiceMonitoring;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 

@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher;
+package org.fenixedu.academic.domain.teacher;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.predicate.AccessControl;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;

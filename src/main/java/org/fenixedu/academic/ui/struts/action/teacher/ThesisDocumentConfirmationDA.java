@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package org.fenixedu.academic.ui.struts.action.teacher;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -25,20 +25,19 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ConfirmThesisDocumentSubmission;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherFinalWorkApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.thesis.ConfirmThesisDocumentSubmission;
+import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
+import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState;
+import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherFinalWorkApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
+package org.fenixedu.academic.ui.struts.action.research.researchUnit;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,11 +24,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
-import net.sourceforge.fenixedu.presentationTier.Action.research.ResearcherApplication.ResearcherResearchUnitApp;
+import org.fenixedu.academic.domain.organizationalStructure.ResearchUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.commons.UnitFunctionalities;
+import org.fenixedu.academic.ui.struts.action.research.ResearcherApplication.ResearcherResearchUnitApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

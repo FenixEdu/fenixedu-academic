@@ -26,9 +26,9 @@
 
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.MeasurementTestRoom"%>
 <%@page import="java.util.Locale"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Registration"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
+<%@page import="org.fenixedu.academic.domain.student.Registration"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
 
 <html:xhtml/>
 

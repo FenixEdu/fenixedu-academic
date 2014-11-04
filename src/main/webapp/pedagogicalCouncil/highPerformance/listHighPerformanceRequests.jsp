@@ -28,11 +28,11 @@
 <html:xhtml />
 
 <fr:form action="/studentHighPerformance.do?method=listRequests">
-	<fr:create id="job" type="net.sourceforge.fenixedu.domain.StudentHighPerformanceQueueJob">
-		<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.StudentHighPerformanceQueueJob">
+	<fr:create id="job" type="org.fenixedu.academic.domain.StudentHighPerformanceQueueJob">
+		<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.StudentHighPerformanceQueueJob">
 			<fr:slot name="executionInterval" layout="menu-select" required="true" key="label.highPerformance.executionInterval">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.ActiveAcademicIntervalProvider" />
 				<fr:property name="format" value="${pathName}" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
@@ -46,7 +46,7 @@
 <br/>
 
 <fr:view name="jobs">
-	<fr:schema type="net.sourceforge.fenixedu.domain.StudentHighPerformanceQueueJob" bundle="PEDAGOGICAL_COUNCIL">
+	<fr:schema type="org.fenixedu.academic.domain.StudentHighPerformanceQueueJob" bundle="PEDAGOGICAL_COUNCIL">
 		<fr:slot name="executionInterval.pathName" key="label.highPerformance.executionInterval" />
 		<fr:slot name="requestDate" key="label.highPerformance.requestDate" />
 		<fr:slot name="person.name" key="label.highPerformance.requestor" />

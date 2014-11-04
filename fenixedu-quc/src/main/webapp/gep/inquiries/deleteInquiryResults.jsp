@@ -39,7 +39,7 @@
 
 <h3><bean:message key="label.executionCourse" bundle="APPLICATION_RESOURCES"/></h3>
 <fr:edit id="deleteExecutionCourseResults" name="deleteExecutionCourseResults" action="/deleteInquiryResults.do?method=deleteExecutionCourseResults" >
-	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DeleteExecutionCourseResultsBean" bundle="INQUIRIES_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.dto.inquiries.DeleteExecutionCourseResultsBean" bundle="INQUIRIES_RESOURCES">
 		<fr:slot name="executionCourseOID" required="true"/>
 		<fr:slot name="executionDegreeOID"/>
 		<fr:slot name="inquiryQuestionOID"/>
@@ -56,7 +56,7 @@
 <br/>
 <h3><bean:message key="label.teacher" bundle="APPLICATION_RESOURCES"/></h3>
 <fr:edit id="deleteProfessorshipResults" name="deleteProfessorshipResults" action="/deleteInquiryResults.do?method=deleteTeacherResults" >
-	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DeleteProfessorshipResultsBean" bundle="INQUIRIES_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.dto.inquiries.DeleteProfessorshipResultsBean" bundle="INQUIRIES_RESOURCES">
 		<fr:slot name="professorshipOID" required="true"/>
 		<fr:slot name="shiftType"/>
 		<fr:slot name="inquiryQuestionOID"/>
@@ -73,7 +73,7 @@
 <br/>
 <h3><bean:message key="title.inquiries.deleteResults.allTeachers" bundle="INQUIRIES_RESOURCES"/></h3>
 <fr:edit id="deleteAllProfessorshipResults" name="deleteProfessorshipResults" action="/deleteInquiryResults.do?method=deleteAllTeachersResults" >
-	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DeleteProfessorshipResultsBean" bundle="INQUIRIES_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.dto.inquiries.DeleteProfessorshipResultsBean" bundle="INQUIRIES_RESOURCES">
 		<fr:slot name="executionCourseOID" required="true"/>
 	</fr:schema>
 	

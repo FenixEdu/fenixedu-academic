@@ -40,7 +40,7 @@
 	--%>
 	
 	<bean:define id="boards" name="unit" property="boards"/>
-	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="person" type="org.fenixedu.academic.domain.Person"/>
 	
 	<jsp:include page="/messaging/announcements/listAnnouncementBoards.jsp" flush="true"/>		
 
@@ -75,7 +75,7 @@
 				<th>
 					Quem pode ler:
 				</th>
-				<e:labelValues id="values" bundle="ENUMERATION_RESOURCES"  enumeration="net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType" />				
+				<e:labelValues id="values" bundle="ENUMERATION_RESOURCES"  enumeration="org.fenixedu.academic.domain.UnitBoardPermittedGroupType" />				
 				<td>
 					<html:select property="unitBoardReadPermittedGroupType">
 						<html:options collection="values" property="value" labelProperty="label" />

@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting;
+package org.fenixedu.academic.dto.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.AdministrativeOfficeExemptionAppliance;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
-
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
+import org.fenixedu.academic.dto.accounting.penaltyExemption.AdministrativeOfficeExemptionAppliance;
 import org.joda.time.YearMonthDay;
 
 public class AdministrativeOfficeFeeAndInsuranceExemptionBean implements Serializable {

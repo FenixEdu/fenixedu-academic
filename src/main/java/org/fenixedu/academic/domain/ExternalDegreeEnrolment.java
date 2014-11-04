@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
-import net.sourceforge.fenixedu.domain.enrolment.ExternalDegreeEnrolmentWrapper;
-import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.util.EnrolmentAction;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
+import org.fenixedu.academic.domain.enrolment.ExternalDegreeEnrolmentWrapper;
+import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.util.EnrolmentAction;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 

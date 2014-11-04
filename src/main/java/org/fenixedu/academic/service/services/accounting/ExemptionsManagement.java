@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
+package org.fenixedu.academic.service.services.accounting;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.InsuranceExemptionBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemptionJustificationType;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeExemption;
+import org.fenixedu.academic.domain.accounting.events.InsuranceExemption;
+import org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType;
+import org.fenixedu.academic.dto.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean;
+import org.fenixedu.academic.dto.accounting.InsuranceExemptionBean;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

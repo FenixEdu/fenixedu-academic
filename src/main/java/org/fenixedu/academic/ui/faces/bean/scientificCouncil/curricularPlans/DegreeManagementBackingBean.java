@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
+package org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,30 +28,29 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.ChangeDegreeOfficialPublicationReference;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegree;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegreeOfficialPublication;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegreeSpecializationArea;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegree;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegreeSpecializationArea;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.EditDegree;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DegreeInfo;
-import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
-import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.DegreeInfo;
+import org.fenixedu.academic.domain.DegreeOfficialPublication;
+import org.fenixedu.academic.domain.DegreeSpecializationArea;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.ChangeDegreeOfficialPublicationReference;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.CreateDegree;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.CreateDegreeOfficialPublication;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.CreateDegreeSpecializationArea;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.DeleteDegree;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.DeleteDegreeSpecializationArea;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.EditDegree;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;

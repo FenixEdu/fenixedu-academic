@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.documentRequests;
+package org.fenixedu.academic.service.services.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DocumentRequestCreator;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastDegreeDiplomaRequestEvent;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PastDiplomaRequest;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
+import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.events.serviceRequests.PastDegreeDiplomaRequestEvent;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.PastDiplomaRequest;
+import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
+import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
+import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.factoryExecutors.DocumentRequestCreator;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;

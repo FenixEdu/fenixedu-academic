@@ -32,7 +32,7 @@
 <bean:define id="semester" name="configuration" property="semester.externalId" />
 <fr:edit id="configuration" name="configuration" action="/manageEnrolementPeriods.do?method=createPeriods">
 	<fr:schema bundle="MANAGER_RESOURCES"
-		type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodConfigurationForCreation">
+		type="org.fenixedu.academic.ui.struts.action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodConfigurationForCreation">
 		<fr:slot name="degreeType" layout="menu-postback" key="label.manager.degree.tipoCurso" required="true">
 			<fr:property name="destination" value="typePostback" />
 		</fr:slot>

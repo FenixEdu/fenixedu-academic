@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.sibs.incomming;
+package org.fenixedu.academic.util.sibs.incomming;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,8 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.util.Money;
 import org.joda.time.YearMonthDay;
 
 public class SibsIncommingPaymentFile {

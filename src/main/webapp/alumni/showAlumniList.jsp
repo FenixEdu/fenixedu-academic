@@ -59,7 +59,7 @@
 
 <logic:present name="searchAlumniBean" property="alumni">
 	<logic:notEmpty name="searchAlumniBean" property="alumni">
-	<bean:define id="bean" name="searchAlumniBean" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean"/>
+	<bean:define id="bean" name="searchAlumniBean" type="org.fenixedu.academic.dto.alumni.AlumniSearchBean"/>
 	<p class="mtop15 mbottom05"><bean:message key="label.hitCount" bundle="ALUMNI_RESOURCES" />: <strong><fr:view name="searchAlumniBean" property="totalItems"/></strong></p>
 		<fr:view name="searchAlumniBean" property="alumni" schema="alumni.registration.search.list">
 			<fr:layout name="tabular-sortable">

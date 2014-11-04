@@ -20,7 +20,7 @@
  * Created on Oct 27, 2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
+package org.fenixedu.academic.servlet.taglib.sop.examsMapNew;
 
 import java.util.Locale;
 

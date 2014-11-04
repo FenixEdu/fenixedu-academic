@@ -39,7 +39,7 @@
 
 
 <fr:view name="cerimonyInquiry">
-	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
+	<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.alumni.CerimonyInquiry">
 		<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"/>
 		<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"/>
 		<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>

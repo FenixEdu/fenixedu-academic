@@ -90,7 +90,7 @@
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.proposal" bundle="APPLICATION_RESOURCES"/></h3>
 
 <fr:view name="thesis">
-	<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
 		<fr:slot name="enrolment.executionPeriod.qualifiedName" key="label.curricular.course.semester"/>
     	<fr:slot name="state" key="label.thesis.state"/>
     	<fr:slot name="valid" key="label.thesis.valid">
@@ -221,7 +221,7 @@
                         <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsOrientator" name="thesis" slot="orientatorCreditsDistribution">
                                 <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-                                <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+                                <fr:validator name="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
                                     <fr:property name="upperBound" value="100"/>
                                 </fr:validator>
@@ -292,7 +292,7 @@
                     <td class="width35em">
                         <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsCoorientator" name="thesis" slot="coorientatorCreditsDistribution">
-                                <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+                                <fr:validator name="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
                                     <fr:property name="upperBound" value="100"/>
                                 </fr:validator>

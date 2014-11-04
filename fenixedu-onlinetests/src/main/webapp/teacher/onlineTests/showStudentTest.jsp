@@ -37,21 +37,21 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="10">
 	<bean:define id="studentId" value="0" type="java.lang.Object"/>
 	<bean:define id="order" value="1"/>
-	<logic:iterate id="testQuestion" name="studentTestQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion" indexId="questionIndex">
+	<logic:iterate id="testQuestion" name="studentTestQuestionList" type="org.fenixedu.academic.domain.onlineTests.StudentTestQuestion" indexId="questionIndex">
 	<logic:equal name="correctionType" value="studentCorrection">
-			<bean:define id="student" name="testQuestion" property="student" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-			<bean:define id="person" name="student" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+			<bean:define id="student" name="testQuestion" property="student" type="org.fenixedu.academic.domain.student.Registration"/>
+			<bean:define id="person" name="student" property="person" type="org.fenixedu.academic.domain.Person"/>
 			<bean:define id="studentId" name="student" property="externalId"/>
 	</logic:equal>
-	<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
-	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
+	<bean:define id="question" name="testQuestion" property="question" type="org.fenixedu.academic.domain.onlineTests.Question"/>
+	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.domain.onlineTests.DistributedTest"/>
 	<bean:define id="questionCode" name="question" property="externalId"/>
 	<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
-	<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="net.sourceforge.fenixedu.util.tests.CorrectionAvailability"/>
+	<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="org.fenixedu.academic.util.tests.CorrectionAvailability"/>
 	<bean:define id="formula" name="testQuestion" property="correctionFormula.formula"/>
 	<bean:define id="testType" name="testQuestion" property="distributedTest.testType.type"/>
 	
-	<logic:iterate id="subQuestion" name="testQuestion" property="studentSubQuestions" type="net.sourceforge.fenixedu.domain.onlineTests.SubQuestion" indexId="itemIndex">
+	<logic:iterate id="subQuestion" name="testQuestion" property="studentSubQuestions" type="org.fenixedu.academic.domain.onlineTests.SubQuestion" indexId="itemIndex">
 		<bean:define id="item" value="<%=itemIndex.toString()%>"/>
 		<%if(testQuestion.getStudentSubQuestions().size()<=1 || (testQuestion.getItemId()!=null && subQuestion.getItemId()!=null && testQuestion.getItemId().equals(subQuestion.getItemId()))){%>
 

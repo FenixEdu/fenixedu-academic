@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.serviceRequests;
+package org.fenixedu.academic.domain.phd.serviceRequests;
 
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestCreateBean;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestCreateBean implements IPhdAcademicServiceRequest {

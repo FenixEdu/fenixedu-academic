@@ -16,28 +16,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.person;
+package org.fenixedu.academic.dto.person;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DistrictSubdivision;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.ProfessionType;
-import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.domain.contacts.Phone;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
-import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
-
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.DistrictSubdivision;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.ProfessionType;
+import org.fenixedu.academic.domain.ProfessionalSituationConditionType;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.MobilePhone;
+import org.fenixedu.academic.domain.contacts.Phone;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
+import org.fenixedu.academic.domain.contacts.WebAddress;
+import org.fenixedu.academic.domain.person.Gender;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.person.MaritalStatus;
 import org.joda.time.YearMonthDay;
 
 /**

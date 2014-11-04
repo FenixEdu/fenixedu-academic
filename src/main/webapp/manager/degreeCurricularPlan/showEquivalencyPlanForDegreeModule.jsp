@@ -25,12 +25,12 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
-<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
+<bean:define id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+<bean:define id="equivalencePlan" type="org.fenixedu.academic.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
 
 <logic:equal name="degreeModule" property="leaf" value="true">
 
-	<bean:define id="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse" name="degreeModule"/>
+	<bean:define id="curricularCourse" type="org.fenixedu.academic.domain.CurricularCourse" name="degreeModule"/>
 
 	<bean:define id="indentLevel" type="java.lang.String" name="indentLevel"/>
 	<bean:define id="width" type="java.lang.String" name="width"/>
@@ -53,7 +53,7 @@
 				</td>
 				<td class="smalltxt" align="right" style="width: 22em;">
 					<%
-						java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> equivalencePlanEntries = curricularCourse.getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
+						java.util.Set<org.fenixedu.academic.domain.EquivalencePlanEntry> equivalencePlanEntries = curricularCourse.getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
 						request.setAttribute("equivalencePlanEntries", equivalencePlanEntries);
 					%>					
 					<bean:size id="numElements" name="equivalencePlanEntries"/>
@@ -77,7 +77,7 @@
 </logic:equal>
 <logic:notEqual name="degreeModule" property="leaf" value="true">
 
-	<bean:define id="courseGroup" type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" name="degreeModule"/>
+	<bean:define id="courseGroup" type="org.fenixedu.academic.domain.degreeStructure.CourseGroup" name="degreeModule"/>
 	<bean:define id="indentLevel" type="java.lang.String" name="indentLevel"/>
 	<bean:define id="width" type="java.lang.String" name="width"/>
 
@@ -99,7 +99,7 @@
 				</th>
 				<th class="smalltxt" align="right" style="width: 22em;">
 					<%
-						java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> equivalencePlanEntries = courseGroup.getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
+						java.util.Set<org.fenixedu.academic.domain.EquivalencePlanEntry> equivalencePlanEntries = courseGroup.getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
 						request.setAttribute("equivalencePlanEntries", equivalencePlanEntries);
 					%>					
 					<bean:size id="numElements" name="equivalencePlanEntries"/>

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student.scholarship.report;
+package org.fenixedu.academic.domain.student.scholarship.report;
 
 public class UTLScholarshipSource extends UTLScholarshipSource_Base {
 

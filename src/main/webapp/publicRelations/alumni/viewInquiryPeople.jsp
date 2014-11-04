@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ page import="net.sourceforge.fenixedu.domain.contacts.PartyContact" %>
+<%@ page import="org.fenixedu.academic.domain.contacts.PartyContact" %>
 
 <html:xhtml/>
 
@@ -35,7 +35,7 @@
 
 
 <fr:view name="cerimonyInquiry">
-	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
+	<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.alumni.CerimonyInquiry">
 		<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"/>
 		<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"/>
 		<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
@@ -74,7 +74,7 @@
 
 	<fr:view name="cerimonyInquiry" property="cerimonyInquiryPerson">
 		<fr:schema bundle="APPLICATION_RESOURCES"
-			type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
+			type="org.fenixedu.academic.domain.alumni.CerimonyInquiryPerson">
 			<fr:slot name="person.username" key="label.username" />
 			<fr:slot name="person.name" key="label.name" />
 			<fr:slot name="person.defaultPhone.presentationValue" key="label.phone" >

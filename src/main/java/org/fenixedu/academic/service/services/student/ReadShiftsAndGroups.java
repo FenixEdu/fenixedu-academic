@@ -16,37 +16,36 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student;
+package org.fenixedu.academic.service.services.student;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExportGrouping;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftGroupingProperties;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExportGrouping;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftGroupingProperties;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.dto.InfoGrouping;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.InfoSiteGroupsByShift;
+import org.fenixedu.academic.dto.InfoSiteShift;
+import org.fenixedu.academic.dto.InfoSiteShiftsAndGroups;
+import org.fenixedu.academic.dto.InfoSiteStudentGroup;
+import org.fenixedu.academic.dto.InfoStudentGroup;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidSituationServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;

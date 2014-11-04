@@ -16,30 +16,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.paymentPlan;
+package org.fenixedu.academic.service.services.accounting.gratuity.paymentPlan;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.accounting.Installment;
-import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
-import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
-import net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForAliens;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYear;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYearForPartialRegime;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.domain.accounting.PaymentPlan;
+import org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents;
+import org.fenixedu.academic.domain.accounting.installments.InstallmentWithMonthlyPenalty;
+import org.fenixedu.academic.domain.accounting.installments.PartialRegimeInstallment;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlanForAliens;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYear;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYearForPartialRegime;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
+import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
+import org.fenixedu.academic.dto.accounting.paymentPlan.PaymentPlanBean;
+import org.fenixedu.academic.predicate.RolePredicates;
+
 import pt.ist.fenixframework.Atomic;
 
 public class GratuityPaymentPlanManager {

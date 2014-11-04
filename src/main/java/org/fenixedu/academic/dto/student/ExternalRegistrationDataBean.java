@@ -19,13 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.student;
+package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.student.ExternalRegistrationData;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.domain.student.ExternalRegistrationData;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

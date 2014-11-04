@@ -236,7 +236,7 @@
 				</logic:notEqual></div>
 				</th>
 			</tr>
-			<logic:iterate id="metadata" name="metadataList" type="net.sourceforge.fenixedu.domain.onlineTests.Metadata">
+			<logic:iterate id="metadata" name="metadataList" type="org.fenixedu.academic.domain.onlineTests.Metadata">
 				<tr>
 					<logic:notEqual name="metadata" property="description" value="">
 						<td class="listClasses"><bean:write name="metadata" property="description" /></td>

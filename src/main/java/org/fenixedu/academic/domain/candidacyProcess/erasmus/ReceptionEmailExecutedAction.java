@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplate;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_Base {
 

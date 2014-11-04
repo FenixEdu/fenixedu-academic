@@ -18,8 +18,8 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType"%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisParticipationType"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>

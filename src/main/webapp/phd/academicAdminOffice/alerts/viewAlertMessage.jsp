@@ -42,7 +42,7 @@
 </p>
 
 <fr:view name="alertMessage">
-	<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+	<fr:schema type="org.fenixedu.academic.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 		<fr:slot name="subject">
 			<fr:property name="classes" value="bold"/>
 		</fr:slot>
@@ -78,7 +78,7 @@
 		
 		<fr:view name="alert">
 	
-			<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlert" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.phd.alert.PhdAlert" bundle="PHD_RESOURCES">
 				<fr:slot name="whenCreated" />
 				<fr:slot name="active" />
 				<fr:slot name="fireDate" />
@@ -114,13 +114,13 @@
 	<logic:iterate id="email" name="possibleEmails">
 		<fr:view name="email">
 			
-			<fr:schema type="net.sourceforge.fenixedu.domain.util.email.Message" bundle="PHD_RESOURCES" >
+			<fr:schema type="org.fenixedu.academic.domain.util.email.Message" bundle="PHD_RESOURCES" >
 				<fr:slot name="sender.fromName" bundle="MESSAGING_RESOURCES" key="label.fromName"/>
 				<fr:slot name="sender.fromAddress" bundle="MESSAGING_RESOURCES" key="label.fromAddress"/>
 				<fr:slot name="created" bundle="MESSAGING_RESOURCES" key="label.email.created"/>
 				<fr:slot name="sent" bundle="MESSAGING_RESOURCES" key="label.email.sentDate"/>
 				<fr:slot name="replyTos" bundle="MESSAGING_RESOURCES" key="label.replyTos">
-				    <fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.util.email.ReplyTo.selectItem"/>
+				    <fr:property name="eachSchema" value="org.fenixedu.academic.domain.util.email.ReplyTo.selectItem"/>
 			        <fr:property name="eachLayout" value="values"/>
 				</fr:slot>
 				<fr:slot name="recipientsAsToText" bundle="MESSAGING_RESOURCES" key="label.receiversGroup.to"/>

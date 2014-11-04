@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
+package org.fenixedu.academic.service.services.commons.searchers;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.person.PersonSearcher;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.service.services.person.PersonSearcher;
 import org.joda.time.YearMonthDay;
 
 public class SearchAllActiveParties extends SearchParties<Party> {

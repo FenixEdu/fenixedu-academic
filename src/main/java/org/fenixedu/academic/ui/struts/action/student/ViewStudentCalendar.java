@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student;
+package org.fenixedu.academic.ui.struts.action.student;
 
-import net.sourceforge.fenixedu.presentationTier.Action.commons.FacesEntryPoint;
-import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
-
+import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
+import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentViewApp;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.inquiries;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.inquiries;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,13 +26,13 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.inquiries.CoordinatorInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryCoordinatorAnswer;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

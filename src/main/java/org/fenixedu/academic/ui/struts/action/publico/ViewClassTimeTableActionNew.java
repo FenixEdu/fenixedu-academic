@@ -22,7 +22,7 @@
  * Package presentationTier.Action.publico 
  * Created on 1/Fev/2003
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico;
+package org.fenixedu.academic.ui.struts.action.publico;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,25 +31,24 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.dto.InfoDegreeCurricularPlan;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionPeriod;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
+import org.fenixedu.academic.dto.InfoSiteTimetable;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.ui.struts.action.utils.ContextUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

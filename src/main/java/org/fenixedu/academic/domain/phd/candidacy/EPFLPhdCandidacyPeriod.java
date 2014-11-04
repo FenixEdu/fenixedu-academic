@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy;
+package org.fenixedu.academic.domain.phd.candidacy;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.phd.EPFLPhdCandidacyProcessProperties;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.period.CandidacyPeriod;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.phd.EPFLPhdCandidacyProcessProperties;
+import org.fenixedu.academic.util.phd.PhdProperties;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

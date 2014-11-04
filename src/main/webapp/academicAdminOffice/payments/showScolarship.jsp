@@ -38,7 +38,7 @@
 <p class="mtop15 mbottom05"><strong><bean:message key="label.scolarships" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 <logic:equal name="exemption" property="externalScholarshipPhdGratuityContribuitionEvent.open" value="true">
 	<fr:view name="exemption">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdGratuityExternalScholarshipExemption">
 			<fr:slot name="description" key="label.serviceRequests.purpose"></fr:slot>
 			<fr:slot name="externalScholarshipPhdGratuityContribuitionEvent.totalValue" key="label.total.amount"></fr:slot>
 			<fr:slot name="amoutStillMissing" key="label.amount.still.missing"></fr:slot>
@@ -56,7 +56,7 @@
 			<html:hidden property="method" value="liquidate"/>
 			<html:hidden name="exemption" property="externalId"/>
 			<fr:edit id="bean" name="bean">
-				<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.ExternalScholarshipManagementDebtsDA$AmountBean">
+				<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.ui.struts.action.administrativeOffice.payments.ExternalScholarshipManagementDebtsDA$AmountBean">
 					<fr:slot name="value" key="label.payments.gratuityExemptions.amount"></fr:slot>
 					<fr:slot name="paymentDate" key="label.payments.gratuityExemptions.paymentDate"></fr:slot>
 				</fr:schema>
@@ -70,7 +70,7 @@
 </logic:equal>
 <logic:equal name="exemption" property="externalScholarshipPhdGratuityContribuitionEvent.open" value="false">
 	<fr:view name="exemption">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdGratuityExternalScholarshipExemption">
 			<fr:slot name="description" key="label.serviceRequests.purpose"></fr:slot>
 			<fr:slot name="externalScholarshipPhdGratuityContribuitionEvent.totalValue" key="label.total.amount"></fr:slot>
 		</fr:schema>

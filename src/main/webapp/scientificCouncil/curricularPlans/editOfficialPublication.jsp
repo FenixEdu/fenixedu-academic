@@ -31,11 +31,11 @@
 
 
 	<bean:define id="officialPub"
-		type="net.sourceforge.fenixedu.domain.DegreeOfficialPublication"
+		type="org.fenixedu.academic.domain.DegreeOfficialPublication"
 		name="officialPub" />
 
 <bean:define id="pubBean"
-	type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean"
+	type="org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans.OfficialPublicationBean"
 	name="pubBean" />
 
 <bean:define id="pubBeanNames" name="pubBean" property="specializationNames" />
@@ -56,7 +56,7 @@
 	action="/curricularPlans/editOfficialPublication.do?method=updateOfficialPub">
 	<fr:edit name="referenceBean" id="referenceBean">
 		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean">
+			type="org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans.OfficialPublicationBean">
 			<fr:slot name="newReference" key="reference">
 				<fr:property name="size" value="60" />
 			</fr:slot>
@@ -82,7 +82,7 @@
 
 <fr:view name="officialPubAreas">
 	<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.DegreeSpecializationArea">
+		type="org.fenixedu.academic.domain.DegreeSpecializationArea">
 		<fr:slot name="nameEn" key="label.name.specializationArea.nameEn" />
 		<fr:slot name="namePt" key="label.name.specializationArea.namePt" />
 	</fr:schema>
@@ -114,7 +114,7 @@
 	action="/curricularPlans/editOfficialPublication.do?method=createNewSpecializationArea">
 	<fr:edit name="pubBean" id="pubBean">
 		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean">
+			type="org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans.OfficialPublicationBean">
 			<fr:slot name="newNamePt" key="label.name.specializationArea.namePt" />
 			<fr:slot name="newNameEn" key="label.name.specializationArea.nameEn" />
 		</fr:schema>

@@ -49,7 +49,7 @@
   <tag>
 
     <name>gerarHorario</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.RenderTimeTableTag</tagclass>
+    <tagclass>org.fenixedu.academic.servlet.taglib.sop.v3.RenderTimeTableTag</tagclass>
     <bodycontent>empty</bodycontent>
     <info>
         Gera a apresentação de um horário.
@@ -109,7 +109,7 @@
   <tag>
  
      <name>generateNewExamsMap</name>
-     <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.RenderExamsMapTag</tagclass>
+     <tagclass>org.fenixedu.academic.servlet.taglib.sop.examsMapNew.RenderExamsMapTag</tagclass>
      <bodycontent>empty</bodycontent>
      
      <info>
@@ -140,7 +140,7 @@
   <tag>
   
     <name>labelFormatter</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.LabelFormatterTagLib</tagclass>
+    <tagclass>org.fenixedu.academic.servlet.taglib.LabelFormatterTagLib</tagclass>
     <bodycontent>JSP</bodycontent>
 
     <attribute>
@@ -167,7 +167,7 @@
   <tag>
   
     <name>property</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.PropertyTag</tagclass>
+    <tagclass>org.fenixedu.academic.servlet.taglib.PropertyTag</tagclass>
     <bodycontent>empty</bodycontent>
 
     <attribute>
@@ -185,7 +185,7 @@
   
   <tag>
 	<name>parameterLink</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.commons.ParameterLinkTag</tagclass>
+    <tagclass>org.fenixedu.academic.servlet.taglib.ParameterLinkTag</tagclass>
     <bodycontent>JSP</bodycontent>
 
     <attribute>
@@ -209,7 +209,7 @@
 
   <tag>
 	<name>parameter</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.commons.ParameterTag</tagclass>
+    <tagclass>org.fenixedu.academic.servlet.taglib.ParameterTag</tagclass>
     <bodycontent>empty</bodycontent>
 
     <attribute>

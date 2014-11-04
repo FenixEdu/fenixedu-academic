@@ -29,7 +29,7 @@
  *  
  */
 
-package net.sourceforge.fenixedu.domain.studentCurricularPlan;
+package org.fenixedu.academic.domain.studentCurricularPlan;
 
 public enum Specialization {
 

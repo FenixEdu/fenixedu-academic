@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
+package org.fenixedu.academic.domain.phd.candidacy.activities;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeBean;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.bennu.core.domain.User;
 
 public class AddCandidacyReferees extends PhdProgramCandidacyProcessActivity {

@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
+package org.fenixedu.academic.domain.phd.candidacy.feedbackRequest;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.phd.PhdElementsList;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.phd.PhdElementsList;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
 
 public class PhdCandidacySharedDocumentsList extends PhdElementsList<PhdIndividualProgramDocumentType> {
 

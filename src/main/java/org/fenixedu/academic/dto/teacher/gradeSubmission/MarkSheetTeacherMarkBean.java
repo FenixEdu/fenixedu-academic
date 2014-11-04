@@ -19,13 +19,13 @@
 /*
  * Created on May 19, 2006
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission;
+package org.fenixedu.academic.dto.teacher.gradeSubmission;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.dto.DataTranferObject;
 
 public class MarkSheetTeacherMarkBean extends DataTranferObject {
 

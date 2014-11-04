@@ -25,10 +25,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice.PhdThesisProcessDA"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdThesisJuryElementBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.thesis.academicAdminOffice.PhdThesisProcessDA"%>
 
 
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%><html:xhtml/>
@@ -95,10 +95,10 @@
 								<fr:property name="size" value="50"/>
 								<fr:property name="format" value="${name} (${user.username})" />
 								<fr:property name="indicatorShown" value="true"/>		
-								<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
+								<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
 								<fr:property name="args" value="size=50"/>
 								<fr:property name="minChars" value="4"/>	
-								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" />			
+								<fr:validator name="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator" />			
 							</fr:slot>
 						</logic:equal>
 						

@@ -20,13 +20,13 @@
 -->
 <!-- GEP Schemas -->
 
-<schema name="latestJobsByType" type="net.sourceforge.fenixedu.domain.QueueJob" bundle="GEP_RESOURCES">
+<schema name="latestJobsByType" type="org.fenixedu.academic.domain.QueueJob" bundle="GEP_RESOURCES">
 	<slot name="upperCaseType" key="label.gep.format"/>
 	<slot name="requestDate" key="label.gep.date"/>
 	<slot name="person.name" key="label.get.person"/>
 </schema>
 
-<schema name="latestJobs" type="net.sourceforge.fenixedu.domain.QueueJob" bundle="GEP_RESOURCES">
+<schema name="latestJobs" type="org.fenixedu.academic.domain.QueueJob" bundle="GEP_RESOURCES">
 	<slot name="executionYear" key="label.gep.courseYear">
 		<property name="format" value="${year}"/>
 	</slot>

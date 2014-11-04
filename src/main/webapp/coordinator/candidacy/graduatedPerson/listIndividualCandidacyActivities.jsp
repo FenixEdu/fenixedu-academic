@@ -81,7 +81,7 @@
 	<br />
 	<strong>Informação de seriação:</strong>
 	<fr:view name="seriesGrade" >
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade">
 			<fr:slot name="degree.name" key="label.candidacy.degree">
 			</fr:slot>
 			<fr:slot name="professionalExperience" key="label.candidacy.professionalExperience">

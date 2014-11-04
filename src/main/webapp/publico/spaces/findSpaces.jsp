@@ -76,7 +76,7 @@ display: inline !important;
 		<p class="mtop2"><i><bean:message key="label.number.of.found.spaces" bundle="DEFAULT"/> <b><bean:write name="foundSpacesSize"/></b> <bean:message key="label.find.spaces.space" bundle="DEFAULT"/>.</i></p>
 				
 		<fr:view name="foundSpaces">
-			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+			<fr:schema type="org.fenixedu.academic.dto.spaceManager.FindSpacesBean" bundle="DEFAULT">
 				<fr:slot name="spacePath" key="label.find.spaces.identification" layout="list-link">
 					<fr:property name="linkFormat" value="/findSpaces.do?method=${method}&amp;spaceID=${id}"/>
 					<fr:property name="moduleRelative" value="true"/>

@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal;
+package org.fenixedu.academic.service.services.administrativeOffice.dismissal;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
+import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateNewInternalSubstitution {

@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
+package org.fenixedu.academic.report.academicAdministrativeOffice;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.Season;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.Season;
 
 public class ExamDateCertificate extends AdministrativeOfficeDocument {
 

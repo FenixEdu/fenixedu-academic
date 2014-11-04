@@ -20,16 +20,15 @@
  * Created on Jul 22, 2004
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
-import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
-import net.sourceforge.fenixedu.domain.transactions.Transaction;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.transactions.InsuranceTransaction;
+import org.fenixedu.academic.domain.transactions.PaymentTransaction;
+import org.fenixedu.academic.domain.transactions.Transaction;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**

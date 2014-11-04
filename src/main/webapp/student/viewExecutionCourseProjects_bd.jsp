@@ -90,7 +90,7 @@
 	                   	 </logic:notEmpty>
 	                   	 
 	                   	 <p style="margin: 6px 0; padding: 0;"><b><bean:message key="label.student.viewExecutionCourseProjects.GroupEnrolmentPolicy"/>:</b>
-		                   	 <%if((((net.sourceforge.fenixedu.dataTransferObject.InfoGrouping) infoGroupProperties).getEnrolmentPolicy()).getType().intValue()==1){%>
+		                   	 <%if((((org.fenixedu.academic.dto.InfoGrouping) infoGroupProperties).getEnrolmentPolicy()).getType().intValue()==1){%>
 		                   	 <bean:message key="label.atomic"/>
 		                   	 <%}else{%>
 		                   	 <bean:message key="label.individual"/>

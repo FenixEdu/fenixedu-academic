@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@ page import="net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation" %>
+<%@ page import="org.fenixedu.academic.domain.student.PrecedentDegreeInformation" %>
 
 <% 
 
@@ -38,7 +38,7 @@ request.setAttribute("precedentDegreeInformationTemp",
 <logic:notEmpty name="precedentDegreeInformation">
 					
 					<fr:view name="precedentDegreeInformation">
-						<fr:schema type="net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation" bundle="GEP_RESOURCES" >
+						<fr:schema type="org.fenixedu.academic.domain.student.PrecedentDegreeInformation" bundle="GEP_RESOURCES" >
 						
 							<logic:notEmpty name="precedentDegreeInformation" property="degreeDesignation">
 								<fr:slot name="degreeDesignation" layout="null-as-label" key="label.personal.ingression.data.viewer.degreeDesignation" />

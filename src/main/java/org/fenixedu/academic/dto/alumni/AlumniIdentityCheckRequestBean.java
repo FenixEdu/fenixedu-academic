@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.alumni;
+package org.fenixedu.academic.dto.alumni;
 
-import net.sourceforge.fenixedu.domain.AlumniRequestType;
+import org.fenixedu.academic.domain.AlumniRequestType;
 
 public class AlumniIdentityCheckRequestBean extends AlumniErrorSendingMailBean {
 

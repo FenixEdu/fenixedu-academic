@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.student;
+package org.fenixedu.academic.ui.renderers.providers.student;
 
-import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
+import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;

@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.standalone;
+package org.fenixedu.academic.ui.struts.action.coordinator.candidacy.standalone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -34,7 +33,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 @Mapping(
         path = "/caseHandlingStandaloneIndividualCandidacyProcess",
         module = "coordinator",
-        formBeanClass = net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneIndividualCandidacyProcessDA.StandaloneIndividualCandidacyForm.class,
+        formBeanClass = org.fenixedu.academic.ui.struts.action.candidacy.standalone.StandaloneIndividualCandidacyProcessDA.StandaloneIndividualCandidacyForm.class,
         functionality = DegreeCoordinatorIndex.class)
 @Forwards({
         @Forward(name = "intro",
@@ -42,7 +41,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
         @Forward(name = "list-allowed-activities",
                 path = "/coordinator/candidacy/standalone/listIndividualCandidacyActivities.jsp") })
 public class StandaloneIndividualCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneIndividualCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.standalone.StandaloneIndividualCandidacyProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

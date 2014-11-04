@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor;
+package org.fenixedu.academic.ui.struts.action.teacher.tutor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,18 +27,18 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.StudentsPerformanceGridDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTutorApp;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider;
+import org.fenixedu.academic.dto.teacher.tutor.PerformanceGridTableDTO;
+import org.fenixedu.academic.dto.teacher.tutor.StudentsPerformanceInfoBean;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.ui.struts.action.commons.tutorship.StudentsPerformanceGridDispatchAction;
+import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherTutorApp;
+import org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipEntryExecutionYearProvider;
+import org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

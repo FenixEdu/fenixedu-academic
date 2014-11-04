@@ -24,8 +24,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
 
 <em><bean:message key="bolonhaManager" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
 <h2><bean:write name="department" property="realName"/></h2>
@@ -52,7 +52,7 @@
 <p>
 <fr:form id="requestForm" action="/competenceCourses/manageVersions.do?method=prepare">
 	<fr:edit id="requestBean" name="requestBean">
-		<fr:schema bundle="BOLONHA_MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean">
+		<fr:schema bundle="BOLONHA_MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean">
 			<fr:slot name="showOldCompetenceCourses" layout="option-select-postback"/>
 		</fr:schema>
 		<fr:layout>

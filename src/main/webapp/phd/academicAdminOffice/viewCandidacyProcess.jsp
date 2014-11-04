@@ -25,16 +25,16 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddState" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveLastState" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RequestCandidacyReview" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RejectCandidacyProcess" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RatifyCandidacy" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RegistrationFormalization" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.AssociateRegistration" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.AddState" %>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RemoveLastState" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess"%>
 
 <strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
 <br/>
@@ -131,35 +131,35 @@
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.manageCandidacyReview"/>
 			</html:link>
 		</li>
-		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview.class %>">
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.RequestCandidacyReview.class %>">
 			<li style="display: inline;">
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareRequestCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.request.candidacy.review"/>
 			</html:link>
 			</li>
 		</phd:activityAvailable>
-		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess.class %>" >
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.RejectCandidacyProcess.class %>" >
 			<li style="display: inline;">
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareRejectCandidacyProcess" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.rejectCandidacyProcess"/>
 				</html:link>
 			</li>
 		</phd:activityAvailable>
-		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class %>" >
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.RatifyCandidacy.class %>" >
 			<li style="display: inline;">
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacy" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.ratifyCandidacy"/>
 				</html:link>
 			</li>
 		</phd:activityAvailable>
-		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization.class %>" >
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.RegistrationFormalization.class %>" >
 			<li style="display: inline;">
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareRegistrationFormalization" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.registrationFormalization"/>
 				</html:link>
 			</li>
 		</phd:activityAvailable>
-		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration.class %>">
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.AssociateRegistration.class %>">
 			<li style="display: inline;">
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareAssociateRegistration" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.registrationFormalization.associate.registration"/>

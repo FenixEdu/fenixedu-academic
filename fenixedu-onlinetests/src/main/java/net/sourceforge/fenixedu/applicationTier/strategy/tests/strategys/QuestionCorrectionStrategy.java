@@ -20,21 +20,21 @@
  * Created on 23/Set/2004
  *
  */
-package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
+package org.fenixedu.academic.service.strategy.tests.strategys;
 
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.util.tests.CardinalityType;
-import net.sourceforge.fenixedu.util.tests.QuestionOption;
-import net.sourceforge.fenixedu.util.tests.RenderChoise;
-import net.sourceforge.fenixedu.util.tests.RenderFIB;
-import net.sourceforge.fenixedu.util.tests.Response;
-import net.sourceforge.fenixedu.util.tests.ResponseCondition;
-import net.sourceforge.fenixedu.util.tests.ResponseLID;
-import net.sourceforge.fenixedu.util.tests.ResponseNUM;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.util.tests.CardinalityType;
+import org.fenixedu.academic.util.tests.QuestionOption;
+import org.fenixedu.academic.util.tests.RenderChoise;
+import org.fenixedu.academic.util.tests.RenderFIB;
+import org.fenixedu.academic.util.tests.Response;
+import org.fenixedu.academic.util.tests.ResponseCondition;
+import org.fenixedu.academic.util.tests.ResponseLID;
+import org.fenixedu.academic.util.tests.ResponseNUM;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
 
 /**
  * @author Susana Fernandes

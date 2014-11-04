@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,33 +29,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateLesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessonInstance;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditLesson;
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
-import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -64,6 +37,32 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.domain.FrequencyType;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.LessonInstance;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.dto.GenericPair;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoRoom;
+import org.fenixedu.academic.dto.InfoRoomOccupationEditor;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceMultipleException;
+import org.fenixedu.academic.service.services.resourceAllocationManager.CreateLesson;
+import org.fenixedu.academic.service.services.resourceAllocationManager.DeleteLessonInstance;
+import org.fenixedu.academic.service.services.resourceAllocationManager.DeleteLessons;
+import org.fenixedu.academic.service.services.resourceAllocationManager.EditLesson;
+import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.InterceptingActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.InvalidTimeIntervalActionException;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.ui.struts.action.utils.ContextUtils;
+import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.struts.annotations.ExceptionHandling;
 import org.fenixedu.bennu.struts.annotations.Exceptions;
 import org.fenixedu.bennu.struts.annotations.Forward;

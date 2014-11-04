@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting;
+package org.fenixedu.academic.dto.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.Event;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.Event;
 
 public class TransferPaymentsToOtherEventAndCancelBean implements Serializable {
     private static final long serialVersionUID = -2180918685540833101L;

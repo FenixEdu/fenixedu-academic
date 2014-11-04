@@ -29,7 +29,7 @@
 <fr:form action="/markSheetSendMail.do?method=searchSendMail">
 	<fr:edit id="search"
 			 name="bean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean"
+			 type="org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean"
 			 schema="markSheet.search.send.mail">
 		<fr:destination name="postBack" path="/markSheetSendMail.do?method=prepareSearchSendMailPostBack"/>
 		<fr:destination name="invalid" path="/markSheetSendMail.do?method=prepareSearchSendMailInvalid"/>

@@ -19,25 +19,25 @@
 /*
  * Created on 9/Fev/2004
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
+package org.fenixedu.academic.service.services.teacher.onlineTests;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.Response;
-import net.sourceforge.fenixedu.util.tests.ResponseNUM;
-import net.sourceforge.fenixedu.util.tests.ResponseSTR;
+import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.dto.onlineTests.InfoInquiryStatistics;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.domain.onlineTests.utils.ParseSubQuestion;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.Response;
+import org.fenixedu.academic.util.tests.ResponseNUM;
+import org.fenixedu.academic.util.tests.ResponseSTR;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.LabelValueBean;

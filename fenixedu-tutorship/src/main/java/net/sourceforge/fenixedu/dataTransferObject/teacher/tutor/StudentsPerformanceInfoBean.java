@@ -16,23 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
+package org.fenixedu.academic.dto.teacher.tutor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TeacherDepartmentDegreesProvider;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider.TutorshipEntryExecutionYearProviderByTeacher;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider.TutorshipEntryExecutionYearProviderForSingleStudent;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.ui.renderers.providers.teacher.TeacherDepartmentDegreesProvider;
+import org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipEntryExecutionYearProvider;
+import org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipEntryExecutionYearProvider.TutorshipEntryExecutionYearProviderByTeacher;
+import org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipEntryExecutionYearProvider.TutorshipEntryExecutionYearProviderForSingleStudent;
+import org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider;
 
 public class StudentsPerformanceInfoBean implements Serializable {
     private static final long serialVersionUID = 1L;

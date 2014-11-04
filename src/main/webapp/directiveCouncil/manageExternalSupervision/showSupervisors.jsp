@@ -52,7 +52,7 @@
 			<fr:property name="classes" value="tstyle1 thleft thlight mvert05" />
 			<fr:property name="columnClasses" value=",,,tdclear tderror1" />
 		</fr:layout>
-		<fr:schema type="net.sourceforge.fenixedu.domain.Person" bundle="DIRECTIVE_COUNCIL_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.Person" bundle="DIRECTIVE_COUNCIL_RESOURCES">
 			<fr:slot name="username" key="label.showSupervisors.supervisor.username" />
 			<fr:slot name="name" key="label.showSupervisors.supervisor.name"/>
 		</fr:schema>
@@ -67,13 +67,13 @@
 	<p class="mtop15 mbottom0"><strong><bean:message key="label.showSupervisors.addSupervisor" bundle="DIRECTIVE_COUNCIL_RESOURCES"/></strong></p>
 	<fr:form action="/manageExternalSupervision.do?method=addSupervisor">
 		<fr:edit name="sessionBean" id="sessionBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.manageExternalSupervision.ManageExternalSupervisionBean" bundle="DIRECTIVE_COUNCIL_RESOURCES">
-				<fr:slot name="newSupervisor" layout="autoComplete" key="label.showSupervisors.nameOrId" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.directiveCouncil.manageExternalSupervision.ManageExternalSupervisionBean" bundle="DIRECTIVE_COUNCIL_RESOURCES">
+				<fr:slot name="newSupervisor" layout="autoComplete" key="label.showSupervisors.nameOrId" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="35" />
 					<fr:property name="format" value="${name} - <strong>${username}</strong>" />
 					<fr:property name="args" value="slot=name,size=20" />
 					<fr:property name="minChars" value="3" />
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons" />
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons" />
 					<fr:property name="indicatorShown" value="true" />
 					<fr:property name="required" value="true"/>
 				</fr:slot>

@@ -48,7 +48,7 @@
 					</html:submit>
 			</td>
 			<td class="listClasses">
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
+				<e:labelValues id="values" enumeration="org.fenixedu.academic.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" size="1" onchange="this.form.submit();">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>

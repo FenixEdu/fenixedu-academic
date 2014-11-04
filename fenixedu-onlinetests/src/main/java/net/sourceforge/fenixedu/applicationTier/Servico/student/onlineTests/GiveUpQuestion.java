@@ -20,27 +20,27 @@
  * Created on 28/Ago/2003
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
+package org.fenixedu.academic.service.services.student.onlineTests;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.Response;
-import net.sourceforge.fenixedu.util.tests.ResponseLID;
-import net.sourceforge.fenixedu.util.tests.ResponseNUM;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
-import net.sourceforge.fenixedu.util.tests.ResponseSTR;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.onlineTests.StudentTestLog;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.domain.onlineTests.SubQuestion;
+import org.fenixedu.academic.domain.onlineTests.utils.ParseSubQuestion;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.Response;
+import org.fenixedu.academic.util.tests.ResponseLID;
+import org.fenixedu.academic.util.tests.ResponseNUM;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
+import org.fenixedu.academic.util.tests.ResponseSTR;
 import pt.ist.fenixframework.Atomic;
 
 /**

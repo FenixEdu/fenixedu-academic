@@ -24,11 +24,11 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadCandidacyReview"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.UploadCandidacyReview"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RequestCandidacyReview"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission"%>
 
 <html:xhtml/>
 
@@ -169,7 +169,7 @@
 	<input type="hidden" name="method" value="" />
 	<logic:notEmpty name="guidingsList">
 		<fr:view name="guidingsList">
-			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.PersonInformationLog" bundle="PHD_RESOURCES">
 			   	<fr:slot name="name" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.name"/>
 			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
 				<fr:slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>
@@ -200,7 +200,7 @@
 	<input type="hidden" name="method" value="" />
 	<logic:notEmpty name="assistantGuidingsList">
 		<fr:view name="assistantGuidingsList">
-			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.PersonInformationLog" bundle="PHD_RESOURCES">
 				<fr:slot name="name" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.name"/>
 			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
 				<fr:slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>

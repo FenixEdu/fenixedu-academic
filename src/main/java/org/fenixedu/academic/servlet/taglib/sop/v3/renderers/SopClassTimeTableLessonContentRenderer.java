@@ -16,26 +16,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
+package org.fenixedu.academic.servlet.taglib.sop.v3.renderers;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.FrequencyType;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.dto.InfoCurricularYear;
+import org.fenixedu.academic.dto.InfoExam;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoLessonInstance;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.dto.InfoWrittenTest;
+import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlot;
+import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlotContentRenderer;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;

@@ -28,14 +28,14 @@
 <!--LANGUAGE SWITCHER -->
 <div id="version">
 	<img class="activeflag" src="Candidato%20%20Licenciatura%20_%20IST_files/icon_pt.gif" alt="Português">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>en/htm/profile/pstudent/lic/"><img src="Candidato%20%20Licenciatura%20_%20IST_files/icon_en.gif" alt="English" border="0"></a>
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>en/htm/profile/pstudent/lic/"><img src="Candidato%20%20Licenciatura%20_%20IST_files/icon_en.gif" alt="English" border="0"></a>
 </div>
 <!--END LANGUAGE SWITCHER -->
 <bean:define id="mappingPath" name="mappingPath"/>
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="title.application.name.degreeChange" bundle="CANDIDATE_RESOURCES"/>
 </div>
@@ -58,7 +58,7 @@
 <p>Destina-se aos estudantes do 1º ciclo que pretendam inscrever-se num 1ºciclo de
 um curso de Licenciatura ou de Mestrado Integrado diferente daquele em que
 praticaram a última inscrição, tendo havido ou não interrupção de inscrição no ensino
-superior. A última inscrição pode ter ocorrido num curso do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, ou em num curso de
+superior. A última inscrição pode ter ocorrido num curso do <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, ou em num curso de
 qualquer outra escola nacional ou estrangeira.</p>
 
 

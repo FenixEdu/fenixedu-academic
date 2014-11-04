@@ -122,11 +122,11 @@ enum org.fenixedu.academic.domain.thesis.ThesisVisibilityType                   
 enum org.fenixedu.academic.domain.transactions.PaymentType                                                             as PaymentType;
 enum org.fenixedu.academic.domain.transactions.TransactionType                                                         as TransactionType;
 enum org.fenixedu.academic.domain.util.LogicOperator                                                                   as LogicOperator;
-enum net.sourceforge.fenixedu.util.ContentType                                                                            as ContentType;
-enum net.sourceforge.fenixedu.util.Month                                                                                  as Month;
-enum net.sourceforge.fenixedu.util.RegimeType                                                                             as RegimeType;
-enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
-enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
+enum org.fenixedu.academic.util.ContentType                                                                            as ContentType;
+enum org.fenixedu.academic.util.Month                                                                                  as Month;
+enum org.fenixedu.academic.util.RegimeType                                                                             as RegimeType;
+enum org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
+enum org.fenixedu.academic.util.WeekDay                                                                                as WeekDay;
 enum org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
 enum org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
 enum org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType                                                 as PhdIndividualProgramDocumentType;
@@ -254,19 +254,19 @@ valueType org.fenixedu.academic.domain.util.EmailAddressList as EmailAddressList
 }
 
 
-valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope {
+valueType org.fenixedu.academic.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope {
     externalizeWith {
         Integer getType();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana {
+valueType org.fenixedu.academic.util.DiaSemana as DiaSemana {
     externalizeWith {
         Integer getDiaSemana();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.EnrolmentAction as EnrolmentAction {
+valueType org.fenixedu.academic.util.EnrolmentAction as EnrolmentAction {
     externalizeWith {
         int getValue();
     }
@@ -274,7 +274,7 @@ valueType net.sourceforge.fenixedu.util.EnrolmentAction as EnrolmentAction {
     internalizeWith getEnum();
 }
 
-valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState as EnrolmentEvaluationState {
+valueType org.fenixedu.academic.util.EnrolmentEvaluationState as EnrolmentEvaluationState {
     externalizeWith {
         Integer getState();
     }
@@ -282,13 +282,13 @@ valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState as EnrolmentEva
     internalizeWith valueOf();
 }
 
-valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType {
+valueType org.fenixedu.academic.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType {
     externalizeWith {
         Integer getType();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.HourMinuteSecond as HourMinuteSecond {
+valueType org.fenixedu.academic.util.HourMinuteSecond as HourMinuteSecond {
     externalizeWith {
         LocalTime toLocalTime();
     }
@@ -296,19 +296,19 @@ valueType net.sourceforge.fenixedu.util.HourMinuteSecond as HourMinuteSecond {
     internalizeWith fromLocalTime();
 }
 
-valueType net.sourceforge.fenixedu.util.MarkType as MarkType {
+valueType org.fenixedu.academic.util.MarkType as MarkType {
     externalizeWith {
         Integer getType();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.Money as Money {
+valueType org.fenixedu.academic.util.Money as Money {
     externalizeWith {
         String toString();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState {
+valueType org.fenixedu.academic.util.PeriodState as PeriodState {
     externalizeWith {
         String getStateCode();
     }
@@ -316,51 +316,51 @@ valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState {
     internalizeWith valueOf();
 }
 
-valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState {
+valueType org.fenixedu.academic.util.ProposalState as ProposalState {
     externalizeWith {
         Integer getState();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.Season as Season {
+valueType org.fenixedu.academic.util.Season as Season {
     externalizeWith {
         Integer getseason();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.SituationName as SituationName {
+valueType org.fenixedu.academic.util.SituationName as SituationName {
     externalizeWith {
         Integer getSituationName();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.State as State {
+valueType org.fenixedu.academic.util.State as State {
     externalizeWith {
         Integer getState();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability as CorrectionAvailability {
+valueType org.fenixedu.academic.util.tests.CorrectionAvailability as CorrectionAvailability {
     externalizeWith {
         Integer getAvailability();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula as CorrectionFormula {
+valueType org.fenixedu.academic.util.tests.CorrectionFormula as CorrectionFormula {
     externalizeWith {
         Integer getFormula();
     }
 }
 
-valueType net.sourceforge.fenixedu.util.tests.Response as Response {
+valueType org.fenixedu.academic.util.tests.Response as Response {
     externalizeWith {
-        String net.sourceforge.fenixedu.util.tests.ResponseExternalization.externalize();
+        String org.fenixedu.academic.util.tests.ResponseExternalization.externalize();
     }
 
-    internalizeWith net.sourceforge.fenixedu.util.tests.ResponseExternalization.internalize();
+    internalizeWith org.fenixedu.academic.util.tests.ResponseExternalization.internalize();
 }
 
-valueType net.sourceforge.fenixedu.util.tests.TestType as TestType {
+valueType org.fenixedu.academic.util.tests.TestType as TestType {
     externalizeWith {
         Integer getType();
     }
@@ -368,10 +368,10 @@ valueType net.sourceforge.fenixedu.util.tests.TestType as TestType {
 
 valueType org.joda.time.Interval as Interval {
     externalizeWith {
-        String net.sourceforge.fenixedu.util.date.SerializationTool.intervalSerialize();
+        String org.fenixedu.academic.util.date.SerializationTool.intervalSerialize();
     }
 
-    internalizeWith net.sourceforge.fenixedu.util.date.SerializationTool.intervalDeserialize();
+    internalizeWith org.fenixedu.academic.util.date.SerializationTool.intervalDeserialize();
 }
 
 valueType org.joda.time.Duration as Duration {
@@ -390,10 +390,10 @@ valueType org.joda.time.Period as Period {
 
 valueType org.joda.time.YearMonthDay as YearMonthDay {
     externalizeWith {
-        String net.sourceforge.fenixedu.util.date.SerializationTool.yearMonthDaySerialize();
+        String org.fenixedu.academic.util.date.SerializationTool.yearMonthDaySerialize();
     }
 
-    internalizeWith net.sourceforge.fenixedu.util.date.SerializationTool.yearMonthDayDeserialize();
+    internalizeWith org.fenixedu.academic.util.date.SerializationTool.yearMonthDayDeserialize();
 }
 
 valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageString {

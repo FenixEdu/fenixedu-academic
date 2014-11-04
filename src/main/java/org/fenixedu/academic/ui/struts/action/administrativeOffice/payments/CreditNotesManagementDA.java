@@ -16,30 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.payments;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ChangeCreditNoteState;
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateCreditNote;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateCreditNoteBean;
-import net.sourceforge.fenixedu.domain.accounting.CreditNote;
-import net.sourceforge.fenixedu.domain.accounting.CreditNoteState;
-import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.domain.documents.CreditNoteGeneratedDocument;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
-import net.sourceforge.fenixedu.presentationTier.docs.accounting.CreditNoteDocument;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.accounting.CreditNote;
+import org.fenixedu.academic.domain.accounting.CreditNoteState;
+import org.fenixedu.academic.domain.accounting.Receipt;
+import org.fenixedu.academic.domain.documents.CreditNoteGeneratedDocument;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.dto.accounting.CreateCreditNoteBean;
+import org.fenixedu.academic.report.accounting.CreditNoteDocument;
+import org.fenixedu.academic.service.services.accounting.ChangeCreditNoteState;
+import org.fenixedu.academic.service.services.accounting.CreateCreditNote;
+import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

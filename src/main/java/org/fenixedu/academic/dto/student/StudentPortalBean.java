@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.student;
+package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,22 +26,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EvaluationType;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Evaluation;
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.WrittenEvaluationEnrolment;
+import org.fenixedu.academic.domain.WrittenTest;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;

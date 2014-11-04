@@ -49,7 +49,7 @@
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 
 <fr:view name="process" property="candidacyProcess.candidacyReferees">
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee" >
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee" >
 		<fr:slot name="name" />
 		<fr:slot name="institution" />
 		<fr:slot name="letterAvailable" />

@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.operator;
+package org.fenixedu.academic.service.services.operator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni.AlumniNotificationService;
-import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.AlumniIdentityCheckRequest;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.service.services.commons.alumni.AlumniNotificationService;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ValidateAlumniIdentity extends AlumniNotificationService {

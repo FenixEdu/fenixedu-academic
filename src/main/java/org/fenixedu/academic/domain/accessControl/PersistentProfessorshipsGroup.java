@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accessControl;
+package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Optional;
 
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.bennu.core.groups.Group;
 
 public class PersistentProfessorshipsGroup extends PersistentProfessorshipsGroup_Base {

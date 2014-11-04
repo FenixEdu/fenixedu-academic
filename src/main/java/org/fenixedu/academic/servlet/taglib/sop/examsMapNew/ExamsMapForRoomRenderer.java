@@ -21,17 +21,17 @@
  *  
  */
 
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
+package org.fenixedu.academic.servlet.taglib.sop.examsMapNew;
 
 import java.util.Calendar;
 import java.util.Locale;
 
 import javax.servlet.jsp.PageContext;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers.ExamsMapSlotContentRenderer;
+import org.fenixedu.academic.dto.InfoCurricularCourseScope;
+import org.fenixedu.academic.dto.InfoExam;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.servlet.taglib.sop.examsMapNew.renderers.ExamsMapSlotContentRenderer;
 
 /*
  * @author Luis Cruz & Sara Ribeiro

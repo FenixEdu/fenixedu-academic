@@ -44,7 +44,7 @@
     <br />
     <br />    
 	<table>
-		<logic:iterate id="infoRoom" name="rooms" indexId="roomIndex" type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom">
+		<logic:iterate id="infoRoom" name="rooms" indexId="roomIndex" type="org.fenixedu.academic.dto.InfoRoom">
 			<tr>
 				<td>
 					<b><%= roomIndex.intValue() + 1 %>.</b>

@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.degreeStructure.RegimeType"%>
+<%@page import="org.fenixedu.academic.domain.degreeStructure.RegimeType"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -439,7 +439,7 @@
 					<bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</th>
 			</tr>			
-			<logic:iterate id="thesis" name="teacherThesisEvaluationParticipants" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+			<logic:iterate id="thesis" name="teacherThesisEvaluationParticipants" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant">
 				<tr>
 					<td>
 						<bean:write name="thesis" property="thesis.student.number"/>
@@ -492,9 +492,9 @@
 </logic:notPresent>
 
 <%-- ========================== TEACHER INSTITUTION WORKING TIME ============================ --%>
-<h3 class="mtop2"><span class="underline1">5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
-<p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
+<p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:present name="institutionWorkTimeList">
 	<table class="tstyle4 mbottom05">
@@ -526,7 +526,7 @@
 	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="3">
-				<i><bean:message key="label.teacherCreditsSheet.noInstitutionWorkingTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
+				<i><bean:message key="label.teacherCreditsSheet.noInstitutionWorkingTime" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
 			</td>
 		</tr>
 	</table>

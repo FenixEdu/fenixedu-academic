@@ -1,12 +1,12 @@
-package net.sourceforge.fenixedu.domain.inquiries;
+package org.fenixedu.academic.domain.inquiries;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.student.Registration;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

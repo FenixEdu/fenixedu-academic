@@ -20,7 +20,7 @@
  * Created on Dec 14, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro.student.tests;
+package org.fenixedu.academic.service.filter.student.tests;
 
 import java.util.Calendar;
 

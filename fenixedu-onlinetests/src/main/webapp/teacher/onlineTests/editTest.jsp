@@ -69,13 +69,13 @@
 <br/>
 <table>
 	<tr><td><hr/></td></tr>
-	<logic:iterate id="testQuestion" name="testQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.TestQuestion">
+	<logic:iterate id="testQuestion" name="testQuestionList" type="org.fenixedu.academic.domain.onlineTests.TestQuestion">
 	<tr>
 		<td><b><bean:message key="message.tests.question" />:</b>&nbsp;<bean:write name="testQuestion" property="testQuestionOrder"/></td></tr>
 		<bean:define id="testQuestionValue" name="testQuestion" property="testQuestionValue"/>
 		<bean:define id="testQuestionValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(testQuestionValue.toString())).toString()) %>"/>		
 		<tr><td><b><bean:message key="message.tests.questionValue" /></b>&nbsp;<bean:write name="testQuestionValue"/></td></tr>
-		<bean:define id="thisQuestion" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
+		<bean:define id="thisQuestion" name="testQuestion" property="question" type="org.fenixedu.academic.domain.onlineTests.Question"/>
 		<bean:define id="questionCode" name="thisQuestion" property="externalId"/>
 		<tr><td><table><tr><td>
 			<div class="gen-button">

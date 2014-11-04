@@ -20,7 +20,7 @@
  * Created on 2005/02/18
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager;
+package org.fenixedu.academic.ui.struts.action.manager;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -30,28 +30,27 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteStudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegreeType;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadStudentCurricularInformation;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferEnrollments;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPeopleApp;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.manager.CreateStudentCurricularPlan;
+import org.fenixedu.academic.service.services.manager.DeleteEnrollment;
+import org.fenixedu.academic.service.services.manager.DeleteStudentCurricularPlan;
+import org.fenixedu.academic.service.services.manager.ReadDegreeCurricularPlansByDegreeType;
+import org.fenixedu.academic.service.services.manager.ReadStudentCurricularInformation;
+import org.fenixedu.academic.service.services.manager.TransferEnrollments;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerPeopleApp;
+import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.ExceptionHandling;

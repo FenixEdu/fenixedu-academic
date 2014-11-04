@@ -36,26 +36,26 @@
 	
 	<fr:edit id="bean" name="bean">
 		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.TeacherAuthorizationManagement$TeacherAuthorizationManagementBean">
+			type="org.fenixedu.academic.ui.struts.action.scientificCouncil.TeacherAuthorizationManagement$TeacherAuthorizationManagementBean">
 			
 			<fr:slot name="username" key="label.username" required="true" />
 			
 			<fr:slot name="lessonHours" key="label.lessonHours" required="true" />
 			
 			<fr:slot name="teacherCategory" key="label.professionalCategory" layout="menu-select"  required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TeacherCategoryProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.TeacherCategoryProvider" />
 				<fr:property name="format" value="${name}" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
 			
 			<fr:slot name="executionSemester" key="label.exeuctionSemester" layout="menu-select"  required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider" />
 				<fr:property name="format" value="${executionYear.year} - ${semester}º semestre" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
 			
 			<fr:slot name="department" key="department" layout="menu-select"  required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DepartmentsProvide" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DepartmentsProvide" />
 				<fr:property name="format" value="${realName}" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>

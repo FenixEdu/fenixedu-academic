@@ -41,11 +41,11 @@
 
     <fr:form action="/studentDataShareAuthorization.do?method=saveAuthorization">
         <fr:edit id="studentDataShareAuthorization" name="student">
-            <fr:schema bundle="STUDENT_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+            <fr:schema bundle="STUDENT_RESOURCES" type="org.fenixedu.academic.domain.student.Student">
                 <fr:slot name="personalDataAuthorization" key="label.student.dataShareAuthorization" layout="menu-postback"
                     required="true">
                     <fr:property name="defaultOptionHidden" value="true" />
-                    <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.PersonalDataAuthorizationProvider" />
+                    <fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.PersonalDataAuthorizationProvider" />
                 </fr:slot>
             </fr:schema>
             <fr:layout name="tabular">

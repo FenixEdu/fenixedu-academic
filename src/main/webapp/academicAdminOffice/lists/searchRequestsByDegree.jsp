@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType"%>
+<%@ page import="org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType"%>
 <html:xhtml />
 
 <h2>
@@ -41,11 +41,11 @@
 	<html:hidden property="method" value="runSearchAndShowResults" />
 	<fr:edit name="degreeByExecutionYearBean" id="degreeByExecutionYearBean">
 		<fr:schema
-			type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DegreeByExecutionYearBean"
+			type="org.fenixedu.academic.dto.academicAdministration.DegreeByExecutionYearBean"
 			bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="executionYear" key="label.executionYear.notCapitalized" layout="menu-select-postback" required="true">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${year}" />
 				<fr:property name="destination" value="postBack" />
 			</fr:slot>
@@ -71,13 +71,13 @@
 	</fr:edit>
 
 	<bean:define id="documentRequestSearchBean" name="documentRequestSearchBean"
-		type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DocumentRequestSearchBean" />
+		type="org.fenixedu.academic.dto.academicAdministration.DocumentRequestSearchBean" />
 	<fr:edit id="documentRequestSearchBean" name="documentRequestSearchBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DocumentRequestSearchBean"
+		<fr:schema type="org.fenixedu.academic.dto.academicAdministration.DocumentRequestSearchBean"
 			bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="academicServiceRequestType" key="label.requestType" layout="menu-select-postback">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestTypeProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.serviceRequests.AcademicServiceRequestTypeProvider" />
 				<fr:property name="eachLayout" value="" />
 			</fr:slot>
 			<fr:slot name="academicServiceRequestSituationType"
@@ -89,7 +89,7 @@
 			<fr:slot name="chosenDocumentRequestType"
 				key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider$QuickDeliveryTypes" />
+					value="org.fenixedu.academic.ui.renderers.providers.DocumentRequestTypeProvider$QuickDeliveryTypes" />
 				<fr:property name="eachLayout" value="" />
 			</fr:slot>
 			<%
@@ -127,7 +127,7 @@
 		</logic:greaterThan>
 
 		<fr:view name="registrationAcademicServiceRequestList">
-			<fr:schema type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"
+			<fr:schema type="org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest"
 				bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="serviceRequestNumber" key="label.serviceRequestNumber" layout="link">
 					<fr:property name="linkFormat"

@@ -16,23 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
+package org.fenixedu.academic.service.factoryExecutors;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.DuplicateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.FreeSolicitationAcademicRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.PartialRegistrationRegimeRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.CourseGroupChangeRequest;
+import org.fenixedu.academic.domain.serviceRequests.DuplicateRequest;
+import org.fenixedu.academic.domain.serviceRequests.EquivalencePlanRequest;
+import org.fenixedu.academic.domain.serviceRequests.EquivalencePlanRevisionRequest;
+import org.fenixedu.academic.domain.serviceRequests.ExtraExamRequest;
+import org.fenixedu.academic.domain.serviceRequests.FreeSolicitationAcademicRequest;
+import org.fenixedu.academic.domain.serviceRequests.PartialRegistrationRegimeRequest;
+import org.fenixedu.academic.domain.serviceRequests.SpecialSeasonRequest;
+import org.fenixedu.academic.domain.serviceRequests.StudentReingressionRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.PhotocopyRequest;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
+import org.fenixedu.academic.service.services.commons.FactoryExecutor;
+
 import pt.ist.fenixframework.Atomic;
 
 public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements

@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher;
+package org.fenixedu.academic.ui.renderers.providers.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
-import net.sourceforge.fenixedu.domain.Tutorship;
+import org.fenixedu.academic.dto.teacher.tutor.StudentsByTutorBean;
+import org.fenixedu.academic.domain.Tutorship;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

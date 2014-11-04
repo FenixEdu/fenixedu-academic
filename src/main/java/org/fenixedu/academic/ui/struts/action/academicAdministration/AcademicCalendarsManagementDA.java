@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
+package org.fenixedu.academic.ui.struts.action.academicAdministration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,21 +25,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendarEntry;
-import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCalendarsApp;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
-import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean;
+import org.fenixedu.academic.service.services.manager.academicCalendarManagement.CreateAcademicCalendarEntry;
+import org.fenixedu.academic.service.services.manager.academicCalendarManagement.DeleteAcademicCalendarEntry;
+import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCalendarsApp;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.renderer.GanttDiagram;
+import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

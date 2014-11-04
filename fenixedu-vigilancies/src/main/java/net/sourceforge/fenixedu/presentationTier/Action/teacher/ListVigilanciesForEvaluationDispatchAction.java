@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package org.fenixedu.academic.ui.struts.action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,16 +25,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeStatus;
-import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
-import net.sourceforge.fenixedu.domain.vigilancy.OwnCourseVigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.person.vigilancy.ChangeConvokeActive;
+import org.fenixedu.academic.service.services.person.vigilancy.ChangeConvokeStatus;
+import org.fenixedu.academic.dto.VariantBean;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.vigilancy.AttendingStatus;
+import org.fenixedu.academic.domain.vigilancy.OwnCourseVigilancy;
+import org.fenixedu.academic.domain.vigilancy.Vigilancy;
+import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;

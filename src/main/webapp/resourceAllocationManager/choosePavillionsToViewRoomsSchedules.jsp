@@ -35,7 +35,7 @@
 	<input type="hidden" name="method" value="list"/>
 
 	<fr:edit name="bean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewAllRoomsSchedulesDA$ChooseBuildingBean" bundle="SOP_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.ViewAllRoomsSchedulesDA$ChooseBuildingBean" bundle="SOP_RESOURCES">
 			<fr:slot name="academicInterval" layout="menu-select" key="link.choose.execution.period">
 				<fr:property name="format" value="\${pathName}" />
 				<fr:property name="from" value="availableIntervals" />
@@ -50,7 +50,7 @@
 	<br />
 	
 	<fr:edit name="bean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewAllRoomsSchedulesDA$ChooseBuildingBean" bundle="SOP_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.ViewAllRoomsSchedulesDA$ChooseBuildingBean" bundle="SOP_RESOURCES">
 			<fr:slot name="selectedBuildings" layout="option-select" key="label.choose.rooms">
 				<fr:property name="from" value="availableBuildings" />
 				<fr:property name="classes" value="nobullet noindent"/>

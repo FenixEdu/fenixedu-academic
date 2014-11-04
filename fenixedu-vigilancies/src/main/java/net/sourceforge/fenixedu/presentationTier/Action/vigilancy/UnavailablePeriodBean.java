@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
+package org.fenixedu.academic.ui.struts.action.vigilancy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
+import org.fenixedu.academic.domain.vigilancy.ExamCoordinator;
+import org.fenixedu.academic.domain.vigilancy.UnavailablePeriod;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.domain.vigilancy.VigilantWrapper;
 
 import org.joda.time.DateTime;
 

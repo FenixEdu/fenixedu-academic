@@ -49,7 +49,7 @@
 <p><strong><bean:message  key="title.phd.programs" bundle="PHD_RESOURCES"/></strong></p>
 
 <fr:view name="phdPrograms" >
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" >
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgram" >
 		<fr:slot name="acronym" />
 		<fr:slot name="name" />
 	</fr:schema>

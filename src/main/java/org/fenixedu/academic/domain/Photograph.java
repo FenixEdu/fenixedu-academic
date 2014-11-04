@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
@@ -31,18 +31,17 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
-import net.sourceforge.fenixedu.domain.photograph.Picture;
-import net.sourceforge.fenixedu.domain.photograph.PictureMode;
-import net.sourceforge.fenixedu.domain.photograph.PictureOriginal;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ContentType;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.photograph.AspectRatio;
+import org.fenixedu.academic.domain.photograph.Picture;
+import org.fenixedu.academic.domain.photograph.PictureMode;
+import org.fenixedu.academic.domain.photograph.PictureOriginal;
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.SystemSender;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;

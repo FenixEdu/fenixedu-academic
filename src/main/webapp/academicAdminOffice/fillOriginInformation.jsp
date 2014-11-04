@@ -28,7 +28,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.student.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="precedentDegreeInformationBean" name="precedentDegreeInformationBean" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean"/>
+<bean:define id="precedentDegreeInformationBean" name="precedentDegreeInformationBean" type="org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean"/>
 
 <fr:form action="/createStudent.do">	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareShowCreateStudentConfirmation"/>
@@ -39,14 +39,14 @@
 	
 	<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.originInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<fr:edit id="originInformation" name="originInformationBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+		<fr:schema type="org.fenixedu.academic.dto.candidacy.OriginInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 			<fr:slot name="dislocatedFromPermanentResidence"  />
 		   	<fr:slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete">
 				<fr:property name="size" value="50"/>
 				<fr:property name="labelField" value="name"/>
 				<fr:property name="format" value="${name} - (${district.name})"/>
 				<fr:property name="indicatorShown" value="true"/>		
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions"/>
+				<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchDistrictSubdivisions"/>
 				<fr:property name="args" value="slot=name,size=20"/>
 				<fr:property name="minChars" value="2"/>
 			</fr:slot>	    
@@ -55,33 +55,33 @@
 				<fr:property name="size" value="50"/>
 				<fr:property name="labelField" value="unit.name"/>
 				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+				<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalUnits"/>
 				<fr:property name="args" value="slot=name,size=50"/>
 				<fr:property name="minChars" value="1"/>
 				<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
 			</fr:slot>
 			<% if(precedentDegreeInformationBean.getSchoolLevel().isHighSchoolOrEquivalent()) { %>
 				<fr:slot name="highSchoolType" layout="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.HighSchoolTypesProvider" />
 					<fr:property name="eachLayout" value="this-does-not-exist" />
 				</fr:slot>
 			<% } %>
 			<fr:slot name="motherSchoolLevel" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 				<fr:property name="eachLayout" value="this-does-not-exist" />
 			</fr:slot>
 			<fr:slot name="motherProfessionType" />
 			<fr:slot name="motherProfessionalCondition" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 			</fr:slot>
 		
 			<fr:slot name="fatherSchoolLevel" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 				<fr:property name="eachLayout" value="this-does-not-exist" />
 			</fr:slot>
 			<fr:slot name="fatherProfessionType"/>
 			<fr:slot name="fatherProfessionalCondition" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 			</fr:slot>	    
 		</fr:schema>
 		<fr:layout name="tabular" >

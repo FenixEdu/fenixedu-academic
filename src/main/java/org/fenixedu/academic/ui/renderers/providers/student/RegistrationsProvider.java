@@ -19,11 +19,12 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.student;
+package org.fenixedu.academic.ui.renderers.providers.student;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.ChooseStudentCurricularPlanBean;
+import org.fenixedu.academic.dto.student.ChooseStudentCurricularPlanBean;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

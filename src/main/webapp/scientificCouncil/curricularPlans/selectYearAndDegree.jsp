@@ -31,10 +31,10 @@
 
 <fr:form id="searchForm" action="/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears">
 	<fr:edit id="sessionBean" name="sessionBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.ExecutionDegreeCoordinatorsBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans.ExecutionDegreeCoordinatorsBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 			<fr:slot name="executionYear" layout="menu-select-postback" key="label.executionYear" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 		</fr:schema>
@@ -55,7 +55,7 @@
 		</logic:empty>
 		<logic:notEmpty name="bachelors">
 			<fr:view name="bachelors">
-				<fr:schema type="net.sourceforge.fenixedu.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 					<fr:slot name="degreeCurricularPlan.degree.name" key="label.degree"/>
 					<fr:slot name="degreeCurricularPlan.name" key="curricularPlan">
 						<fr:property  name="classes" value="bold"/>
@@ -89,7 +89,7 @@
 		</logic:empty>
 		<logic:notEmpty name="masters">
 			<fr:view name="masters">
-				<fr:schema type="net.sourceforge.fenixedu.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 					<fr:slot name="degreeCurricularPlan.degree.name" key="label.degree"/>
 					<fr:slot name="degreeCurricularPlan.name" key="curricularPlan">
 						<fr:property  name="classes" value="bold"/>
@@ -123,7 +123,7 @@
 		</logic:empty>
 		<logic:notEmpty name="integratedMasters">
 			<fr:view name="integratedMasters">
-				<fr:schema type="net.sourceforge.fenixedu.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 					<fr:slot name="degreeCurricularPlan.degree.name" key="label.degree"/>
 					<fr:slot name="degreeCurricularPlan.name" key="curricularPlan">
 						<fr:property  name="classes" value="bold"/>
@@ -157,7 +157,7 @@
 		</logic:empty>
 		<logic:notEmpty name="otherDegrees">
 			<fr:view name="otherDegrees">
-				<fr:schema type="net.sourceforge.fenixedu.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.ExecutionDegree" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 					<fr:slot name="degreeCurricularPlan.degree.name" key="label.degree"/>
 					<fr:slot name="degreeCurricularPlan.name" key="curricularPlan">
 						<fr:property  name="classes" value="bold"/>

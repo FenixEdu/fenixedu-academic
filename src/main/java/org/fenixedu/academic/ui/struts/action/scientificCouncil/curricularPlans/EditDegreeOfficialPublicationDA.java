@@ -1,20 +1,19 @@
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
-import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
-import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCurricularPlansManagement;
-import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean.SpecializationName;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.DegreeOfficialPublication;
+import org.fenixedu.academic.domain.DegreeSpecializationArea;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.commons.FenixActionForward;
+import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificCurricularPlansManagement;
+import org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans.OfficialPublicationBean.SpecializationName;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

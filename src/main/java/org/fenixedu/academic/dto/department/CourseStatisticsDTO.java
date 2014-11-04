@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.department;
+package org.fenixedu.academic.dto.department;
 
 import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.curriculum.IGrade;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.curriculum.IGrade;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

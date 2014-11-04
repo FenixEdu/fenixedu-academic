@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan;
+package org.fenixedu.academic.domain.studentCurricularPlan.equivalencyPlan;
 
 import java.text.Collator;
 import java.util.Comparator;
@@ -24,10 +24,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.EquivalencePlanEntry;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 
 public class EquivalencyPlanEntryCurriculumModuleWrapper {
 

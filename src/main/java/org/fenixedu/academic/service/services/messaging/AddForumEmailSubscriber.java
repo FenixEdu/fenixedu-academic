@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
+package org.fenixedu.academic.service.services.messaging;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.messaging.Forum;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.messaging.Forum;
+
 import pt.ist.fenixframework.Atomic;
 
 public class AddForumEmailSubscriber {

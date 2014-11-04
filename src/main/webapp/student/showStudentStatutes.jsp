@@ -33,7 +33,7 @@
 
 <logic:notEmpty name="studentStatutes">
 	<fr:view name="studentStatutes" schema="student.studentStatutes.show">
-		<fr:schema type="net.sourceforge.fenixedu.domain.student.StudentStatute" bundle="STUDENT_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.student.StudentStatute" bundle="STUDENT_RESOURCES">
 			<fr:slot name="statuteType" key="label.student.statute.description" />
 			<fr:slot name="beginExecutionPeriod.beginDateYearMonthDay" key="label.student.statute.startdate" />
 			<fr:slot name="endExecutionPeriod.endDateYearMonthDay" key="label.student.statute.enddate" />

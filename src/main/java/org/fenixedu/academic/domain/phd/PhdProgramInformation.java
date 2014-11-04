@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd;
+package org.fenixedu.academic.domain.phd;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramInformation extends PhdProgramInformation_Base {

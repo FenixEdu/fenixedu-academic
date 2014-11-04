@@ -25,8 +25,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail" %>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.SendPhdEmail"%>
+<%@page import="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmail" %>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manage.emails" bundle="PHD_RESOURCES" /></h2>

@@ -67,7 +67,7 @@
 </logic:present>
 
 <fr:view name="executionCourseAudit">
-	<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">
+	<fr:schema bundle="INQUIRIES_RESOURCES" type="org.fenixedu.academic.domain.inquiries.ExecutionCourseAudit">
 		<fr:slot name="teacherAuditor.person.name" key="label.teacher" bundle="APPLICATION_RESOURCES"/>
 		<fr:slot name="studentAuditor.person.name" key="student" bundle="APPLICATION_RESOURCES"/>		
 		<fr:slot name="conclusions" key="label.inquiry.audit.conclusions"/>

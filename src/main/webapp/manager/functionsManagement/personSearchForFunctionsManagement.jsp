@@ -25,7 +25,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$ManagementFunctionsPage" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.manager.ManagerApplications$ManagementFunctionsPage" />
 
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>

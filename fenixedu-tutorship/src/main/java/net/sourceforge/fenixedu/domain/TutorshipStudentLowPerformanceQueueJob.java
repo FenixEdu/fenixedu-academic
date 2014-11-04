@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,13 +26,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance.AbstractPrescriptionRule;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance.StudentLowPerformanceBean;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.studentLowPerformance.AbstractPrescriptionRule;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.studentLowPerformance.StudentLowPerformanceBean;
 
 import org.joda.time.DateTime;
 

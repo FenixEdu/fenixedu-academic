@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.photographs;
+package org.fenixedu.academic.dto.photographs;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PhotoState;
-import net.sourceforge.fenixedu.domain.PhotoType;
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.person.HumanName;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PhotoState;
+import org.fenixedu.academic.domain.PhotoType;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.person.HumanName;
+import org.fenixedu.academic.domain.person.RoleType;
 import org.joda.time.LocalDate;
 
 /**

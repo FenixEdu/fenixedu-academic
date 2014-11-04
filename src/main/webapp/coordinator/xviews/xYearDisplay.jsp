@@ -26,14 +26,14 @@
 
 
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.YearViewBean"%>
+	import="org.fenixedu.academic.ui.struts.action.coordinator.xviews.YearViewBean"%>
 <%@page
-	import="net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup"%>
+	import="org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup"%>
 <%@page
-	import="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"%>
+	import="org.fenixedu.academic.domain.degreeStructure.DegreeModule"%>
 <%@page import="java.util.Set"%>
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar"%>
+	import="org.fenixedu.academic.ui.struts.action.coordinator.xviews.Inar"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 
 <html:xhtml />
@@ -69,13 +69,13 @@
 	action="<%= "/xYear.do?method=showYearInformation&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() + "&locale=" + I18N.getLocale().getLanguage() %>">
 	<fr:edit id="searchFormBean" name="searchFormBean">
 		<fr:schema
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.YearViewBean"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.xviews.YearViewBean"
 			bundle="COORDINATOR_RESOURCES">
 			<fr:slot name="executionYear" layout="menu-select"
 				key="label.executionYear" required="true">
 				<fr:property name="format" value="${qualifiedName}" />
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForDegreeCurricularPlanProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsForDegreeCurricularPlanProvider" />
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>
 		</fr:schema>
@@ -102,7 +102,7 @@
 			<fr:property name="columnClasses" value="," />
 		</fr:layout>
 		<fr:schema
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.xviews.Inar"
 			bundle="COORDINATOR_RESOURCES">
 			<fr:slot name="enrolled" key="label.enrolled" />
 			<fr:slot name="frequenting" key="label.frequenting" />
@@ -139,7 +139,7 @@
 					<fr:property name="columnClasses" value="," />
 				</fr:layout>
 				<fr:schema
-					type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar"
+					type="org.fenixedu.academic.ui.struts.action.coordinator.xviews.Inar"
 					bundle="COORDINATOR_RESOURCES">
 					<fr:slot name="enrolled" key="label.enrolled" />
 					<fr:slot name="frequenting" key="label.frequenting" />
@@ -212,7 +212,7 @@
 						<fr:property name="columnClasses" value="," />
 					</fr:layout>
 					<fr:schema
-						type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar"
+						type="org.fenixedu.academic.ui.struts.action.coordinator.xviews.Inar"
 						bundle="COORDINATOR_RESOURCES">
 						<fr:slot name="enrolled" key="label.enrolled" />
 						<fr:slot name="frequenting" key="label.frequenting" />
@@ -274,7 +274,7 @@
 						<fr:property name="columnClasses" value="," />
 					</fr:layout>
 					<fr:schema
-						type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar"
+						type="org.fenixedu.academic.ui.struts.action.coordinator.xviews.Inar"
 						bundle="COORDINATOR_RESOURCES">
 						<fr:slot name="enrolled" key="label.enrolled" />
 						<fr:slot name="frequenting" key="label.frequenting" />

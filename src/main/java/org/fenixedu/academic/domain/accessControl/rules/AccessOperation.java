@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accessControl.rules;
+package org.fenixedu.academic.domain.accessControl.rules;
 
 import java.io.Serializable;
 import java.util.Optional;

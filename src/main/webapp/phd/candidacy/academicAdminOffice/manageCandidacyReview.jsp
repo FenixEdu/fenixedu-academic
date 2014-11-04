@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.candidacy.manageCandidacyReview" bundle="PHD_RESOURCES" /></h2>
@@ -114,7 +114,7 @@
 
 <%--  ### End Of Documents  ### --%>
 
-<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadCandidacyReview.class %>">
+<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.UploadCandidacyReview.class %>">
 
 	<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 	<fr:form action="/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
@@ -146,7 +146,7 @@
 		
 </phd:activityAvailable>
 
-<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class %>">
+<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= org.fenixedu.academic.domain.phd.candidacy.activities.RequestRatifyCandidacy.class %>">
 	<fr:form action="/phdProgramCandidacyProcess.do?method=requestRatifyCandidacy">
 	  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
 	  	<fr:edit id="documentToUpload" name="documentToUpload" visible="false" />
@@ -155,7 +155,7 @@
 		
 		<fr:edit id="stateBean" name="stateBean" visible="false" />
 	  	<fr:edit id="stateBean-generateAlert" name="stateBean">
-	  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean">
+	  		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean">
 	  			<fr:slot name="generateAlert" layout="radio-postback">
 	  				<fr:property name="destination" value="postback" />
 	  			</fr:slot>

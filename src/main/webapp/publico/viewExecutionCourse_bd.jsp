@@ -27,8 +27,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ page import="pt.ist.fenixframework.FenixFramework" %>
-<%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.domain.Teacher" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <logic:notPresent name="siteView">
 	<span class="error"><!-- Error messages go here --><p><bean:message key="errors.invalidSiteExecutionCourse"/></p></span>
 </logic:notPresent>
@@ -133,7 +133,7 @@
             	<logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
 				<p style="margin-top: 6px; margin-bottom: 6px;">
 					<bean:define id="teacherID" type="java.lang.String" name="infoResponsableTeacher" property="externalId"/>
-					<% net.sourceforge.fenixedu.domain.Person person = FenixFramework.<Teacher> getDomainObject(teacherID).getPerson();
+					<% org.fenixedu.academic.domain.Person person = FenixFramework.<Teacher> getDomainObject(teacherID).getPerson();
 					   request.setAttribute("person", person);
 					%>
 
@@ -166,7 +166,7 @@
             <logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
 				<p style="margin-top: 6px; margin-bottom: 6px;">
 					<bean:define id="teacherID" type="java.lang.String" name="infoTeacher" property="externalId"/>
-					<% net.sourceforge.fenixedu.domain.Person person = pt.ist.fenixframework.FenixFramework.<Teacher>getDomainObject(teacherID).getPerson();
+					<% org.fenixedu.academic.domain.Person person = pt.ist.fenixframework.FenixFramework.<Teacher>getDomainObject(teacherID).getPerson();
 					   request.setAttribute("person", person);
 					%>
 					<logic:present name="person" property="homepage">

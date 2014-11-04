@@ -23,15 +23,15 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication$ShowStudentEvaluations" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.student.StudentApplication$ShowStudentEvaluations" />
 
 <f:view>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>	
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<h:outputText value="<h2>#{bundle['link.exams.enrolment']}</h2>" escape="false"
-	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.Exam'}"/>
+	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'org.fenixedu.academic.domain.Exam'}"/>
 	<h:outputText value="<h2>#{bundle['link.writtenTests.enrolment']}</h2>" escape="false"
-	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'org.fenixedu.academic.domain.WrittenTest'}"/>
 	<h:outputText value="<div class='infoop2'>
 	<b>Sincronizar Calendário</b><br/>
     Pode ficar a par de novidades relacionadas com testes e exames directamente no seu calendário pessoal.

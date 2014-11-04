@@ -34,13 +34,13 @@
 
 <fr:form action="/viewStudent.do?method=showStats">
 	<fr:edit name="sessionBean" id="sessionBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult.ExternalSupervisorViewsBean" bundle="EXTERNAL_SUPERVISION_RESOURCES">
-			<fr:slot name="student" layout="autoComplete" key="label.selectStudent.nameOrID" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.externalSupervision.consult.ExternalSupervisorViewsBean" bundle="EXTERNAL_SUPERVISION_RESOURCES">
+			<fr:slot name="student" layout="autoComplete" key="label.selectStudent.nameOrID" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
 				<fr:property name="size" value="35" />
 				<fr:property name="format" value="${name} - <strong>${username}</strong>" />
 				<fr:property name="args" value="slot=name,size=20" />
 				<fr:property name="minChars" value="3" />
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons" />
+				<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons" />
 				<fr:property name="indicatorShown" value="true" />
 				<fr:property name="required" value="true"/>
 			</fr:slot>

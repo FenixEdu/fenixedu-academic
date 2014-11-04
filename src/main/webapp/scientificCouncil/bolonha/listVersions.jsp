@@ -42,7 +42,7 @@
 		<th></th>
 	</tr>
 	
-	<logic:iterate id="changeRequest" name="changeRequests" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest">
+	<logic:iterate id="changeRequest" name="changeRequests" type="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest">
 		<bean:define id="changeRequestID" name="changeRequest" property="externalId"/>
 		<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.externalId"/>
 		<tr>
@@ -51,7 +51,7 @@
 			<td><fr:view name="changeRequest" property="competenceCourse.name"/></td>
 			<td><fr:view name="changeRequest" property="requester.name"/></td>
 			<td class="acenter">
-				<fr:view name="changeRequest" property="analizedBy" type="net.sourceforge.fenixedu.domain.Person">
+				<fr:view name="changeRequest" property="analizedBy" type="org.fenixedu.academic.domain.Person">
 					<fr:layout name="null-as-label">
 						<fr:property name="label" value="-"/>
 						<fr:property name="subLayout" value="values"/>

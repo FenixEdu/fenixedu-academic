@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,23 +25,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurma;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurma;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableShiftsForClass;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByClass;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveShifts;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
-import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
-
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -49,6 +32,22 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.InfoClass;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.service.services.resourceAllocationManager.EditarTurma;
+import org.fenixedu.academic.service.services.resourceAllocationManager.LerAulasDeTurma;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadAvailableShiftsForClass;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadShiftByOID;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadShiftsByClass;
+import org.fenixedu.academic.service.services.resourceAllocationManager.RemoveShifts;
+import org.fenixedu.academic.service.services.resourceAllocationManager.RemoverTurno;
+import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.ExceptionHandling;

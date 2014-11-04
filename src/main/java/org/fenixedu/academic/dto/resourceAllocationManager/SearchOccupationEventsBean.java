@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager;
+package org.fenixedu.academic.dto.resourceAllocationManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;

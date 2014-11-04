@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequestExcel;
+package org.fenixedu.academic.ui.struts.action.commons.documentRequestExcel;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -28,18 +28,17 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.IDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;

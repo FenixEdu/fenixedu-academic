@@ -1,17 +1,16 @@
-package org.fenixedu.core.ui.teacher;
+package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExportGrouping;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
-
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExportGrouping;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

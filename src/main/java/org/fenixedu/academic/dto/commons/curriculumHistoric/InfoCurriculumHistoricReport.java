@@ -19,17 +19,16 @@
 /*
  * Created on Oct 11, 2004
  */
-package net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric;
+package org.fenixedu.academic.dto.commons.curriculumHistoric;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 
 /**
  * @author nmgo

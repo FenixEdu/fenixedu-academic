@@ -1,11 +1,10 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.person;
+package org.fenixedu.academic.service.services.person;
 
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.UserProfile;

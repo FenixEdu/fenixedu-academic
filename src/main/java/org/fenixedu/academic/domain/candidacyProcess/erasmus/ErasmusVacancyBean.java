@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityQuota;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 
 public class ErasmusVacancyBean implements java.io.Serializable {
 

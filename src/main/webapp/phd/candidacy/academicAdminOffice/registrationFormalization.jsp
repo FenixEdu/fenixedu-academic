@@ -23,8 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.RegistrationFormalizationBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA"%><html:xhtml/>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.registrationFormalization" bundle="PHD_RESOURCES" /></h2>

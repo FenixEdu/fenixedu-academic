@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.StringFormatter;
-
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class MasterDegreeDiplomaReport extends DiplomaReport {
@@ -35,7 +34,7 @@ public class MasterDegreeDiplomaReport extends DiplomaReport {
 
     @Override
     public String getReportTemplateKey() {
-        return "net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest.MASTER_DEGREE";
+        return "org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest.MASTER_DEGREE";
     }
 
     @Override

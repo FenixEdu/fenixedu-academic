@@ -25,12 +25,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <%@ page import="java.util.List" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacher.TeacherService" %>
+<%@ page import="org.fenixedu.academic.domain.teacher.TeacherMasterDegreeService" %>
+<%@ page import="org.fenixedu.academic.domain.teacher.TeacherService" %>
 
 <h3><bean:message key="message.credits.masterDegree.title"/></h3>
 
-<bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
+<bean:define id="executionDegree" name="executionDegree" type="org.fenixedu.academic.domain.ExecutionDegree"/>
 <h4><bean:message key="message.credits.masterDegree.curricularPlan"/>:  <bean:write name="executionDegree" property="degreeCurricularPlan.name"/><br/>
 <bean:message key="message.credits.masterDegree.executionYear"/>: <bean:write name="executionDegree" property="executionYear.year"/></h4>
 
@@ -61,7 +61,7 @@
 			
 		<bean:define id="creditsMap" name="masterDegreeCreditsForm" property="creditsMap" type="java.util.HashMap"/>
 		<bean:define id="hoursMap" name="masterDegreeCreditsForm" property="hoursMap" type="java.util.HashMap"/>	
-		<bean:define id="masterDegreeCreditsDTO" name="masterDegreeCreditsDTO" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction.MasterDegreeCreditsDTO"/>		
+		<bean:define id="masterDegreeCreditsDTO" name="masterDegreeCreditsDTO" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction.MasterDegreeCreditsDTO"/>		
 		
 			<tr>
 			
@@ -76,7 +76,7 @@
 				
 				<%-- Curricular Course Type --%>
 				<td class="acenter" rowspan="<%= totalRowSpan %>">
-					<bean:define id="curricularCourseType" name="masterDegreeCreditsDTO" property="curricularCourse.type" type="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType"/>
+					<bean:define id="curricularCourseType" name="masterDegreeCreditsDTO" property="curricularCourse.type" type="org.fenixedu.academic.domain.curriculum.CurricularCourseType"/>
 					<e:define id="curricularCourseTypeToString" enumeration="curricularCourseType" bundle="ENUMERATION_RESOURCES"/>
 					<bean:write name="curricularCourseTypeToString"/>
 				</td>
@@ -96,7 +96,7 @@
 					</logic:notEqual>
 				</td>							
 				
-				<bean:define id="curricularCorse" name="masterDegreeCreditsDTO" property="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"/>
+				<bean:define id="curricularCorse" name="masterDegreeCreditsDTO" property="curricularCourse" type="org.fenixedu.academic.domain.CurricularCourse"/>
 				
 				<logic:iterate id="mapElement" name="masterDegreeCreditsDTO" property="executionCoursesMap" indexId="executionPeriodIndex">
 					
@@ -104,7 +104,7 @@
 						<tr>					
 					</logic:greaterThan>
 					
-					<bean:define id="executionPeriod" name="mapElement" property="key" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>								
+					<bean:define id="executionPeriod" name="mapElement" property="key" type="org.fenixedu.academic.domain.ExecutionSemester"/>								
 					<bean:define id="executionCourses" name="mapElement" property="value"/>
 					
 					<%
@@ -120,7 +120,7 @@
 											
 					<logic:iterate id="executionCourseTrio" name="executionCourses" indexId="executionCourseIndex">
 	
-						<bean:define id="executionCourse" name="executionCourseTrio" property="first.key" type="net.sourceforge.fenixedu.domain.ExecutionCourse"></bean:define>						
+						<bean:define id="executionCourse" name="executionCourseTrio" property="first.key" type="org.fenixedu.academic.domain.ExecutionCourse"></bean:define>						
 	
 						<% 
 							String isLastCellDone = "false";
@@ -152,13 +152,13 @@
 						
 						<logic:notEmpty name="executionCourse" property="professorships">	
 							
-							<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship" indexId="professorshipIndex">
+							<logic:iterate id="professorship" name="executionCourse" property="professorships" type="org.fenixedu.academic.domain.Professorship" indexId="professorshipIndex">
 																
 								<logic:greaterThan name="professorshipIndex" value="0">
 									<tr>					
 								</logic:greaterThan>
 								<logic:notEmpty name="professorship" property="teacher">
-									<bean:define id="teacher" name="professorship" property="teacher" type="net.sourceforge.fenixedu.domain.Teacher"/>
+									<bean:define id="teacher" name="professorship" property="teacher" type="org.fenixedu.academic.domain.Teacher"/>
 									<td class="aright"><bean:write name="teacher" property="teacherId"/></td>											
 									<td><bean:write name="teacher" property="person.name"/></td>
 														

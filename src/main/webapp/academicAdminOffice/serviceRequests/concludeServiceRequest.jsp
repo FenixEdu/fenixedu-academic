@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest"%>
+<%@page import="org.fenixedu.academic.domain.serviceRequests.SpecialSeasonRequest"%>
 
 <html:xhtml/>
 
@@ -36,7 +36,7 @@
 	}
 </script>
 
-<bean:define id="academicServiceRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
+<bean:define id="academicServiceRequest" name="academicServiceRequest" type="org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 
 <h2 class="mbottom1"><bean:write name="academicServiceRequest" property="description"/></h2>
 

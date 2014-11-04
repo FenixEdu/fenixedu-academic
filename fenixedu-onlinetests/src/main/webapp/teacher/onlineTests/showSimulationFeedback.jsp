@@ -52,8 +52,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%= request.getParameter("distributedTestCode") %>"/>
 
 	<logic:present name="infoStudentTestQuestionList">
-		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
+		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="org.fenixedu.academic.dto.onlineTests.InfoStudentTestQuestion"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.dto.onlineTests.InfoDistributedTest"/>
 		<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testInformation" property="testInformation" name="distributedTest" property="testInformation"/>
 		<bean:define id="testType" name="distributedTest" property="testType.type"/>
@@ -77,8 +77,8 @@
 	</logic:present>
 	<logic:notPresent name="infoStudentTestQuestionList">
 		<bean:define id="infoStudentTestQuestionList" name="infoSiteStudentTestFeedback" property="infoStudentTestQuestionList"/>
-		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion" indexId="questionIndex">
-			<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion"/>
+		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="org.fenixedu.academic.dto.onlineTests.InfoStudentTestQuestion" indexId="questionIndex">
+			<bean:define id="question" name="testQuestion" property="question" type="org.fenixedu.academic.dto.onlineTests.InfoQuestion"/>
 			<bean:define id="questionType" name="question" property="questionType.type"/>
 			<bean:define id="questionCode" name="question" property="externalId"/>
 			<html:hidden alt='<%="questionCode"+questionIndex%>' property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
@@ -104,7 +104,7 @@
 			</logic:notEmpty>
 			
 		</logic:iterate>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.dto.onlineTests.InfoDistributedTest"/>
 		<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testInformation" property="testInformation" name="distributedTest" property="testInformation"/>
 		<bean:define id="testType" name="distributedTest" property="testType.type"/>

@@ -37,7 +37,7 @@
 			<bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>:
 			<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 
 				<fr:layout name="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
 					<fr:property name="format" value="${year}"/>
 					<fr:destination name="postback" path="/defineExpectationEvaluationGroups.do?method=listGroupsWithSelectedExecutionYear"/>
 				</fr:layout>

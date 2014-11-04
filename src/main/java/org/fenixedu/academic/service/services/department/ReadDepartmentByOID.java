@@ -20,11 +20,12 @@
  * 
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.department;
+package org.fenixedu.academic.service.services.department;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.domain.Department;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.dto.InfoDepartment;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

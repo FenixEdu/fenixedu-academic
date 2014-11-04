@@ -39,13 +39,13 @@
 
 <logic:notEmpty name="attends">
 	<logic:iterate id="attend" name="attends">
-		<bean:define id="executionCourse" name="attend" property="disciplinaExecucao" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
+		<bean:define id="executionCourse" name="attend" property="disciplinaExecucao" type="org.fenixedu.academic.domain.ExecutionCourse"/>
 		<bean:define id="attendsId" name="attend" property="externalId" />
 		<bean:define id="projectsWithOnlineSubmission" name="executionCourse" property="projectsWithOnlineSubmission" />
 		<p class="mtop2 mbottom0"><strong><bean:write name="executionCourse" property="nome"/></strong></p>
 		<logic:notEmpty name="projectsWithOnlineSubmission">
 			<ul>
-				<logic:iterate id="projectWithOnlineSubmission" name="projectsWithOnlineSubmission" type="net.sourceforge.fenixedu.domain.Project">
+				<logic:iterate id="projectWithOnlineSubmission" name="projectsWithOnlineSubmission" type="org.fenixedu.academic.domain.Project">
 					<bean:define id="projectId" name="projectWithOnlineSubmission" property="externalId" />
 					<li>
 						<bean:write name="projectWithOnlineSubmission" property="name"/> , 

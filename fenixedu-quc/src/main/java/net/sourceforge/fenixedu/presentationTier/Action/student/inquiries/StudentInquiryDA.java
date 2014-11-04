@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
+package org.fenixedu.academic.ui.struts.action.student.inquiries;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,27 +31,27 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryGroupQuestionBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryQuestionDTO;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentTeacherInquiryBean;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
+import org.fenixedu.academic.dto.VariantBean;
+import org.fenixedu.academic.dto.inquiries.CurricularCourseInquiriesRegistryDTO;
+import org.fenixedu.academic.dto.inquiries.InquiryBlockDTO;
+import org.fenixedu.academic.dto.inquiries.InquiryGroupQuestionBean;
+import org.fenixedu.academic.dto.inquiries.InquiryQuestionDTO;
+import org.fenixedu.academic.dto.inquiries.StudentInquiryBean;
+import org.fenixedu.academic.dto.inquiries.StudentTeacherInquiryBean;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.inquiries.CurricularCourseInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryCourseAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryNotAnsweredJustification;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryExecutionPeriod;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryRegistry;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.StudentTeacherInquiryTemplate;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

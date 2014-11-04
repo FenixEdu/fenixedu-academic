@@ -26,19 +26,19 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType"%>
-<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
+	import="org.fenixedu.academic.servlet.taglib.sop.v3.TimeTableType"%>
+<%@ page import="org.fenixedu.academic.domain.degree.DegreeType"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+	import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%>
 
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 
 <bean:define id="institutionUrl" type="java.lang.String">
-	<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>
+	<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>
 </bean:define>
 
 <div class="breadcumbs mvert0">
-   <a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> 
+   <a href="<%= institutionUrl %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> 
    <bean:define id="institutionUrlTeaching" type="java.lang.String"><%= institutionUrl %><bean:message key="link.institution" bundle="GLOBAL_RESOURCES" /></bean:define> 
     &nbsp;&gt;&nbsp;
     <a href="<%= institutionUrlTeaching %>"><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a> 

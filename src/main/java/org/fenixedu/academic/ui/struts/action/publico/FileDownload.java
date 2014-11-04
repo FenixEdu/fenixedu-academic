@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico;
+package org.fenixedu.academic.ui.struts.action.publico;
 
 import java.io.DataOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.File;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixframework.FenixFramework;

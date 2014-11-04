@@ -21,10 +21,11 @@
  *
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.domain.Lesson;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.dto.InfoLesson;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

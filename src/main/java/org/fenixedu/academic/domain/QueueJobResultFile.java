@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-
+import org.fenixedu.academic.domain.documents.GeneratedDocumentType;
+import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;

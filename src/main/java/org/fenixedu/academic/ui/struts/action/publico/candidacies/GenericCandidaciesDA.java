@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies;
+package org.fenixedu.academic.ui.struts.action.publico.candidacies;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -25,25 +25,24 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
-import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationPeriodBean;
-import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean;
-import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean;
-import net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUserBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicCandidaciesApp;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.candidacy.GenericApplication;
+import org.fenixedu.academic.domain.candidacy.GenericApplicationFile;
+import org.fenixedu.academic.domain.candidacy.GenericApplicationLetterOfRecomentation;
+import org.fenixedu.academic.domain.candidacy.GenericApplicationRecomentation;
+import org.fenixedu.academic.domain.candidacy.util.GenericApplicationPeriodBean;
+import org.fenixedu.academic.domain.candidacy.util.GenericApplicationRecommendationBean;
+import org.fenixedu.academic.domain.candidacy.util.GenericApplicationUploadBean;
+import org.fenixedu.academic.domain.candidacy.util.GenericApplicationUserBean;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.publico.PublicApplication.PublicCandidaciesApp;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;

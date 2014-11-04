@@ -36,7 +36,7 @@
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 		
 		<fr:edit id="send.reception.email.bean.edit.message" name="sendReceptionEmailBean">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
 				<fr:slot name="emailSubject" required="true" key="label.erasmus.send.reception.edit.subject">
 					<fr:property name="size" value="120" />
 				</fr:slot>

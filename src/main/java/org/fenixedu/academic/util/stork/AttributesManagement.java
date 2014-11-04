@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.stork;
+package org.fenixedu.academic.util.stork;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,13 +24,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributesList;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.Gender;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributeType;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributesList;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.Gender;
 import org.joda.time.YearMonthDay;
 
 public class AttributesManagement {

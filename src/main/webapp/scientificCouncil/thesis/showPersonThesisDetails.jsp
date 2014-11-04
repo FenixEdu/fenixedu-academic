@@ -18,19 +18,19 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.Thesis"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%>
+<%@page import="org.fenixedu.academic.domain.thesis.Thesis"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.Enrolment"%>
 <%@page import="java.util.Set"%>
-<%@page import="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"%>
+<%@page import="org.fenixedu.academic.domain.finalDegreeWork.GroupProposal"%>
 <%@page import="java.util.TreeSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent"%>
+<%@page import="org.fenixedu.academic.domain.finalDegreeWork.GroupStudent"%>
 <%@page import="java.util.SortedSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
-<%@page import="net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup"%>
+<%@page import="org.fenixedu.academic.domain.finalDegreeWork.Proposal"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
+<%@page import="org.fenixedu.academic.domain.finalDegreeWork.FinalDegreeWorkGroup"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -113,7 +113,7 @@
 </table>
 
 <logic:present name="person" property="student">
-	<bean:define id="student" name="person" property="student" type="net.sourceforge.fenixedu.domain.student.Student"/>
+	<bean:define id="student" name="person" property="student" type="org.fenixedu.academic.domain.student.Student"/>
 	<h3 class="separator2">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.processes"/>
 	</h3>
@@ -211,7 +211,7 @@
 	<h3 class="separator2">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.proposal.candidacies"/>
 	</h3>
-	<logic:iterate id="registration" name="student" property="registrations" type="net.sourceforge.fenixedu.domain.student.Registration">
+	<logic:iterate id="registration" name="student" property="registrations" type="org.fenixedu.academic.domain.student.Registration">
 		<%
 			final SortedSet<GroupStudent> groupStudents = new TreeSet<GroupStudent>(GroupStudent.COMPARATOR_BY_YEAR_REVERSE);
 			groupStudents.addAll(registration.getAssociatedGroupStudentsSet());

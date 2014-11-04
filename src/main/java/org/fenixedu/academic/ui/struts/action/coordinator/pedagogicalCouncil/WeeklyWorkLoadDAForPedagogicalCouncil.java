@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.pedagogicalCouncil;
+package org.fenixedu.academic.ui.struts.action.coordinator.pedagogicalCouncil;
 
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.WeeklyWorkLoadDA;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
-
+import org.fenixedu.academic.ui.struts.action.coordinator.WeeklyWorkLoadDA;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

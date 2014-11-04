@@ -36,7 +36,7 @@
 </html:link>
 <br/>
 <fr:view name="list" >
-	<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.FctScholarshipPhdGratuityContribuitionPR">
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.FctScholarshipPhdGratuityContribuitionPR">
 		<fr:slot name="startDate"></fr:slot>
 		<fr:slot name="endDate"></fr:slot>
 	</fr:schema>

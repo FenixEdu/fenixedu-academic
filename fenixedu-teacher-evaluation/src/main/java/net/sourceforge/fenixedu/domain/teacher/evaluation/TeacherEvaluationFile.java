@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher.evaluation;
+package org.fenixedu.academic.domain.teacher.evaluation;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.Person;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;

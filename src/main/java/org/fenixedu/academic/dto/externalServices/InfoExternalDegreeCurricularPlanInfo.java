@@ -22,12 +22,12 @@
  * Author: Goncalo Luiz (goncalo@ist.utl.pt)
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.externalServices;
+package org.fenixedu.academic.dto.externalServices;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

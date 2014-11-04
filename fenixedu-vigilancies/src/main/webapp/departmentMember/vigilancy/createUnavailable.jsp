@@ -38,7 +38,7 @@
 
 <fr:edit 
 id="createUnavailablePeriod"
-type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodBean" layout="tabular"
+type="org.fenixedu.academic.ui.struts.action.vigilancy.UnavailablePeriodBean" layout="tabular"
            name="bean"
            schema="unavailable.create" 
            action="vigilancy/unavailablePeriodManagement.do?method=createUnavailablePeriod"

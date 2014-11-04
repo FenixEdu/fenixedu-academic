@@ -59,7 +59,7 @@
 		<fieldset style="display: block;">
 			<h3>Identificação <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></h3>
 			<p>
-				<bean:message key="label.alumni.registration.process" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />				
+				<bean:message key="label.alumni.registration.process" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />				
 			</p>
 		
 			<fr:edit id="alumniBean" name="alumniBean" visible="false" />
@@ -92,7 +92,7 @@
 			<label for="email">
 				<bean:message key="label.email" bundle="ALUMNI_RESOURCES" />:
 			</label>
-			<fr:edit id="email-validated" name="alumniBean" slot="email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator">
+			<fr:edit id="email-validated" name="alumniBean" slot="email" validator="org.fenixedu.academic.ui.renderers.validators.RequiredEmailValidator">
 				<fr:destination name="invalid" path="/alumni.do?method=initFenixPublicAccess&showForm=true"/>
 				<fr:layout>
 					<fr:property name="size" value="40"/>
@@ -131,7 +131,7 @@
 			</label>
 
 			<div id="policyPrivacy" class="switchInline mtop1">
-				<bean:message key="label.privacy.policy.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />
+				<bean:message key="label.privacy.policy.text" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />
 			</div>
 						
 			<logic:present name="privacyPolicyPublicAccessMessage">
@@ -161,7 +161,7 @@
 			</li>
 			<li>
 				<h4>Como alterar a IST-ID?</h4>
-				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
+				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
 			</li>
 			<li>
 				<h4>Tive mais do que um número de aluno. Qual o número que deverei facultar?</h4>

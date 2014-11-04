@@ -20,33 +20,13 @@
  * Created on Dec 10, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship;
+package org.fenixedu.academic.ui.struts.action.teacher.professorship;
 
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
-import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionCoursesByExecutionDegreeService;
-import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.professorship.ReadExecutionCoursesByTeacherResponsibility;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -60,6 +40,25 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionPeriod;
+import org.fenixedu.academic.dto.InfoPerson;
+import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionPeriods;
+import org.fenixedu.academic.service.services.degree.execution.ReadExecutionCoursesByExecutionDegreeService;
+import org.fenixedu.academic.service.services.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
+import org.fenixedu.academic.service.services.department.professorship.ReadExecutionCoursesByTeacherResponsibility;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation;
+import org.fenixedu.academic.ui.struts.action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler;
+import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.struts.annotations.ExceptionHandling;
 import org.fenixedu.bennu.struts.annotations.Exceptions;
 import org.fenixedu.bennu.struts.annotations.Forward;

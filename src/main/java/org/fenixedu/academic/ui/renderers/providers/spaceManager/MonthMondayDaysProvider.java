@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager;
+package org.fenixedu.academic.ui.renderers.providers.spaceManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.spaceManager.ViewEventSpaceOccupationsBean;
-import net.sourceforge.fenixedu.domain.Lesson;
-
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.dto.spaceManager.ViewEventSpaceOccupationsBean;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;

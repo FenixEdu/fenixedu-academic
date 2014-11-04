@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.phd;
+package org.fenixedu.academic.service.services.phd;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

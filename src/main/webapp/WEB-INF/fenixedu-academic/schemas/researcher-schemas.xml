@@ -18,19 +18,19 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="showNickName" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="showNickName" type="org.fenixedu.academic.domain.Person">
     <slot name="nickname" />
 </schema>
 
-<schema name="unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+<schema name="unit.name" type="org.fenixedu.academic.domain.organizationalStructure.Unit">
     <slot name="name" />
 </schema>
 
-<schema name="showName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="showName" bundle="RESEARCHER_RESOURCES" type="org.fenixedu.academic.domain.Person">
     <slot name="nickname" key="researcher.viewCurriculum.name" />
 </schema>
 
-<schema name="view.persistent.group" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="RESEARCHER_RESOURCES">
+<schema name="view.persistent.group" type="org.fenixedu.academic.domain.accessControl.PersistentGroupMembers" bundle="RESEARCHER_RESOURCES">
     <slot name="name" key="label.groupName" />
     <slot name="persons" key="label.members">
         <property name="eachLayout" value="values" />

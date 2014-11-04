@@ -24,8 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.phd.YearMonth"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.dto.phd.YearMonth"%>
 
 <style>
 .unreadSubject { font-weight: bold; background: #fafaea !important; }
@@ -61,10 +61,10 @@
 </logic:present>
 <fr:form>
 	<fr:edit id="yearMonthBean" name="yearMonthBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.phd.YearMonth" bundle="PHD_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.dto.phd.YearMonth" bundle="PHD_RESOURCES">
 			<fr:slot name="yearString" key="label.year" bundle="PHD_RESOURCES" layout="menu-select-postback">
 				<fr:property name="nullOptionHidden" value="true" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider$CivilYearsProviderDescendingOrder" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CivilYearsProvider$CivilYearsProviderDescendingOrder" />
 			</fr:slot>
 			<fr:slot name="month" key="label.month" layout="menu-postback">
 				<fr:property name="defaultText" value="<%="-- " + BundleUtil.getMessageFromModuleOrApplication("Phd", "label.all") + " --" %>" />
@@ -87,7 +87,7 @@
 
 <logic:notEmpty name="alertMessages">
 	<fr:view name="alertMessages">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+		<fr:schema type="org.fenixedu.academic.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 			<fr:slot name="whenCreated" layout="no-time" />
 			<fr:slot name="process" layout="link">
 				<fr:property name="contextRelative" value="true"/>

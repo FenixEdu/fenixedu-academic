@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration;
+package org.fenixedu.academic.domain.phd.migration;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantSelectType;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantType;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.phd.InternalPhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdParticipantBean;
+import org.fenixedu.academic.domain.phd.PhdParticipantBean.PhdParticipantSelectType;
+import org.fenixedu.academic.domain.phd.PhdParticipantBean.PhdParticipantType;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.IncompleteFieldsException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 

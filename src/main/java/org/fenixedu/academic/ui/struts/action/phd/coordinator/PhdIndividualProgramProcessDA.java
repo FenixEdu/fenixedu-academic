@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator;
+package org.fenixedu.academic.ui.struts.action.phd.coordinator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,37 +28,36 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
-import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail;
-import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AcceptEnrolments;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RejectEnrolments;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdSeminarPredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdThesisPredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.phd.ManageEnrolmentsBean;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.alert.AlertService;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
+import org.fenixedu.academic.domain.phd.email.PhdProgramEmail;
+import org.fenixedu.academic.domain.phd.email.PhdProgramEmailBean;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.AcceptEnrolments;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.RejectEnrolments;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.ui.struts.action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
+import org.fenixedu.academic.ui.struts.action.phd.CommonPhdIndividualProgramProcessDA;
+import org.fenixedu.academic.ui.struts.action.phd.PhdCandidacyPredicateContainer;
+import org.fenixedu.academic.ui.struts.action.phd.PhdInactivePredicateContainer;
+import org.fenixedu.academic.ui.struts.action.phd.PhdSeminarPredicateContainer;
+import org.fenixedu.academic.ui.struts.action.phd.PhdThesisPredicateContainer;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%>
 
 
 <html:xhtml/>
@@ -44,7 +44,7 @@
      </li>
     <!--  Following code is commented due to RT ticket #336485 -->
     <%--<logic:notEmpty name="thesis">
-  	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
+  	<bean:define id="thesis" name="thesis" type="org.fenixedu.academic.domain.thesis.Thesis"/>
 	        <% if(ThesisPresentationState.areDocumentsSubmitted(thesis)) {
 		    %>
 		        <li>

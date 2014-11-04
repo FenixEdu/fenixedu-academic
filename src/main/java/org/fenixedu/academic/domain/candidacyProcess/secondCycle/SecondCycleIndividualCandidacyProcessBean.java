@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
+package org.fenixedu.academic.domain.candidacyProcess.secondCycle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,14 +24,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import org.fenixedu.academic.domain.candidacyProcess.FormationBean;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import org.fenixedu.academic.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.joda.time.LocalDate;
 
 public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandidacyProcessWithPrecedentDegreeInformationBean {

@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.credits.util;
+package org.fenixedu.academic.domain.credits.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.teacher.DegreeProjectTutorialService;
 
 import org.apache.commons.lang.StringUtils;
 

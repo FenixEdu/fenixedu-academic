@@ -28,7 +28,7 @@
 
 <logic:present name="infoSiteStudentsTestMarks">
 	
-	<bean:define id="distributedTest" name="infoSiteStudentsTestMarks" property="infoDistributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
+	<bean:define id="distributedTest" name="infoSiteStudentsTestMarks" property="infoDistributedTest" type="org.fenixedu.academic.dto.onlineTests.InfoDistributedTest"/>
 	<bean:define id="infoStudentTestQuestionList" name="infoSiteStudentsTestMarks" property="infoStudentTestQuestionList"/>
 	
 	<center>
@@ -49,7 +49,7 @@
 		<bean:size id="numberOfStudentTestQuestion" name="infoStudentTestQuestionList"/>
 		<bean:define id="numberOfStudents" value="<%=numberOfStudentTestQuestion.toString()%>"/>
 					
-		<logic:iterate id="studentTestQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionMark" indexId="index">
+		<logic:iterate id="studentTestQuestion" name="infoStudentTestQuestionList" type="org.fenixedu.academic.dto.onlineTests.InfoStudentTestQuestionMark" indexId="index">
 			<bean:define id="maximumMark" name="studentTestQuestion" property="maximumMark"/>
 			<logic:equal name="index" value="0">
 				<h2><bean:write name="distributedTest" property="title"/></h2>

@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus;
+package org.fenixedu.academic.ui.struts.action.candidacy.erasmus;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;

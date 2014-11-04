@@ -19,7 +19,7 @@
 /**
  * Nov 9, 2005
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import org.joda.time.DateTime;
 

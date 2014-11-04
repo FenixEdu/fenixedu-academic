@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico;
+package org.fenixedu.academic.ui.struts.action.publico;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
-import net.sourceforge.fenixedu.domain.inquiries.GroupResultType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean;
+import org.fenixedu.academic.domain.inquiries.GroupResultType;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryGroupQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 public abstract class ViewInquiryPublicResults extends FenixDispatchAction {
 

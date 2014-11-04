@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.period;
+package org.fenixedu.academic.domain.period;
 
-import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCandidacyProcess;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.candidacyProcess.standalone.StandaloneCandidacyProcess;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 
 public class StandaloneCandidacyPeriod extends StandaloneCandidacyPeriod_Base {

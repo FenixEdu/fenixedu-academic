@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.studentLowPerformance;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.student.Registration;
 
 abstract class PrescriptionRuleGenericMoment extends AbstractPrescriptionRule {
 

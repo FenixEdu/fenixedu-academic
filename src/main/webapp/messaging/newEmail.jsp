@@ -20,9 +20,9 @@
 --%>
 <%@ page isELIgnored="true"%>
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.util.email.Sender"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="org.fenixedu.academic.domain.util.email.Sender"%>
+<%@page import="org.fenixedu.academic.domain.person.RoleType"%>
+<%@page import="org.fenixedu.academic.predicate.AccessControl"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -43,23 +43,23 @@
 	<html:hidden property="method" value="sendEmail"/>
 
 	<fr:edit id="emailBean" name="emailBean">
-		<fr:schema type="net.sourceforge.fenixedu.domain.util.email.EmailBean" bundle="MESSAGING_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.util.email.EmailBean" bundle="MESSAGING_RESOURCES">
 			<fr:slot name="sender" bundle="MESSAGING_RESOURCES" key="label.fromName" layout="menu-select-postback"
 					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		        <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EmailSenderProvider" />
+		        <fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EmailSenderProvider" />
 				<fr:property name="format" value="${fromName} (${fromAddress})" />
 				<fr:property name="destination" value="selectSender"/>
 			</fr:slot>
     		<fr:slot name="replyTos" layout="option-select" key="label.replyTos">
-        		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EmailReplyTosProvider" />
-        		<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.util.email.ReplyTo.selectItem"/>
+        		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EmailReplyTosProvider" />
+        		<fr:property name="eachSchema" value="org.fenixedu.academic.domain.util.email.ReplyTo.selectItem"/>
         		<fr:property name="eachLayout" value="values"/>
         		<fr:property name="classes" value="nobullet noindent"/>
         		<fr:property name="sortBy" value="replyToAddress"/>
     		</fr:slot>
     		<fr:slot name="recipients" layout="option-select" key="label.receiversGroup">
-        		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EmailRecipientsProvider" />
-        		<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.util.email.Recipient.selectItem"/>
+        		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EmailRecipientsProvider" />
+        		<fr:property name="eachSchema" value="org.fenixedu.academic.domain.util.email.Recipient.selectItem"/>
         		<fr:property name="eachLayout" value="values"/>
         		<fr:property name="classes" value="nobullet noindent"/>
         		<fr:property name="sortBy" value="toName"/>

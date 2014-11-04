@@ -31,9 +31,9 @@
 <div class="simpleblock3 mtop2">
 	<fr:form action="/showPeriods.do?method=firstPage">
 		<fr:edit id="executionSemesterContextBean" name="contextBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionSemester" layout="menu-select-postback" key="label.executionPeriod">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider"/>
 					<fr:property name="format" value="${semester} - ${executionYear.year}" />
 				</fr:slot>
 			</fr:schema>
@@ -58,9 +58,9 @@
 <div class="simpleblock3 mtop2">
 	<fr:form action="/showPeriods.do?method=firstPage">
 		<fr:edit id="executionDegreeContextBean" name="contextBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionDegreeForExecutionPeriodProvider"/>
 					<fr:property name="format" value="${degree.presentationName}" />
 				</fr:slot>
 			</fr:schema>
@@ -131,8 +131,8 @@
 <!-- 
 enrolmentPeriod
 beginExecutionPeriodContexts
-        private net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval academicInterval;
-        private net.sourceforge.fenixedu.util.PeriodState state;
+        private org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval academicInterval;
+        private org.fenixedu.academic.util.PeriodState state;
         private java.lang.String name;
         private org.joda.time.YearMonthDay beginDateYearMonthDay;
         private org.joda.time.YearMonthDay endDateYearMonthDay;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package org.fenixedu.academic.ui.struts.action.teacher;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,27 +27,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.ProjectSubmission;
-import net.sourceforge.fenixedu.domain.ProjectSubmissionLog;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Archive;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.DiskZipArchive;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.domain.ProjectSubmission;
+import org.fenixedu.academic.domain.ProjectSubmissionLog;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.dto.VariantBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.teacher.NotifyStudentGroup;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Archive;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.DiskZipArchive;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;

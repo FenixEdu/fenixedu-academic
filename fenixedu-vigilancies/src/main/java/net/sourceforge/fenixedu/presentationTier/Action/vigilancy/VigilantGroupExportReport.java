@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
+package org.fenixedu.academic.ui.struts.action.vigilancy;
 
 import java.io.OutputStream;
 import java.util.List;
@@ -24,10 +24,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
+import org.fenixedu.academic.dto.WrittenEvaluationVigilancyView;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.domain.vigilancy.VigilantWrapper;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

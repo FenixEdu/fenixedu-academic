@@ -19,6 +19,6 @@
 
 -->
 
-<schema name="unitSite.tree.unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+<schema name="unitSite.tree.unit.name" type="org.fenixedu.academic.domain.organizationalStructure.Unit">
     <slot name="nameWithAcronym"/>
 </schema>

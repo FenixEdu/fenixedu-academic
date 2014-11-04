@@ -24,10 +24,10 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SubmitComission"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadComissionDocument"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadReportDocument"%>
+<%@page import="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.SubmitComission"%>
+<%@page import="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate"%>
+<%@page import="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadComissionDocument"%>
+<%@page import="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadReportDocument"%>
 
 <br/>
 

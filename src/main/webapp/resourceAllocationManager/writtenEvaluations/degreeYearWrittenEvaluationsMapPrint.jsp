@@ -66,7 +66,7 @@
 				</tr>
 				<logic:iterate id="executionCourse" name="executionCoursesByCurricularYearEntry" property="value">
 					<logic:iterate id="evaluation" name="executionCourse" property="associatedEvaluations">
-						<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
+						<logic:equal name="evaluation" property="class.name" value="org.fenixedu.academic.domain.WrittenTest">
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>
@@ -96,7 +96,7 @@
 								</td>
 							</tr>
 						</logic:equal>
-						<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
+						<logic:equal name="evaluation" property="class.name" value="org.fenixedu.academic.domain.Exam">
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>

@@ -19,14 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-
+import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
+import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

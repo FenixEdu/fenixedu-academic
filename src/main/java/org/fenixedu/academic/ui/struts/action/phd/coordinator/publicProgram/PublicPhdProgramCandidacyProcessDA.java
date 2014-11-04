@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram;
+package org.fenixedu.academic.ui.struts.action.phd.coordinator.publicProgram;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,28 +25,27 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-import net.sourceforge.fenixedu.domain.phd.ThesisSubject;
-import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.PublicCandidacyHashCode;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
+import org.fenixedu.academic.domain.phd.ThesisSubject;
+import org.fenixedu.academic.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
+import org.fenixedu.academic.ui.struts.action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
+import org.fenixedu.academic.ui.struts.action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

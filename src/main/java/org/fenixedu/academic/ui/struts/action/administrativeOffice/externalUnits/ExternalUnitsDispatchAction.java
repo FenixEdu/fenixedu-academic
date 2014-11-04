@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.externalUnits;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.externalUnits;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,38 +24,37 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalCurricularCourse;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.DeleteExternalCurricularCourse;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.DeleteExternalUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalCurricularCourse;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalEnrolment;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalUnit;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalCurricularCourseBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalCurricularCourseBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalEnrolmentBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalUnitBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.ExternalCurricularCourseResultBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.ExternalUnitResultBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.ExternalUnitsSearchBean;
-import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminInstitutionsApp;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExternalCurricularCourse;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalCurricularCourseBean;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalUnitBean;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.EditExternalCurricularCourseBean;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.EditExternalEnrolmentBean;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.EditExternalUnitBean;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.ExternalCurricularCourseResultBean;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.ExternalUnitResultBean;
+import org.fenixedu.academic.dto.administrativeOffice.externalUnits.ExternalUnitsSearchBean;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.administrativeOffice.externalUnits.CreateExternalCurricularCourse;
+import org.fenixedu.academic.service.services.administrativeOffice.externalUnits.CreateExternalUnit;
+import org.fenixedu.academic.service.services.administrativeOffice.externalUnits.DeleteExternalCurricularCourse;
+import org.fenixedu.academic.service.services.administrativeOffice.externalUnits.DeleteExternalUnit;
+import org.fenixedu.academic.service.services.administrativeOffice.externalUnits.EditExternalCurricularCourse;
+import org.fenixedu.academic.service.services.administrativeOffice.externalUnits.EditExternalEnrolment;
+import org.fenixedu.academic.service.services.administrativeOffice.externalUnits.EditExternalUnit;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminInstitutionsApp;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

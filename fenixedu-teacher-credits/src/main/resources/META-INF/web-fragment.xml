@@ -14,7 +14,7 @@
 	<!-- Filter -->
 	<filter>
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.AnnualTeachingCreditsDocumentFilter</filter-class>
+		<filter-class>org.fenixedu.academic.servlet.filters.AnnualTeachingCreditsDocumentFilter</filter-class>
 	</filter>
 	<!-- Filter Mapping -->
 	<filter-mapping>

@@ -16,21 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews;
+package org.fenixedu.academic.ui.struts.action.coordinator.xviews;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
-import net.sourceforge.fenixedu.domain.interfaces.HasDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.BranchType;
+import org.fenixedu.academic.domain.interfaces.HasDegreeCurricularPlan;
+import org.fenixedu.academic.domain.interfaces.HasExecutionYear;
 
 public class YearViewBean implements Serializable, HasExecutionYear, HasDegreeCurricularPlan {
 

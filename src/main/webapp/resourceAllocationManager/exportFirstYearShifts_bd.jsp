@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%>
 
 <html:xhtml/>
 
@@ -35,11 +35,11 @@
 
 <fr:form action="/exportFirstYearShifts.do?method=export">
 	<fr:edit name="first_year_shifts_export">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.FirstYearShiftsBean" bundle="APPLICATION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.dto.resourceAllocationManager.FirstYearShiftsBean" bundle="APPLICATION_RESOURCES">
 		    <fr:slot name="executionYear" layout="menu-select" key="property.executionPeriod"
 		        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		        <fr:property name="providerClass"
-		            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		            value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 		        <fr:property name="format" value="${name}" />
 		        <fr:property name="nullOptionHidden" value="true" />
 		    </fr:slot>

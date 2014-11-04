@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
+package org.fenixedu.academic.domain.candidacyProcess.mobility;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
-
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class MobilityStudentData extends MobilityStudentData_Base {

@@ -23,7 +23,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentCalendar" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.student.ViewStudentCalendar" />
 
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
@@ -62,9 +62,9 @@
 				<h:selectOneMenu id="evaluationTypeClassname" value="#{studentCalendar.evaluationTypeClassname}"
 						onchange="this.form.submit();">
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.all']}" itemValue=""/>
-					<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.exam']}" itemValue="net.sourceforge.fenixedu.domain.Exam"/>
-					<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.test']}" itemValue="net.sourceforge.fenixedu.domain.WrittenTest"/>
-					<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
+					<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.exam']}" itemValue="org.fenixedu.academic.domain.Exam"/>
+					<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.test']}" itemValue="org.fenixedu.academic.domain.WrittenTest"/>
+					<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.project']}" itemValue="org.fenixedu.academic.domain.Project"/>
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<h:outputText value="<br/>" escape="false"/>

@@ -61,10 +61,10 @@
 		</p>
 		<fr:form action="/enrollment/evaluations/specialSeason.do?method=showDegreeModules">
 			<fr:edit id="bean" name="bean">
-				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.SpecialSeasonStudentEnrollmentBean" bundle="STUDENT_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.ui.struts.action.student.enrollment.SpecialSeasonStudentEnrollmentBean" bundle="STUDENT_RESOURCES">
 					<fr:slot name="executionSemester" layout="menu-select" key="label.semester" required="true">
 						<fr:property name="format" value="${qualifiedName}"/>
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersForSpecialSeasonProvider"/>
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersForSpecialSeasonProvider"/>
 						<fr:property name="saveOptions" value="true"/>
 					</fr:slot>
 				</fr:schema>

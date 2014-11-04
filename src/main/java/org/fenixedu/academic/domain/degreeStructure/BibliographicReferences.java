@@ -19,7 +19,7 @@
 /*
  * Created on Jan 24, 2006
  */
-package net.sourceforge.fenixedu.domain.degreeStructure;
+package org.fenixedu.academic.domain.degreeStructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;

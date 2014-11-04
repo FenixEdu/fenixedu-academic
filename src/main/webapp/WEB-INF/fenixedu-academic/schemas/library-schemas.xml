@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="library.thesis.search" type="net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean"
+<schema name="library.thesis.search" type="org.fenixedu.academic.dto.thesis.ThesisSearchBean"
 	bundle="DOMAIN_RESOURCES">
 	<slot name="text" key="label.searchField" layout="input-with-comment" bundle="COMMON_RESOURCES">
 		<property name="subProperty(size)" value="40"/>
@@ -32,7 +32,7 @@
 	</slot>
 	<slot name="year" layout="menu-select" key="label.ExecutionYear.year">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisExecutionYearsProvider" />
+			value="org.fenixedu.academic.ui.renderers.providers.ThesisExecutionYearsProvider" />
 		<property name="format" value="${year}" />
 		<property name="key" value="true" />
 		<property name="bundle" value="ENUMERATION_RESOURCES" />
@@ -41,7 +41,7 @@
 	</slot>
 </schema>
 
-<schema name="library.thesis.list" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
+<schema name="library.thesis.list" type="org.fenixedu.academic.domain.thesis.Thesis"
 	bundle="DOMAIN_RESOURCES">
 	<slot name="enrolment.executionYear.name" key="label.ExecutionYear.year" />
 	<slot name="discussed" key="label.thesis.Thesis.approvalDate" layout="no-time" />
@@ -58,11 +58,11 @@
 	</slot>
 </schema>
 
-<schema name="library.thesis.operator" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="library.thesis.operator" type="org.fenixedu.academic.domain.Person">
 	<slot name="user.username" />
 </schema>
 
-<schema name="library.thesis.author" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
+<schema name="library.thesis.author" type="org.fenixedu.academic.domain.thesis.Thesis"
 	bundle="DOMAIN_RESOURCES">
 	<slot name="enrolment.studentCurricularPlan.registration.student.person.name" key="label.Party.name"
 		layout="person-name" />
@@ -71,12 +71,12 @@
 	<slot name="departmentName" key="label.Department" layout="null-as-label" />
 </schema>
 
-<schema name="library.thesis.state.null" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
+<schema name="library.thesis.state.null" type="org.fenixedu.academic.domain.thesis.Thesis"
 	bundle="DOMAIN_RESOURCES">
 	<slot name="libraryState" key="label.thesis.Thesis.libraryState" />
 </schema>
 
-<schema name="library.thesis.state" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryOperation"
+<schema name="library.thesis.state" type="org.fenixedu.academic.domain.thesis.ThesisLibraryOperation"
 	bundle="DOMAIN_RESOURCES">
 	<slot name="state" key="label.thesis.ThesisLibraryOperation.state" />
 	<slot name="libraryReference" key="label.thesis.ThesisLibraryOperation.libraryReference" />
@@ -85,7 +85,7 @@
 	<slot name="operation" key="label.thesis.ThesisLibraryOperation.operation" />
 </schema>
 
-<schema name="library.thesis.validate" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryArchiveOperation"
+<schema name="library.thesis.validate" type="org.fenixedu.academic.domain.thesis.ThesisLibraryArchiveOperation"
 	constructor="thesisId, performerId, libraryReference" bundle="DOMAIN_RESOURCES">
 	<slot name="thesisId" hidden="true" />
 	<slot name="performerId" hidden="true" />
@@ -100,7 +100,7 @@
 	</slot>
 </schema>
 
-<schema name="library.thesis.pending" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
+<schema name="library.thesis.pending" type="org.fenixedu.academic.domain.thesis.ThesisLibraryPendingOperation"
 	constructor="thesisId, performerId, pendingComment" bundle="DOMAIN_RESOURCES">
 	<slot name="thesisId" hidden="true" />
 	<slot name="performerId" hidden="true" />
@@ -110,13 +110,13 @@
 	</slot>
 </schema>
 
-<schema name="library.thesis.cancel" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryCancelOperation"
+<schema name="library.thesis.cancel" type="org.fenixedu.academic.domain.thesis.ThesisLibraryCancelOperation"
 	constructor="thesisId, performerId">
 	<slot name="thesisId" hidden="true" />
 	<slot name="performerId" hidden="true" />
 </schema>
 
-<schema name="library.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
+<schema name="library.thesis.details" type="org.fenixedu.academic.domain.thesis.Thesis"
 	bundle="DOMAIN_RESOURCES">
 	<slot name="finalTitle" key="label.thesis.Thesis.finalTitle" />
 	<slot name="finalSubtitle" key="label.thesis.Thesis.finalSubtitle" />
@@ -149,6 +149,6 @@
 	<slot name="visibility" key="label.thesis.Thesis.visibility" />
 </schema>
 
-<schema name="thesis.participant.name-with-alias" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+<schema name="thesis.participant.name-with-alias" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant">
 	<slot name="person" layout="name-with-alias" />
 </schema>

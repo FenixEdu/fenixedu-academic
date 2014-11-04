@@ -20,7 +20,7 @@
  * Created on 13/Nov/2004
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student;
+package org.fenixedu.academic.ui.struts.action.student;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,21 +29,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrollGroupShift;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadGroupingShifts;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -51,6 +36,20 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.InfoSiteShifts;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidChangeServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidSituationServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidStudentNumberServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.student.EnrollGroupShift;
+import org.fenixedu.academic.service.services.student.ReadGroupingShifts;
+import org.fenixedu.academic.service.services.student.VerifyStudentGroupAtributes;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

@@ -20,7 +20,7 @@
  * Created on 13/Mar/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
+package org.fenixedu.academic.ui.struts.action.exceptions;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

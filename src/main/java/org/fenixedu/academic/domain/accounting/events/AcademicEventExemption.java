@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events;
+package org.fenixedu.academic.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.Exemption;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventExemptionJustification;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.AcademicEvent;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicEventExemptionJustification;
+import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicEventJustificationType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

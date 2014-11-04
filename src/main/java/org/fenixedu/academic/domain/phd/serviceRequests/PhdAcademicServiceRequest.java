@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.serviceRequests;
+package org.fenixedu.academic.domain.phd.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.domain.student.Student;
-
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.spaces.domain.Space;
 
 abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceRequest_Base {

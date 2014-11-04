@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.person;
+package org.fenixedu.academic.domain.person;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class GenderHelper {

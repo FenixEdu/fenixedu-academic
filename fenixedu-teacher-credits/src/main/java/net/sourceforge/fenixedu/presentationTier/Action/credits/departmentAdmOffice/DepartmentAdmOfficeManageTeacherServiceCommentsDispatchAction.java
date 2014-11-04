@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
+package org.fenixedu.academic.ui.struts.action.credits.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherServiceCommentsDispatchAction;
+import org.fenixedu.academic.ui.struts.action.credits.ManageTeacherServiceCommentsDispatchAction;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

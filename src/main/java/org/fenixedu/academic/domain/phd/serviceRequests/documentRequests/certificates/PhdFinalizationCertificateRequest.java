@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates;
+package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.certificates;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhdFinalizationCertificateRequestEvent;
-import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdFinalizationCertificateRequestEvent;
+import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
+import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
+import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
+import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

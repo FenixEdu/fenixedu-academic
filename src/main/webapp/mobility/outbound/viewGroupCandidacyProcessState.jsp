@@ -18,8 +18,8 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.CandidacyGroupContestState.CandidacyGroupContestStateStage"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.CandidacyGroupContestState"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.CandidacyGroupContestState.CandidacyGroupContestStateStage"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.CandidacyGroupContestState"%>
 
 <style>
 .tableStyle {

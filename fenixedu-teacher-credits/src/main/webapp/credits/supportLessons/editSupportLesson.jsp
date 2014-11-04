@@ -39,7 +39,7 @@
 <td><img src="<%= request.getContextPath() + url %>"/></td>
 <td >
 	<fr:view name="professorship">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Professorship">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.Professorship">
 			<fr:slot name="teacher.person.presentationName" key="label.name"/>
 			<fr:slot name="executionCourse.nome" key="label.course"/>
 			<fr:slot name="executionCourse.executionPeriod" key="label.execution-period" layout="format">
@@ -91,7 +91,7 @@
 				<bean:message key="label.support-lesson.weekday"/>:
 			</td>
 			<td>
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.util.WeekDay" bundle="ENUMERATION_RESOURCES" excludedFields="SUNDAY"/>
+				<e:labelValues id="values" enumeration="org.fenixedu.academic.util.WeekDay" bundle="ENUMERATION_RESOURCES" excludedFields="SUNDAY"/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.weekDay" property="weekDay">
 						<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>

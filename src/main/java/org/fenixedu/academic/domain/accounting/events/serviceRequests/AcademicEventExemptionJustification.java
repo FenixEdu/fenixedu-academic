@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
+package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
+import org.fenixedu.academic.domain.accounting.events.AcademicEventExemption;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;

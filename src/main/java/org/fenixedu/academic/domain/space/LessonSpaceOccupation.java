@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.space;
+package org.fenixedu.academic.domain.space;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.predicates.SpacePredicates;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.FrequencyType;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.OccupationPeriod;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.SpacePredicates;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;

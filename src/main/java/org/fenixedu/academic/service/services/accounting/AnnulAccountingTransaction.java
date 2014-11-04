@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
+package org.fenixedu.academic.service.services.accounting;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AnnulAccountingTransactionBean;
-
+import org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;

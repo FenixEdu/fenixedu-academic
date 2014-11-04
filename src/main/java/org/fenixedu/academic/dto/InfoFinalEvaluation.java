@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.FinalEvaluation;
-import net.sourceforge.fenixedu.util.EvaluationType;
+import org.fenixedu.academic.domain.FinalEvaluation;
+import org.fenixedu.academic.util.EvaluationType;
 
 /**
  * @author Tânia Pousão

@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
+package org.fenixedu.academic.service.filter.coordinator;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.service.filter.Filtro;
 
 /**
  * Base filter for all resources that can be accessed by an degree coordinator.

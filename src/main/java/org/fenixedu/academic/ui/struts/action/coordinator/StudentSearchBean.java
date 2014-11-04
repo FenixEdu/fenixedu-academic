@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
+package org.fenixedu.academic.ui.struts.action.coordinator;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 
 public class StudentSearchBean implements FactoryExecutor, Serializable {
 

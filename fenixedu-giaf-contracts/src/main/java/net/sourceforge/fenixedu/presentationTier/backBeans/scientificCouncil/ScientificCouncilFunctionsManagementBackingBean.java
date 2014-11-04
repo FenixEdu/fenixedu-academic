@@ -20,14 +20,14 @@
  * Created on April 21, 2006
  *	by mrsp
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil;
+package org.fenixedu.academic.ui.faces.bean.scientificCouncil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.ui.faces.bean.manager.personManagement.ManagerFunctionsManagementBackingBean;
 
 import org.joda.time.YearMonthDay;
 

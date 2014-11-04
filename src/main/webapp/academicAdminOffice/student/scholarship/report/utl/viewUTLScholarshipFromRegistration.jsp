@@ -36,7 +36,7 @@
 
 	<h3 class="mbottom05"><bean:message key="title.utl.scholarship.report.result" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="utlScholarshipBean"  >
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration">
 			<fr:slot name="institutionCode" layout="null-as-label" />
 			<fr:slot name="institutionName" layout="null-as-label" />
 			<fr:slot name="applicationNumber" layout="null-as-label" />

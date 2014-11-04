@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.accounting.reports;
+package org.fenixedu.academic.ui.struts.action.manager.accounting.reports;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportBean;
-import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob;
-import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobLaunchService;
-import net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.QueueJob;
+import org.fenixedu.academic.domain.accounting.report.GratuityReportBean;
+import org.fenixedu.academic.domain.accounting.report.GratuityReportQueueJob;
+import org.fenixedu.academic.domain.accounting.report.GratuityReportQueueJobLaunchService;
+import org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJob;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerPaymentsApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

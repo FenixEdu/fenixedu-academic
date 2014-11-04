@@ -29,17 +29,17 @@
 <h2><bean:message key="title.tutorship.view" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 <fr:edit id="tutorsBean" name="tutorsBean" action="/viewTutors.do?method=listTutors">
-	<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ViewTutorsDA$ViewTutorsBean" bundle="PEDAGOGICAL_COUNCIL">
+	<fr:schema type="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.ViewTutorsDA$ViewTutorsBean" bundle="PEDAGOGICAL_COUNCIL">
 		<fr:slot name="executionSemester" layout="menu-select-postback" key="label.tutorship.year">
 			<fr:property name="providerClass"
-				value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ViewTutorsDA$ExecutionSemestersProvider" />
+				value="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.ViewTutorsDA$ExecutionSemestersProvider" />
 			<fr:property name="bundle" value="PEDAGOGICAL_COUNCIL" />
 			<fr:property name="format" value="${executionYear.year}" />
 			<fr:property name="destination" value="semesterPostBack" />
 		</fr:slot>
 		<fr:slot name="executionDegree" layout="menu-select" key="label.degree">
 			<fr:property name="providerClass"
-				value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ViewTutorsDA$ContextDegreesProvider"/>
+				value="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.ViewTutorsDA$ContextDegreesProvider"/>
 			<fr:property name="bundle" value="PEDAGOGICAL_COUNCIL" />
 			<fr:property name="format" value="${presentationName}" />
 			<fr:property name="sortBy" value="presentationName" />
@@ -55,7 +55,7 @@
 
 <logic:notEmpty name="tutorsBean" property="tutors">		
 	<fr:view name="tutorsBean" property="tutors">
-		<fr:schema type="net.sourceforge.fenixedu.domain.TutorshipIntention" bundle="APPLICATION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.TutorshipIntention" bundle="APPLICATION_RESOURCES">
 			<fr:slot name="teacher.person.username" key="label.username" />
 			<fr:slot name="teacher.person.name" key="label.name"/>
 		</fr:schema>

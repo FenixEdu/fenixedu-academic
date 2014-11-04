@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
+package org.fenixedu.academic.domain.phd.individualProcess.activities;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-
+import org.fenixedu.academic.domain.QualificationBean;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.bennu.core.domain.User;
 
 public class AddQualifications extends PhdIndividualProgramProcessActivity {

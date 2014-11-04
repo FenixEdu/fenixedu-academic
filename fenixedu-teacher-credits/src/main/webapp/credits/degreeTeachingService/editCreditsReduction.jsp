@@ -44,7 +44,7 @@
 <td >
 
 <fr:view name="teacherService">
-	<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.TeacherService">
+	<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.teacher.TeacherService">
 		<fr:slot name="teacher.person.presentationName" key="label.name"/>
 		<fr:slot name="executionPeriod" key="label.period" layout="format">
 			<fr:property name="format" value="${name}  ${executionYear.year}" />
@@ -63,7 +63,7 @@
 <logic:present name="reductionService">
 	<br/><br/>
 	<fr:edit id="reductionService" name="reductionService" action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>">
-		<fr:schema type="net.sourceforge.fenixedu.domain.teacher.ReductionService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.teacher.ReductionService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
 			<fr:slot name="requestCreditsReduction" key="label.requestCreditsReduction"  layout="radio" required="true">
 				<fr:property name="classes" value="nobullet"/>
 			</fr:slot>
@@ -77,7 +77,7 @@
 
 <logic:notPresent name="reductionService">
 	<br/><br/>
-	<fr:create action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>" type="net.sourceforge.fenixedu.domain.teacher.ReductionService"
+	<fr:create action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>" type="org.fenixedu.academic.domain.teacher.ReductionService"
 	schema="create.reductionService">
 		<fr:hidden slot="teacherService" name="teacherService"/>
 		<fr:layout name="flow">

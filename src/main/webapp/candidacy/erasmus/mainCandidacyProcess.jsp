@@ -23,9 +23,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.ChooseDegreeBean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.ChooseMobilityProgramBean" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.ChooseDegreeBean" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.ChooseMobilityProgramBean" %>
 
 
 <html:xhtml/>
@@ -288,7 +288,7 @@
 		</script>
 		
 		<fr:view name="childProcesses">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="candidacyDate" key="label.candidacy.date" />
 				<fr:slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 				<fr:slot name="personalDetails.name" key="label.name" />			

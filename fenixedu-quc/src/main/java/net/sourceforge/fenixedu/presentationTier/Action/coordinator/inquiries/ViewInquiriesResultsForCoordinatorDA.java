@@ -19,7 +19,7 @@
 /**
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.inquiries;
+package org.fenixedu.academic.ui.struts.action.coordinator.inquiries;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,25 +32,25 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorInquiryBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.ViewInquiriesResultPageDTO;
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
+import org.fenixedu.academic.dto.inquiries.CoordinatorInquiryBean;
+import org.fenixedu.academic.dto.inquiries.CoordinatorResultsBean;
+import org.fenixedu.academic.dto.inquiries.CurricularCourseResumeResult;
+import org.fenixedu.academic.dto.inquiries.ViewInquiriesResultPageDTO;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.inquiries.CoordinatorInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryCoordinatorAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryResponseState;
+import org.fenixedu.academic.domain.inquiries.ResultClassification;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
+import org.fenixedu.academic.ui.struts.action.publico.ViewTeacherInquiryPublicResults;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

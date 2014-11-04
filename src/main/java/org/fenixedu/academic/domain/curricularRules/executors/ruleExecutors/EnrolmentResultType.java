@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
+package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 
 public enum EnrolmentResultType {
     TEMPORARY(0, EnrollmentCondition.TEMPORARY),

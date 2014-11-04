@@ -33,7 +33,7 @@
 			<tr>
 				<td width="40%">
 					<fr:form>
-						<fr:edit id="manageThesisContext" name="manageThesisContext" schema="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ManageThesisContext">
+						<fr:edit id="manageThesisContext" name="manageThesisContext" schema="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ManageThesisContext">
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
 								<fr:property name="columnClasses" value=",,tdclear"/>

@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules;
+package org.fenixedu.academic.ui.struts.action.teacher.siteArchive.rules;
 
 import java.util.regex.Pattern;
 
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
 
 /**
  * This rule simple transform url based on a matching pattern and a replacement

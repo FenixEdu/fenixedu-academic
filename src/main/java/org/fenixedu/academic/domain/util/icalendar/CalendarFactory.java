@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.util.icalendar;
+package org.fenixedu.academic.domain.util.icalendar;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,6 +24,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Locale;
+
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Date;
@@ -39,7 +41,6 @@ import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Url;
 import net.fortuna.ical4j.model.property.Version;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CalendarFactory {
     public static String PROD_ID_APPLICATION = "Sistema Fenix";

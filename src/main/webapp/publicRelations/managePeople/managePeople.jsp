@@ -40,7 +40,7 @@
 
 <fr:form action="/managePublicRelationsPeople.do?method=addPersonManager">
 	<fr:edit id="addPerson" name="bean"> 
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice.PersonBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.ui.struts.action.publicRelationsOffice.PersonBean">
 			<fr:slot name="username" key="label.identificationNumber">
 			</fr:slot>
 		</fr:schema> 
@@ -54,7 +54,7 @@
 <br>
 <br>
 <fr:view name="persons">
-    <fr:schema name="unitSite.manager" type="net.sourceforge.fenixedu.domain.Person" bundle="SITE_RESOURCES">
+    <fr:schema name="unitSite.manager" type="org.fenixedu.academic.domain.Person" bundle="SITE_RESOURCES">
         <fr:slot name="username" key="label.alias"/>
         <fr:slot name="name" key="label.name"/>
     </fr:schema>

@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.ui.struts.action.publico.ThesisFilterBean;
 
 public class DepartmentDegreesWithDissertationProvider extends DegreesWithDissertationProvider {
 

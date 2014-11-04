@@ -20,10 +20,10 @@
  * Created on 23/Set/2004
  *
  */
-package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
+package org.fenixedu.academic.service.strategy.tests.strategys;
 
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.util.tests.Response;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.util.tests.Response;
 
 /**
  * @author Susana Fernandes

@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.servlets.jsf;
+package org.fenixedu.academic.servlet;
 
 import java.io.IOException;
 

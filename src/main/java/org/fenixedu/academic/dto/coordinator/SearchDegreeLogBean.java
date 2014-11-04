@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.coordinator;
+package org.fenixedu.academic.dto.coordinator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeLog;
-import net.sourceforge.fenixedu.domain.DegreeLog.DegreeLogTypes;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeLog;
+import org.fenixedu.academic.domain.DegreeLog.DegreeLogTypes;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;

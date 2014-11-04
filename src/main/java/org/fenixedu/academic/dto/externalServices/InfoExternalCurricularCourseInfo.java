@@ -23,10 +23,10 @@
  * 
  */
 
-package net.sourceforge.fenixedu.dataTransferObject.externalServices;
+package org.fenixedu.academic.dto.externalServices;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.DegreeModuleScope;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

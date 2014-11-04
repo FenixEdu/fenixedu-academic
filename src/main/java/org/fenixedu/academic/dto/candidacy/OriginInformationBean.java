@@ -19,20 +19,20 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.candidacy;
+package org.fenixedu.academic.dto.candidacy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.DistrictSubdivision;
-import net.sourceforge.fenixedu.domain.GrantOwnerType;
-import net.sourceforge.fenixedu.domain.ProfessionType;
-import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
-import net.sourceforge.fenixedu.domain.SchoolLevelType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.domain.District;
+import org.fenixedu.academic.domain.DistrictSubdivision;
+import org.fenixedu.academic.domain.GrantOwnerType;
+import org.fenixedu.academic.domain.ProfessionType;
+import org.fenixedu.academic.domain.ProfessionalSituationConditionType;
+import org.fenixedu.academic.domain.SchoolLevelType;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.dto.person.PersonBean;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

@@ -19,7 +19,7 @@
 /*
  * Created on 27/Ago/2003
  */
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

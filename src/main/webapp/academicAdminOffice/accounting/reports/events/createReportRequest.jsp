@@ -46,7 +46,7 @@
 	
 	<fr:edit id="bean-edit" name="bean">
 	
-		<fr:schema type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJobBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+		<fr:schema type="org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJobBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 			<fr:slot name="beginDate" required="true" >
 				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 			</fr:slot>
@@ -74,10 +74,10 @@
 
 	<fr:edit id="bean-edit-options" name="bean">
 	
-		<fr:schema type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJobBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+		<fr:schema type="org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJobBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 			
 				<fr:slot name="executionYear" layout="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 					<fr:property name="format" value="${name}" />
 				</fr:slot>
 			

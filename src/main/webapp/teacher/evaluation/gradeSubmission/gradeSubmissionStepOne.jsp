@@ -48,7 +48,7 @@
 	<fr:edit id="submissionBean"
 			 name="submissionBean"
 			 schema="markSheet.teacher.gradeSubmission.step.one"
-			 type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
+			 type="org.fenixedu.academic.dto.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop1"/>
 			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>

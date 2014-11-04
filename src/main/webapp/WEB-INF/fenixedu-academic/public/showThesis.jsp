@@ -5,7 +5,7 @@
 <html>
 
 	<head>
-		<title><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%></title>
+		<title><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bennu-core/css/bootstrap.min.css">
@@ -19,7 +19,7 @@
 				</div>
 				<div class="col-sm-6 text-right">
 					<h2>
-						<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>" target="_blank">
+						<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>" target="_blank">
 							<img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo" />
 						</a>
 					</h2>

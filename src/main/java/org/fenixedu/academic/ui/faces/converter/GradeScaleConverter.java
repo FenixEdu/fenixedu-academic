@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.converter;
+package org.fenixedu.academic.ui.faces.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.CharacterConverter;
 
-import net.sourceforge.fenixedu.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScale;
 
 public class GradeScaleConverter extends CharacterConverter {
 

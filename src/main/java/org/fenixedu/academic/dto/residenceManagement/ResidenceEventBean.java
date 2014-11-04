@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
+package org.fenixedu.academic.dto.residenceManagement;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
-import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.Money;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.organizationalStructure.ResidenceManagementUnit;
+import org.fenixedu.academic.domain.residence.ResidenceYear;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.util.Money;
 
 public class ResidenceEventBean implements Serializable {
 

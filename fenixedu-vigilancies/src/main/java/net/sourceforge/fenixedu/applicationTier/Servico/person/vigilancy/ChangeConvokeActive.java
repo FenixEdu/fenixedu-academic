@@ -16,23 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
+package org.fenixedu.academic.service.services.person.vigilancy;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.accessControl.VigilancyGroup;
-import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.PersonSender;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.EvaluationManagementLog;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.accessControl.VigilancyGroup;
+import org.fenixedu.academic.domain.util.email.ConcreteReplyTo;
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.domain.util.email.PersonSender;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.vigilancy.ExamCoordinator;
+import org.fenixedu.academic.domain.vigilancy.Vigilancy;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;

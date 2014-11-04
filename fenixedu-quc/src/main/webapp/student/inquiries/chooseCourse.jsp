@@ -108,7 +108,7 @@
 		<html:hidden property="method" value="submitWeeklySpentHours"/>
 		<p>
 			<bean:message key="label.weeklySpentHours.edit" bundle="INQUIRIES_RESOURCES"/>: 
-			<fr:edit id="weeklySpentHours" name="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" >
+			<fr:edit id="weeklySpentHours" name="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="org.fenixedu.academic.dto.VariantBean" >
 				<fr:layout name="flow">
 					<fr:property name="labelExcluded" value="true"/>
 					<fr:property name="validatorClasses" value="error0"/>

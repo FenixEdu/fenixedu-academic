@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.vigilancy.strategies;
+package org.fenixedu.academic.domain.vigilancy.strategies;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
+import org.fenixedu.academic.domain.vigilancy.VigilantWrapper;
 
 public class StrategySugestion {
 

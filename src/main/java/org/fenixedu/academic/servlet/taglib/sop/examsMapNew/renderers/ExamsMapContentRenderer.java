@@ -20,7 +20,7 @@
  * Created on 2003/10/28  
  */
 
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers;
+package org.fenixedu.academic.servlet.taglib.sop.examsMapNew.renderers;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -28,15 +28,14 @@ import java.util.Locale;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
-
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.util.RequestUtils;
+import org.fenixedu.academic.dto.InfoExam;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.servlet.taglib.sop.examsMapNew.ExamsMap;
+import org.fenixedu.academic.servlet.taglib.sop.examsMapNew.ExamsMapSlot;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 

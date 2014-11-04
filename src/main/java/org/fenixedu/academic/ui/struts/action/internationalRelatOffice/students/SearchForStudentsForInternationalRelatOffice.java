@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.students;
+package org.fenixedu.academic.ui.struts.action.internationalRelatOffice.students;
 
-import net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.InternationalRelationsApplication.InternRelationsConsultApp;
-import net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.SearchForStudents;
-
+import org.fenixedu.academic.ui.struts.action.internationalRelatOffice.SearchForStudents;
+import org.fenixedu.academic.ui.struts.action.internationalRelatOffice.InternationalRelationsApplication.InternRelationsConsultApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

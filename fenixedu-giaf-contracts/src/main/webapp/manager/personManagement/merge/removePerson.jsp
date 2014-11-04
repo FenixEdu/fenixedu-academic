@@ -53,7 +53,7 @@
 	</table>
 
 	<fr:view name="person"
-		schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+		schema="org.fenixedu.academic.domain.Person.personal.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes"
 				value="tstyle2 thleft thlight mtop15 thwhite" />
@@ -69,7 +69,7 @@
 		</tr>
 	</table>
 	<fr:view name="person"
-		schema="net.sourceforge.fenixedu.domain.Person.user.info">
+		schema="org.fenixedu.academic.domain.Person.user.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
 		</fr:layout>
@@ -86,7 +86,7 @@
 
 
 	<fr:view name="person"
-		schema="net.sourceforge.fenixedu.domain.Person.family">
+		schema="org.fenixedu.academic.domain.Person.family">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
 		</fr:layout>

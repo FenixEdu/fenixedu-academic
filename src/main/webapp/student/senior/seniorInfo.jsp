@@ -29,7 +29,7 @@
 	
 	<h2><bean:message key="label.title.seniorInfo"/></h2>
 
-	<bean:define id="senior" name="senior" type="net.sourceforge.fenixedu.domain.student.Senior"/>
+	<bean:define id="senior" name="senior" type="org.fenixedu.academic.domain.student.Senior"/>
 	
 	<logic:notEmpty name="senior">
 			 	

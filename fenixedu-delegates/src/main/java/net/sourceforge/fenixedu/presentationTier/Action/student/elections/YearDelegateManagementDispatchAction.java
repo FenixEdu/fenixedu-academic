@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student.elections;
+package org.fenixedu.academic.ui.struts.action.student.elections;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,23 +26,23 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.AddCandidateYearDelegateElections;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.RemoveCandidateYearDelegateElections;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.VoteYearDelegateElections;
-import net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.elections.DelegateElection;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.student.elections.AddCandidateYearDelegateElections;
+import org.fenixedu.academic.service.services.student.elections.RemoveCandidateYearDelegateElections;
+import org.fenixedu.academic.service.services.student.elections.VoteYearDelegateElections;
+import org.fenixedu.academic.dto.student.elections.StudentVoteBean;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.elections.DelegateElection;
+import org.fenixedu.academic.domain.elections.DelegateElectionPeriod;
+import org.fenixedu.academic.domain.elections.DelegateElectionResultsByStudentDTO;
+import org.fenixedu.academic.domain.elections.DelegateElectionVotingPeriod;
+import org.fenixedu.academic.domain.elections.YearDelegateElection;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

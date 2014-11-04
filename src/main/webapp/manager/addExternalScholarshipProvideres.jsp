@@ -33,13 +33,13 @@
 		<fr:form action="/externalScholarshipProvider.do?method=add">
 		
 		<fr:edit id="bean" name="bean">
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.ExternalScholarshipProviderDA$ExternalScholarshipBean" >
-				<fr:slot name="selected" layout="autoComplete" key="label.nif" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+			<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.ExternalScholarshipProviderDA$ExternalScholarshipBean" >
+				<fr:slot name="selected" layout="autoComplete" key="label.nif" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="rawSlotName" value="selected"/>
 					<fr:property name="labelField" value="name"/>
 					<fr:property name="indicatorShown" value="true"/>		
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchPartyByNif"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.SearchPartyByNif"/>
 					<fr:property name="args" value="slot=name"/>
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="format" value="${name}"/>

@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration;
+package org.fenixedu.academic.domain.phd.migration;
 
 import java.io.Serializable;
 import java.util.NoSuchElementException;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
-import net.sourceforge.fenixedu.domain.phd.migration.common.NationalityTranslator;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
-import net.sourceforge.fenixedu.util.StringFormatter;
-
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.person.Gender;
+import org.fenixedu.academic.domain.phd.migration.common.ConversionUtilities;
+import org.fenixedu.academic.domain.phd.migration.common.NationalityTranslator;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.IncompleteFieldsException;
+import org.fenixedu.academic.util.StringFormatter;
 import org.joda.time.LocalDate;
 
 public class PhdMigrationIndividualPersonalDataBean implements Serializable {

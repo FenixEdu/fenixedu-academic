@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
+package org.fenixedu.academic.ui.faces.bean.teacher.evaluation;
 
 import javax.faces.component.html.HtmlInputHidden;
 
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 
 public class EvaluationManagementMenuBackingBean extends FenixBackingBean {
 

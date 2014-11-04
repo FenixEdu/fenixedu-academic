@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.manager;
+package org.fenixedu.academic.service.services.manager;
 
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ReingressionPeriod;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodType;
-
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
+import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
+import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
+import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
+import org.fenixedu.academic.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
+import org.fenixedu.academic.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ReingressionPeriod;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.enrolmentPeriods.EnrolmentPeriodType;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

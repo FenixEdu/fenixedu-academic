@@ -20,7 +20,7 @@
  * Created on Feb 10, 2006
  *	by mrsp
  */
-package net.sourceforge.fenixedu.domain.organizationalStructure;
+package org.fenixedu.academic.domain.organizationalStructure;
 
 public enum PartyTypeEnum {
 

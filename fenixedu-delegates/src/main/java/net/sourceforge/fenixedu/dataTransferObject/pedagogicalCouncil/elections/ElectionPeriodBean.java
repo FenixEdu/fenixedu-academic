@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections;
+package org.fenixedu.academic.dto.pedagogicalCouncil.elections;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.elections.DelegateElection;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
+import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.elections.DelegateElection;
+import org.fenixedu.academic.domain.elections.DelegateElectionVotingPeriod;
 
 import org.joda.time.YearMonthDay;
 

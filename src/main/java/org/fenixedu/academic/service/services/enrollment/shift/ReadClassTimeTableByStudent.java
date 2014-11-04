@@ -16,21 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
+package org.fenixedu.academic.service.services.enrollment.shift;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.service.filter.enrollment.ClassEnrollmentAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ReadClassTimeTableByStudent {

@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.messaging;
+package org.fenixedu.academic.domain.messaging;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.accessControl.StudentGroup;
+import org.fenixedu.academic.domain.accessControl.TeacherGroup;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

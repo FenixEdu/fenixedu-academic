@@ -20,7 +20,7 @@ package pt.utl.ist.codeGenerator.database;
 
 import java.util.Stack;
 
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
+import org.fenixedu.academic.util.HourMinuteSecond;
 
 import org.fenixedu.spaces.domain.Space;
 

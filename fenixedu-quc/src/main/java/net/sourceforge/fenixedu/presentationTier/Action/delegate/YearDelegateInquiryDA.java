@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.delegate;
+package org.fenixedu.academic.ui.struts.action.delegate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,23 +29,23 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DelegateInquiryBean;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.YearDelegate;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication.DelegateParticipateApp;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewCourseInquiryPublicResults;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
+import org.fenixedu.academic.dto.inquiries.CurricularCourseResumeResult;
+import org.fenixedu.academic.dto.inquiries.DelegateInquiryBean;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.inquiries.DelegateInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryDelegateAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.student.Delegate;
+import org.fenixedu.academic.domain.student.YearDelegate;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.delegate.DelegateApplication.DelegateParticipateApp;
+import org.fenixedu.academic.ui.struts.action.publico.ViewCourseInquiryPublicResults;
+import org.fenixedu.academic.ui.struts.action.publico.ViewTeacherInquiryPublicResults;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

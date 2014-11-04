@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.manager;
+package org.fenixedu.academic.ui.renderers.providers.manager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
-
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;

@@ -58,7 +58,7 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
-<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean"/>
+<bean:define id="bean" name="bean" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean"/>
 
 <div class="mbottom2">
 	<p class="mtop15 mbottom05"><em><bean:message key="label.vigilancy.label" bundle="VIGILANCY_RESOURCES"/>:</em></p>
@@ -162,12 +162,12 @@
 
 			<logic:iterate id="writtenEvaluation" name="writtenEvaluations">
 
-				<bean:define id="evaluation" name="writtenEvaluation" type="net.sourceforge.fenixedu.domain.WrittenEvaluation"/>
+				<bean:define id="evaluation" name="writtenEvaluation" type="org.fenixedu.academic.domain.WrittenEvaluation"/>
 				<bean:define id="beginDate" name="evaluation" property="beginningDateTime" type="org.joda.time.DateTime"/>
-				<logic:iterate id="executionCourse" name="evaluation" property="associatedExecutionCoursesSet" length="1" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+				<logic:iterate id="executionCourse" name="evaluation" property="associatedExecutionCoursesSet" length="1" type="org.fenixedu.academic.domain.ExecutionCourse">
 					<p class="mtop2 mbottom05"><%= "<strong>" +  executionCourse.getNome() + " (" + executionCourse.getSigla() + ")</strong> - " + evaluation.getEvaluationType().toString() %> <fr:view name="beginDate"/></p>
 				</logic:iterate>
-				<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean"/>
+				<bean:define id="bean" name="bean" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean"/>
 				
 				<logic:notEmpty name="evaluation" property="<%= bean.isShowNotActiveConvokes() ? "vigilancies" :  "allActiveVigilancies"%>">
 
@@ -213,8 +213,8 @@
 						<th>
 						</th>
 					</tr>
-					<logic:iterate id="vigilancy" name="evaluation" property="<%= bean.isShowNotActiveConvokes() ? "vigilancies" :  "allActiveVigilancies"%>" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
-						<bean:define id="vigilancy" name="vigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy"/>
+					<logic:iterate id="vigilancy" name="evaluation" property="<%= bean.isShowNotActiveConvokes() ? "vigilancies" :  "allActiveVigilancies"%>" type="org.fenixedu.academic.domain.vigilancy.Vigilancy">
+						<bean:define id="vigilancy" name="vigilancy" type="org.fenixedu.academic.domain.vigilancy.Vigilancy"/>
 						
 						<tr class="<%= vigilancy.isOtherCourseVigilancy() ? (!vigilancy.isActive() ? "color888" : "") : "color007b4d"%>">
 							<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/>

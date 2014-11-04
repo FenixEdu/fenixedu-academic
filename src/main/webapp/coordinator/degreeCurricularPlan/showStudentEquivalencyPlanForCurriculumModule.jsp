@@ -25,18 +25,18 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>
+<bean:define id="student" type="org.fenixedu.academic.domain.student.Student" name="student"/>
 <bean:define id="equivalencyPlanEntryCurriculumModuleWrapper" name="equivalencyPlanEntryCurriculumModuleWrapper"/>
-<bean:define id="curriculumModule" type="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule" name="equivalencyPlanEntryCurriculumModuleWrapper" property="curriculumModule"/>
-<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
-<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="studentCurricularPlanEquivalencePlan"/>
+<bean:define id="curriculumModule" type="org.fenixedu.academic.domain.studentCurriculum.CurriculumModule" name="equivalencyPlanEntryCurriculumModuleWrapper" property="curriculumModule"/>
+<bean:define id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+<bean:define id="equivalencePlan" type="org.fenixedu.academic.domain.EquivalencePlan" name="studentCurricularPlanEquivalencePlan"/>
 <bean:define id="indentLevel" type="java.lang.String" name="indentLevel"/>
 <bean:define id="width" type="java.lang.String" name="width"/>
 
 <logic:equal name="curriculumModule" property="leaf" value="true">
 	<logic:equal name="curriculumModule" property="enrolment" value="true">
 	
-		<bean:define id="enrolment" type="net.sourceforge.fenixedu.domain.Enrolment" name="curriculumModule"/>
+		<bean:define id="enrolment" type="org.fenixedu.academic.domain.Enrolment" name="curriculumModule"/>
 	
 		<div class="indent<%= indentLevel %>">
 			<table class="showinfo3 mvert0" style="width: <%= width %>em;">
@@ -81,7 +81,7 @@
 </logic:equal>
 <logic:notEqual name="curriculumModule" property="leaf" value="true">
 
-	<bean:define id="curriculumGroup" type="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" name="curriculumModule"/>
+	<bean:define id="curriculumGroup" type="org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup" name="curriculumModule"/>
 
 	<div style="padding-left: <%= indentLevel %>em;">
 		<table class="showinfo3 mvert0" style="width: <%= width %>em;">

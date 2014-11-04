@@ -20,7 +20,7 @@
  * Created on Nov 4, 2005
  *	by mrsp
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement;
+package org.fenixedu.academic.ui.faces.bean.manager.personManagement;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,15 +30,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.AssociateNewFunctionToPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
+import org.fenixedu.academic.service.services.departmentAdmOffice.AssociateNewFunctionToPerson;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Function;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.ui.faces.bean.departmentAdmOffice.FunctionsManagementBackingBean;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;

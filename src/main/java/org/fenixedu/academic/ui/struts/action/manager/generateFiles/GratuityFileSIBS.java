@@ -20,7 +20,7 @@
  * Created on 28/Jan/2004
  *  
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.generateFiles;
+package org.fenixedu.academic.ui.struts.action.manager.generateFiles;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,8 +31,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-
+import org.fenixedu.academic.dto.InfoGratuitySituation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

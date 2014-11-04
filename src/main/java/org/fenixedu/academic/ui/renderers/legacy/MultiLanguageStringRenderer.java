@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.legacy;
+package org.fenixedu.academic.ui.renderers.legacy;
 
 import org.fenixedu.commons.i18n.LocalizedString;
 

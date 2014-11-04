@@ -52,7 +52,7 @@
 
 <logic:present name="alumniResultItems">
 	<logic:notEmpty name="alumniResultItems">
-		<bean:define id="bean" name="searchAlumniBean" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean"/>
+		<bean:define id="bean" name="searchAlumniBean" type="org.fenixedu.academic.dto.alumni.AlumniSearchBean"/>
 		<fr:view name="alumniResultItems" schema="alumni.gep.search.result">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 mtop05" />

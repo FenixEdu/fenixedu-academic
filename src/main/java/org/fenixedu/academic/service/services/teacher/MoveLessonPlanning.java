@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
+package org.fenixedu.academic.service.services.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.LessonPlanning;
+import org.fenixedu.academic.domain.LessonPlanning;
+import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class MoveLessonPlanning {

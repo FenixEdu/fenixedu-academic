@@ -24,7 +24,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@ page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" %>
+<%@ page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" %>
 
 	<%-- Academic Services --%>
 	

@@ -20,7 +20,7 @@
  * Created on 2004/08/24
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Date;
 

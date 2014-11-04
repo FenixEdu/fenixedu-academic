@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.notification;
+package org.fenixedu.academic.domain.phd.notification;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class PhdNotificationBean implements Serializable {
 

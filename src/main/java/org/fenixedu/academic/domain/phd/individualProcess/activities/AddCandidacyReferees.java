@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
+package org.fenixedu.academic.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.bennu.core.domain.User;
 
 public class AddCandidacyReferees extends PhdIndividualProgramProcessActivity {
@@ -32,7 +31,7 @@ public class AddCandidacyReferees extends PhdIndividualProgramProcessActivity {
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
         process.getCandidacyProcess().executeActivity(userView,
-                net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddCandidacyReferees.class.getSimpleName(), object);
+                org.fenixedu.academic.domain.phd.candidacy.activities.AddCandidacyReferees.class.getSimpleName(), object);
         return process;
     }
 }

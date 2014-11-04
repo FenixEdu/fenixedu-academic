@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
+package org.fenixedu.academic.ui.struts.action.research.researchUnit;
 
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.UnitMailSenderAction;
+import org.fenixedu.academic.ui.struts.action.messaging.UnitMailSenderAction;
 
 import org.fenixedu.bennu.struts.annotations.Mapping;
 

@@ -31,7 +31,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<bean:define id="processData" name="processData" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData"/>
+<bean:define id="processData" name="processData" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualProcessData"/>
 <bean:define id="processNumber" name="processData" property="number" />
 <bean:define id="personalDataBean" name="processData" property="phdMigrationIndividualPersonalData.personalBean" />
 
@@ -89,13 +89,13 @@
 		</fr:view>
 		
 		<fr:edit id="personalDataBean" name="personalDataBean" >
-			<fr:schema type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES">
-				<fr:slot name="chosenPersonManually" layout="autoComplete" key="label.selectStudent.nameOrID" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+			<fr:schema type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES">
+				<fr:slot name="chosenPersonManually" layout="autoComplete" key="label.selectStudent.nameOrID" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="35" />
 					<fr:property name="format" value="${name} - <strong>${username}</strong>" />
 					<fr:property name="args" value="slot=name,size=20" />
 					<fr:property name="minChars" value="3" />
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons" />
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons" />
 					<fr:property name="indicatorShown" value="true" />
 					<fr:property name="required" value="true"/>
 				</fr:slot>

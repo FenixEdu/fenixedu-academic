@@ -20,30 +20,29 @@
  * Created on 26/Ago/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student;
+package org.fenixedu.academic.ui.struts.action.student;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyGroupingAndStudentGroupWithoutShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.dto.InfoExportGrouping;
+import org.fenixedu.academic.dto.InfoSiteStudentGroup;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidSituationServiceException;
+import org.fenixedu.academic.service.services.student.ReadExportGroupingsByGrouping;
+import org.fenixedu.academic.service.services.student.ReadStudentGroupInformation;
+import org.fenixedu.academic.service.services.student.VerifyGroupingAndStudentGroupWithoutShift;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

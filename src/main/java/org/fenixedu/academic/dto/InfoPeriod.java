@@ -20,11 +20,11 @@
  * Created on Nov 3, 2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import org.fenixedu.academic.domain.OccupationPeriod;
 
 /**
  * @author Ana e Ricardo

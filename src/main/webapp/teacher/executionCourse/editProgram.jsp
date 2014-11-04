@@ -42,7 +42,7 @@
 </p>
 
 <logic:present name="curriculum">
-	<bean:define id="curriculum" name="curriculum" type="net.sourceforge.fenixedu.domain.Curriculum"/>
+	<bean:define id="curriculum" name="curriculum" type="org.fenixedu.academic.domain.Curriculum"/>
 	<bean:define id="curricularCourse" name="curriculum" property="curricularCourse"/>
 	<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 	<h3 class="mtop15">
@@ -51,9 +51,9 @@
 		<bean:write name="curricularCourse" property="name"/>
 	</h3>
 	<bean:define id="url" type="java.lang.String">/editProgram.do?method=editProgram&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
-	<bean:define id="curricularCourse" name="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"/>
+	<bean:define id="curricularCourse" name="curricularCourse" type="org.fenixedu.academic.domain.CurricularCourse"/>
 
-	<bean:define id="curriculumFactoryEditCurriculum" name="curricularCourse" property="curriculumFactoryEditCurriculum" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryEditCurriculum"/>
+	<bean:define id="curriculumFactoryEditCurriculum" name="curricularCourse" property="curriculumFactoryEditCurriculum" type="org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryEditCurriculum"/>
 	<logic:notEqual name="executionCourse" property="executionPeriod.executionYear.state.stateCode" value="C">
 		<%
 			curriculumFactoryEditCurriculum.setCurriculum(curriculum);
@@ -61,7 +61,7 @@
 	</logic:notEqual>
 
 	<fr:edit name="curriculumFactoryEditCurriculum"
-			schema="net.sourceforge.fenixedu.domain.Curriculum.Program"
+			schema="org.fenixedu.academic.domain.Curriculum.Program"
 			action="<%= url %>"
 			>
 		<fr:layout name="flow">

@@ -20,15 +20,15 @@
  * Created on 23/Set/2004
  *
  */
-package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
+package org.fenixedu.academic.service.strategy.tests.strategys;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.util.tests.CardinalityType;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
-import net.sourceforge.fenixedu.util.tests.ResponseSTR;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.util.tests.CardinalityType;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
+import org.fenixedu.academic.util.tests.ResponseSTR;
 
 /**
  * @author Susana Fernandes

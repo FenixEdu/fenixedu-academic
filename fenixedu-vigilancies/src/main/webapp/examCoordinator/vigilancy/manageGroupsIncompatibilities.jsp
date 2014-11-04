@@ -38,7 +38,7 @@
 </fr:form>
 
 <logic:present name="bean" property="selectedVigilantGroup">
-<bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
+<bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="org.fenixedu.academic.domain.vigilancy.VigilantGroup"/>
 
 <logic:empty name="vigilantWrappers"> 
 	<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noIncompatibilitiesToManage"/> 
@@ -47,7 +47,7 @@
 <logic:notEmpty name="vigilantWrappers">
 <ul>
 	<logic:iterate id="vigilantWrapperIterator" name="vigilantWrappers">
-	<bean:define id="vigilantWrapper" name="vigilantWrapperIterator" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper"/>
+	<bean:define id="vigilantWrapper" name="vigilantWrapperIterator" type="org.fenixedu.academic.domain.vigilancy.VigilantWrapper"/>
 		<li>
 			<fr:view name="vigilantWrapper" property="person.name"/> 
 			<span class="greytxt2"><bean:message key="label.vigilancy.incompatibleWith" bundle="VIGILANCY_RESOURCES"/> </span>

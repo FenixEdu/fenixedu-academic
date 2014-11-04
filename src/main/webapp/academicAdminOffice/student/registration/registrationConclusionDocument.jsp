@@ -24,9 +24,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@page import="net.sourceforge.fenixedu.domain.Person"%>
-<%@page import="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DegreeFinalizationCertificate"%>
+<%@page import="org.fenixedu.academic.domain.Person"%>
+<%@page import="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice" %>
+<%@page import="org.fenixedu.academic.report.academicAdministrativeOffice.DegreeFinalizationCertificate"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
 
@@ -34,8 +34,8 @@
 
 <html:xhtml />
 
-<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-<bean:define id="registrationConclusionBean" name="registrationConclusionBean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean"/>
+<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
+<bean:define id="registrationConclusionBean" name="registrationConclusionBean" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean"/>
 
 <table width="90%">
 	<tr>
@@ -99,7 +99,7 @@
 				</th>
 			</tr>
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
 					<tr class="scplanenrollment">
 						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.code"/></td>
 						<td class=" scplancolcurricularcourse"><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
@@ -125,7 +125,7 @@
 				</logic:equal>
 			</logic:iterate>				
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.GivenCreditsEntry">
+				<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.GivenCreditsEntry">
 					<tr class="scplanenrollment">
 						<td class="acenter">-</td>
 						<td class=" scplancolcurricularcourse"><bean:message bundle="APPLICATION_RESOURCES" key="label.givenCredits"/></td>

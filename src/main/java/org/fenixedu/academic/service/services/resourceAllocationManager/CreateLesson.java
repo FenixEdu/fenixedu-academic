@@ -20,23 +20,22 @@
  *
  * Created on 2003/08/12
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.DiaSemana;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.FrequencyType;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.dto.InfoRoomOccupationEditor;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 

@@ -30,11 +30,11 @@
 
 <p><strong><bean:message key="message.erasmus.candidacy.enrol.on.modules" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 
-<bean:define id="erasmusCandidacy" name="process" property="candidacy" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplication" />
+<bean:define id="erasmusCandidacy" name="process" property="candidacy" type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplication" />
 <bean:define id="modulesToEnrolForFirstSemester" name="erasmusCandidacy" property="modulesToEnrolForFirstSemester" />
  
 <fr:view name="modulesToEnrolForFirstSemester" >
-	<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol">
+	<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.enrolment.DegreeModuleToEnrol">
 		<fr:slot name="curriculumGroup.degreeModule.nameI18N" key="label.erasmus.candidacy.group.name" />
 		<fr:slot name="context.childDegreeModule.nameI18N" key="label.erasmus.candidacy.child.degree.module.name" />
 		<fr:slot name="executionPeriod.name" key="label.erasmus.candidacy.execution.period.name" />

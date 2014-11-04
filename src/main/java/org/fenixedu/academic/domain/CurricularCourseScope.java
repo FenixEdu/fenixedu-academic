@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.text.Collator;
 import java.util.Calendar;
@@ -24,16 +24,15 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
+import org.fenixedu.academic.dto.comparators.CalendarDateComparator;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;

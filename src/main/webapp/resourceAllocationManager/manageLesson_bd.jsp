@@ -22,14 +22,14 @@
 <%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@page import="org.joda.time.Weeks"%>
 <%@page import="org.joda.time.YearMonthDay"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionCourse"%>
 <%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
 
 <jsp:include page="/commons/contextLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />

@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
+package org.fenixedu.academic.ui.struts.action.vigilancy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
 
 public class VigilantBoundBean implements Serializable {
 

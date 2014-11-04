@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+package org.fenixedu.academic.ui.renderers.providers;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

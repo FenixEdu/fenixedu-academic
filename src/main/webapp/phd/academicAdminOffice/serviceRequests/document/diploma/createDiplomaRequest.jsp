@@ -31,9 +31,9 @@
 	<fr:edit id="phd-academic-service-request-create-bean" name="phdAcademicServiceRequestCreateBean" visible="false" />
 
 	<fr:edit id="phd-academic-service-request-create-bean-choose-document-type" name="phdAcademicServiceRequestCreateBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean">
 			<fr:slot name="documentRequestType" required="true" layout="menu-select-postback">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDocumentRequestTypeProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequestTypeProvider" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
 			<fr:slot name="freeProcessed" />

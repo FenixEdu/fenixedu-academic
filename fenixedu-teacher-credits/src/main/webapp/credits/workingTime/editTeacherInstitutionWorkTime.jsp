@@ -38,7 +38,7 @@
 <td >
 
 <fr:view name="teacherService">
-	<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.TeacherService">
+	<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.teacher.TeacherService">
 		<fr:slot name="teacher.person.presentationName" key="label.name"/>
 		<fr:slot name="executionPeriod" key="label.period" layout="format">
 			<fr:property name="format" value="${name}  ${executionYear.year}" />
@@ -84,7 +84,7 @@
 </logic:present>
 
 <logic:notPresent name="institutionWorkTime">
-	<fr:create action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>" type="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime"
+	<fr:create action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>" type="org.fenixedu.academic.domain.teacher.InstitutionWorkTime"
 	schema="create.institutionWorkTime">
 		<fr:hidden slot="teacherService" name="teacherService"/>
 		<fr:layout>

@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import java.io.IOException;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfRenderUtils;
+import org.fenixedu.academic.ui.faces.components.util.JsfRenderUtils;
 
 public class UISelectOne extends javax.faces.component.UISelectOne {
 

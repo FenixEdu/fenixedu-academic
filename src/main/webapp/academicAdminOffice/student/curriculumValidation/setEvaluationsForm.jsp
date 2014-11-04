@@ -24,15 +24,15 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean" %>
-<%@ page import="net.sourceforge.fenixedu.domain.Enrolment" %>
+<%@ page import="org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean" %>
+<%@ page import="org.fenixedu.academic.domain.Enrolment" %>
 
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.curriculum.validation.set.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"/>
+<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="org.fenixedu.academic.domain.StudentCurricularPlan"/>
 <bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
 <bean:define id="executionSemesterId" name="executionSemester" property="externalId" />
 

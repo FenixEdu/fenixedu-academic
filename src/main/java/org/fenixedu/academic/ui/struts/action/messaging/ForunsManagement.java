@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.messaging;
+package org.fenixedu.academic.ui.struts.action.messaging;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,27 +30,26 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddForumEmailSubscriber;
-import net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationMessage;
-import net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationThreadAndMessage;
-import net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveForumEmailSubscriber;
-import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean;
-import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
-import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
-import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.messaging.ConversationMessage;
+import org.fenixedu.academic.domain.messaging.ConversationThread;
+import org.fenixedu.academic.domain.messaging.Forum;
+import org.fenixedu.academic.dto.messaging.CreateConversationMessageBean;
+import org.fenixedu.academic.dto.messaging.CreateConversationThreadAndMessageBean;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.messaging.AddForumEmailSubscriber;
+import org.fenixedu.academic.service.services.messaging.CreateConversationMessage;
+import org.fenixedu.academic.service.services.messaging.CreateConversationThreadAndMessage;
+import org.fenixedu.academic.service.services.messaging.RemoveForumEmailSubscriber;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.utils.RequestUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;

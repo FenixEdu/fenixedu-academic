@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.messaging;
+package org.fenixedu.academic.dto.messaging;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Registration;
 
 public class RegistrationsBean implements Serializable {
 

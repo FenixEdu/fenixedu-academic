@@ -19,11 +19,11 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.util.workflow;
+package org.fenixedu.academic.domain.util.workflow;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.Person;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

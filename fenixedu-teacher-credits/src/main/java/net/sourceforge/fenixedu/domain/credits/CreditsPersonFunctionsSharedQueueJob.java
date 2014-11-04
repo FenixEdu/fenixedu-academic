@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.credits;
+package org.fenixedu.academic.domain.credits;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunctionShared;
-import net.sourceforge.fenixedu.domain.organizationalStructure.SharedFunction;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.QueueJobResult;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunctionShared;
+import org.fenixedu.academic.domain.organizationalStructure.SharedFunction;
 
 public class CreditsPersonFunctionsSharedQueueJob extends CreditsPersonFunctionsSharedQueueJob_Base {
 

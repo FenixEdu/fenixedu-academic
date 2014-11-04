@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams;
+package org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,8 +27,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
 
 /**
  * This response wrapper is used by the fetcher to prevent any content generated
@@ -39,7 +39,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Reso
  * The {@link #getOutputStream() ServletOutputStream} and {@link #getWriter()
  * PrinterWriter} returned by the response will write to the provided stream ratter than to the wrapped response. If the response
  * is of type <tt>"text/html"</tt> then an intermediary
- * {@link net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.TransformUrlsStream} is used to ensure that
+ * {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams.TransformUrlsStream} is used to ensure that
  * the content is transfomed using the target resource's rules.
  * 
  * @author cfgi

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.validator.form;
+package org.fenixedu.academic.ui.struts.validator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive;
+package org.fenixedu.academic.ui.struts.action.teacher.siteArchive;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,17 +32,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
-
+import org.fenixedu.academic.domain.File;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams.FetcherRequestWrapper;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
 import org.fenixedu.bennu.io.domain.GenericFile;
 import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 import com.google.common.io.ByteStreams;
 
 /**
- * The <tt>Fetcher</tt> manages a queue of {@link net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource}
+ * The <tt>Fetcher</tt> manages a queue of {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource}
  * and it's responsible for retrieving and transforming each resource in the
  * queue.
  * 

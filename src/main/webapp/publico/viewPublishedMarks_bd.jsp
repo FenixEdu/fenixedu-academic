@@ -23,12 +23,12 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %>
+<%@ page import="org.fenixedu.academic.util.EvaluationType" %>
 <logic:present name="siteView">
 <bean:message key="classification.nonOfficial.information" />
 <br />
-<bean:define id="marksListComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks"/>
-<bean:define id="infoEvaluation" name="marksListComponent" property="infoEvaluation" type="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation"/>
+<bean:define id="marksListComponent" name="siteView" property="component" type="org.fenixedu.academic.dto.InfoSiteMarks"/>
+<bean:define id="infoEvaluation" name="marksListComponent" property="infoEvaluation" type="org.fenixedu.academic.dto.InfoEvaluation"/>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <table width="90%" align="center">
 	<tr>
@@ -61,7 +61,7 @@
 	</tr>    		
 		
 	<logic:present name="marksListComponent" property="infoAttends">  								
-	   	<logic:iterate id="attendElem" name="marksListComponent" property="infoAttends" type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta"> 
+	   	<logic:iterate id="attendElem" name="marksListComponent" property="infoAttends" type="org.fenixedu.academic.dto.InfoFrequenta"> 
 	   		<bean:define id="studentNumber" name="attendElem" property="aluno.number" />
 	   		<bean:define id="studentMark" value=""/>
 			<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>

@@ -19,17 +19,14 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.predicates;
+package org.fenixedu.academic.predicate;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
-
+import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.groups.Group;
 
 /**

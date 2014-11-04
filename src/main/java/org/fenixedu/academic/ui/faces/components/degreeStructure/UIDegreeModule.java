@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
+package org.fenixedu.academic.ui.faces.components.degreeStructure;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,24 +27,23 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public class UIDegreeModule extends UIInput {
     public static final String COMPONENT_TYPE =
-            "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeModule";
+            "org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeModule";
 
     public static final String COMPONENT_FAMILY =
-            "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeModule";
+            "org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeModule";
 
     protected DegreeModule degreeModule;
     protected Context previousContext;

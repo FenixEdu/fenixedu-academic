@@ -41,13 +41,13 @@
 		<h:outputText value="<table class='tstyle2 thlight thright'>" escape="false" />
 			<h:outputText value="<tr>" escape="false" />
 				<h:outputText value="<th>" escape="false" />
-					<h:outputText value="#{bundle['label.exam']}: " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
-					<h:outputText value="#{bundle['label.written.test']}: " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+					<h:outputText value="#{bundle['label.exam']}: " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.Exam'}"/>
+					<h:outputText value="#{bundle['label.written.test']}: " rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.WrittenTest'}"/>
 				<h:outputText value="</th>" escape="false" />
 				<h:outputText value="<td>" escape="false" />
 					<h:outputText value="<strong>" escape="false" />
-						<h:outputText value="#{evaluationManagementBackingBean.evaluation.season}" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}"/>
-						<h:outputText value="#{evaluationManagementBackingBean.evaluation.description}" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+						<h:outputText value="#{evaluationManagementBackingBean.evaluation.season}" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.Exam'}"/>
+						<h:outputText value="#{evaluationManagementBackingBean.evaluation.description}" rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.WrittenTest'}"/>
 					<h:outputText value="</strong>" escape="false" />
 				<h:outputText value="</td>" escape="false" />
 			<h:outputText value="</tr>" escape="false" />

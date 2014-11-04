@@ -19,15 +19,15 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.externalServices;
+package org.fenixedu.academic.dto.externalServices;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.WrittenEvaluation;
 
 public class EnrolledCourseBean {
 

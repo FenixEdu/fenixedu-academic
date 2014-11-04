@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.library;
+package org.fenixedu.academic.ui.struts.action.library;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
 import org.fenixedu.spaces.domain.Space;
 

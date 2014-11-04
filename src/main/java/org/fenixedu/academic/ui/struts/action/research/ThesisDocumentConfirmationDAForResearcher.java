@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.research;
+package org.fenixedu.academic.ui.struts.action.research;
 
-import net.sourceforge.fenixedu.presentationTier.Action.research.ResearcherApplication.ResearcherFinalWorkApp;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.ThesisDocumentConfirmationDA;
-
+import org.fenixedu.academic.ui.struts.action.research.ResearcherApplication.ResearcherFinalWorkApp;
+import org.fenixedu.academic.ui.struts.action.teacher.ThesisDocumentConfirmationDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

@@ -34,7 +34,7 @@
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />
 	</fr:layout>
 	<fr:schema bundle="MANAGER_RESOURCES"
-		type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PostingRulesManagementDA$FctScolarshipPostingRuleBean">
+		type="org.fenixedu.academic.ui.struts.action.manager.payments.PostingRulesManagementDA$FctScolarshipPostingRuleBean">
 		<fr:slot name="startDate" key="label.phd.gratuity.startDate"
 			required="true" />
 		<fr:slot name="endDate" key="label.phd.gratuity.endDate" />

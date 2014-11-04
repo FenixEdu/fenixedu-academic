@@ -16,27 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.seminar.academicAdminOffice;
+package org.fenixedu.academic.ui.struts.action.phd.seminar.academicAdminOffice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.AddState;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.EditProcessAttributes;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RemoveLastState;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RevertToWaitingComissionForValidation;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RevertToWaitingForComissionConstitution;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.seminar.CommonPublicPresentationSeminarDA;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdProcessState;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.AddState;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.EditProcessAttributes;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.RemoveLastState;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.RevertToWaitingComissionForValidation;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.RevertToWaitingForComissionConstitution;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
+import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
+import org.fenixedu.academic.ui.struts.action.phd.seminar.CommonPublicPresentationSeminarDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

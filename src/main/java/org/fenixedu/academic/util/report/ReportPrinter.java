@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.util.report;
+package org.fenixedu.academic.util.report;
 
 import java.util.Collection;
 import java.util.Map;

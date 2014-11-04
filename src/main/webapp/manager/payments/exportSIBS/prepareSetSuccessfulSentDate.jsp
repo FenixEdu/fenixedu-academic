@@ -33,7 +33,7 @@
 	<fr:edit id="sibs.outgoing.payment.file.data.bean" name="sibsOutgoingPaymentFileDataBean" visible="false" />
 	
 	<fr:edit id="sibs.outgoing.payment.file.data.bean.edit" name="sibsOutgoingPaymentFileDataBean">
-		<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.ExportSIBSPaymentsDA$SIBSOutgoingPaymentFileDataBean">
+		<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.payments.ExportSIBSPaymentsDA$SIBSOutgoingPaymentFileDataBean">
 			<fr:slot name="lastOutgoingPaymentFileSent" key="label.sibs.outgoing.payment.last.successful.sent.payment.file" required="true">
 			</fr:slot>
 		</fr:schema>

@@ -19,16 +19,16 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
+package org.fenixedu.academic.service.services.administrativeOffice.candidacy;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
-import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.util.workflow.StateBean;
+import org.fenixedu.academic.domain.util.workflow.StateMachine;
+import org.fenixedu.academic.dto.administrativeOffice.candidacy.RegisterCandidacyBean;
+import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

@@ -50,7 +50,7 @@
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+            <exception handler="org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler" key="" type="org.fenixedu.academic.domain.exceptions.DomainException"></exception>
       </global-exceptions>
       <!-- ========== Global Forward Definitions =============================== -->
       <global-forwards type="org.apache.struts.action.ActionForward">

@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.exceptions;
+package org.fenixedu.academic.domain.exceptions;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
+import org.fenixedu.academic.domain.Enrolment;
 
 public class InDebtEnrolmentsException extends DomainException {
 

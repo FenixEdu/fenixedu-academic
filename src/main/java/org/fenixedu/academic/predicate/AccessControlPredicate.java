@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.injectionCode;
+package org.fenixedu.academic.predicate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

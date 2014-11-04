@@ -19,11 +19,11 @@
 /*
  * Created on Jan 2, 2006
  */
-package net.sourceforge.fenixedu.dataTransferObject.bolonhaManager;
+package org.fenixedu.academic.dto.bolonhaManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
 
 public class CourseLoad implements Serializable {
     private Double theoreticalHours = Double.valueOf(0);

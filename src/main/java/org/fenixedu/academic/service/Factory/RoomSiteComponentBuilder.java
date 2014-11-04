@@ -22,31 +22,30 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package net.sourceforge.fenixedu.applicationTier.Factory;
+package org.fenixedu.academic.service.Factory;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoOccupation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.LessonInstance;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.WrittenTest;
+import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
+import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
+import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
+import org.fenixedu.academic.dto.InfoExam;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoLessonInstance;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.dto.InfoOccupation;
+import org.fenixedu.academic.dto.InfoRoom;
+import org.fenixedu.academic.dto.InfoSiteRoomTimeTable;
+import org.fenixedu.academic.dto.InfoWrittenTest;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.Interval;

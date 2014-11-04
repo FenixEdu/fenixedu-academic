@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
+package org.fenixedu.academic.service.services.person.vigilancy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.vigilancy.VigilantGroup;
 import pt.ist.fenixframework.Atomic;
 
 public class AddExecutionCourseToGroup {

@@ -20,12 +20,12 @@
  * Created on Dec 26, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.util.date;
+package org.fenixedu.academic.util.date;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.util.FenixUtil;
+import org.fenixedu.academic.util.FenixUtil;
 
 /**
  * @author jpvl

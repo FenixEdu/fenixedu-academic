@@ -20,11 +20,12 @@
  * Created on Nov 28, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
+package org.fenixedu.academic.service.services.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.Teacher;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.dto.InfoTeacher;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;

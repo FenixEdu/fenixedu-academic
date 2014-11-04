@@ -23,10 +23,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers.PhdManageEnrolmentsExecutionSemestersProvider"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers.ExistingEnrolmentsToValidate"%>
+<%@page import="org.fenixedu.academic.domain.Enrolment"%>
+<%@page import="org.fenixedu.academic.domain.phd.ManageEnrolmentsBean" %>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.coordinator.providers.PhdManageEnrolmentsExecutionSemestersProvider"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.coordinator.providers.ExistingEnrolmentsToValidate"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
 
 <logic:present role="role(COORDINATOR)">

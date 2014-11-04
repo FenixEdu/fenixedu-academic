@@ -21,7 +21,7 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
+package org.fenixedu.academic.service.services.exceptions;
 
 /**
  * @author João Mota

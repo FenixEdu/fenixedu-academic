@@ -79,7 +79,7 @@ height: 50px;
         
         <logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
         
-            <bean:define id="filtersBean" name="performanceGridFiltersBean" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean"/>
+            <bean:define id="filtersBean" name="performanceGridFiltersBean" type="org.fenixedu.academic.dto.teacher.tutor.StudentsPerformanceInfoBean"/>
             <bean:define id="degreeOID" value="<%= filtersBean.getDegree().getExternalId().toString() %>" />
             <bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getExternalId().toString() %>" />
             <bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getExternalId().toString() %>" />
@@ -138,7 +138,7 @@ height: 50px;
                             <th colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.studentsPercentage" /></th>
                         </tr>
         
-                        <logic:iterate id="statistics" name="tutorStatistics" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorStatisticsBean">
+                        <logic:iterate id="statistics" name="tutorStatistics" type="org.fenixedu.academic.dto.teacher.tutor.TutorStatisticsBean">
                             <tr>
                                 <td width="75px"><%= statistics.getApprovedEnrolmentsNumber()  %></td>
                                 <td width="75px"><%= statistics.getStudentsNumber() %></td>
@@ -157,7 +157,7 @@ height: 50px;
         </logic:present>
     
         <logic:present name="performanceGridFiltersBean">
-            <bean:define id="filtersBean" name="performanceGridFiltersBean" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean"/>
+            <bean:define id="filtersBean" name="performanceGridFiltersBean" type="org.fenixedu.academic.dto.teacher.tutor.StudentsPerformanceInfoBean"/>
             <bean:define id="degreeOID" value="<%= filtersBean.getDegree().getExternalId().toString() %>" />
             <bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getExternalId().toString() %>" />
             <bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getExternalId().toString() %>" />
@@ -199,7 +199,7 @@ height: 50px;
                             <th><bean:message bundle="APPLICATION_RESOURCES" key="label.studentsNumber" /></th>
                             <th colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.studentsPercentage" /></th>
                         </tr>
-                        <logic:iterate id="studentStatistics" name="allStudentsStatistics" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorStatisticsBean">
+                        <logic:iterate id="studentStatistics" name="allStudentsStatistics" type="org.fenixedu.academic.dto.teacher.tutor.TutorStatisticsBean">
                             <tr>
                                 <td width="75px"><%= studentStatistics.getApprovedEnrolmentsNumber()  %></td>
                                 <td width="75px"><%= studentStatistics.getStudentsNumber() %></td>

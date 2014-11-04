@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers;
+package org.fenixedu.academic.servlet.taglib.sop.v3.colorPickers;
 
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.ColorPicker;
+import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoLessonInstance;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.dto.InfoWrittenEvaluation;
+import org.fenixedu.academic.servlet.taglib.sop.v3.ColorPicker;
 
 public class ClassTimeTableColorPicker extends ColorPicker {
 

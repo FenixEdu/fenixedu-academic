@@ -19,14 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.activities;
+package org.fenixedu.academic.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
-import net.sourceforge.fenixedu.domain.phd.access.ExternalAccessPhdActivity;
-import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.PhdThesisReportFeedbackDocument;
+import org.fenixedu.academic.domain.phd.access.ExternalAccessPhdActivity;
+import org.fenixedu.academic.domain.phd.access.PhdExternalOperationBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.bennu.core.domain.User;
 
 public class JuryReporterFeedbackExternalUpload extends ExternalAccessPhdActivity<PhdThesisProcess> {

@@ -156,7 +156,7 @@
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 					</td>
 					<td rowspan="2">
-			        	<html:link page="<%= "/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() %>">
+			        	<html:link page="<%= "/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((org.fenixedu.academic.dto.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() %>">
 							<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 				        </html:link>
 					</td>

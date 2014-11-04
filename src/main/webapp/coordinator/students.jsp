@@ -29,9 +29,9 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 <%
-	net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
+	org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
 %>
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex" />
 <jsp:include page="/coordinator/context.jsp" />
 
 <f:view>

@@ -39,7 +39,7 @@
 <fr:form action="/studentEnrolments.do?method=showDegreeModulesToEnrol">
 	<fr:edit id="studentEnrolment"
 			 name="studentEnrolmentBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean"
+			 type="org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentEnrolmentBean"
 			 schema="student.enrolment.choose.executionPeriod">
 		<fr:destination name="postBack" path="/studentEnrolments.do?method=postBack"/>
 		<fr:layout name="tabular">
@@ -52,7 +52,7 @@
 <logic:present name="studentEnrolmentBean" property="executionPeriod">
 
 	<bean:define id="degree" name="studentEnrolmentBean" property="studentCurricularPlan.degree" 
-				type="net.sourceforge.fenixedu.domain.AcademicProgram"/>
+				type="org.fenixedu.academic.domain.AcademicProgram"/>
 
 	<ul class="mvert1">
 		<academic:allowed operation="ENROLMENT_WITHOUT_RULES" program="<%= degree %>">

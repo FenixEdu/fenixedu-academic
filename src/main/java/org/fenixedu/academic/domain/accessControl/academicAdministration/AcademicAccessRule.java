@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
+package org.fenixedu.academic.domain.accessControl.academicAdministration;
 
 import java.text.Collator;
 import java.util.Comparator;
@@ -7,15 +7,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.accessControl.rules.AccessRuleSystem;
-import net.sourceforge.fenixedu.domain.accessControl.rules.AccessTarget;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.accessControl.rules.AccessRuleSystem;
+import org.fenixedu.academic.domain.accessControl.rules.AccessTarget;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;

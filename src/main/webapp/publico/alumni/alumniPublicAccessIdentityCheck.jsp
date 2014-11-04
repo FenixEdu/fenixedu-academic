@@ -32,7 +32,7 @@
 <h2><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h2>
 
 <div class="alumnilogo" style="background: none;">
-<%-- <div class="col_right_alumni"><img src="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
+<%-- <div class="col_right_alumni"><img src="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
 	
 	<h3><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></h3>
 	

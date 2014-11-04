@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,17 +27,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewInternalSubstitution;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.InternalSubstitutionDismissalBean;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
+import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
+import org.fenixedu.academic.dto.administrativeOffice.dismissal.InternalSubstitutionDismissalBean;
+import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedEnrolment;
+import org.fenixedu.academic.service.services.administrativeOffice.dismissal.CreateNewInternalSubstitution;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

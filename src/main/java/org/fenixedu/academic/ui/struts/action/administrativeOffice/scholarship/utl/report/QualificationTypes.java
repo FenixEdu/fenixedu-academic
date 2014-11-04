@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.QualificationType;
+import org.fenixedu.academic.domain.QualificationType;
 
 public class QualificationTypes {
 

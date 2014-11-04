@@ -20,12 +20,11 @@
  * Created on 14/Nov/2003
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
+package org.fenixedu.academic.service.filter.framework;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.service.filter.AuthorizationByRoleFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.slf4j.Logger;

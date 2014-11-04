@@ -21,7 +21,7 @@
  *
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,8 +29,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
-import net.sourceforge.fenixedu.util.State;
+import org.fenixedu.academic.domain.organizationalStructure.ExternalContract;
+import org.fenixedu.academic.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;

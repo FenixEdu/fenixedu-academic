@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
+<%@page import="org.fenixedu.academic.util.FenixDigestUtils"%>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.confirmMarkSheet"/></h2>
 
@@ -52,7 +52,7 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
+<bean:define id="mark" name="markSheet" type="org.fenixedu.academic.domain.MarkSheet"/>
 <bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
 
 

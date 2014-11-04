@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess;
+package org.fenixedu.academic.domain.candidacyProcess;
 
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplication;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplication;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityStudentDataBean;
+import org.fenixedu.academic.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
+import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 
 public class PrecedentDegreeInformationForIndividualCandidacyFactory {
 

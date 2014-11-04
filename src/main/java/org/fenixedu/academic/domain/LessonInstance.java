@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;

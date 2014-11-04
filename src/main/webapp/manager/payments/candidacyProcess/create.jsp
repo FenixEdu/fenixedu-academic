@@ -35,7 +35,7 @@
 		<fr:edit id="bean" name="bean" visible="false" />
 				
 		<fr:edit id="bean-edit" name="bean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.CandidacyProcessPaymentCodeBean" bundle="MANAGER_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean" bundle="MANAGER_RESOURCES">
 				<fr:slot name="beginDate" required="true" />
 				<fr:slot name="endDate" required="true" />
 				<fr:slot name="numberOfPaymentCodes" required="true" />

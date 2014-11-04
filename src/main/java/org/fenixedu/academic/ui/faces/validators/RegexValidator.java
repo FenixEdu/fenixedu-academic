@@ -20,7 +20,7 @@
  * Created on Oct 11, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.validators;
+package org.fenixedu.academic.ui.faces.validators;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
@@ -29,8 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class RegexValidator implements Validator, StateHolder {
@@ -38,7 +37,7 @@ public class RegexValidator implements Validator, StateHolder {
 
     private boolean _transient = false;
 
-    private final String INVALID_INPUT = "net.sourceforge.fenixedu.presentationTier.jsf.validators.INVALID_INPUT";
+    private final String INVALID_INPUT = "org.fenixedu.academic.ui.faces.validators.INVALID_INPUT";
 
     @Override
     public void validate(FacesContext _context, UIComponent _component, Object _value) throws ValidatorException {

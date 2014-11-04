@@ -31,13 +31,13 @@
 <p class="breadcumbs">
 	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 1</strong>: <bean:message key="label.personManagement.merge.choose.persons" bundle="MANAGER_RESOURCES" /> </span> &gt;
 
-<logic:equal name="classToMerge" value="net.sourceforge.fenixedu.domain.Person">
+<logic:equal name="classToMerge" value="org.fenixedu.academic.domain.Person">
 	<span class="actual"><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 2</strong>: <bean:message key="label.personManagement.merge.transfer.personal.data" bundle="MANAGER_RESOURCES" /> </span> &gt;
 </logic:equal>
 
 	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 3</strong>: <bean:message key="label.personManagement.merge.transfer.events.and.accounts" bundle="MANAGER_RESOURCES" /> </span> &gt;
 
-<logic:equal name="classToMerge" value="net.sourceforge.fenixedu.domain.student.Student">
+<logic:equal name="classToMerge" value="org.fenixedu.academic.domain.student.Student">
 	<span class="actual"><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 4</strong>: <bean:message key="label.personManagement.merge.transfer.student.data" bundle="MANAGER_RESOURCES" /> </span> &gt;
 </logic:equal>
 
@@ -109,7 +109,7 @@
 
 <p>&nbsp;</p>
 
-<logic:equal name="classToMerge" value="net.sourceforge.fenixedu.domain.Person">
+<logic:equal name="classToMerge" value="org.fenixedu.academic.domain.Person">
 
 	<fr:form action="/mergePersons.do?method=prepareTransferEventsAndAccounts">
 	
@@ -120,7 +120,7 @@
 
 </logic:equal>
 
-<logic:equal name="classToMerge" value="net.sourceforge.fenixedu.domain.student.Student">
+<logic:equal name="classToMerge" value="org.fenixedu.academic.domain.student.Student">
 
 	<fr:form action="/mergePersons.do?method=prepareTransferRegistrations">
 	

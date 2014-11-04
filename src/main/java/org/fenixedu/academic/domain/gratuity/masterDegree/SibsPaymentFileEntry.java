@@ -19,15 +19,14 @@
 /*
  * Created on Apr 22, 2004
  */
-package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
+package org.fenixedu.academic.domain.gratuity.masterDegree;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
-import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
-
+import org.fenixedu.academic.domain.gratuity.SibsPaymentStatus;
+import org.fenixedu.academic.domain.gratuity.SibsPaymentType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**

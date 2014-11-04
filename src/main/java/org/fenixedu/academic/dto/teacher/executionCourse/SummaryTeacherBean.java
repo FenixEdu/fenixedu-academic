@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
+package org.fenixedu.academic.dto.teacher.executionCourse;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class SummaryTeacherBean implements Serializable {

@@ -21,9 +21,9 @@
 <%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" %>
+<%@page import="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" %>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.guidance.provider.PhdGuidanceDocumentTypeProvider" %>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.guidance.provider.PhdGuidanceDocumentTypeProvider" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>

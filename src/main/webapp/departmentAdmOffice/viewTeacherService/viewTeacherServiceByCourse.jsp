@@ -26,7 +26,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core"  prefix="c" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix"  prefix="fc" %>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp$ViewTeacherService" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.departmentAdmOffice.DepartmentAdmOfficeApp$ViewTeacherService" />
 
 <f:view>
 	

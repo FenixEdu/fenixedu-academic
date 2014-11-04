@@ -21,18 +21,17 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -366,7 +365,7 @@ public class Summary extends Summary_Base {
 
     @Deprecated
     public java.util.Date getSummaryHour() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getSummaryHourHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getSummaryHourHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -375,7 +374,7 @@ public class Summary extends Summary_Base {
         if (date == null) {
             setSummaryHourHourMinuteSecond(null);
         } else {
-            setSummaryHourHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setSummaryHourHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

@@ -16,29 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.seminar;
+package org.fenixedu.academic.ui.struts.action.phd.seminar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RejectComission;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RejectReport;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SubmitComission;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.UploadReport;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.ValidateComission;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.ValidateReport;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.RejectComission;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.RejectReport;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.SubmitComission;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.UploadReport;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.ValidateComission;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.ValidateReport;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessDA;
 
 abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
 

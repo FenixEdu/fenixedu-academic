@@ -19,10 +19,11 @@
 /*
  * Created on May 5, 2006
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
+package org.fenixedu.academic.service.services.administrativeOffice.gradeSubmission;
 
-import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.MarkSheet;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class DeleteMarkSheet {

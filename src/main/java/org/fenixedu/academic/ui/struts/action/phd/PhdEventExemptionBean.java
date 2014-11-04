@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
 import java.io.Serializable;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.phd.debts.PhdEvent;
+import org.fenixedu.academic.domain.phd.debts.PhdEventExemptionJustificationType;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.LocalDate;
 
 public class PhdEventExemptionBean implements Serializable {

@@ -38,13 +38,13 @@
 
 	<fr:form action="/projectTutorialCourses.do?method=showDepartmentExecutionCourses">
 		<fr:edit id="departmentCreditsBean" name="departmentCreditsBean">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.DepartmentCreditsBean">
 				<fr:slot name="department" key="label.department" layout="menu-select">
 					<fr:property name="from" value="availableDepartments"/>
 					<fr:property name="format" value="${name}"/>
 				</fr:slot>
 				<fr:slot name="executionSemester" key="label.execution-period" layout="menu-select" required="true">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider" />
 					<fr:property name="format" value="${executionYear.year} - ${semester}º semestre" />
 					<fr:property name="nullOptionHidden" value="true" />
 				</fr:slot>
@@ -61,7 +61,7 @@
 	<logic:notEmpty name="departmentCreditsBean" property="departmentExecutionCourses">
 		<bean:define id="departmentOid" name="departmentCreditsBean" property="department.externalId"/>
 		<fr:view name="departmentCreditsBean" property="departmentExecutionCourses">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.ExecutionCourse">
 				<fr:slot name="name" key="label.course"/>
 				<fr:slot name="degreePresentationString" key="label.degrees"/>
 				<fr:slot name="projectTutorialCourse" key="label.projectTutorialCourseType"/>

@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@ page language="java"%>
@@ -49,9 +49,9 @@
 	<tr>
 		<td style="vertical-align: bottom;"><fr:form action="/libraryOperator.do?method=selectLibrary">
 				<fr:edit id="attendance" name="attendance">
-					<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+					<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance">
 						<fr:slot name="library" key="label.library" layout="menu-select-postback" required="true">
-							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.library.LibraryProvider" />
+							<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.library.LibraryProvider" />
 							<fr:property name="format" value="Biblioteca \${parent.parent.presentationName}" />
 							<fr:property name="destination" value="postback" />
 						</fr:slot>
@@ -68,7 +68,7 @@
 			<div style="float: right; margin-left: 10px; margin-top: 15px;">
 				<logic:present name="attendance" property="library">
 					 				
-					<bean:message key="label.library.ocupation" />: <%= net.sourceforge.fenixedu.domain.space.SpaceUtils.currentAttendaceCount(((net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance)request.getAttribute("attendance")).getLibrary()) %> / ${attendance.library.allocatableCapacity}
+					<bean:message key="label.library.ocupation" />: <%= org.fenixedu.academic.domain.space.SpaceUtils.currentAttendaceCount(((org.fenixedu.academic.ui.struts.action.library.LibraryAttendance)request.getAttribute("attendance")).getLibrary()) %> / ${attendance.library.allocatableCapacity}
 				</logic:present>
 			</div>
 		</td>
@@ -87,7 +87,7 @@
 							<tr><td><a href="#" onclick="setManualSearch();"><bean:message key="link.manualSearch" bundle="LIBRARY_RESOURCES" /> </a></td></tr>
 							<tr>
 								<td><fr:edit id="search.person" name="attendance">
-										<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+										<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance">
 											<fr:slot name="personId" key="label.search.person" />
 										</fr:schema>
 										<fr:layout name="tabular">
@@ -106,9 +106,9 @@
 					<a href="#" onclick="setCardSearch();"><bean:message key="link.cardSearch" bundle="LIBRARY_RESOURCES" /> </a>
 					<fr:form action="/libraryOperator.do?method=advancedSearch">
 						<fr:edit id="advanced.search" name="attendance">
-							<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+							<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance">
 								<fr:slot name="personType" key="label.person.type" layout="menu-select">
-									<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance$RoleTypeProvider" />
+									<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance$RoleTypeProvider" />
 									<fr:property name="defaultText" value="" />
 								</fr:slot>
 								<fr:slot name="personName" key="label.person.name">
@@ -148,7 +148,7 @@
 						<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" />
 					</p>
 					<fr:view name="attendance" property="matches">
-						<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+						<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance">
 							<fr:slot name="username" key="label.person.username" />
 							<fr:slot name="name" key="label.person.name" />
 						</fr:schema>
@@ -171,7 +171,7 @@
 					</logic:notEqual>
 				</logic:notEmpty> <logic:present name="attendance" property="person">
 					<fr:view name="attendance">
-						<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+						<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance">
 							<fr:slot name="person" key="label.person.picture" layout="view-as-image">
 								<fr:property name="classes" value="column3" />
 								<fr:property name="useParent" value="true" />
@@ -234,7 +234,7 @@
 							<table>
 								<tr>
 									<td><fr:edit id="person.selectPlace" name="attendance">
-											<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+											<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance">
 												<fr:slot name="personAttendance.occupationDesctiption" key="label.person.place" readOnly="true" />
 												<fr:slot name="personAttendance.entranceTime" key="label.person.entranceTime" readOnly="true" />
 											</fr:schema>
@@ -255,9 +255,9 @@
 								<table>
 									<tr>
 										<td><fr:edit id="person.selectPlace" name="attendance">
-												<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+												<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance">
 													<fr:slot name="selectedSpace" key="label.person.place" layout="menu-select">
-														<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance$PlaceProvider" />
+														<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.library.LibraryAttendance$PlaceProvider" />
 														<fr:property name="sortBy" value="name" />
 														<fr:property name="format" value="\${name}" />
 														<fr:property name="defaultText" value="label.space.libraryResourceNone" />
@@ -289,7 +289,7 @@
 					</h3>
 					
 					<fr:view name="attendance" property="libraryAttendances">
-						<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.domain.space.SpaceAttendances">
+						<fr:schema bundle="LIBRARY_RESOURCES" type="org.fenixedu.academic.domain.space.SpaceAttendances">
 							<fr:slot name="person.username" key="label.person.username" />
 							<fr:slot name="person.firstAndLastName" key="label.person.name" />
 							<fr:slot name="occupationDesctiption" key="label.space.name" />

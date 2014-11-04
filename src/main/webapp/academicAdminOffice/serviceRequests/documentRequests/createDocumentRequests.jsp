@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
+<%@ page import="org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
 <%@ page import="org.apache.struts.action.ActionMessages"%>
 
 <html:xhtml/>
@@ -90,7 +90,7 @@
 	
 		<!-- Choose Document Request Type -->
 		<bean:define id="schema" name="documentRequestCreateBean" property="schema" type="java.lang.String"/>
-		<fr:edit id="documentRequestTypeEdit" name="documentRequestCreateBean" schema="<%=schema%>" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+		<fr:edit id="documentRequestTypeEdit" name="documentRequestCreateBean" schema="<%=schema%>" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thright thlight mtop025 mbottom0 thmiddle"/>
 				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
@@ -102,7 +102,7 @@
 		<!-- Insert additional Information (if any) -->
 		<logic:present name="additionalInformationSchemaName">
 			<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
-			<fr:edit id="additionalInformationEdit" name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+			<fr:edit id="additionalInformationEdit" name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
@@ -118,7 +118,7 @@
 			
 			<!-- Requested Cycle -->
 			<logic:equal name="documentRequestCreateBean" property="hasCycleTypeDependency" value="true">
-				<fr:edit id="requestedCycleEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.requestedCycle" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+				<fr:edit id="requestedCycleEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.requestedCycle" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
@@ -127,7 +127,7 @@
 			</logic:equal>
 			
 			<!-- Internationalization -->
-			<fr:edit id="languageEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.language" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+			<fr:edit id="languageEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.language" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
@@ -136,7 +136,7 @@
 	
 			<!-- Mobility Program -->
 			<logic:equal name="documentRequestCreateBean" property="hasMobilityProgramDependency" value="true">
-				<fr:edit id="mobilityProgramEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.mobilityProgram" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+				<fr:edit id="mobilityProgramEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.mobilityProgram" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
@@ -146,7 +146,7 @@
 	
 			<!-- Purposes -->
 			<logic:equal name="documentRequestCreateBean" property="hasPurposeNeed" value="true">
-				<fr:edit id="purposesEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+				<fr:edit id="purposesEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
@@ -156,7 +156,7 @@
 	
 			<!-- Can be free processed? -->
 			<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
-				<fr:edit id="freeProcessedEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+				<fr:edit id="freeProcessedEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>

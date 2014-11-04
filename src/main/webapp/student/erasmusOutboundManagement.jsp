@@ -18,18 +18,18 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
-<%@page import="net.sourceforge.fenixedu.domain.Country"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
+<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
+<%@page import="org.fenixedu.academic.domain.Country"%>
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
-<%@page import="net.sourceforge.fenixedu.domain.period.CandidacyPeriod"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacy"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
+<%@page import="org.fenixedu.academic.domain.period.CandidacyPeriod"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -72,7 +72,7 @@
 
 <h2><bean:message key="link.title.student.mobility.processes"/></h2>
 
-<bean:define id="student" name="student" type="net.sourceforge.fenixedu.domain.student.Student"/>
+<bean:define id="student" name="student" type="org.fenixedu.academic.domain.student.Student"/>
 
 	<h2 class="separator2">
 		<bean:write name="student" property="person.name"/>
@@ -80,7 +80,7 @@
 		<bean:write name="student" property="person.username"/>
 		)</span>
 	</h2>
-	<logic:iterate id="registration" name="student" property="registrations" type="net.sourceforge.fenixedu.domain.student.Registration">
+	<logic:iterate id="registration" name="student" property="registrations" type="org.fenixedu.academic.domain.student.Registration">
 		<% if (!registration.getOutboundMobilityCandidacySubmissionSet().isEmpty()) { %>
 		
 				<%

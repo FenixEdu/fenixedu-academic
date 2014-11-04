@@ -21,7 +21,7 @@
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType"%><html:xhtml />
+<%@page import="org.fenixedu.academic.domain.candidacy.CandidacyOperationType"%><html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>

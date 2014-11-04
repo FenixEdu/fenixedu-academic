@@ -1,12 +1,11 @@
-package net.sourceforge.fenixedu.domain.accessControl;
+package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;

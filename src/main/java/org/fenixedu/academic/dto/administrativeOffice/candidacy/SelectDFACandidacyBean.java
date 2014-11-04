@@ -19,13 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy;
+package org.fenixedu.academic.dto.administrativeOffice.candidacy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
-import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
-import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
+import org.fenixedu.academic.domain.candidacy.DFACandidacy;
+import org.fenixedu.academic.domain.util.workflow.StateBean;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

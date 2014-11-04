@@ -19,7 +19,7 @@
 /*
  * Created on Feb 21, 2006
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules;
+package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +27,14 @@ import java.util.List;
 import javax.faces.component.UISelectItems;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompositeRule;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.LogicOperator;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
-
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.util.LogicOperator;
+import org.fenixedu.academic.service.services.bolonhaManager.CreateCompositeRule;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class CompositeRulesManagementBackingBean extends CurricularRulesManagementBackingBean {

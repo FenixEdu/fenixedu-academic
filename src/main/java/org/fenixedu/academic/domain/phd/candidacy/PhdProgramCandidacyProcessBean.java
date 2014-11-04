@@ -16,30 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy;
+package org.fenixedu.academic.domain.phd.candidacy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-import net.sourceforge.fenixedu.domain.phd.ThesisSubject;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.QualificationBean;
+import org.fenixedu.academic.domain.phd.ExternalPhdProgram;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdParticipantBean;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
+import org.fenixedu.academic.domain.phd.ThesisSubject;
+import org.fenixedu.academic.dto.person.ChoosePersonBean;
+import org.fenixedu.academic.dto.person.PersonBean;
 import org.joda.time.LocalDate;
 
 public class PhdProgramCandidacyProcessBean implements Serializable {

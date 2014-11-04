@@ -35,7 +35,7 @@
 	<td><img src="<%= request.getContextPath() + url %>"/></td>
 	<td >
 		<fr:view name="professorship">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Professorship">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.Professorship">
 				<fr:slot name="teacher.person.presentationName" key="label.name"/>
 				<fr:slot name="this" key="label.course" layout="format">
 					<fr:property name="format" value="${executionCourse.nome}  (${degreeSiglas})" />
@@ -63,7 +63,7 @@
 			
 		<h3 class="separator2 mtop2"><bean:message key="label.availableOrientations" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 		<fr:edit id="projectTutorialService" name="projectTutorialServiceBeans" action="<%= "/degreeProjectTutorialService.do?method=updateProjectTutorialService&professorshipID="+professorshipID%>">
-			<fr:schema type="net.sourceforge.fenixedu.domain.credits.util.ProjectTutorialServiceBean" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.credits.util.ProjectTutorialServiceBean" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
 				<fr:slot name="attend.registration.number" key="label.teacher-thesis-student.student-number" readOnly="true"/>
 				<fr:slot name="attend.registration.student.person.name" key="label.teacher-thesis-student.student-name" readOnly="true"/>
 				<fr:slot name="percentage" key="label.teacher-thesis-student.percentage" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>

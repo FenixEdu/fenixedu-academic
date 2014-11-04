@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.IFormation;
-
+import org.fenixedu.academic.dto.alumni.formation.IFormation;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;

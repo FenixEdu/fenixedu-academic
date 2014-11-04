@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student.registrationStates;
+package org.fenixedu.academic.domain.student.registrationStates;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,21 +28,20 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.domain.util.workflow.IState;
-import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
-import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.RegistrationStatePredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EnrolmentAction;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.domain.util.workflow.IState;
+import org.fenixedu.academic.domain.util.workflow.StateBean;
+import org.fenixedu.academic.domain.util.workflow.StateMachine;
+import org.fenixedu.academic.dto.student.RegistrationStateBean;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.RegistrationStatePredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EnrolmentAction;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -246,7 +245,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
                 responsablePersonName = "-";
             }
 
-            net.sourceforge.fenixedu.domain.student.RegistrationStateLog
+            org.fenixedu.academic.domain.student.RegistrationStateLog
                     .createRegistrationStateLog(getRegistration(), Bundle.MESSAGING,
                             "log.registration.registrationstate.removed", getStateType().getDescription(), getRemarks());
             setRegistration(null);
@@ -325,7 +324,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
             throw new DomainException("error.cannot.add.registrationState.incoherentState");
         }
-        net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(bean.getRegistration(),
+        org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(bean.getRegistration(),
                 Bundle.MESSAGING, "log.registration.registrationstate.added", bean.getStateType().getDescription(),
                 bean.getRemarks());
         return createdState;

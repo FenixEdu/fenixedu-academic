@@ -27,7 +27,7 @@
 
 <html:xhtml/>
 
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
 
 <h2><bean:message key="title.sendEmail" bundle="APPLICATION_RESOURCES"/></h2>
 
@@ -73,9 +73,9 @@
 	
 	<fr:form id="receiversBeanForm" action="/sendMailToTutoredStudents.do?method=prepare">
 		<fr:edit id="receiversBean" name="receiversBean">
-			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.dto.teacher.tutor.StudentsByTutorBean">
 				<fr:slot name="studentsEntryYear" key="label.studentsEntryYear" layout="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$ActiveTutorshipEntryExecutionYearProviderByTeacher"/> 
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$ActiveTutorshipEntryExecutionYearProviderByTeacher"/> 
 					<fr:property name="format" value="${year}"/>
 					<fr:property name="defaultText" value="<%= "-- " + BundleUtil.getMessageFromModuleOrApplication("application", "label.view.all") +  " --" %>"/>
 				</fr:slot>

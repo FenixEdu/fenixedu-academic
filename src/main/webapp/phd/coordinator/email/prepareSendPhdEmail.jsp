@@ -26,8 +26,8 @@
 
 <html:xhtml/>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" %>
+<%@page import="org.fenixedu.academic.domain.phd.email.PhdProgramEmailBean" %>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" %>
 
 <logic:present role="role(COORDINATOR)">
 
@@ -123,7 +123,7 @@
 	
 		<fr:edit id="phdEmailBean.individuals" name="phdEmailBean" >
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramEmailBean.class.getName() %>">
-				<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy" validator="net.sourceforge.fenixedu.presentationTier.Action.phd.validator.EmailListValidator">
+				<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy" validator="org.fenixedu.academic.ui.struts.action.phd.validator.EmailListValidator">
 					<fr:property name="size" value="50" />
 				</fr:slot>
 			</fr:schema>

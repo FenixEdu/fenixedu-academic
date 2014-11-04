@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,45 +33,44 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
-import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularCourseFunctor;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import net.sourceforge.fenixedu.predicates.DegreeCurricularPlanPredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.MarkType;
-import net.sourceforge.fenixedu.util.PeriodState;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.BranchType;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
+import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
+import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
+import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.curriculum.AverageType;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
+import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
+import org.fenixedu.academic.dto.ExecutionCourseView;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.DegreeCurricularPlanPredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MarkType;
+import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
@@ -1032,7 +1031,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 if (branch.getBranchType() == null) {
                     return branch.getName().equals("") && branch.getCode().equals("");
                 }
-                return branch.getBranchType().equals(net.sourceforge.fenixedu.domain.branch.BranchType.COMNBR);
+                return branch.getBranchType().equals(org.fenixedu.academic.domain.branch.BranchType.COMNBR);
 
             }
         });
@@ -1686,7 +1685,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return (Set) branches;
     }
 
-    public Set<BranchCourseGroup> getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType branchType) {
+    public Set<BranchCourseGroup> getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
         final Set<BranchCourseGroup> branchesByType = new TreeSet<BranchCourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
         final Set<BranchCourseGroup> branches = getAllBranches();
         if (branches == null) {
@@ -1701,18 +1700,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Set<BranchCourseGroup> getMajorBranches() {
-        return getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType.MAJOR);
+        return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MAJOR);
     }
 
     public Set<BranchCourseGroup> getMinorBranches() {
-        return getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType.MINOR);
+        return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MINOR);
     }
 
     public boolean hasBranches() {
         return getAllBranches().isEmpty() ? false : true;
     }
 
-    public boolean hasBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType branchType) {
+    public boolean hasBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
         return getBranchesByType(branchType).isEmpty() ? false : true;
     }
 
@@ -1997,7 +1996,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
+    public java.util.Set<org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
         return getTargetEquivalencePlansSet();
     }
 

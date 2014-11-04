@@ -20,7 +20,7 @@
  * Author : Goncalo Luiz
  * Creation Date: Jul 4, 2006,3:12:27 PM
  */
-package net.sourceforge.fenixedu.presentationTier.Action.messaging;
+package org.fenixedu.academic.ui.struts.action.messaging;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>

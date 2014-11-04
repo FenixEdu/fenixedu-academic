@@ -28,10 +28,10 @@
 
 <html:xhtml/>
 
-<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean"/>
+<bean:define id="bean" name="bean" type="org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean"/>
 
 <h2>
-	<bean:define id="academicSituationType" name="bean" property="academicServiceRequestSituationType" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType"/>
+	<bean:define id="academicSituationType" name="bean" property="academicServiceRequestSituationType" type="org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType"/>
 	<logic:equal name="academicSituationType" value="NEW">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" />
 	</logic:equal>

@@ -21,7 +21,7 @@
  *
  * Created on 6 de Janeiro de 2003, 20:29
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Objects;
 import java.util.stream.Collectors;

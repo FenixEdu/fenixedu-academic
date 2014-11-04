@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.example;
+package org.fenixedu.academic.ui.faces.bean.example;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
+import org.fenixedu.academic.service.services.commons.ReadExecutionPeriods;
 
 public class ExecutionPeriods {
 

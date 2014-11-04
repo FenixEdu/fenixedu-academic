@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.webServices.jersey.api;
+package org.fenixedu.academic.api.infra;
 
 import java.util.Iterator;
 import java.util.Locale;

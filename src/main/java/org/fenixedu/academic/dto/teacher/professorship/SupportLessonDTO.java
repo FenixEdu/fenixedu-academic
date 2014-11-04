@@ -19,12 +19,12 @@
 /**
  * Nov 22, 2005
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.professorship;
+package org.fenixedu.academic.dto.teacher.professorship;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.util.DiaSemana;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.util.DiaSemana;
 
 /**
  * @author Ricardo Rodrigues

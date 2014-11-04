@@ -30,7 +30,7 @@
 <bean:define id="specializationArea"
 	name="specializationArea" />
 	
-<bean:define id="officialPub" type="net.sourceforge.fenixedu.domain.DegreeOfficialPublication" name="specializationArea" property="specializationArea.officialPublication"/>	
+<bean:define id="officialPub" type="org.fenixedu.academic.domain.DegreeOfficialPublication" name="specializationArea" property="specializationArea.officialPublication"/>	
 
 <fr:form
 	action='<%="/curricularPlans/editOfficialPublication.do?officialPubId=" + officialPub.getExternalId()%>'>
@@ -38,7 +38,7 @@
 	
 	<fr:edit name="specializationArea" id="specializationArea">
 		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean$SpecializationName">
+			type="org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans.OfficialPublicationBean$SpecializationName">
 			<fr:slot name="enName" key="degree.officialPublication.pt" />
 			<fr:slot name="ptName" key="degree.officialPublication.en" />
 		</fr:schema>

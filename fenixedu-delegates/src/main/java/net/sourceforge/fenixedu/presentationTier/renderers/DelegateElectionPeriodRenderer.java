@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers;
+package org.fenixedu.academic.ui.renderers;
 
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
+import org.fenixedu.academic.domain.elections.DelegateElectionCandidacyPeriod;
+import org.fenixedu.academic.domain.elections.DelegateElectionPeriod;
+import org.fenixedu.academic.domain.elections.DelegateElectionVotingPeriod;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;

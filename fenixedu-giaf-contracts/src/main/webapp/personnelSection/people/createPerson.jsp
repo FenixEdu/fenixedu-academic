@@ -21,8 +21,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.Role"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.Role"%>
+<%@page import="org.fenixedu.academic.domain.person.RoleType"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
@@ -46,7 +46,7 @@
 		<fr:form action="/personnelManagePeople.do">
 			<fr:edit name="anyPersonSearchBean" id="anyPersonSearchBeanId">
 				<input type="hidden" name="method"/>
-				<fr:schema type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
 					<fr:slot name="name">
 						<fr:property name="size" value="50"/>
 					</fr:slot>	
@@ -77,7 +77,7 @@
 							<bean:message key="label.roles" bundle="APPLICATION_RESOURCES"/>
 						</th>
 					</tr>
-					<logic:iterate id="person" name="resultPersons" type="net.sourceforge.fenixedu.domain.Person">
+					<logic:iterate id="person" name="resultPersons" type="org.fenixedu.academic.domain.Person">
 						<tr>
 							<td class="listClasses">
 								<html:link action="/personnelManagePeople.do?method=viewPerson" paramId="personId" paramName="person" paramProperty="externalId">

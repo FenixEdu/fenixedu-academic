@@ -90,7 +90,7 @@
 					
 					<div class="authorization-edit">
 						<fr:edit name="group">
-							<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AuthorizationGroupBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+							<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.AuthorizationGroupBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 								<fr:slot name="operation" key="label.operation">
 									<fr:property name="defaultOptionHidden" value="true"/>
 									<fr:property name="sort" value="true"/>
@@ -194,7 +194,7 @@
 					<div id="collapseOne" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<logic:iterate id="office" name="managementBean" property="administrativeOffices" 
-										   type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice">
+										   type="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice">
 								<div class="draggable_course office">
 									<div id="oid" style="display:none"><bean:write name="office" property="oid"/></div>
 									<div id="presentationName" style="display:none"><bean:write name="office" property="unit.name"/></div>
@@ -205,7 +205,7 @@
 					</div>
 				</div>
 		
-				<logic:iterate id="degreeType" name="managementBean" property="degreeTypes" type="net.sourceforge.fenixedu.domain.degree.DegreeType">
+				<logic:iterate id="degreeType" name="managementBean" property="degreeTypes" type="org.fenixedu.academic.domain.degree.DegreeType">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">
@@ -241,7 +241,7 @@
 					<div id="collapseTwo" class="panel-collapse collapse">
 						<div class="panel-body">
 							<logic:iterate id="program" name="managementBean" property="phdPrograms" 
-										   type="net.sourceforge.fenixedu.domain.phd.PhdProgram">
+										   type="org.fenixedu.academic.domain.phd.PhdProgram">
 								<div class="draggable_course degree">
 									<div id="oid" style="display:none"><bean:write name="program" property="oid"/></div>
 									<div id="presentationName" style="display:none"><bean:write name="program" property="presentationName"/></div>

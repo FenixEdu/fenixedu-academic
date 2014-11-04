@@ -38,13 +38,13 @@
 	<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 	
 	<fr:edit id="send.reception.email.bean.edit" name="sendReceptionEmailBean">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
 			<fr:slot name="includeOnlyProcessWithNoReceptionEmail" key="label.erasmus.send.reception.email.include.processes.no.reception.email" required="true" layout="radio-postback">
 				<fr:property name="destination" value="postBack"/>
 			</fr:slot>
 			<fr:slot name="mobilityProgram" layout="menu-select-postback" key="label.mobility.program" >
 				<fr:property name="format" value="${registrationProtocol.description.content}" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$MobilityApplicationsMobilityProgramsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusCandidacyProcessDA$MobilityApplicationsMobilityProgramsProvider" />
 				<fr:property name="destination" value="postBack"/>
 			</fr:slot>
 		</fr:schema>

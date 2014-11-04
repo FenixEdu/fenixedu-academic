@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher;
+package org.fenixedu.academic.domain.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod;
-import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
-import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod;
-import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.department.TeacherPersonalExpectationBean;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.TeacherAutoEvaluationDefinitionPeriod;
+import org.fenixedu.academic.domain.TeacherExpectationDefinitionPeriod;
+import org.fenixedu.academic.domain.TeacherPersonalExpectationPeriod;
+import org.fenixedu.academic.domain.TeacherPersonalExpectationsEvaluationPeriod;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

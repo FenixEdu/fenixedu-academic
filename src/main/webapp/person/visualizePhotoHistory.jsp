@@ -61,7 +61,7 @@
 	<logic:notEmpty name="history">
 		
 		<fr:view name="history">
-			<fr:schema type="net.sourceforge.fenixedu.domain.Photograph" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.Photograph" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="externalId" key="label.photo" layout="view-as-image">
 			    	<fr:property name="classes" value="nobullet noindent"/>
 					<fr:property name="useParent" value="true" />

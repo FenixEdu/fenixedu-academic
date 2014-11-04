@@ -22,10 +22,9 @@
  * Created on 31 de Outubro de 2002, 12:19
  */
 
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-
+import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,23 +30,23 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.NonRegularTeachingService;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.inquiries.InquiriesRegistryState;
+import org.fenixedu.academic.domain.inquiries.InquiryCourseAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryGradesInterval;
+import org.fenixedu.academic.domain.inquiries.InquiryStudentTeacherAnswer;
+import org.fenixedu.academic.domain.inquiries.QuestionAnswer;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryExecutionPeriod;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryRegistry;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.StudentTeacherInquiryTemplate;
+import org.fenixedu.academic.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

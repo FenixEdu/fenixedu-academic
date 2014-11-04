@@ -34,7 +34,7 @@
 
 	<tag>
 		<name>allowed</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.AcademicGroupTagLib</tag-class>
+		<tag-class>org.fenixedu.academic.servlet.taglib.AcademicGroupTagLib</tag-class>
 		<description>Renders content if logged user is allowed to execute a given academic operation</description>
 		<attribute>
 			<name>operation</name>
@@ -53,7 +53,7 @@
 	</tag>
 	<tag>
 		<name>notAllowed</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.AcademicGroupNotAllowedTagLib</tag-class>
+		<tag-class>org.fenixedu.academic.servlet.taglib.AcademicGroupNotAllowedTagLib</tag-class>
 		<description>Renders content if logged user is not allowed to execute a given academic operation</description>
 		<attribute>
 			<name>operation</name>

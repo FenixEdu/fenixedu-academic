@@ -25,12 +25,12 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"%>
-<%@page import="net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest"%>
+<%@page import="org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituation"%>
+<%@page import="org.fenixedu.academic.domain.serviceRequests.SpecialSeasonRequest"%>
 
 <html:xhtml/>
 
-<bean:define id="academicServiceRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
+<bean:define id="academicServiceRequest" name="academicServiceRequest" type="org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 
 <h2 class="mbottom1"><bean:write name="academicServiceRequest" property="description"/></h2>
 
@@ -55,7 +55,7 @@
 	
 	    <fr:view name="rectorateSubmissionBatch">
 			<fr:schema 
-				type="net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch"
+				type="org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch"
 				bundle="ACADEMIC_OFFICE_RESOURCES">
 			    <fr:slot name="diplomaDocumentRequestCount" key="label.rectorateSubmission.documentRequestCount" />
 				<fr:slot name="creation" key="label.rectorateSubmission.creation" />

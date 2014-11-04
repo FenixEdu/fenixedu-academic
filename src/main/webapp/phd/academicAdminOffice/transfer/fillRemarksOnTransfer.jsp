@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdParticipant"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -73,7 +73,7 @@
 	<fr:edit id="phdIndividualProgramProcessBean" name="phdIndividualProgramProcessBean" visible="false" />
 
 	<fr:edit id="phdIndividualProgramProcessBean-remarks" name="phdIndividualProgramProcessBean">
-		<fr:schema bundle="PHD_RESOURCES"  type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean">
+		<fr:schema bundle="PHD_RESOURCES"  type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean">
 			<fr:slot name="remarks" required="true" layout="longText" >
 				<fr:property name="rows" value="4" />
 				<fr:property name="columns" value="40" />

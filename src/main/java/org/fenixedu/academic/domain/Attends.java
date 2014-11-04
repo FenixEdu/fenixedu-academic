@@ -22,7 +22,7 @@
  * Created on 20 de Outubro de 2002, 14:42
  */
 
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -35,16 +35,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.GroupEnrolment;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.student.WeeklyWorkLoad;
+import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateMidnight;

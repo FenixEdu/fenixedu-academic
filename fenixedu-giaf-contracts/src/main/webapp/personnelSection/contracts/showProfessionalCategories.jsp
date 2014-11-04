@@ -28,7 +28,7 @@
 
 <logic:present name="professionalCategories">
 	<fr:edit name="professionalCategories">
-		<fr:schema bundle="CONTRACTS_RESOURCES" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory">
+		<fr:schema bundle="CONTRACTS_RESOURCES" type="org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory">
 			<fr:slot readOnly="true" name="giafId" key="label.giafId" layout="null-as-label"/>
 			<fr:slot readOnly="true" name="categoryType" key="label.type" layout="null-as-label"/>
 			<fr:slot readOnly="true" name="name" key="label.category" layout="null-as-label"/>

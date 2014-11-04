@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.activities;
+package org.fenixedu.academic.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.domain.phd.access.ExternalAccessPhdActivity;
-import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-
+import org.fenixedu.academic.domain.phd.access.ExternalAccessPhdActivity;
+import org.fenixedu.academic.domain.phd.access.PhdExternalOperationBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.bennu.core.domain.User;
 
 public class JuryDocumentsDownload extends ExternalAccessPhdActivity<PhdThesisProcess> {

@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -27,7 +27,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <%@page
-    import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
+    import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <html:xhtml />
 
@@ -76,7 +76,7 @@
 	
 	<fr:edit id="studentSelectionFormEdit" name="studentContextSelectionBean">
 		
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.StudentContextSelectionBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.dto.resourceAllocationManager.StudentContextSelectionBean">
 			<fr:slot name="number" key="label.student.username.or.number"/>
 		<logic:notPresent name="noEditionAllowed">
 			<fr:slot name="toEdit" key="label.edit.schedule"/>
@@ -118,7 +118,7 @@
 		</span></p>
 	</logic:empty>
 	<logic:notEmpty name="registrations">
-		<bean:define name="timeTableExecutionSemester" id="timeTableExecutionSemester" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/> 
+		<bean:define name="timeTableExecutionSemester" id="timeTableExecutionSemester" type="org.fenixedu.academic.domain.ExecutionSemester"/> 
 		<logic:iterate id="registration" name="registrations">
 			<html:link page="<%= "/chooseExecutionPeriod.do?method=chooseStudentById&executionSemesterId=" + timeTableExecutionSemester.getExternalId() %>" paramId="registrationId" paramName="registration" paramProperty="externalId">
 				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degreeNameWithDegreeCurricularPlanName"/>

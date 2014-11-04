@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico;
+package org.fenixedu.academic.ui.struts.action.publico;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,17 +26,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.GroupResultType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
-import net.sourceforge.fenixedu.domain.inquiries.ResultsInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
+import org.fenixedu.academic.dto.inquiries.BlockResultsSummaryBean;
+import org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.inquiries.GroupResultType;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.InquiryResultType;
+import org.fenixedu.academic.domain.inquiries.ResultsInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.StudentTeacherInquiryTemplate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

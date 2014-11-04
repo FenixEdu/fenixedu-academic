@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico;
+package org.fenixedu.academic.ui.struts.action.publico;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -24,23 +24,23 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorInquiryBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryRegentAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.dto.inquiries.CoordinatorInquiryBean;
+import org.fenixedu.academic.dto.inquiries.InquiryBlockDTO;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.inquiries.CoordinatorInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.DelegateInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryCoordinatorAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryDelegateAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryRegentAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryTeacherAnswer;
+import org.fenixedu.academic.domain.inquiries.RegentInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.TeacherInquiryTemplate;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

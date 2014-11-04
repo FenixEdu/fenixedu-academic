@@ -20,9 +20,9 @@
  * Created on 13/Mar/2003 by jpvl
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro;
+package org.fenixedu.academic.service.filter;
 
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import org.fenixedu.academic.domain.person.RoleType;
 
 /**
  * @author jpvl

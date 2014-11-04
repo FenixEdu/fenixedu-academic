@@ -20,7 +20,7 @@
  * 
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.department;
+package org.fenixedu.academic.service.services.department;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,12 +28,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseStatisticsDTO;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.dto.department.CompetenceCourseStatisticsDTO;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

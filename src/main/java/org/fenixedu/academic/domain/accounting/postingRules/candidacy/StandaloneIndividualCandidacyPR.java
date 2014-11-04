@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy;
+package org.fenixedu.academic.domain.accounting.postingRules.candidacy;
 
-import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.Exemption;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.accounting.EntryType;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.events.AcademicEventExemption;
+import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
 public class StandaloneIndividualCandidacyPR extends StandaloneIndividualCandidacyPR_Base {

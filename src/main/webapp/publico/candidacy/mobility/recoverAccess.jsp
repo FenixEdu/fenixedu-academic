@@ -42,7 +42,7 @@
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -55,13 +55,13 @@
 
 	<fr:edit id="PublicAccessCandidacy.preCreationForm" 
 		 name="candidacyPreCreationBean" 
-		 type="net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.IndividualCandidacyProcessPublicDA$CandidacyPreCreationBean"
+		 type="org.fenixedu.academic.ui.struts.action.publico.candidacies.IndividualCandidacyProcessPublicDA$CandidacyPreCreationBean"
 		 slot="email">
 		 <fr:layout>
 		 	<fr:property name="classes" value="mvert05"/>
 		 	<fr:property name="size" value="35"/>
-		 	<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator"/>
-			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+		 	<fr:validator name="org.fenixedu.academic.ui.renderers.validators.RequiredEmailValidator"/>
+			<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 				<fr:property name="type" value="character"/>
 				<fr:property name="length" value="100"/>
 			</fr:validator>

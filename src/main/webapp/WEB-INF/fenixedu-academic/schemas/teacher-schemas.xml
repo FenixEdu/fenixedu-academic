@@ -19,7 +19,7 @@
 
 -->
 
-<schema name="teacher.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ThesisDocumentConfirmationDA$ThesisPresentationWrapper" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+<schema name="teacher.thesis.table" type="org.fenixedu.academic.ui.struts.action.teacher.ThesisDocumentConfirmationDA$ThesisPresentationWrapper" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
     <slot name="thesis.student.number" key="label.student.number.short"/>
     <slot name="thesis.student.person.name" key="student"/>
     <slot name="thesis.finalTitle" key="label.scientificCouncil.title">
@@ -28,15 +28,15 @@
     <slot name="thesisPresentationState" key="label.thesis.state"/>
 </schema>
 
-<schema name="executionCourseLog.logTypes" type="net.sourceforge.fenixedu.domain.ExecutionCourseLog$ExecutionCourseLogTypes">
+<schema name="executionCourseLog.logTypes" type="org.fenixedu.academic.domain.ExecutionCourseLog$ExecutionCourseLogTypes">
 	<slot name="qualifiedName"/>
 </schema>
-<schema name="executionCourseLog.professorship" type="net.sourceforge.fenixedu.domain.Professorship" bundle="APPLICATION_RESOURCES">
+<schema name="executionCourseLog.professorship" type="org.fenixedu.academic.domain.Professorship" bundle="APPLICATION_RESOURCES">
 	<slot name="person.username"/>
 	<slot name="person.name" />
 </schema>
 
-<schema name="professorship.view.properties" type="net.sourceforge.fenixedu.domain.ProfessorshipPermissions" bundle="APPLICATION_RESOURCES">
+<schema name="professorship.view.properties" type="org.fenixedu.academic.domain.ProfessorshipPermissions" bundle="APPLICATION_RESOURCES">
 		<slot name="personalization" key="link.personalizationOptions"/>
 		<slot name="siteArchive"  key="link.executionCourse.archive.generate"/>
 		<slot name="announcements" key="link.announcements"/>

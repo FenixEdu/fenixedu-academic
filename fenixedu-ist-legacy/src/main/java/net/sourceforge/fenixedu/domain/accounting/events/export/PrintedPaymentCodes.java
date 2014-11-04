@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events.export;
+package org.fenixedu.academic.domain.accounting.events.export;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 
 public class PrintedPaymentCodes {
 

@@ -16,16 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy;
+package org.fenixedu.academic.domain.phd.candidacy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
+
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class PhdCandidacyRefereeLetterBean implements Serializable {

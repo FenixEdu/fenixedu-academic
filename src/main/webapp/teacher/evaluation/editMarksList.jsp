@@ -42,7 +42,7 @@
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
 			
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.onlineTests.OnlineTest'}">
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.onlineTests.OnlineTest'}">
 				<h:outputText value="<b>#{bundle['lable.test']}:</b> " escape="false"/>
 				<h:outputText value="#{evaluationManagementBackingBean.evaluation.distributedTest.evaluationTitle}, "/>
 				<h:outputText value="#{bundle['label.day']}" />
@@ -55,7 +55,7 @@
 				</h:outputFormat>
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.WrittenTest'}">
 				<h:outputText value="<b>#{bundle['label.written.test']}:</b> " escape="false"/>
 				<h:outputText value="#{evaluationManagementBackingBean.evaluation.description}, "/>
 				<h:outputText value="#{bundle['label.day']}" />
@@ -68,7 +68,7 @@
 				</h:outputFormat>
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}">
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.Exam'}">
 				<h:outputText value="<b>#{bundle['label.exam']}:</b> " escape="false"/>
 				<h:outputText value="#{evaluationManagementBackingBean.evaluation.season}, "/>
 				<h:outputText value="#{bundle['label.day']}" />
@@ -81,7 +81,7 @@
 				</h:outputFormat>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.AdHocEvaluation'}">
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.AdHocEvaluation'}">
 				<h:outputText value="<b>#{bundle['label.adHocEvaluation']}:</b> " escape="false"/>
 				<h:outputText value="#{evaluationManagementBackingBean.evaluation.name}, "/>		
 				<h:outputText value="<b>#{bundle['label.description']}:</b> " escape="false"/>		

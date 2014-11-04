@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice;
+package org.fenixedu.academic.ui.struts.action.masterDegree.administrativeOffice;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,25 +26,25 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadNumerusClausus;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ApproveCandidates;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadAdmitedCandidates;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidates;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidatesForSelection;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadSubstituteCandidates;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateApproval;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateApprovalGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearToSelectCandidatesDA;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.SituationName;
+import org.fenixedu.academic.service.services.commons.ReadExecutionDegreeByOID;
+import org.fenixedu.academic.service.services.commons.degree.ReadNumerusClausus;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.masterDegree.commons.candidate.ApproveCandidates;
+import org.fenixedu.academic.service.services.masterDegree.commons.candidate.ReadAdmitedCandidates;
+import org.fenixedu.academic.service.services.masterDegree.commons.candidate.ReadCandidates;
+import org.fenixedu.academic.service.services.masterDegree.commons.candidate.ReadCandidatesForSelection;
+import org.fenixedu.academic.service.services.masterDegree.commons.candidate.ReadSubstituteCandidates;
+import org.fenixedu.academic.dto.InfoCandidateApproval;
+import org.fenixedu.academic.dto.InfoCandidateApprovalGroup;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidate;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.commons.ChooseExecutionYearToSelectCandidatesDA;
+import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.NonExistingActionException;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.util.SituationName;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;

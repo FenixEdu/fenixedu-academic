@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.externalServices.epfl;
+package org.fenixedu.academic.ui.struts.action.externalServices.epfl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -37,25 +37,24 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.QualificationType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.PublicCandidacyHashCode;
+import org.fenixedu.academic.domain.Qualification;
+import org.fenixedu.academic.domain.QualificationType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
+import org.fenixedu.academic.domain.phd.ThesisSubjectOrder;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
+import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Partial;
 import org.slf4j.Logger;

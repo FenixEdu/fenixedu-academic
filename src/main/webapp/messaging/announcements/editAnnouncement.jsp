@@ -26,7 +26,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.messaging.Announcement"%>
+<%@page import="org.fenixedu.academic.domain.messaging.Announcement"%>
 
 <%-- <em><bean:message bundle="MESSAGING_RESOURCES" key="label.manageChannels"/></em> --%>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
@@ -75,7 +75,7 @@
 <%-- Título --%>
 	<tr>
 		<th style="width: 125px;">
-			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
+			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.title.label"/>:
 		</th>
 		<td>
 			<fr:edit id="announcement-subject-validated" name="announcement" slot="subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
@@ -90,7 +90,7 @@
 <%-- Corpo --%>
 	<tr>
 		<th>
-			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>:
+			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.body.label"/>:
 		</th>
 		<td>
 			<fr:edit id="announcement-body-validated" name="announcement" slot="body" layout="area" 
@@ -144,7 +144,7 @@
 <%-- Excerto --%>
 	<tr>
 		<th style="width: 125px;">
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.excerpt.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.excerpt.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement" slot="excerpt" layout="area">
@@ -159,10 +159,10 @@
 <%-- Local --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.place.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.place.label"/>:
 		</th>
 		<td>
-			<fr:edit name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="place">
+			<fr:edit name="announcement" type="org.fenixedu.academic.domain.messaging.Announcement" slot="place">
 				<fr:layout>
 					<fr:property name="size" value="30"/>
 				</fr:layout>
@@ -174,7 +174,7 @@
 <%-- Palavras-chave --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.keywords.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.keywords.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement" slot="keywords">
@@ -188,7 +188,7 @@
 <%-- Nome do autor --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorName.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.authorName.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="author">
@@ -203,7 +203,7 @@
 <%-- E-mail do autor --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorEmail.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.authorEmail.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="authorEmail">
@@ -217,7 +217,7 @@
 <%-- Início do evento --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.referedSubjectBegin.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="referedSubjectBegin"/>			
@@ -227,7 +227,7 @@
 <%-- Fim do evento --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectEnd.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.referedSubjectEnd.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="referedSubjectEnd"/>						
@@ -237,7 +237,7 @@
 <%-- Início de publicação --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.publicationBegin.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="publicationBegin"/>			
@@ -247,7 +247,7 @@
 <%-- Fim de publicação --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.publicationEnd.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="publicationEnd"/>			
@@ -257,7 +257,7 @@
 <%-- Visível --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.visible.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement" slot="visible"/>
@@ -268,7 +268,7 @@
  
  	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.categories.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.categories.label"/>:
 		</th>
 		<td>
 			<fr:edit id="categories-validated" name="announcement" slot="categories">
@@ -277,7 +277,7 @@
 				
                 <fr:property name="label" value="" />
                 <fr:property name="providerClass"
-                        value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AnnouncementCategoryProvider" />
+                        value="org.fenixedu.academic.ui.renderers.providers.AnnouncementCategoryProvider" />
                 <fr:property name="eachSchema" value="announcement.category.name.content" />
                 <fr:property name="eachLayout" value="values" />
 				<fr:property name="classes" value="nobullet noindent" />
@@ -291,14 +291,14 @@
 <%-- Campus --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.campus.label"/>
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.campus.label"/>
 		</th>
 		<td>
 			<fr:edit id="campus-validated" name="announcement" slot="campus">
  				<fr:layout name="menu-select">
 					<fr:property name="labelStyle" value="display:none"/>
 					<fr:property name="size" value="30"/>
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.spaceManager.CampusProvider"/>		
 					<fr:property name="format"	value="${name}" />
 				</fr:layout>
 			</fr:edit>
@@ -308,7 +308,7 @@
 <%-- Press Release --%>
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.pressRelease.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.pressRelease.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement" slot="pressRelease"/>
@@ -319,7 +319,7 @@
  
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.photo.label"/>
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.photo.label"/>
 		</th>
 		<td>
 			<span id="photoUrl">
@@ -402,7 +402,7 @@
 	<logic:notEmpty name="announcement" property="editorNotes">
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.editorNotes.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.editorNotes.label"/>:
 		</th>
 		<td>
 			<fr:view name="announcement" property="editorNotes"/>

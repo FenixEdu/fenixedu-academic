@@ -24,8 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ page import="org.fenixedu.bennu.core.domain.Bennu"%>
-<%@ page import="net.sourceforge.fenixedu.domain.Department"%>
-<%@ page import="net.sourceforge.fenixedu.domain.TeacherCategory"%>
+<%@ page import="org.fenixedu.academic.domain.Department"%>
+<%@ page import="org.fenixedu.academic.domain.TeacherCategory"%>
 <html:xhtml/>
 
 <h2><bean:message key="label.upload.authorizations" /></h2>
@@ -59,10 +59,10 @@
 	
 	<fr:edit id="teacherAuthorizationsUploadBean" name="teacherAuthorizationsUploadBean">
 		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.TeacherAuthorizationManagement$TeacherAuthorizationsUploadBean">
+			type="org.fenixedu.academic.ui.struts.action.scientificCouncil.TeacherAuthorizationManagement$TeacherAuthorizationsUploadBean">
 			
 			<fr:slot name="executionSemester" key="label.exeuctionSemester" layout="menu-select"  required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider" />
 				<fr:property name="format" value="${executionYear.year} - ${semester}º semestre" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>

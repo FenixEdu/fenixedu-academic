@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 
 public class InfoFrequenta extends InfoObject {
     protected InfoStudent _aluno;

@@ -20,13 +20,14 @@
  * Created on Nov 9, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation;
+package org.fenixedu.academic.ui.faces.bean.coordinator.evaluation;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.Project;
+import org.fenixedu.academic.domain.Evaluation;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.teacher.DeleteEvaluation;
+
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 

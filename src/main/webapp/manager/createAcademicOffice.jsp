@@ -30,7 +30,7 @@
 
 <h2>Create Academic Office</h2>
 	<fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=createAcademicOffice">
-		<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
+		<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
 			<fr:slot name="type" key="documents.type">
 			</fr:slot>
 		</fr:schema>

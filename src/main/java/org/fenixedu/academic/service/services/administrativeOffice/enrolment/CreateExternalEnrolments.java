@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment;
+package org.fenixedu.academic.service.services.administrativeOffice.enrolment;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.ExternalCurricularCourseEnrolmentBean;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.ExternalCurricularCourseEnrolmentBean;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateExternalEnrolments {

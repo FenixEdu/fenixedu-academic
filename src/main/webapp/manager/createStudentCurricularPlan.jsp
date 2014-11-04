@@ -52,7 +52,7 @@
 
 		<tr>
 			<td>
-				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState" bundle="ENUMERATION_RESOURCES"/>
+				<e:labelValues id="values" enumeration="org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState" bundle="ENUMERATION_RESOURCES"/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCurricularPlanState" property="studentCurricularPlanState" size="1">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>

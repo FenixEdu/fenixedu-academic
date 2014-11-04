@@ -16,19 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.report.events;
+package org.fenixedu.academic.domain.accounting.report.events;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
+import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
+import org.fenixedu.academic.domain.accounting.events.dfa.DfaRegistrationEvent;
+import org.fenixedu.academic.domain.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.student.EnrolmentModel;
+import org.fenixedu.academic.domain.student.Registration;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EventWrapper implements Wrapper {

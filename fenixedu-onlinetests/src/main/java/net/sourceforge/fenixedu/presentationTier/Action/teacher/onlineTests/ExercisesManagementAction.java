@@ -20,7 +20,7 @@
  * Created on 14/Ago/2003
  */
 
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests;
+package org.fenixedu.academic.ui.struts.action.teacher.onlineTests;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,37 +33,37 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ChangeStudentTestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CreateExercise;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteExercise;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteExerciseVariation;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditExercise;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertExercise;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertExerciseVariation;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadExercise;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
-import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
-import net.sourceforge.fenixedu.util.tests.CardinalityType;
-import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.RenderChoise;
-import net.sourceforge.fenixedu.util.tests.RenderFIB;
-import net.sourceforge.fenixedu.util.tests.ResponseCondition;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
-import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
-import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
-import net.sourceforge.fenixedu.util.tests.XMLQuestion;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.tests.InvalidMetadataException;
+import org.fenixedu.academic.service.services.exceptions.tests.InvalidXMLFilesException;
+import org.fenixedu.academic.service.services.teacher.onlineTests.ChangeStudentTestQuestion;
+import org.fenixedu.academic.service.services.teacher.onlineTests.CreateExercise;
+import org.fenixedu.academic.service.services.teacher.onlineTests.DeleteExercise;
+import org.fenixedu.academic.service.services.teacher.onlineTests.DeleteExerciseVariation;
+import org.fenixedu.academic.service.services.teacher.onlineTests.EditExercise;
+import org.fenixedu.academic.service.services.teacher.onlineTests.InsertExercise;
+import org.fenixedu.academic.service.services.teacher.onlineTests.InsertExerciseVariation;
+import org.fenixedu.academic.service.services.teacher.onlineTests.ReadExercise;
+import org.fenixedu.academic.dto.comparators.MetadataComparator;
+import org.fenixedu.academic.dto.onlineTests.InfoQuestion;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.onlineTests.Metadata;
+import org.fenixedu.academic.domain.onlineTests.Question;
+import org.fenixedu.academic.domain.onlineTests.SubQuestion;
+import org.fenixedu.academic.domain.onlineTests.utils.ParseSubQuestion;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
+import org.fenixedu.academic.util.tests.CardinalityType;
+import org.fenixedu.academic.util.tests.QuestionDifficultyType;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.RenderChoise;
+import org.fenixedu.academic.util.tests.RenderFIB;
+import org.fenixedu.academic.util.tests.ResponseCondition;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
+import org.fenixedu.academic.util.tests.TestQuestionChangesType;
+import org.fenixedu.academic.util.tests.TestQuestionStudentsChangesType;
+import org.fenixedu.academic.util.tests.XMLQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.action.ActionError;

@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.transactions;
+package org.fenixedu.academic.dto.transactions;
 
-import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
+import org.fenixedu.academic.domain.transactions.ReimbursementTransaction;
+import org.fenixedu.academic.dto.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

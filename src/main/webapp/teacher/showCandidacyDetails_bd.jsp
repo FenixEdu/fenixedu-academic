@@ -25,11 +25,11 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 
 <bean:define id="cases" type="java.util.List" name="cases"/>
-<bean:define id="student" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudent"  name="student"/>
-<bean:define id="curricularCourse" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse"  name="curricularCourse"/>
+<bean:define id="student" type="org.fenixedu.academic.dto.InfoStudent"  name="student"/>
+<bean:define id="curricularCourse" type="org.fenixedu.academic.dto.InfoCurricularCourse"  name="curricularCourse"/>
 <bean:define id="motivation" type="java.lang.String"  name="motivation"/>
-<bean:define id="seminary" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary"  name="seminary"/>
-<bean:define id="modality" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality"  name="modality"/>
+<bean:define id="seminary" type="org.fenixedu.academic.dto.Seminaries.InfoSeminary"  name="seminary"/>
+<bean:define id="modality" type="org.fenixedu.academic.dto.Seminaries.InfoModality"  name="modality"/>
 
 <logic:present name="cases">
 	<logic:present name="student">
@@ -82,7 +82,7 @@
 						<td><bean:message key="label.seminaries.showCandidacy.Motivation"/>:</td>
 						<td><bean:write name="motivation"/></td>
 					</tr>
-					<logic:iterate indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy" name="cases" id="caseStudy">
+					<logic:iterate indexId="index" type="org.fenixedu.academic.dto.Seminaries.InfoCaseStudy" name="cases" id="caseStudy">
 					<tr>
 						<td><bean:message key="label.seminaries.showCandidacy.Case"/> <%=index.intValue()+1 %></td>
 						<td><bean:write name="caseStudy" property="code"/> - <bean:write name="caseStudy" property="name"/></td>

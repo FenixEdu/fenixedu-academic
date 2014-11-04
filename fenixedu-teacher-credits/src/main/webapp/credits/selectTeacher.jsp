@@ -35,12 +35,12 @@
 
 <logic:present name="teacherBean">
 	<fr:edit id="teacherBean" name="teacherBean" action="/credits.do?method=showTeacherCredits">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.TeacherCreditsBean">
 			<fr:slot name="teacher" layout="autoComplete">
 				<fr:property name="size" value="80"/>
 				<fr:property name="format" value="${person.name} (${person.username})"/>
 				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachers"/>
+				<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchTeachers"/>
 				<fr:property name="args" value="slot=person.name"/>
 				<fr:property name="minChars" value="3"/>
 				<fr:property name="errorStyleClass" value="error0"/>

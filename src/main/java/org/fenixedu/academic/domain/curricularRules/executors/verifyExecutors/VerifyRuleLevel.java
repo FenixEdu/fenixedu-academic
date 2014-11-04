@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors;
+package org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors;
 
 public enum VerifyRuleLevel {
 

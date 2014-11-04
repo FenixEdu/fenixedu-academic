@@ -16,30 +16,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentPresidentStrategy;
-import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
-import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryStudentCycleAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.teacher.ReductionService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.DepartmentPresidentStrategy;
+import org.fenixedu.academic.domain.alumni.CerimonyInquiryPerson;
+import org.fenixedu.academic.domain.inquiries.DelegateInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.InquiryStudentCycleAnswer;
+import org.fenixedu.academic.domain.inquiries.RegentInquiryTemplate;
+import org.fenixedu.academic.domain.inquiries.StudentInquiryRegistry;
+import org.fenixedu.academic.domain.inquiries.TeacherInquiryTemplate;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.personnelSection.contracts.PersonProfessionalData;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.teacher.ReductionService;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.domain.time.calendarStructure.TeacherCreditsFillingCE;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

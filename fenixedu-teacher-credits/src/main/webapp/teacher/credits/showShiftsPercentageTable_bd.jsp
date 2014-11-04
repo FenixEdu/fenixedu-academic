@@ -23,9 +23,9 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="java.util.Calendar" %> 
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
+<%@ page import="org.fenixedu.academic.dto.InfoLesson" %>
 			 
 <bean:define id="infoShiftsPercentageList" name="infoShiftPercentageList" scope="request" />
 

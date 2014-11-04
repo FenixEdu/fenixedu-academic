@@ -19,12 +19,12 @@
 /**
  * Nov 24, 2005
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.workTime;
+package org.fenixedu.academic.dto.teacher.workTime;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.util.WeekDay;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.util.WeekDay;
 
 /**
  * @author Ricardo Rodrigues

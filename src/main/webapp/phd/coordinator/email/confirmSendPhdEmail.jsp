@@ -26,8 +26,8 @@
 
 <html:xhtml/>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" %>
+<%@page import="org.fenixedu.academic.domain.phd.email.PhdProgramEmailBean" %>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" %>
 
 <logic:present role="role(COORDINATOR)">
 

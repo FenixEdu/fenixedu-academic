@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.documents;
+package org.fenixedu.academic.domain.documents;
 
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 
 /**
  * Type of {@GeneratedDocument}s

@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events;
+package org.fenixedu.academic.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch;
-
+import org.fenixedu.academic.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch;
 import org.joda.time.YearMonthDay;
 
 public class PenaltyExemptionJustificationFactory {

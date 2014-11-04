@@ -52,9 +52,9 @@
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
 	<fr:edit id="individualCandidacyProcessBean.choose" name="individualCandidacyProcessBean">
-		<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="copyDestinationProcess" required="true" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle.SecondCycleNextCandidacyProcesses" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.secondCycle.SecondCycleNextCandidacyProcesses" />
 				<fr:property name="format" value="${candidacyPeriod.presentationName}" />
 			</fr:slot>
 			

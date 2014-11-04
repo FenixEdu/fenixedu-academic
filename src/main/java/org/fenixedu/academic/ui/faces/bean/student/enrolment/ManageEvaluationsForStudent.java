@@ -20,7 +20,7 @@
  * Created on Nov 14, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment;
+package org.fenixedu.academic.ui.faces.bean.student.enrolment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,18 +30,17 @@ import java.util.Map;
 
 import javax.faces.component.html.HtmlInputHidden;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.Evaluation;
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.student.EnrolStudentInWrittenEvaluation;
+import org.fenixedu.academic.service.services.student.UnEnrollStudentInWrittenEvaluation;
 import org.fenixedu.spaces.domain.Space;
 
 public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToEnrol {

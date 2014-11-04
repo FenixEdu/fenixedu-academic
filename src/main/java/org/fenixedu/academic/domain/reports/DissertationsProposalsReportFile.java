@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.reports;
+package org.fenixedu.academic.domain.reports;
 
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import org.fenixedu.academic.domain.ExecutionYear;
+
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 public class DissertationsProposalsReportFile extends DissertationsProposalsReportFile_Base {

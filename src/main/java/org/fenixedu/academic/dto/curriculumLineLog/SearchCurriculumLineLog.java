@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.curriculumLineLog;
+package org.fenixedu.academic.dto.curriculumLineLog;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionSemester;
 
 public class SearchCurriculumLineLog implements Serializable {
 

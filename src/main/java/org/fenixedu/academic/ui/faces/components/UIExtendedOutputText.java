@@ -19,7 +19,7 @@
 /*
  * Created on Feb 2, 2006
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import javax.faces.component.UIOutput;
 

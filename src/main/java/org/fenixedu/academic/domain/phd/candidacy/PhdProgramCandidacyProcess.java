@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy;
+package org.fenixedu.academic.domain.phd.candidacy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,60 +24,59 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PhotoState;
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
-import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
-import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddCandidacyReferees;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddNotification;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddState;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteCandidacyReview;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteDocument;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.EditCandidacyDate;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.EditProcessAttributes;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.PhdProgramCandidacyProcessActivity;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveCandidacyDocument;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveLastState;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadCandidacyReview;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadDocuments;
-import net.sourceforge.fenixedu.domain.phd.candidacy.activities.ValidatedByCandidate;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
-import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
-import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PhotoState;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.PostingRule;
+import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
+import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
+import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.caseHandling.StartActivity;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.phd.PhdCandidacyProcessState;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
+import org.fenixedu.academic.domain.phd.PhdProgramServiceAgreementTemplate;
+import org.fenixedu.academic.domain.phd.alert.PhdFinalProofRequestAlert;
+import org.fenixedu.academic.domain.phd.alert.PhdPublicPresentationSeminarAlert;
+import org.fenixedu.academic.domain.phd.alert.PhdRegistrationFormalizationAlert;
+import org.fenixedu.academic.domain.phd.candidacy.activities.AddCandidacyReferees;
+import org.fenixedu.academic.domain.phd.candidacy.activities.AddNotification;
+import org.fenixedu.academic.domain.phd.candidacy.activities.AddState;
+import org.fenixedu.academic.domain.phd.candidacy.activities.AssociateRegistration;
+import org.fenixedu.academic.domain.phd.candidacy.activities.DeleteCandidacyReview;
+import org.fenixedu.academic.domain.phd.candidacy.activities.DeleteDocument;
+import org.fenixedu.academic.domain.phd.candidacy.activities.EditCandidacyDate;
+import org.fenixedu.academic.domain.phd.candidacy.activities.EditProcessAttributes;
+import org.fenixedu.academic.domain.phd.candidacy.activities.PhdProgramCandidacyProcessActivity;
+import org.fenixedu.academic.domain.phd.candidacy.activities.RatifyCandidacy;
+import org.fenixedu.academic.domain.phd.candidacy.activities.RegistrationFormalization;
+import org.fenixedu.academic.domain.phd.candidacy.activities.RejectCandidacyProcess;
+import org.fenixedu.academic.domain.phd.candidacy.activities.RemoveCandidacyDocument;
+import org.fenixedu.academic.domain.phd.candidacy.activities.RemoveLastState;
+import org.fenixedu.academic.domain.phd.candidacy.activities.RequestCandidacyReview;
+import org.fenixedu.academic.domain.phd.candidacy.activities.RequestRatifyCandidacy;
+import org.fenixedu.academic.domain.phd.candidacy.activities.UploadCandidacyReview;
+import org.fenixedu.academic.domain.phd.candidacy.activities.UploadDocuments;
+import org.fenixedu.academic.domain.phd.candidacy.activities.ValidatedByCandidate;
+import org.fenixedu.academic.domain.phd.debts.PhdRegistrationFee;
+import org.fenixedu.academic.domain.student.PersonalIngressionData;
+import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
@@ -601,7 +600,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     @Override
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState> getStates() {
+    public java.util.Set<org.fenixedu.academic.domain.phd.PhdCandidacyProcessState> getStates() {
         return getStatesSet();
     }
 

@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student;
+package org.fenixedu.academic.domain.student;
 
 import java.util.Comparator;
 
 import jvstm.cps.ConsistencyPredicate;
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.GrantOwnerType;
-import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.GrantOwnerType;
+import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
+import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 

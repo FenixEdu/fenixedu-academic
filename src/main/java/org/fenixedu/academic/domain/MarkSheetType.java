@@ -19,9 +19,9 @@
 /*
  * Created on Apr 19, 2006
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 
 public enum MarkSheetType {
 

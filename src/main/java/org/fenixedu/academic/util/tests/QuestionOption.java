@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.tests;
+package org.fenixedu.academic.util.tests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.FenixUtil;
-
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.util.FenixUtil;
 
 public class QuestionOption extends FenixUtil {
 

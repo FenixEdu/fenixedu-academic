@@ -19,9 +19,9 @@
 /*
  * Created on 29/Fev/2004
  */
-package net.sourceforge.fenixedu.domain.credits;
+package org.fenixedu.academic.domain.credits;
 
-import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
+import org.fenixedu.academic.domain.credits.event.CreditsEvent;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

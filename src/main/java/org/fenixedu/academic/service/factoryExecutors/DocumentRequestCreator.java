@@ -16,21 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
+package org.fenixedu.academic.service.factoryExecutors;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.documentRequests.CreatePastDiplomaRequest;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.Under23TransportsDeclarationRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DeclarationRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
+import org.fenixedu.academic.service.services.commons.FactoryExecutor;
+import org.fenixedu.academic.service.services.serviceRequests.documentRequests.CreatePastDiplomaRequest;
+
 import pt.ist.fenixframework.Atomic;
 
 final public class DocumentRequestCreator extends DocumentRequestCreateBean implements FactoryExecutor {

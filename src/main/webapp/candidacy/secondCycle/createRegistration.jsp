@@ -41,7 +41,7 @@
 
  	<fr:edit id="individualCandidacyProcessBean"
  		name="individualCandidacyProcessBean" 
-		type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" 
+		type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" 
 		visible="false" />
 	
 	<bean:define id="degreeName" name="individualCandidacyProcessBean" property="selectedDegree.presentationName" />

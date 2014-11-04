@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
+package org.fenixedu.academic.ui.struts.action.manager.personManagement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact;
-import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
-import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.dto.contacts.PartyContactBean;
+import org.fenixedu.academic.service.services.contacts.CreatePartyContact;
+import org.fenixedu.academic.service.services.contacts.EditPartyContact;
 
 public class PartyContactsManagementDispatchAction extends
-        net.sourceforge.fenixedu.presentationTier.Action.person.PartyContactsManagementDispatchAction {
+        org.fenixedu.academic.ui.struts.action.person.PartyContactsManagementDispatchAction {
 
     @Override
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

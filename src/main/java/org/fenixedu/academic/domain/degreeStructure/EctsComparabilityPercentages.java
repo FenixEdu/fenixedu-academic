@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.degreeStructure;
+package org.fenixedu.academic.domain.degreeStructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class EctsComparabilityPercentages implements Serializable {
     private static final long serialVersionUID = 7682260143153322085L;

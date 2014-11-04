@@ -98,7 +98,7 @@
 						<bean:define id="typeValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,TOEFL_LINGUISTICS_CERTIFICATE,GRE_LINGUISTICS_CERTIFICATE"/>	
 					</logic:equal>
 					<fr:edit id="documentByType" name="documentByType" >
-						<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+						<fr:schema type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 							<fr:slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 								<fr:property name="includedValues" value="<%= typeValues %>" />
 								<fr:property name="bundle" value="PHD_RESOURCES" />

@@ -1,4 +1,4 @@
-package org.fenixedu.core.ui;
+package org.fenixedu.academic.ui.spring;
 
 import javax.servlet.http.HttpServletRequest;
 

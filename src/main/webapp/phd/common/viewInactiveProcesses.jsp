@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
 <%@page import="pt.ist.fenixframework.DomainObject"%>
 
 
@@ -43,9 +43,9 @@
 
 <fr:form id="search" action="/phdIndividualProgramProcess.do?method=viewInactiveProcesses">
 	<fr:edit id="searchProcessBean" name="searchProcessBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean">
 			<fr:slot name="executionYear" layout="menu-select-postback">
-		 		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+		 		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
 				<fr:property name="format" value="${year}" />
 			</fr:slot>
 		</fr:schema>

@@ -29,9 +29,9 @@
 <%@page import="org.apache.struts.action.ActionMessages" %>
 <%@ page import="java.util.Locale"%>
 
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" %>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" %>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" %>
+<%@ page import="org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributeType" %>
 
 
 <%!static String f(String value, Object ... args) {
@@ -64,7 +64,7 @@
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
@@ -111,11 +111,11 @@
 		name="individualCandidacyProcessBean"
 		property="personBean">
 		
-			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="name" key="label.name" >
 					<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcess.getPersonalFieldsFromStork().getTypes().contains(StorkAttributeType.STORK_NAME)) %>" />
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+					<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 						<fr:property name="type" value="character"/>
 						<fr:property name="length" value="100"/>
 					</fr:validator>
@@ -142,7 +142,7 @@
 				<fr:slot name="documentIdNumber" key="label.identificationNumber" >
 					<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcess.getPersonalFieldsFromStork().getTypes().contains(StorkAttributeType.STORK_EIDENTIFIER)) %>" />
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+					<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 						<fr:property name="type" value="character"/>
 						<fr:property name="length" value="100"/>
 					</fr:validator>
@@ -152,14 +152,14 @@
 	
 				<fr:slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcess.getPersonalFieldsFromStork().getTypes().contains(StorkAttributeType.STORK_NATIONALITY)) %>" />
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/>
 					<fr:property name="format" value="${countryNationality}" />
 					<fr:property name="sortBy" value="countryNationality"/>
 				</fr:slot>
 	
 				<fr:slot name="address" key="label.address">
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+					<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 						<fr:property name="type" value="character"/>
 						<fr:property name="length" value="100"/>
 					</fr:validator>
@@ -169,7 +169,7 @@
 	
 				<fr:slot name="areaCode" key="label.areaCode">
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+					<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 						<fr:property name="type" value="character"/>
 						<fr:property name="length" value="10"/>
 					</fr:validator>
@@ -177,7 +177,7 @@
 				</fr:slot>
 	
 				<fr:slot name="area" key="label.area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+					<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 						<fr:property name="type" value="character"/>
 						<fr:property name="length" value="40"/>
 					</fr:validator>
@@ -187,7 +187,7 @@
 				<fr:slot name="countryOfResidence" key="label.countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="format" value="${localizedName}"/>
 					<fr:property name="sortBy" value="localizedName=asc" />
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				</fr:slot>
 			
 				<fr:slot name="phone" key="label.phone">

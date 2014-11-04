@@ -30,7 +30,7 @@
 
 <h2>Create Department</h2>
 	<fr:edit id="department" name="bean" action="/manageAssociatedObjects.do?method=createDepartment">
-		<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
+		<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
 			<fr:slot name="active" key="active">
 			</fr:slot>
 			<fr:slot name="code" key="label.manager.code">

@@ -19,7 +19,7 @@
 /*
  * Created on Sep 16, 2004
  */
-package net.sourceforge.fenixedu.domain.credits.event;
+package org.fenixedu.academic.domain.credits.event;
 
 public enum CreditsEvent {
 

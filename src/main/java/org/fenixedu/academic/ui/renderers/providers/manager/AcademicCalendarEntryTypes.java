@@ -16,22 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.manager;
+package org.fenixedu.academic.ui.renderers.providers.manager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInNormalSeasonCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInSpecialSeasonCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInNormalSeasonCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicTrimesterCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
+import org.fenixedu.academic.domain.time.calendarStructure.EnrolmentsPeriodCE;
+import org.fenixedu.academic.domain.time.calendarStructure.ExamsPeriodInNormalSeasonCE;
+import org.fenixedu.academic.domain.time.calendarStructure.ExamsPeriodInSpecialSeasonCE;
+import org.fenixedu.academic.domain.time.calendarStructure.GradeSubmissionInNormalSeasonCE;
+import org.fenixedu.academic.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
+import org.fenixedu.academic.domain.time.calendarStructure.LessonsPeriodCE;
+import org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 

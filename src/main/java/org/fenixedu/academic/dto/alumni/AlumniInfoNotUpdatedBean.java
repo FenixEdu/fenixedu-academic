@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.alumni;
+package org.fenixedu.academic.dto.alumni;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.accessControl.NotUpdatedAlumniInfoForSpecificDaysGroup;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-
+import org.fenixedu.academic.domain.accessControl.NotUpdatedAlumniInfoForSpecificDaysGroup;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;

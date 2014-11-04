@@ -19,9 +19,9 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.student.importation;
+package org.fenixedu.academic.domain.student.importation;
 
-import net.sourceforge.fenixedu.domain.person.Gender;
+import org.fenixedu.academic.domain.person.Gender;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

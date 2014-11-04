@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -45,7 +45,7 @@
 	</p>
 </html:messages>
 
-<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getExternalId() + "&amp;teacherId=" + teacherID %>'>
+<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + org.fenixedu.academic.domain.ExecutionSemester.readActualExecutionSemester().getExternalId() + "&amp;teacherId=" + teacherID %>'>
 	<bean:message key="label.credits.fill.information.for.current.semester" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </html:link>					
 
@@ -176,7 +176,7 @@
 	<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.masterDegreeLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;	
 	<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.degreeFinalProjectStudents.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 	<bean:message key="label.credits.thesis.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.thesis.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-	<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.institutionWorkTime.code.explanation" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
+	<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.institutionWorkTime.code.explanation" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
 	<bean:message key="label.credits.otherTypeCreditLine.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.otherTypeCreditLine.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
 	<bean:message key="label.credits.managementPositions.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.managementPositions.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>, &nbsp;
 	<bean:message key="label.credits.serviceExemptionSituations.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.serviceExemptionSituations.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>.
@@ -184,6 +184,6 @@
 	
 </logic:notEmpty>
 
-<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getExternalId() + "&amp;teacherId=" + teacherID %>'>
+<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + org.fenixedu.academic.domain.ExecutionSemester.readActualExecutionSemester().getExternalId() + "&amp;teacherId=" + teacherID %>'>
 	<bean:message key="label.credits.fill.information.for.current.semester" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </html:link>					

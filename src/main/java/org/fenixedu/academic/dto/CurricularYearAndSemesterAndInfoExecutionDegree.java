@@ -22,7 +22,7 @@
  * Created on 24 de Novembro de 2002, 23:05
  */
 
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 /**
  * 

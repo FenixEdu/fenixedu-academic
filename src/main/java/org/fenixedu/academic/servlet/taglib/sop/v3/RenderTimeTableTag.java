@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
+package org.fenixedu.academic.servlet.taglib.sop.v3;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,29 +31,28 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.RoomTimeTableColorPicker;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.RoomTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassRoomTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopRoomTimeTableLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SpaceManagerRoomTimeTableLessonContentRenderer;
-
 import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.RequestUtils;
+import org.fenixedu.academic.dto.InfoCurricularYear;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoLessonInstance;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.servlet.taglib.sop.v3.colorPickers.ClassTimeTableColorPicker;
+import org.fenixedu.academic.servlet.taglib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
+import org.fenixedu.academic.servlet.taglib.sop.v3.colorPickers.RoomTimeTableColorPicker;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.ClassTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.RoomTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.ShiftTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.SopClassRoomTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.SopClassTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.SopRoomTimeTableLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.SpaceManagerRoomTimeTableLessonContentRenderer;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

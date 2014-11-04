@@ -19,22 +19,22 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+package org.fenixedu.academic.ui.renderers.inquiries;
 
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.dto.inquiries.BlockResumeResult;
+import org.fenixedu.academic.dto.inquiries.CurricularCourseResumeResult;
+import org.fenixedu.academic.dto.inquiries.TeacherShiftTypeResultsBean;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.inquiries.InquiryDelegateAnswer;
+import org.fenixedu.academic.domain.inquiries.InquiryGlobalComment;
+import org.fenixedu.academic.domain.inquiries.InquiryResultComment;
+import org.fenixedu.academic.domain.inquiries.ResultClassification;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.lang.StringUtils;
 

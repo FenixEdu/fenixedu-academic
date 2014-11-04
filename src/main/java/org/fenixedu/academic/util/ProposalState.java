@@ -19,7 +19,7 @@
 /*
  * Created on 17/Ago/2004
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 /**
  * @author joaosa & rmalo

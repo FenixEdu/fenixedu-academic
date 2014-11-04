@@ -19,7 +19,7 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -60,7 +60,7 @@
 	<bean:define id="phdProgramId" name="phdProgram" property="externalId" />
 	
 	<fr:view name="phdProgram" property="phdProgramContextPeriods">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod" >
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgramContextPeriod" >
 			<fr:slot name="beginDate" />
 			<fr:slot name="endDate" />
 		</fr:schema>

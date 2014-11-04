@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -24,14 +24,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
-import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
-
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.candidacy.degree.ShiftDistribution;
+import org.fenixedu.academic.domain.candidacy.degree.ShiftDistributionEntry;
+import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixframework.Atomic;

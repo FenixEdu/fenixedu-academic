@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Factory;
+package org.fenixedu.academic.service.Factory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,27 +25,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroupAndStudents;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndShiftByStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.StudentGroup;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.InfoSiteGroupsByShift;
+import org.fenixedu.academic.dto.InfoSiteShift;
+import org.fenixedu.academic.dto.InfoSiteShifts;
+import org.fenixedu.academic.dto.InfoSiteShiftsAndGroups;
+import org.fenixedu.academic.dto.InfoSiteStudentGroup;
+import org.fenixedu.academic.dto.InfoSiteStudentGroupAndStudents;
+import org.fenixedu.academic.dto.InfoSiteStudentInformation;
+import org.fenixedu.academic.dto.InfoSiteStudentsAndShiftByStudentGroup;
+import org.fenixedu.academic.dto.InfoStudentGroup;
+import org.fenixedu.academic.dto.InfoStudentGroupWithAttendsAndGroupingAndShift;
+import org.fenixedu.academic.service.services.ExcepcaoInexistente;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**

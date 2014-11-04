@@ -16,20 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha;
+package org.fenixedu.academic.service.services.student.enrolment.bolonha;
 
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
+import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.CourseLoadRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
+
 import pt.ist.fenixframework.Atomic;
 
 public class EnrolBolonhaStudentInCurriculumValidationContext {

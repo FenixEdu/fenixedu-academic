@@ -34,15 +34,15 @@
 
 <fr:form id="searchForm" action="/specialSeason/specialSeasonStatusTracker.do?method=listStudents">
 	<fr:edit id="bean" name="bean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments.SpecialSeasonStatusTrackerBean" bundle="MANAGER_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.manager.enrolments.SpecialSeasonStatusTrackerBean" bundle="MANAGER_RESOURCES">
 			<fr:slot name="executionSemester" layout="menu-select" key="label.executionSemester" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 			<fr:slot name="competenceCourse" layout="menu-select" key="label.competenceCourse">
 				<fr:property name="format" value="${name}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CompetenceCoursesForDepartmentProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CompetenceCoursesForDepartmentProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 		</fr:schema>

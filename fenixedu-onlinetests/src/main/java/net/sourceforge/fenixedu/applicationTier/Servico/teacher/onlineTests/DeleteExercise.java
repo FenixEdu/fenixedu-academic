@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
+package org.fenixedu.academic.service.services.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,14 +24,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
-import net.sourceforge.fenixedu.domain.onlineTests.Test;
-import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
+import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.onlineTests.Metadata;
+import org.fenixedu.academic.domain.onlineTests.Question;
+import org.fenixedu.academic.domain.onlineTests.Test;
+import org.fenixedu.academic.domain.onlineTests.TestQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 

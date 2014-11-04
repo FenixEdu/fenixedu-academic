@@ -73,23 +73,23 @@
 	<fr:form action="/announcementSwap.do?method=swap">
 		<fr:edit id="sessionBeanJSP" name="sessionBean" visible="false"/>
 		<fr:edit id="executionCourseBean" name="bean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
 				<fr:slot name="executionSemester" layout="menu-select-postback" key="label.manager.executionCourseManagement.executionPeriod">
 					<fr:property name="format" value="${qualifiedName}"/>
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"/>
 					<fr:property name="saveOptions" value="true"/>
 				</fr:slot>
 				<fr:slot name="destinationExecutionCourse" layout="menu-select" key="executionCourse.destination">
 					<fr:property name="format" value="${nome} - ${sigla} - (${degreePresentationString})"/>
 					<fr:property name="sortBy" value="nome"/>
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.academicAdminOffice.ExecutionCoursesProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.academicAdminOffice.ExecutionCoursesProvider"/>
 					<fr:property name="saveOptions" value="true"/>
 					<fr:property name="classes" value="selectWidth600px"/>
 				</fr:slot>
 				<fr:slot name="announcements" layout="option-select" key="manager.announcements.stats.announcementsStats.label">
 					<fr:property name="eachSchema" value="announcement.view-with-subject"/>
 					<fr:property name="eachLayout" value="values-comma"/>
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.AnnouncementsForBoard"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.manager.AnnouncementsForBoard"/>
 					<fr:property name="saveOptions" value="true"/>
 					<fr:property name="classes" value="nobullet ulindent0 mvert0"/>
 				</fr:slot>

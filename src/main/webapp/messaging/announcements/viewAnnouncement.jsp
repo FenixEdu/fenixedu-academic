@@ -28,7 +28,7 @@
 
 <logic:present name="announcement">
 
-	<bean:define id="announcement" name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement"/>
+	<bean:define id="announcement" name="announcement" type="org.fenixedu.academic.domain.messaging.Announcement"/>
 		
 	<%-- <em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em> --%>
 	<h2><bean:message key="messaging.viewAnnouncement.title" bundle="MESSAGING_RESOURCES"/></h2>

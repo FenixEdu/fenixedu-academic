@@ -1,1 +1,1 @@
-net.sourceforge.fenixedu.presentationTier.servlets.FenixContainerInitializer
+org.fenixedu.academic.servlet.FenixContainerInitializer

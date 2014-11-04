@@ -49,7 +49,7 @@
 	<br/>
 	<bean:define id="url" type="java.lang.String">/manageDepartmentDegrees.do?method=remove&departmentID=<bean:write name="departmentDegreeBean" property="department.externalId"/></bean:define>
 	<fr:view name="departmentDegreeBean" property="department.degrees"
-			schema="net.sourceforge.fenixedu.domain.Degree.List.For.Department.Association">
+			schema="org.fenixedu.academic.domain.Degree.List.For.Department.Association">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1"/>
 	        <fr:property name="columnClasses" value=",,,"/>

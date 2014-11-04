@@ -23,12 +23,13 @@
  *  
  */
 
-package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
+package org.fenixedu.academic.service.services.commons.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.dto.InfoStudentCurricularPlan;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

@@ -20,9 +20,9 @@
  * Created on Apr 30, 2004
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree;
+package org.fenixedu.academic.service.services.exceptions.gratuity.masterDegree;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

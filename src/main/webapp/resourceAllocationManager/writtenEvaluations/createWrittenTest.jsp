@@ -23,17 +23,17 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.MainExamsDA" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.exams.MainExamsDA" />
 
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 		
-	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
+	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.WrittenTest'}" escape="false">
 		<f:param value="#{bundle['label.written.test']}" />
 	</h:outputFormat>
-	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
+	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.Exam'}" escape="false">
 		<f:param value="#{bundle['label.exam']}" />
 	</h:outputFormat>
 
@@ -115,15 +115,15 @@
 			</h:panelGroup>
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.description']}" escape="false"
-						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.WrittenTest'}"/>
 				<h:outputText value="#{bundle['property.exam.season']}" escape="false"
-						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}"/>
+						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.Exam'}"/>
 			</h:panelGroup>
 			<h:panelGroup>
 				<h:inputText alt="#{htmlAltBundle['inputText.description']}" required="true" maxlength="120" size="15" value="#{SOPEvaluationManagementBackingBean.description}"
-						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.WrittenTest'}"/>
 				<h:selectOneMenu value="#{SOPEvaluationManagementBackingBean.season}"
-						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}">
+						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.Exam'}">
 					<f:selectItems value="#{SOPEvaluationManagementBackingBean.seasonLabels}" />
 				</h:selectOneMenu>
 			</h:panelGroup>
@@ -144,22 +144,22 @@
 
 
 		<h:outputText value="<p class='mvert15'>" escape="false"/>
-		<h:outputFormat value="<b>#{bundleSOP['lable.associated.rooms']}:</b> <br/><em>#{SOPEvaluationManagementBackingBean.associatedRooms}</em><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.rooms']}:</b> <br/><em>#{SOPEvaluationManagementBackingBean.associatedRooms}</em><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.WrittenTest'}" escape="false">
 			<f:param value="#{bundle['label.written.test']}"/>
 		</h:outputFormat>
 		<h:outputText value="</p>" escape="false"/>
 		
 		<h:outputText value="<p class='mvert15'>" escape="false"/>
-		<h:outputFormat value="<b>#{bundleSOP['lable.associated.rooms']}:</b> <br/><em>#{SOPEvaluationManagementBackingBean.associatedRooms}</em><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.rooms']}:</b> <br/><em>#{SOPEvaluationManagementBackingBean.associatedRooms}</em><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.Exam'}" escape="false">
 			<f:param value="#{bundle['label.exam']}"/>
 		</h:outputFormat>
 		<h:outputText value="</p>" escape="false"/>
 
 
-		<h:outputFormat value="<b>#{bundleSOP['lable.associated.curricular.courses']}:</b>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.curricular.courses']}:</b>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.WrittenTest'}" escape="false">
 			<f:param value="#{bundle['label.written.test']}"/>
 		</h:outputFormat>
-		<h:outputFormat value="<b>#{bundleSOP['lable.associated.curricular.courses']}:</b>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.curricular.courses']}:</b>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'org.fenixedu.academic.domain.Exam'}" escape="false">
 			<f:param value="#{bundle['label.exam']}"/>
 		</h:outputFormat>
 

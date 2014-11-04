@@ -35,7 +35,7 @@
 	</description>
 	<tag>	   
 		<name>ganttDiagram</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.GanttDiagramTagLib</tag-class>
+		<tag-class>org.fenixedu.academic.servlet.taglib.GanttDiagramTagLib</tag-class>
 		<body-content>empty</body-content>
 		<description>
 			Renders Gantt Diagrams

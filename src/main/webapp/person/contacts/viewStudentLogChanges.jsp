@@ -80,7 +80,7 @@
 		</style>
 	
 	<fr:view name="logsList">
-		<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="APPLICATION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.PersonInformationLog" bundle="APPLICATION_RESOURCES">
 			<fr:slot name="username" key="label.username" >
 		    	<fr:property name="classes" value="nobullet noindent"/>  
 	    	</fr:slot>

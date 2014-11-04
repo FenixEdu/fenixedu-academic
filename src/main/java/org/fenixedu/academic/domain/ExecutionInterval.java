@@ -16,25 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
-import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.period.DegreeTransferCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
-import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.util.PeriodState;
-
+import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCodeMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.period.CandidacyPeriod;
+import org.fenixedu.academic.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
+import org.fenixedu.academic.domain.period.DegreeChangeCandidacyPeriod;
+import org.fenixedu.academic.domain.period.DegreeTransferCandidacyPeriod;
+import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
+import org.fenixedu.academic.domain.period.Over23CandidacyPeriod;
+import org.fenixedu.academic.domain.period.SecondCycleCandidacyPeriod;
+import org.fenixedu.academic.domain.period.StandaloneCandidacyPeriod;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 abstract public class ExecutionInterval extends ExecutionInterval_Base {

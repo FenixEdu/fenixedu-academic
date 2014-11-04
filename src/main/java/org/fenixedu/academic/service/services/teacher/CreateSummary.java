@@ -16,16 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
+package org.fenixedu.academic.service.services.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
-import net.sourceforge.fenixedu.domain.Summary;
+import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.dto.SummariesManagementBean;
+import org.fenixedu.academic.service.ServiceMonitoring;
+import org.fenixedu.academic.service.filter.ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.filter.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
+import org.fenixedu.academic.service.filter.SummaryManagementToTeacherAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateSummary {

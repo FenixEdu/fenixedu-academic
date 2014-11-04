@@ -16,30 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis;
+package org.fenixedu.academic.ui.struts.action.phd.thesis;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.alert.AlertService;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
+import org.fenixedu.academic.domain.phd.thesis.activities.ScheduleThesisMeeting;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.PhdDocumentsZip;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessDA;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -143,7 +142,7 @@ abstract public class CommonPhdThesisProcessDA extends PhdProcessDA {
 
     public ActionForward deleteDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        return executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteDocument.class,
+        return executeActivity(org.fenixedu.academic.domain.phd.candidacy.activities.DeleteDocument.class,
                 getDomainObject(request, "documentId"), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
                 "message.document.deleted.successfuly");
     }

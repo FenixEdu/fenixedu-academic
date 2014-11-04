@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager;
+package org.fenixedu.academic.dto.resourceAllocationManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,16 +27,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.domain.CurricularYearList;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.OccupationPeriodReference;
-import net.sourceforge.fenixedu.domain.OccupationPeriodType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.date.IntervalTools;
-
+import org.fenixedu.academic.domain.CurricularYearList;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.OccupationPeriod;
+import org.fenixedu.academic.domain.OccupationPeriodReference;
+import org.fenixedu.academic.domain.OccupationPeriodType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.date.IntervalTools;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;

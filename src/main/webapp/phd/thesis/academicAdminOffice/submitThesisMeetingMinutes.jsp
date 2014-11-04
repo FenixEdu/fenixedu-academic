@@ -23,8 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingBean"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean"%>
 
 <html:xhtml/>
 
@@ -80,7 +80,7 @@
 	<fr:edit id="meetingBean.notify" name="meetingBean">
 
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdMeetingBean.class.getName() %>">
-			<fr:slot name="toNotify" key="net.sourceforge.fenixedu.domain.phd.thesis.meeting.toNotify" bundle="PHD_RESOURCES" layout="radio">
+			<fr:slot name="toNotify" key="org.fenixedu.academic.domain.phd.thesis.meeting.toNotify" bundle="PHD_RESOURCES" layout="radio">
 				<fr:property name="classes" value="liinline nobullet"/>
 			</fr:slot>
 		</fr:schema>

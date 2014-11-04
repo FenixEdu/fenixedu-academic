@@ -64,7 +64,7 @@
 <fr:form action="<%= "/phdProgramCandidacyProcess.do?method=editProcessAttributes&processId=" + processId %>">
 
 	<fr:edit id="processBean" name="processBean" >
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
 			<fr:slot name="candidacyDate" required="true"/>
 			<fr:slot name="whenRatified" />
 		</fr:schema>

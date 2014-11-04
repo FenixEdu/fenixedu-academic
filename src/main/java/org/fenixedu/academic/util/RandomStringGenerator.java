@@ -19,7 +19,7 @@
 /*
  * Created on 18/Mar/2003
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.Random;
 

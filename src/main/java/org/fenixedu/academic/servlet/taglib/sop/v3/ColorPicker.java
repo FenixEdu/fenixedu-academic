@@ -21,12 +21,12 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
+package org.fenixedu.academic.servlet.taglib.sop.v3;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
+import org.fenixedu.academic.dto.InfoShowOccupation;
 
 /**
  * @author jpvl

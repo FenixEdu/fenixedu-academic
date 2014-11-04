@@ -36,13 +36,13 @@
 
 <logic:present name="departmentCreditsBean">
 	<fr:edit id="departmentCreditsBean" name="departmentCreditsBean" action="/exportCredits.do?method=exportDepartmentCredits">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.DepartmentCreditsBean">
 			<fr:slot name="department" key="label.department" layout="menu-select">
 				<fr:property name="from" value="availableDepartments"/>
 				<fr:property name="format" value="${name}"/>
 			</fr:slot>
 			<fr:slot name="executionYear" key="label.executionYear" layout="menu-select" required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${qualifiedName}" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>

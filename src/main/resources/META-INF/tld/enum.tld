@@ -44,8 +44,8 @@
   <!-- =======================By gedl 23-9-2005============================================ -->
   <tag>
      <name>define</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.EnumDefineTagLib</tag-class>
-	<tei-class>net.sourceforge.fenixedu.presentationTier.TagLib.EnumDescriptionTagExtraInfo</tei-class>
+    <tag-class>org.fenixedu.academic.servlet.taglib.EnumDefineTagLib</tag-class>
+	<tei-class>org.fenixedu.academic.servlet.taglib.EnumDescriptionTagExtraInfo</tei-class>
     <body-content>JSP</body-content>
     <description>
       Defines a scripting variable holding the name for the specified value type
@@ -92,8 +92,8 @@
        <!-- ===================================================================================== -->
   <tag>
     <name>labelValues</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.EnumTagLib</tag-class>
-	<tei-class>net.sourceforge.fenixedu.presentationTier.TagLib.CollectionTagExtraInfo</tei-class>
+    <tag-class>org.fenixedu.academic.servlet.taglib.EnumTagLib</tag-class>
+	<tei-class>org.fenixedu.academic.servlet.taglib.CollectionTagExtraInfo</tei-class>
     <body-content>JSP</body-content>
     <description>
       Return the LabelValueBeans for enumeration

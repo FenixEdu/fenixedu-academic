@@ -20,7 +20,7 @@
  * Created on Apr 26, 2004
  *
  */
-package net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs;
+package org.fenixedu.academic.util.gratuity.fileParsers.sibs;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -31,11 +31,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InvalidSibsPaymentFileFormatServiceException;
-import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
-import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
+import org.fenixedu.academic.domain.gratuity.SibsPaymentStatus;
+import org.fenixedu.academic.domain.gratuity.SibsPaymentType;
+import org.fenixedu.academic.domain.gratuity.masterDegree.SibsPaymentFile;
+import org.fenixedu.academic.domain.gratuity.masterDegree.SibsPaymentFileEntry;
+import org.fenixedu.academic.service.services.exceptions.gratuity.masterDegree.InvalidSibsPaymentFileFormatServiceException;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

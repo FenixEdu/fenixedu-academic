@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.FrequencyType;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.HourMinuteSecond;
 
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;

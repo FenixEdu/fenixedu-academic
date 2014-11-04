@@ -20,12 +20,12 @@
  * Created on Jul 26, 2005
  *  by jdnf and mrsp
  */
-package net.sourceforge.fenixedu.applicationTier.utils;
+package org.fenixedu.academic.service.utils;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.BibliographicReference;
+import org.fenixedu.academic.domain.ExecutionCourse;
 
 public class ExecutionCourseUtils {
 

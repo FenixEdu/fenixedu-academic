@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse;
+package org.fenixedu.academic.ui.renderers.providers.executionCourse;
 
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-
+import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;

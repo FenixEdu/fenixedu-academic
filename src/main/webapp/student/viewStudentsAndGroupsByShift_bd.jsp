@@ -27,8 +27,8 @@
 
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
+<%@ page import="org.fenixedu.academic.dto.InfoLesson"%>
+<%@ page import="org.fenixedu.academic.dto.InfoShift"%>
 
 <%@ page import="java.util.Calendar" %>
 

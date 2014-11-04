@@ -37,7 +37,7 @@
 <fr:form action='<%="/caseHandlingSecondCycleIndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
 	<html:hidden property="method" value="prepareExecuteIntroduceCandidacyResult" />
 	<fr:edit name="secondCycleIndividualCandidacyResultBean">
-	<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
 		<fr:slot name="degree" layout="menu-select-postback" >
 			<fr:property name="from" value="degrees"></fr:property>
 			<fr:property name="format" value="${name}" />

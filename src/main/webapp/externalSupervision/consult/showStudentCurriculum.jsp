@@ -25,7 +25,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
+<%@page import="org.fenixedu.academic.domain.degree.DegreeType"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 
@@ -33,7 +33,7 @@
 
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
-<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
 <bean:define id="personExternalId" name="registration" property="student.person"/>
 
 <html:link page="/viewCurriculum.do?method=prepareForSupervisor" paramName="personExternalId" paramProperty="externalId" paramId="personId">
@@ -102,7 +102,7 @@
 		<tr>
 			<th><bean:message key="label.view" bundle="STUDENT_RESOURCES" />:</th>
 			<td>
-				<e:labelValues id="viewTypes" enumeration="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer$ViewType" bundle="ENUMERATION_RESOURCES" />
+				<e:labelValues id="viewTypes" enumeration="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer$ViewType" bundle="ENUMERATION_RESOURCES" />
 				<html:select property="viewType" altKey="select.viewType" bundle="HTMLALT_RESOURCES" onchange="this.form.submit();">
 					<html:options collection="viewTypes" labelProperty="label" property="value"/>
 				</html:select>
@@ -111,7 +111,7 @@
 		<tr>
 			<th><bean:message key="label.enrollmentsFilter.basic" bundle="STUDENT_RESOURCES" /></th>
 			<td>
-				<e:labelValues id="enrolmentStateTypes" enumeration="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer$EnrolmentStateFilterType" bundle="ENUMERATION_RESOURCES" />
+				<e:labelValues id="enrolmentStateTypes" enumeration="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer$EnrolmentStateFilterType" bundle="ENUMERATION_RESOURCES" />
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentStateType" property="select" onchange='this.form.submit();' >
 					<html:options collection="enrolmentStateTypes" property="value" labelProperty="label"/>
 				</html:select>
@@ -120,7 +120,7 @@
 		<tr>
 			<th><bean:message key="organize.by" bundle="STUDENT_RESOURCES" />:</th>
 			<td>
-				<e:labelValues id="organizationTypes" enumeration="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer$OrganizationType" bundle="ENUMERATION_RESOURCES" />
+				<e:labelValues id="organizationTypes" enumeration="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer$OrganizationType" bundle="ENUMERATION_RESOURCES" />
 				<logic:iterate id="organizationType" name="organizationTypes">
 					<bean:define id="label" name="organizationType" property="label" />
 					<bean:define id="value" name="organizationType" property="value" />
@@ -209,7 +209,7 @@
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.creditsConcluded" bundle="APPLICATION_RESOURCES"/></em></p>			
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.approvedCredits" bundle="APPLICATION_RESOURCES"/></em></p>	
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.maxCredits" bundle="APPLICATION_RESOURCES"/></em></p>
-	    <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
+	    <e:labelValues id="enrolmentEvaluationTypes" enumeration="org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType" />
 		<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
 			<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
 		</logic:iterate>

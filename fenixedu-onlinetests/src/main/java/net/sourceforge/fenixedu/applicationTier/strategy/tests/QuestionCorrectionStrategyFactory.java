@@ -20,18 +20,18 @@
  * Created on 23/Set/2004
  *
  */
-package net.sourceforge.fenixedu.applicationTier.strategy.tests;
+package org.fenixedu.academic.service.strategy.tests;
 
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.FENIX_LIDQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.FENIX_NUMQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.FENIX_STRQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_LIDQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_NUMQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_STRQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
+import org.fenixedu.academic.service.strategy.tests.strategys.FENIX_LIDQuestionCorrectionStrategy;
+import org.fenixedu.academic.service.strategy.tests.strategys.FENIX_NUMQuestionCorrectionStrategy;
+import org.fenixedu.academic.service.strategy.tests.strategys.FENIX_STRQuestionCorrectionStrategy;
+import org.fenixedu.academic.service.strategy.tests.strategys.IMS_LIDQuestionCorrectionStrategy;
+import org.fenixedu.academic.service.strategy.tests.strategys.IMS_NUMQuestionCorrectionStrategy;
+import org.fenixedu.academic.service.strategy.tests.strategys.IMS_STRQuestionCorrectionStrategy;
+import org.fenixedu.academic.service.strategy.tests.strategys.IQuestionCorrectionStrategy;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.util.tests.CorrectionFormula;
+import org.fenixedu.academic.util.tests.QuestionType;
 
 /**
  * @author Susana Fernandes

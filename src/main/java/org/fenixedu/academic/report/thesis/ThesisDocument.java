@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs.thesis;
+package org.fenixedu.academic.report.thesis;
 
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**

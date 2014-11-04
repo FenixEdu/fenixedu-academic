@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.time;
+package org.fenixedu.academic.domain.time;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicSemestersDurationFieldType;
-import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicYearsDurationFieldType;
-
+import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicSemestersDurationFieldType;
+import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicYearsDurationFieldType;
 import org.joda.time.DurationFieldType;
 import org.joda.time.PeriodType;
 

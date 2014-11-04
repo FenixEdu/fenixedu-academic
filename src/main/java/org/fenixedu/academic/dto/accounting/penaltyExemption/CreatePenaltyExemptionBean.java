@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption;
+package org.fenixedu.academic.dto.accounting.penaltyExemption;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType;
-
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
 import org.joda.time.YearMonthDay;
 
 public abstract class CreatePenaltyExemptionBean implements Serializable {

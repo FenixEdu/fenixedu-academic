@@ -66,7 +66,7 @@
 				<th>
 					Quem pode ler:
 				</th>
-				<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType" />				
+				<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="org.fenixedu.academic.domain.UnitBoardPermittedGroupType" />				
 				<td>
 					<html:select property="unitBoardReadPermittedGroupType">
 						<html:options collection="values" property="value" labelProperty="label" />
@@ -111,7 +111,7 @@
 	<logic:present name="announcements">
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 		<bean:define id="extraParameters" name="extraParameters" />
-		<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
+		<bean:define id="announcementBoard" name="announcementBoard" type="org.fenixedu.academic.domain.messaging.AnnouncementBoard"/>
 		<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
 	
 		<ul>

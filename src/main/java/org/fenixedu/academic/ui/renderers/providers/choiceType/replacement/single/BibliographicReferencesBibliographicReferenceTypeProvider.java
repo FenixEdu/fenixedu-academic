@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single;
+package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ public class BibliographicReferencesBibliographicReferenceTypeProvider implement
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays.asList(net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType
+        return Arrays.asList(org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType
                 .values());
     }
 

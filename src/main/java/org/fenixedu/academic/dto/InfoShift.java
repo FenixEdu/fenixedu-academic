@@ -22,7 +22,7 @@
  * Created on 31 de Outubro de 2002, 12:35
  */
 
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 /**
  * @author tfc130
@@ -34,13 +34,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftGroupingProperties;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.util.NumberUtils;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftGroupingProperties;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.util.NumberUtils;
+
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InfoShift extends InfoObject {

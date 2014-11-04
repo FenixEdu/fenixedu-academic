@@ -19,12 +19,11 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.validators;
+package org.fenixedu.academic.ui.renderers.validators;
 
 import java.text.ParseException;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

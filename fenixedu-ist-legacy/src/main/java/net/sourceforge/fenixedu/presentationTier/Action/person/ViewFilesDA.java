@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.person;
+package org.fenixedu.academic.ui.struts.action.person;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,15 +28,15 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingFilesApp;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.PedagogicalCouncilUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificCouncilUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.ui.struts.action.commons.UnitFunctionalities;
+import org.fenixedu.academic.ui.struts.action.messaging.MessagingApplication.MessagingFilesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

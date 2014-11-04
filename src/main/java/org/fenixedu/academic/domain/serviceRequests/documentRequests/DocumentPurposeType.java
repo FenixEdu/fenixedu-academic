@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
+package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 public enum DocumentPurposeType {
     FAMILY_ALLOWANCE, PUBLIC_TRANSPORTS, MILITARY, PROFESSIONAL, PPRE, STUDY_SCHOLARSHIP, OTHER;

@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
+package org.fenixedu.academic.dto.residenceManagement;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.Person;
 
 public class ResidenceRoleManagementBean implements Serializable {
 

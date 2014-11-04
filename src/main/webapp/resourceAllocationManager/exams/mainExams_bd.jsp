@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
+	import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <h2><bean:message key="label.selected.space.written.evaluations"/></h2>
 <p><bean:message key="label.selected.space.written.evaluations.information"/></p>
@@ -57,7 +57,7 @@
 		<bean:message key="label.change.published.state" />
 	</html:submit></p>
 
-	<bean:define id="executionSemester" name="executionInterval" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
+	<bean:define id="executionSemester" name="executionInterval" type="org.fenixedu.academic.domain.ExecutionSemester"/>
 	<logic:present name="executionDegrees">
 		<table class="tstyle4">
 			<tr>
@@ -65,7 +65,7 @@
 				<th><bean:message key="label.degree" /></th>
 				<th><bean:message key="label.exams.map.temp.state" /></th>
 			</tr>
-			<logic:iterate id="executionDegree" name="executionDegrees" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+			<logic:iterate id="executionDegree" name="executionDegrees" type="org.fenixedu.academic.domain.ExecutionDegree">
 				<tr>
 					<td><bean:message name="executionDegree"
 						property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES" /></td>

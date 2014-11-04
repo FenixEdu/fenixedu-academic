@@ -41,10 +41,10 @@
 <%--  ### Results  ### --%>
 
 <fr:edit id="select-period-bean" name="selectPeriodBean">
-	<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$SelectPhdCandidacyPeriodBean" bundle="PHD_RESOURCES" >
-		<fr:slot name="phdCandidacyPeriod" key="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$SelectPhdCandidacyPeriodBean.phdCandidacyPeriod" layout="menu-select-postback">
+	<fr:schema type="org.fenixedu.academic.ui.struts.action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$SelectPhdCandidacyPeriodBean" bundle="PHD_RESOURCES" >
+		<fr:slot name="phdCandidacyPeriod" key="org.fenixedu.academic.ui.struts.action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$SelectPhdCandidacyPeriodBean.phdCandidacyPeriod" layout="menu-select-postback">
 			<fr:property name="destination" value="phdCandidacyPeriodSelectionPostback" />
-			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$PhdCandidacyPeriodDataProvider" />
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$PhdCandidacyPeriodDataProvider" />
 			<fr:property name="format" value="${presentationName}" />
 		</fr:slot>
 	</fr:schema>

@@ -28,7 +28,7 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:write name="process" property="displayName" /></h2>
 
-<bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess" />
+<bean:define id="process" name="process" type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess" />
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="childProcessName" name="childProcessName" />
 <bean:define id="processName" name="processName" />

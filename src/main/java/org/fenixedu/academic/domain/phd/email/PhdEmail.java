@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.email;
+package org.fenixedu.academic.domain.phd.email;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.ReplyTo;
+import org.fenixedu.academic.domain.util.email.Sender;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

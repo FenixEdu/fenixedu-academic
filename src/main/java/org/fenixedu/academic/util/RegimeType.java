@@ -20,7 +20,7 @@
  * Created on Dec 5, 2005
  *	by mrsp
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.Locale;
 

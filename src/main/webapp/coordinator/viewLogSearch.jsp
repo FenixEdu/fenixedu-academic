@@ -46,9 +46,9 @@
 <logic:present name="searchBean">
 	<fr:form action="<%="/searchDLog.do?method=search&amp;degreeCurricularPlanID=" + request.getParameter("degreeCurricularPlanID") %>">
 		<fr:edit id="searchBean" name="searchBean">
-			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.coordinator.SearchDegreeLogBean" bundle="MESSAGING_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.dto.coordinator.SearchDegreeLogBean" bundle="MESSAGING_RESOURCES">
 				<fr:slot name="degreeLogTypes" layout="option-select" bundle="ENUMERATION_RESOURCES" key="DegreeLogTypes">
-	        		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeLogTypesProvider" />
+	        		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreeLogTypesProvider" />
 	        		<fr:property name="classes" value="nobullet noindent"/>
 	        		<fr:property name="selectAllShown" value="true"/>
 	    		</fr:slot>
@@ -76,7 +76,7 @@
 				numberOfPagesAttributeName="numberOfPages"/>
 
 			<fr:view name="logPagesBean" property="degreeLogs">
-				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.coordinator.SearchDegreeLogBean" bundle="APPLICATION_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.dto.coordinator.SearchDegreeLogBean" bundle="APPLICATION_RESOURCES">
 					<fr:slot name="person" layout="view-as-image">
 						<fr:property name="photoCellClasses" value="personalcard_photo"/>
 				   		<fr:property name="imageFormat" value="<%=request.getContextPath()+ "/user/photo/${username}"%>"/>

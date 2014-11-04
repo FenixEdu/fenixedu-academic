@@ -81,8 +81,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 	<logic:notEmpty name="infoSiteStudentTestFeedback" property="studentTestQuestionList">
 		<bean:define id="studentTestQuestionList" name="infoSiteStudentTestFeedback" property="studentTestQuestionList"/>
-		<logic:iterate id="testQuestion" name="studentTestQuestionList" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
+		<logic:iterate id="testQuestion" name="studentTestQuestionList" type="org.fenixedu.academic.domain.onlineTests.StudentTestQuestion"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.domain.onlineTests.DistributedTest"/>
 		<bean:define id="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 		<br/>
 		<br/>

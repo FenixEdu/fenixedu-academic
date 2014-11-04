@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib;
+package org.fenixedu.academic.servlet.taglib;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -27,16 +27,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.domain.Holiday;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.util.DayType;
-import net.sourceforge.fenixedu.util.Month;
-import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
-import net.sourceforge.fenixedu.util.renderer.GanttDiagram.ViewType;
-import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.taglib.TagUtils;
+import org.fenixedu.academic.domain.Holiday;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.util.DayType;
+import org.fenixedu.academic.util.Month;
+import org.fenixedu.academic.util.renderer.GanttDiagram;
+import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
+import org.fenixedu.academic.util.renderer.GanttDiagram.ViewType;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;

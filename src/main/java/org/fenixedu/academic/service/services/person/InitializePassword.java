@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.person;
+package org.fenixedu.academic.service.services.person;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -25,10 +25,9 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordInitializationException;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager.ConfigurationProperties;
-
+import org.fenixedu.academic.service.services.exceptions.PasswordInitializationException;
+import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.util.FenixConfigurationManager.ConfigurationProperties;
 import org.fenixedu.bennu.core.domain.User;
 
 import com.google.common.io.BaseEncoding;

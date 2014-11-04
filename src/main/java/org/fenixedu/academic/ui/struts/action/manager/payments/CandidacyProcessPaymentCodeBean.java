@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
+package org.fenixedu.academic.ui.struts.action.manager.payments;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-
+import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.joda.time.LocalDate;
 
 public class CandidacyProcessPaymentCodeBean implements Serializable {

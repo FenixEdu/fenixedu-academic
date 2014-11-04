@@ -20,11 +20,11 @@
  * Created on 22/Jul/2003
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.StudentGroup;
+import org.fenixedu.academic.domain.StudentGroup;
 
 /**
  * @author asnr and scpo

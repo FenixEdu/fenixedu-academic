@@ -47,7 +47,7 @@
 		<bean:message key="label.start" bundle="RESEARCHER_RESOURCES"/>:	  
 		<fr:edit id="firstYear" name="executionYearIntervalBean" slot="firstExecutionYear">
 			<fr:layout name="menu-select">
-			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
 			<fr:property name="format" value="${year}"/>
 			<fr:property name="defaultText" value="label.undefined"/>
 			<fr:property name="key" value="true"/>
@@ -60,7 +60,7 @@
 
 		<fr:edit id="finalYear" name="executionYearIntervalBean" slot="finalExecutionYear">
 			<fr:layout name="menu-select">
-			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
 			<fr:property name="format" value="${year}"/>
 			<fr:property name="defaultText" value="label.undefined"/>
 			<fr:property name="key" value="true"/>
@@ -121,7 +121,7 @@
 
 
 	<ul>
-    <logic:iterate id="lecture" name="lectures" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+    <logic:iterate id="lecture" name="lectures" type="org.fenixedu.academic.domain.ExecutionCourse">
 		<li>
 		
 		<app:contentLink name="lecture" property="site" target="blank">

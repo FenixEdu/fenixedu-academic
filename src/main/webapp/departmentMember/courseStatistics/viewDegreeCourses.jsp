@@ -39,9 +39,9 @@
 <fr:form id="chooseSemesterForm" action="/departmentCourses.do?method=prepareDegreeCourses" >
 	<fr:edit id="courseStatisticsBean" name="courseStatisticsBean">
 		<fr:schema bundle="DEPARTMENT_MEMBER_RESOURCES"
-			type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.CourseStatisticsBean">
+			type="org.fenixedu.academic.ui.struts.action.departmentMember.CourseStatisticsBean">
 			<fr:slot name="executionSemester" layout="menu-select-postback" key="label.common.executionYear">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider" />
 				<fr:property name="format" value="${qualifiedName}" />
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>

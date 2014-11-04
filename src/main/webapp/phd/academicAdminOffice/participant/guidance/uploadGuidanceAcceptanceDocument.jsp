@@ -60,7 +60,7 @@
 	<fr:edit id="guidingBean" name="guidingBean" visible="false" />
 	
 	<fr:edit id="guidingBean-upload" name="guidingBean">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES" >
+		<fr:schema type="org.fenixedu.academic.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES" >
 			<fr:slot name="guidingAcceptanceLetter.file" key="PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER">
 				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">

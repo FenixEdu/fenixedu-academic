@@ -20,7 +20,7 @@
  * Created on 8/Mai/2003 by jpvl
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
+package org.fenixedu.academic.ui.struts.action.exceptions;
 
 import java.util.Date;
 

@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
 <%@page import="pt.ist.fenixframework.DomainObject"%>
 
 
@@ -49,7 +49,7 @@
 	<tr>
 		<td>
 			<fr:edit id="searchProcessBean" name="searchProcessBean">
-				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean">
+				<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean">
 					<fr:slot name="searchCriterion">
 						<fr:property name="defaultOptionHidden" value="true"/>
 						<fr:property name="bundle" value="PHD_RESOURCES"/>

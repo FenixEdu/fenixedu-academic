@@ -20,9 +20,9 @@
  * Created on Dec 9, 2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.Attends;
+import org.fenixedu.academic.domain.Attends;
 
 /**
  * @author André Fernandes / João Brito

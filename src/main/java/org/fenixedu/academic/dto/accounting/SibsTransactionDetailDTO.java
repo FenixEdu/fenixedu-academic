@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting;
+package org.fenixedu.academic.dto.accounting;
 
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
-
+import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.joda.time.DateTime;
 
 public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {

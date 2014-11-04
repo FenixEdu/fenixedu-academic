@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
+import org.fenixedu.academic.service.services.manager.MergeExecutionCourses;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.onlineTests.Metadata;
+import org.fenixedu.academic.domain.onlineTests.TestScope;
 import pt.ist.fenixframework.FenixFramework;
 
 @WebListener

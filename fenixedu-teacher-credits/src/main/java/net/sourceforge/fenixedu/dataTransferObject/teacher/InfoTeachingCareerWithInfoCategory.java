@@ -20,10 +20,10 @@
  * Created on 30/Jun/2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher;
+package org.fenixedu.academic.dto.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+import org.fenixedu.academic.dto.InfoTeacher;
+import org.fenixedu.academic.domain.teacher.TeachingCareer;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -38,7 +38,7 @@ public class InfoTeachingCareerWithInfoCategory extends InfoTeachingCareer {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer
+     * org.fenixedu.academic.dto.teacher.InfoTeachingCareer
      * #copyFromDomain(Dominio.teacher.TeachingCareer)
      */
     @Override

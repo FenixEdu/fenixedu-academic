@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.photograph;
+package org.fenixedu.academic.domain.photograph;
 
 public enum AspectRatio {
     ª1_by_1(1, 1), ª3_by_4(3, 4), ª9_by_10(9, 10);

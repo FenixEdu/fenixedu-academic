@@ -33,7 +33,7 @@
 
 <fr:form action="/shiftDistributionFirstYear.do?method=uploadAndSimulateFileDistribution" encoding="multipart/form-data">
 	<fr:edit id="fileBeanDistribution" name="fileBeanDistribution">
-		<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ShiftDistributionFileBean">
+		<fr:schema bundle="SOP_RESOURCES" type="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.ShiftDistributionFileBean">
 			<fr:slot name="inputStream" key="label.file" required="true" bundle="APPLICATION_RESOURCES">
 				<fr:property name="fileNameSlot" value="filename"/>
 			</fr:slot>

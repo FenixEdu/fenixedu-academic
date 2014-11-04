@@ -19,19 +19,20 @@
 /*
  * Created on Dec 9, 2005
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
+package org.fenixedu.academic.service.services.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CompetenceCourseType;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.util.StringFormatter;
+import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.CompetenceCourseType;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
+import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import org.fenixedu.academic.service.filter.BolonhaManagerAuthorizationFilter;
+import org.fenixedu.academic.service.filter.ScientificCouncilAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.ExistingCompetenceCourseInformationException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.util.StringFormatter;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

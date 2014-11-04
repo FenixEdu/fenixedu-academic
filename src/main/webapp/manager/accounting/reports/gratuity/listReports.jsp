@@ -32,10 +32,10 @@
 	<fr:edit id="gratuity.report.bean" name="gratuityReportBean" visible="false" />
 	
 	<fr:edit id="gratuity.report.bean" name="gratuityReportBean">
-		<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.report.GratuityReportBean">
+		<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.report.GratuityReportBean">
 			<fr:slot name="executionYear" key="label.gratuity.report.execution.year" layout="menu-select-postback">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
@@ -58,7 +58,7 @@
 
 <logic:notEmpty name="generatedReports">
 	<fr:view name="generatedReports" >
-		<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob">
+		<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.report.GratuityReportQueueJob">
 			<fr:slot name="filename" key="label.gratuity.report.file.name" />
 			<fr:slot name="requestDate" key="label.gratuity.report.request.date" />
 			<fr:slot name="jobEndTime" key="label.gratuity.report.end.date" />
@@ -74,7 +74,7 @@
 	</fr:view>
 	
 	<fr:view name="eventReports" >
-		<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob">
+		<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJob">
 			<fr:slot name="filename" key="label.gratuity.report.file.name" />
 			<fr:slot name="requestDate" key="label.gratuity.report.request.date" />
 			<fr:slot name="jobEndTime" key="label.gratuity.report.end.date" />
@@ -98,7 +98,7 @@
 
 <logic:notEmpty name="notGeneratedReports">
 <fr:view	name="notGeneratedReports" sortBy="requestDate=desc">
-	<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob">
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.report.GratuityReportQueueJob">
 		<fr:slot name="requestDate" key="label.gratuity.report.request.date" />
 		<fr:slot name="jobStartTime" key="label.gratuity.report.start.time" />
 		<fr:slot name="jobEndTime" key="label.gratuity.report.end.time" />

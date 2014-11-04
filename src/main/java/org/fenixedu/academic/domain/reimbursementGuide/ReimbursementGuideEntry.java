@@ -21,7 +21,7 @@
  *  
  */
 
-package net.sourceforge.fenixedu.domain.reimbursementGuide;
+package org.fenixedu.academic.domain.reimbursementGuide;
 
 import java.math.BigDecimal;
 

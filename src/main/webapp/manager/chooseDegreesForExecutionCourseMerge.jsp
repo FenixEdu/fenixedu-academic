@@ -62,19 +62,19 @@
 
 <html:form action="/chooseDegreesForExecutionCourseMerge.do?method=chooseDegreesAndExecutionPeriod" styleId="submitForm">
 	<fr:edit id="degreeBean" name="degreeBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="academicInterval" layout="menu-select" key="label.mergedegrees.academicinterval" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		        <fr:property name="providerClass"
-		            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />
+		            value="org.fenixedu.academic.ui.renderers.providers.AcademicIntervalProvider" />
 		        <fr:property name="format" value="${pathName}" />
 		        <fr:property name="nullOptionHidden" value="true" />
 	    	</fr:slot>
 			<fr:slot name="sourceDegree" layout="menu-select" key="label.mergedegrees.source" required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreesProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreesProvider" />
 				<fr:property name="format" value="${presentationName}" />
 			</fr:slot>
 			<fr:slot name="destinationDegree" layout="menu-select" key="label.mergedegrees.destination" required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreesProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreesProvider" />
 				<fr:property name="format" value="${presentationName}" />
 			</fr:slot>
 		</fr:schema>

@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <html:xhtml/>
 
-<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
 
 <div align="center">
 

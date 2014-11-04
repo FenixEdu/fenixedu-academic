@@ -23,12 +23,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="java.util.Calendar" %>
-<%@ page import="net.sourceforge.fenixedu.util.Mes" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem" %>
+<%@ page import="org.fenixedu.academic.util.Mes" %>
+<%@ page import="org.fenixedu.academic.dto.InfoWebSiteItem" %>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="infoWebSiteSection">
 	<table width="100%" align="center">
-		<logic:iterate id="item" name="infoWebSiteSection" property="infoItemsList" type="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem">
+		<logic:iterate id="item" name="infoWebSiteSection" property="infoItemsList" type="org.fenixedu.academic.dto.InfoWebSiteItem">
 			<tr>
 				<td align="left">
 					<bean:write name="item" property="title"/>

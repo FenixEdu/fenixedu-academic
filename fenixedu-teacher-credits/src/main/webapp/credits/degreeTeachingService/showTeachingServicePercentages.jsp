@@ -42,7 +42,7 @@
 <td><img src="<%= request.getContextPath() + url %>"/></td>
 <td >
 	<fr:view name="professorship">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Professorship">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.Professorship">
 			<fr:slot name="teacher.person.presentationName" key="label.name"/>
 			<fr:slot name="executionCourse.nome" key="label.course"/>
 			<fr:slot name="executionCourse.executionPeriod" key="label.execution-period" layout="format">

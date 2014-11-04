@@ -20,7 +20,7 @@
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
@@ -79,7 +79,7 @@
 	<fr:edit id="validateComissionBean" name="validateComissionBean" visible="false"/>
 	
   	<fr:edit id="validateComissionBean.generateAlert" name="validateComissionBean">
-  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+  		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean">
   			<fr:slot name="generateAlert" layout="radio" />
   		</fr:schema>
 		<fr:layout name="tabular-editable">

@@ -20,7 +20,7 @@
  * Created on 3/Dez/2003
  *
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.Calendar;
 import java.util.Date;

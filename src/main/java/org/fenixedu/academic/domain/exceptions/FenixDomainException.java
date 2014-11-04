@@ -20,7 +20,7 @@
  * Created on Feb 3, 2005
  *
  */
-package net.sourceforge.fenixedu.domain.exceptions;
+package org.fenixedu.academic.domain.exceptions;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>

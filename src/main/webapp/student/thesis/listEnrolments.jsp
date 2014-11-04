@@ -24,7 +24,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%><html:xhtml/>
 
 <h2><bean:message key="title.student.thesis"/></h2>
 
@@ -53,7 +53,7 @@
 		<th>
 		</th>
 	</tr>
-	<logic:iterate id="enrolment" type="net.sourceforge.fenixedu.domain.Enrolment" name="enrolments">
+	<logic:iterate id="enrolment" type="org.fenixedu.academic.domain.Enrolment" name="enrolments">
 		<tr>
 			<td>
 				<bean:write name="enrolment" property="executionYear.year"/>

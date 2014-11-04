@@ -40,7 +40,7 @@
 	<p><h3><bean:message bundle="MANAGER_RESOURCES" key="link.new.rule"/></h3></p>	
 	<br/>
 	
-	<fr:create id="create" type="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule" schema="connectionRule.bean">
+	<fr:create id="create" type="org.fenixedu.academic.domain.organizationalStructure.ConnectionRule" schema="connectionRule.bean">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

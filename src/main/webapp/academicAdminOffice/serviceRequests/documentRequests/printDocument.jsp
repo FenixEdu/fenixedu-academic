@@ -26,7 +26,7 @@
 
 <h2 class="mbottom1"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="document.print" /></h2>
 
-<bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
+<bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 
 <div style="float: right;">
 	<bean:define id="personID" name="academicServiceRequest" property="registration.student.person.username"/>
@@ -73,7 +73,7 @@
 	</p>
 </html:messages>
 
-<bean:define id="documentRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
+<bean:define id="documentRequest" name="academicServiceRequest" type="org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest"/>
 
 <logic:equal name="documentRequest" property="toPrint" value="true">
 <p>

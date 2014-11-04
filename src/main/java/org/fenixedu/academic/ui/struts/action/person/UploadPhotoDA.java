@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.person;
+package org.fenixedu.academic.ui.struts.action.person;
 
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
@@ -24,23 +24,22 @@ import java.io.FileInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ContentType;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.dto.person.PersonBean;
+import org.fenixedu.academic.dto.person.PhotographUploadBean;
+import org.fenixedu.academic.dto.person.PhotographUploadBean.UnableToProcessTheImage;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.services.fileManager.UploadOwnPhoto;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.person.UpdateEmergencyContactDA.EmergencyContactBean;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;

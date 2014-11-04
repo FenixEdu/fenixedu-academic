@@ -31,7 +31,7 @@
 <logic:present name="announcements">
 	<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="extraParameters" name="extraParameters" />
-	<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
+	<bean:define id="announcementBoard" name="announcementBoard" type="org.fenixedu.academic.domain.messaging.AnnouncementBoard"/>
 	<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
 	
 	<html:link action="<%= contextPrefix + "method=viewBoards&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">

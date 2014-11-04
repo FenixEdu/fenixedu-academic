@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.credits;
+package org.fenixedu.academic.dto.teacher.credits;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import org.fenixedu.academic.domain.NonRegularTeachingService;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.teacher.DegreeTeachingService;
 
 public class NonRegularTeachingServiceBean implements Serializable {
     Professorship professorship;

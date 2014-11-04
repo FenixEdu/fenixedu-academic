@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 
 public class TeacherThesisCreditsInfoBean implements Serializable {
 

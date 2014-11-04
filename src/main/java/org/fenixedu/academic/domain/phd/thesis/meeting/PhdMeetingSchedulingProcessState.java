@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
+package org.fenixedu.academic.domain.phd.thesis.meeting;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdProgramProcess;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
 import org.joda.time.DateTime;
 
 public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProcessState_Base {

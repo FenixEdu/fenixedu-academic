@@ -30,17 +30,17 @@
 
 <fr:form id="searchForm" action="/viewYear.do?method=showStudents">
 	<fr:edit id="sessionBean" name="sessionBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult.ExternalSupervisorViewsBean" bundle="EXTERNAL_SUPERVISION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.externalSupervision.consult.ExternalSupervisorViewsBean" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 			<fr:slot name="executionYear" layout="menu-select" key="label.selectYear.executionYear" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaExecutionYearsProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.BolonhaExecutionYearsProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 			<logic:present name="selectProtocol">
 				<logic:equal name="selectProtocol" value="true">
 					<fr:slot name="protocol" layout="menu-select" key="label.selectYear.agreement" required="true">
 						<fr:property name="format" value="${code}"/>
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RegistrationProtocolsAllowedForUserProvider"/>
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.RegistrationProtocolsAllowedForUserProvider"/>
 						<fr:property name="saveOptions" value="true"/>
 					</fr:slot>
 				</logic:equal>
@@ -91,7 +91,7 @@
 				<fr:property name="columnClasses" value="acenter,acenter,,,,," />
 			</fr:layout>
 			
-			<fr:schema type="net.sourceforge.fenixedu.domain.Person" bundle="EXTERNAL_SUPERVISION_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.Person" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 				<fr:slot name="student.number" key="label.selectYear.studentNumber" />
 				<fr:slot name="username" key="label.selectYear.username" />
 				<fr:slot name="name" key="label.selectYear.name" />

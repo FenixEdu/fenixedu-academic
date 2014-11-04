@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,19 +27,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionCondition;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.inquiries.InquiryBlock;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.InquiryResultComment;
+import org.fenixedu.academic.domain.inquiries.InquiryTeacherAnswer;
+import org.fenixedu.academic.domain.inquiries.MandatoryCondition;
+import org.fenixedu.academic.domain.inquiries.QuestionAnswer;
+import org.fenixedu.academic.domain.inquiries.QuestionCondition;
+import org.fenixedu.academic.domain.inquiries.ResultPersonCategory;
+import org.fenixedu.academic.domain.inquiries.TeacherInquiryTemplate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

@@ -19,7 +19,7 @@
 
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
+<%@page import="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
 <html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>

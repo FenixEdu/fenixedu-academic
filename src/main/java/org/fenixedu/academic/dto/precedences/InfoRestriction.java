@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.precedences;
+package org.fenixedu.academic.dto.precedences;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import org.fenixedu.academic.dto.InfoObject;
 
 /**
  * @author David Santos on Jul 27, 2004

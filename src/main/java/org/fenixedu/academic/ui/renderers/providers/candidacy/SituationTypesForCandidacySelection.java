@@ -19,12 +19,13 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy;
+package org.fenixedu.academic.ui.renderers.providers.candidacy;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;

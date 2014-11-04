@@ -48,7 +48,7 @@
 
 <fr:edit id="markSheet"
 		 name="markSheet"
-		 type="net.sourceforge.fenixedu.domain.MarkSheet"
+		 type="org.fenixedu.academic.domain.MarkSheet"
 		 schema="markSheet.editArchiveInformation"
 		 action='<%= finalUrl %>'>
 

@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy.workflow.form;
+package org.fenixedu.academic.domain.candidacy.workflow.form;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.DistrictSubdivision;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.util.workflow.Form;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.District;
+import org.fenixedu.academic.domain.DistrictSubdivision;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.util.workflow.Form;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 

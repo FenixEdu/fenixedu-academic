@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.student;
+package org.fenixedu.academic.dto.student;
 
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 
 public interface IStudentCurricularPlanBean {
 

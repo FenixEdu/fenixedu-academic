@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
+package org.fenixedu.academic.servlet.taglib.sop.v3;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-
+import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.spaces.domain.Space;
 
 public class CellInfo {

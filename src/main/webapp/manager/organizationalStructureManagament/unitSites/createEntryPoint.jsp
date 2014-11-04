@@ -38,7 +38,7 @@
 <fr:form action="<%="/unitSiteManagement.do?method=createEntryPoint&oid="+siteOid%>"> 
 	
 	<fr:edit id="multiLanguageStringBean" name="multiLanguageStringBean"> 
-	 	<fr:schema bundle="SITE_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean"> 
+	 	<fr:schema bundle="SITE_RESOURCES" type="org.fenixedu.academic.dto.VariantBean"> 
 			<fr:slot name="MLString" key="label.name"></fr:slot>
 	 	</fr:schema>
 	</fr:edit>

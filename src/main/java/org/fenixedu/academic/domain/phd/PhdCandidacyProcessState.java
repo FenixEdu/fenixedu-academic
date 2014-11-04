@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd;
+package org.fenixedu.academic.domain.phd;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.AdmittedCandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.AdmittedCandidacySituation;
+import org.fenixedu.academic.domain.candidacy.CandidacySituation;
+import org.fenixedu.academic.domain.candidacy.NotAdmittedCandidacySituation;
+import org.fenixedu.academic.domain.candidacy.PreCandidacySituation;
+import org.fenixedu.academic.domain.candidacy.StandByCandidacySituation;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.DateTime;
 
 public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {

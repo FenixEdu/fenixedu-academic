@@ -30,7 +30,7 @@
 <p class="mtop2"><bean:message key="label.choose.department" bundle="PEDAGOGICAL_COUNCIL"/></p>
 
 <fr:view name="departments">
-	<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit">
+	<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit">
 		<fr:slot name="name" key="label.teacher.department"/>
 	</fr:schema>
 	<fr:layout name="tabular">

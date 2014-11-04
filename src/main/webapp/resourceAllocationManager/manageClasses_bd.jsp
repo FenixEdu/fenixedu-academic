@@ -19,7 +19,7 @@
 
 --%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -47,7 +47,7 @@
 		<span class="error"><!-- Error messages go here --><html:errors /></span>
 	</p>
 
-   	<bean:define id="degree" type="net.sourceforge.fenixedu.domain.Degree" name="executionDegreeD" property="degreeCurricularPlan.degree"/>   	
+   	<bean:define id="degree" type="org.fenixedu.academic.domain.Degree" name="executionDegreeD" property="degreeCurricularPlan.degree"/>   	
    	<bean:define id="curricularYear" type="java.lang.Integer" 
    		name="<%= PresentationConstants.CURRICULAR_YEAR %>" property="year"/>	
    	<%= degree.constructSchoolClassPrefix(curricularYear) %>

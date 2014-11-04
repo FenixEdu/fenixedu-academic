@@ -74,7 +74,7 @@
 
 			<strong><bean:message key="label.phd.editPhdIndividualProgramProcessInformation.candidacy.details" bundle="PHD_RESOURCES" /></strong>
 			<fr:edit id="phdIndividualProgramProcessBean-candidacy-details" name="phdIndividualProgramProcessBean">
-				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean">
+				<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean">
 					<fr:slot name="whenRatified" required="true" />
 				</fr:schema>
 				<fr:layout name="tabular-editable">
@@ -89,7 +89,7 @@
 			
 			<strong><bean:message key="label.phd.editPhdIndividualProgramProcessInformation.phdIndividualProgramProcess.details" bundle="PHD_RESOURCES" /></strong>
 			<fr:edit id="phdIndividualProgramProcessBean-phdIndividualprogramProcess-details" name="phdIndividualProgramProcessBean">
-				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean">
+				<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean">
 					<fr:slot name="whenFormalizedRegistration" required="true" />
 					<fr:slot name="whenStartedStudies" required="true" />
 				</fr:schema>

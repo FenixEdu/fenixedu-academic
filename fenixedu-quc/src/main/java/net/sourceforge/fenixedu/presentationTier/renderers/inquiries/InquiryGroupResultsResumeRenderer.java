@@ -19,17 +19,17 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+package org.fenixedu.academic.ui.renderers.inquiries;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean;
+import org.fenixedu.academic.dto.inquiries.QuestionResultsSummaryBean;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestionHeader;
+import org.fenixedu.academic.domain.inquiries.InquiryResult;
+import org.fenixedu.academic.domain.inquiries.InquiryResultComment;
+import org.fenixedu.academic.domain.inquiries.ResultClassification;
 
 import org.apache.commons.lang.StringUtils;
 

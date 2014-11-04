@@ -20,13 +20,13 @@
  * Created on 31/Out/2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
-import net.sourceforge.fenixedu.util.DiaSemana;
+import org.fenixedu.academic.domain.FrequencyType;
+import org.fenixedu.academic.domain.space.EventSpaceOccupation;
+import org.fenixedu.academic.util.DiaSemana;
 
 /**
  * @author Ana e Ricardo

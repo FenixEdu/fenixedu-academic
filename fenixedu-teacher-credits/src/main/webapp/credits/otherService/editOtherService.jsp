@@ -40,7 +40,7 @@
 <td><img src="<%= request.getContextPath() + url %>" /></td>
 <td >
 <fr:view name="teacherService">
-	<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.TeacherService">
+	<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.teacher.TeacherService">
 		<fr:slot name="teacher.person.presentationName" key="label.name"/>
 		<fr:slot name="executionPeriod" key="label.period" layout="format">
 			<fr:property name="format" value="${name}  ${executionYear.year}" />
@@ -66,7 +66,7 @@
 		</fr:edit>
 	</logic:present>
 	<logic:notPresent name="otherService">
-		<fr:create action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>" type="net.sourceforge.fenixedu.domain.teacher.OtherService"
+		<fr:create action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>" type="org.fenixedu.academic.domain.teacher.OtherService"
 		schema="create.otherService">
 		<fr:hidden slot="teacherService" name="teacherService"/>
 		<fr:layout>

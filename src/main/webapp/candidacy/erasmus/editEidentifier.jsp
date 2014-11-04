@@ -61,7 +61,7 @@
 				name="individualCandidacyProcessBean"
 				property="personBean" >
         <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
-            type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest">
+            type="org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest">
             <fr:slot name="eidentifier" key="label.eidentifier" />
         </fr:schema>				
 	</fr:edit>

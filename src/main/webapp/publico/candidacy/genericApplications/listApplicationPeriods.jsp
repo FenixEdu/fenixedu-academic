@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod"%>
+<%@page import="org.fenixedu.academic.domain.period.GenericApplicationPeriod"%>
 <%@page import="java.util.SortedSet"%>
 
 <html:xhtml/>
@@ -100,7 +100,7 @@
  		<h2><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.create.application.period"/></h2>
 
 		<fr:edit id="genericApplicationPeriodBean" name="genericApplicationPeriodBean">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationPeriodBean" bundle="CANDIDATE_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.candidacy.util.GenericApplicationPeriodBean" bundle="CANDIDATE_RESOURCES">
 				<fr:slot name="title" key="label.application.period.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
    					<fr:property name="size" value="50"/>
 				</fr:slot>

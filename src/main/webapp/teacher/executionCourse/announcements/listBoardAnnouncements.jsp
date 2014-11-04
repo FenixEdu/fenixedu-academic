@@ -29,7 +29,7 @@
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
 <logic:present name="announcements">
-	<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
+	<bean:define id="announcementBoard" name="announcementBoard" type="org.fenixedu.academic.domain.messaging.AnnouncementBoard"/>
 	<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
 
 	<h2>

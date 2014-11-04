@@ -24,9 +24,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers.CurricularCourseDegreeExecutionSemesterProvider"%>
+<%@page import="org.fenixedu.academic.domain.Enrolment"%>
+<%@page import="org.fenixedu.academic.domain.phd.ManageEnrolmentsBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.coordinator.providers.CurricularCourseDegreeExecutionSemesterProvider"%>
 
 <logic:present role="role(COORDINATOR)">
 

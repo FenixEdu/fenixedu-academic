@@ -21,12 +21,12 @@
  *
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.State;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.masterDegree.MasterDegreeThesisState;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.State;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;

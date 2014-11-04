@@ -20,7 +20,7 @@
  * Created on Apr 3, 2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
+package org.fenixedu.academic.servlet.taglib.sop.examsMapNew;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -29,13 +29,12 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers.ExamsMapContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers.ExamsMapSlotContentRenderer;
-
 import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.academic.dto.InfoExamsMap;
+import org.fenixedu.academic.dto.InfoRoomExamsMap;
+import org.fenixedu.academic.servlet.taglib.sop.examsMapNew.renderers.ExamsMapContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.examsMapNew.renderers.ExamsMapSlotContentRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

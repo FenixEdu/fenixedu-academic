@@ -18,17 +18,17 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.Person"%>
+<%@page import="org.fenixedu.academic.domain.Person"%>
 <%@ page language="java"%>
 <%@page import="java.util.TreeSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.Registration"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
-<%@page import="net.sourceforge.fenixedu.domain.Country"%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement"%>
+<%@page import="org.fenixedu.academic.domain.student.Registration"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacy"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
+<%@page import="org.fenixedu.academic.domain.Country"%>
+<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
+<%@page import="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -37,7 +37,7 @@
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/></h2>
 
-<bean:define id="contest" name="contest" type="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest"/>
+<bean:define id="contest" name="contest" type="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"/>
 <%
 	final MobilityAgreement mobilityAgreement = contest.getMobilityAgreement();
 	final Unit unit = mobilityAgreement.getUniversityUnit();

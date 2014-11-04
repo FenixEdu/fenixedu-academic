@@ -16,35 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
+package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
-import net.sourceforge.fenixedu.domain.degreeStructure.NoEctsComparabilityTableFound;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
-import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
-import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
-import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DiplomaSupplement;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.DegreeOfficialPublication;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
+import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
+import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.PhdProgramInformation;
+import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
+import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
+import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
+import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
+import org.fenixedu.academic.report.academicAdministrativeOffice.DiplomaSupplement;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;

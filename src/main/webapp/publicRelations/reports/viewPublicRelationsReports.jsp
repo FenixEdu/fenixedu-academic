@@ -27,7 +27,7 @@
 
 <h2><bean:message key="title.student.reports" bundle="APPLICATION_RESOURCES"/></h2>
 
-<bean:define id="studentReportPredicate" name="studentReportPredicate" type="net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport.StudentReportPredicate"/>
+<bean:define id="studentReportPredicate" name="studentReportPredicate" type="org.fenixedu.academic.service.services.student.reports.GenerateStudentReport.StudentReportPredicate"/>
 <bean:define id="year" name="studentReportPredicate" property="executionYear.year"/>
 <bean:define id="executionYearID" name="studentReportPredicate" property="executionYear.externalId"/>
 <bean:define id="active" name="studentReportPredicate" property="active"/>

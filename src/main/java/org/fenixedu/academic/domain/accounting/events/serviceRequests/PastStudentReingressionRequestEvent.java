@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
+package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest;
-import net.sourceforge.fenixedu.util.Money;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.StudentReingressionRequest;
+import org.fenixedu.academic.util.Money;
 
 public class PastStudentReingressionRequestEvent extends PastStudentReingressionRequestEvent_Base implements IPastRequestEvent {
 

@@ -24,10 +24,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCurriculumFilterOptions"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.PhdCurriculumFilterOptions"%>
+<%@page import="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType"%>
+<%@page import="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType"%>
+<%@page import="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
 
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
@@ -63,17 +63,17 @@
 		</fr:slot>
 
 		<fr:slot name="viewType" layout="menu-select-postback">
-			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ViewTypeProvider" />
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.ViewTypeProvider" />
 			<fr:property name="nullOptionHidden" value="true" />
 		</fr:slot>
 
 		<fr:slot name="enrolmentStateType" layout="menu-select-postback">
-			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.EnrolmentStateFilterTypeProvider" />
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.EnrolmentStateFilterTypeProvider" />
 			<fr:property name="nullOptionHidden" value="true" />
 		</fr:slot>
 
 		<fr:slot name="organizationType" layout="menu-select-postback">
-			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.OrganizationTypeProvider" />
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.OrganizationTypeProvider" />
 			<fr:property name="nullOptionHidden" value="true" />
 		</fr:slot>
 

@@ -23,10 +23,10 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" %>
-<%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.domain.curriculum.CurricularCourseType" %>
+<%@ page import="org.fenixedu.academic.domain.curriculum.EnrollmentState" %>
+<%@ page import="org.fenixedu.academic.dto.InfoEnrolment" %>
 
   <span class="error"><!-- Error messages go here --><html:errors /></span>
 

@@ -55,7 +55,7 @@
 		</fr:edit>
 	</fr:form>
 	
-	<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"/>
+	<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="org.fenixedu.academic.domain.StudentCurricularPlan"/>
 	<bean:define id="executionSemesterId" name="bolonhaStudentEnrollmentBean" property="executionPeriod.externalId" />
 	<academic:allowed operation="MANAGE_MARKSHEETS" program="<%= studentCurricularPlan.getRegistration().getDegree() %>">
 		<ul class="mbottom2">

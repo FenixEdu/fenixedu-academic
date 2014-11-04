@@ -24,8 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ page import="java.util.List" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
-<%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
+<%@ page import="org.fenixedu.academic.dto.InfoMasterDegreeCandidate" %>
+<%@ page import="org.fenixedu.academic.util.SituationName" %>
 
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>

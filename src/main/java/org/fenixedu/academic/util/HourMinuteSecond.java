@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.io.Serializable;
 import java.util.Calendar;

@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
+package org.fenixedu.academic.ui.struts.action.coordinator.thesis;
 
 import java.io.Serializable;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import org.fenixedu.academic.domain.ExecutionYear;
 
 public class ThesisContextBean implements Serializable {
 

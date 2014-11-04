@@ -20,7 +20,7 @@
  * Created on 2003/07/28
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.utils;
+package org.fenixedu.academic.ui.struts.action.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,35 +29,34 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadClassByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
-import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
-import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
+import org.fenixedu.academic.dto.InfoClass;
+import org.fenixedu.academic.dto.InfoCurricularYear;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionPeriod;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoShift;
+import org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean;
+import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
+import org.fenixedu.academic.service.services.commons.ReadCurricularYearByOID;
+import org.fenixedu.academic.service.services.commons.ReadExecutionCourseByOID;
+import org.fenixedu.academic.service.services.commons.ReadExecutionDegreeByOID;
+import org.fenixedu.academic.service.services.commons.ReadExecutionPeriodByOID;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadClassByOID;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadLessonByOID;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadShiftByOID;
+import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

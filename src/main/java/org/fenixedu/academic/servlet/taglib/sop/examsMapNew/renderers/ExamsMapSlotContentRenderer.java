@@ -20,12 +20,12 @@
  * Created on Apr 3, 2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers;
+package org.fenixedu.academic.servlet.taglib.sop.examsMapNew.renderers;
 
 import javax.servlet.jsp.PageContext;
 
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
+import org.fenixedu.academic.servlet.taglib.sop.examsMapNew.ExamsMap;
+import org.fenixedu.academic.servlet.taglib.sop.examsMapNew.ExamsMapSlot;
 
 /**
  * @author Luis Cruz & Sara Ribeiro

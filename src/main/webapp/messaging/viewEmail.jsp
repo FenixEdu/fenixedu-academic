@@ -26,7 +26,7 @@
 
 <%@page import="java.util.Set"%>
 <%@page import="java.util.TreeSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.util.EmailAddressList"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.util.EmailAddressList"%><html:xhtml/>
 
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
 <logic:present name="message">
@@ -54,7 +54,7 @@
 		</html:link>
 	</logic:notPresent>
 
-	<fr:view name="message" schema="net.sourceforge.fenixedu.domain.util.email.Message.info">
+	<fr:view name="message" schema="org.fenixedu.academic.domain.util.email.Message.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thleft thtop"/>
 			<fr:property name="columnClasses" value="width11em,,,"/>
@@ -70,7 +70,7 @@
 	</fr:view>
 	
 	<% final Set failed = new TreeSet(); %>
-	<logic:iterate id="utilEmail" type="net.sourceforge.fenixedu.domain.util.Email" name="message" property="emails">
+	<logic:iterate id="utilEmail" type="org.fenixedu.academic.domain.util.Email" name="message" property="emails">
 		<%
 			final EmailAddressList failedAddressList = utilEmail.getFailedAddresses();
 			if (failedAddressList != null && !failedAddressList.isEmpty()) {

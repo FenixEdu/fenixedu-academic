@@ -22,7 +22,7 @@
  * March 2nd, 2003, 17h38
  */
 
-package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
+package org.fenixedu.academic.ui.struts.action.exceptions;
 
 /**
  * 

@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<%@page import="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent"%>
+<%@page import="org.fenixedu.academic.domain.accounting.ResidenceEvent"%>
 <h2><bean:message key="label.missingPayments" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></h2>
 
 <logic:notEmpty name="list">

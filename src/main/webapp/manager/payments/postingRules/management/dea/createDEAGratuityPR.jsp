@@ -63,10 +63,10 @@
 	<input type="hidden" name="method" value="" />
 
 	<fr:edit id="paymentPlanEditor" name="paymentPlanEditor" >
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean"
+		<fr:schema type="org.fenixedu.academic.dto.accounting.paymentPlan.PaymentPlanBean"
 			bundle="APPLICATION_RESOURCES">
 			<fr:slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${year}" />
 				<fr:property name="destination" value="changeExecutionYearPostback"/>
 			</fr:slot>
@@ -82,7 +82,7 @@
 	<br/><br/>
 	
 	<fr:edit id="installmentEditor" name="installmentEditor">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean"
+		<fr:schema type="org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean"
 			bundle="APPLICATION_RESOURCES">
 			<fr:slot name="amount" />
 			<fr:slot name="startDate" />

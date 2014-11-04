@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="title.phd.candidacy.periods" bundle="PHD_RESOURCES" /></h2>
@@ -48,7 +48,7 @@
 
 <logic:notEmpty  name="phdCandidacyPeriods">
 	<fr:view name="phdCandidacyPeriods">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod">
 			<fr:slot name="type" />
 			<fr:slot name="executionInterval.name" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod.executionYear"/>
 			<fr:slot name="start" />

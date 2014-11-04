@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.exceptions;
+package org.fenixedu.academic.domain.exceptions;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response.Status;
 
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.util.Bundle;
 
 public class DomainException extends org.fenixedu.bennu.core.domain.exceptions.DomainException {
 

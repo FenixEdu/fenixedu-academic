@@ -91,7 +91,7 @@
 <logic:equal name="show" value="groups">
 <logic:notEmpty name="bean" property="vigilantGroups">
 <logic:iterate id="vigilantGroup" name="bean" property="vigilantGroups">
-<bean:define id="group" name="vigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
+<bean:define id="group" name="vigilantGroup" type="org.fenixedu.academic.domain.vigilancy.VigilantGroup"/>
 
 <table class="tstyle1 tdtop thleft">
 <tr>

@@ -16,19 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
+package org.fenixedu.academic.dto.teacher.executionCourse;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
-import net.sourceforge.fenixedu.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.Month;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionCourseLog;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Month;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;

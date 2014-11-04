@@ -19,17 +19,17 @@
 /*
  * Created on Feb 2, 2006
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import javax.faces.component.UIComponent;
 
-import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfTagUtils;
+import org.fenixedu.academic.ui.faces.components.util.JsfTagUtils;
 
 import com.sun.faces.taglib.html_basic.OutputTextTag;
 
 public class UIExtendedOutputTextTag extends OutputTextTag {
 
-    private static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText";
+    private static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.UIExtendedOutputText";
 
     private String linebreak;
 

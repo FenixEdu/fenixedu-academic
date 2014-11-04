@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Comparator;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.util.PeriodState;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.util.PeriodState;
+
 import pt.ist.fenixframework.DomainObject;
 
 /**

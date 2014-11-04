@@ -18,38 +18,38 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="net.sourceforge.fenixedu.domain.ExecutionSemester.edit" type="net.sourceforge.fenixedu.domain.ExecutionSemester">
+<schema name="org.fenixedu.academic.domain.ExecutionSemester.edit" type="org.fenixedu.academic.domain.ExecutionSemester">
 	<slot name="name"/>
 	<slot name="semester" bundle="MANAGER_RESOURCES" key="label.semester"/>
 	<slot name="beginDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.begin"/>
 	<slot name="endDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.end"/>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.ExecutionYear.view" type="net.sourceforge.fenixedu.domain.ExecutionYear">
+<schema name="org.fenixedu.academic.domain.ExecutionYear.view" type="org.fenixedu.academic.domain.ExecutionYear">
 	<slot name="year" key="executionYear"/>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.annotation" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+<schema name="org.fenixedu.academic.domain.ExecutionDegree.annotation" type="org.fenixedu.academic.domain.ExecutionDegree">
 	<slot name="anotation"/>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.name" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+<schema name="org.fenixedu.academic.domain.ExecutionDegree.name" type="org.fenixedu.academic.domain.ExecutionDegree">
 	<slot name="degreeCurricularPlan.name" key="label.degree"/>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.presentationName" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+<schema name="org.fenixedu.academic.domain.ExecutionDegree.presentationName" type="org.fenixedu.academic.domain.ExecutionDegree">
     <slot name="presentationName" />
 </schema>
 
-<schema name="executionDegree.context.choose" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean">
+<schema name="executionDegree.context.choose" type="org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean">
 	<slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree.year">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreesForDegreeCurricularPlan"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.executionDegree.ExecutionDegreesForDegreeCurricularPlan"/>
         <property name="format" value="${executionYear.year}"/>
         <property name="destination" value="chooseExecutionDegree"/>
     </slot>
 </schema>
 
-<schema name="executionDegree.context.choose.noNull" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean">
+<schema name="executionDegree.context.choose.noNull" type="org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean">
 	<slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree.year">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreesForDegreeCurricularPlan"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.executionDegree.ExecutionDegreesForDegreeCurricularPlan"/>
         <property name="format" value="${executionYear.year}"/>
         <property name="destination" value="chooseExecutionDegree"/>
         <property name="nullOptionHidden" value="true"/>

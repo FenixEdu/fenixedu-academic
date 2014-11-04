@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.docs;
+package org.fenixedu.academic.report;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,10 +25,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.util.DateI18NUtil;
-import net.sourceforge.fenixedu.util.report.ReportPrinter.ReportDescription;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.util.DateI18NUtil;
+import org.fenixedu.academic.util.report.ReportPrinter.ReportDescription;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;

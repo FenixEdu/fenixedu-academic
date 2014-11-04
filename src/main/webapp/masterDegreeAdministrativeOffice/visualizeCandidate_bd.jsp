@@ -24,14 +24,14 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.State" %>
-<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.util.State" %>
+<%@ page import="org.fenixedu.academic.util.Data" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction" %>
-<%@ page import="net.sourceforge.fenixedu.domain.ApplicationDocumentType"%>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
+<%@ page import="org.fenixedu.academic.dto.InfoCandidateSituation" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction" %>
+<%@ page import="org.fenixedu.academic.domain.ApplicationDocumentType"%>
+<%@ page import="org.fenixedu.academic.dto.InfoMasterDegreeCandidate" %>
 
 <bean:define id="personalInfo" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" scope="request" property="infoPerson"/>
 <bean:define id="masterDegreeCandidate" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>

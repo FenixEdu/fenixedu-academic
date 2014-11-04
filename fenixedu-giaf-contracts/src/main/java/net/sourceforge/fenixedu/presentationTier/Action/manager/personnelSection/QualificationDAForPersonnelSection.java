@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.personnelSection;
+package org.fenixedu.academic.ui.struts.action.manager.personnelSection;
 
-import net.sourceforge.fenixedu.presentationTier.Action.manager.QualificationDA;
-import net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonManagementAction;
+import org.fenixedu.academic.ui.struts.action.manager.QualificationDA;
+import org.fenixedu.academic.ui.struts.action.personnelSection.PersonManagementAction;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

@@ -31,11 +31,11 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDistributedTests"/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="10">
 	<bean:define id="order" value="1"/>
-	<logic:iterate id="infoInquiryStatistic" name="infoInquiryStatisticsList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics" indexId="iterateIndex">
-		<bean:define id="testQuestion" name ="infoInquiryStatistic" property="infoStudentTestQuestion" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
+	<logic:iterate id="infoInquiryStatistic" name="infoInquiryStatisticsList" type="org.fenixedu.academic.dto.onlineTests.InfoInquiryStatistics" indexId="iterateIndex">
+		<bean:define id="testQuestion" name ="infoInquiryStatistic" property="infoStudentTestQuestion" type="org.fenixedu.academic.domain.onlineTests.StudentTestQuestion"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.domain.onlineTests.DistributedTest"/>
 		<bean:define id="testCode" name="distributedTest" property="externalId"/>
-		<bean:define id="student" name="testQuestion" property="student" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+		<bean:define id="student" name="testQuestion" property="student" type="org.fenixedu.academic.domain.student.Registration"/>
 		<bean:define id="studentCode" name="student" property="externalId"/>
 		<logic:equal name="iterateIndex" value="0">
 			<center><h2><bean:write name="distributedTest" property="title"/></h2>
@@ -43,17 +43,17 @@
 			<br/>
 			<br/>
 		</logic:equal>
-		<bean:define id="testQuestion" name ="infoInquiryStatistic" property="infoStudentTestQuestion" type="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"/>
+		<bean:define id="testQuestion" name ="infoInquiryStatistic" property="infoStudentTestQuestion" type="org.fenixedu.academic.domain.onlineTests.StudentTestQuestion"/>
 		<bean:define id="index" value="0"/>
-		<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"/>
+		<bean:define id="question" name="testQuestion" property="question" type="org.fenixedu.academic.domain.onlineTests.Question"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.domain.onlineTests.DistributedTest"/>
 		<bean:define id="questionCode" name="question" property="externalId"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
-		<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="net.sourceforge.fenixedu.util.tests.CorrectionAvailability"/>
+		<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="org.fenixedu.academic.util.tests.CorrectionAvailability"/>
 		<bean:define id="formula" name="testQuestion" property="correctionFormula.formula"/>
 		<bean:define id="testType" name="testQuestion" property="distributedTest.testType.type"/>
 		
-		<logic:iterate id="subQuestion" name="testQuestion" property="studentSubQuestions" type="net.sourceforge.fenixedu.domain.onlineTests.SubQuestion" indexId="itemIndex">
+		<logic:iterate id="subQuestion" name="testQuestion" property="studentSubQuestions" type="org.fenixedu.academic.domain.onlineTests.SubQuestion" indexId="itemIndex">
 		<bean:define id="item" value="<%=itemIndex.toString()%>"/>
 		<%if(testQuestion.getStudentSubQuestions().size()<=1 || (testQuestion.getItemId()!=null && subQuestion.getItemId()!=null && testQuestion.getItemId().equals(subQuestion.getItemId()))){%>
 		<bean:define id="questionType" name="subQuestion" property="questionType.type"/>	

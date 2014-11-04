@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.StringTokenizer;
 
-import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.branch.BranchType;
-
+import org.fenixedu.academic.domain.Branch;
+import org.fenixedu.academic.domain.branch.BranchType;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

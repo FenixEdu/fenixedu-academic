@@ -49,9 +49,9 @@
 
 <fr:form action="<%= "/phdAcademicServiceRequestManagement.do?method=createNewRequest&phdIndividualProgramProcessId=" + phdIndividualProgramProcessId %>">
 	<fr:edit id="phd-academic-service-request-create-bean" name="phdAcademicServiceRequestCreateBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean">
 			<fr:slot name="requestType" required="true" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestTypeProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestTypeProvider" />
 			</fr:slot>
 			<fr:slot name="requestDate" required="true" />
 		</fr:schema>

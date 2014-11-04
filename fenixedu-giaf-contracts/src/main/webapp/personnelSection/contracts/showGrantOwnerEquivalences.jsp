@@ -28,7 +28,7 @@
 
 <logic:present name="grantOwnerEquivalences">
 	<fr:edit name="grantOwnerEquivalences">
-		<fr:schema type="net.sourceforge.fenixedu.domain.personnelSection.contracts.GrantOwnerEquivalent" bundle="CONTRACTS_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.personnelSection.contracts.GrantOwnerEquivalent" bundle="CONTRACTS_RESOURCES">
 			<fr:slot readOnly="true" name="giafId" key="label.giafId" layout="null-as-label"/>
 			<fr:slot readOnly="true" name="name" key="label.situation" layout="null-as-label"/>
 			<fr:slot name="isSabaticalOrEquivalent" layout="null-as-label"/>

@@ -21,7 +21,7 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.List;
 

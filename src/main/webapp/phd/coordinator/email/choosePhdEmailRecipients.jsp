@@ -28,9 +28,9 @@
 <html:xhtml/>
 
 
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
 <%@page import="pt.ist.fenixframework.DomainObject"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" %>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" %>
 
 <logic:present role="role(COORDINATOR)">
 

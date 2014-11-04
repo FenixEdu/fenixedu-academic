@@ -36,15 +36,15 @@
 	<fr:form action="/editExecutionCourseChooseExPeriod.do?method=listExecutionCourseActions">
 	<!-- fr:edit para permitir a escolha do curso e do ano curricular -->
 	<fr:edit id="sessionBeanJSP" name="sessionBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
 			<fr:slot name="executionDegree" layout="menu-select-postback" key="label.manager.executionDegrees">
 				<fr:property name="format" value="${presentationName}" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodAcademicAdminProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionDegreeForExecutionPeriodAcademicAdminProvider" />
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>
 			<fr:slot name="curricularYear" layout="menu-select-postback" key="label.manager.executionCourseManagement.curricularYear">
 				<fr:property name="format" value="${year}" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CurricularYearsProvider" />
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>
 		</fr:schema>
@@ -57,7 +57,7 @@
 
 	<p class="infoop"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseNotLinked" /></p>
 	<fr:edit id="sessionBeanJSPAux" name="sessionBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
 			<fr:slot name="chooseNotLinked" layout="option-select-postback" key="label.manager.chooseNotLinked">
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>

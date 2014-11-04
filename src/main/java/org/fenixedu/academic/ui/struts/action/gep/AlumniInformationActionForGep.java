@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.gep;
+package org.fenixedu.academic.ui.struts.action.gep;
 
-import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepAlumniApp;
-import net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice.AlumniInformationAction;
-
+import org.fenixedu.academic.ui.struts.action.gep.GepApplication.GepAlumniApp;
+import org.fenixedu.academic.ui.struts.action.publicRelationsOffice.AlumniInformationAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

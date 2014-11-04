@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.research;
+package org.fenixedu.academic.service.services.research;
 
-import net.sourceforge.fenixedu.domain.UnitFile;
-
+import org.fenixedu.academic.domain.UnitFile;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;

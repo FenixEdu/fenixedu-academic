@@ -107,7 +107,7 @@
 			</tr>
 			<bean:size id="curricularCoursesListSize" name="infoCurricularCourses"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCoursesListSize" property="curricularCoursesListSize" value="<%=curricularCoursesListSize.toString()%>"/>			
-			<logic:iterate id="curricularCourse" name="infoCurricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
+			<logic:iterate id="curricularCourse" name="infoCurricularCourses" type="org.fenixedu.academic.dto.InfoCurricularCourse">
 				<tr>	 			
 					<td class="listClasses">
 						<bean:define id="internalId" name="curricularCourse" property="externalId"/>

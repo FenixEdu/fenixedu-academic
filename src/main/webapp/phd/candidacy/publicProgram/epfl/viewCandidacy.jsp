@@ -27,8 +27,8 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
 	<bean:message key="title.view.candidacy.process" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -99,7 +99,7 @@ padding: 0.5em 1em;
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditPersonalInformation" value="true">
 	<fr:view name="pendingPartyContactBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.contacts.PendingPartyContactBean" bundle="PHD_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.dto.contacts.PendingPartyContactBean" bundle="PHD_RESOURCES">
 			<fr:slot name="person.name" key="label.net.sourceforge.fenixedu.domain.Person.name" >
 				<property name="classes" value="bold nowrap"/>
 			</fr:slot>

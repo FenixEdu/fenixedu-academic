@@ -104,7 +104,7 @@ font-weight: normal;
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.regent.details.inquiry" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES"/></p>
+<p><bean:message key="message.regent.details.inquiry" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES"/></p>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
@@ -125,8 +125,8 @@ font-weight: normal;
 				(<bean:write name="regentInquiryBean" property="professorship.executionCourse.name"/> - <bean:write name="entrySet" property="key.degree.sigla"/>)
 			</span>
 		</h3>
-		<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-		<bean:define id="executionDegree" name="entrySet" property="key" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
+		<bean:define id="executionCourse" name="executionCourse" type="org.fenixedu.academic.domain.ExecutionCourse"/>
+		<bean:define id="executionDegree" name="entrySet" property="key" type="org.fenixedu.academic.domain.ExecutionDegree"/>
 		<bean:define id="executionCourseOID" name="regentInquiryBean" property="professorship.executionCourse.externalId"/>
 		<bean:define id="degreeCurricularPlanOID" name="entrySet" property="key.degreeCurricularPlan.externalId"/>
 		<p class="mvert15">
@@ -138,7 +138,7 @@ font-weight: normal;
 		<bean:define id="hasNotRelevantData">
 			<%= executionCourse.hasNotRelevantDataFor(executionDegree) %>
 		</bean:define>
-		<logic:iterate indexId="iter" id="blockResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
+		<logic:iterate indexId="iter" id="blockResult" name="entrySet" property="value" type="org.fenixedu.academic.dto.inquiries.BlockResultsSummaryBean">
 			<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->
 				<bean:define id="toogleFunctions">
 					<bean:write name="toogleFunctions" filter="false"/>
@@ -188,7 +188,7 @@ font-weight: normal;
 			<bean:define id="teacherToogleFunctions" value=""/>
 			<logic:notEmpty name="regentInquiryBean" property="teachersResultsMap">
 				<logic:iterate id="entrySet" name="regentInquiryBean" property="teachersResultsMap">
-					<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
+					<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="entrySet" property="value" type="org.fenixedu.academic.dto.inquiries.TeacherShiftTypeResultsBean">
 						<div style="margin: 2.5em 0 3.5em 0;">
 							<h3>
 								<bean:write name="teacherShiftTypeResult" property="professorship.person.name"/> / 
@@ -202,7 +202,7 @@ font-weight: normal;
 									<bean:message bundle="INQUIRIES_RESOURCES" key="link.inquiry.showTeacherResults"/>
 								</html:link>
 							</p>
-							<logic:iterate indexId="iter" id="blockResult" name="teacherShiftTypeResult" property="blockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
+							<logic:iterate indexId="iter" id="blockResult" name="teacherShiftTypeResult" property="blockResults" type="org.fenixedu.academic.dto.inquiries.BlockResultsSummaryBean">
 								<bean:define id="teacherToogleFunctions">
 									<bean:write name="teacherToogleFunctions" filter="false"/>
 									<%= "$('#teacher-block" + teacherShiftTypeResult.getProfessorship().getExternalId() + teacherShiftTypeResult.getShiftType() + (Integer.valueOf(iter)+(int)1) + "').click(function()" 

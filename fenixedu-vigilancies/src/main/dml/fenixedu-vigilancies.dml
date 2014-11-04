@@ -1,6 +1,6 @@
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-enum net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus as AttendingStatus;
+enum org.fenixedu.academic.domain.vigilancy.AttendingStatus as AttendingStatus;
 
 class vigilancy.ExamCoordinator  {
     Boolean allowedToCreateGroups;

@@ -24,12 +24,12 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeeting"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeeting"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeeting"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean"%>
 
 <bean:define id="thesisProcessId" name="process" property="externalId" />
 
@@ -51,7 +51,7 @@
 	<fr:edit id="bean" name="bean" visible="false" />
 	
 	<fr:edit id="bean-edit" name="bean">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdEditMeetingBean" bundle="PHD_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.phd.thesis.meeting.PhdEditMeetingBean" bundle="PHD_RESOURCES">
 			<fr:slot name="scheduledDate" required="true">
 				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.DateTimeValidator" />
 			</fr:slot>

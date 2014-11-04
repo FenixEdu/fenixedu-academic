@@ -100,7 +100,7 @@ float: none;
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.teacher.details.inquiry" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES"/></p>
+<p><bean:message key="message.teacher.details.inquiry" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="INQUIRIES_RESOURCES"/></p>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
@@ -123,7 +123,7 @@ float: none;
 		<h3 class="separator2 mtop2"><span style="font-weight: normal;">1. Resultados do Inquérito aos alunos</span></h3>
 		<bean:define id="teacherToogleFunctions" value=""/>
 		<logic:notEmpty name="teacherInquiryBean" property="teachersResults">
-			<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="teacherInquiryBean" property="teachersResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
+			<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="teacherInquiryBean" property="teachersResults" type="org.fenixedu.academic.dto.inquiries.TeacherShiftTypeResultsBean">
 				<div style="margin: 2.5em 0 3.5em 0;">
 					<h3>
 						<bean:write name="teacherShiftTypeResult" property="professorship.person.name"/> / 
@@ -137,7 +137,7 @@ float: none;
 							<bean:message bundle="INQUIRIES_RESOURCES" key="link.inquiry.showTeacherResults"/>
 						</html:link>
 					</p>
-					<logic:iterate indexId="iter" id="blockResult" name="teacherShiftTypeResult" property="blockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
+					<logic:iterate indexId="iter" id="blockResult" name="teacherShiftTypeResult" property="blockResults" type="org.fenixedu.academic.dto.inquiries.BlockResultsSummaryBean">
 						<bean:define id="teacherToogleFunctions">
 							<bean:write name="teacherToogleFunctions" filter="false"/>
 							<%= "$('#teacher-block" + teacherShiftTypeResult.getProfessorship().getExternalId() + teacherShiftTypeResult.getShiftType() + (Integer.valueOf(iter)+(int)1) + "').click(function()" 

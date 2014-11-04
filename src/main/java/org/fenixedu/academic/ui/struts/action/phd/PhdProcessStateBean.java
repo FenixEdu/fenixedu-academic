@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
-
+import org.fenixedu.academic.domain.phd.PhdProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgramProcess;
 import org.joda.time.DateTime;
 
 public class PhdProcessStateBean implements Serializable {

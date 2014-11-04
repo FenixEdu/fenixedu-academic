@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.sibs;
+package org.fenixedu.academic.util.sibs;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -30,9 +30,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymentCodes;
-import net.sourceforge.fenixedu.util.Money;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.events.export.PrintedPaymentCodes;
+import org.fenixedu.academic.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;

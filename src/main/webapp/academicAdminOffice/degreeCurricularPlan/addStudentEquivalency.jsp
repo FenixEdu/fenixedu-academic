@@ -25,9 +25,9 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
-<bean:define id="selectedDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="selectedDegreeCurricularPlan"/>
-<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>
+<bean:define id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+<bean:define id="selectedDegreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="selectedDegreeCurricularPlan"/>
+<bean:define id="student" type="org.fenixedu.academic.domain.student.Student" name="student"/>
 
 <h2><bean:message key="link.equivalency.plan.create.equivalence" bundle="APPLICATION_RESOURCES"/></h2>
 
@@ -44,7 +44,7 @@
 
 	<fr:edit id="StudentEquivalencyPlanEntryCreator.setNonListFields"
 			name="studentEquivalencyPlanEntryCreator"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.StudentEquivalencyPlanEntryCreator"
 			schema="StudentEquivalencyPlanEntryCreator.setNonListFields">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
@@ -62,7 +62,7 @@
 	<p class="mtop15 mbottom05"><bean:message key="message.origin.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<fr:edit id="StudentEquivalencyPlanEntryCreator.addOrigin"
 			name="studentEquivalencyPlanEntryCreator"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.StudentEquivalencyPlanEntryCreator"
 			schema="StudentEquivalencyPlanEntryCreator.addOrigin">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
@@ -73,7 +73,7 @@
 	<p class="mtop15 mbottom05"><bean:message key="message.destination.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<fr:edit id="StudentEquivalencyPlanEntryCreator.addDestination"
 			name="studentEquivalencyPlanEntryCreator"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.StudentEquivalencyPlanEntryCreator"
 			schema="StudentEquivalencyPlanEntryCreator.addDestination">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
@@ -132,7 +132,7 @@
 			+ "&amp;studentNumber=" + student.getNumber() %>">
 		<fr:edit id="StudentEquivalencyPlanEntryCreator.create"
 				name="studentEquivalencyPlanEntryCreator"
-				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
+				type="org.fenixedu.academic.ui.struts.action.coordinator.StudentEquivalencyPlanEntryCreator"
 				schema="StudentEquivalencyPlanEntryCreator.create">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="dnone"/>

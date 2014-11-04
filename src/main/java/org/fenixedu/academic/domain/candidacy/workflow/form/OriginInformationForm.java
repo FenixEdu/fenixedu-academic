@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy.workflow.form;
+package org.fenixedu.academic.domain.candidacy.workflow.form;
 
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.SchoolLevelType;
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
-import net.sourceforge.fenixedu.domain.util.workflow.Form;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.SchoolLevelType;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.domain.raides.DegreeDesignation;
+import org.fenixedu.academic.domain.util.workflow.Form;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;

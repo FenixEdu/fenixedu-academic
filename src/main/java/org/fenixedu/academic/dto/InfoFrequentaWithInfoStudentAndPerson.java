@@ -20,9 +20,9 @@
  * Created on 23/Jun/2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.Attends;
+import org.fenixedu.academic.domain.Attends;
 
 /**
  * @author Tânia Pousão 23/Jun/2004

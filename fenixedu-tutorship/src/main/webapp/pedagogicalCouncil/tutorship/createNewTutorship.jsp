@@ -41,11 +41,11 @@
 	<fr:form action="<%= "/viewTutorship.do?method=createNewTutorship&studentId=" + studentId %>">
 		<fr:edit id="tutors" name="tutors">
 			<fr:schema bundle="PEDAGOGICAL_COUNCIL"
-				type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean">
+				type="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TeacherTutorshipCreationBean">
 				<fr:slot name="teacher" layout="menu-select"
 					key="label.tutorship.tutor">
 					<fr:property name="providerClass"
-						value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
+						value="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
 					<fr:property name="format"
 						value="${teacher.teacherId} - ${name}" />
 					<fr:property name="sortBy" value="teacher.teacherId" />

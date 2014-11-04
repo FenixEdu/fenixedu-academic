@@ -24,10 +24,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%><html:xhtml />
+<%@page import="org.fenixedu.academic.domain.person.RoleType"%><html:xhtml />
 
 <logic:present name="person">
-	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="person" type="org.fenixedu.academic.domain.Person"/>
 
 	<h2><bean:message key="label.person.title.personalConsult" bundle="APPLICATION_RESOURCES"/></h2>
 	<bean:define id="personID" name="person" property="externalId" />
@@ -551,7 +551,7 @@
 	<logic:present parameter="editPersonalInfo">
 		<fr:edit name="person"
 			action="<%="/personnelManagePeople.do?method=viewPerson&personId=" + personID %>"
-			schema="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames">
+			schema="org.fenixedu.academic.domain.Person.personal.info.withPartitionedNames">
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
@@ -564,7 +564,7 @@
 	<logic:notPresent parameter="editPersonalInfo">
 
 		<fr:view name="person"
-			schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+			schema="org.fenixedu.academic.domain.Person.personal.info">
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
@@ -589,7 +589,7 @@
 		</tr>
 	</table>
 	<fr:view name="person"
-		schema="net.sourceforge.fenixedu.domain.Person.user.info">
+		schema="org.fenixedu.academic.domain.Person.user.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
 		</fr:layout>
@@ -610,7 +610,7 @@
 
 		<fr:edit name="person"
 			action="<%="/personnelManagePeople.do?method=viewPerson&personId=" + personID %>"
-			schema="net.sourceforge.fenixedu.domain.Person.family">
+			schema="org.fenixedu.academic.domain.Person.family">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
 			</fr:layout>
@@ -622,7 +622,7 @@
 	<logic:notPresent parameter="editFiliationInfo">
 
 		<fr:view name="person"
-			schema="net.sourceforge.fenixedu.domain.Person.family">
+			schema="org.fenixedu.academic.domain.Person.family">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
 			</fr:layout>

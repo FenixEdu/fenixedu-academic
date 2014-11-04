@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
+package org.fenixedu.academic.service.services.student.onlineTests;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -27,32 +27,32 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuthorizedStudentToDoTestException;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.IQuestionCorrectionStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.QuestionCorrectionStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.tests.Response;
-import net.sourceforge.fenixedu.util.tests.ResponseLID;
-import net.sourceforge.fenixedu.util.tests.ResponseNUM;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
-import net.sourceforge.fenixedu.util.tests.ResponseSTR;
-import net.sourceforge.fenixedu.util.tests.TestType;
+import org.fenixedu.academic.service.ServiceMonitoring;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.exceptions.tests.NotAuthorizedStudentToDoTestException;
+import org.fenixedu.academic.service.strategy.tests.IQuestionCorrectionStrategyFactory;
+import org.fenixedu.academic.service.strategy.tests.QuestionCorrectionStrategyFactory;
+import org.fenixedu.academic.service.strategy.tests.strategys.IQuestionCorrectionStrategy;
+import org.fenixedu.academic.dto.comparators.CalendarDateComparator;
+import org.fenixedu.academic.dto.comparators.CalendarHourComparator;
+import org.fenixedu.academic.dto.onlineTests.InfoSiteStudentTestFeedback;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Mark;
+import org.fenixedu.academic.domain.onlineTests.DistributedTest;
+import org.fenixedu.academic.domain.onlineTests.OnlineTest;
+import org.fenixedu.academic.domain.onlineTests.StudentTestLog;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.domain.onlineTests.SubQuestion;
+import org.fenixedu.academic.domain.onlineTests.utils.ParseSubQuestion;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.tests.Response;
+import org.fenixedu.academic.util.tests.ResponseLID;
+import org.fenixedu.academic.util.tests.ResponseNUM;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
+import org.fenixedu.academic.util.tests.ResponseSTR;
+import org.fenixedu.academic.util.tests.TestType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

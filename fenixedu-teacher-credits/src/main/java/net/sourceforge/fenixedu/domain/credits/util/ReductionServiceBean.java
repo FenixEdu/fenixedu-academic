@@ -16,23 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.credits.util;
+package org.fenixedu.academic.domain.credits.util;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DepartmentCreditsPool;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.ReductionService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.DepartmentCreditsPool;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.domain.teacher.ReductionService;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark;
+import org.fenixedu.academic.domain.teacher.evaluation.FacultyEvaluationProcessYear;
+import org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationMark;
+import org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationProcess;
+import org.fenixedu.academic.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;

@@ -36,7 +36,7 @@
 			          <table border="0" width="100%" height="100" align="center" cellpadding="0" cellspacing="0">
 			            <tr> 
 			              <td width="50" height="100">
-			               <img src="<%= request.getContextPath() %>/masterDegreeAdministrativeOffice/guide/images/istlogo.gif" alt="<bean:message key="istlogo" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
+			               <img src="<%= request.getContextPath() %>/masterDegreeAdministrativeOffice/guide/images/istlogo.gif" alt="<bean:message key="istlogo" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
 			              </td>
 			              <td>
 			                &nbsp;
@@ -44,7 +44,7 @@
 			              <td>
 			                <table border="0" width="100%" height="100%">
 			                  <tr valign="top" align="left"> 
-			                    <td>&nbsp;<b><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%></b><br/>
+			                    <td>&nbsp;<b><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%></b><br/>
 				                    &nbsp;<b>Curso: <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
 				                    &nbsp;<b>Ano Lectivo: <bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/><br/>
 			                      <hr size="1">

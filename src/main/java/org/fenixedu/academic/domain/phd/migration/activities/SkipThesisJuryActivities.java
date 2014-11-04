@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration.activities;
+package org.fenixedu.academic.domain.phd.migration.activities;
 
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
-
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.caseHandling.Process;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType;
+import org.fenixedu.academic.domain.phd.thesis.activities.PhdThesisActivity;
+import org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 

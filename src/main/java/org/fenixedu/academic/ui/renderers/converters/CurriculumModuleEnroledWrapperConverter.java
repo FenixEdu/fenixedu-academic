@@ -19,14 +19,15 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.converters;
+package org.fenixedu.academic.ui.renderers.converters;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
+
 import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 

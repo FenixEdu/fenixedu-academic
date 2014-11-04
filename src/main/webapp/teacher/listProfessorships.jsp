@@ -59,7 +59,7 @@
 			<th><bean:message key="label.executionCourseManagement.menu.view.courseAndPage"/></th>
 			<th><bean:message key="label.professorships.degrees"/></th>
 		</tr>
-	<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	<logic:iterate id="executionCourse" name="executionCourses" type="org.fenixedu.academic.domain.ExecutionCourse">
 			<tr>
 				<td style="width: 150px;" class="acenter">
 		            <span class="smalltxt">

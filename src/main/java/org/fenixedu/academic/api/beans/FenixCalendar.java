@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.webServices.jersey.beans;
+package org.fenixedu.academic.api.beans;
 
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixPeriod;
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
+import org.fenixedu.academic.api.beans.publico.FenixPeriod;
+import org.fenixedu.academic.api.beans.publico.FenixSpace;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

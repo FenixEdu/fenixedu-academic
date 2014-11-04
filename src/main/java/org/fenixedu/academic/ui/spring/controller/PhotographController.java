@@ -1,11 +1,10 @@
-package org.fenixedu.academic.ui;
+package org.fenixedu.academic.ui.spring.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.photograph.PictureMode;
-
+import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.photograph.PictureMode;
 import org.fenixedu.bennu.core.domain.Avatar;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;

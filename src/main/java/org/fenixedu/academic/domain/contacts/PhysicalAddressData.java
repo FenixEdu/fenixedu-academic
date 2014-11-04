@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.contacts;
+package org.fenixedu.academic.domain.contacts;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Country;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
 
 public class PhysicalAddressData implements Serializable {
 

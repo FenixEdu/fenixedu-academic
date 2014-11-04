@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -24,8 +24,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;

@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd;
+package org.fenixedu.academic.domain.phd;
 
-import net.sourceforge.fenixedu.domain.Holiday;
-import net.sourceforge.fenixedu.util.WeekDay;
-
+import org.fenixedu.academic.domain.Holiday;
+import org.fenixedu.academic.util.WeekDay;
 import org.joda.time.LocalDate;
 
 public class PhdProgramCalendarUtil {

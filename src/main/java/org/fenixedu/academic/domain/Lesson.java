@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -35,21 +35,20 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.domain.util.icalendar.ClassEventBean;
-import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
-import net.sourceforge.fenixedu.util.WeekDay;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
+import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.util.icalendar.ClassEventBean;
+import org.fenixedu.academic.domain.util.icalendar.EventBean;
+import org.fenixedu.academic.dto.GenericPair;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.HourMinuteSecond;
+import org.fenixedu.academic.util.WeekDay;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -1175,7 +1174,7 @@ public class Lesson extends Lesson_Base {
 
     @Deprecated
     public java.util.Date getBegin() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getBeginHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -1184,13 +1183,13 @@ public class Lesson extends Lesson_Base {
         if (date == null) {
             setBeginHourMinuteSecond(null);
         } else {
-            setBeginHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setBeginHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
     @Deprecated
     public java.util.Date getEnd() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEndHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -1199,7 +1198,7 @@ public class Lesson extends Lesson_Base {
         if (date == null) {
             setEndHourMinuteSecond(null);
         } else {
-            setEndHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEndHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

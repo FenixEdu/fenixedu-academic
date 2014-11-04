@@ -25,7 +25,7 @@
 <c:set var="base" value="${pageContext.request.contextPath}/teacher" />
 <c:set var="professorship" value="${executionCourse.professorshipForCurrentUser}" />
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA" />
 
 <div class="row">
 	<nav class="col-lg-2" id="context">

@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration.common;
+package org.fenixedu.academic.domain.phd.migration.common;
 
 import java.util.HashMap;
 
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.PhdProgram;
 
 public class PhdProgramTranslator {
     private static final HashMap<Integer, String> translationMap = new HashMap<Integer, String>();

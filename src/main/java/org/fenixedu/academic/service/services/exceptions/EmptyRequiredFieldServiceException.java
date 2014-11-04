@@ -20,7 +20,7 @@
  * Created on 13/Mar/2003
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
+package org.fenixedu.academic.service.services.exceptions;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

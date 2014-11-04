@@ -22,7 +22,7 @@
  *  
  */
 
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 public class Mes extends FenixUtil {
 

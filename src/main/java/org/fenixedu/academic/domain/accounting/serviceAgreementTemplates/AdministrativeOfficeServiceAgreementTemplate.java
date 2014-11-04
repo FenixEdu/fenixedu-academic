@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates;
+package org.fenixedu.academic.domain.accounting.serviceAgreementTemplates;
 
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class AdministrativeOfficeServiceAgreementTemplate extends AdministrativeOfficeServiceAgreementTemplate_Base {
 

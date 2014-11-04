@@ -20,14 +20,15 @@
  * Created on Dec 11, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.degree.execution;
+package org.fenixedu.academic.service.services.degree.execution;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

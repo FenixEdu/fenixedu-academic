@@ -20,18 +20,17 @@
  * Created on 12/Nov/2003
  *  
  */
-package net.sourceforge.fenixedu.domain.reimbursementGuide;
+package org.fenixedu.academic.domain.reimbursementGuide;
 
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.util.State;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.util.State;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**

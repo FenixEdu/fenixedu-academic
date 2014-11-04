@@ -20,7 +20,7 @@
  * Created on Aug 3, 2004
  *
  */
-package net.sourceforge.fenixedu.domain.student;
+package org.fenixedu.academic.domain.student;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;

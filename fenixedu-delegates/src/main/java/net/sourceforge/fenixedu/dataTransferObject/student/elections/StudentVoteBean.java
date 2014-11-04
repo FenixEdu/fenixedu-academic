@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.student.elections;
+package org.fenixedu.academic.dto.student.elections;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,12 +25,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.elections.DelegateElectionPeriod;
+import org.fenixedu.academic.domain.elections.YearDelegateElection;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;

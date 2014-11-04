@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events;
+package org.fenixedu.academic.domain.accounting.events;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.EventType;
 
 public enum PenaltyExemptionJustificationType {
     SOCIAL_SHARE_GRANT_OWNER,

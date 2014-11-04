@@ -55,7 +55,7 @@
 <fr:form action="/qucAudit.do">
 	<html:hidden property="method" value="editProcess"/>
 	<fr:edit id="auditProcessBean" name="auditProcessBean" action="/qucAudit.do?method=editProcess">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">			
+		<fr:schema bundle="INQUIRIES_RESOURCES" type="org.fenixedu.academic.domain.inquiries.ExecutionCourseAudit">			
 			<fr:slot name="conclusions" key="label.inquiry.audit.conclusions" layout="longText">
 				<fr:property name="columns" value="65"/>
 				<fr:property name="rows" value="7"/>

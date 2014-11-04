@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.report;
+package org.fenixedu.academic.domain.accounting.report;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.joda.time.DateTime;
 
 public class GratuityReportBean implements java.io.Serializable {

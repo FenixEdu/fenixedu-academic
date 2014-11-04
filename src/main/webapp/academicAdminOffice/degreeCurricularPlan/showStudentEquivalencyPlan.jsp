@@ -30,7 +30,7 @@
 <logic:present name="selectedDegreeCurricularPlan">
 	<fr:edit id="StudentSearchBean"
 			name="studentSearchBean"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentSearchBean"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.StudentSearchBean"
 			schema="StudentSearchBean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle"/>
@@ -42,7 +42,7 @@
 <logic:notPresent name="selectedDegreeCurricularPlan">
 	<fr:edit id="StudentSearchBeanWithDegreeCurricularPlan"
 			name="studentSearchBean"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentSearchBean"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.StudentSearchBean"
 			schema="StudentSearchBeanWithDegreeCurricularPlan">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle"/>
@@ -65,10 +65,10 @@
 			</p>
 		</logic:notPresent>
 		<logic:present name="studentCurricularPlanEquivalencePlan">
-			<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>
-			<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
-			<bean:define id="selectedDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="selectedDegreeCurricularPlan"/>
-			<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="studentCurricularPlanEquivalencePlan"/>
+			<bean:define id="student" type="org.fenixedu.academic.domain.student.Student" name="student"/>
+			<bean:define id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+			<bean:define id="selectedDegreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="selectedDegreeCurricularPlan"/>
+			<bean:define id="equivalencePlan" type="org.fenixedu.academic.domain.EquivalencePlan" name="studentCurricularPlanEquivalencePlan"/>
 			<logic:present name="rootEquivalencyPlanEntryCurriculumModuleWrapper">
 
 				<p class="mvert15">

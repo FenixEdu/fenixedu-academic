@@ -289,7 +289,7 @@ max-width: 231px;
 <%--  ### Candidacy Information ### --%>
 <h2 style="margin-top: 1.5em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
 <fr:view name="individualProgramProcess">
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess">
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess">
 		<fr:slot name="candidacyDate">
 			<fr:property name="classes" value="bold nowrap"/>
 		</fr:slot>

@@ -25,8 +25,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PhdProgramsAssociatedToCoordinator"  %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean"%>
+<%@ page import="org.fenixedu.academic.ui.struts.action.phd.providers.PhdProgramsAssociatedToCoordinator"  %>
+<%@page import="org.fenixedu.academic.domain.phd.email.PhdProgramEmailBean"%>
 
 <html:xhtml/>
 
@@ -89,7 +89,7 @@
 	<logic:notEmpty name="program" property="phdProgramEmails">
 		<fr:view name="program" property="phdProgramEmails">
 		
-			<fr:schema bundle="PHD_RESOURCES" type="<%= net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail.class.getName() %>">
+			<fr:schema bundle="PHD_RESOURCES" type="<%= org.fenixedu.academic.domain.phd.email.PhdProgramEmail.class.getName() %>">
 				<fr:slot name="whenCreated" layout="year-month"/>
 				<fr:slot name="formattedSubject" /> 
 			</fr:schema>

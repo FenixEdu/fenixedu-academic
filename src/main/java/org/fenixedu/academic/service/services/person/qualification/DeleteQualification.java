@@ -21,10 +21,11 @@
  * 
  */
 
-package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
+package org.fenixedu.academic.service.services.person.qualification;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Qualification;
+import org.fenixedu.academic.domain.Qualification;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

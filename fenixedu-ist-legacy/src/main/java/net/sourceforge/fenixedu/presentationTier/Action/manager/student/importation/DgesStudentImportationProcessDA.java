@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.student.importation;
+package org.fenixedu.academic.ui.struts.action.manager.student.importation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,16 +25,16 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.EntryPhase;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.student.importation.DgesBaseProcessLauncher;
-import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationFile;
-import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
-import net.sourceforge.fenixedu.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration;
-import net.sourceforge.fenixedu.domain.student.importation.ExportExistingStudentsFromImportationProcess;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
+import org.fenixedu.academic.domain.EntryPhase;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.QueueJob;
+import org.fenixedu.academic.domain.student.importation.DgesBaseProcessLauncher;
+import org.fenixedu.academic.domain.student.importation.DgesStudentImportationFile;
+import org.fenixedu.academic.domain.student.importation.DgesStudentImportationProcess;
+import org.fenixedu.academic.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration;
+import org.fenixedu.academic.domain.student.importation.ExportExistingStudentsFromImportationProcess;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

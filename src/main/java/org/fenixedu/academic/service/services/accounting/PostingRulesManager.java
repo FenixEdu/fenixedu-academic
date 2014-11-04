@@ -16,35 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
+package org.fenixedu.academic.service.services.accounting;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.StandaloneInstallmentBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.PaymentPlan;
+import org.fenixedu.academic.domain.accounting.PostingRule;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
+import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
+import org.fenixedu.academic.dto.accounting.paymentPlan.PaymentPlanBean;
+import org.fenixedu.academic.dto.accounting.paymentPlan.StandaloneInstallmentBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreateGratuityPostingRuleBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.academic.service.services.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;

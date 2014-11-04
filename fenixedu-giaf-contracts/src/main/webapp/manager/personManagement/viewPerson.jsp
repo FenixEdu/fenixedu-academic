@@ -113,7 +113,7 @@
 	</table>
 	<logic:equal name="person" property="canValidateContacts" value="false">
 	<fr:view name="person">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.Person">
 			<fr:slot name="numberOfValidationRequests" key="label.Person.numberOfValidationRequests"/>
 			<fr:slot name="lastValidationRequestDate" key="label.Person.lastValidationRequestDate"/>
 		</fr:schema>
@@ -481,7 +481,7 @@
 		<fr:edit name="person" id="edit-person">
 			<fr:layout name="tabular-editable">
 			</fr:layout>
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.Person">
 				<fr:slot name="disableSendEmails" bundle="APPLICATION_RESOURCES" key="person.disable.send.emails" layout="option-select-postback"></fr:slot>
 			</fr:schema>
 		</fr:edit>
@@ -519,7 +519,7 @@
 		</logic:messagesPresent>
 		<fr:edit name="person"
 			action="<%="/findPerson.do?method=viewPerson&personID=" + personID %>"
-			schema="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames">
+			schema="org.fenixedu.academic.domain.Person.personal.info.withPartitionedNames">
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
@@ -531,7 +531,7 @@
 	<logic:notPresent parameter="editPersonalInfo">
 
 		<fr:view name="person"
-			schema="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames">
+			schema="org.fenixedu.academic.domain.Person.personal.info.withPartitionedNames">
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
@@ -558,7 +558,7 @@
 	<logic:present parameter="editUserInfo">
 		<fr:edit name="person"
 			action="<%="/findPerson.do?method=viewPerson&personID=" + personID %>">
-			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.Person">
 				<fr:slot readOnly="true" name="user.username" key="label.person.username"/>
 				<fr:slot name="eidentifier" key="label.eidentifier" layout="null-as-value"/>
 			</fr:schema>
@@ -570,7 +570,7 @@
 	</logic:present>
 	<logic:notPresent parameter="editUserInfo">
 		<fr:view name="person">
-			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.Person">
 				<fr:slot name="user.username" key="label.person.username"/>
 				<fr:slot name="eidentifier" key="label.eidentifier" layout="null-as-value"/>
 			</fr:schema>
@@ -600,7 +600,7 @@
 
 		<fr:edit name="person"
 			action="<%="/findPerson.do?method=viewPerson&personID=" + personID %>"
-			schema="net.sourceforge.fenixedu.domain.Person.family">
+			schema="org.fenixedu.academic.domain.Person.family">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
 			</fr:layout>
@@ -612,7 +612,7 @@
 	<logic:notPresent parameter="editFiliationInfo">
 
 		<fr:view name="person"
-			schema="net.sourceforge.fenixedu.domain.Person.family">
+			schema="org.fenixedu.academic.domain.Person.family">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
 			</fr:layout>

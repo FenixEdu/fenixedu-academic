@@ -26,13 +26,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.QueueJobResultFile;
-import net.sourceforge.fenixedu.domain.QueueJobWithFile;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-
+import org.fenixedu.academic.domain.QueueJob;
+import org.fenixedu.academic.domain.QueueJobResult;
+import org.fenixedu.academic.domain.QueueJobResultFile;
+import org.fenixedu.academic.domain.QueueJobWithFile;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;

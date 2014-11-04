@@ -20,7 +20,7 @@
  * Created on 8/Mai/2003 by jpvl
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
+package org.fenixedu.academic.service.services.exceptions;
 
 import java.util.Date;
 

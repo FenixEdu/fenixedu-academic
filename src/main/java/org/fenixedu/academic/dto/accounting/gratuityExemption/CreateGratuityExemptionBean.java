@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption;
+package org.fenixedu.academic.dto.accounting.gratuityExemption;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType;
-import net.sourceforge.fenixedu.util.Money;
-
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustificationType;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.YearMonthDay;
 
 public class CreateGratuityExemptionBean implements Serializable {

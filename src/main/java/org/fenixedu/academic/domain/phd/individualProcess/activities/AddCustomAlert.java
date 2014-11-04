@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
+package org.fenixedu.academic.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
-
+import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.alert.PhdCustomAlert;
+import org.fenixedu.academic.domain.phd.alert.PhdCustomAlertBean;
 import org.fenixedu.bennu.core.domain.User;
 
 public class AddCustomAlert extends PhdIndividualProgramProcessActivity {

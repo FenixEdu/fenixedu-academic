@@ -54,12 +54,12 @@
 			<tr>
 				<td><fr:edit id="authorizationsBean" name="authorizationsBean" required="true">
 						<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
-							type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AuthorizationsManagementBean">
+							type="org.fenixedu.academic.ui.struts.action.academicAdministration.AuthorizationsManagementBean">
 							<fr:slot name="party" layout="autoComplete" key="label.academicAdministration.authorizations.member">
 								<fr:property name="size" value="50" />
 								<fr:property name="labelField" value="presentationName" />
 								<fr:property name="indicatorShown" value="true" />
-								<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveParties" />
+								<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchAllActiveParties" />
 								<fr:property name="args" value="slot=name,size=50,internal=true" />
 								<fr:property name="minChars" value="4" />
 							</fr:slot>

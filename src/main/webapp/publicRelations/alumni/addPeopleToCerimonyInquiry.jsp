@@ -48,7 +48,7 @@ ist2xxxx
 <p class="mtop15 mbottom05"><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.people.insertFile"/>:</p>
 
 <fr:edit id="usernameFileBean" name="usernameFileBean" action="<%= url %>">
-	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice.UsernameFileBean">
+	<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.ui.struts.action.publicRelationsOffice.UsernameFileBean">
 		<fr:slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<fr:property name="fileNameSlot" value="filename"/>
 			<fr:property name="size" value="30"/>

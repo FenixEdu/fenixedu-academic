@@ -1,15 +1,14 @@
-package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
+package org.fenixedu.academic.dto.spaceManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.dto.LinkObject;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 

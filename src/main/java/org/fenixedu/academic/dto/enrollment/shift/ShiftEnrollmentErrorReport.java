@@ -19,12 +19,12 @@
 /*
  * Created on 13/Fev/2004
  */
-package net.sourceforge.fenixedu.dataTransferObject.enrollment.shift;
+package org.fenixedu.academic.dto.enrollment.shift;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
+import org.fenixedu.academic.dto.DataTranferObject;
 
 /**
  * @author jmota

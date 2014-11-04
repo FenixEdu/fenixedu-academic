@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.stork;
-
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
+package org.fenixedu.academic.util.stork;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributeType;
 
 public class Attribute {
     Integer id;

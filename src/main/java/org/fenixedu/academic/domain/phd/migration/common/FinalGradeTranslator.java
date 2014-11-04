@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration.common;
+package org.fenixedu.academic.domain.phd.migration.common;
 
 import java.util.HashMap;
 
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.InvalidFinalGradeException;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.InvalidFinalGradeException;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
 
 public class FinalGradeTranslator {
     private static final HashMap<String, PhdThesisFinalGrade> translationMap = new HashMap<String, PhdThesisFinalGrade>();

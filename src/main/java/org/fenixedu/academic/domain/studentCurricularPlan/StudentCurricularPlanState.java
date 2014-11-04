@@ -20,12 +20,11 @@
  * StudentCurricularState.java Created on 20 de Dezembro de 2002, 14:12
  */
 
-package net.sourceforge.fenixedu.domain.studentCurricularPlan;
+package org.fenixedu.academic.domain.studentCurricularPlan;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

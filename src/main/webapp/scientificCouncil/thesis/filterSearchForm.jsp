@@ -32,10 +32,10 @@
 <logic:present name="manageSecondCycleThesisSearchBean">
 	<fr:form action="<%= "/manageSecondCycleThesis.do?method=filterSearch" %>">
 		<fr:edit id="filterSearchForm" name="manageSecondCycleThesisSearchBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean"
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean"
 					bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 				<fr:slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
 					<fr:property name="format" value="${year}"/>
     				<fr:property name="destination" value="listThesis"/>
     			</fr:slot>

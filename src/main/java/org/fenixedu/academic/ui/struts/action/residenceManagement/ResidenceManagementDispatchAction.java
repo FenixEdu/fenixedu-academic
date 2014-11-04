@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.residenceManagement;
+package org.fenixedu.academic.ui.struts.action.residenceManagement;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,17 +28,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateResidenceEvents;
-import net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.PayResidenceEvent;
-import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
-import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceDebtEventBean;
-import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
-import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
-import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
-import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -48,6 +37,16 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.accounting.ResidenceEvent;
+import org.fenixedu.academic.domain.organizationalStructure.ResidenceManagementUnit;
+import org.fenixedu.academic.domain.residence.ResidenceMonth;
+import org.fenixedu.academic.dto.residenceManagement.ImportResidenceEventBean;
+import org.fenixedu.academic.dto.residenceManagement.ResidenceDebtEventBean;
+import org.fenixedu.academic.dto.residenceManagement.ResidenceEventBean;
+import org.fenixedu.academic.dto.residenceManagement.ResidentListsHolderBean;
+import org.fenixedu.academic.service.services.residenceManagement.CreateResidenceEvents;
+import org.fenixedu.academic.service.services.residenceManagement.PayResidenceEvent;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

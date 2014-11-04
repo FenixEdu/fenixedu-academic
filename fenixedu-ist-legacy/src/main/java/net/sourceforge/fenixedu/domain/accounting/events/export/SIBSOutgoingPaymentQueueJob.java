@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events.export;
+package org.fenixedu.academic.domain.accounting.events.export;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.QueueJobResult;
+import org.fenixedu.academic.domain.QueueJob;
+import org.fenixedu.academic.domain.QueueJobResult;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;

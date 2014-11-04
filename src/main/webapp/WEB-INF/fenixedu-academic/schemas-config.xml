@@ -62,17 +62,17 @@
 <!-- 
   Example:
   
-    <schema name="person.birth" type="net.sourceforge.fenixedu.domain.Person">
+    <schema name="person.birth" type="org.fenixedu.academic.domain.Person">
         <slot name="birthYearMonthDay" key="person.nascimento.special-case" layout="heading-date">
             <property name="format" value="yyyy - MM - dd"/>
         </slot>
     </schema>
     
-    <schema name="person.country" type="net.sourceforge.fenixedu.domain.Person">
+    <schema name="person.country" type="org.fenixedu.academic.domain.Person">
         <slot name="nationality" schema="pais.minimal"/>
     </schema>
     
-    <schema name="country.minimal" type="net.sourceforge.fenixedu.domain.Person">
+    <schema name="country.minimal" type="org.fenixedu.academic.domain.Person">
         <slot name="name"/>
         <slot name="nacionality"/>
     </schema>
@@ -83,13 +83,13 @@
   </schema>
   
   <!-- FIXME: remove schemas after this, they are used only as example -->
-  <schema name="person.simple-admin-info" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.simple-admin-info" type="org.fenixedu.academic.domain.Person">
     <slot name="name"/>
     <slot name="username"/>
     <slot name="email"/>
   </schema>
   
-  <schema name="person.simple-admin-info.extended" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.simple-admin-info.extended" type="org.fenixedu.academic.domain.Person">
     <slot name="name"/>
     <slot name="username" layout="link"/>
     <slot name="email">
@@ -100,12 +100,12 @@
     </slot>
   </schema>
   
-  <schema name="country.short" type="net.sourceforge.fenixedu.domain.Country">
+  <schema name="country.short" type="org.fenixedu.academic.domain.Country">
     <slot name="code"/>
     <slot name="nationality"/>
   </schema>
   
-  <schema name="person.simple-edit" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.simple-edit" type="org.fenixedu.academic.domain.Person">
     <slot name="name">
         <property name="size" value="50"/>
     </slot>
@@ -120,7 +120,7 @@
     </slot>
   </schema>
   
-  <schema name="person.simple-edit-validated" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.simple-edit-validated" type="org.fenixedu.academic.domain.Person">
     <slot name="name">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
@@ -143,7 +143,7 @@
     </slot>
   </schema>
   
-  <schema name="person.create-minimal" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.create-minimal" type="org.fenixedu.academic.domain.Person">
     <slot name="name">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
@@ -162,7 +162,7 @@
     <slot name="isPassInKerberos"/>
   </schema>
   
-  <schema name="person.create-minimal-defaults" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.create-minimal-defaults" type="org.fenixedu.academic.domain.Person">
     <slot name="name">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
@@ -184,15 +184,15 @@
     <slot name="isPassInKerberos"/>
   </schema>
   
-  <schema name="person.name" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.name" type="org.fenixedu.academic.domain.Person">
     <slot name="name" layout="allow-case-change"/>
   </schema>
   
-  <schema name="person.username" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.username" type="org.fenixedu.academic.domain.Person">
     <slot name="username"/>
   </schema>
 
-  <schema name="teacherPersonalExpectation.view-all-except-tutorComment" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="teacherPersonalExpectation.view-all-except-tutorComment" type="org.fenixedu.academic.domain.Person">
   	<slot name="teacher.teacherId" />
     <slot name="teacher.person.name" />
 	<slot name="graduations" />
@@ -229,40 +229,40 @@
 	<slot name="professionalActivityMainFocus" />
   </schema>
 
-  <schema name="person.admin.simple" type="net.sourceforge.fenixedu.domain.Person">
+  <schema name="person.admin.simple" type="org.fenixedu.academic.domain.Person">
     <slot name="username" layout="link"/>
     <slot name="name"/>
   </schema>
   
-  <schema name="weekly.work.load.bean" type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadBean">
+  <schema name="weekly.work.load.bean" type="org.fenixedu.academic.ui.struts.action.student.WeeklyWorkLoadBean">
     <slot name="contact"/>
     <slot name="autonomousStudy"/>
     <slot name="other"/>
   </schema>
   
-  <schema name="list.connectionRules" type="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
+  <schema name="list.connectionRules" type="org.fenixedu.academic.domain.organizationalStructure.ConnectionRule">
     <slot name="accountabilityType.type"/>
     <slot name="allowedChildPartyType.type"/>
     <slot name="allowedParentPartyType.type"/>    
   </schema>  
   
-  <schema name="connectionRule.bean" type="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
+  <schema name="connectionRule.bean" type="org.fenixedu.academic.domain.organizationalStructure.ConnectionRule">
     <slot name="accountabilityType" layout="menu-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.AccountabilityTypeProvider"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.AccountabilityTypeProvider"/>
         <property name="eachLayout" value="values-dash"/>
     </slot>
     <slot name="allowedChildPartyType" layout="menu-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PartyTypeProvider"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.PartyTypeProvider"/>
         <property name="eachLayout" value="values-dash"/>
     </slot>
     <slot name="allowedParentPartyType" layout="menu-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PartyTypeProvider"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.PartyTypeProvider"/>
         <property name="eachLayout" value="label"/>
     </slot>
   </schema>
   
 	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
-	<schema name="person.create-validated" type="net.sourceforge.fenixedu.domain.Person">
+	<schema name="person.create-validated" type="org.fenixedu.academic.domain.Person">
 
 		<!-- Personal data -->
 		<slot name="name" key="person.name" default="[Primeiro Ultimo]">
@@ -293,7 +293,7 @@
 		<!-- Filiation -->
 		<slot name="dateOfBirthYearMonthDay" />
 		<slot name="nationality" layout="menu-select"> 
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
+			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/> 
 			<property name="format" value="${nationality}"/>
 		</slot>
 		<slot name="parishOfBirth" />
@@ -318,11 +318,11 @@
 		<slot name="isPassInKerberos" />
 	</schema>
 
-	<schema name="student.curricular.plan.start.date" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
+	<schema name="student.curricular.plan.start.date" type="org.fenixedu.academic.domain.StudentCurricularPlan">
 		<slot name="startDate"/>
 	</schema>
 
-	<schema name="degree.info.description" type="net.sourceforge.fenixedu.domain.DegreeInfo">
+	<schema name="degree.info.description" type="org.fenixedu.academic.domain.DegreeInfo">
 		<slot name="description" layout="rich-text" key="label.brief.introduction">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
@@ -423,7 +423,7 @@
 		</slot>
 	</schema>
 
-	<schema name="degree.info.access" type="net.sourceforge.fenixedu.domain.DegreeInfo">
+	<schema name="degree.info.access" type="org.fenixedu.academic.domain.DegreeInfo">
 		<slot name="testIngression" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
@@ -472,7 +472,7 @@
 		</slot>
 	</schema>
 
-	<schema name="degree.info.professional.status" type="net.sourceforge.fenixedu.domain.DegreeInfo">
+	<schema name="degree.info.professional.status" type="org.fenixedu.academic.domain.DegreeInfo">
 		<slot name="qualificationLevel" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
@@ -491,7 +491,7 @@
 		</slot>
 	</schema>
 
-	<schema name="degree.curricular.plan.description" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan">
+	<schema name="degree.curricular.plan.description" type="org.fenixedu.academic.domain.DegreeCurricularPlan">
 		<slot name="description" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
@@ -510,7 +510,7 @@
 		</slot>
 	</schema>
 
-	<schema name="evaluation.project.view-with-name-description-and-grouping" type="net.sourceforge.fenixedu.domain.Project" bundle="APPLICATION_RESOURCES">
+	<schema name="evaluation.project.view-with-name-description-and-grouping" type="org.fenixedu.academic.domain.Project" bundle="APPLICATION_RESOURCES">
 	    <slot name="name" />
 	    <slot name="description" layout="null-as-label">
 	    	<property name="label" value="-"/>
@@ -520,15 +520,15 @@
    	    <slot name="grouping.name" />
 	</schema>
 	
-	<schema name="list.student.execution.periods" type="net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean" bundle="APPLICATION_RESOURCES">
+	<schema name="list.student.execution.periods" type="org.fenixedu.academic.dto.student.ManageStudentStatuteBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionPeriod" key="label.net.sourceforge.fenixedu.domain.ProjectSubmission.execution.semester" layout="menu-select-postback">
-    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionPeriodsProvider"/>
+    	<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider"/>
     	<property name="format" value="${year} - ${semester}º Sem."/>	
     	<property name="destination" value="postBack"/>
     </slot>
 	</schema>
 	
-	<schema name="projectSubmission.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	<schema name="projectSubmission.view-full" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber" />
    	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
    	    <slot name="submissionDateTime" />
@@ -539,7 +539,7 @@
    	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
 	</schema>
 
-	<schema name="deletedProjectSubmission.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	<schema name="deletedProjectSubmission.view-full" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber" layout="link">
    	    	<property name="useParent" value="true"/>
    	    	<property name="moduleRelative" value="true"/>
@@ -555,18 +555,18 @@
    	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
 	</schema>
 	
-	<schema name="studentGroupRendering" type="net.sourceforge.fenixedu.domain.StudentGroup" bundle="APPLICATION_RESOURCES">
+	<schema name="studentGroupRendering" type="org.fenixedu.academic.domain.StudentGroup" bundle="APPLICATION_RESOURCES">
 		<slot name="groupNumber" />
 	</schema>
 	
-	<schema name="projectSubmission.viewObservation" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	<schema name="projectSubmission.viewObservation" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber" />
    	    <slot name="attends.aluno.number" />
    	    <slot name="attends.aluno.person.name" key="label.name" />		
    	    <slot name="teacherObservation" key="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
 	</schema>
 
-	<schema name="projectSubmission.editObservation" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	<schema name="projectSubmission.editObservation" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber" read-only="true"/>
    	    <slot name="attends.aluno.number" read-only="true"/>
    	    <slot name="attends.aluno.person.name" key="label.name" read-only="true"/>
@@ -576,13 +576,13 @@
 		</slot>
 	</schema>
 		
-	<schema name="projectSubmission.create" type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean">
+	<schema name="projectSubmission.create" type="org.fenixedu.academic.dto.projectSubmission.CreateProjectSubmissionBean">
 		<slot name="inputStream" key="label.projectSubmission.projectFile" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="fileNameSlot" value="filename"/>
 		</slot>
 	</schema>
 	
-	<schema name="projectSubmissionLog.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmissionLog" bundle="APPLICATION_RESOURCES">
+	<schema name="projectSubmissionLog.view-full" type="org.fenixedu.academic.domain.ProjectSubmissionLog" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber"/>
    	    <slot name="attends.aluno.number" />
    	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
@@ -591,13 +591,13 @@
    	    <slot name="fileSize" layout="fileSize"/>
 	</schema>
 	
-	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
+	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">
 		<slot name="name"/>
 		<slot name="idDocumentType"/>
 		<slot name="documentIdNumber"/>
 	</schema>
 	
-	<schema name="SimpleSearchPersonWithStudentBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean" bundle="APPLICATION_RESOURCES">
+	<schema name="SimpleSearchPersonWithStudentBean.edit" type="org.fenixedu.academic.dto.person.SimpleSearchPersonWithStudentBean" bundle="APPLICATION_RESOURCES">
 		<slot name="studentNumber"/>
 		<slot name="documentIdNumber"/>
 		<slot name="idDocumentType">
@@ -612,20 +612,20 @@
         <slot name="class" layout="label"/>
     </schema>
 
-    <schema name="AdministrativeOffice.view" type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" bundle="APPLICATION_RESOURCES">
+    <schema name="AdministrativeOffice.view" type="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice" bundle="APPLICATION_RESOURCES">
 	    	<slot name="administrativeOfficeType" />
     </schema>
 
-    <schema name="Degree.name.and.sigla" type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+    <schema name="Degree.name.and.sigla" type="org.fenixedu.academic.domain.Degree" bundle="APPLICATION_RESOURCES">
 		<slot name="name" key="label.degree.name" />
 		<slot name="sigla" key="label.sigla" />
 	</schema>
 	
-	<schema name="DegreeCurricularPlanRendererConfig.search" type="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" bundle="APPLICATION_RESOURCES">
+	<schema name="DegreeCurricularPlanRendererConfig.search" type="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" bundle="APPLICATION_RESOURCES">
 		<slot name="executionInterval" layout="menu-select-postback" key="label.executionYear">
 			<property name="format" value="${qualifiedName}" />
 			<property name="nullOptionHidden" value="true" />
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig$ExecutionIntervalProvider" />
+			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRendererConfig$ExecutionIntervalProvider" />
 		</slot>
 		<slot name="organizeBy" key="label.view.structure.organized.by">
 			<property name="defaultOptionHidden" value="true" />
@@ -634,13 +634,13 @@
 		<slot name="showCourses" key="label.view.curricularCourses" />
 	</schema>
 	
-	<schema name="create.persistent.group" type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.PersistentGroupMembersBean" bundle="APPLICATION_RESOURCES">
+	<schema name="create.persistent.group" type="org.fenixedu.academic.ui.struts.action.research.researchUnit.PersistentGroupMembersBean" bundle="APPLICATION_RESOURCES">
 		<slot name="name" key="label.groupName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="40"/>
 		</slot>
 		<slot name="people" layout="option-select" key="label.members">
 				<property name="classes" value="nobullet noindent"/>
-				<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForUnitGroups"/>
+				<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.PeopleForUnitGroups"/>
 				<property name="saveOptions" value="true"/>
 				<property name="eachLayout" value="name-with-alias"/>
 				<property name="sortBy" value="name"/>
@@ -650,7 +650,7 @@
 				<property name="format" value="${name} / ${username}"/>
 				<property name="args" value="slot=name,size=20"/>
 				<property name="minChars" value="2"/>
-				<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
+				<property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons"/>
 				<property name="indicatorShown" value="true"/>		
 		</slot>
 	</schema>

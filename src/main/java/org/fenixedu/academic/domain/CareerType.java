@@ -20,7 +20,7 @@
  * Created on Nov 13, 2003
  *  
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 /**
  * @author Leonor Almeida

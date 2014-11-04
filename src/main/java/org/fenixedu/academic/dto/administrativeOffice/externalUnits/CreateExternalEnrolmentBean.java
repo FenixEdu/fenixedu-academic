@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits;
+package org.fenixedu.academic.dto.administrativeOffice.externalUnits;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import net.sourceforge.fenixedu.domain.Grade;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExternalCurricularCourse;
+import org.fenixedu.academic.domain.Grade;
 import org.joda.time.YearMonthDay;
 
 public class CreateExternalEnrolmentBean implements Serializable {

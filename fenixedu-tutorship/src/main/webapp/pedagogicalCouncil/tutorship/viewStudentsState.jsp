@@ -40,7 +40,7 @@
 
 </fr:form>
 <logic:present name="job">
-	<bean:define id="job" name="job" type="net.sourceforge.fenixedu.domain.TutorshipStudentLowPerformanceQueueJob"/>
+	<bean:define id="job" name="job" type="org.fenixedu.academic.domain.TutorshipStudentLowPerformanceQueueJob"/>
 		<div class="success0 mtop0" style="width:600px;">
 			<p class="mvert05">
 			<bean:message key="link.tutorship.student.lowPerformance.confirmation" bundle="PEDAGOGICAL_COUNCIL" arg0="<%= job.getDescription().toString() %>"/></p>

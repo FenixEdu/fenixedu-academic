@@ -122,20 +122,20 @@
       </global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <action forward="/curricularCourseManagement.jsp" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/curricularCourseManagement"></action>
-            <action scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.CurricularCourseManagerDA" path="/curricularCourseManager">
+            <action forward="/curricularCourseManagement.jsp" type="org.fenixedu.academic.ui.struts.action.base.FenixForwardAction" path="/curricularCourseManagement"></action>
+            <action scope="request" parameter="method" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.CurricularCourseManagerDA" path="/curricularCourseManager">
                   <forward path="selectDegree.jsp" name="selectDegree"></forward>
                   <forward path="showDegreeCurricularPlans.jsp" name="showDegreeCurricularPlans"></forward>
                   <forward path="showCurricularCourses.jsp" name="showCurricularCourses"></forward>
                   <forward path="viewCurriculum.jsp" name="viewCurriculum"></forward>
                   <forward path="editCurriculum.jsp" name="editCurriculum"></forward>
             </action>
-            <action scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.CurricularCourseManagerDA" name="curriculumForm" path="/curriculumManager">
+            <action scope="request" parameter="method" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.CurricularCourseManagerDA" name="curriculumForm" path="/curriculumManager">
                   <forward path="editCurriculum.jsp" name="editCurriculum"></forward>
                   <forward path="insertCurriculum.jsp" name="insertCurriculum"></forward>
                   <forward path="showCurricularCourses.jsp" name="showCurricularCourses"></forward>
             </action>
-            <action scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.CurricularCourseManagerDA" name="selectBasicCurricularCourses" path="/basicCurricularCourseManager">
+            <action scope="request" parameter="method" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.CurricularCourseManagerDA" name="selectBasicCurricularCourses" path="/basicCurricularCourseManager">
                   <forward path="selectDegreeBasic.jsp" name="selectDegree"></forward>
                   <forward path="showDegreeCurricularPlansBasic.jsp" name="showDegreeCurricularPlans"></forward>
                   <forward path="showCurricularCoursesBasic.jsp" name="showCurricularCourses"></forward>

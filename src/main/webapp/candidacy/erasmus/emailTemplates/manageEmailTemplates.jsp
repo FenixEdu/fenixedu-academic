@@ -43,7 +43,7 @@
 	
 	<fr:edit id="mobilityEmailTemplateBean-choose-type" name="mobilityEmailTemplateBean">	
 	
-		<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="type" layout="menu-postback">
 				<fr:property name="destination" value="postback" />
 				<fr:property name="format" value="${localizedName}" />
@@ -51,7 +51,7 @@
 			</fr:slot>
 			<fr:slot name="mobilityProgram" layout="menu-select-postback">
 				<fr:property name="destination" value="postback" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramAllProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.MobilityProgramAllProvider" />
 				<fr:property name="format" value="${name}" />
 				<fr:property name="sortBy" value="name"/>
 			</fr:slot>
@@ -82,7 +82,7 @@
 			<fr:edit id="mobilityEmailTemplateBean" name="mobilityEmailTemplateBean" visible="false" />
 			
 			<fr:edit id="mobilityEmailTemplateBean-edit" name="mobilityEmailTemplateBean">
-				<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 					<fr:slot name="subject" required="true">
 						<fr:property name="size" value="161" />
 					</fr:slot>

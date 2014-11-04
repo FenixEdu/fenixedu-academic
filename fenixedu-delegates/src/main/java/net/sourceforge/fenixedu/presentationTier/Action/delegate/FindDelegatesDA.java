@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.delegate;
+package org.fenixedu.academic.ui.struts.action.delegate;
 
-import net.sourceforge.fenixedu.presentationTier.Action.commons.delegates.FindDelegatesDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication.DelegateConsultApp;
+import org.fenixedu.academic.ui.struts.action.commons.delegates.FindDelegatesDispatchAction;
+import org.fenixedu.academic.ui.struts.action.delegate.DelegateApplication.DelegateConsultApp;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

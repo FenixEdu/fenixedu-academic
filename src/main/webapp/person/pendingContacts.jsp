@@ -101,7 +101,7 @@
 <bean:define id="pendingPhones" name="person" property="pendingPhones" />
 <bean:size id="size" name="pendingPhones" />
 <logic:notEmpty name="pendingPhones">
-	<logic:iterate id="contact" name="pendingPhones" type="net.sourceforge.fenixedu.domain.contacts.PartyContact">
+	<logic:iterate id="contact" name="pendingPhones" type="org.fenixedu.academic.domain.contacts.PartyContact">
 			<tr>
 			<td><bean:message key="label.partyContacts.Phone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -161,7 +161,7 @@
 <bean:define id="pendingMobilePhones" name="person" property="pendingMobilePhones" />
 <bean:size id="size" name="pendingMobilePhones" />
 <logic:notEmpty name="pendingMobilePhones">
-	<logic:iterate id="contact" name="pendingMobilePhones" type="net.sourceforge.fenixedu.domain.contacts.PartyContact">
+	<logic:iterate id="contact" name="pendingMobilePhones" type="org.fenixedu.academic.domain.contacts.PartyContact">
 			<tr>
 			<td><bean:message key="label.partyContacts.MobilePhone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>

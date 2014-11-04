@@ -19,9 +19,9 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.inquiries;
+package org.fenixedu.academic.dto.inquiries;
 
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.Person;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

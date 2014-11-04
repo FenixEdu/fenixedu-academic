@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
+<%@ page import="org.fenixedu.academic.servlet.taglib.sop.v3.TimeTableType" %>
 <logic:notPresent name="siteView" property="component" >
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">

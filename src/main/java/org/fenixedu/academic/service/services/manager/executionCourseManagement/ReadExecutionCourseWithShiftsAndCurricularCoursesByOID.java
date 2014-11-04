@@ -21,10 +21,11 @@
  * 
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
+package org.fenixedu.academic.service.services.manager.executionCourseManagement;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

@@ -120,12 +120,12 @@
 				<fr:edit id="performanceGridFiltersBean"
 					name="performanceGridFiltersBean" layout="tabular-editable">
 					<fr:schema bundle="APPLICATION_RESOURCES"
-						type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean">
+						type="org.fenixedu.academic.dto.teacher.tutor.StudentsPerformanceInfoBean">
 						<fr:slot name="studentsEntryYear" key="label.entryYear"
 							layout="menu-select-postback"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 							<fr:property name="providerClass"
-								value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$TutorshipEntryExecutionYearProviderForSingleStudent" />
+								value="org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$TutorshipEntryExecutionYearProviderForSingleStudent" />
 							<fr:property name="format" value="${year}" />
 							<fr:property name="sortBy" value="year" />
 							<fr:property name="destination" value="post-back" />
@@ -135,7 +135,7 @@
 							layout="menu-select-postback"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 							<fr:property name="providerClass"
-								value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider" />
+								value="org.fenixedu.academic.ui.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider" />
 							<fr:property name="format" value="${year}" />
 							<fr:property name="sortBy" value="year" />
 							<fr:property name="destination" value="post-back" />

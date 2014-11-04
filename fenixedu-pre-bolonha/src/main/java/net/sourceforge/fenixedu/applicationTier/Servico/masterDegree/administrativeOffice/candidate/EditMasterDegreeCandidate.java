@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
+package org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
-import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.State;
+import static org.fenixedu.academic.predicate.AccessControl.check;
+import org.fenixedu.academic.service.services.ExcepcaoInexistente;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidate;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidateWithInfoPerson;
+import org.fenixedu.academic.dto.InfoPersonEditor;
+import org.fenixedu.academic.domain.CandidateSituation;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.MasterDegreeCandidate;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.State;
 
 import org.joda.time.YearMonthDay;
 

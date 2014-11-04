@@ -23,10 +23,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
 <html:xhtml/>
 

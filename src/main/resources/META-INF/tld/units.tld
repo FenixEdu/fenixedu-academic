@@ -37,7 +37,7 @@
  
 	<tag>
 	   <name>tree</name>
-	   <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.units.UnitsTree</tag-class>
+	   <tag-class>org.fenixedu.academic.servlet.taglib.UnitsTree</tag-class>
 	   <body-content>empty</body-content>
 	   <description>
 	   	  Renders the units tree

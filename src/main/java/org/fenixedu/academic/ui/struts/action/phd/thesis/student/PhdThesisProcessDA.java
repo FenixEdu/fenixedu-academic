@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.student;
+package org.fenixedu.academic.ui.struts.action.phd.thesis.student;
 
-import net.sourceforge.fenixedu.presentationTier.Action.phd.student.PhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
-
+import org.fenixedu.academic.ui.struts.action.phd.student.PhdIndividualProgramProcessDA;
+import org.fenixedu.academic.ui.struts.action.phd.thesis.CommonPhdThesisProcessDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

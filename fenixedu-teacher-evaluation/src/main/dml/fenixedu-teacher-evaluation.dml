@@ -1,7 +1,7 @@
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType                                         as TeacherEvaluationFileType;
-enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
+enum org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationFileType                                         as TeacherEvaluationFileType;
+enum org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
 
 class teacher.evaluation.FacultyEvaluationProcess  {
     MultiLanguageString title;

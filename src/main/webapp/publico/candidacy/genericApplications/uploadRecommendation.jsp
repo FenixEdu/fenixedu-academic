@@ -18,16 +18,16 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.GenericApplicationRecomentation"%>
 <%@page import="org.apache.struts.action.ActionMessages"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.GenericApplicationFile"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.GenericApplication"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod"%>
+<%@page import="org.fenixedu.academic.domain.period.GenericApplicationPeriod"%>
 <%@page import="java.util.SortedSet"%>
 
 <html:xhtml/>
@@ -134,7 +134,7 @@
 	<input type="hidden" name="confirmationCode" value="<%= genericRecomentation.getConfirmationCode() %>"/>
 
 	<fr:edit id="uploadBean" name="uploadBean">
-		<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
+		<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.candidacy.util.GenericApplicationUploadBean">
 			<fr:slot name="stream" key="label.candidacy.document.file">
     			<fr:property name="fileNameSlot" value="fileName"/>
     			<fr:property name="fileSizeSlot" value="fileSize"/>

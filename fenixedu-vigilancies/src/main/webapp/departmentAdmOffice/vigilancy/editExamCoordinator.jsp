@@ -29,7 +29,7 @@
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.editExamCoordinator"/></h2><br>
 
 
-<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>
+<bean:define id="bean" name="bean" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean"/>
 
 <fr:edit id="editCoordinators" name="bean" property="examCoordinators" schema="editCoordinatorPreviledges">
 	<fr:destination name="cancel" path="<%= "/vigilancy/examCoordinatorManagement.do?method=prepareAddExamCoordinatorWithState&unitId=" + bean.getSelectedUnit().getExternalId() + "&deparmentId=" + bean.getSelectedDepartment().getExternalId() %>"/>

@@ -49,7 +49,7 @@
 			<bean:message key="label.rss" bundle="MESSAGING_RESOURCES"/>
 		</th>
 	</tr>
-	<logic:iterate id="board" name="boards" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
+	<logic:iterate id="board" name="boards" type="org.fenixedu.academic.domain.messaging.AnnouncementBoard">
 		<bean:define id="qualifiedName" name="board" property="qualifiedName" type="java.lang.String"/>
 		
 		<tr>

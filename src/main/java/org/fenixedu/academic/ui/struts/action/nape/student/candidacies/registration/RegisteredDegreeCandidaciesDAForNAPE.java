@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.nape.student.candidacies.registration;
+package org.fenixedu.academic.ui.struts.action.nape.student.candidacies.registration;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.candidacy.registrations.RegisteredDegreeCandidaciesDA;
-import net.sourceforge.fenixedu.presentationTier.Action.nape.NapeApplication.NapeRegisteredCandidaciesApp;
-
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.candidacy.registrations.RegisteredDegreeCandidaciesDA;
+import org.fenixedu.academic.ui.struts.action.nape.NapeApplication.NapeRegisteredCandidaciesApp;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

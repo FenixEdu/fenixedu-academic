@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import org.fenixedu.academic.domain.organizationalStructure.Accountability;
 
 public class AccountabilityImportRegister extends AccountabilityImportRegister_Base {
 

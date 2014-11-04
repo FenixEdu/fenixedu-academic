@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import com.sun.faces.taglib.html_basic.CommandLinkTag;
 
 public class UICommandLinkTag extends CommandLinkTag {
 
-    private static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLink";
+    private static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.UICommandLink";
 
     @Override
     public String getComponentType() {

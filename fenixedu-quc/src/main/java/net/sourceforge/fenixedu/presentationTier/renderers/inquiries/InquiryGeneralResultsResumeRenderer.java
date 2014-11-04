@@ -19,11 +19,11 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+package org.fenixedu.academic.ui.renderers.inquiries;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
+import org.fenixedu.academic.dto.inquiries.GroupResultsSummaryBean;
+import org.fenixedu.academic.dto.inquiries.QuestionResultsSummaryBean;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestion;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;

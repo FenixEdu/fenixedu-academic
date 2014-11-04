@@ -25,8 +25,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-	<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
-	<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
+	<bean:define id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+	<bean:define id="equivalencePlan" type="org.fenixedu.academic.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
 
 	<logic:present name="entries">
 	<ul class="mtop05">
@@ -51,7 +51,7 @@
 		</logic:empty>
 
 		<table class="tstyle2 mtop05">
-		<logic:iterate id="entry" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry" indexId="n" name="entries">
+		<logic:iterate id="entry" type="org.fenixedu.academic.domain.EquivalencePlanEntry" indexId="n" name="entries">
 			<tr>
 				<td align="center">
 					<logic:equal name="entry" property="transitiveSource" value="true">

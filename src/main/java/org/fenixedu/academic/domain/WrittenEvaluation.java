@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,21 +30,20 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
-
+import org.fenixedu.academic.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.Context.DegreeModuleScopeContext;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.util.icalendar.EvaluationEventBean;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.EvaluationType;
+import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -842,7 +841,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     @Deprecated
     public java.util.Date getBeginningDate() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginningDateHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getBeginningDateHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -851,7 +850,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         if (date == null) {
             setBeginningDateHourMinuteSecond(null);
         } else {
-            setBeginningDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setBeginningDateHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
@@ -872,7 +871,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     @Deprecated
     public java.util.Date getEndDate() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndDateHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEndDateHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -881,7 +880,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         if (date == null) {
             setEndDateHourMinuteSecond(null);
         } else {
-            setEndDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEndDateHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
@@ -902,7 +901,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     @Deprecated
     public java.util.Date getEnrollmentBeginTimeDate() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentBeginTimeDateHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEnrollmentBeginTimeDateHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -911,7 +910,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         if (date == null) {
             setEnrollmentBeginTimeDateHourMinuteSecond(null);
         } else {
-            setEnrollmentBeginTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEnrollmentBeginTimeDateHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
@@ -932,7 +931,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     @Deprecated
     public java.util.Date getEnrollmentEndTimeDate() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentEndTimeDateHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEnrollmentEndTimeDateHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -941,7 +940,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         if (date == null) {
             setEnrollmentEndTimeDateHourMinuteSecond(null);
         } else {
-            setEnrollmentEndTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEnrollmentEndTimeDateHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

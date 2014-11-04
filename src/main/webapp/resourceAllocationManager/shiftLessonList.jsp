@@ -18,15 +18,15 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.CourseLoad"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
-<%@page import="net.sourceforge.fenixedu.domain.Shift"%>
+<%@page import="org.fenixedu.academic.domain.CourseLoad"%>
+<%@page import="org.fenixedu.academic.dto.InfoShift"%>
+<%@page import="org.fenixedu.academic.domain.Shift"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
 
 <p class="mtop2 mbottom05"><strong>Aulas já atribuidas ao turno:</strong></p>

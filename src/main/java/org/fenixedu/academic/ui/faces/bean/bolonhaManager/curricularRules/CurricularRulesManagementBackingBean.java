@@ -19,7 +19,7 @@
 /*
  * Created on Feb 3, 2006
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules;
+package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,40 +29,39 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateRule;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCurricularRule;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularRule;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
-import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
-import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
-import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
-import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
-import net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
+import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
+import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
+import org.fenixedu.academic.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
+import org.fenixedu.academic.domain.curricularRules.PrecedenceRule;
+import org.fenixedu.academic.domain.curricularRules.RestrictionBetweenDegreeModules;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
+import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
+import org.fenixedu.academic.dto.bolonhaManager.CurricularRuleParametersDTO;
+import org.fenixedu.academic.service.services.bolonhaManager.CreateRule;
+import org.fenixedu.academic.service.services.bolonhaManager.DeleteCurricularRule;
+import org.fenixedu.academic.service.services.bolonhaManager.EditCurricularRule;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;

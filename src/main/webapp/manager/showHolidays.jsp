@@ -31,7 +31,7 @@
 <bean:message bundle="MANAGER_RESOURCES" key="message.manage.holidays"/>
 <br/>
 <br/>
-<fr:create type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageHolidaysDA$HolidayFactoryCreator"
+<fr:create type="org.fenixedu.academic.ui.struts.action.manager.ManageHolidaysDA$HolidayFactoryCreator"
 		schema="HolidayFactoryCreatory"
 		action="/manageHolidays.do?method=create&amp;page=0">
 </fr:create>

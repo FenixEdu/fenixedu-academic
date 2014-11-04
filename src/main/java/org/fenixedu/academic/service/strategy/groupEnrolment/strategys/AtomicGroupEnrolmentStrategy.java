@@ -20,11 +20,11 @@
  * Created on 24/Jul/2003
  */
 
-package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
+package org.fenixedu.academic.service.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.StudentGroup;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.StudentGroup;
 
 /**
  * @author asnr and scpo

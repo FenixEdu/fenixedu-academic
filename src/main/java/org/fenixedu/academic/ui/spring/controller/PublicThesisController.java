@@ -1,7 +1,6 @@
-package org.fenixedu.academic.ui;
+package org.fenixedu.academic.ui.spring.controller;
 
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-
+import org.fenixedu.academic.domain.thesis.Thesis;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

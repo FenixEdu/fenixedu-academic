@@ -20,11 +20,11 @@
  * Created on May 3, 2005
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher;
+package org.fenixedu.academic.dto.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import org.fenixedu.academic.domain.NonAffiliatedTeacher;
+import org.fenixedu.academic.dto.InfoInstitution;
+import org.fenixedu.academic.dto.InfoObject;
 
 /**
  * @author Ricardo Rodrigues

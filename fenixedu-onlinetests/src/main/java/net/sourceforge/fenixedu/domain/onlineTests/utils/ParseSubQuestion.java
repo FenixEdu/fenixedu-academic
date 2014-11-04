@@ -19,7 +19,7 @@
 /*
  * Created on 25/Jul/2003
  */
-package net.sourceforge.fenixedu.domain.onlineTests.utils;
+package org.fenixedu.academic.domain.onlineTests.utils;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -40,17 +40,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
-import net.sourceforge.fenixedu.util.tests.CardinalityType;
-import net.sourceforge.fenixedu.util.tests.QuestionOption;
-import net.sourceforge.fenixedu.util.tests.QuestionType;
-import net.sourceforge.fenixedu.util.tests.RenderChoise;
-import net.sourceforge.fenixedu.util.tests.RenderFIB;
-import net.sourceforge.fenixedu.util.tests.ResponseCondition;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
-import net.sourceforge.fenixedu.util.tests.TestType;
+import org.fenixedu.academic.domain.onlineTests.Question;
+import org.fenixedu.academic.domain.onlineTests.StudentTestQuestion;
+import org.fenixedu.academic.domain.onlineTests.SubQuestion;
+import org.fenixedu.academic.util.tests.CardinalityType;
+import org.fenixedu.academic.util.tests.QuestionOption;
+import org.fenixedu.academic.util.tests.QuestionType;
+import org.fenixedu.academic.util.tests.RenderChoise;
+import org.fenixedu.academic.util.tests.RenderFIB;
+import org.fenixedu.academic.util.tests.ResponseCondition;
+import org.fenixedu.academic.util.tests.ResponseProcessing;
+import org.fenixedu.academic.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 import net.sourceforge.fenixedu.utilTests.QuestionResolver;

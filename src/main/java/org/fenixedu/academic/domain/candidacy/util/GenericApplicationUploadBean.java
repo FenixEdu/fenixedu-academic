@@ -16,18 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacy.util;
+package org.fenixedu.academic.domain.candidacy.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
-import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.candidacy.GenericApplication;
+import org.fenixedu.academic.domain.candidacy.GenericApplicationFile;
+import org.fenixedu.academic.domain.candidacy.GenericApplicationLetterOfRecomentation;
+import org.fenixedu.academic.domain.candidacy.GenericApplicationRecomentation;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+
 import pt.ist.fenixframework.Atomic;
 
 import com.lowagie.text.pdf.PdfReader;

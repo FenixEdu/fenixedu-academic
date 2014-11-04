@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
+package org.fenixedu.academic.ui.struts.action.coordinator.thesis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,36 +26,35 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CancelSubmitThesis;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposal;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.DeleteThesis;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ReviseThesis;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
-import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
-import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
-import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.report.thesis.ApproveJuryDocument;
+import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
+import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
+import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisProposal;
+import org.fenixedu.academic.service.services.thesis.CancelSubmitThesis;
+import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
+import org.fenixedu.academic.service.services.thesis.CreateThesisProposal;
+import org.fenixedu.academic.service.services.thesis.DeleteThesis;
+import org.fenixedu.academic.service.services.thesis.ReviseThesis;
+import org.fenixedu.academic.service.services.thesis.SubmitThesis;
+import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonChange;
+import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonTarget;
+import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
+import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

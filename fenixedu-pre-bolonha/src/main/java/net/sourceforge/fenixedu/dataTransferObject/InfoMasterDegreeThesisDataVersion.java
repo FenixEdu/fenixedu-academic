@@ -20,13 +20,13 @@
  * Created on Oct 14, 2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.util.State;
+import org.fenixedu.academic.domain.MasterDegreeThesisDataVersion;
+import org.fenixedu.academic.util.State;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

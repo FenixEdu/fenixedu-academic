@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 
 <h2><bean:message key="link.listCourseResponsibles" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
@@ -54,7 +54,7 @@
 
 <logic:present name="courseResponsibles">
 	<fr:view name="courseResponsibles">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchCourseResponsiblesParametersBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.dto.administrativeOffice.lists.SearchCourseResponsiblesParametersBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="curricularCourse.name" key="label.curricular.course.from.curriculum"/>
 			<fr:slot name="competenceCourse.name" key="label.competence.course.name"/>
 			<fr:slot name="degree.sigla" key="degree"/>

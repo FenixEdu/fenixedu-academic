@@ -20,12 +20,12 @@
  * Created on 3/Fev/2004
  *
  */
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

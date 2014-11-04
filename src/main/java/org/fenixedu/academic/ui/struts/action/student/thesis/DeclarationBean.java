@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
+package org.fenixedu.academic.ui.struts.action.student.thesis;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
-
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.thesis.ThesisVisibilityType;
 import org.joda.time.DateTime;
 
 public class DeclarationBean implements Serializable {

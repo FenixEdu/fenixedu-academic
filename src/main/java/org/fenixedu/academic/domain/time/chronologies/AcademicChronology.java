@@ -16,22 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.time.chronologies;
+package org.fenixedu.academic.domain.time.chronologies;
 
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeField;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeField;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicTrimesterDateTimeField;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeField;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.DayOfAcademicSemesterDateTimeField;
-import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicSemestersDurationField;
-import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicTrimesterDurationField;
-import net.sourceforge.fenixedu.domain.time.chronologies.durationFields.AcademicYearsDurationField;
-
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicTrimesterCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
+import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeField;
+import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeField;
+import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicTrimesterDateTimeField;
+import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeField;
+import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.DayOfAcademicSemesterDateTimeField;
+import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicSemestersDurationField;
+import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicTrimesterDurationField;
+import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicYearsDurationField;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeField;

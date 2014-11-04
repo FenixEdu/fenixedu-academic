@@ -16,30 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
+package org.fenixedu.academic.ui.struts.action.student.thesis;
 
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.AcceptThesisDeclaration;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisAbstractFile;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.RejectThesisDeclaration;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
-import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSubmitApp;
-import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
-import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
+import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
+import org.fenixedu.academic.service.services.thesis.AcceptThesisDeclaration;
+import org.fenixedu.academic.service.services.thesis.CreateThesisAbstractFile;
+import org.fenixedu.academic.service.services.thesis.CreateThesisDissertationFile;
+import org.fenixedu.academic.service.services.thesis.RejectThesisDeclaration;
+import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
+import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentSubmitApp;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

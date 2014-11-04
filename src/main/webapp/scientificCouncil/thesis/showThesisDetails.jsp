@@ -18,18 +18,18 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType"%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisFile"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisParticipationType"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisFile"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.List"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
-<%@page import="net.sourceforge.fenixedu.domain.Degree"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
-<%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%>
+<%@page import="org.fenixedu.academic.domain.Degree"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%>
+<%@page import="org.fenixedu.academic.domain.Enrolment"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -40,7 +40,7 @@
 
 <jsp:include page="viewThesisHeader.jsp"/>
 
-<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
+<bean:define id="thesis" name="thesis" type="org.fenixedu.academic.domain.thesis.Thesis"/>
 
 <logic:messagesPresent message="true" property="error">
     <html:messages id="message" message="true" property="error">
@@ -199,12 +199,12 @@
 	if (thesis.getDissertation() != null) {
 %>
 <div style="margin-left: 35px; width: 90%;">
-	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
+	<logic:equal name="thesis" property="visibility" value="<%= org.fenixedu.academic.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
 		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
 			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPublic" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
    	    </html:link>
 	</logic:equal>
-	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
+	<logic:equal name="thesis" property="visibility" value="<%= org.fenixedu.academic.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
 		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
 			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPrivate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
    	    </html:link>

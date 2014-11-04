@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.util.icalendar;
+package org.fenixedu.academic.domain.util.icalendar;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 

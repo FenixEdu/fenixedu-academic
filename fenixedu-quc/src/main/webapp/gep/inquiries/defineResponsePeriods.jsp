@@ -33,7 +33,7 @@
 <br/>
 
 <fr:form action="/defineResponsePeriods.do?method=define">
-	<fr:edit id="inquiryResponsePeriod" name="definitionPeriodBean" schema="net.sourceforge.fenixedu.domain.inquiry.SelectInquiryResponsePeriod.edit">
+	<fr:edit id="inquiryResponsePeriod" name="definitionPeriodBean" schema="org.fenixedu.academic.domain.inquiry.SelectInquiryResponsePeriod.edit">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
 			<fr:destination name="postBack" path="/defineResponsePeriods.do?method=changeSemester"/>
@@ -51,7 +51,7 @@
 		<br/>
 	</logic:present>
 	<logic:notPresent name="inquiryDoesntExist">
-		<fr:edit id="inquiryResponsePeriodMessage" name="definitionPeriodBean" schema="net.sourceforge.fenixedu.domain.inquiry.InquiryResponsePeriodMessage.edit">
+		<fr:edit id="inquiryResponsePeriodMessage" name="definitionPeriodBean" schema="org.fenixedu.academic.domain.inquiry.InquiryResponsePeriodMessage.edit">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
 	 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

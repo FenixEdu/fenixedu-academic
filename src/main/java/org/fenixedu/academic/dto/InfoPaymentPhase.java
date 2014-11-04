@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.PaymentPhase;
+import org.fenixedu.academic.domain.PaymentPhase;
 
 /**
  * @author Fernanda Quitério 10/Jan/2004

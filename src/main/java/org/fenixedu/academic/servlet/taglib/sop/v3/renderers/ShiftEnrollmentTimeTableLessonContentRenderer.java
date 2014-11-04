@@ -19,19 +19,18 @@
 /**
  * Aug 6, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
+package org.fenixedu.academic.servlet.taglib.sop.v3.renderers;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRendererShift;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoLesson;
+import org.fenixedu.academic.dto.InfoLessonInstance;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlot;
+import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlotContentRendererShift;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;

@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.curricularPeriod;
+package org.fenixedu.academic.domain.curricularPeriod;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

@@ -19,9 +19,9 @@
 /*
  * Created on 7/Mar/2004
  */
-package net.sourceforge.fenixedu.domain.credits;
+package org.fenixedu.academic.domain.credits;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionSemester;
 
 /**
  * @author jpvl

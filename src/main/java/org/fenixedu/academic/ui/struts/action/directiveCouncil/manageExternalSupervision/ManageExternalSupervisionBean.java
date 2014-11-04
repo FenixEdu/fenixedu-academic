@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.manageExternalSupervision;
+package org.fenixedu.academic.ui.struts.action.directiveCouncil.manageExternalSupervision;
 
 import java.io.Serializable;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
 
 public class ManageExternalSupervisionBean implements Serializable {
 

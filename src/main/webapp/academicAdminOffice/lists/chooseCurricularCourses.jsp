@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 <html:xhtml />
 
 <h2>
@@ -40,11 +40,11 @@
 <fr:form action="/studentsListByCurricularCourse.do?method=showActiveCurricularCourseScope">
 	<fr:edit id="searchBean" name="searchBean">
 		<fr:schema
-			type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByCurricularCourseParametersBean"
+			type="org.fenixedu.academic.dto.academicAdministration.SearchStudentsByCurricularCourseParametersBean"
 			bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="executionYear" key="label.executionYear" layout="menu-select-postback" required="true">
 				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
 				<fr:property name="format" value="${year}" />
 				<fr:property name="destination" value="executionYearPostBack" />
 			</fr:slot>

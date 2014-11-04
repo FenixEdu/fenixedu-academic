@@ -29,7 +29,7 @@
  *  
  */
 
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +37,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.State;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.util.SituationName;
+import org.fenixedu.academic.util.State;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

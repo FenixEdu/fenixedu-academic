@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.candidacy;
+package org.fenixedu.academic.dto.candidacy;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.SchoolLevelType;
-import net.sourceforge.fenixedu.domain.SchoolPeriodDuration;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
-import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.SchoolLevelType;
+import org.fenixedu.academic.domain.SchoolPeriodDuration;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.domain.raides.DegreeDesignation;
+import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.joda.time.LocalDate;
 
 /**

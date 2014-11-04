@@ -33,7 +33,7 @@
 
 	<fr:form action="/searchStudents.do">
 		<fr:edit id="searchStudentsWithEnrolmentsByDepartment" name="searchStudentsWithEnrolmentsByDepartment"
-				schema="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment">
+				schema="org.fenixedu.academic.domain.student.SearchStudentsWithEnrolmentsByDepartment">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle1"/>
 		        <fr:property name="columnClasses" value=",,noborder"/>
@@ -47,7 +47,7 @@
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" value="download"><bean:message key="button.download"/></html:submit>
 
 			<fr:view name="studentCurricularPlans"
-					schema="net.sourceforge.fenixedu.domain.StudentCurricularPlan.List">
+					schema="org.fenixedu.academic.domain.StudentCurricularPlan.List">
 				<fr:layout name="tabular" >
 					<fr:property name="classes" value="tstyle1"/>
 			        <fr:property name="columnClasses" value=",,,,"/>

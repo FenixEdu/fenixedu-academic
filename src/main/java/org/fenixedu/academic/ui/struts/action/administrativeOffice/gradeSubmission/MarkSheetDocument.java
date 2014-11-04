@@ -1,13 +1,13 @@
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import net.sourceforge.fenixedu.util.FenixDigestUtils;
+import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.MarkSheet;
+import org.fenixedu.academic.report.FenixReport;
+import org.fenixedu.academic.util.FenixDigestUtils;
 
 public class MarkSheetDocument extends FenixReport {
     private static final long serialVersionUID = -1015332436546905622L;

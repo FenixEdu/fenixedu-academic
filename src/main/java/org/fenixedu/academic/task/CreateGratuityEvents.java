@@ -20,12 +20,11 @@ package org.fenixedu.academic.task;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
-import net.sourceforge.fenixedu.util.InvocationResult;
-
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
+import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.commons.i18n.I18N;

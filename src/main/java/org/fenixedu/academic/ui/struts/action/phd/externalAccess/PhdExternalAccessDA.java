@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.externalAccess;
+package org.fenixedu.academic.ui.struts.action.phd.externalAccess;
 
 import java.io.IOException;
 import java.util.Set;
@@ -24,30 +24,29 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
-import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
-import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement;
-import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.DownloadCandidacyFeedbackDocuments;
-import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.ExternalUploadCandidacyFeedback;
-import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReviewDocumentsDownload;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicPhdApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
+import org.fenixedu.academic.domain.phd.access.PhdExternalOperationBean;
+import org.fenixedu.academic.domain.phd.access.PhdProcessAccessType;
+import org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement;
+import org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
+import org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.DownloadCandidacyFeedbackDocuments;
+import org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.ExternalUploadCandidacyFeedback;
+import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
+import org.fenixedu.academic.domain.phd.thesis.activities.JuryDocumentsDownload;
+import org.fenixedu.academic.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
+import org.fenixedu.academic.domain.phd.thesis.activities.JuryReviewDocumentsDownload;
+import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
+import org.fenixedu.academic.ui.struts.action.phd.PhdDocumentsZip;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessDA;
+import org.fenixedu.academic.ui.struts.action.publico.PublicApplication.PublicPhdApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

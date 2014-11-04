@@ -84,7 +84,7 @@
 		</style>
 
  	 <fr:view name="logsList">
-		<fr:schema type="net.sourceforge.fenixedu.domain.student.RegistrationStateLog" bundle="APPLICATION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.student.RegistrationStateLog" bundle="APPLICATION_RESOURCES">
 <fr:slot name="person" layout="view-as-image">
 						<fr:property name="photoCellClasses" value="personalcard_photo"/>
 				   		<fr:property name="imageFormat" value="<%=request.getContextPath()+ "/user/photo/${username}"%>"/>

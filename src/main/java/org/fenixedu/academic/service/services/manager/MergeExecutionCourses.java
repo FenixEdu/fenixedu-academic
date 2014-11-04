@@ -20,7 +20,7 @@
  * Created on 29/Nov/2003
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.manager;
+package org.fenixedu.academic.service.services.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,30 +32,31 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.CourseLoad;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
-import net.sourceforge.fenixedu.domain.ExportGrouping;
-import net.sourceforge.fenixedu.domain.FinalEvaluation;
-import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
-import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
-import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
-import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.CourseLoad;
+import org.fenixedu.academic.domain.Evaluation;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionCourseLog;
+import org.fenixedu.academic.domain.ExportGrouping;
+import org.fenixedu.academic.domain.FinalEvaluation;
+import org.fenixedu.academic.domain.LessonInstance;
+import org.fenixedu.academic.domain.Mark;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.domain.messaging.ConversationMessage;
+import org.fenixedu.academic.domain.messaging.ConversationThread;
+import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
+import org.fenixedu.academic.domain.messaging.ForumSubscription;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.service.ServiceMonitoring;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

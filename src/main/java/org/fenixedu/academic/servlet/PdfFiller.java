@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.candidacydocfiller;
+package org.fenixedu.academic.servlet;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.domain.Person;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Person;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.AcroFields;

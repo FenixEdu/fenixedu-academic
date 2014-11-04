@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.classProperties;
+package org.fenixedu.academic.util.classProperties;
 
-import net.sourceforge.fenixedu.util.FenixUtil;
+import org.fenixedu.academic.util.FenixUtil;
 
 /**
  * @author David Santos in Apr 6, 2004

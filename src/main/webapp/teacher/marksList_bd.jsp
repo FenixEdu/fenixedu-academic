@@ -23,15 +23,15 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %> 
+<%@ page import="org.fenixedu.academic.util.EvaluationType" %> 
 <logic:messagesPresent>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </logic:messagesPresent>
  
 <html:form action="/writeMarks" >  
 	<logic:present name="siteView">
-	<bean:define id="marksListComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks"/>
-	<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>
+	<bean:define id="marksListComponent" name="siteView" property="component" type="org.fenixedu.academic.dto.InfoSiteMarks"/>
+	<bean:define id="commonComponent" name="siteView" property="commonComponent" type="org.fenixedu.academic.dto.InfoSiteCommon"/>
 
 	<bean:define id="executionCourseId" name="commonComponent" property="executionCourse.externalId"/>
 	<bean:define id="evaluationId" name="marksListComponent" property="infoEvaluation.externalId" />
@@ -96,7 +96,7 @@
 			<bean:size id="size" name="marksListComponent" property="infoAttends" />	
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sizeList" property="sizeList" value="<%= size.toString() %>" /> 
 				    			    		
-	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends" indexId="markId" type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
+	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends" indexId="markId" type="org.fenixedu.academic.dto.InfoFrequenta">
 	    	
 		    	<bean:define id="studentCode" name="markElem" property="aluno.externalId" />
 		    	<bean:define id="studentNumber" name="markElem" property="aluno.number" />

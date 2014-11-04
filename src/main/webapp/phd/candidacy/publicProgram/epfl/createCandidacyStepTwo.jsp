@@ -27,8 +27,8 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -86,7 +86,7 @@
 				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
 			</tr>
-			<logic:iterate id="thesisSubjectBean" name="candidacyBean" property="thesisSubjectBeans" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean">
+			<logic:iterate id="thesisSubjectBean" name="candidacyBean" property="thesisSubjectBeans" type="org.fenixedu.academic.domain.phd.candidacy.PhdThesisSubjectOrderBean">
 				<tr>
 					<td class="aright"><fr:view name="thesisSubjectBean" property="order"/></td>
 					<td><fr:view name="thesisSubjectBean" property="thesisSubject.name.content"/></td>

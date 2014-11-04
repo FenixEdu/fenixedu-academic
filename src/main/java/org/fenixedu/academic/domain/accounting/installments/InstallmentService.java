@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.installments;
+package org.fenixedu.academic.domain.accounting.installments;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
-import net.sourceforge.fenixedu.domain.accounting.Installment;
+import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
+
 import pt.ist.fenixframework.Atomic;
 
 public class InstallmentService {

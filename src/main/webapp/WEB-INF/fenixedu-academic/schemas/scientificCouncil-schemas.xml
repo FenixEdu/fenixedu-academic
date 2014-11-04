@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="scientificCouncil.thesis.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="scientificCouncil.thesis.table" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="student.number" key="label.student.number.short" />
     <slot name="student.person.name" key="student" />
     <slot name="finalTitle" key="label.scientificCouncil.title" layout="short">
@@ -31,7 +31,7 @@
     <!-- This method requires to much computation to be placed on scientific council interface! It alone consumes 30 % of the processing time. <slot name="hasMadeProposalPreviousYear" key="label.proposalLastYear"/> -->
 </schema>
 
-<schema name="thesis.table.submitted.proposals" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="thesis.table.submitted.proposals" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="student" layout="format" key="label.scientificCouncil.student">
         <property name="format" value="${person.name} (${number})" />
     </slot>
@@ -41,7 +41,7 @@
     <slot name="submission" key="label.scientificCouncil.whenSubmitted" />
 </schema>
 
-<schema name="thesis.table.approved.proposals" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="thesis.table.approved.proposals" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="student" layout="format" key="label.scientificCouncil.student">
         <property name="format" value="${person.name} (${number})" />
     </slot>
@@ -51,7 +51,7 @@
     <slot name="approval" key="label.scientificCouncil.whenApproved" />
 </schema>
 
-<schema name="scientificCouncil.thesis.approve.dissertation" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="scientificCouncil.thesis.approve.dissertation" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="student" layout="format">
         <property name="format" value="${person.name} (${number})" />
     </slot>
@@ -66,18 +66,18 @@
     <slot name="proposedPlace" key="label.scientificCouncil.thesis.place" layout="null-as-label" />
 </schema>
 
-<schema name="scientificCouncil.thesis.for.execution.year.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$DissertationsContextBean">
+<schema name="scientificCouncil.thesis.for.execution.year.bean" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$DissertationsContextBean">
     <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
         <property name="format" value="${nextYearsYearString}" />
     </slot>
     <slot name="executionDegree" key="label.degree" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider" />
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider" />
         <property name="format" value="${degreeCurricularPlan.name}" />
     </slot>
 </schema>
 
-<schema name="executionDegree.coordinator.view-name-role" type="net.sourceforge.fenixedu.domain.Coordinator">
+<schema name="executionDegree.coordinator.view-name-role" type="org.fenixedu.academic.domain.Coordinator">
     <slot name="person.name" />
     <slot name="responsible">
         <property name="trueLabel" value="coordinator.responsible.boolean.true" />
@@ -86,23 +86,23 @@
     </slot>
 </schema>
 
-<schema name="thesis.review.person" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="thesis.review.person" type="org.fenixedu.academic.domain.Person">
     <slot name="name" key="label.scientificCouncil.thesis.review.person.name" />
     <slot name="teacher.category" key="label.scientificCouncil.thesis.review.teacher.category" schema="view.teacherCategory.name" />
     <slot name="teacher.department.realName" key="label.scientificCouncil.thesis.review.teacher.department" />
 </schema>
 
-<schema name="thesis.review.person.external" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="thesis.review.person.external" type="org.fenixedu.academic.domain.Person">
     <slot name="name" key="label.scientificCouncil.thesis.review.person.name" />
     <slot name="externalPerson.institutionUnit.nameWithAcronym" key="label.scientificCouncil.thesis.review.teacher.department" />
 </schema>
 
-<schema name="thesis.review.information" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="thesis.review.information" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="finalTitle" key="label.scientificCouncil.title" />
     <slot name="comment" />
 </schema>
 
-<schema name="thesis.rejection.comment" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="thesis.rejection.comment" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="rejectionComment" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="columns" value="60" />
         <property name="rows" value="7" />
@@ -110,26 +110,26 @@
     <setter signature="rejectProposal(rejectionComment)" />
 </schema>
 
-<schema name="scientificCouncil.thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ThesisContextBean">
+<schema name="scientificCouncil.thesis.context.bean" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ThesisContextBean">
     <slot name="degree" key="label.degree" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreesWithDissertationProvider" />
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreesWithDissertationProvider" />
         <property name="format" value="${presentationName} (${sigla})" />
         <property name="destination" value="listThesis" />
     </slot>
     <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
         <property name="format" value="${year}" />
         <property name="destination" value="listThesis" />
     </slot>
 </schema>
 
-<schema name="page.goto" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+<schema name="page.goto" type="org.fenixedu.academic.dto.PageContainerBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
     <slot name="pageJump" key="label.page.goto" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="4" />
     </slot>
 </schema>
 
-<schema name="thesis.jury.proposal.person.loginInfo" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+<schema name="thesis.jury.proposal.person.loginInfo" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
     <slot name="person" layout="name-with-alias" key="label.person.name" />
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-" />
@@ -139,7 +139,7 @@
     </slot>
 </schema>
 
-<schema name="view.departments.with.requests" type="net.sourceforge.fenixedu.domain.Department">
+<schema name="view.departments.with.requests" type="org.fenixedu.academic.domain.Department">
     <slot name="name" layout="link">
         <property name="useParent" value="true" />
         <property name="destination" value="viewDepartmentRequests" />
@@ -148,7 +148,7 @@
     <slot name="competenceCourseInformationChangeRequestsCount" />
 </schema>
 
-<schema name="present.semester1.loads" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
+<schema name="present.semester1.loads" type="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
     <slot name="theoreticalHours" key="theoreticalLesson" />
     <slot name="problemsHours" key="problemsLesson" />
     <slot name="laboratorialHours" key="laboratorialLesson" />
@@ -160,7 +160,7 @@
     <slot name="ectsCredits" />
 </schema>
 
-<schema name="present.semester2.loads" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
+<schema name="present.semester2.loads" type="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
     <slot name="secondTheoreticalHours" key="theoreticalLesson" />
     <slot name="secondProblemsHours" key="problemsLesson" />
     <slot name="secondLaboratorialHours" key="laboratorialLesson" />
@@ -172,23 +172,23 @@
     <slot name="secondEctsCredits" key="ectsCredits" />
 </schema>
 
-<schema name="scientificCouncil.thesis.creation.period.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">
+<schema name="scientificCouncil.thesis.creation.period.context.bean" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">
     <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
         <property name="format" value="${year}" />
         <property name="destination" value="listThesisCreationPeriods" />
     </slot>
-    <!-- <slot name="executionDegree" key="label.degree" layout="menu-select-postback"> <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider"/> 
+    <!-- <slot name="executionDegree" key="label.degree" layout="menu-select-postback"> <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider"/> 
         <property name="format" value="${degreeCurricularPlan.degree.presentationName} (${degreeCurricularPlan.degree.sigla})"/> <property name="destination" value="listThesisCreationPeriods"/> </slot> -->
 </schema>
 
-<schema name="scientificCouncil.thesis.creationPeriod" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+<schema name="scientificCouncil.thesis.creationPeriod" type="org.fenixedu.academic.domain.ExecutionDegree">
     <slot name="degreeCurricularPlan.degree.presentationName" key="label.degree" />
     <slot name="beginThesisCreationPeriod" key="label.begin" />
     <slot name="endThesisCreationPeriod" key="label.end" />
 </schema>
 
-<schema name="scientificCouncil.thesis.creation.period.definition" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">
+<schema name="scientificCouncil.thesis.creation.period.definition" type="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">
     <slot name="beginThesisCreationPeriod" key="label.begin">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
         <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">

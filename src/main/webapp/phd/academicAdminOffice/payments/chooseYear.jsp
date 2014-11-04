@@ -23,8 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"%>
+<%@page import="org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean"%>
+<%@page import="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"%>
 
 <html:xhtml/>
 
@@ -67,7 +67,7 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 	<fr:edit id="yearBean" name="yearBean" action="<%= "/phdAccountingEventsManagement.do?method=createGratuityEvent&processId=" + processId.toString() %>">
 		
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdAccountingEventsManagementDA$PhdGratuityCreationInformation">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdAccountingEventsManagementDA$PhdGratuityCreationInformation">
 			<fr:slot name="year"  key="label.civil.year"></fr:slot>
 		</fr:schema>
 		

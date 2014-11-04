@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration.common.exceptions;
+package org.fenixedu.academic.domain.phd.migration.common.exceptions;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.Person;
 
 public class PossiblePersonCandidatesException extends ParseException {
 

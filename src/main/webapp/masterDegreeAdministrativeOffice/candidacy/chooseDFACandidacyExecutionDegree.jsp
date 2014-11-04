@@ -33,7 +33,7 @@
 <fr:form action="/createDfaCandidacy.do?method=createCandidacy">
 	<fr:edit id="executionDegree"
 			 name="candidacyBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
+			 type="org.fenixedu.academic.dto.administrativeOffice.candidacy.CreateDFACandidacyBean"
 			 schema="candidacy.choose.executionDegree.toCreate">
 			 
 		<fr:destination name="degreeTypePostback" path="/createDfaCandidacy.do?method=chooseDegreeTypePostBack"/>
@@ -52,7 +52,7 @@
 			<fr:edit id="executionDegree-invisible" name="candidacyBean" visible="false"/> 
 			<fr:edit id="person"
 				 name="candidacyBean"
-				 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
+				 type="org.fenixedu.academic.dto.administrativeOffice.candidacy.CreateDFACandidacyBean"
 				 schema="candidacy.create.choose.person">
 				<fr:destination name="invalid" path="/createDfaCandidacy.do?method=chooseExecutionDegreeInvalid"/>					 
 				<fr:layout name="tabular" >

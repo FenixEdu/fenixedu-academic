@@ -18,8 +18,8 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
+<%@page import="org.fenixedu.academic.predicate.AccessControl"%>
+<%@page import="org.fenixedu.academic.domain.person.RoleType"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -45,7 +45,7 @@
 <logic:present name="facultyEvaluationProcessCreationBean">
 	<fr:form action="/teacherEvaluation.do?method=createFacultyEvaluationProcess">
 		<fr:edit id="facultyEvaluationProcessCreationBean" name="facultyEvaluationProcessCreationBean">
-			<fr:schema bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean">
+			<fr:schema bundle="RESEARCHER_RESOURCES" type="org.fenixedu.academic.domain.teacher.evaluation.FacultyEvaluationProcessBean">
 				<fr:slot name="title" key="label.teacher.evaluation.facultyEvaluationProcess.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 					<fr:property name="size" value="40"/>
 				</fr:slot>
@@ -75,7 +75,7 @@
 	<bean:define id="urlEditInvalid">/teacherEvaluation.do?method=prepareEditFacultyEvaluationProcess&amp;facultyEvaluationProcessOID=<bean:write name="facultyEvaluationProcessEditnBean" property="facultyEvaluationProcess.externalId"/></bean:define>
 	<fr:form action="/teacherEvaluation.do?method=editFacultyEvaluationProcess">
 		<fr:edit id="facultyEvaluationProcessEditnBean" name="facultyEvaluationProcessEditnBean">
-			<fr:schema bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean">
+			<fr:schema bundle="RESEARCHER_RESOURCES" type="org.fenixedu.academic.domain.teacher.evaluation.FacultyEvaluationProcessBean">
 				<fr:slot name="title" key="label.teacher.evaluation.facultyEvaluationProcess.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="40"/>
 				</fr:slot>
@@ -342,7 +342,7 @@
 	</p>
 	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=viewFacultyEvaluationProcess&facultyEvaluationProcessOID=<bean:write name="fileUploadBean" property="facultyEvaluationProcess.externalId"/></bean:define>
 	<fr:edit id="fileUploadBean" name="fileUploadBean" action="/teacherEvaluation.do?method=uploadEvaluators">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.teacher.evaluation.FileUploadBean">
 			<fr:slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="fileNameSlot" value="filename"/>
 				<fr:property name="size" value="30"/>
@@ -365,7 +365,7 @@
 	</p>
 	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=viewFacultyEvaluationProcess&facultyEvaluationProcessOID=<bean:write name="fileUploadBeanForApprovedMarks" property="facultyEvaluationProcess.externalId"/></bean:define>
 	<fr:edit id="fileUploadBeanForApprovedMarks" name="fileUploadBeanForApprovedMarks" action="/teacherEvaluation.do?method=uploadApprovedEvaluations">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.teacher.evaluation.FileUploadBean">
 			<fr:slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="fileNameSlot" value="filename"/>
 				<fr:property name="size" value="30"/>

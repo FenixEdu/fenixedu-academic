@@ -19,7 +19,7 @@
 /*
  * Created on May 19, 2006
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission;
+package org.fenixedu.academic.dto.teacher.gradeSubmission;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,10 +27,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Teacher;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.dto.DataTranferObject;
 
 public class MarkSheetTeacherGradeSubmissionBean extends DataTranferObject {
 

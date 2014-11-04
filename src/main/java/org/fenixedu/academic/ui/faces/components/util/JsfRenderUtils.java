@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components.util;
+package org.fenixedu.academic.ui.faces.components.util;
 
 import java.io.IOException;
 import java.util.List;

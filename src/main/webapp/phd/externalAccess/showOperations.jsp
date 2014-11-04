@@ -25,11 +25,11 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.access.PhdProcessAccessType"%><html:xhtml/>
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<bean:message key="label.phds" bundle="PHD_RESOURCES"/>
 </div>
 
@@ -46,10 +46,10 @@
 </logic:notEmpty>
 
 <bean:define id="hash" name="participant" property="accessHashCode" />
-<bean:define id="mainProcess" name="participant" property="individualProcess" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" />
+<bean:define id="mainProcess" name="participant" property="individualProcess" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" />
 
 <ul>
-	<logic:iterate id="accessType" name="participant" property="accessTypes.types" type="net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType">
+	<logic:iterate id="accessType" name="participant" property="accessTypes.types" type="org.fenixedu.academic.domain.phd.access.PhdProcessAccessType">
 		<bean:define id="methodName" >prepare<bean:write name="accessType" property="descriptor"/></bean:define>
 		
 		<phd:accessTypeAvailable mainProcess="<%= mainProcess %>" accessType="<%= accessType %>">

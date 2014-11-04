@@ -20,9 +20,9 @@
  * Created on 4/Jul/2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.Department;
+import org.fenixedu.academic.domain.Department;
 
 /**
  * @author jpvl
@@ -82,7 +82,7 @@ public class InfoDepartment extends InfoObject {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * org.fenixedu.academic.dto.InfoObject#copyFromDomain
      * (Dominio.DomainObject)
      */
     public void copyFromDomain(Department department) {

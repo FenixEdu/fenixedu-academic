@@ -20,7 +20,7 @@
  * Created on 14/Mar/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
+package org.fenixedu.academic.ui.struts.action.masterDegree.administrativeOffice.candidate;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,32 +28,32 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetBranchListByCandidateID;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidateRegistrationInformation;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateForRegistration;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.RegisterCandidate;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuityValuesNotDefinedActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
+import org.fenixedu.academic.service.services.commons.ReadExecutionDegreeByOID;
+import org.fenixedu.academic.service.services.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidChangeServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidStudentNumberServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate.GetBranchListByCandidateID;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate.GetCandidateRegistrationInformation;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate.ReadCandidateForRegistration;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.candidate.RegisterCandidate;
+import org.fenixedu.academic.dto.InfoCandidateRegistration;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoMasterDegreeCandidate;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.commons.ChooseExecutionYearDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.GratuityValuesNotDefinedActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.InvalidChangeActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.InvalidInformationInFormActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.InvalidStudentNumberActionException;
+import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;

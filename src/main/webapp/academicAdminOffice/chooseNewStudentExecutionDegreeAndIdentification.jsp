@@ -40,7 +40,7 @@
 	<h3 class="mtop15 mbottom025"><bean:message key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:edit id="executionDegree"
 			 name="executionDegreeBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean"
+			 type="org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean"
 			 schema="choose.executionDegree.toCreateRegistration">
 		<fr:destination name="degreePostBack" path="/createStudent.do?method=chooseDegreePostBack"/>
 		<fr:destination name="degreeCurricularPlanPostBack" path="/createStudent.do?method=chooseDegreeCurricularPlanPostBack"/>	
@@ -53,7 +53,7 @@
 	
 	<logic:present name="executionDegreeBean" property="executionDegree">
 		<h3 class="mtop1 mbottom025"><bean:message key="label.ingression.short" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-		<fr:edit name="ingressionInformationBean" id="chooseIngression" schema="ingression.information" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean">				 
+		<fr:edit name="ingressionInformationBean" id="chooseIngression" schema="ingression.information" type="org.fenixedu.academic.dto.candidacy.IngressionInformationBean">				 
 			<fr:destination name="agreementPostBack" path="/createStudent.do?method=chooseAgreementPostBack"/>
 			<fr:destination name="ingressionPostBack" path="/createStudent.do?method=chooseIngressionPostBack"/>
 			<fr:destination name="entryPhasePostBack" path="/createStudent.do?method=chooseEntryPhasePostBack"/>
@@ -86,7 +86,7 @@
 		<fr:edit name="ingressionInformationBean" id="chooseIngression" visible="false" />
 		
 		<h3 class="mtop1 mbottom025"><bean:message key="label.identification" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-		<fr:edit id="choosePerson" name="choosePersonBean" schema="create.registration.choose.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean">				 
+		<fr:edit id="choosePerson" name="choosePersonBean" schema="create.registration.choose.person" type="org.fenixedu.academic.dto.person.ChoosePersonBean">				 
 			<fr:hidden name="firstTimeSearch" slot="firstTimeSearch" />
 			<fr:layout name="tabular" >
  				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>

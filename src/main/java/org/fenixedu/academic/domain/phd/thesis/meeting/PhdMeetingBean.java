@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
+package org.fenixedu.academic.domain.phd.thesis.meeting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-
+import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
 import org.joda.time.DateTime;
 
 public class PhdMeetingBean implements Serializable {

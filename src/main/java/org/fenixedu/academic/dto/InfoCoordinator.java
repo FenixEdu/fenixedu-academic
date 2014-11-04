@@ -20,9 +20,9 @@
  * Created on 27/Out/2003
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.Coordinator;
+import org.fenixedu.academic.domain.Coordinator;
 
 /**
  * fenix-head Dominio

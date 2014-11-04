@@ -18,9 +18,9 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
+<%@page import="org.fenixedu.academic.domain.Installation"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
 <h2><bean:message key ="link.title.irsDeclaration" /></h2>
 
-<p><em><bean:message key="message.irs.declaration.not.available" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%= Installation.getInstance().getInstituitionalEmailAddress("da") %>" bundle="APPLICATION_RESOURCES" /></em></p>
+<p><em><bean:message key="message.irs.declaration.not.available" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%= Installation.getInstance().getInstituitionalEmailAddress("da") %>" bundle="APPLICATION_RESOURCES" /></em></p>

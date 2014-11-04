@@ -20,13 +20,13 @@
  * Created on 24/Jul/2003
  *
  */
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
+import org.fenixedu.academic.domain.onlineTests.utils.ParseSubQuestion;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 

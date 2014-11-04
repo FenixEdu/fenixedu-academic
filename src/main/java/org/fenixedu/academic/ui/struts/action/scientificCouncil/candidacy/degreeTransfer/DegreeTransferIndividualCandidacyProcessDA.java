@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.candidacy.degreeTransfer;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.candidacy.degreeTransfer;
 
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-
+import org.fenixedu.academic.ui.struts.FenixActionForm;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -32,6 +31,6 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
         @Forward(name = "list-allowed-activities",
                 path = "/scientificCouncil/candidacy/degreeTransfer/listIndividualCandidacyActivities.jsp") })
 public class DegreeTransferIndividualCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeTransfer.DegreeTransferIndividualCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.degreeTransfer.DegreeTransferIndividualCandidacyProcessDA {
 
 }

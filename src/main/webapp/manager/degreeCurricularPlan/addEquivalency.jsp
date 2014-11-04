@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+<bean:define id="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
 
 <h2><bean:message key="link.equivalency.plan.create.equivalence" bundle="APPLICATION_RESOURCES"/></h2>
 
@@ -42,7 +42,7 @@
 
 	<fr:edit id="EquivalencePlanEntry.Creator.setNonListFields"
 			name="equivalencePlanEntryCreator"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.EquivalencePlanEntryCreator"
 			schema="EquivalencePlanEntry.Creator.setNonListFields">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mvert05"/>
@@ -53,7 +53,7 @@
 	<p class="mtop1 mbottom05"><bean:message key="message.origin.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<fr:edit id="EquivalencePlanEntry.Creator.addOriginDegreeModule"
 			name="equivalencePlanEntryCreator"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.EquivalencePlanEntryCreator"
 			schema="EquivalencePlanEntry.Creator.addOriginDegreeModule">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
@@ -65,7 +65,7 @@
 	<p class="mtop1 mbottom05"><bean:message key="message.destination.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<fr:edit id="EquivalencePlanEntry.Creator.addDestinationDegreeModule"
 			name="equivalencePlanEntryCreator"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator"
+			type="org.fenixedu.academic.ui.struts.action.coordinator.EquivalencePlanEntryCreator"
 			schema="EquivalencePlanEntry.Creator.addDestinationDegreeModule">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
@@ -125,7 +125,7 @@
 
 
 	<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getExternalId() %>">
-		<fr:edit id="EquivalencePlanEntry.Creator.create" name="equivalencePlanEntryCreator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator"
+		<fr:edit id="EquivalencePlanEntry.Creator.create" name="equivalencePlanEntryCreator" type="org.fenixedu.academic.ui.struts.action.coordinator.EquivalencePlanEntryCreator"
 				schema="EquivalencePlanEntry.Creator.create">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="dnone"/>

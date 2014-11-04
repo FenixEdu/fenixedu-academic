@@ -19,14 +19,15 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.person;
+package org.fenixedu.academic.ui.renderers.providers.person;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.person.ChoosePersonBean;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

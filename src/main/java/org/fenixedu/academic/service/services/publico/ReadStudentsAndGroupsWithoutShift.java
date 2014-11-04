@@ -20,7 +20,7 @@
  * Created on 8/Jan/2005
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.publico;
+package org.fenixedu.academic.service.services.publico;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,17 +28,16 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentAndGroup;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.dto.InfoSiteStudentAndGroup;
+import org.fenixedu.academic.dto.InfoSiteStudentInformation;
+import org.fenixedu.academic.dto.InfoSiteStudentsAndGroups;
+import org.fenixedu.academic.dto.InfoStudentGroup;
+import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;

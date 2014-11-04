@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.transactions;
+package org.fenixedu.academic.dto.transactions;
 
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPersonAccount;
-import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
-import net.sourceforge.fenixedu.domain.transactions.PaymentType;
-import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
-import net.sourceforge.fenixedu.domain.transactions.Transaction;
-import net.sourceforge.fenixedu.domain.transactions.TransactionType;
+import org.fenixedu.academic.domain.transactions.PaymentTransaction;
+import org.fenixedu.academic.domain.transactions.PaymentType;
+import org.fenixedu.academic.domain.transactions.ReimbursementTransaction;
+import org.fenixedu.academic.domain.transactions.Transaction;
+import org.fenixedu.academic.domain.transactions.TransactionType;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.dto.InfoPerson;
+import org.fenixedu.academic.dto.InfoPersonAccount;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

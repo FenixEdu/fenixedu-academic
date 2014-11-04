@@ -20,9 +20,9 @@
  * Created on 10/Out/2003
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,20 +31,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
-import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EvaluationType;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.space.EventSpaceOccupation;
+import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
+import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.util.icalendar.EvaluationEventBean;
+import org.fenixedu.academic.dto.InfoEvaluation;
+import org.fenixedu.academic.dto.InfoWrittenTest;
+import org.fenixedu.academic.predicate.WrittenTestPredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;

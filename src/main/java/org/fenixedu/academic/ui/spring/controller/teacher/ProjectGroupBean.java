@@ -1,11 +1,10 @@
-package org.fenixedu.core.ui.teacher;
+package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Grouping;
-
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Grouping;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 

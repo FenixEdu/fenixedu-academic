@@ -20,7 +20,7 @@
  * Created on Apr 26, 2004
  *
  */
-package net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs;
+package org.fenixedu.academic.util.gratuity.fileParsers.sibs;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

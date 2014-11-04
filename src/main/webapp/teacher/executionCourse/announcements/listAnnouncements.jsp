@@ -34,7 +34,7 @@
 
 <logic:equal name="hasYear" value="true">
 	<logic:equal name="hasMonth" value="true">
-		<p><em style="background: #fff8dd;"><%=new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(request.getParameter("selectedMonth"))).toString()%>
+		<p><em style="background: #fff8dd;"><%=new org.fenixedu.academic.util.Mes(Integer.valueOf(request.getParameter("selectedMonth"))).toString()%>
 		de <%=request.getParameter("selectedYear")%></em></p>
 	</logic:equal>
 </logic:equal>
@@ -44,7 +44,7 @@
 
 	<logic:notEmpty name="announcements">
 		
-		<logic:iterate id="announcement" name="announcements" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
+		<logic:iterate id="announcement" name="announcements" type="org.fenixedu.academic.domain.messaging.Announcement">
 		
 		<div class="announcement mtop15 mbottom25">
 
@@ -222,7 +222,7 @@
 
 <logic:present name="archive">
 	<logic:present name="announcementBoard">
-		<bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
+		<bean:define id="board" name="announcementBoard" type="org.fenixedu.academic.domain.messaging.AnnouncementBoard"/>
 		<div class="aarchives">
 			<messaging:archive name="archive" targetUrl="${pageContext.request.contextPath}/teacher/announcementManagement.do?method=viewArchive&announcementBoardId=${board.externalId}&executionCourseID=${executionCourse.externalId}&"/>	
 		</div>

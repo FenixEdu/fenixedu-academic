@@ -25,10 +25,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState" %>
-<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
+<%@ page import="org.fenixedu.academic.servlet.taglib.sop.v3.TimeTableType" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState" %>
+<%@ page import="org.fenixedu.academic.domain.degree.DegreeType" %>
 
 
 <bean:define id="component" name="siteView" property="component"/>
@@ -40,8 +40,8 @@
     <br/>
 			<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.degreeType" />	
 			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" />
-			<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %></bean:define>
-				<div class="breadcumbs mvert0"><a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
+			<bean:define id="institutionUrl" type="java.lang.String"><%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %></bean:define>
+				<div class="breadcumbs mvert0"><a href="<%= institutionUrl %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
 				<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.degreeType" />	
 				<logic:equal name="degreeType" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 					 <html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) %>" >Ensino Mestrados</html:link>

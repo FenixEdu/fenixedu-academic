@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice;
+package org.fenixedu.academic.ui.struts.action.masterDegree.administrativeOffice;
 
-import net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearToCandidateStudyPlanDA;
+import org.fenixedu.academic.ui.struts.action.commons.ChooseExecutionYearToCandidateStudyPlanDA;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

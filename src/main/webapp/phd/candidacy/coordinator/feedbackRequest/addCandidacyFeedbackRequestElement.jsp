@@ -23,8 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElementBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.coordinator.feedbackRequest.PhdCandidacyFeedbackRequestDA"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElementBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.phd.candidacy.coordinator.feedbackRequest.PhdCandidacyFeedbackRequestDA"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
 
 <logic:notEmpty name="elementBean">
@@ -111,7 +111,7 @@
 							<fr:property name="size" value="50"/>
 							<fr:property name="labelField" value="name"/>
 							<fr:property name="indicatorShown" value="true"/>		
-							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
+							<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
 							<fr:property name="args" value="size=50"/>
 							<fr:property name="minChars" value="4"/>				
 						</fr:slot>

@@ -34,7 +34,7 @@
 <h3><bean:write name="tutorshipIntention" property="teacher.person.name"/> - <bean:write name="tutorshipIntention" property="teacher.person.username"/></h3>
 		
 <fr:view name="tutorshipIntention" property="tutorships">
-	<fr:schema type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.Tutorship" bundle="APPLICATION_RESOURCES">
 		<fr:slot name="student.number" key="label.number"/>
 		<fr:slot name="student.name" key="label.name"/>
 		<fr:slot name="student.person.defaultMobilePhoneNumber" key="label.mobile"/>

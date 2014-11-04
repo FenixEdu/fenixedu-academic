@@ -21,7 +21,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
@@ -33,7 +33,7 @@
 	<fr:edit name="bean">
 		<fr:schema type="org.fenixedu.bennu.core.util.VariantBean" bundle="SOP_RESOURCES">
 			<fr:slot name="object" layout="menu-select-postback" key="property.academicInterval">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.AcademicIntervalProvider" />
 				<fr:property name="format" value="\${pathName}" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
@@ -82,8 +82,8 @@
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.evaluationType" property="evaluationType" size="1">
 					<html:option key="label.all" value=""/>
-					<html:option key="label.exams" value="net.sourceforge.fenixedu.domain.Exam"/>
-					<html:option key="label.tests" value="net.sourceforge.fenixedu.domain.WrittenTest"/>
+					<html:option key="label.exams" value="org.fenixedu.academic.domain.Exam"/>
+					<html:option key="label.tests" value="org.fenixedu.academic.domain.WrittenTest"/>
 			    </html:select>
 			</td>
 		</tr>

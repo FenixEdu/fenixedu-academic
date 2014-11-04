@@ -64,7 +64,7 @@
 	
 	<fr:edit id="phdConfigurationIndividualProgramProcessBean-edit" 
 		name="phdConfigurationIndividualProgramProcessBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdConfigurationIndividualProgramProcessBean">
 			<fr:slot name="generateAlerts" />
 			<fr:slot name="migratedProcess" />
 			<fr:slot name="isBolonha" />

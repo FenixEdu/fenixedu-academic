@@ -31,7 +31,7 @@
 <h2><bean:message key="label.phd.focusAreas" bundle="PHD_RESOURCES" /></h2>
 
 <fr:view name="focusAreas">
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea">
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgramFocusArea">
 		<fr:slot name="name.content" key="label.phd.institution.public.candidacy.focus.area">
 		</fr:slot>
 	</fr:schema>

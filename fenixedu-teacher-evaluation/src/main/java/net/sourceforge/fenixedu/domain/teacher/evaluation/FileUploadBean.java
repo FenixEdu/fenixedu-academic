@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher.evaluation;
+package org.fenixedu.academic.domain.teacher.evaluation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

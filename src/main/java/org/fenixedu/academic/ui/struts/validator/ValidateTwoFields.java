@@ -20,7 +20,7 @@
  * Created on 13/Mar/2003
  *
  */
-package net.sourceforge.fenixedu.presentationTier.validator.form;
+package org.fenixedu.academic.ui.struts.validator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

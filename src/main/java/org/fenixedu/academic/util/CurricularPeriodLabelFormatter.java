@@ -19,12 +19,11 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 

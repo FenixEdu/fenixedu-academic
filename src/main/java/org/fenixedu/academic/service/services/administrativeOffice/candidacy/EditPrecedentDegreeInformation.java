@@ -19,9 +19,10 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
+package org.fenixedu.academic.service.services.administrativeOffice.candidacy;
 
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
+import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

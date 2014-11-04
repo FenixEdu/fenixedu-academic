@@ -73,13 +73,13 @@ Documentation:
     
 	<!--@ Same as the above link renderer but where you can specify when the link is visible. -->
     
-	<renderer type="java.lang.Object" layout="conditional-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ConditionalObjectLinkRenderer"/>
+	<renderer type="java.lang.Object" layout="conditional-link" class="org.fenixedu.academic.ui.renderers.ConditionalObjectLinkRenderer"/>
 
-    <renderer type="net.sourceforge.fenixedu.domain.File" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.FileLinkRenderer"/>
+    <renderer type="org.fenixedu.academic.domain.File" layout="link" class="org.fenixedu.academic.ui.renderers.FileLinkRenderer"/>
 
-    <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
+    <renderer type="org.fenixedu.academic.domain.Person" layout="person-email-identity" class="org.fenixedu.academic.ui.renderers.EmailIdentityRenderer"/>
   
-  	<renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-presentation-card" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonalCardRenderer">
+  	<renderer type="org.fenixedu.academic.domain.Person" layout="person-presentation-card" class="org.fenixedu.academic.ui.renderers.PersonalCardRenderer">
   		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
 		<property name="formatImageURL" value="/user/photo/${externalId}"/>
   		<property name="contextRelative" value="true"/>
@@ -88,7 +88,7 @@ Documentation:
 		<property name="infoCellClasses"  value="personalcard_info"/>
   	</renderer>
   	
-  	<renderer type="java.util.List" layout="person-presentation-card" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiplePersonalCardRenderer">
+  	<renderer type="java.util.List" layout="person-presentation-card" class="org.fenixedu.academic.ui.renderers.MultiplePersonalCardRenderer">
   		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
 		<property name="formatImageURL" value="/user/photo/${externalId}"/>
   		<property name="contextRelative" value="true"/>
@@ -99,25 +99,25 @@ Documentation:
   	
     <renderer type="java.lang.String" class="pt.ist.fenixWebFramework.renderers.StringRenderer"/>
           
-    <renderer type="java.lang.String" layout="person-name" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonNameRenderer"/>
+    <renderer type="java.lang.String" layout="person-name" class="org.fenixedu.academic.ui.renderers.PersonNameRenderer"/>
 
-    <renderer type="java.lang.String" layout="person-short-name" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonNameRenderer">
+    <renderer type="java.lang.String" layout="person-short-name" class="org.fenixedu.academic.ui.renderers.PersonNameRenderer">
         <property name="firstLastOnly" value="true"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.Person" layout="name-with-alias" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonNameWithAliasRenderer">
+    <renderer type="org.fenixedu.academic.domain.Person" layout="name-with-alias" class="org.fenixedu.academic.ui.renderers.PersonNameWithAliasRenderer">
         <property name="label" value="label.person.login.external"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" layout="degree-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
+    <renderer type="org.fenixedu.academic.domain.DegreeCurricularPlan" layout="degree-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
         
-    <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
+    <renderer type="org.fenixedu.academic.domain.Shift" layout="shift-plain" class="org.fenixedu.academic.ui.renderers.ShiftPlainRenderer"/>
 
- 	<renderer type="net.sourceforge.fenixedu.domain.Lesson" layout="lesson-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.LessonPlainRenderer"/>
+ 	<renderer type="org.fenixedu.academic.domain.Lesson" layout="lesson-plain" class="org.fenixedu.academic.ui.renderers.LessonPlainRenderer"/>
 
-	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
+	<renderer type="org.fenixedu.academic.domain.Summary" layout="summary-plain-to-create-summary" class="org.fenixedu.academic.ui.renderers.SummaryPlainRenderer"/>
 		
     <!-- @ Boolean renderer aimed to allow a graphical view of a boolean value through the presentation of an icon
     	 	By default: True=GreenCheck /  / False=EmptyDash -->
@@ -143,20 +143,20 @@ Documentation:
     
     <!--@ Tag Renderers -->
     
-    <renderer type="java.util.Collection" layout="tag-count" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCountRenderer">
+    <renderer type="java.util.Collection" layout="tag-count" class="org.fenixedu.academic.ui.renderers.TagCountRenderer">
     	<property name="moduleRelative" value="true"/>
     	<property name="contextRelative" value="true"/>
     	<property name="separator" value="|"/>
     </renderer>
 
-    <renderer type="java.util.Collection" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCloudRenderer">
+    <renderer type="java.util.Collection" layout="tag-cloud" class="org.fenixedu.academic.ui.renderers.TagCloudRenderer">
     	<property name="moduleRelative" value="true"/>
     	<property name="contextRelative" value="true"/>
     	<property name="numberOfLevels" value="6"/>
     </renderer>
     
 
-    <renderer type="java.util.Collection" layout="tag-search" class="net.sourceforge.fenixedu.presentationTier.renderers.AdvancedTagCloudSearchRenderer">
+    <renderer type="java.util.Collection" layout="tag-search" class="org.fenixedu.academic.ui.renderers.AdvancedTagCloudSearchRenderer">
     	<property name="moduleRelative" value="true"/>
     	<property name="contextRelative" value="true"/>
     	<property name="numberOfLevels" value="6"/>
@@ -165,7 +165,7 @@ Documentation:
     	<property name="nearByTagClass" value="tcloudnearBy"/>
     </renderer>
      
-     <renderer type="net.sourceforge.fenixedu.domain.Department" layout="competence-course-list" class="net.sourceforge.fenixedu.presentationTier.renderers.CompetenceCourseVersionList">
+     <renderer type="org.fenixedu.academic.domain.Department" layout="competence-course-list" class="org.fenixedu.academic.ui.renderers.CompetenceCourseVersionList">
      	<property name="approvedClass" value="approved"/>
 		<property name="draftClass" value="draft"/>
 		<property name="publishedClass" value="published"/>
@@ -175,36 +175,36 @@ Documentation:
 		<property name="messageClass" value="warning0"/>
      </renderer>   
 
-    <renderer mode="input" type="java.lang.String" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagInputCloudRenderer">
+    <renderer mode="input" type="java.lang.String" layout="tag-cloud" class="org.fenixedu.academic.ui.renderers.TagInputCloudRenderer">
     	<property name="textClasses" value="smalltxt color888"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.student.curriculum.Curriculum" class="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.CurriculumRenderer"/>   
+    <renderer type="org.fenixedu.academic.domain.student.curriculum.Curriculum" class="org.fenixedu.academic.ui.renderers.student.curriculum.CurriculumRenderer"/>   
 
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer"/>
+    <renderer mode="input" type="org.fenixedu.academic.domain.StudentCurricularPlan" class="org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer"/>
     
-	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
+	<renderer mode="input" type="org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="org.fenixedu.academic.ui.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
 	
-	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean" layout="student-optional-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.DegreeCurricularPlanOptionalEnrolmentsRenderer"/>
+	<renderer mode="input" type="org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean" layout="student-optional-enrolments" class="org.fenixedu.academic.ui.renderers.DegreeCurricularPlanOptionalEnrolmentsRenderer"/>
 	
-	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" layout="student-dismissal" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentDismissalRenderer"/>	
+	<renderer mode="input" type="org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean" layout="student-dismissal" class="org.fenixedu.academic.ui.renderers.StudentDismissalRenderer"/>	
 
-    <renderer mode="input" type="pt.ist.fenixframework.DomainObject" layout="autoCompleteWithPostBack" class="net.sourceforge.fenixedu.presentationTier.renderers.AutoCompleteInputRendererWithPostBack">
+    <renderer mode="input" type="pt.ist.fenixframework.DomainObject" layout="autoCompleteWithPostBack" class="org.fenixedu.academic.ui.renderers.AutoCompleteInputRendererWithPostBack">
         <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>
         <property name="autoCompleteStyleClass" value="autoComplete"/>
         <property name="minChars" value="3"/>
         <property name="valueField" value="externalId" />
     </renderer>
         
-    <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-enrolment" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer"/>
+    <renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-enrolment" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer"/>
     
-    <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean" layout="erasmus-bolonha-student-enrolment" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentInputRenderer"/>
+    <renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean" layout="erasmus-bolonha-student-enrolment" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentInputRenderer"/>
     
-    <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-special-season-enrolment" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer">
-    	<property name="defaultLayout" value="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentSpecialSeasonEnrolmentLayout"/>
+    <renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-special-season-enrolment" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer">
+    	<property name="defaultLayout" value="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentSpecialSeasonEnrolmentLayout"/>
     </renderer>
     
-    <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean" layout="bolonha-student-optional-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentInputRenderer"/>
+    <renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean" layout="bolonha-student-optional-enrolments" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentInputRenderer"/>
     
     <renderer layout="viewDepartmentTeachersExpectationsNestedTemplateLayout" type="pt.ist.fenixframework.DomainObject" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/showPersonalExpectationTemplate.jsp"/>
@@ -215,7 +215,7 @@ Documentation:
     </renderer>
     
     <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
-    <renderer type="org.fenixedu.bennu.core.groups.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
+    <renderer type="org.fenixedu.bennu.core.groups.Group" layout="show-groups" class="org.fenixedu.academic.ui.renderers.GroupRenderer"/>
     
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->
@@ -225,16 +225,16 @@ Documentation:
     </renderer>
 
 	<!--@ File displayed as an html picture -->
-    <renderer type="net.sourceforge.fenixedu.domain.File"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"
+    <renderer type="org.fenixedu.academic.domain.File"
+              class="org.fenixedu.academic.ui.renderers.FileAsPictureRenderer"
               layout="image" />
     
     <!--@ Money output -->
-    <renderer type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyRenderer"/>
+    <renderer type="org.fenixedu.academic.util.Money" class="org.fenixedu.academic.ui.renderers.MoneyRenderer"/>
 
     <!-- input -->
     
-    <renderer mode="input" type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyInputRenderer"/>
+    <renderer mode="input" type="org.fenixedu.academic.util.Money" class="org.fenixedu.academic.ui.renderers.MoneyInputRenderer"/>
 
 	<renderer mode="input" type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateInputRenderer"/>
 
@@ -248,14 +248,14 @@ Documentation:
 		<property name="minute" value="true"/>
 	</renderer>
 	
-	<renderer mode="input" type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
+	<renderer mode="input" type="org.fenixedu.academic.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 		<property name="second" value="true"/>
 	</renderer>
 	
 	<!--@ The default layout for a HourMinuteSecond automatically includes the hour and minute -->	
-	<renderer type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
+	<renderer type="org.fenixedu.academic.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${hour,02d}:${minuteOfHour,02d}"/>
 	</renderer>	
 	
@@ -267,52 +267,52 @@ Documentation:
     </renderer>
     
     <!--@ The layout username-as-person allows you to insert a person given a username -->
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.Person" layout="username-as-person" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonUsernameStringInputRenderer"/>
+    <renderer mode="input" type="org.fenixedu.academic.domain.Person" layout="username-as-person" class="org.fenixedu.academic.ui.renderers.PersonUsernameStringInputRenderer"/>
 
     <!--@ The layout username-as-person allows you to insert a person given a username -->
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.Teacher" layout="teacherId-as-teacher" class="net.sourceforge.fenixedu.presentationTier.renderers.TeacherIdStringInputRenderer"/>
+    <renderer mode="input" type="org.fenixedu.academic.domain.Teacher" layout="teacherId-as-teacher" class="org.fenixedu.academic.ui.renderers.TeacherIdStringInputRenderer"/>
 
 	<!--@ Layout that allows you to render a list with checkboxes with postback -->
 	<renderer mode="input" type="java.util.Collection" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.CheckBoxOptionListRendererWithPostBack"/>
     
-    <renderer type="net.sourceforge.fenixedu.domain.Person"
+    <renderer type="org.fenixedu.academic.domain.Person"
               class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
               layout="format-name-number">
 		<property name="format" value="${name}" />
 	</renderer>
     
-	<renderer mode="input" type="net.sourceforge.fenixedu.domain.student.Student" layout="by-number" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentByNumberInputRenderer"/>
+	<renderer mode="input" type="org.fenixedu.academic.domain.student.Student" layout="by-number" class="org.fenixedu.academic.ui.renderers.StudentByNumberInputRenderer"/>
     
      <!--@ Each LinkObject in the collection is presented like a HtmlLink. LinkObject has the necessary information for each link. -->
-    <renderer type="java.util.List" layout="list-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ListLinkRenderer" />
+    <renderer type="java.util.List" layout="list-link" class="org.fenixedu.academic.ui.renderers.ListLinkRenderer" />
     
-    <renderer mode="input" layout="pages" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" class="net.sourceforge.fenixedu.presentationTier.renderers.PagesRenderer" />
+    <renderer mode="input" layout="pages" type="org.fenixedu.academic.dto.PageContainerBean" class="org.fenixedu.academic.ui.renderers.PagesRenderer" />
 
-    <renderer type="net.sourceforge.fenixedu.domain.Grade"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.GradeInputRenderer"
+    <renderer type="org.fenixedu.academic.domain.Grade"
+              class="org.fenixedu.academic.ui.renderers.GradeInputRenderer"
               mode="input" layout="grade-input"/>
               
-    <renderer type="net.sourceforge.fenixedu.domain.Grade"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.GradeRenderer">
+    <renderer type="org.fenixedu.academic.domain.Grade"
+              class="org.fenixedu.academic.ui.renderers.GradeRenderer">
 		<property name="gradeScaleClasses" value="color888 smalltxt"/>
     </renderer>
 
-    <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
+    <renderer type="java.util.Collection" layout="contact-list" class="org.fenixedu.academic.ui.renderers.ContactListRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>
         <property name="defaultLabel" value="label.partyContacts.defaultContact"/>
     </renderer>
 
-    <renderer type="java.util.Collection" layout="contact-table" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactTableRenderer">
+    <renderer type="java.util.Collection" layout="contact-table" class="org.fenixedu.academic.ui.renderers.ContactTableRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>
         <property name="defaultLabel" value="label.partyContacts.defaultContact"/>
     </renderer>
 
-	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="search-execution-course-attends" class="net.sourceforge.fenixedu.presentationTier.renderers.SearchExecutionCourseAttendsRenderer" />
-	<renderer type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="execution-course-attends-spreadsheet" class="net.sourceforge.fenixedu.presentationTier.renderers.ExecutionCourseAttendsSpreadSheetRenderer" />
+	<renderer mode="input" type="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="search-execution-course-attends" class="org.fenixedu.academic.ui.renderers.SearchExecutionCourseAttendsRenderer" />
+	<renderer type="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="execution-course-attends-spreadsheet" class="org.fenixedu.academic.ui.renderers.ExecutionCourseAttendsSpreadSheetRenderer" />
 	
-	<renderer mode="output" type="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" class="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRenderer"/>
+	<renderer mode="output" type="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" class="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRenderer"/>
 	
-	<renderer mode="input" type="java.lang.String" layout="captcha" class="net.sourceforge.fenixedu.presentationTier.renderers.CaptchaRenderer">
+	<renderer mode="input" type="java.lang.String" layout="captcha" class="org.fenixedu.academic.ui.renderers.CaptchaRenderer">
 		<property name="jcaptchaUrl" value="/publico/jcaptcha.do" />
 	</renderer>
 	
@@ -322,17 +322,17 @@ Documentation:
     </renderer>
     
     <!-- Legacy Renderers -->
-    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.legacy.MultiLanguageStringInputRenderer"/>
-	<renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.legacy.MultiLanguageTextInputRenderer"/>
-	<renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.legacy.MultiLanguageRichTextInputRenderer"/>
+    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringInputRenderer"/>
+	<renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="area" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageTextInputRenderer"/>
+	<renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="rich-text" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageRichTextInputRenderer"/>
 
-	<renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.legacy.MultiLanguageStringRenderer">
+	<renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringRenderer">
 		<property name="languageShown" value="false"/>
 	</renderer>
-	<renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="short" class="net.sourceforge.fenixedu.presentationTier.renderers.legacy.ShortMultiLanguageStringRenderer">
+	<renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="short" class="org.fenixedu.academic.ui.renderers.legacy.ShortMultiLanguageStringRenderer">
 		<property name="length" value="40"/>
 	</renderer>
-	<renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html" class="net.sourceforge.fenixedu.presentationTier.renderers.legacy.MultiLanguageStringRenderer">
+	<renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringRenderer">
 		<property name="escaped" value="false"/>
 		<property name="languageShown" value="false"/>
 	</renderer>

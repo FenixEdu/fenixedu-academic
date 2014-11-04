@@ -16,16 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.report.events;
+package org.fenixedu.academic.domain.accounting.report.events;
 
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.domain.accounting.Exemption;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemption;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption;
+import org.fenixedu.academic.domain.phd.debts.PhdEventExemption;
+import org.fenixedu.academic.util.Bundle;
+
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 

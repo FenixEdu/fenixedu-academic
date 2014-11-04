@@ -20,8 +20,8 @@
 --%>
 <%@ page isELIgnored="true"%>
 <%@ page language="java"%>
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
+<%@page import="org.fenixedu.academic.predicate.AccessControl"%>
+<%@page import="org.fenixedu.academic.domain.person.RoleType"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -36,7 +36,7 @@
 
 <fr:view name="process">
 	<fr:schema bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess">
+		type="org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationProcess">
 		<fr:slot name="facultyEvaluationProcess.autoEvaluationInterval"
 			key="label.teacher.evaluation.facultyEvaluationProcess.autoEvaluationInterval" layout="format">
 			<fr:property name="format"
@@ -91,7 +91,7 @@
 				<div id="<%="warning" + processId%>" class="dnone">
 					<div class="warning1 mtop1">
 						<p class="mvert05">
-							<bean:message key="label.teacher.evaluation.evaluation.lock.confirm" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="RESEARCHER_RESOURCES" />
+							<bean:message key="label.teacher.evaluation.evaluation.lock.confirm" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="RESEARCHER_RESOURCES" />
 						</p>
 						<div class="mtop1 mbottom05">
 							<form method="post" id="lockMark" action="<%=request.getContextPath() + "/researcher/teacherEvaluation.do?method=lockEvaluation&process=" + processId%>">
@@ -117,7 +117,7 @@
 				<bean:define id="externalId" name="process" property="externalId" />
 				<fr:view name="process" property="teacherEvaluationFileBeanSet">
 					<fr:schema bundle="RESEARCHER_RESOURCES"
-						type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
+						type="org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationFileBean">
 						<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
 						<fr:slot name="teacherEvaluationFile" layout="link" key="label.teacher.evaluation.file" />
 						<fr:slot name="teacherEvaluationFileUploadDate" key="label.teacher.evaluation.date" layout="null-as-label" />
@@ -150,7 +150,7 @@
 		}
 	</script>
 
-	<% if (!((net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess) request.getAttribute("process")).isAutoEvaluationLocked()) { %>
+	<% if (!((org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationProcess) request.getAttribute("process")).isAutoEvaluationLocked()) { %>
 		<bean:define id="processId" name="process" property="externalId" />
 		<p class="mtop0 mbottom15">
 			<html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
@@ -172,7 +172,7 @@
 
 		<div id="<%="warning" + processId%>" class="dnone">
 			<div class="warning1">
-				<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>"
+				<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>"
 					bundle="RESEARCHER_RESOURCES" /></p>
 				<div class="mtop1 mbottom05">
 					<form method="post" id="lockMark"
@@ -192,7 +192,7 @@
 			<bean:define id="externalId" name="process" property="externalId" />
 			<fr:view name="process" property="teacherAutoEvaluationFileBeanSet">
 				<fr:schema bundle="RESEARCHER_RESOURCES"
-					type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
+					type="org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationFileBean">
 					<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
 					<fr:slot name="teacherEvaluationFile" layout="link" key="label.teacher.evaluation.file" />
 					<fr:slot name="teacherEvaluationFileUploadDate" key="label.teacher.evaluation.date" layout="null-as-label" />
@@ -231,7 +231,7 @@
 		<bean:define id="externalId" name="process" property="externalId" />
 		<fr:view name="process" property="teacherEvaluationFileBeanSet">
 			<fr:schema bundle="RESEARCHER_RESOURCES"
-				type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
+				type="org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationFileBean">
 				<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
 				<fr:slot name="teacherEvaluationFile" layout="link" key="label.teacher.evaluation.file" />
 				<fr:slot name="teacherEvaluationFileUploadDate" key="label.teacher.evaluation.date" layout="null-as-label" />

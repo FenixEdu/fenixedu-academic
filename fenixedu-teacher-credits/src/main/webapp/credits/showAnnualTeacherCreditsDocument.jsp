@@ -43,7 +43,7 @@ padding: 0;
 <logic:present name="annualTeachingCreditsBean">
 	<h3><bean:message key="label.teacherService.credits"/>&nbsp;<bean:write name="annualTeachingCreditsBean" property="executionYear.name"/></h3>
 	<fr:view name="annualTeachingCreditsBean">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.AnnualTeachingCreditsBean">
 			<fr:slot name="teacher.person.presentationName" key="label.name"/>
 			<fr:slot name="professionalCategoryName" key="label.category" layout="null-as-label"/>
 			<fr:slot name="departmentName" key="label.department" layout="null-as-label"/>
@@ -150,13 +150,13 @@ padding: 0;
 		</logic:iterate>
 	
 
-<h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 	
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
 			<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
 			<bean:define id="executionPeriodId" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
 			<fr:view name="annualTeachingCreditsByPeriodBean" property="institutionWorkTime">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.teacher.InstitutionWorkTime">
 					<fr:slot name="weekDay.label" key="label.teacher-institution-working-time.weekday"/>
 					<fr:slot name="startTime" key="label.teacher-institution-working-time.start-time">
 						<fr:property name="format" value="HH:mm"/>
@@ -181,7 +181,7 @@ padding: 0;
 	</logic:empty>
 	<logic:notEmpty name="annualTeachingCreditsBean" property="masterDegreeThesis">
 		<fr:view name="annualTeachingCreditsBean" property="masterDegreeThesis">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant">
 				<fr:slot name="thesis.student.number" key="label.teacher-thesis-student.student-number"/>
 				<fr:slot name="thesis.student.person.name" key="label.teacher-thesis-student.student-name"/>
 				<fr:slot name="thesis.title" key="label.teacher-thesis-student.title"/>
@@ -205,7 +205,7 @@ padding: 0;
 		</logic:empty>
 		<logic:notEmpty name="phdDegreeTheses">
 			<fr:view name="phdDegreeTheses">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.phd.InternalPhdParticipant">
 					<fr:slot name="individualProcess.student.number" key="label.teacher-thesis-student.student-number"/>
 					<fr:slot name="individualProcess.student.person.name" key="label.teacher-thesis-student.student-name"/>
 					<fr:slot name="individualProcess.thesisTitle" key="label.teacher-thesis-student.title"/>
@@ -234,7 +234,7 @@ padding: 0;
 			
 			<h3 class="mtop15 mbottom05">
 				<fr:view name="professorship" layout="values">
-					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Professorship">
+					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.Professorship">
 						<fr:slot name="executionCourse.nome"/>
 						<fr:slot name="executionCourse.sigla"/>
 						<fr:slot name="degreeSiglas"/>
@@ -263,7 +263,7 @@ padding: 0;
 			</logic:empty>
 			<logic:notEmpty name="personFunctions">
 				<fr:view name="annualTeachingCreditsByPeriodBean" property="personFunctions">
-					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
+					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.organizationalStructure.PersonFunction">
 						<fr:slot name="function.name" key="label.managementPosition.position"/>
 						<fr:slot name="function.unit.name" key="label.managementPosition.unit"/>
 					</fr:schema>
@@ -284,7 +284,7 @@ padding: 0;
 			</logic:empty>
 			<logic:notEmpty name="otherServices">
 				<fr:view name="annualTeachingCreditsByPeriodBean" property="otherServices">
-					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.OtherService">
+					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.teacher.OtherService">
 						<fr:slot name="credits" key="label.credits"/>
 						<fr:slot name="reason" key="label.otherTypeCreditLine.reason"/>
 					</fr:schema>
@@ -299,7 +299,7 @@ padding: 0;
 <h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.credits.creditsReduction.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 		<logic:equal name="annualTeachingCreditsBean" property="canSeeCreditsReduction" value="true">
 			<fr:view name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
 					<fr:slot name="executionPeriod.name" key="label.period"/>
 					<fr:slot name="requestCreditsReduction" key="label.requestedReductionCredits" layout="radio"/>
 					<fr:slot name="creditsReductionServiceAttribute" key="label.attributedReductionCredits" layout="null-as-label"/>
@@ -325,7 +325,7 @@ padding: 0;
 			</logic:empty>
 			<logic:notEmpty name="serviceExemptions">
 				<fr:view name="annualTeachingCreditsByPeriodBean" property="serviceExemptions">
-					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation">
+					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.personnelSection.contracts.PersonContractSituation">
 						<fr:slot name="contractSituation.name.content" key="label.serviceExemption.type"/>
 						<fr:slot name="beginDate" key="label.serviceExemption.start"/>
 						<fr:slot name="serviceExemptionEndDate" key="label.serviceExemption.end" layout="null-as-label"/>
@@ -350,7 +350,7 @@ padding: 0;
 		</logic:empty>
 		<logic:notEmpty name="teacherServiceComments">
 			<fr:view name="teacherServiceComments">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.TeacherServiceComment">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.teacher.TeacherServiceComment">
 					<fr:slot name="content" key="label.comment"/>
 					<fr:slot name="createdBy" key="label.user">
 						<fr:property name="format" value="${name} (${username})"/>

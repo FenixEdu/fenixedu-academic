@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.exceptions;
+package org.fenixedu.academic.domain.exceptions;
 
-import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 
 public class EnrollmentDomainException extends DomainException {
 

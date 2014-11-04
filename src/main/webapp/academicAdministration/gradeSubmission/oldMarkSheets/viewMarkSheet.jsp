@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 
-<%@ page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
+<%@ page import="org.fenixedu.academic.util.FenixDigestUtils"%>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.viewMarkSheet"/></h2>
 <logic:messagesPresent message="true">
 	<ul>
@@ -64,7 +64,7 @@
 			<th>&nbsp;</th>
 		</tr>
 		<bean:define id="url" name="url" />
-		<logic:iterate id="enrolmentEvaluation" name="markSheet" property="enrolmentEvaluationsSortedByStudentNumber" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
+		<logic:iterate id="enrolmentEvaluation" name="markSheet" property="enrolmentEvaluationsSortedByStudentNumber" type="org.fenixedu.academic.domain.EnrolmentEvaluation">
 			<tr>
 				<td>
 					<bean:write name="enrolmentEvaluation" property="student.number"/>
@@ -83,7 +83,7 @@
 					<bean:write name="enrolmentEvaluation" property="gradeValue"/>
 				</td>
 				<td>
-					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == net.sourceforge.fenixedu.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>
+					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == org.fenixedu.academic.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>
 						<html:link action='<%= "/oldMarkSheetManagement.do?method=prepareViewRectificationMarkSheet" + url %>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="externalId">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectified"/>
 						</html:link>
@@ -94,7 +94,7 @@
 	</table>
 
 	<p class="mtop15 mbottom1">
-		<bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
+		<bean:define id="mark" name="markSheet" type="org.fenixedu.academic.domain.MarkSheet"/>
 		<bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
 		<span class="highlight1"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.checksum"/>: <bean:write name="checksum"/></span>
 	</p>

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
+package org.fenixedu.academic.servlet.taglib.sop.v3;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,13 +29,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
-
 import org.apache.struts.Globals;
 import org.apache.struts.util.RequestUtils;
+import org.fenixedu.academic.domain.SchoolClass;
+import org.fenixedu.academic.dto.InfoShowOccupation;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
+import org.fenixedu.academic.servlet.taglib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
 
 /**
  * @author jpvl

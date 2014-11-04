@@ -37,7 +37,7 @@
 
 <logic:equal name="hasYear" value="true">
 	<logic:equal name="hasMonth" value="true">
-		<p><em style="background: #fff8dd;"><%=new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(request.getParameter("selectedMonth"))).toString()%>
+		<p><em style="background: #fff8dd;"><%=new org.fenixedu.academic.util.Mes(Integer.valueOf(request.getParameter("selectedMonth"))).toString()%>
 		de <%=request.getParameter("selectedYear")%></em></p>
 	</logic:equal>
 </logic:equal>
@@ -53,7 +53,7 @@
 	
 		<logic:equal name="tabularVersion" value="false">
 			<logic:iterate id="announcement" name="announcements"
-				type="net.sourceforge.fenixedu.domain.messaging.Announcement">
+				type="org.fenixedu.academic.domain.messaging.Announcement">
 	
 	
 				<bean:define id="announcementId" name="announcement" property="externalId"/>
@@ -140,7 +140,7 @@
 
 							<%-- Página da Cadeira --%>
 							<logic:notEmpty name="announcement" property="announcementBoard">
-								<logic:equal name="announcement" property="announcementBoard.class.name" value="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard">
+								<logic:equal name="announcement" property="announcementBoard.class.name" value="org.fenixedu.academic.domain.messaging.ExecutionCourseAnnouncementBoard">
 									<logic:notEmpty name="announcement" property="announcementBoard.executionCourse">
 										<logic:notEmpty name="announcement" property="announcementBoard.executionCourse.site">
 											<app:contentLink name="announcement" property="announcementBoard.executionCourse.site" target="_blank">
@@ -302,7 +302,7 @@
 <logic:present name="archive">
 	<logic:present name="announcementBoard">
 		<bean:define id="board" name="announcementBoard"
-			type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard" />
+			type="org.fenixedu.academic.domain.messaging.AnnouncementBoard" />
 		<%
 				    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
 		%>

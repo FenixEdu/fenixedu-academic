@@ -20,7 +20,7 @@
  * Created on Aug 5, 2004
  *
  */
-package net.sourceforge.fenixedu.presentationTier.validator.form;
+package org.fenixedu.academic.ui.struts.validator;
 
 import java.util.HashMap;
 import java.util.Iterator;

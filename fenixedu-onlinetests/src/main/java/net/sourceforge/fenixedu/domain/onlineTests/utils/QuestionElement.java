@@ -19,7 +19,7 @@
 /*
  * Created on 25/Jul/2003
  */
-package net.sourceforge.fenixedu.domain.onlineTests.utils;
+package org.fenixedu.academic.domain.onlineTests.utils;
 
 import java.util.ArrayList;
 import java.util.List;

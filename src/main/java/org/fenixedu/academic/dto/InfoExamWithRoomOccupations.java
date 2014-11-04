@@ -20,14 +20,14 @@
  * Created on 9/Jul/2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
 
 /**
  * @author Tânia Pousão

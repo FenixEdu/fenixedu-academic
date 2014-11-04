@@ -31,9 +31,9 @@
 <logic:present name="bookmarkedAnnouncementBoards">	
 	<logic:notEmpty name="bookmarkedAnnouncementBoards">
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
-		<bean:define id="bookmarkedAnnouncementBoards" name="bookmarkedAnnouncementBoards" type="java.util.Collection<net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard>"/>
+		<bean:define id="bookmarkedAnnouncementBoards" name="bookmarkedAnnouncementBoards" type="java.util.Collection<org.fenixedu.academic.domain.messaging.AnnouncementBoard>"/>
 		<bean:define id="extraParameters" name="extraParameters" type="java.lang.String"/>
-		<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
+		<bean:define id="person" name="person" type="org.fenixedu.academic.domain.Person"/>
 
 		<%							
 			int indexOfLastSlash = contextPrefix.lastIndexOf("/");

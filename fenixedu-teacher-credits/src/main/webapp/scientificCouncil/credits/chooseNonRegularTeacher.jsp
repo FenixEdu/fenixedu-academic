@@ -33,7 +33,7 @@
 		
 <logic:present name="nonRegularTeacherBean">
 	<fr:edit id="nonRegularTeacherBean" name="nonRegularTeacherBean" action="/manageNonRegularTeachingService.do?method=showNonRegularTeachingService">
-		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.credits.NonRegularTeacherBean">
+		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES" type="org.fenixedu.academic.dto.teacher.credits.NonRegularTeacherBean">
 			<fr:slot name="username"/>
 		</fr:schema>
 	</fr:edit>

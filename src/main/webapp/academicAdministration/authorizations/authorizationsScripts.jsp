@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType"%>
+<%@page import="org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType"%>
 
 <!--[if lt IE 9]>
 	<script>

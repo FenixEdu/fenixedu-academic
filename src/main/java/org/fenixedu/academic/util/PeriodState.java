@@ -20,7 +20,7 @@
  * Created on 5/Abr/2003 by jpvl
  *
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 /**
  * @author jpvl

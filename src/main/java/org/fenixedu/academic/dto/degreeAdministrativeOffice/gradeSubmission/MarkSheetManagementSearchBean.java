@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission;
+package org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.MarkSheetState;
-import net.sourceforge.fenixedu.domain.MarkSheetType;
+import org.fenixedu.academic.domain.MarkSheetState;
+import org.fenixedu.academic.domain.MarkSheetType;
 
 public class MarkSheetManagementSearchBean extends MarkSheetManagementBaseBean {
 

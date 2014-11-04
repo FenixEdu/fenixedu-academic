@@ -59,8 +59,8 @@
 		<th><bean:message key="label.vigilancy.attended" bundle="VIGILANCY_RESOURCES"/></th>
 		<th><bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></th>
 	</tr>
-	<logic:iterate id="vigilancy" name="writtenEvaluation" property="teachersVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
-	<bean:define id="vigilancy" name="vigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy"/>
+	<logic:iterate id="vigilancy" name="writtenEvaluation" property="teachersVigilancies" type="org.fenixedu.academic.domain.vigilancy.Vigilancy">
+	<bean:define id="vigilancy" name="vigilancy" type="org.fenixedu.academic.domain.vigilancy.Vigilancy"/>
 		
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 		<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/></td>
@@ -87,9 +87,9 @@
 		<th><bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></th>
 
 	</tr>
-<logic:iterate id="vigilancy" name="writtenEvaluation" property="othersVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
+<logic:iterate id="vigilancy" name="writtenEvaluation" property="othersVigilancies" type="org.fenixedu.academic.domain.vigilancy.Vigilancy">
 		
-	<bean:define id="vigilancy" name="vigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy"/>
+	<bean:define id="vigilancy" name="vigilancy" type="org.fenixedu.academic.domain.vigilancy.Vigilancy"/>
 		
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 		<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/></td>

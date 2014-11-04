@@ -25,7 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <jsp:include page="/includeMathJax.jsp" />
-<%@page import="net.sourceforge.fenixedu.domain.CompetenceCourse"%>
+<%@page import="org.fenixedu.academic.domain.CompetenceCourse"%>
 
 <h2><bean:message key="link.program" /></h2>
 
@@ -46,9 +46,9 @@
 
 	<bean:define id="showNote" value="false" toScope="request"/>
 	
-	<bean:define id="executionPeriod" name="executionCourse" property="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionSemester" />
+	<bean:define id="executionPeriod" name="executionCourse" property="executionPeriod" type="org.fenixedu.academic.domain.ExecutionSemester" />
 
-	<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName" type="net.sourceforge.fenixedu.domain.CurricularCourse">
+	<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName" type="org.fenixedu.academic.domain.CurricularCourse">
 		<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 
 		<logic:equal name="curricularCourse" property="bolonhaDegree" value="true">
@@ -81,8 +81,8 @@
 		</logic:equal>
 
 		<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
-			<% net.sourceforge.fenixedu.domain.Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionPeriod.getExecutionYear().getEndDate()); %>
-			<% net.sourceforge.fenixedu.domain.Curriculum lastCurriculum = curricularCourse.findLatestCurriculum(); %>
+			<% org.fenixedu.academic.domain.Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionPeriod.getExecutionYear().getEndDate()); %>
+			<% org.fenixedu.academic.domain.Curriculum lastCurriculum = curricularCourse.findLatestCurriculum(); %>
 			<% request.setAttribute("curriculum", curriculum); %>
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 

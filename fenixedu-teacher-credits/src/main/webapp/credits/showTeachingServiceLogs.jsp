@@ -18,9 +18,9 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.Person"%>
-<%@page import="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean"%>
-<%@page import="net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog"%>
+<%@page import="org.fenixedu.academic.domain.Person"%>
+<%@page import="org.fenixedu.academic.domain.credits.util.AnnualTeachingCreditsBean"%>
+<%@page import="org.fenixedu.academic.domain.teacher.TeacherServiceLog"%>
 <%@page import="java.util.SortedSet"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>

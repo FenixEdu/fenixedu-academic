@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
+<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -110,7 +110,7 @@
 		</fieldset>
 		
 		<p class="mvert15">
-			<bean:message key="message.phd.institution.public.candidacy.fill.referee.submit.only.once" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES" />
+			<bean:message key="message.phd.institution.public.candidacy.fill.referee.submit.only.once" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PHD_RESOURCES" />
 		</p>
 		
 		<html:submit ><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>

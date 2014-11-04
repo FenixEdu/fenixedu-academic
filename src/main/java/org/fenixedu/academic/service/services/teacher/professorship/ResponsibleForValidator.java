@@ -20,19 +20,18 @@
  * Created on Dec 19, 2003 by jpvl
  *  
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
+package org.fenixedu.academic.service.services.teacher.professorship;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoProfessorship;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 /**
  * @author jpvl

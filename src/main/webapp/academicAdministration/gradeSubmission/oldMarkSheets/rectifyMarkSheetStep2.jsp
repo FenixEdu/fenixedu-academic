@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
-<%@page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState"%>
+<%@page import="org.fenixedu.academic.util.EnrolmentEvaluationState"%>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectifyOldMarkSheet"/></h2>
 
@@ -74,7 +74,7 @@
 		
 		<bean:define id="url" name="rectifyBean" property="url" />
 		
-		<logic:iterate id="evaluation" name="enrolmentEvaluations" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" >
+		<logic:iterate id="evaluation" name="enrolmentEvaluations" type="org.fenixedu.academic.domain.EnrolmentEvaluation" >
 			<bean:define id="evaluationID" name="evaluation" property="externalId"/>
 			<bean:define id="studentNumber" name="evaluation" property="enrolment.studentCurricularPlan.student.number"/>		
 			<tr>

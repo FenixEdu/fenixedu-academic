@@ -40,7 +40,7 @@
 <fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
 	<html:hidden property="method" value="prepareExecuteIntroduceCandidacyResult" />
 	<fr:edit name="individualCandidacyResultBean">
-	<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
 		<fr:slot name="degree" layout="menu-select-postback" >
 			<fr:property name="from" value="degrees"></fr:property>
 			<fr:property name="format" value="${name}" />

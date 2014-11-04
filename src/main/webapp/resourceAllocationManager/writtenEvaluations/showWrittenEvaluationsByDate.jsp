@@ -19,7 +19,7 @@
 
 --%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -251,10 +251,10 @@ return (aVal - bVal);
 										+ "="
 										+ pageContext.findAttribute("selectedEnd") 
 										%>">
-						<logic:equal name="writtenEvaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
+						<logic:equal name="writtenEvaluation" property="class.name" value="org.fenixedu.academic.domain.Exam">
 							<bean:write name="writtenEvaluation" property="season"/>
 						</logic:equal>
-						<logic:equal name="writtenEvaluation" property="class.name" value="net.sourceforge.fenixedu.domain.WrittenTest">
+						<logic:equal name="writtenEvaluation" property="class.name" value="org.fenixedu.academic.domain.WrittenTest">
 							<bean:write name="writtenEvaluation" property="description"/>
 						</logic:equal>
 					</html:link>

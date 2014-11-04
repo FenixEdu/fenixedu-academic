@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
+package org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment.bolonha;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

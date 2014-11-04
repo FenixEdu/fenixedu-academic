@@ -48,7 +48,7 @@
 	<fr:edit id="erasmus.coordinator.bean" name="erasmusCoordinatorBean" visible="false" />
 	  
 	<fr:edit id="erasmus.coordinator.bean.search" name="erasmusCoordinatorBean">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean">
 			<fr:slot name="teacherId" key="label.erasmus.coordinator.teacher.id" >
 			</fr:slot>
 		</fr:schema>
@@ -62,7 +62,7 @@
 <logic:notEmpty name="erasmusCoordinatorBean" property="teacher">
 	<p><bean:message key="label.erasmus.coordinator.teacher.found" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 	<fr:view name="erasmusCoordinatorBean" property="teacher">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Teacher">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.Teacher">
 			<fr:slot name="teacherId" key="label.erasmus.coordinator.teacher.number" />
 			<fr:slot name="person.name" key="label.erasmus.coordinator.teacher.name" />
 		</fr:schema>
@@ -75,9 +75,9 @@
  		<fr:edit id="erasmus.coordinator.bean" name="erasmusCoordinatorBean" visible="false" />
  		
 		<fr:edit id="erasmus.coordinator.bean.assign" name="erasmusCoordinatorBean">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean">
 				<fr:slot name="degree" layout="menu-select" key="label.erasmus.degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
 			        <fr:property name="format" value="${degreeType.localizedName} - ${nameI18N}" />
 			        <fr:property name="sortBy" value="degreeType.localizedName=asc, nameI18N=asc"/>
 				</fr:slot>

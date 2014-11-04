@@ -52,7 +52,7 @@
 	</div>
 </logic:messagesPresent>
 
-<bean:define id="bean" name="enrolmentBean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean"/>
+<bean:define id="bean" name="enrolmentBean" type="org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean"/>
 
 <fr:form action='<%= "/" + actionName + ".do" %>'>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCurricular"/>

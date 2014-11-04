@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.scientificCouncil;
+package org.fenixedu.academic.ui.struts.action.manager.scientificCouncil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,15 +24,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.SaveTeachersBody;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.UpdateNonAffiliatedTeachersProfessorship;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.manager.SaveTeachersBody;
+import org.fenixedu.academic.service.services.manager.UpdateNonAffiliatedTeachersProfessorship;
+import org.fenixedu.academic.ui.struts.action.base.FenixAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.InvalidArgumentsActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.NonExistingActionException;
+import org.fenixedu.academic.ui.struts.action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,12 +51,12 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "readCurricularCourse",
         path = "/scientificCouncil/masterDegreeCreditsManagement.do?method=prepareEdit") })
 @Exceptions(value = {
-        @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
-                handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = org.fenixedu.academic.domain.exceptions.DomainException.class,
+                handler = org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler.class, scope = "request"),
         @ExceptionHandling(
-                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException.class,
+                type = org.fenixedu.academic.ui.struts.action.exceptions.InvalidArgumentsActionException.class,
                 key = "presentationTier.Action.exceptions.InvalidArgumentsActionException",
-                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+                handler = org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class SaveTeachersBodyActionForScientificCouncil extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

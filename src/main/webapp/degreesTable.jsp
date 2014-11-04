@@ -38,7 +38,7 @@
 	boolean hasDegree = false;
 %>
 
-	<logic:iterate id="degree" name="degrees" type="net.sourceforge.fenixedu.domain.Degree">
+	<logic:iterate id="degree" name="degrees" type="org.fenixedu.academic.domain.Degree">
 		<logic:equal name="degree" property="degreeType" value="<%= degreeType.toString() %>">
 			<%if ((renderBolonha.equals("false") && !degree.isBolonhaDegree())|| (renderBolonha.equals("true") && degree.isBolonhaDegree())) {
 				hasDegree = true;
@@ -51,7 +51,7 @@
 %>
 
 <table>
-	<logic:iterate id="degree" name="degrees" type="net.sourceforge.fenixedu.domain.Degree">
+	<logic:iterate id="degree" name="degrees" type="org.fenixedu.academic.domain.Degree">
 		<logic:equal name="degree" property="degreeType" value="<%= degreeType.toString() %>">
 			<%if ((renderBolonha.equals("false") && !degree.isBolonhaDegree())|| (renderBolonha.equals("true") && degree.isBolonhaDegree())) { %>
 				<bean:define id="degreeCode" name="degree" property="sigla"/>

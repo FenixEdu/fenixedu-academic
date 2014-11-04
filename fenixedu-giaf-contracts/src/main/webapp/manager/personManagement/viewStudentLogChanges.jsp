@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%><html:xhtml />
+<%@page import="org.fenixedu.academic.domain.person.RoleType"%><html:xhtml />
 
 <h2><bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/></h2>
 
@@ -83,7 +83,7 @@
 		</style>
 	
 	<fr:view name="logsList">
-		<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="APPLICATION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.PersonInformationLog" bundle="APPLICATION_RESOURCES">
 			<fr:slot name="person" layout="null-as-label">
 				<fr:property name="subSchema" value="person.photo" />
 				<fr:property name="subLayout" value="values"/>

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.servlets.filters;
+package org.fenixedu.academic.servlet.filters;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,12 +37,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
-import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
-import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCreditsDocument;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.credits.AnnualCreditsState;
+import org.fenixedu.academic.domain.credits.AnnualTeachingCredits;
+import org.fenixedu.academic.domain.credits.AnnualTeachingCreditsDocument;
+import org.fenixedu.academic.domain.person.RoleType;
 
 import org.apache.commons.lang.StringUtils;
 import org.htmlcleaner.HtmlCleaner;

@@ -22,7 +22,7 @@
 <!DOCTYPE schemas SYSTEM "../fenix-renderers-schemas.dtd">
 
 <schemas>
-<schema name="presentVigilantWithCategory" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
+<schema name="presentVigilantWithCategory" type="org.fenixedu.academic.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
         <slot name="person.teacher" layout="null-as-label" key="label.vigilancy.category">
             <property name="label" value=" "/>
             <property name="subLayout" value="values"/>
@@ -34,7 +34,7 @@
         <slot name="estimatedPoints"/>
 </schema>
 
-<schema name="presentTeacherCategoryCode" type="net.sourceforge.fenixedu.domain.Teacher" bundle="VIGILANCY_RESOURCES">
+<schema name="presentTeacherCategoryCode" type="org.fenixedu.academic.domain.Teacher" bundle="VIGILANCY_RESOURCES">
     <slot name="category" layout="null-as-label" key="label.vigilancy.category">
         <property name="label" value=" "/>
         <property name="subLayout" value="values"/>
@@ -42,26 +42,26 @@
     </slot>
 </schema>
 
-<schema name="presentTeacherCategoryCodeString" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory" bundle="VIGILANCY_RESOURCES">
+<schema name="presentTeacherCategoryCodeString" type="org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory" bundle="VIGILANCY_RESOURCES">
     <slot name="name" key="label.vigilancy.category"/>
 </schema>
 
-<schema name="presentVigilantWrapperName" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
+<schema name="presentVigilantWrapperName" type="org.fenixedu.academic.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
         <slot name="person.name"/>
 </schema>
 
-<schema name="presentPersonName" type="net.sourceforge.fenixedu.domain.Person" bundle="VIGILANCY_RESOURCES">
+<schema name="presentPersonName" type="org.fenixedu.academic.domain.Person" bundle="VIGILANCY_RESOURCES">
         <slot name="name" key="label.vigilancy.incompatible.vigilants"/>
 </schema>
 
 
-<schema name="presentVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
+<schema name="presentVigilant" type="org.fenixedu.academic.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
         <slot name="person.name" key="label.vigilancy.vigilant"/>
         <slot name="person.username" key="label.vigilancy.username"/> 
         <slot name="points" key="label.vigilancy.totalPoints"/>
 </schema>
 
-<schema name="presentVigilantWithIncompatiblePerson" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
+<schema name="presentVigilantWithIncompatiblePerson" type="org.fenixedu.academic.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
         <slot name="person" key="label.vigilancy.vigilant" layout="format">
             <property name="format" value="${name} incompativel com"/>
         </slot>
@@ -69,7 +69,7 @@
 </schema>   
 <!-- UnavailablePeriod Schemas -->
 
-<schema name="unavailable.create" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodBean" bundle="VIGILANCY_RESOURCES">
+<schema name="unavailable.create" type="org.fenixedu.academic.ui.struts.action.vigilancy.UnavailablePeriodBean" bundle="VIGILANCY_RESOURCES">
         <slot name="beginDate" key="label.vigilancy.beginDate"/>
         <slot name="endDate" key="label.vigilancy.endDate"/>
         <slot name="justification" key="label.vigilancy.justification" layout="longText">
@@ -78,13 +78,13 @@
         </slot>
 </schema>       
     
-<schema name="unavailableShow" type="net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod" bundle="VIGILANCY_RESOURCES">
+<schema name="unavailableShow" type="org.fenixedu.academic.domain.vigilancy.UnavailablePeriod" bundle="VIGILANCY_RESOURCES">
         <slot name="beginDate" key="label.vigilancy.beginDate"/>
         <slot name="endDate" key="label.vigilancy.endDate"/>
         <slot name="justification" key="label.vigilancy.justification"/>
 </schema>
     
-<schema name="unavailableShowForCoordinator" type="net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod" bundle="VIGILANCY_RESOURCES">
+<schema name="unavailableShowForCoordinator" type="org.fenixedu.academic.domain.vigilancy.UnavailablePeriod" bundle="VIGILANCY_RESOURCES">
         <slot name="beginDate" key="label.vigilancy.beginDate"/>
         <slot name="endDate" key="label.vigilancy.endDate"/>
         <slot name="person.name" key="label.vigilancy.name"/>
@@ -93,12 +93,12 @@
 
 <!--  VigilantGroup Schemas -->
 
-<schema name="vigilantGroup.block1" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="vigilantGroup.block1" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="name" key="label.vigilancy.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
             <property name="size" value="40"/>
         </slot>
         <slot name="convokeStrategy" key="label.vigilancy.algorithm" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StrategyProvider"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StrategyProvider"/>
         </slot>
         <slot name="contactEmail" key="label.vigilancy.contactEmail" validator="pt.ist.fenixWebFramework.renderers.validators.EmailValidator">
             <property name="size" value="40"/>
@@ -113,60 +113,60 @@
             <property name="commentClasses" value="smalltxt color555"/>
         </slot>
 </schema>
-<schema name="vigilantGroup.block2" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
-        <slot name="beginFirstUnavailablePeriod" key="label.vigilancy.start" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-        <slot name="endFirstUnavailablePeriod" key="label.vigilancy.end" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+<schema name="vigilantGroup.block2" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+        <slot name="beginFirstUnavailablePeriod" key="label.vigilancy.start" validator="org.fenixedu.academic.ui.renderers.validators.DateTimeValidator"/>
+        <slot name="endFirstUnavailablePeriod" key="label.vigilancy.end" validator="org.fenixedu.academic.ui.renderers.validators.DateTimeValidator"/>
 </schema>
-<schema name="vigilantGroup.block3" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
-        <slot name="beginSecondUnavailablePeriod" key="label.vigilancy.start" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
-        <slot name="endSecondUnavailablePeriod" key="label.vigilancy.end" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+<schema name="vigilantGroup.block3" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+        <slot name="beginSecondUnavailablePeriod" key="label.vigilancy.start" validator="org.fenixedu.academic.ui.renderers.validators.DateTimeValidator"/>
+        <slot name="endSecondUnavailablePeriod" key="label.vigilancy.end" validator="org.fenixedu.academic.ui.renderers.validators.DateTimeValidator"/>
 </schema>
     
-<schema name="vigilantGroup.selectToEdit" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="vigilantGroup.selectToEdit" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedVigilantGroup" key="label.vigilancy.vigilantGroup" layout="menu-select-postback">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsOfExamCoordinator"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantGroupsOfExamCoordinator"/>
             <property name="format" value="${name}"/>
             <property name="sortBy" value="name"/>
         </slot>
 </schema>
 
-<schema name="selectVigilantGroupForConvokes" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectVigilantGroupForConvokes" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedVigilantGroup" key="label.vigilancy.vigilantGroup" layout="menu-select-postback">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsOfExamCoordinator" />
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantGroupsOfExamCoordinator" />
             <property name="format" value="${name}"/>
         </slot>
 </schema>
 
-<schema name="selectVigilantGroupForPoints" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectVigilantGroupForPoints" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedVigilantGroup" key="label.vigilancy.vigilantGroup" layout="menu-select-postback">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsForPoints" />
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantGroupsForPoints" />
             <property name="format" value="${name} - ${executionYear.year}"/>
             <property name="sortBy" value="executionYear.year=desc"/>
         </slot>
 </schema>
 
 <!--  Like this because providers needs context in the vigilantGroupBean--> 
-<schema name="addVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="addVigilants" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="employees" key="label.vigilancy.employees" layout="tabular-option" schema="presentEmployeeWithCatAndNumber">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EmployeesForGivenUnit"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EmployeesForGivenUnit"/>
             <property name="classes" value="tstyle1"/>
             <property name="emptyMessageKey" value="label.vigilancy.noEmployees"/>
             <property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
         </slot>
 </schema>
 
-<schema name="removeVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="removeVigilants" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
     <slot name="vigilants" key="label.vigilancy.vigilants" layout="tabular-option" schema="presentVigilantWithCategory">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenVigilantGroup"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantsForGivenVigilantGroup"/>
             <property name="classes" value="tstyle1"/>
             <property name="emptyMessageKey" value="label.vigilancy.noVigilantsInGroup"/>
             <property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
     </slot>     
 </schema>
     
-<schema name="removeCoordinators" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="removeCoordinators" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="examCoordinators" key="label.vigilancy.employees" layout="option-select">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExamCoordinatorsForGivenGroup"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExamCoordinatorsForGivenGroup"/>
             <property name="eachLayout" value="values"/>
             <property name="eachSchema" value="presentCoordinatorName"/>
             <property name="emptyMessageKey" value="label.vigilancy.noExamCoordinatorsInGroup"/>
@@ -175,9 +175,9 @@
         </slot>
 </schema>
     
-<schema name="addCoordinators" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="addCoordinators" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
     <slot name="examCoordinators" key="label.vigilancy.vigilants" layout="option-select">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExamCoordinatorsForGivenUnit"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExamCoordinatorsForGivenUnit"/>
             <property name="eachLayout" value="values"/>
             <property name="eachSchema" value="presentCoordinatorName"/>
             <property name="emptyMessageKey" value="label.vigilancy.noExamCoordinators"/>
@@ -189,28 +189,28 @@
     
 
             
-<schema name="selectUnitInVigilantGroup" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectUnitInVigilantGroup" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedUnit" key="label.vigilancy.unit" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitsOfDepartmentForVigilantGroup"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.UnitsOfDepartmentForVigilantGroup"/>
         <property name="format" value="${name}"/>
         </slot>
 </schema>
 
-<schema name="addExternalPerson" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="addExternalPerson" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="username" key="label.vigilancy.personUsername"/>
         <slot name="vigilantGroups" key="label.vigilancy.vigilantGroups" layout="option-select">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsOfExamCoordinatorSelectMany"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantGroupsOfExamCoordinatorSelectMany"/>
             <property name="eachLayout" value="values"/>
             <property name="eachSchema" value="presentVigilantGroupName"/>
             <property name="classes" value="list2"/>
         </slot>
 </schema>   
 
-<schema name="presentVigilantGroupName" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
+<schema name="presentVigilantGroupName" type="org.fenixedu.academic.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
         <slot name="name"/>
 </schema>
 
-<schema name="edit.vigilantGroup.points" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
+<schema name="edit.vigilantGroup.points" type="org.fenixedu.academic.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
     <slot name="pointsForTeacher">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -255,7 +255,7 @@
     </slot>
 </schema>
 
-<schema name="previousPointsForGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
+<schema name="previousPointsForGroup" type="org.fenixedu.academic.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
     <slot name="pointsForTeacher"/>
     <slot name="pointsForConvoked"/>
     <slot name="pointsForDismissed"/>
@@ -268,7 +268,7 @@
 <!--  Convokes Schemas -->
 
 
-<schema name="present.convokes" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">    
+<schema name="present.convokes" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">    
         <slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
             <property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${externalId}&amp;method=showWrittenEvaluationReport"/>
             <property name="subLayout" value="values-comma"/>
@@ -281,7 +281,7 @@
         <slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
-<schema name="presentSimpleConvokesWithLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">   
+<schema name="presentSimpleConvokesWithLink" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">   
         <slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
             <property name="linkFormat" value="/examCoordination/vigilancy/convokeManagement.do?writtenEvaluationId=${externalId}&amp;method=showReport"/>
             <property name="subLayout" value="values-comma"/>
@@ -292,7 +292,7 @@
         <slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
-<schema name="presentSimpleConvokesWithoutLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">    
+<schema name="presentSimpleConvokesWithoutLink" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">    
         <slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="values-comma" schema="presentWrittenEvaluationName">
             <property name="classes" value="bluetxt"/>
             <property name="indentation" value="true"/>
@@ -300,7 +300,7 @@
         <slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
-<schema name="presentSimpleConvokesForVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">    
+<schema name="presentSimpleConvokesForVigilant" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">    
         <slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation.header" layout="link">
             <property name="linkFormat" value="/departmentMember/vigilancy/vigilantManagement.do?writtenEvaluationId=${externalId}&amp;method=showWrittenEvaluationReport"/>
             <property name="subLayout" value="values-comma"/>
@@ -310,26 +310,26 @@
         <slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
-<schema name="presentConvokesAllInfoForVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"
+<schema name="presentConvokesAllInfoForVigilant" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"
 extends="presentSimpleConvokesForVigilant"> 
         <slot name="active" key="label.vigilancy.active.header" />
         <slot name="confirmed" key="label.vigilancy.confirmed.header"/>
         <slot name="attendedToConvoke" key="label.vigilancy.attended.header"/>
 </schema>
 
-<schema name="present.convokesForCoordinator" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"
+<schema name="present.convokesForCoordinator" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"
 extends="presentSimpleConvokesWithLink">
         <slot name="active" key="label.vigilancy.active.header"/>
         <slot name="confirmed" key="label.vigilancy.confirmed.header"/>
 </schema>
 
-<schema name="present.convokesForCoordinator.withoutLink" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"
+<schema name="present.convokesForCoordinator.withoutLink" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"
 extends="presentSimpleConvokesWithoutLink">
         <slot name="active" key="label.vigilancy.active.header"/>
         <slot name="confirmed" key="label.vigilancy.confirmed.header"/>
 </schema>
 
-<schema name="presentWrittenEvaluationName" type="net.sourceforge.fenixedu.domain.WrittenEvaluation" bundle="VIGILANCY_RESOURCES">  
+<schema name="presentWrittenEvaluationName" type="org.fenixedu.academic.domain.WrittenEvaluation" bundle="VIGILANCY_RESOURCES">  
         <slot name="fullName" key="label.vigilancy.writtenEvaluation.header"/>
         <slot name="dayDateYearMonthDay" key="label.vigilancy.date"/>       
         <slot name="beginningDateHourMinuteSecond" key="label.vigilancy.date"/>
@@ -341,7 +341,7 @@ extends="presentSimpleConvokesWithoutLink">
 </schema>
 
 
-<schema name="presentWrittenEvaluationNameDateFirst" type="net.sourceforge.fenixedu.domain.WrittenEvaluation" bundle="VIGILANCY_RESOURCES"> 
+<schema name="presentWrittenEvaluationNameDateFirst" type="org.fenixedu.academic.domain.WrittenEvaluation" bundle="VIGILANCY_RESOURCES"> 
         <slot name="dayDateYearMonthDay" key="label.vigilancy.date">        
             <property name="classes" value="color888"/>
         </slot>
@@ -351,28 +351,28 @@ extends="presentSimpleConvokesWithoutLink">
         <slot name="name" key="label.vigilancy.writtenEvaluation.header"/>
 </schema>
 
-<schema name="selectVigilantsThatAreTeachers" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectVigilantsThatAreTeachers" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedTeachers" layout="tabular-option" schema="presentVigilantWithCategory">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TeachersInAGivenConvoke"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.TeachersInAGivenConvoke"/>
             <property name="classes" value="tstyle1 mtop0" />   
         </slot>
 </schema>
-<schema name="selectVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectVigilants" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
         <slot name="vigilants" key="label.vigilancy.vigilants" layout="tabular-option-postback" schema="presentVigilantWithCategory">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsForGivenVigilantGroup"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantsForGivenVigilantGroup"/>
             <property name="classes" value="tstyle1 mtop0" />
         </slot>
 </schema>
-<schema name="selectVigilantsThatAreUnavailable" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">        
+<schema name="selectVigilantsThatAreUnavailable" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">        
         <slot name="selectedUnavailableVigilants" key="label.vigilancy.vigilants" layout="tabular-option" schema="presentVigilantWithCategory">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnavaibleVigilantsInGivenConvoke"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.UnavaibleVigilantsInGivenConvoke"/>
             <property name="classes" value="tstyle1 mtop0" />
         </slot>
 </schema>
 
-<schema name="selectUnavailableVigilants" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectUnavailableVigilants" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedUnavailableVigilants" key="label.vigilancy.vigilants" layout="option-select">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnavaibleVigilantsInGivenConvoke"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.UnavaibleVigilantsInGivenConvoke"/>
             <property name="eachLayout" value="values"/>
             <property name="eachSchema" value="presentVigilantInline"/>
             <property name="classes" value="list2" />
@@ -380,7 +380,7 @@ extends="presentSimpleConvokesWithoutLink">
 </schema>   
 
     
-<schema name="confirmConvokes" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="confirmConvokes" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
         <slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation">
         <property name="format" value="${name}"/>
         </slot>
@@ -391,34 +391,34 @@ extends="presentSimpleConvokesWithoutLink">
         </slot>
 </schema>
 
-<schema name="showEmail" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="showEmail" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
         <slot name="emailMessage" layout="longText" key="label.vigilancy.email">
         <property name="columns" value="100"/>
         <property name="rows" value="30"/>
         </slot>
 </schema>   
 
-<schema name="presentSugestion" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="presentSugestion" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
         <slot name="vigilants" key="label.vigilancy.vigilants" layout="option-select">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantsSugested"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantsSugested"/>
             <property name="eachLayout" value="values"/>
             <property name="eachSchema" value="presentVigilantInline"/>
             <property name="classes" value="tstyle1a" />
         </slot>
 </schema>
 
-<schema name="prepare.yearselect" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES">
+<schema name="prepare.yearselect" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES">
         <slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback" >
             <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
             <property name="format" value="${year}"/>
         </slot>
 </schema> 
 
-<schema name="examCoordinatorOptions" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="prepare.yearselect">
+<schema name="examCoordinatorOptions" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="prepare.yearselect">
         <slot name="selectedVigilantGroup" layout="menu-select-postback" key="label.vigilancy.vigilantGroup">
         <property name="providerClass" 
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsOfExamCoordinator" />
+            value="org.fenixedu.academic.ui.renderers.providers.VigilantGroupsOfExamCoordinator" />
         <property name="format" value="${name}"/>
         </slot>
         <slot name="showIncompatibilities" key="label.vigilancy.incompatibilities" layout="option-select-postback"/>
@@ -431,15 +431,15 @@ extends="presentSimpleConvokesWithoutLink">
         <slot name="showOwnVigilancies" key="label.vigilancy.showOwnVigilancies" layout="option-select-postback"/>
 </schema>
 
-<schema name="selectWrittenEvaluation" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="selectVigilantGroupForConvokes">
+<schema name="selectWrittenEvaluation" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES" extends="selectVigilantGroupForConvokes">
         <slot name="writtenEvaluation" key="label.vigilancy.writtenEvaluation" layout="menu-select-postback">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.WrittenEvaluationForGivenVigilantGroup" />
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.WrittenEvaluationForGivenVigilantGroup" />
             <property name="format" value="${beginningDateTime.dayOfMonth}/${beginningDateTime.monthOfYear}/${beginningDateTime.year} ${beginningDateTime.hourOfDay}:${beginningDateTime.minuteOfHour,02d} ${fullName} (${degreesAsString} - ${evaluationType})  "/>
             <property name="sortBy" value="beginningDateTime"/>
         </slot>
 </schema>
 
-<schema name="presentConvokesWithVigilant" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"> 
+<schema name="presentConvokesWithVigilant" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES"> 
         <slot name="vigilant.person.username" key="label.vigilancy.username"/>
         <slot name="vigilant.person.name" key="label.vigilancy.vigilant"/>
         <slot name="vigilant.points" key="label.vigilancy.totalPoints.header"/>
@@ -455,7 +455,7 @@ extends="presentSimpleConvokesWithoutLink">
         <slot name="points" key="label.vigilancy.points.header"/>
 </schema>
         
-<schema name="convokesByVigilant.allInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" >
+<schema name="convokesByVigilant.allInformation" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" >
         <slot name="vigilant.teacherCategoryCode" key="label.vigilancy.category.header"/>
         <slot name="vigilant.person.username" key="label.vigilancy.username"/>
         <slot name="vigilant.person.name" key="label.vigilancy.vigilant"/>
@@ -469,7 +469,7 @@ extends="presentSimpleConvokesWithoutLink">
         <slot name="points" key="label.vigilancy.points.header"/>
 </schema>
 
-<schema name="convokesByVigilant.simpleInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.simpleInformation" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
         <remove name="vigilant.incompatiblePersonName"/>
         <remove name="active" />
@@ -478,7 +478,7 @@ extends="presentSimpleConvokesWithoutLink">
         <remove name="vigilant.boundsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.showOnlyBounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.showOnlyBounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
         <remove name="vigilant.incompatiblePersonName"/>
         <remove name="active" />
@@ -486,43 +486,43 @@ extends="presentSimpleConvokesWithoutLink">
         <remove name="attendedToConvoke" />
 </schema>
 
-<schema name="convokesByVigilant.exceptBounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.exceptBounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.boundsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.exceptUnavailables" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.exceptUnavailables" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
         <remove name="vigilant.boundsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.exceptUnavailablesAndBounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.exceptUnavailablesAndBounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.exceptIncompatibilities" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.exceptIncompatibilities" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.incompatiblePersonName"/>
         <remove name="vigilant.boundsAsString"/>
 </schema>   
 
-<schema name="convokesByVigilant.incompatibilitiesAndbounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.incompatibilitiesAndbounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.incompatiblePersonName"/>
 </schema>       
 
-<schema name="convokesByVigilant.exceptVigilancyInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.exceptVigilancyInformation" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
     <remove name="active" />
     <remove name="confirmed"/>
     <remove name="attendedToConvoke" />
     <remove name="vigilant.boundsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.exceptVigilancyInformationAndBounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.exceptVigilancyInformationAndBounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
     <remove name="active" />
     <remove name="confirmed"/>
     <remove name="attendedToConvoke" />
 </schema>
 
     
-<schema name="convokesByVigilant.onlyUnavailables" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.onlyUnavailables" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.incompatiblePersonName"/>
         <remove name="active" />
         <remove name="confirmed"/>
@@ -530,14 +530,14 @@ extends="presentSimpleConvokesWithoutLink">
         <remove name="vigilant.boundsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.unavailablesAndBounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.unavailablesAndBounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.incompatiblePersonName"/>
         <remove name="active" />
         <remove name="confirmed"/>
         <remove name="attendedToConvoke" />
 </schema>
 
-<schema name="convokesByVigilant.onlyIncompatibilities" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.onlyIncompatibilities" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
         <remove name="active" />
         <remove name="confirmed"/>
@@ -545,20 +545,20 @@ extends="presentSimpleConvokesWithoutLink">
         <remove name="vigilant.boundsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.incompatibilitiesAndBounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.incompatibilitiesAndBounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
         <remove name="active" />
         <remove name="confirmed"/>
         <remove name="attendedToConvoke" />
 </schema>
 
-<schema name="convokesByVigilant.onlyVigilancyInformation" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.onlyVigilancyInformation" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
         <remove name="vigilant.incompatiblePersonName"/>
         <remove name="vigilant.boundsAsString"/>
 </schema>
 
-<schema name="convokesByVigilant.vigilancyInformationAndBounds" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
+<schema name="convokesByVigilant.vigilancyInformationAndBounds" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="convokesByVigilant.allInformation">
         <remove name="vigilant.unavailablePeriodsAsString"/>
         <remove name="vigilant.incompatiblePersonName"/>
 </schema>
@@ -566,13 +566,13 @@ extends="presentSimpleConvokesWithoutLink">
 
 
 
-<schema name="showVigilantsFromConvokes" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">
+<schema name="showVigilantsFromConvokes" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">
         <slot name="vigilantWrapper" key="label.vigilancy.name">
             <property name="format" value="${person.name} (${person.username})"/>
         </slot>
 </schema>
     
-<schema name="visibleConvokeInfo" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
+<schema name="visibleConvokeInfo" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean" bundle="VIGILANCY_RESOURCES">
     <slot name="showIncompatibilities" key="label.vigilancy.incompatibilities" layout="option-select-postback"/>
     <slot name="showUnavailables" key="label.vigilancy.displayUnavailableInformation" layout="option-select-postback"/>
     <slot name="showAllVigilancyInfo" key="label.vigilancy.showAllVigilancyInfo" layout="option-select-postback"/>
@@ -580,7 +580,7 @@ extends="presentSimpleConvokesWithoutLink">
 
 <!--  ExecutionCourse Schemas-->
 
-<schema name="presentExecutionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse" bundle="VIGILANCY_RESOURCES">
+<schema name="presentExecutionCourse" type="org.fenixedu.academic.domain.ExecutionCourse" bundle="VIGILANCY_RESOURCES">
         <slot name="nome" key="label.vigilancy.executionCourses"/>
         <slot name="degreesSortedByDegreeName" layout="flowLayout">
             <property name="eachLayout" value="values"/>
@@ -593,65 +593,65 @@ extends="presentSimpleConvokesWithoutLink">
     <slot name="name"/>
 </schema>
     
-<schema name="presentDegree" type="net.sourceforge.fenixedu.domain.Degree" bundle="VIGILANCY_RESOURCES">
+<schema name="presentDegree" type="org.fenixedu.academic.domain.Degree" bundle="VIGILANCY_RESOURCES">
         <slot name="sigla"/>
 </schema>
         
-<schema name="removeExecutionCourses" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="removeExecutionCourses" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
     <slot name="courses" layout="option-select">
             <property name="eachLayout" value="values"/>
             <property name="classes" value="list2"/>
             <property name="eachSchema" value="presentExecutionCourse"/>
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesInGroup"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionCoursesInGroup"/>
             <property name="emptyMessageKey" value="label.vigilancy.noCoursesInGroup"/>
             <property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
             <property name="sortBy" value="nome"/>
     </slot>
 </schema>
 
-<schema name="addExecutionCourses" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="addExecutionCourses" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
     <slot name="coursesToAdd" layout="option-select">
             <property name="eachLayout" value="values"/>
             <property name="eachSchema" value="presentExecutionCourse"/>
             <property name="classes" value="list2"/>
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesForUnit"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionCoursesForUnit"/>
             <property name="emptyMessageKey" value="label.vigilancy.noCourses"/>
             <property name="emptyMessageBundle" value="VIGILANCY_RESOURCES"/>
             <property name="sortBy" value="nome"/>
     </slot>
 </schema>
 
-<schema name="addExternalCourse" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="addExternalCourse" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="externalCourse" key="label.vigilancy.name" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
             <property name="maxCount" value="30"/>
             <property name="size" value="40"/>
             <property name="format" value="${nome} (${degreePresentationString})"/>
-            <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchCurrentExecutionCourses"/>
+            <property name="provider" value="org.fenixedu.academic.service.services.commons.SearchCurrentExecutionCourses"/>
             <property name="args" value="slot=nome"/>
             <property name="minChars" value="3"/>   
         </slot>
 </schema>
 
-<schema name="addExternalCourse-withoutjs" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="addExternalCourse-withoutjs" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedDepartment" key="label.vigilancy.department" layout="menu-select">
             <property name="format" value="${realName}"/>
             <property name="sortBy" value="realName"/>
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.DepartmentProvider"/>
         </slot>
         <slot name="externalCourse" key="label.vigilancy.name" layout="menu-select">
             <property name="format" value="${nome} (${degreePresentationString})"/>
             <property name="sortBy" value="nome"/>
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SingleExecutionCourseForUnit"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.SingleExecutionCourseForUnit"/>
         </slot>
 </schema>
 
-<schema name="selectUnitInVigilancyGroup" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectUnitInVigilancyGroup" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedUnit" key="label.vigilancy.scientificArea" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitsOfDepartmentForVigilancyGroup"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.UnitsOfDepartmentForVigilancyGroup"/>
         <property name="format" value="${name}"/>
         </slot>
         <slot name="selectedCompetenceCourseGroupUnit" key="label.vigilancy.competenceCourseGroup" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CompetenceCourseGroupsForScientificArea"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CompetenceCourseGroupsForScientificArea"/>
         <property name="format" value="${name}"/>
         </slot>
 </schema>
@@ -660,31 +660,31 @@ extends="presentSimpleConvokesWithoutLink">
 
 <!--  examCoordinator -->
 
-<schema name="examCoordinator.create" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="examCoordinator.create" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="username" key="label.vigilancy.personUsername" />
 </schema>
 
-<schema name="examCoordinators.edit" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="examCoordinators.edit" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="examCoordinators" key="label.vigilancy.employees" layout="option-select">
-            <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExamCoordinatorsForGivenUnit"/>
+            <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExamCoordinatorsForGivenUnit"/>
             <property name="eachLayout" value="values"/>
             <property name="eachSchema" value="editCoordinatorPreviledges"/>
             <property name="classes" value="list2"/>
         </slot>
 </schema>
 
-<schema name="editCoordinatorPreviledges" type="net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
+<schema name="editCoordinatorPreviledges" type="org.fenixedu.academic.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
         <slot name="person.name" key="label.vigilancy.name" read-only="true"/>
         <slot name="allowedToCreateGroups" key="label.vigilancy.hasGroupCreationPreviledge" layout="radio">
             <property name="classes" value="nobullet liinline"/>
         </slot>
 </schema>
 
-<schema name="examCoordinator.edit" type="net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
+<schema name="examCoordinator.edit" type="org.fenixedu.academic.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
     <slot name="allowedToCreateGroups" key="label.vigilancy.allowedToCreateGroups"/>
 </schema>
 
-<schema name="showExamCoordinators" type="net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
+<schema name="showExamCoordinators" type="org.fenixedu.academic.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
         <slot name="person.name" key="label.vigilancy.name"/>
         <slot name="executionYear" key="label.vigilancy.executionYear">
             <property name="format" value="${year}"/>
@@ -692,14 +692,14 @@ extends="presentSimpleConvokesWithoutLink">
         <slot name="allowedToCreateGroups" key="label.vigilancy.hasGroupCreationPreviledge"/>
 </schema>
 
-<schema name="presentCoordinatorName" type="net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
+<schema name="presentCoordinatorName" type="org.fenixedu.academic.domain.vigilancy.ExamCoordinator" bundle="VIGILANCY_RESOURCES">
     <slot name="person.name" key="label.vigilancy.name"/>
 </schema>
 
-<schema name="addUnavailablePeriodToVigilant" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodBean" bundle="VIGILANCY_RESOURCES">
+<schema name="addUnavailablePeriodToVigilant" type="org.fenixedu.academic.ui.struts.action.vigilancy.UnavailablePeriodBean" bundle="VIGILANCY_RESOURCES">
         <slot name="vigilantWrapper" key="label.vigilancy.vigilants" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SelectVigilantForUnavailable"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.SelectVigilantForUnavailable"/>
             <property name="format" value="${person.name}"/>
         </slot>             
         <slot name="beginDate" key="label.vigilancy.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -712,13 +712,13 @@ extends="presentSimpleConvokesWithoutLink">
 
 
 <!--  Others -->    
-<schema name="presentEmployee" type="net.sourceforge.fenixedu.domain.Employee" bundle="VIGILANCY_RESOURCES">
+<schema name="presentEmployee" type="org.fenixedu.academic.domain.Employee" bundle="VIGILANCY_RESOURCES">
         <slot name="person" key="label.vigilancy.name">
             <property name="format" value="${name} (${username})"/>
         </slot>
 </schema>
 
-<schema name="presentEmployeeWithCatAndNumber" type="net.sourceforge.fenixedu.domain.Employee" bundle="VIGILANCY_RESOURCES">
+<schema name="presentEmployeeWithCatAndNumber" type="org.fenixedu.academic.domain.Employee" bundle="VIGILANCY_RESOURCES">
         <slot name="person.teacher" layout="null-as-label" key="label.vigilancy.category">
             <property name="label" value=" "/>
             <property name="subLayout" value="values"/>
@@ -730,10 +730,10 @@ extends="presentSimpleConvokesWithoutLink">
         </slot>
 </schema>
     
-<schema name="selectColumnsToDisplay" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectColumnsToDisplay" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback">
             <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
             <property name="format" value="${year}"/>
         </slot>
         <slot name="showVigilantColumn" key="label.vigilancy.vigilants" layout="option-select-postback"/>
@@ -741,25 +741,25 @@ extends="presentSimpleConvokesWithoutLink">
         <slot name="showCoordinators" key="label.vigilancy.examCoordinators" layout="option-select-postback"/>
 </schema>
 
-<schema name="selectYearToDisplay" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectYearToDisplay" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="executionYear" key="label.vigilancy.executionYear" layout="menu-select-postback">
             <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
             <property name="format" value="${year}"/>
         </slot>
 </schema>
 
-<schema name="selectVigilantsOfVigilantGroup" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
+<schema name="selectVigilantsOfVigilantGroup" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
         <slot name="selectedVigilantWrapper" key="label.vigilancy.vigilants" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantOfVigilantGroup"/>
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.VigilantOfVigilantGroup"/>
             <property name="format" value="${person.name}"/>
         </slot>
 </schema>
     
-<schema name="selectGroupsToDisplayMap" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES" extends="prepare.yearselect">
+<schema name="selectGroupsToDisplayMap" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantBean" bundle="VIGILANCY_RESOURCES" extends="prepare.yearselect">
         <slot name="selectedVigilantGroup" key="label.vigilancy.vigilantGroups" layout="menu-select-postback">      
             <property name="providerClass" 
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VigilantGroupsProvider" />
+            value="org.fenixedu.academic.ui.renderers.providers.VigilantGroupsProvider" />
             <property name="format" value="${name}"/>
         </slot>
         <slot name="showIncompatibilities" key="label.vigilancy.incompatibilities" layout="option-select-postback"/>
@@ -773,7 +773,7 @@ extends="presentSimpleConvokesWithoutLink">
 </schema>
     
     
-<schema name="showWhyUnavailable" type="net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation" bundle="VIGILANCY_RESOURCES">
+<schema name="showWhyUnavailable" type="org.fenixedu.academic.domain.vigilancy.strategies.UnavailableInformation" bundle="VIGILANCY_RESOURCES">
     <slot name="vigilant.person.name"/>
     <slot name="reason"/>
     <slot name="vigilant.unavailablePeriods"> 
@@ -782,7 +782,7 @@ extends="presentSimpleConvokesWithoutLink">
     </slot>     
 </schema>
 
-<schema name="editConvokableStatus" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
+<schema name="editConvokableStatus" type="org.fenixedu.academic.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
     <slot name="teacherCategoryCode" read-only="true" key="label.vigilancy.category"/>
     <slot name="person.username" read-only="true" key="label.vigilancy.username"/>
     <slot name="person.name" read-only="true" key="label.vigilancy.vigilant"/>
@@ -794,7 +794,7 @@ extends="presentSimpleConvokesWithoutLink">
     </slot>
 </schema>
 
-<schema name="editStartPoints" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
+<schema name="editStartPoints" type="org.fenixedu.academic.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">
     <slot name="teacherCategoryCode" read-only="true" key="label.vigilancy.category.header"/>
     <slot name="person.username" read-only="true" key="label.vigilancy.username"/>
     <slot name="person.name" read-only="true" key="label.vigilancy.vigilant"/>
@@ -809,13 +809,13 @@ extends="presentSimpleConvokesWithoutLink">
     
 </schema>
 
-<schema name="editVigilantBoundBean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantBoundBean" bundle="VIGILANCY_RESOURCES">
+<schema name="editVigilantBoundBean" type="org.fenixedu.academic.ui.struts.action.vigilancy.VigilantBoundBean" bundle="VIGILANCY_RESOURCES">
     <slot name="person"/>
     <slot name="group"/>
     <slot name="bound"/>
 </schema>
 
-<schema name="employeesForVigilantWrappers" type="net.sourceforge.fenixedu.domain.Employee" bundle="VIGILANCY_RESOURCES">
+<schema name="employeesForVigilantWrappers" type="org.fenixedu.academic.domain.Employee" bundle="VIGILANCY_RESOURCES">
     <slot name="person.teacher" layout="null-as-label" key="label.vigilancy.category">
             <property name="label" value=" "/>
             <property name="subLayout" value="values"/>
@@ -825,7 +825,7 @@ extends="presentSimpleConvokesWithoutLink">
     <slot name="person.name" key="label.vigilancy.name"/>
 </schema>
 
-<schema name="presentPersonWithCatAndNumber" type="net.sourceforge.fenixedu.domain.Person" bundle="VIGILANCY_RESOURCES">
+<schema name="presentPersonWithCatAndNumber" type="org.fenixedu.academic.domain.Person" bundle="VIGILANCY_RESOURCES">
         <slot name="teacher" layout="null-as-label" key="label.vigilancy.category">
             <property name="label" value=" "/>
             <property name="subLayout" value="values"/>
@@ -835,13 +835,13 @@ extends="presentSimpleConvokesWithoutLink">
         <slot name="name" key="label.vigilancy.name"/>
 </schema>
 
-<!--<schema name="presentExternalPersonWithCatAndNumber" type="net.sourceforge.fenixedu.domain.Person" bundle="VIGILANCY_RESOURCES">
+<!--<schema name="presentExternalPersonWithCatAndNumber" type="org.fenixedu.academic.domain.Person" bundle="VIGILANCY_RESOURCES">
         <slot name="currentVigilant.teacherCategoryCode" layout="null-as-label" key="label.vigilancy.category"/>
         <slot name="username" key="label.vigilancy.username"/>
         <slot name="name" key="label.vigilancy.name"/>
 </schema>-->
 
-<schema name="presentVigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">
+<schema name="presentVigilancy" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">
     <slot name="vigilant.teacher" layout="null-as-label" key="label.vigilancy.category">
         <property name="label" value=" "/>
         <property name="subLayout" value="values"/>
@@ -854,16 +854,16 @@ extends="presentSimpleConvokesWithoutLink">
     <slot name="confirmed" key="label.vigilancy.confirmed"/>
 </schema>
 
-<schema name="presentVigilancyWithParticipation" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="presentVigilancy">
+<schema name="presentVigilancyWithParticipation" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES" extends="presentVigilancy">
     <slot name="attended" key="label.vigilancy.attended"/>
 </schema>
 
-<schema name="presentVigilantNameForVigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">
+<schema name="presentVigilantNameForVigilancy" type="org.fenixedu.academic.domain.vigilancy.Vigilancy" bundle="VIGILANCY_RESOURCES">
     <slot name="vigilantWrapper.person.name" key="label.vigilancy.vigilantsThatTeachCourse"/>
 </schema>
 
 
-<schema name="showGroupStatsWithNames" type="net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView" bundle="VIGILANCY_RESOURCES">
+<schema name="showGroupStatsWithNames" type="org.fenixedu.academic.dto.WrittenEvaluationVigilancyView" bundle="VIGILANCY_RESOURCES">
     <slot name="writtenEvaluation" layout="values" schema="presentWrittenEvaluationNameDateFirst" key="label.vigilancy.writtenEvaluation.header"/>
     <slot name="totalVigilancies"/>
     <slot name="vigilanciesFromTeachers"/>
@@ -898,7 +898,7 @@ extends="presentSimpleConvokesWithoutLink">
     </slot>
 </schema>
 
-<schema name="showGroupStats" type="net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView" bundle="VIGILANCY_RESOURCES">
+<schema name="showGroupStats" type="org.fenixedu.academic.dto.WrittenEvaluationVigilancyView" bundle="VIGILANCY_RESOURCES">
     <slot name="writtenEvaluation" layout="values" schema="presentWrittenEvaluationNameDateFirst" key="label.vigilancy.writtenEvaluation.header"/>
     <slot name="totalVigilancies"/>
     <slot name="vigilanciesFromTeachers"/>
@@ -908,7 +908,7 @@ extends="presentSimpleConvokesWithoutLink">
     <slot name="numberOfAttendedConvokes"/>
 </schema>
 
-<schema name="variant.integer" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="VIGILANCY_RESOURCES">
+<schema name="variant.integer" type="org.fenixedu.academic.dto.VariantBean" bundle="VIGILANCY_RESOURCES">
     <slot name="integer" key="label.vigilancy.selectNumberOfVigilantsToUnconvoke" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="1"/>
     </slot>

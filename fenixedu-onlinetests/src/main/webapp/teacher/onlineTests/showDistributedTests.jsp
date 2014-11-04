@@ -93,7 +93,7 @@ function invertSelect(){
 					<th class="listClasses-header"><bean:message key="message.testBeginDate" /></th>
 					<th class="listClasses-header"><bean:message key="message.testEndDate" /></th>
 				</tr>
-				<logic:iterate id="distributedTest" name="distributedTests" type="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
+				<logic:iterate id="distributedTest" name="distributedTests" type="org.fenixedu.academic.domain.onlineTests.DistributedTest">
 					<tr>
 						<bean:define id="testType" name="distributedTest" property="testType.type" />
 						<bean:define id="distributedTestCode" name="distributedTest" property="externalId" />

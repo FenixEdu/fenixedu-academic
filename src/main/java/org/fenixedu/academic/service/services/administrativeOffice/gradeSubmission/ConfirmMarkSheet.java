@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
+package org.fenixedu.academic.service.services.administrativeOffice.gradeSubmission;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.Person;
+import org.fenixedu.academic.domain.MarkSheet;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ConfirmMarkSheet {

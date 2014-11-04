@@ -24,7 +24,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%>
+<%@page import="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess"%>
 
 <logic:notEmpty name="process" property="seminarProcess">
 <logic:equal name="process" property="activeState.active" value="true">

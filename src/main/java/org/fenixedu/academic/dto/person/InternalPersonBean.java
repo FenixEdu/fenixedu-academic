@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.person;
+package org.fenixedu.academic.dto.person;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import org.fenixedu.academic.domain.person.RoleType;
 
 public class InternalPersonBean extends PersonBean {
 

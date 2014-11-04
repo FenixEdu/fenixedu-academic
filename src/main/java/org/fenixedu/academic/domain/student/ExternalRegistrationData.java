@@ -16,13 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student;
-
-import net.sourceforge.fenixedu.dataTransferObject.student.ExternalRegistrationDataBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+package org.fenixedu.academic.domain.student;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.dto.student.ExternalRegistrationDataBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**

@@ -3,7 +3,7 @@
 
 <renderers-config>
     <!--@ Special layout to present a vigilant table with a slightly different organization. -->
-    <renderer type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" layout="vigilant-table" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantTableRender">
+    <renderer type="org.fenixedu.academic.domain.vigilancy.VigilantGroup" layout="vigilant-table" class="org.fenixedu.academic.ui.renderers.VigilantTableRender">
         <property name="convokeTitleKey" value="vigilantTable.convoke.title"/> 
         <property name="convokeTitleBundle" value="VIGILANCY_RESOURCES"/> 
         <property name="deletedConvokeClasses" value="color888"/>
@@ -11,5 +11,5 @@
         <property name="warningClass" value="highlight8" />
     </renderer>
 
-    <renderer mode="input" type="java.util.Collection" layout="vigilantsInGroup-render" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantsInGroupRender"/>
+    <renderer mode="input" type="java.util.Collection" layout="vigilantsInGroup-render" class="org.fenixedu.academic.ui.renderers.VigilantsInGroupRender"/>
 </renderers-config>

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
+package org.fenixedu.academic.ui.faces.components.degreeStructure;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -25,24 +25,23 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
-
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.CurricularPeriodLabelFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class UICurricularCourse extends UIDegreeModule {
 
     public static final String COMPONENT_TYPE =
-            "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
+            "org.fenixedu.academic.ui.faces.components.degreeStructure.UICurricularCourse";
 
     public static final String COMPONENT_FAMILY =
-            "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
+            "org.fenixedu.academic.ui.faces.components.degreeStructure.UICurricularCourse";
 
     private final CurricularCourse curricularCourse;
     private final boolean byYears;

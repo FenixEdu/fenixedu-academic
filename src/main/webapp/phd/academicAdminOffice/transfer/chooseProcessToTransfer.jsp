@@ -19,7 +19,7 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdParticipant"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -74,7 +74,7 @@
 <em><strong><bean:message key="message.choose.new.phd.process.to.transfer" bundle="PHD_RESOURCES" /></strong></em>
 
 <fr:view name="studentProcesses">
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess">
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess">
 		<fr:slot name="processNumber" />
 		<fr:slot name="phdProgram" layout="null-as-label">
 			<fr:property name="subLayout" value="values" />

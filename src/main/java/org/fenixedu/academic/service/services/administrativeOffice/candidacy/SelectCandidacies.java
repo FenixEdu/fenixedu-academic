@@ -19,16 +19,17 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
+package org.fenixedu.academic.service.services.administrativeOffice.candidacy;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean;
-import net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation;
-import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
+import org.fenixedu.academic.domain.candidacy.SubstituteCandidacySituation;
+import org.fenixedu.academic.domain.util.workflow.StateMachine;
+import org.fenixedu.academic.dto.administrativeOffice.candidacy.SelectDFACandidacyBean;
+import org.fenixedu.academic.predicate.RolePredicates;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

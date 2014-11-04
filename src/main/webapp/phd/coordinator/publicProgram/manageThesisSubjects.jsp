@@ -30,7 +30,7 @@
 
 <h2><bean:message key="label.phd.focusAreas" bundle="PHD_RESOURCES" /></h2>
 
-<bean:define id="focusArea" name="focusArea" type="net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea"/>
+<bean:define id="focusArea" name="focusArea" type="org.fenixedu.academic.domain.phd.PhdProgramFocusArea"/>
 <h3><bean:write name="focusArea" property="name.content" /></h3>
 
 <%--  ### Error Messages  ### --%>
@@ -41,7 +41,7 @@
 
 <logic:notEmpty name="thesisSubjects">
 	<fr:view name="thesisSubjects">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.ThesisSubject">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.ThesisSubject">
 			<fr:slot name="name.content" key="label.phd.name"/>
 			<fr:slot name="teacher.person.name" key="label.phd.guiding"/>
 			<fr:slot name="externalAdvisorName" key="label.phd.guiding.external"/>
@@ -68,7 +68,7 @@
 
 <fr:form action="<%= "/candidacies/phdProgramCandidacyProcess.do?method=addThesisSubject&focusAreaId=" + focusArea.getExternalId() %>">
 	<fr:edit id="thesisSubjectBean" name="thesisSubjectBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$ThesisSubjectBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.ui.struts.action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$ThesisSubjectBean">
 			<fr:slot name="name" key="label.phd.name" >
 				<fr:property name="size" value="80" />
 				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator" />
@@ -77,7 +77,7 @@
 				<fr:property name="size" value="80"/>
 				<fr:property name="labelField" value="person.name"/>
 				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachers"/>
+				<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchTeachers"/>
 				<fr:property name="args" value="slot=person.name"/>
 				<fr:property name="minChars" value="3"/>
 				<fr:property name="errorStyleClass" value="error0"/>

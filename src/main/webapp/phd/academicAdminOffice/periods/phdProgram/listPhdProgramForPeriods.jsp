@@ -19,7 +19,7 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -48,7 +48,7 @@
 <p><strong><bean:message  key="title.phd.programs" bundle="PHD_RESOURCES"/></strong></p>
 
 <fr:view name="phdPrograms" >
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" >
+	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgram" >
 		<fr:slot name="acronym" />
 		<fr:slot name="name" />
 		<%-- 

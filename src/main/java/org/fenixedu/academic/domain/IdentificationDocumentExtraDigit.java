@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
-
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+package org.fenixedu.academic.domain;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class IdentificationDocumentExtraDigit extends IdentificationDocumentExtraDigit_Base {
 

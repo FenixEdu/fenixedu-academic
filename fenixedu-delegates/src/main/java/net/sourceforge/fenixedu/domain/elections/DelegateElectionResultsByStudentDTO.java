@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.elections;
+package org.fenixedu.academic.domain.elections;
 
-import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.student.Student;
+import org.fenixedu.academic.dto.DataTranferObject;
+import org.fenixedu.academic.domain.student.Student;
 
 public class DelegateElectionResultsByStudentDTO extends DataTranferObject {
     private Student student;

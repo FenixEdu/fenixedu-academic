@@ -16,23 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.personnelSection;
+package org.fenixedu.academic.ui.struts.action.personnelSection;
 
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewInternalPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPersonMatchingAnyParameter;
-import net.sourceforge.fenixedu.dataTransferObject.person.InternalPersonBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.service.services.manager.CreateNewInternalPerson;
+import org.fenixedu.academic.service.services.person.SearchPersonMatchingAnyParameter;
+import org.fenixedu.academic.dto.person.InternalPersonBean;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Person.AnyPersonSearchBean;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;

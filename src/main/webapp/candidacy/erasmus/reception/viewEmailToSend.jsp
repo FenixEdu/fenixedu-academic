@@ -41,7 +41,7 @@
 	<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=sendReceptionEmail&amp;processId=" + processId.toString() %>' id="send-form">
 	
 		<fr:view name="sendReceptionEmailBean">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
 				<fr:slot name="emailSubject" key="label.erasmus.send.reception.edit.subject"/>
 				<fr:slot name="emailBody" key="label.erasmus.send.reception.edit.body" />
 			</fr:schema>

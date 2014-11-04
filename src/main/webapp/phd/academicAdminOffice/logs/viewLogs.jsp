@@ -46,7 +46,7 @@
 
 		<fr:view name="logs">
 	
-			<fr:schema type="net.sourceforge.fenixedu.domain.phd.log.PhdLogEntry" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.phd.log.PhdLogEntry" bundle="PHD_RESOURCES">
 				<fr:slot name="whenOccured" />
 				<fr:slot name="responsibleName" />
 				<fr:slot name="state" />

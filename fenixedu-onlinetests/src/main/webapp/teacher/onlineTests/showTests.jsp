@@ -53,7 +53,7 @@
 				<th class="listClasses-header"><bean:message key="label.test.lastModifiedDate" /></th>
 				<th width="100" class="listClasses-header"><bean:message key="label.test.numberOfQuestions" /></th>
 			</tr>
-			<logic:iterate id="test" name="testList" type="net.sourceforge.fenixedu.domain.onlineTests.Test">
+			<logic:iterate id="test" name="testList" type="org.fenixedu.academic.domain.onlineTests.Test">
 				<tr>
 					<td class="listClasses"><bean:write name="test" property="title" /></td>
 					<td class="listClasses"><bean:write name="test" property="creationDateFormatted" /></td>

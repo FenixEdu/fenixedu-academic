@@ -37,10 +37,10 @@
 
 <fr:form id="searchForm" action="<%= "/xYear.do?method=showYearInformation&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() + "&locale=" + I18N.getLocale().getLanguage() %>"> <!-- + "&gwt.codesvr=127.0.0.1:9997" -->
 	<fr:edit id="searchFormBean" name="searchFormBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.YearViewBean" bundle="COORDINATOR_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.coordinator.xviews.YearViewBean" bundle="COORDINATOR_RESOURCES">
 			<fr:slot name="executionYear" layout="menu-select" key="label.executionYear" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForDegreeCurricularPlanProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsForDegreeCurricularPlanProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 		</fr:schema>

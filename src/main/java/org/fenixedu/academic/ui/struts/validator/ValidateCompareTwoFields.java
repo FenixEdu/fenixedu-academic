@@ -20,7 +20,7 @@
  * Created on 3/Dez/2003
  *  
  */
-package net.sourceforge.fenixedu.presentationTier.validator.form;
+package org.fenixedu.academic.ui.struts.validator;
 
 import java.util.Comparator;
 

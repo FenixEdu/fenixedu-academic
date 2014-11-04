@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
+package org.fenixedu.academic.ui.faces.bean.teacher.evaluation;
 
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateAdHocEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditAdHocEvaluation;
-import net.sourceforge.fenixedu.domain.AdHocEvaluation;
-import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.AdHocEvaluation;
+import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.teacher.CreateAdHocEvaluation;
+import org.fenixedu.academic.service.services.teacher.DeleteEvaluation;
+import org.fenixedu.academic.service.services.teacher.EditAdHocEvaluation;
 
 import pt.ist.fenixframework.FenixFramework;
 

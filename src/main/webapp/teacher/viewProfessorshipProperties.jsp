@@ -26,15 +26,15 @@
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript"></script>
 <script type="text/javascript">
 function inverSelection(){
-	jQuery('input[id^="net.sourceforge.fenixedu.domain.ProfessorshipPermissions"]').each(function(e) { this.checked = !(this.checked) })
+	jQuery('input[id^="org.fenixedu.academic.domain.ProfessorshipPermissions"]').each(function(e) { this.checked = !(this.checked) })
 }
 
 function selectAll(){
-	jQuery('input[id^="net.sourceforge.fenixedu.domain.ProfessorshipPermissions"]').each(function(e) { this.checked = true })
+	jQuery('input[id^="org.fenixedu.academic.domain.ProfessorshipPermissions"]').each(function(e) { this.checked = true })
 }
 
 function selectNone(){
-	jQuery('input[id^="net.sourceforge.fenixedu.domain.ProfessorshipPermissions"]').each(function(e) { this.checked = false })
+	jQuery('input[id^="org.fenixedu.academic.domain.ProfessorshipPermissions"]').each(function(e) { this.checked = false })
 }
 </script>
 

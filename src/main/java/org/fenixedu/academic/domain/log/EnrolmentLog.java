@@ -19,12 +19,12 @@
 /*
  * Created on Nov 4, 2004
  */
-package net.sourceforge.fenixedu.domain.log;
+package org.fenixedu.academic.domain.log;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.EnrolmentAction;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.EnrolmentAction;
 
 /**
  * @author nmgo

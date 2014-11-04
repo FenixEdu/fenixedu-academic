@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.manager.scientificCouncil;
+package org.fenixedu.academic.ui.struts.action.manager.scientificCouncil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertProfessorShip;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.service.services.manager.InsertProfessorShip;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.exceptions.NonExistingActionException;
+import org.fenixedu.academic.ui.struts.action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -46,9 +46,9 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "insertProfessorShip", path = "/manager/insertTeacherByNumber_bd.jsp"),
         @Forward(name = "readTeacherInCharge", path = "/scientificCouncil/readTeacherInCharge.do") })
 @Exceptions(value = { @ExceptionHandling(
-        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+        type = org.fenixedu.academic.ui.struts.action.exceptions.NonExistingActionException.class,
         key = "presentationTier.Action.exceptions.NonExistingActionException",
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+        handler = org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class InsertProfessorShipByNumberDAForScientificCouncil extends FenixDispatchAction {
 
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request,

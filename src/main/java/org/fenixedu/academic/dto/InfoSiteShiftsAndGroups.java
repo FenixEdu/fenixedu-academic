@@ -20,7 +20,7 @@
  * Created on 23/Setembro/2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.List;
 import java.util.ListIterator;

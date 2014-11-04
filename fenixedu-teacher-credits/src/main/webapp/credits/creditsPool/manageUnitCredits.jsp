@@ -59,13 +59,13 @@
 	<div class="thisPage">
 	<fr:form id="f1" action="/creditsPool.do?method=viewDepartmentExecutionCourses">
 		<fr:edit id="departmentCreditsBean" name="departmentCreditsBean">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.DepartmentCreditsBean">
 				<fr:slot name="department" key="label.department" layout="menu-select" required="true">
 					<fr:property name="from" value="availableDepartments"/>
 					<fr:property name="format" value="${name}"/>
 				</fr:slot>
 				<fr:slot name="executionYear" key="label.executionYear" layout="menu-select" required="true">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 					<fr:property name="format" value="${year}" />
 				</fr:slot>
 			</fr:schema>
@@ -101,7 +101,7 @@
 				
 			</div>
 			<fr:view name="departmentCreditsPoolBean">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.DepartmentCreditsPoolBean">
 					<fr:slot name="departmentCreditsPool.originalCreditsPool" key="label.departmentCreditsPool"/>
 					<fr:slot name="departmentCreditsPool.creditsPool" key="label.changedDepartmentCreditsPool"/>
 					<fr:slot name="assignedCredits" key="label.assignedCredits"/>
@@ -118,7 +118,7 @@
 				<fr:form id="sharedUnitCreditsForm" action="/creditsPool.do?method=editUnitCredits">
 					<fr:edit id="departmentCreditsPoolBean" name="departmentCreditsPoolBean" visible="false"/>
 					<fr:edit id="departmentCreditsPoolBean2" name="departmentCreditsPoolBean" property="departmentSharedExecutionCourses" >
-						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
+						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
 							<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
 							<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
 							<fr:slot name="executionCourse.executionPeriod.semester" key="label.execution-period" readOnly="true"/>
@@ -150,7 +150,7 @@
 			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.shared.other.departments"/></h3>
 			<logic:notEmpty name="departmentCreditsPoolBean" property="otherDepartmentSharedExecutionCourses">
 				<fr:view name="departmentCreditsPoolBean" property="otherDepartmentSharedExecutionCourses">
-					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
+					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
 						<fr:slot name="executionCourse.departmentNames" key="label.department" readOnly="true" />
 						<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
 						<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
@@ -175,7 +175,7 @@
 				<fr:form id="unitCreditsForm" action="/creditsPool.do?method=editUnitCredits">
 					<fr:edit id="departmentCreditsPoolBean" name="departmentCreditsPoolBean" visible="false"/>
 					<fr:edit id="departmentCreditsPoolBean3" name="departmentCreditsPoolBean" property="departmentExecutionCourses">
-						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
+						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="org.fenixedu.academic.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
 							<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
 							<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
 							<fr:slot name="executionCourse.executionPeriod.semester" key="label.execution-period" readOnly="true"/>

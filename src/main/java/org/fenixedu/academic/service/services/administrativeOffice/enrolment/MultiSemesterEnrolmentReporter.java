@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment;
+package org.fenixedu.academic.service.services.administrativeOffice.enrolment;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,12 +8,11 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
-import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.EnrolmentAction;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.log.CurriculumLineLog;
+import org.fenixedu.academic.domain.log.EnrolmentLog;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.EnrolmentAction;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 

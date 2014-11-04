@@ -26,7 +26,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 
-<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.MainExamsDA" />
+<fp:select actionClass="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.exams.MainExamsDA" />
 
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
@@ -170,10 +170,10 @@
 					<c:forEach items="${executionCourseWrittenEvaluationAgregationBean.writtenEvaluations}" var="evaluation">
 						<tr>
 							<td class="description">
-								<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.WrittenTest'}">
+								<c:if test="${evaluation.class.name == 'org.fenixedu.academic.domain.WrittenTest'}">
 									<c:out value="${evaluation.description}"/>
 								</c:if>
-								<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}">
+								<c:if test="${evaluation.class.name == 'org.fenixedu.academic.domain.Exam'}">
 									<c:out value="${evaluation.season}"/>
 								</c:if>
 							</td>

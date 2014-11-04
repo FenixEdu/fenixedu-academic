@@ -19,7 +19,7 @@
 
 --%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -28,7 +28,7 @@
 <h2><bean:message key="title.associateTeacher" /></h2>		
 
 <div class="infoop2">
-<bean:message key="label.teacher.auth" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="HTMLALT_RESOURCES"/>
+<bean:message key="label.teacher.auth" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="HTMLALT_RESOURCES"/>
 </div>
 	
 <fr:form action="/teachersManagerDA.do">

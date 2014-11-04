@@ -19,17 +19,17 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType"%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisFile"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisParticipationType"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant"%>
+<%@page import="org.fenixedu.academic.domain.thesis.ThesisFile"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="java.util.List"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
-<%@page import="net.sourceforge.fenixedu.domain.Degree"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
-<%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%>
+<%@page import="org.fenixedu.academic.domain.Degree"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%>
+<%@page import="org.fenixedu.academic.domain.Enrolment"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -38,7 +38,7 @@
 
 <html:xhtml/>
 
-<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
+<bean:define id="thesis" name="thesis" type="org.fenixedu.academic.domain.thesis.Thesis"/>
 
 <jsp:include page="viewThesisHeader.jsp"/>
 
@@ -48,16 +48,16 @@
 	<fr:edit name="evaluationMemberBean"
     	     action="<%= "/manageSecondCycleThesis.do?method=addEvaluationMember&amp;thesisOid=" + thesis.getExternalId() %>"
         	 schema="thesis.jury.proposal.information.edit">
-		<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.thesis.Thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 			<fr:slot name="thesisParticipationType" key="label.jury.member.type" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisJuryTypeProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ThesisJuryTypeProvider"/>
 			</fr:slot>
-			<fr:slot name="person" layout="autoComplete" key="label.jury.member.person" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+			<fr:slot name="person" layout="autoComplete" key="label.jury.member.person" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
 				<fr:property name="size" value="70" />
 				<fr:property name="labelField" value="presentationName" />
 				<fr:property name="args" value="slot=name,size=20" />
 				<fr:property name="minChars" value="3" />
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons" />
+				<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons" />
 				<fr:property name="indicatorShown" value="true" />
 				<fr:property name="required" value="true"/>
 			</fr:slot>

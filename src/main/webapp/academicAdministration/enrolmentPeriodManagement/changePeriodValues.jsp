@@ -32,7 +32,7 @@
 <bean:define id="semester" name="configuration" property="semester.externalId" />
 <fr:edit id="configuration" name="configuration" action="/manageEnrolementPeriods.do?method=changePeriodValues">
 	<fr:schema bundle="MANAGER_RESOURCES"
-		type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodConfigurationForEdit">
+		type="org.fenixedu.academic.ui.struts.action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodConfigurationForEdit">
 		<fr:slot name="start" key="label.enrolment.period.startDate" required="true" />
 		<fr:slot name="end" key="label.enrolment.period.endDate" required="true" />
 		<fr:slot name="scope" layout="option-select" key="label.enrolment.period.scope">

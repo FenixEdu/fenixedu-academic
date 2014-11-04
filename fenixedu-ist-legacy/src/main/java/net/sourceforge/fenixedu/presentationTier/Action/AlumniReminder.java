@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import org.apache.struts.actions.ForwardAction;
 

@@ -37,7 +37,7 @@
 
 <logic:notEmpty name="sibsOutgoingPaymentFiles">
 <fr:view	name="sibsOutgoingPaymentFiles" >
-	<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentFile">
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.events.export.SIBSOutgoingPaymentFile">
 		<fr:slot name="filename" key="label.sibs.outgoing.payment.file.name" />
 		<fr:slot name="uploadTime" key="label.sibs.outgoing.payment.upload.time" />
 		<fr:slot name="successfulSentDate" key="label.sibs.outgoing.payment.successfulSent" />
@@ -69,7 +69,7 @@
 
 <logic:notEmpty name="sibsOutgoingPaymentQueueJobs">
 <fr:view	name="sibsOutgoingPaymentQueueJobs" sortBy="requestDate=desc">
-	<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentQueueJob">
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.events.export.SIBSOutgoingPaymentQueueJob">
 		<fr:slot name="requestDate" key="label.sibs.outgoing.payment.queue.job.request.date" />
 		<fr:slot name="jobStartTime" key="label.sibs.outgoing.payment.queue.job.start.time" />
 		<fr:slot name="jobEndTime" key="label.sibs.outgoing.payment.queue.job.end.time" />

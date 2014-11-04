@@ -108,7 +108,7 @@
   	
 	<fr:edit id="ratifyCandidacyBean"
 	name="ratifyCandidacyBean">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean" bundle="PHD_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.phd.candidacy.RatifyCandidacyBean" bundle="PHD_RESOURCES">
 			<fr:slot name="whenRatified" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 			<fr:slot name="maxDaysToFormalizeRegistration" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 			<fr:slot name="ratificationFile.file" required="<%= !migratedProcess.booleanValue() %>">

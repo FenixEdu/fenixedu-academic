@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
+package org.fenixedu.academic.domain.accounting.paymentPlans;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.IsPartialRegimePaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
-import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleFactory;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsPartialRegimePaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRuleFactory;
+import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class FullGratuityPaymentPlanForPartialRegime extends FullGratuityPaymentPlanForPartialRegime_Base {
 

@@ -19,17 +19,17 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
 <%@ page language="java"%>
-<%@page import="net.sourceforge.fenixedu.domain.Person"%>
-<%@page import="net.sourceforge.fenixedu.domain.Country"%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
+<%@page import="org.fenixedu.academic.domain.Person"%>
+<%@page import="org.fenixedu.academic.domain.Country"%>
+<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
 <%@page import="java.util.SortedSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
-<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
-<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
+<%@page import="org.fenixedu.academic.util.BundleUtil"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -94,33 +94,33 @@
 
 <logic:present name="outboundMobilityContextBean">
 
-	<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean"/>
+	<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean"/>
 
 	<fr:form id="prepareForm" action="/outboundMobilityCandidacy.do">
 		<html:hidden property="method" value="prepare"/>
 				<fr:edit id="outboundMobilityContextBeanExecutionIntervalSelection" name="outboundMobilityContextBean">
-					<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="MANAGER_RESOURCES">
+					<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="MANAGER_RESOURCES">
 						<fr:slot name="executionYear" bundle="MANAGER_RESOURCES" key="label.executionYear"
 								layout="menu-select-postback">
-							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+							<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 							<fr:property name="format" value="${year}" />
 						</fr:slot>
 			    		<fr:slot name="candidacyPeriodsAsList" layout="option-select" key="label.candidacy.periods" bundle="ACADEMIC_OFFICE_RESOURCES">
-    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyPeriodProvider" />
-        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval"/>
+    			    		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OutboundMobilityCandidacyPeriodProvider" />
+        					<fr:property name="eachSchema" value="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval"/>
         					<fr:property name="eachLayout" value="values"/>
         					<fr:property name="classes" value="nobullet noindent"/>
 		    			</fr:slot>
 			    		<fr:slot name="mobilityProgramsAsList" layout="option-select" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES">
-    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityProgramProvider" />
-        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityProgram.description"/>
+    			    		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OutboundMobilityProgramProvider" />
+        					<fr:property name="eachSchema" value="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityProgram.description"/>
         					<fr:property name="eachLayout" value="values"/>
         					<fr:property name="classes" value="nobullet noindent degreeSelectors"/>
         					<fr:property name="listItemStyle" value=""/>
 		    			</fr:slot>
 			    		<fr:slot name="mobilityGroupsAsList" layout="option-select" key="label.mobility.group" bundle="ACADEMIC_OFFICE_RESOURCES">
-    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyGroupProvider" />
-        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup.description"/>
+    			    		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OutboundMobilityCandidacyGroupProvider" />
+        					<fr:property name="eachSchema" value="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup.description"/>
         					<fr:property name="eachLayout" value="values"/>
         					<fr:property name="classes" value="nobullet noindent degreeSelectors"/>
         					<fr:property name="listItemStyle" value=""/>
@@ -208,9 +208,9 @@
 		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group.add.member"/></h3>
 		<fr:edit id="outboundMobilityContextBeanAddMobilityCoordinator" name="outboundMobilityContextBean"
 				action="/outboundMobilityCandidacy.do?method=addMobilityCoordinator">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="person" layout="autoComplete" key="label.person" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-  					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.PersonAutoCompleteProvider" />
+  					<fr:property name="provider" value="org.fenixedu.academic.ui.renderers.providers.person.PersonAutoCompleteProvider" />
         			<fr:property name="labelField" value="presentationName"/>
       				<fr:property name="classes" value="inputsize500px"/>
        				<fr:property name="minChars" value="2"/>
@@ -229,7 +229,7 @@
 		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.create.new.period"/></h3>
 		<fr:edit id="outboundMobilityContextBeanCreateCandidacyPeriod" name="outboundMobilityContextBean"
 				action="/outboundMobilityCandidacy.do?method=createNewOutboundMobilityCandidacyPeriod">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="startDateTime" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.startDate"
 						validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 				<fr:slot name="endDateTime" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.endDate"
@@ -253,10 +253,10 @@
 			<bean:define id="providerArgs2" type="java.lang.String">executionYearOid=<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %></bean:define>
 			<fr:edit id="outboundMobilityContextBeanCreateCandidacyPeriod" name="outboundMobilityContextBean"
 					action="/outboundMobilityCandidacy.do?method=addDegreeToGroup">
-				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
    					<fr:slot name="executionDegree" layout="autoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
        					<fr:property name="args" value="<%= providerArgs2 %>" />
-       					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
+       					<fr:property name="provider" value="org.fenixedu.academic.ui.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
         				<fr:property name="labelField" value="presentationName"/>
        					<fr:property name="classes" value="inputsize500px"/>
        					<fr:property name="minChars" value="2"/>
@@ -307,7 +307,7 @@
 		<div id="EditCandidacyPeriodBlock" style="display: none;">
 			<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.period"/></h3>
 			<fr:edit id="editCandidacyPeriod" name="candidacyPeriod" action="/outboundMobilityCandidacy.do?method=editCandidacyPeriod">
-				<fr:schema type="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod" bundle="ACADEMIC_OFFICE_RESOURCES">
 					<fr:slot name="start" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.startDate"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="end" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.endDate"
@@ -346,7 +346,7 @@
 				</div>
 			</div>
 			<fr:edit id="editCandidateOptions" name="outboundMobilityContextBean" action="/outboundMobilityCandidacy.do?method=addCandidateOption">
-				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 					<fr:slot name="optionIntroductoryDestription" bundle="ACADEMIC_OFFICE_RESOURCES" layout="rich-text" key="label.optionIntroductoryDestription"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="optionValue" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"
@@ -365,9 +365,9 @@
 			<bean:define id="providerArgs" type="java.lang.String">executionYearOid=<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %></bean:define>
 			<fr:edit id="outboundMobilityContextBeanCreateCandidacyContest" name="outboundMobilityContextBean"
 					action="/outboundMobilityCandidacy.do?method=createNewOutboundMobilityCandidacyContest">
-				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	    			<fr:slot name="mobilityProgram" layout="autoComplete" key="label.mobilityProgram" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-    	    			<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MobilityProgramProvider" />
+    	    			<fr:property name="provider" value="org.fenixedu.academic.ui.renderers.providers.MobilityProgramProvider" />
         				<fr:property name="labelField" value="registrationProtocol.description.content"/>
         				<fr:property name="classes" value="inputsize500px"/>
         				<fr:property name="minChars" value="1"/>
@@ -377,7 +377,7 @@
 					<% if (outboundMobilityContextBean.getMobilityGroups().size() == 0) { %>
     					<fr:slot name="executionDegree" layout="autoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
         					<fr:property name="args" value="<%= providerArgs %>" />
-        					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
+        					<fr:property name="provider" value="org.fenixedu.academic.ui.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
 	        				<fr:property name="labelField" value="presentationName"/>
         					<fr:property name="classes" value="inputsize500px"/>
         					<fr:property name="minChars" value="2"/>
@@ -386,7 +386,7 @@
     					</fr:slot>
 					<% } %>
     				<fr:slot name="unit" layout="autoComplete" key="label.university" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-        				<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExternalUniversityUnitAutoCompleteProvider" />
+        				<fr:property name="provider" value="org.fenixedu.academic.ui.renderers.providers.ExternalUniversityUnitAutoCompleteProvider" />
 	        			<fr:property name="labelField" value="presentationName"/>
         				<fr:property name="classes" value="inputsize500px"/>
         				<fr:property name="minChars" value="2"/>

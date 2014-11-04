@@ -34,7 +34,7 @@
 <logic:notPresent name="boardSearchBean" property="searchExecutionCourseBoards">
 	<fr:form action="/announcements/boards.do?method=search">
 		<fr:edit id="boardSearchBean.searchExecutionCourseBoards"
-				name="boardSearchBean" schema="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.searchExecutionCourseBoards">
+				name="boardSearchBean" schema="org.fenixedu.academic.domain.messaging.BoardSearchBean.searchExecutionCourseBoards">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop05 mbottom1"/>
 	  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -58,7 +58,7 @@
 	<logic:equal name="boardSearchBean" property="searchExecutionCourseBoards" value="true">
 		<fr:form action="/announcements/boards.do?method=search">
 			<fr:edit id="boardSearchBean.executionCourse"
-					name="boardSearchBean" schema="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.executionCourse">
+					name="boardSearchBean" schema="org.fenixedu.academic.domain.messaging.BoardSearchBean.executionCourse">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop05 mbottom1"/>
 		  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -80,7 +80,7 @@
 	<logic:notEqual name="boardSearchBean" property="searchExecutionCourseBoards" value="true">
 		<fr:form action="/announcements/boards.do?method=search">
 			<fr:edit id="boardSearchBean.unit"
-					name="boardSearchBean" schema="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.unit">
+					name="boardSearchBean" schema="org.fenixedu.academic.domain.messaging.BoardSearchBean.unit">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop05 mbottom1"/>
 		  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

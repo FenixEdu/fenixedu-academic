@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.ChangeDegreeOfficialPublicationReference;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegreeSpecializationArea;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegreeSpecializationArea;
-import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
-import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
-
+import org.fenixedu.academic.domain.DegreeOfficialPublication;
+import org.fenixedu.academic.domain.DegreeSpecializationArea;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.ChangeDegreeOfficialPublicationReference;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.CreateDegreeSpecializationArea;
+import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.DeleteDegreeSpecializationArea;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

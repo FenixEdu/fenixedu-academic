@@ -20,14 +20,14 @@
  * Created on 23/Jul/2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
+package org.fenixedu.academic.dto.onlineTests;
 
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.domain.onlineTests.Metadata;
 
 /**
  * @author Susana Fernandes

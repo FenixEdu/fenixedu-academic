@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -56,7 +56,7 @@
 	<fr:edit id="phdProgramContextPeriodBean" name="phdProgramContextPeriodBean" visible="false" />
 	
 	<fr:edit id="phdProgramContextPeriodBean.edit" name="phdProgramContextPeriodBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriodBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgramContextPeriodBean">
 			<fr:slot name="beginDate" required="true"/>
 			<fr:slot name="endDate" />
 		</fr:schema>

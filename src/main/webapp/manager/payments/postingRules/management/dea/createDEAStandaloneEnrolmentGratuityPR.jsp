@@ -97,7 +97,7 @@
 	
 	
 	<fr:edit id="installmentEditor" name="installmentEditor">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.StandaloneInstallmentBean"
+		<fr:schema type="org.fenixedu.academic.dto.accounting.paymentPlan.StandaloneInstallmentBean"
 			bundle="APPLICATION_RESOURCES">
 			<fr:slot name="startDate" />
 			<fr:slot name="ectsForYear" />

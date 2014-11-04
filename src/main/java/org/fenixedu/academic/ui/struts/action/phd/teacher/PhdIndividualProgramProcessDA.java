@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.teacher;
+package org.fenixedu.academic.ui.struts.action.phd.teacher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,21 +26,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdSeminarPredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdThesisPredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherPhdApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.phd.InternalPhdParticipant;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdParticipant;
+import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import org.fenixedu.academic.ui.struts.action.phd.CommonPhdIndividualProgramProcessDA;
+import org.fenixedu.academic.ui.struts.action.phd.PhdCandidacyPredicateContainer;
+import org.fenixedu.academic.ui.struts.action.phd.PhdInactivePredicateContainer;
+import org.fenixedu.academic.ui.struts.action.phd.PhdSeminarPredicateContainer;
+import org.fenixedu.academic.ui.struts.action.phd.PhdThesisPredicateContainer;
+import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherPhdApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

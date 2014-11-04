@@ -21,7 +21,7 @@
  * 
  * Created on 2003/03/19
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -29,13 +29,12 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.Season;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.academic.domain.Exam;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.EvaluationType;
+import org.fenixedu.academic.util.Season;
 
 public class InfoExam extends InfoWrittenEvaluation {
 

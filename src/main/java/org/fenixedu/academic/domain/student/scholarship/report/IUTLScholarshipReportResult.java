@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.student.scholarship.report;
+package org.fenixedu.academic.domain.student.scholarship.report;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.QualificationType;
-import net.sourceforge.fenixedu.util.Money;
+import org.fenixedu.academic.domain.QualificationType;
+import org.fenixedu.academic.util.Money;
 
 public interface IUTLScholarshipReportResult {
 

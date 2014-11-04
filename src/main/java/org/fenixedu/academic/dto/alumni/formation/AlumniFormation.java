@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.alumni.formation;
+package org.fenixedu.academic.dto.alumni.formation;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,19 +24,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.EducationArea;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Formation;
-import net.sourceforge.fenixedu.domain.FormationType;
-import net.sourceforge.fenixedu.domain.QualificationType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.EducationArea;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Formation;
+import org.fenixedu.academic.domain.FormationType;
+import org.fenixedu.academic.domain.QualificationType;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionUnit;
+import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
+import org.fenixedu.academic.domain.organizationalStructure.SchoolUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class AlumniFormation implements Serializable, IFormation {

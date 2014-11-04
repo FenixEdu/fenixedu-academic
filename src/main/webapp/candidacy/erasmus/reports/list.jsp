@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
 
 <html:xhtml/>
 
@@ -47,7 +47,7 @@
 
 <logic:notEmpty name="erasmusCandidacyProcess" property="doneReports">
 	<fr:view name="erasmusCandidacyProcess" property="doneReports">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport">
 			<fr:slot name="requestDate" />
 			<fr:slot name="person.name" key="label.net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport.person.name" />
 		</fr:schema>
@@ -72,7 +72,7 @@
 
 <logic:notEmpty name="erasmusCandidacyProcess" property="undoneReports">
 	<fr:view name="erasmusCandidacyProcess" property="undoneReports">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport">
 			<fr:slot name="requestDate" />
 			<fr:slot name="person.name" key="label.net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport.person.name" />
 			<fr:slot name="jobStartTime" />

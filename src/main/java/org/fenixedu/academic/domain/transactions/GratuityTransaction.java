@@ -16,16 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.transactions;
+package org.fenixedu.academic.domain.transactions;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.GuideEntry;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonAccount;
-
+import org.fenixedu.academic.domain.GratuitySituation;
+import org.fenixedu.academic.domain.GuideEntry;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.PersonAccount;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 

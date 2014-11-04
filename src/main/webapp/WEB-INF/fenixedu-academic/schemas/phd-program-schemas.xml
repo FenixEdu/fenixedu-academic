@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="PhdIndividualProgramProcess.view.resume" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcess.view.resume" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="phdIndividualProcessNumber">
 		<property name="format" value="${number}/${year}" />
 	</slot>
@@ -34,15 +34,15 @@
 	<slot name="person.name" />
 </schema>
 
-<schema name="PhdProgram.name" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" bundle="PHD_RESOURCES">
+<schema name="PhdProgram.name" type="org.fenixedu.academic.domain.phd.PhdProgram" bundle="PHD_RESOURCES">
 	<slot name="name" />
 </schema>
 
-<schema name="ExternalPhdProgram.name" type="net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram" bundle="PHD_PROGRAM">
+<schema name="ExternalPhdProgram.name" type="org.fenixedu.academic.domain.phd.ExternalPhdProgram" bundle="PHD_PROGRAM">
 	<slot name="name" />
 </schema>
 
-<schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcess.view" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
 	<slot name="person.name">
 		<property name="classes" value="bold"/>
@@ -58,7 +58,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdIndividualProgramProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcess.view.simple" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
 	<slot name="person.name">
 		<property name="classes" value="bold nowrap"/>
@@ -66,7 +66,7 @@
 	<slot name="activeState" layout="phd-enum-renderer" />
 </schema>
 
-<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
 	<slot name="person.name">
 		<property name="classes" value="bold"/>
@@ -97,11 +97,11 @@
 	<slot name="updatedBy" />
 </schema>
 
-<schema name="PhdStudyPlan.description" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlan" bundle="PHD_RESOURCES">
+<schema name="PhdStudyPlan.description" type="org.fenixedu.academic.domain.phd.PhdStudyPlan" bundle="PHD_RESOURCES">
 	<slot name="description" />
 </schema>
 
-<schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
+<schema name="PhdProgramCandidacyProcess.view" type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
@@ -114,7 +114,7 @@
 	<slot name="activeStateRemarks"/>
 </schema>
 
-<schema name="PhdProgramCandidacyProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
+<schema name="PhdProgramCandidacyProcess.view.simple" type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
@@ -123,20 +123,20 @@
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editProgramInformation" 
-		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean"
+		type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean"
 		bundle="PHD_RESOURCES">
 	<slot name="candidacyDate">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>
 	<slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.ExecutionYearsProvider" />
 		<property name="destination" value="select-execution-year-postback" />
 		<property name="format" value="${year}" />
         <property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ActivePhdProgramsOnExecutionYearProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.ActivePhdProgramsOnExecutionYearProvider" />
 		<property name="format" value="${presentationName}" />
         <property name="saveOptions" value="true"/>
 	</slot>
@@ -145,7 +145,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified" type="org.fenixedu.academic.dto.person.PersonBean" bundle="PHD_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
 		<property name="maxLength" value="255"/>
@@ -176,7 +176,7 @@
     <slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="localizedName=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
@@ -193,7 +193,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramCandidacyProcessBean.editPersonalInformation" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramCandidacyProcessBean.editPersonalInformation" type="org.fenixedu.academic.dto.person.PersonBean" bundle="PHD_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
 		<property name="maxLength" value="255"/>
@@ -231,7 +231,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>	
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.CountryProvider"/>
 		<property name="format" value="${countryNationality}" />
 		<property name="sortBy" value="countryNationality"/>
 	</slot>
@@ -246,7 +246,7 @@
 	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="localizedName=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
@@ -280,12 +280,12 @@
             <property name="bundle" value="PHD_RESOURCES" />
         </validator>
     </slot>
-	<slot name="email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
+	<slot name="email" validator="org.fenixedu.academic.ui.renderers.validators.NotRequiredEmailValidator">
 		<property name="size" value="40"/>
 	</slot>
 </schema>
 
-<schema name="PhdProgramDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramDocumentUploadBean.edit" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type">
 		<property name="includedValues" value="CANDIDACY_FORM,REGISTRATION_FORM,STUDY_PLAN,CV,DEGREE_FINALIZATION_CERTIFICATE,HABILITATION_CERTIFICATE_DOCUMENT,DISSERTATION_OR_FINAL_WORK_DOCUMENT,ID_DOCUMENT,SOCIAL_SECURITY,RECOMMENDATION_LETTER,HEALTH_BULLETIN,GUIDER_ACCEPTANCE_LETTER,ASSISTENT_GUIDER_ACCEPTANCE_LETTER,MOTIVATION_LETTER,RESEARCH_PLAN,OTHER" />
 		<property name="bundle" value="PHD_RESOURCES" />
@@ -300,7 +300,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramDocumentUploadBean.forThesis.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramDocumentUploadBean.forThesis.edit" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type">
 		<property name="includedValues" value="OTHER" />
 		<property name="bundle" value="PHD_RESOURCES" />
@@ -315,7 +315,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdCandidacyDocumentUploadBean.review.document" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyDocumentUploadBean.review.document" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file">
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -327,7 +327,7 @@
 </schema>
 
 
-<schema name="PhdProgramProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">
+<schema name="PhdProgramProcessDocument.view" type="org.fenixedu.academic.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">
 	<slot name="documentType">
 		<property name="bundle" value="PHD_RESOURCES" />
 	</slot>
@@ -341,26 +341,26 @@
 	<slot name="documentVersion"/>
 </schema>
 
-<schema name="PhdGuidanceDocument.view" type="net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument" bundle="PHD_RESOURCES" extends="PhdProgramProcessDocument.view">
+<schema name="PhdGuidanceDocument.view" type="org.fenixedu.academic.domain.phd.guidance.PhdGuidanceDocument" bundle="PHD_RESOURCES" extends="PhdProgramProcessDocument.view">
 	<remove name="documentVersion" />
 </schema>
 
-<schema name="Person.name" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+<schema name="Person.name" type="org.fenixedu.academic.domain.Person" bundle="PHD_RESOURCES">
 	<slot name="name" />
 </schema>
 
-<schema name="PhdProgramProcessDocument.view.without.type" type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES"
+<schema name="PhdProgramProcessDocument.view.without.type" type="org.fenixedu.academic.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES"
 	extends="PhdProgramProcessDocument.view">
 	<remove name="documentType"/>
 </schema>
 
 <schema name="PhdProgramProcessDocument.review.document" 
-		type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" 
+		type="org.fenixedu.academic.domain.phd.PhdProgramProcessDocument" 
 		extends="PhdProgramProcessDocument.view" bundle="PHD_RESOURCES">
 	<remove name="documentType"/>
 </schema>
 
-<schema name="Phd.Qualification.view" type="net.sourceforge.fenixedu.domain.Qualification" bundle="PHD_RESOURCES">
+<schema name="Phd.Qualification.view" type="org.fenixedu.academic.domain.Qualification" bundle="PHD_RESOURCES">
 	<slot name="type" />
 	<slot name="degree" />
 	<slot name="school" />
@@ -369,7 +369,7 @@
 	<slot name="attendedEnd" layout="year-month" />
 </schema>
 
-<schema name="Phd.QualificationBean.manage" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
+<schema name="Phd.QualificationBean.manage" type="org.fenixedu.academic.domain.QualificationBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="includedValues" value="DEGREE,MASTER_DEGREE,FIRST_CYCLE,SECOND_CYCLE,INTEGRATED_MASTER_DEGREE,BACHELOR_DEGREE,OTHER" />
 	</slot>
@@ -386,7 +386,7 @@
 	</slot>
 </schema>
 
-<schema name="Phd.Job.view" type="net.sourceforge.fenixedu.domain.Job" bundle="PHD_RESOURCES">
+<schema name="Phd.Job.view" type="org.fenixedu.academic.domain.Job" bundle="PHD_RESOURCES">
 	<slot name="employerName" />
 	<slot name="position" />
 	<slot name="city" />
@@ -400,17 +400,17 @@
 	</slot>
 </schema>
 
-<schema name="Phd.JobBean.manage" type="net.sourceforge.fenixedu.domain.JobBean" bundle="PHD_RESOURCES">
+<schema name="Phd.JobBean.manage" type="org.fenixedu.academic.domain.JobBean" bundle="PHD_RESOURCES">
 	<slot name="parentBusinessArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="format" value="${description}"/>
 		<property name="sortBy" value="description=asc" />
 		<property name="destination" value="searchChilds" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaParentProvider" />		
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.BusinessAreaParentProvider" />		
 	</slot>
 	<slot name="childBusinessArea" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="format" value="${description}"/>
 		<property name="sortBy" value="description=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaChildProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.BusinessAreaChildProvider" />
 	</slot>
 	<slot name="city" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="employerName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -420,23 +420,23 @@
 	<slot name="country" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="localizedName=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 </schema>
 
-<schema name="PhdIndividualProgramProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcessBean.editDetails" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
 	<slot name="candidacyDate">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>
 	<slot name="phdProgram" layout="menu-select-postback">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProviderForEditDetails" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramsProviderForEditDetails" />
 		<property name="format" value="${presentationName}" />
 		<property name="sortBy" value="presentationName"/>
         <property name="destination" value="editDetailsPostback"/>
 	</slot>
 	<slot name="focusArea" layout="menu-select-postback">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProviderForEditDetails" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramFocusAreasProviderForEditDetails" />
 		<property name="format" value="${name}" />
         <property name="sortBy" value="name"/>
         <property name="destination" value="editDetailsPostback"/>
@@ -455,7 +455,7 @@
 </schema>
 
 
-<schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuiding.view" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
@@ -468,20 +468,20 @@
 	<slot name="phone" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.phone"/>
 </schema>
 
-<schema name="PhdCandidacyFeedbackRequestElement.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyFeedbackRequestElement.PhdProgramGuiding.view" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle"/>
 	<slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
 	<slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
 </schema>
 
-<schema name="PhdProgramGuiding.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuiding.view.simple" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
 	<slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
 </schema>
 
-<schema name="PhdProgramGuidingBean.select.type" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuidingBean.select.type" type="org.fenixedu.academic.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 	<slot name="participantSelectType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="selectType"/>
@@ -489,19 +489,19 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramGuidingBean.select.existing" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean"
+<schema name="PhdProgramGuidingBean.select.existing" type="org.fenixedu.academic.domain.phd.PhdParticipantBean"
 	extends="PhdProgramGuidingBean.select.type" bundle="PHD_RESOURCES">
 	<slot name="participant" layout="autoComplete" required="true">
 		<property name="size" value="50"/>
 		<property name="labelField" value="nameWithTitle"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.phd.SearchPhdParticipantsByProcess"/>
+		<property name="provider" value="org.fenixedu.academic.service.services.phd.SearchPhdParticipantsByProcess"/>
 		<property name="args" value="phdProcessOID=${individualProgramProcess.externalId}"/>
 		<property name="minChars" value="3"/>				
 	</slot>
 </schema>
 
-<schema name="PhdProgramGuidingBean.internal.or.external" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean"
+<schema name="PhdProgramGuidingBean.internal.or.external" type="org.fenixedu.academic.domain.phd.PhdParticipantBean"
 	extends="PhdProgramGuidingBean.select.type" bundle="PHD_RESOURCES">
 	<slot name="participantType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
@@ -510,7 +510,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramGuidingBean.edit.EXTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" 
+<schema name="PhdProgramGuidingBean.edit.EXTERNAL" type="org.fenixedu.academic.domain.phd.PhdParticipantBean" 
 	extends="PhdProgramGuidingBean.internal.or.external" bundle="PHD_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="title" />
@@ -526,13 +526,13 @@
 	<slot name="phone" />
 </schema>
 
-<schema name="PhdProgramGuidingBean.edit.INTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean"
+<schema name="PhdProgramGuidingBean.edit.INTERNAL" type="org.fenixedu.academic.domain.phd.PhdParticipantBean"
 	extends="PhdProgramGuidingBean.internal.or.external" bundle="PHD_RESOURCES">
-	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" >
+	<slot name="person" layout="autoComplete" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator" >
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
+		<property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons"/>
 		<property name="args" value="size=50"/>
 		<property name="minChars" value="4"/>				
 	</slot>
@@ -544,7 +544,7 @@
 <!-- Public schemas -->
 
 <schema name="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification"
-		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean"
+		type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean"
 		bundle="PHD_RESOURCES">
 	<slot name="email">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -555,19 +555,19 @@
 </schema>
 
 <schema name="Public.PhdProgramCandidacyProcessBean.focus.area" 
-		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+		type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
 	<slot name="focusArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramFocusAreasProvider" />
 		<property name="format" value="${name}" />
         <property name="sortBy" value="name"/>
 	</slot>
 	<slot name="program" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" /> 
 	</slot>
 	<slot name="externalPhdProgram" layout="menu-select-postback" key="label.epfl.phd.program">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name" />
 		<property name="defaultText" value="label.not.applicable.or.chosen.by.thesis" />
@@ -577,18 +577,18 @@
 </schema>
 
 <schema name="Public.PhdProgramCandidacyProcessBean.thesis.title" 
-		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+		type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
 	<slot name="thesisTitle">
 		<property name="size" value="80"/>
 	</slot>
 </schema>
 
 <schema name="Public.PhdProgramCandidacyProcessBean.institution.id" 
-		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+		type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
 	<slot name="institutionId" />
 </schema>
 
-<schema name="Public.PhdProgramCandidacyProcess.qualification" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdProgramCandidacyProcess.qualification" type="org.fenixedu.academic.domain.QualificationBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="includedValues" value="BACHELOR_DEGREE,DEGREE,MASTER_DEGREE,DOCTORATE_DEGREE,OTHER" />
 	</slot>
@@ -609,7 +609,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdProgramCandidacyProcess.referee" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdProgramCandidacyProcess.referee" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeBean" bundle="PHD_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
@@ -623,7 +623,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdProgramGuidingBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdProgramGuidingBean.edit" type="org.fenixedu.academic.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
@@ -637,7 +637,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.edit" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.document">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
@@ -648,7 +648,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.edit.with.type" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.edit.with.type" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,GUIDER_ACCEPTANCE_LETTER" />
 		<property name="bundle" value="PHD_RESOURCES" />
@@ -666,7 +666,7 @@
 </schema>
 
 <!-- Documents: The following schemas could be removed if interface was different  -->
-<schema name="Public.PhdCandidacyDocumentUploadBean.curriculum.vitae" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.curriculum.vitae" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.documents.curriculum.vitae">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
@@ -679,7 +679,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.identificationDocument" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.identificationDocument" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.documents.identificationDocument">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
@@ -692,7 +692,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.motivationLetter" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.motivationLetter" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.documents.motivationLetter">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
@@ -705,7 +705,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.socialSecurityDocument" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.socialSecurityDocument" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.documents.socialSecurityDocument">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
@@ -716,7 +716,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.researchPlan" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.researchPlan" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.documents.researchPlan">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
@@ -727,7 +727,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.dissertationOrFinalWorkDocument" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.dissertationOrFinalWorkDocument" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.documents.dissertationOrFinalWorkDocument">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
@@ -738,7 +738,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.habilitationCertificateDocument" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyDocumentUploadBean.habilitationCertificateDocument" type="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.document">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
@@ -753,7 +753,7 @@
 
 <!-- End of documents  -->
 
-<schema name="Public.PhdIndividualProgramProcess.view.person" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+<schema name="Public.PhdIndividualProgramProcess.view.person" type="org.fenixedu.academic.domain.Person" bundle="PHD_RESOURCES">
 	<slot name="name">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
@@ -774,7 +774,7 @@
 	<slot name="email" />
 </schema>
 
-<schema name="Public.PhdIndividualProgramProcess.view.person.bean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdIndividualProgramProcess.view.person.bean" type="org.fenixedu.academic.dto.person.PersonBean" bundle="PHD_RESOURCES">
 	<slot name="name">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
@@ -795,7 +795,7 @@
 	<slot name="email" />
 </schema>
 
-<schema name="Public.PhdIndividualProgramProcess.view.person.simple" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+<schema name="Public.PhdIndividualProgramProcess.view.person.simple" type="org.fenixedu.academic.domain.Person" bundle="PHD_RESOURCES">
 	<slot name="name">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
@@ -804,7 +804,7 @@
    	<slot name="dateOfBirth" />
 </schema>
 
-<schema name="Public.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="Public.PhdIndividualProgramProcess.view" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="candidacyDate">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
@@ -827,24 +827,24 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramFocusArea.name" type="net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea" bundle="PHD_RESOURCES">
+<schema name="PhdProgramFocusArea.name" type="org.fenixedu.academic.domain.phd.PhdProgramFocusArea" bundle="PHD_RESOURCES">
 	<slot name="name" />
 </schema>
 
-<schema name="Public.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
+<schema name="Public.PhdProgramGuiding.view" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" />
 	<slot name="workLocation" />
 	<slot name="email" />
 </schema>
 
-<schema name="PhdCandidacyReferee.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyReferee.view" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee" bundle="PHD_RESOURCES">
 	<slot name="name" />
 	<slot name="email" />
 	<slot name="institution" />
 	<slot name="letterAvailable" />
 </schema>
 
-<schema name="Public.PhdProgramProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">
+<schema name="Public.PhdProgramProcessDocument.view" type="org.fenixedu.academic.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">
 	<slot name="documentType">
 		<property name="bundle" value="PHD_RESOURCES" />
 	</slot>
@@ -852,19 +852,19 @@
 	<slot name="filename"/>
 </schema>
 
-<schema name="Public.PhdIndividualProgramProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdIndividualProgramProcessBean.editDetails" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
 	<slot name="focusArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramFocusAreasProvider" />
 		<property name="format" value="${name}" />
         <property name="sortBy" value="name"/>
 	</slot>
 	<slot name="phdProgram" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" /> 
 	</slot>
 	<slot name="externalPhdProgram" layout="menu-select-postback" key="label.epfl.phd.program">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name" />
 		<property name="defaultText" value="label.not.applicable.or.chosen.by.thesis" />
@@ -877,7 +877,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyRefereeLetterBean.applicant.information" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyRefereeLetterBean.applicant.information" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="howLongKnownApplicant" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="input-with-comment">
         <property name="subProperty(size)" value="15" />
         <property name="bundle" value="PHD_RESOURCES"/>
@@ -904,13 +904,13 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyRefereeLetterBean.overall.promise" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyRefereeLetterBean.overall.promise" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="academicPerformance" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="socialAndCommunicationSkills" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="potencialToExcelPhd" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="Public.PhdCandidacyRefereeLetterBean.comments" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyRefereeLetterBean.comments" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="file" layout="input-with-comment">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
@@ -930,7 +930,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyRefereeLetterBean.referee.information" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdCandidacyRefereeLetterBean.referee.information" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="refereeName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
@@ -950,7 +950,7 @@
 		<property name="size" value="10"/>
 	</slot>
 	<slot name="refereeCountry" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="localizedName=asc" />
 	</slot>
@@ -959,7 +959,7 @@
  
 <!-- End of public schemas -->  
 
-<schema name="PhotographUploadBean.upload" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean" bundle="PHD_RESOURCES">
+<schema name="PhotographUploadBean.upload" type="org.fenixedu.academic.dto.person.PhotographUploadBean" bundle="PHD_RESOURCES">
 	<slot name="fileInputStream" key="label.photo">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
@@ -973,7 +973,7 @@
 </schema>
 
 
-<schema name="PhdCustomAlertBean.edit" type="net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean" bundle="PHD_RESOURCES">	
+<schema name="PhdCustomAlertBean.edit" type="org.fenixedu.academic.domain.phd.alert.PhdCustomAlertBean" bundle="PHD_RESOURCES">	
 	<slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	
 	<slot name="body" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="longText">
@@ -990,7 +990,7 @@
 </schema>
 
 
-<schema name="PhdAlert.view" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlert" bundle="PHD_RESOURCES">
+<schema name="PhdAlert.view" type="org.fenixedu.academic.domain.phd.alert.PhdAlert" bundle="PHD_RESOURCES">
 	
 	<slot name="toSendMail" />
 		
@@ -1000,7 +1000,7 @@
 	
 </schema>
 
-<schema name="PhdAlertMessage.view" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+<schema name="PhdAlertMessage.view" type="org.fenixedu.academic.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 	
 	<slot name="whenCreated" layout="no-time" />
 
@@ -1013,7 +1013,7 @@
 </schema>
 
 
-<schema name="PhdAlertMessage.view.for.process" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+<schema name="PhdAlertMessage.view.for.process" type="org.fenixedu.academic.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 	
 	<slot name="whenCreated" layout="no-time" />
 	
@@ -1025,26 +1025,26 @@
 	
 </schema>
 
-<schema name="PhdStudyPlanBean.edit.exempted" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES">	
+<schema name="PhdStudyPlanBean.edit.exempted" type="org.fenixedu.academic.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES">	
 	<slot name="exempted" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="exempted" />
 	</slot>
 </schema>
 
-<schema name="PhdStudyPlanBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES"
+<schema name="PhdStudyPlanBean.edit" type="org.fenixedu.academic.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES"
 	extends="PhdStudyPlanBean.edit.exempted">	
 	<slot name="degree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.DegreesProviderForStudyPlan" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.DegreesProviderForStudyPlan" />
 		<property name="format" value="${presentationName}" />
 	</slot>
 </schema>
 
-<schema name="PhdStudyPlanEntry.view" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry" bundle="PHD_RESOURCES">
+<schema name="PhdStudyPlanEntry.view" type="org.fenixedu.academic.domain.phd.PhdStudyPlanEntry" bundle="PHD_RESOURCES">
 	<slot name="courseDescription" />	
 </schema>
 
-<schema name="PhdStudyPlan.view" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlan" bundle="PHD_RESOURCES">
+<schema name="PhdStudyPlan.view" type="org.fenixedu.academic.domain.phd.PhdStudyPlan" bundle="PHD_RESOURCES">
 	<slot name="exempted" />
 	<slot name="degree" layout="null-as-label">
 		<property name="subLayout" value="values" />
@@ -1052,11 +1052,11 @@
 	</slot>
 </schema>
 
-<schema name="Degree.name" type="net.sourceforge.fenixedu.domain.Degree" bundle="PHD_RESOURCES">
+<schema name="Degree.name" type="org.fenixedu.academic.domain.Degree" bundle="PHD_RESOURCES">
 	<slot name="presentationName" />
 </schema>
 
-<schema name="PhdStudyPlanEntryBean.edit.internal" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean" bundle="PHD_RESOURCES">
+<schema name="PhdStudyPlanEntryBean.edit.internal" type="org.fenixedu.academic.domain.phd.PhdStudyPlanEntryBean" bundle="PHD_RESOURCES">
 	<slot name="internalEntry" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="studyPlanEntryPostBack"/>
@@ -1067,25 +1067,25 @@
 		<property name="destination" value="studyPlanEntryPostBack"/>
 	</slot>
 	<slot name="degree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.DegreesProviderForStudyPlanEntry" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.DegreesProviderForStudyPlanEntry" />
 		<property name="destination" value="studyPlanEntryPostBack"/>
 		<property name="format" value="${presentationName}" />
 	</slot>
 	<slot name="competenceCourses" layout="option-select">
 		<property name="saveOptions" value="true"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.CompetenceCourseForStudyPlanEntryProvider"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.CompetenceCourseForStudyPlanEntryProvider"/>
 		<property name="eachSchema" value="PhdStudyPlanEntry.CompetenceCourse.view"/>
 		<property name="eachLayout" value="values"/>
 		<property name="classes" value="nobullet noindent"/>
 	</slot>
 </schema>
 
-<schema name="PhdStudyPlanEntry.CompetenceCourse.view" type="net.sourceforge.fenixedu.domain.CompetenceCourse" bundle="PHD_RESOURCES">
+<schema name="PhdStudyPlanEntry.CompetenceCourse.view" type="org.fenixedu.academic.domain.CompetenceCourse" bundle="PHD_RESOURCES">
 	<slot name="name" />
 	<slot name="ectsCredits" />
 </schema>
 
-<schema name="PhdStudyPlanEntryBean.edit.external" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean" bundle="PHD_RESOURCES">
+<schema name="PhdStudyPlanEntryBean.edit.external" type="org.fenixedu.academic.domain.phd.PhdStudyPlanEntryBean" bundle="PHD_RESOURCES">
 	<slot name="internalEntry" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="studyPlanEntryPostBack"/>
@@ -1098,7 +1098,7 @@
 </schema>
 
 
-<schema name="PhdIndividualProgramProcess.view.qualification.exams.information" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcess.view.qualification.exams.information" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="qualificationExamsRequired" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
@@ -1108,7 +1108,7 @@
 </schema>
 
 
-<schema name="PhdIndividualProgramProcessBean.edit.qualification.exams" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcessBean.edit.qualification.exams" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
 	<slot name="qualificationExamsRequired">
 		<property name="defaultOptionHidden" value="true" />
 	</slot>	
@@ -1117,7 +1117,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramCandidacyProcessStateBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean" 
+<schema name="PhdProgramCandidacyProcessStateBean.edit" type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean" 
 		bundle="PHD_RESOURCES">
 	<slot name="remarks" layout="longText" >
 		<property name="columns" value="80"/>
@@ -1126,18 +1126,18 @@
 	</slot>
 </schema>
 
-<schema name="PhdNotification.view" type="net.sourceforge.fenixedu.domain.phd.notification.PhdNotification" bundle="PHD_RESOURCES">
+<schema name="PhdNotification.view" type="org.fenixedu.academic.domain.phd.notification.PhdNotification" bundle="PHD_RESOURCES">
 	<slot name="notificationNumber" />
 	<slot name="type" />
 	<slot name="state" />
 	<slot name="whenCreated" />
 </schema>
 
-<schema name="PhdNotificationBean.edit" type="net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean" bundle="PHD_RESOURCES">
+<schema name="PhdNotificationBean.edit" type="org.fenixedu.academic.domain.phd.notification.PhdNotificationBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="PublicPhdCandidacyBean.view" type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$PublicPhdCandidacyBean" bundle="PHD_RESOURCES">
+<schema name="PublicPhdCandidacyBean.view" type="org.fenixedu.academic.ui.struts.action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$PublicPhdCandidacyBean" bundle="PHD_RESOURCES">
 	<slot name="email" />
 	<slot name="name" layout="null-as-label" />
 	<slot name="phdFocusArea" layout="null-as-label" />
@@ -1145,24 +1145,24 @@
 	<slot name="validated" />
 </schema>
 
-<schema name="PhdCandidacyRefereeLetter.applicant.information" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyRefereeLetter.applicant.information" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
 	<slot name="howLongKnownApplicant" />
 	<slot name="capacity" />
 	<slot name="comparisonGroup" />
 	<slot name="rankInClass" />
 </schema>
 
-<schema name="PhdCandidacyRefereeLetter.overall.promise" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyRefereeLetter.overall.promise" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
 	<slot name="academicPerformance" />
 	<slot name="socialAndCommunicationSkills" />
 	<slot name="potencialToExcelPhd" />
 </schema>
 
-<schema name="PhdCandidacyRefereeLetter.comments" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyRefereeLetter.comments" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
 	<slot name="comments"/>
 </schema>
 
-<schema name="PhdCandidacyRefereeLetter.comments.with.file" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyRefereeLetter.comments.with.file" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
 	<slot name="file" layout="link">
 		<property name="linkFormat" value="${downloadUrl}" />
 		<property name="moduleRelative" value="false" />
@@ -1171,7 +1171,7 @@
 	<slot name="comments"/>
 </schema>
 
-<schema name="PhdCandidacyRefereeLetter.referee.information" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+<schema name="PhdCandidacyRefereeLetter.referee.information" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
 	<slot name="refereeName" />
 	<slot name="refereePosition" />
 	<slot name="refereeInstitution" />
@@ -1182,7 +1182,7 @@
 	<slot name="refereeEmail" />
 </schema>
 
-<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="student.number" read-only="true" layout="conditional-link">
 		<property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}"/>
 		<property name="contextRelative" value="true"/>
@@ -1194,7 +1194,7 @@
 	<slot name="person.username" />
 </schema>
 
-<schema name="PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcess.view.registration.conclusion.bean" type="org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdRegistrationConclusionBean" bundle="PHD_RESOURCES">
 	<slot name="degreeNameWithDescription" />
 	<slot name="activeStateType">
 		<property name="classes" value="bold" />
@@ -1207,7 +1207,7 @@
 	<slot name="finalAverage" layout="null-as-label" />
 </schema>
 
-<schema name="PublicPresentationSeminarProcess.view" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
+<schema name="PublicPresentationSeminarProcess.view" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
@@ -1220,7 +1220,7 @@
 	<slot name="presentationDate"/>
 </schema>
 
-<schema name="PublicPresentationSeminarProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
+<schema name="PublicPresentationSeminarProcess.view.simple" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
@@ -1229,7 +1229,7 @@
 </schema>
 
 
-<schema name="PublicPresentationSeminarProcessBean.edit.document.and.remarks" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
+<schema name="PublicPresentationSeminarProcessBean.edit.document.and.remarks" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
 	<slot name="document.file">
 		<property name="fileNameSlot" value="document.filename"/>
 		<property name="size" value="20"/>
@@ -1240,7 +1240,7 @@
 	</slot>
 </schema>
 
-<schema name="PublicPresentationSeminarProcessBean.edit.remarks" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
+<schema name="PublicPresentationSeminarProcessBean.edit.remarks" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
 	<slot name="presentationRequestDate" required="true" />
 	<slot name="remarks" layout="longText">
 		<property name="columns" value="80"/>
@@ -1248,7 +1248,7 @@
 	</slot>
 </schema>
 
-<schema name="PublicPresentationSeminarComissionDocumentBean.edit.presentationDate" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" 
+<schema name="PublicPresentationSeminarComissionDocumentBean.edit.presentationDate" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean" 
 		bundle="PHD_RESOURCES">
 	<slot name="presentationDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="remarks" layout="longText">
@@ -1257,7 +1257,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdIndividualProgramProcess.view.resume.for.student" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcess.view.resume.for.student" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
 	<slot name="phdProgram" layout="null-as-label">
 		<property name="subLayout" value="values" />
@@ -1266,7 +1266,7 @@
 	<slot name="activeState" layout="phd-enum-renderer"/>
 </schema>
 
-<schema name="PhdThesisProcess.view" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
+<schema name="PhdThesisProcess.view" type="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
@@ -1288,7 +1288,7 @@
 	<slot name="finalGrade"/>
 </schema>
 
-<schema name="PhdThesisProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
+<schema name="PhdThesisProcess.view.simple" type="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
@@ -1304,67 +1304,67 @@
 	<slot name="activeStateRemarks"/>
 </schema>
 
-<schema name="PhdMeetingSchedulingProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess" bundle="PHD_RESOURCES">
+<schema name="PhdMeetingSchedulingProcess.view.simple" type="org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes"/>
 	</slot>
 </schema>
 
-<schema name="PhdMeeting.view" type="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting" bundle="PHD_RESOURCES">
+<schema name="PhdMeeting.view" type="org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeeting" bundle="PHD_RESOURCES">
 	<slot name="meetingDate" layout="year-month"/>
 	<slot name="meetingPlace" />
 </schema>
 
-<schema name="Registration.degreeNameWithDegreeCurricularPlanName" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="PHD_RESOURCES">
+<schema name="Registration.degreeNameWithDegreeCurricularPlanName" type="org.fenixedu.academic.domain.student.Registration" bundle="PHD_RESOURCES">
 	<slot name="degreeNameWithDegreeCurricularPlanName" />
 	<slot name="startDate" layout="null-as-label"/>
 	<slot name="activeStateType" />
 </schema>
 
-<schema name="phd.show.permissions.member" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+<schema name="phd.show.permissions.member" type="org.fenixedu.academic.domain.Person" bundle="PHD_RESOURCES">
 	<slot name="name" />
 	<slot name="username" />
 </schema>
 
-<schema name="DegreeCurricularPlan.presentationName" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="PHD_RESOURCES">
+<schema name="DegreeCurricularPlan.presentationName" type="org.fenixedu.academic.domain.DegreeCurricularPlan" bundle="PHD_RESOURCES">
 	<slot name="presentationName" />
 </schema>
 
-<schema name="Enrolment.view.name" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="PHD_RESOURCES">
+<schema name="Enrolment.view.name" type="org.fenixedu.academic.domain.Enrolment" bundle="PHD_RESOURCES">
 	<slot name="presentationName" />
 </schema>
 
-<schema name="PhdParticipant.view.name.with.title" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
+<schema name="PhdParticipant.view.name.with.title" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle"/>
 </schema>
 
-<schema name="PhdAcademicServiceRequest.new.situation-PROCESSING" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+<schema name="PhdAcademicServiceRequest.new.situation-PROCESSING" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
 	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
 </schema>
 
-<schema name="PhdAcademicServiceRequest.new.situation-CANCELLED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+<schema name="PhdAcademicServiceRequest.new.situation-CANCELLED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
 	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
-<schema name="PhdAcademicServiceRequest.new.situation-REJECTED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+<schema name="PhdAcademicServiceRequest.new.situation-REJECTED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
 	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
-<schema name="PhdAcademicServiceRequest.new.situation-CONCLUDED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+<schema name="PhdAcademicServiceRequest.new.situation-CONCLUDED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
 	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
 	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
-<schema name="PhdAcademicServiceRequest.new.situation-RECEIVED_FROM_EXTERNAL_ENTITY" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+<schema name="PhdAcademicServiceRequest.new.situation-RECEIVED_FROM_EXTERNAL_ENTITY" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
 	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" required="true"/>
 	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
-<schema name="PhdAcademicServiceRequest.new.situation-DELIVERED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+<schema name="PhdAcademicServiceRequest.new.situation-DELIVERED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
 	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
 </schema>
 
-<schema name="PhdIndividualProgramProcessEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
+<schema name="PhdIndividualProgramProcessEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean">
 	<slot name="creator.name" />
 	<slot name="creationDate" layout="year-month"/>
 	<slot name="bccsView" />
@@ -1374,7 +1374,7 @@
 	<slot name="message" />
 </schema>
 
-<schema name="PhdProgramEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean">
+<schema name="PhdProgramEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.email.PhdProgramEmailBean">
 	<slot name="creator.name" />
 	<slot name="creationDate" layout="year-month"/>
 	<slot name="bccsView" />
@@ -1384,7 +1384,7 @@
 	<slot name="message" />
 </schema>
 
-<schema name="PhdMigrationIndividualProcessDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
+<schema name="PhdMigrationIndividualProcessDataBean" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
 	<slot name="data" />
 	<slot name="processNumber" />
 	<slot name="phdProgram" layout="null-as-label">
@@ -1409,9 +1409,9 @@
 	<slot name="limitToFinishDate" layout="year-month-day" />
 </schema>
 
-<schema name="PhdMigrationIndividualProcessDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
+<schema name="PhdMigrationIndividualProcessDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
 	<slot name="phdProgram" layout="menu-select" required="true">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsFilteredProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramsFilteredProvider" />
 		<property name="format" value="${name}" />
 	</slot>
 	<slot name="title" >
@@ -1429,7 +1429,7 @@
 	<slot name="annulmentDate" layout="year-month-day" />
 </schema>
 
-<schema name="PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
+<schema name="PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
 	<slot name="data" />"
 	<slot name="phdStudentNumber" />
 	<slot name="identificationNumber" />
@@ -1455,7 +1455,7 @@
 	<slot name="email" />
 </schema>
 
-<schema name="PhdMigrationIndividualPersonalDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
+<schema name="PhdMigrationIndividualPersonalDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
 	<slot name="identificationNumber" />
 	<slot name="socialSecurityNumber" />
 	<slot name="fullName" />
@@ -1463,7 +1463,7 @@
 	<slot name="dateOfBirth" layout="year-month-day" required="true"/>
 	<slot name="gender" layout="phd-enum-renderer"/>
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.CountryProvider"/>
 		<property name="format" value="${countryNationality}" />
 		<property name="sortBy" value="countryNationality"/>
 	</slot>
@@ -1483,7 +1483,7 @@
 	<slot name="email" />
 </schema>
 
-<schema name="PhdMigrationIndividualPersonalDataBean.simple.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
+<schema name="PhdMigrationIndividualPersonalDataBean.simple.view" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
 	<slot name="identificationNumber" />
 	<slot name="socialSecurityNumber" />
 	<slot name="fullName" />
@@ -1492,7 +1492,7 @@
 	<slot name="email" />
 </schema>
 
-<schema name="PhdMigrationGuidingBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding$PhdMigrationGuidingBean">
+<schema name="PhdMigrationGuidingBean" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationGuiding$PhdMigrationGuidingBean">
 	<slot name="data" />
 	<slot name="phdStudentNumber" />
 	<slot name="institutionCode" />
@@ -1500,7 +1500,7 @@
 	<slot name="teacherId" />
 </schema>
 
-<schema name="PhdMigrationIndividualProcessData.simple" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData">
+<schema name="PhdMigrationIndividualProcessData.simple" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualProcessData">
 	<slot name="processBean.processNumber" />
 	<slot name="processBean.phdProgram" layout="null-as-label">
 		<property name="subLayout" value="values" />
@@ -1513,26 +1513,26 @@
 	<slot name="migrationDate" layout="null-as-label"/>
 </schema>
 
-<schema name="SearchPhdMigrationProcessBean.edit" type="net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean" bundle="PHD_RESOURCES">
+<schema name="SearchPhdMigrationProcessBean.edit" type="org.fenixedu.academic.domain.phd.migration.SearchPhdMigrationProcessBean" bundle="PHD_RESOURCES">
 	<slot name="executionYear" layout="menu-select">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.MigrationExecutionYearsProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.MigrationExecutionYearsProvider" />
 		<property name="format" value="${year}" />
         <property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="processState" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdMigrationProcessStateTypeProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.PhdMigrationProcessStateTypeProvider" />
 		<property name="format" value="${localizedName}" />
 		<property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="phdStudentNumber" />
 	<slot name="filterNotMigratedProcesses" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.SearchPhdMigrationProcessBeanFilterMigratedProcessesProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.SearchPhdMigrationProcessBeanFilterMigratedProcessesProvider" />
 		<property name="format" value="${localizedName}" />
 		<property name="saveOptions" value="true"/>
 	</slot>
 </schema>
 
-<schema name="PhdThesisProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean" bundle="PHD_RESOURCES">
+<schema name="PhdThesisProcessBean.editDetails" type="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean" bundle="PHD_RESOURCES">
 	<slot name="whenThesisDiscussionRequired">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>

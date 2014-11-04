@@ -21,13 +21,14 @@
  * 
  *  
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Date;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Curriculum;
+import org.fenixedu.academic.domain.ExecutionYear;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**

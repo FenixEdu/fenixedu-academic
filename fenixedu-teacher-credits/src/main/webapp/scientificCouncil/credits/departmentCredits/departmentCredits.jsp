@@ -57,7 +57,7 @@
 
 
 <logic:present name="employeesOfDepartment">
-<bean:define id="department" name="departmentCreditsBean" property="department" type="net.sourceforge.fenixedu.domain.Department"/>
+<bean:define id="department" name="departmentCreditsBean" property="department" type="org.fenixedu.academic.domain.Department"/>
 <h3><bean:message key="title.department.credits.list" name="departmentCreditsBean" arg0="<%= department.getNameI18n().toString() %>"/></h3> 
 	<fr:view name="employeesOfDepartment"  schema="scientificCouncil.credits.employee">
 		<fr:layout name="tabular">

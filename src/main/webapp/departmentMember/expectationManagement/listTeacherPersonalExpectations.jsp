@@ -36,7 +36,7 @@
 			<bean:message key="label.common.executionYear"/>:
 			<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 
 				<fr:layout name="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
 					<fr:property name="format" value="${year}"/>
 					<fr:destination name="postback" path="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectationsForSelectedExecutionYear"/>
 				</fr:layout>
@@ -61,7 +61,7 @@
 					<th><bean:message key="label.expectation.evaluation" bundle="DEPARTMENT_MEMBER_RESOURCES"/></th>										
 				</tr>
 				<logic:iterate id="mapEntry" name="teachersPersonalExpectations">		
-					<bean:define id="teacher" name="mapEntry" property="key" type="net.sourceforge.fenixedu.domain.Teacher"/>				
+					<bean:define id="teacher" name="mapEntry" property="key" type="org.fenixedu.academic.domain.Teacher"/>				
 					<tr>
 						<td>
 							<logic:notEmpty name="mapEntry" property="value">

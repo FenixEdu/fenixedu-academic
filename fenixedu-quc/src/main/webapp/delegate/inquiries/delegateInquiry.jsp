@@ -96,7 +96,7 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os probl
 			<bean:message bundle="DELEGATES_RESOURCES" key="link.inquiry.showUCResults"/>
 		</html:link>
 	</p>
-	<logic:iterate indexId="iter" id="blockResult" name="delegateInquiryBean" property="curricularBlockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
+	<logic:iterate indexId="iter" id="blockResult" name="delegateInquiryBean" property="curricularBlockResults" type="org.fenixedu.academic.dto.inquiries.BlockResultsSummaryBean">
 		<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is GREY -->
 			<bean:define id="toogleFunctions">
 				<bean:write name="toogleFunctions" filter="false"/>
@@ -152,7 +152,7 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os probl
 				</h3>
 			</logic:notEqual>
 			<bean:define id="teacherToogleFunctions" value=""/>
-			<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="delegateInquiryBean" property="teachersResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
+			<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="delegateInquiryBean" property="teachersResults" type="org.fenixedu.academic.dto.inquiries.TeacherShiftTypeResultsBean">
 				<div style="margin: 2.5em 0 3.5em 0;">
 					<h3>
 						<bean:write name="teacherShiftTypeResult" property="professorship.person.name"/> / 
@@ -166,7 +166,7 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os probl
 							<bean:message bundle="DELEGATES_RESOURCES" key="link.inquiry.showTeacherResults"/>
 						</html:link>
 					</p>
-					<logic:iterate indexId="iter" id="blockResult" name="teacherShiftTypeResult" property="blockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
+					<logic:iterate indexId="iter" id="blockResult" name="teacherShiftTypeResult" property="blockResults" type="org.fenixedu.academic.dto.inquiries.BlockResultsSummaryBean">
 						<bean:define id="teacherToogleFunctions">
 							<bean:write name="teacherToogleFunctions" filter="false"/>
 							<%= "$('#teacher-block" + teacherShiftTypeResult.getProfessorship().getExternalId() + teacherShiftTypeResult.getShiftType() + (Integer.valueOf(iter)+(int)1) + "').click(function()" 

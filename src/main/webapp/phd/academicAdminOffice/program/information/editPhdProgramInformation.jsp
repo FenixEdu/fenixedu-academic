@@ -55,7 +55,7 @@
 		
 	<fr:edit id="phdProgramInformationBean.create" name="phdProgramInformationBean">	
 
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgramInformationBean" >
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgramInformationBean" >
 			<fr:slot name="beginDate" required="true" />
 			
 			<fr:slot name="minThesisEctsCredits" required="true" >

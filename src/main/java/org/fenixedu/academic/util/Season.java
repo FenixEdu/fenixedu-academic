@@ -25,7 +25,7 @@
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 

@@ -19,16 +19,16 @@
 
 --%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
-<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.domain.Person"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.GenericApplication"%>
+<%@page import="org.fenixedu.academic.domain.person.RoleType"%>
+<%@page import="org.fenixedu.academic.predicate.AccessControl"%>
+<%@page import="org.fenixedu.academic.domain.Person"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod"%>
+<%@page import="org.fenixedu.academic.domain.period.GenericApplicationPeriod"%>
 <%@page import="java.util.SortedSet"%>
 
 <html:xhtml/>
@@ -74,7 +74,7 @@
 		<input type="hidden" name="applicationPeriodId" value="<%= genericApplicationPeriod.getExternalId() %>"/>
 
 		<fr:edit id="genericApplicationPeriodEdit" name="applicationPeriod">
-			<fr:schema type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod" bundle="CANDIDATE_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.period.GenericApplicationPeriod" bundle="CANDIDATE_RESOURCES">
 				<fr:slot name="title" key="label.application.period.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
    					<fr:property name="size" value="50"/>
 				</fr:slot>
@@ -135,7 +135,7 @@
 		<input type="hidden" name="applicationPeriodId" value="<%= genericApplicationPeriod.getExternalId() %>"/>
 
 		<fr:edit id="genericApplicationUserBean" name="genericApplicationUserBean">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUserBean" bundle="CANDIDATE_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.candidacy.util.GenericApplicationUserBean" bundle="CANDIDATE_RESOURCES">
 				<fr:slot name="username" key="label.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
    					<fr:property name="size" value="12"/>
 				</fr:slot>

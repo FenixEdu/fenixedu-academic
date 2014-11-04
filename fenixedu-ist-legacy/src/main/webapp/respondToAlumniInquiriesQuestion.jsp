@@ -58,9 +58,9 @@
 				<fr:form action="/respondToAlumniInquiriesQuestion.do">
 					<html:hidden property="method" value="registerAlumniResponseNow"/>
 					<fr:edit id="cerimonyInquiryPerson" name="cerimonyInquiryPerson">
-						<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
+						<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.alumni.CerimonyInquiryPerson">
 							<fr:slot name="cerimonyInquiryAnswer" key="label.response" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CerimonyInquiryAnswerProvider"/>
+								<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CerimonyInquiryAnswerProvider"/>
 								<fr:property name="format" value="${text}" />
 							</fr:slot>
 							<logic:equal name="cerimonyInquiryPerson" property="cerimonyInquiry.allowComments" value="true">

@@ -36,11 +36,11 @@
 	<fr:edit id="chooseStudentBean" name="chooseStudentBean" visible="false" />
 	
 	<fr:edit id="chooseStudentBean-choose" name="chooseStudentBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.gep.student.candidacy.personal.ingression.data.ChooseStudentBean" bundle="GEP_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.gep.student.candidacy.personal.ingression.data.ChooseStudentBean" bundle="GEP_RESOURCES">
 			<fr:slot name="number" key="label.personal.ingression.data.viewer.search.student.number" >
 				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
 			</fr:slot>
-			<fr:slot name="username" key="label.personal.ingression.data.viewer.search.student.username" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
+			<fr:slot name="username" key="label.personal.ingression.data.viewer.search.student.username" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 			<fr:slot name="documentId" key="label.personal.ingression.data.viewer.search.document.id" />
 		</fr:schema>
 		
@@ -62,7 +62,7 @@
 	<logic:notEmpty name="students">
 	
 		<fr:view name="students">
-			<fr:schema type="net.sourceforge.fenixedu.domain.student.Student" bundle="GEP_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.student.Student" bundle="GEP_RESOURCES">
 				<fr:slot name="number" key="label.personal.ingression.data.viewer.student.number" />
 				<fr:slot name="person.name" key="label.personal.ingression.data.viewer.student.name" />
 			</fr:schema>

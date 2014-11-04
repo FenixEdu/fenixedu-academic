@@ -19,11 +19,11 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdJuryElementsRatificationEntity"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean"%><html:xhtml/>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -146,7 +146,7 @@
 <p><strong><bean:message  key="title.phd.thesis.jury.element.ratification.entity" bundle="PHD_RESOURCES"/></strong></p>
 
 
-<bean:define id="thesisProcessBean" name="thesisProcessBean" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean" />
+<bean:define id="thesisProcessBean" name="thesisProcessBean" type="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean" />
 <fr:form action="<%= "/phdThesisProcess.do?method=setPhdJuryElementsRatificationEntity&processId=" + processId.toString() %>">
 	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
 	
@@ -154,7 +154,7 @@
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
 			<fr:slot name="phdJuryElementsRatificationEntity" layout="menu-select-postback" >
 				<fr:property name="format" value="${localizedName}" />
-				<fr:property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdJuryElementsRatificationEntityProvider" />
+				<fr:property name="providerClass"	value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.PhdJuryElementsRatificationEntityProvider" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
 			

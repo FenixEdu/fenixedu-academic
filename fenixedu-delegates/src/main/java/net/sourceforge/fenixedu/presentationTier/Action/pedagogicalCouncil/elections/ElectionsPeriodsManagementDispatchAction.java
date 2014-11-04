@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.elections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,20 +28,20 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateVotingPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.NewRoundElectionBean;
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.elections.DelegateElection;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalDelegateElectionsEntryPoint;
+import org.fenixedu.academic.service.services.pedagogicalCouncil.elections.CreateDelegateVotingPeriod;
+import org.fenixedu.academic.dto.pedagogicalCouncil.elections.ElectionPeriodBean;
+import org.fenixedu.academic.dto.pedagogicalCouncil.elections.NewRoundElectionBean;
+import org.fenixedu.academic.dto.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.elections.DelegateElection;
+import org.fenixedu.academic.domain.elections.DelegateElectionResultsByStudentDTO;
+import org.fenixedu.academic.domain.elections.DelegateElectionVotingPeriod;
+import org.fenixedu.academic.domain.elections.YearDelegateElection;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalDelegateElectionsEntryPoint;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

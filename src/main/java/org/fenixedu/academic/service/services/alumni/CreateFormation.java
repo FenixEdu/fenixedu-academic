@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
+package org.fenixedu.academic.service.services.alumni;
 
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
-import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.Formation;
+import org.fenixedu.academic.domain.Alumni;
+import org.fenixedu.academic.domain.Formation;
+import org.fenixedu.academic.dto.alumni.formation.AlumniFormation;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateFormation extends FormationManagement {

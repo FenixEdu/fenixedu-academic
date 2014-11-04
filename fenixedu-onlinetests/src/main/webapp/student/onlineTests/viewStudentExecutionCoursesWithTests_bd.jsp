@@ -35,7 +35,7 @@
 		<fr:form action="/studentTests.do?method=viewStudentExecutionCoursesWithTests">
 			<fr:edit id="executionYear" name="registrationSelectExecutionYearBean" slot="executionYear">
 				<fr:layout name="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionYearsProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionYearsProvider" />
 					<fr:property name="format" value="${year}" />
 					<fr:property name="destination" value="postBack"/>
 				</fr:layout>
@@ -57,7 +57,7 @@
 				<th><bean:message key="label.curricular.course.acronym"/></th>
 				<th><bean:message key="label.curricular.course.name"/></th>
 			</tr>
-			<logic:iterate id="executionCourse" name="studentExecutionCoursesList" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+			<logic:iterate id="executionCourse" name="studentExecutionCoursesList" type="org.fenixedu.academic.domain.ExecutionCourse">
 			<tr>
 				<td>
 					<html:link page="/studentTests.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="externalId">

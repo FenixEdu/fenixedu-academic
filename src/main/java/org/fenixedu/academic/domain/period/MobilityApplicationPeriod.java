@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.period;
+package org.fenixedu.academic.domain.period;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,20 +24,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplate;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateBean;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityQuota;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;

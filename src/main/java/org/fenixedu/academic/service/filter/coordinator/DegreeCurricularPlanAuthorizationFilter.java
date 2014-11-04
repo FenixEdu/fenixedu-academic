@@ -20,14 +20,13 @@
  * Created on Oct 24, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
+package org.fenixedu.academic.service.filter.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.service.filter.framework.DomainObjectAuthorizationFilter;
 import org.fenixedu.bennu.core.domain.User;
 
 public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthorizationFilter {

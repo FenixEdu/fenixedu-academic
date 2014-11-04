@@ -28,10 +28,10 @@
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.event.reports.request.view" /></h2>
 
-<bean:define id="queueJob" name="queueJob" type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" />
+<bean:define id="queueJob" name="queueJob" type="org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJob" />
 
 <fr:view name="queueJob">
-	<fr:schema type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" bundle="ACADEMIC_OFFICE_RESOURCES">		
+	<fr:schema type="org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJob" bundle="ACADEMIC_OFFICE_RESOURCES">		
 		<fr:slot name="beginDate" />
 		<fr:slot name="endDate" />
 

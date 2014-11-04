@@ -39,7 +39,7 @@
 	<bean:define id="backAction" name="backAction" type="java.lang.String" />
 	<fr:edit id="fileUploadBean" name="fileUploadBean"
 		action="<%= "/teacherEvaluation.do?method=uploadEvaluationFile&amp;backAction=" + backAction %>">
-		<fr:schema bundle="ENUMERATION_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean">
+		<fr:schema bundle="ENUMERATION_RESOURCES" type="org.fenixedu.academic.domain.teacher.evaluation.FileUploadBean">
 			<fr:slot name="inputStream" key="<%= type %>"
 				validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="fileNameSlot" value="filename" />

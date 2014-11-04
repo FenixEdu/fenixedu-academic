@@ -19,10 +19,9 @@
 /*
  * Created on Apr 15, 2005
  */
-package net.sourceforge.fenixedu.domain.person;
+package org.fenixedu.academic.domain.person;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;

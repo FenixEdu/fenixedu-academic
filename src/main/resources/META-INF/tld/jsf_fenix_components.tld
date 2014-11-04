@@ -44,7 +44,7 @@
   <tag>
 
     <name>htmlEditor</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIHtmlEditorTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.faces.components.UIHtmlEditorTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
     <body-content>empty</body-content>
     <description>
@@ -139,7 +139,7 @@
   
    <tag>
     <name>viewState</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewStateTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.faces.components.UIViewStateTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
     <body-content>empty</body-content>
     <description>
@@ -179,7 +179,7 @@
   </tag>
   <tag>
 		<name>regexValidator</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidatorTag</tag-class>
+		<tag-class>org.fenixedu.academic.ui.faces.validators.RegexValidatorTag</tag-class>
 		<tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -192,7 +192,7 @@
   <!-- Command Link -->
   <tag>
     <name>commandLink</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLinkTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.faces.components.UICommandLinkTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
     <body-content>JSP</body-content>
     <description>
@@ -583,7 +583,7 @@
   <!-- Command Button -->
   <tag>
     <name>commandButton</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandButtonTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.faces.components.UICommandButtonTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
     <body-content>JSP</body-content>
     <description>
@@ -953,7 +953,7 @@
   <!-- SelectOneMenu -->
   <tag>
     <name>selectOneMenu</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOneTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.faces.components.UISelectOneTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
     <body-content>JSP</body-content>
     <description>
@@ -1316,7 +1316,7 @@
   </tag>
 	<tag>
 		<name>fenixCalendar</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.FenixCalendarTag</tag-class>
+		<tag-class>org.fenixedu.academic.ui.faces.components.FenixCalendarTag</tag-class>
 		<description>Fenix Generic Calendar</description>
   
 		<attribute>
@@ -1368,7 +1368,7 @@
 	</tag>
 	<tag>
 		<name>degreeCurricularPlanRender</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.DegreeCurricularPlanTag</tag-class>
+		<tag-class>org.fenixedu.academic.ui.faces.components.degreeStructure.DegreeCurricularPlanTag</tag-class>
 		<description>Fenix Degree Curricular Plan Render</description>
   
 		<attribute>
@@ -1385,7 +1385,7 @@
 			<name>dcp</name>
 			<required>true</required>
 			<rtexprvalue>false</rtexprvalue>
-			<description>Degree Curricular Plan to be rendered. Type: net.sourceforge.fenixedu.domain.DegreeCurricularPlan</description>
+			<description>Degree Curricular Plan to be rendered. Type: org.fenixedu.academic.domain.DegreeCurricularPlan</description>
 		</attribute>
 		<attribute>
 			<name>toEdit</name>
@@ -1427,7 +1427,7 @@
 			<name>executionYear</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<description>If present, contexts are filtered accordingly. Type: net.sourceforge.fenixedu.domain.ExecutionYear. Default: false</description>
+			<description>If present, contexts are filtered accordingly. Type: org.fenixedu.academic.domain.ExecutionYear. Default: false</description>
 		</attribute>
 		<attribute>
 			<name>reportsAvailable</name>
@@ -1444,7 +1444,7 @@
 	</tag>
   <tag>
 		<name>breadCrumbs</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.BreadCrumbsTag</tag-class>
+		<tag-class>org.fenixedu.academic.ui.faces.components.BreadCrumbsTag</tag-class>
 		<description>Public page bread crumbs</description>
 
 		<attribute>
@@ -1465,7 +1465,7 @@
 	</tag>
   <tag>
     <name>dataRepeater</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.faces.components.UIDataRepeaterTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
     <body-content>JSP</body-content>
     <description>
@@ -1579,7 +1579,7 @@
 
   <tag>
 		<name>dateValidator</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.DateValidatorTag</tag-class>
+		<tag-class>org.fenixedu.academic.ui.faces.validators.DateValidatorTag</tag-class>
 		<tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -1596,7 +1596,7 @@
   
   <tag>
 		<name>autoComplete</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoCompleteTag</tag-class>
+		<tag-class>org.fenixedu.academic.ui.faces.components.UIAutoCompleteTag</tag-class>
 		<tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -1691,7 +1691,7 @@
   
   <tag>
     <name>extendedOutputText</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputTextTag</tag-class>
+    <tag-class>org.fenixedu.academic.ui.faces.components.UIExtendedOutputTextTag</tag-class>
     <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
     <body-content>JSP</body-content>
     <description>
@@ -1809,7 +1809,7 @@
         
    <tag>
 		<name>contentLink</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.ContentLinkTag</tag-class>
+		<tag-class>org.fenixedu.academic.ui.faces.components.ContentLinkTag</tag-class>
 		<description>Content Link Tag</description>
   
 		<attribute>

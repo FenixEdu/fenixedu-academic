@@ -1,6 +1,6 @@
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymentCodes as PrintedPaymentCodes {
+valueType org.fenixedu.academic.domain.accounting.events.export.PrintedPaymentCodes as PrintedPaymentCodes {
     externalizeWith {
         String exportAsString();
     }

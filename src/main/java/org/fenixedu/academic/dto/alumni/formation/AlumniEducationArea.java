@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.alumni.formation;
+package org.fenixedu.academic.dto.alumni.formation;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.EducationArea;
+import org.fenixedu.academic.domain.EducationArea;
 
 public class AlumniEducationArea implements Serializable {
 

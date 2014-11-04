@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher;
+package org.fenixedu.academic.ui.renderers.providers.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import org.fenixedu.academic.dto.teacher.tutor.StudentsPerformanceInfoBean;
+import org.fenixedu.academic.domain.ExecutionYear;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;

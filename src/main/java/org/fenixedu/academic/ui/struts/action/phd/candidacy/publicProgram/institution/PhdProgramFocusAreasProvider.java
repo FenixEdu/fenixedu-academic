@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution;
+package org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.institution;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,12 +24,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-import net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
+import org.fenixedu.academic.domain.phd.candidacy.InstitutionPhdCandidacyPeriod;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
 public class PhdProgramFocusAreasProvider extends AbstractDomainObjectProvider {
 

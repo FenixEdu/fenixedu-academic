@@ -45,7 +45,7 @@
 </fr:form>
 
 <logic:present name="bean" property="selectedVigilantGroup">
-<bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
+<bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="org.fenixedu.academic.domain.vigilancy.VigilantGroup"/>
 
 <ul class="mtop1">
 	<li>

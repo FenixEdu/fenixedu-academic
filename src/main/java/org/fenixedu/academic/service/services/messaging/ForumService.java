@@ -19,24 +19,23 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
+package org.fenixedu.academic.service.services.messaging;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
-import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
-import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.messaging.ConversationMessage;
+import org.fenixedu.academic.domain.messaging.ConversationThread;
+import org.fenixedu.academic.domain.messaging.ForumSubscription;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.SystemSender;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.HtmlToTextConverterUtil;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.UserGroup;

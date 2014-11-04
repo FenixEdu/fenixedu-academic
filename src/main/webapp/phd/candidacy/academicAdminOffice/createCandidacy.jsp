@@ -90,7 +90,7 @@
 		
 		<fr:edit id="createCandidacyBean.migratedProcess"
 			name="createCandidacyBean">
-			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean">
+			<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean">
 				<fr:slot name="phdStudentNumber" required="true" /> 
 			</fr:schema>
 			<fr:layout name="tabular">

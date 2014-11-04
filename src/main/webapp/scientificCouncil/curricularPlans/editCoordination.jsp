@@ -164,7 +164,7 @@
 
 <fr:view name="coordsBean" property="coordinators">
 	
-	<fr:schema type="net.sourceforge.fenixedu.domain.Coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.Coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<fr:slot name="person.username" key="label.mecanographicNumber"/>
 		<fr:slot name="person.name" key="label.name"/>
 		<fr:slot name="responsible" key="label.protocol.responsible" layout="boolean-icon">
@@ -212,13 +212,13 @@
 	<p class="mtop1 mbottom0"><strong><bean:message key="label.add.coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 	<fr:form action="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=addCoordinator&personId="+ personId.toString()%>">
 		<fr:edit name="coordsBean" id="coordsBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.ExecutionDegreeCoordinatorsBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-				<fr:slot name="newCoordinator" layout="autoComplete" key="label.name.or.id" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+			<fr:schema type="org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans.ExecutionDegreeCoordinatorsBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+				<fr:slot name="newCoordinator" layout="autoComplete" key="label.name.or.id" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="35" />
 					<fr:property name="format" value="${name} - <strong>${username}</strong>" />
 					<fr:property name="args" value="slot=name,size=20" />
 					<fr:property name="minChars" value="3" />
-					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons" />
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons" />
 					<fr:property name="indicatorShown" value="true" />
 					<fr:property name="required" value="true"/>
 				</fr:slot>
@@ -238,7 +238,7 @@
 <logic:notEmpty name="coordinatorLogs">
 <h2><bean:message key="label.coordinatorLog.title" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 <fr:view name="coordinatorLogs" >
-	<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES" type="net.sourceforge.fenixedu.domain.CoordinatorLog">
+	<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES" type="org.fenixedu.academic.domain.CoordinatorLog">
 		<fr:slot name="personWho.name" key="label.coordinatorLog.personWho"/>
 		<fr:slot name="date" key="label.coordinatorLog.date"/>
 		<fr:slot name="operation" key="label.coordinatorLog.operation"/>

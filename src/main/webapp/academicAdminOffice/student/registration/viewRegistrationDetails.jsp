@@ -25,11 +25,11 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 
 <html:xhtml/>
 
-	<bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+	<bean:define id="registration" name="registration" scope="request" type="org.fenixedu.academic.domain.student.Registration"/>
 
 	<div style="float: right;">
 		<bean:define id="personID" name="registration" property="student.person.username"/>
@@ -83,7 +83,7 @@
 	<logic:notPresent name="registration" property="ingression">
 		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:notPresent>
-	<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+	<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
 
 
 
@@ -329,7 +329,7 @@
 	
 	<academic:allowed operation="SERVICE_REQUESTS">
 	<h3 class="mtop25 mbottom05 separator2"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	<bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+	<bean:define id="registration" name="registration" scope="request" type="org.fenixedu.academic.domain.student.Registration"/>
 	<p>
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>:
 		<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequestQuick" paramId="registrationId" paramName="registration" paramProperty="externalId">

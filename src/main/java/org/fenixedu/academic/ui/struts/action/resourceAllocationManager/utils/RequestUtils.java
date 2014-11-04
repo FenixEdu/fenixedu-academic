@@ -24,22 +24,23 @@
  * Created on 16/Dez/2002
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionCourse;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.dto.InfoExecutionCourse;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionPeriod;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.service.services.commons.ReadExecutionPeriod;
+import org.fenixedu.academic.service.services.commons.ReadExecutionYear;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.publico.ReadExecutionCourse;
+import org.fenixedu.academic.service.services.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**

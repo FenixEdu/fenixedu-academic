@@ -20,11 +20,11 @@
  * Created on 21/Mar/2003
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.GuideEntry;
+import org.fenixedu.academic.domain.DocumentType;
+import org.fenixedu.academic.domain.GraduationType;
+import org.fenixedu.academic.domain.GuideEntry;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

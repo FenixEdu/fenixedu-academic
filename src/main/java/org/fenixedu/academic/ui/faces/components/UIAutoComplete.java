@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -30,10 +30,9 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.IntegerConverter;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.CharEncoding;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -54,10 +53,10 @@ public class UIAutoComplete extends UIInput {
     private static final String DEFAULT_AUTO_COMPLETE_SERVLET_URI = "ajax/AutoCompleteServlet";
 
     private final String INVALID_AUTO_COMPLETE_INPUT =
-            "net.sourceforge.fenixedu.presentationTier.jsf.validators.autoCompleteValidator.INVALID_AUTO_COMPLETE_INPUT";
+            "org.fenixedu.academic.ui.faces.validators.autoCompleteValidator.INVALID_AUTO_COMPLETE_INPUT";
 
     private final String AUTO_COMPLETE_VALUE_REQUIRED =
-            "net.sourceforge.fenixedu.presentationTier.jsf.validators.autoCompleteValidator.AUTO_COMPLETE_VALUE_REQUIRED";
+            "org.fenixedu.academic.ui.faces.validators.autoCompleteValidator.AUTO_COMPLETE_VALUE_REQUIRED";
 
     public UIAutoComplete() {
         setRendererType(null);

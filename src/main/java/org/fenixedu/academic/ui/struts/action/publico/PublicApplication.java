@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.publico;
+package org.fenixedu.academic.ui.struts.action.publico;
 
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
 

@@ -42,7 +42,7 @@
 	
 	<fr:edit id="academicInterval"
 			 name="executionDegreeBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean"
+			 type="org.fenixedu.academic.dto.administrativeOffice.lists.ExecutionDegreeListBean"
 			 schema="choose.degreeCurricularPlan">
 		<fr:destination name="degreePostBack" path="/chooseExecutionYearAndDegreeCurricularPlan.do?method=chooseDegree"/>
         <fr:destination name="curricularPlanPostBack" path="/chooseExecutionYearAndDegreeCurricularPlan.do?method=chooseDegreeCurricularPlan"/>

@@ -16,19 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
+package org.fenixedu.academic.domain.candidacyProcess.graduatedPerson;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CandidaciesLog;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.CandidaciesLog;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGradeState;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState;
+import org.fenixedu.academic.util.Bundle;
 
 public class DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean implements Serializable {
 

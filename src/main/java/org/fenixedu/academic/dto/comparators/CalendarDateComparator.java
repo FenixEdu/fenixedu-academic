@@ -21,7 +21,7 @@
  *
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.comparators;
+package org.fenixedu.academic.dto.comparators;
 
 import java.util.Calendar;
 import java.util.Comparator;
@@ -31,7 +31,7 @@ import java.util.Comparator;
  * @author Susana Fernandes
  * 
  *         22/Jul/2003 fenix-head
- *         net.sourceforge.fenixedu.dataTransferObject.comparators
+ *         org.fenixedu.academic.dto.comparators
  * 
  */
 public class CalendarDateComparator implements Comparator {

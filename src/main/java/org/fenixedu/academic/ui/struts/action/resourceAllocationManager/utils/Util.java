@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
+package org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
-import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.dto.InfoBuilding;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadBuildings;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.SpaceClassification;
 

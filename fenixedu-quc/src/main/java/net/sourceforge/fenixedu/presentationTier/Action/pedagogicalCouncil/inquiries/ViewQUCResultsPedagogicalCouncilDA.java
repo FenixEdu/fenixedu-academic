@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.inquiries;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.inquiries;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,10 +28,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentExecutionSemester;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
+import org.fenixedu.academic.dto.inquiries.DepartmentExecutionSemester;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.ui.struts.action.departmentMember.ViewQUCResultsDA;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

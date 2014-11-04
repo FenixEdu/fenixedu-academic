@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.studentLowPerformance;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.PrescriptionEnum;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.PrescriptionEnum;
 
 public class PrescriptionBean implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action;
+package org.fenixedu.academic.ui.struts.action;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,12 +9,12 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+import org.fenixedu.academic.service.services.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

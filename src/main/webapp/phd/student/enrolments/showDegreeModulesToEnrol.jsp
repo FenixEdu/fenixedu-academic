@@ -24,7 +24,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ page import="org.apache.struts.action.ActionMessages" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.CompetenceCourse"%>
+<%@page import="org.fenixedu.academic.domain.CompetenceCourse"%>
 <html:xhtml />
 
 <logic:present role="role(STUDENT)">

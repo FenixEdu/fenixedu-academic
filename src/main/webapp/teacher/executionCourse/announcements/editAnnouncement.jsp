@@ -42,7 +42,7 @@
 
 	<tr>
 		<th style="width: 125px;">
-			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
+			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.title.label"/>:
 		</th>
 		<td>
 			<fr:edit id="announcement-subject-validated" name="announcement" slot="subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
@@ -56,7 +56,7 @@
 
 	<tr>
 		<th>
-			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>:
+			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.body.label"/>:
 		</th>
 		<td>
 			<fr:edit id="announcement-body-validated" name="announcement" slot="body" layout="area" 
@@ -110,7 +110,7 @@
 <table class="tstyle5 thlight thtop thright mtop025">
 	<tr>
 		<th style="width: 125px;">
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.excerpt.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.excerpt.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement" slot="excerpt" layout="area">
@@ -124,10 +124,10 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.place.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.place.label"/>:
 		</th>
 		<td>
-			<fr:edit name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="place">
+			<fr:edit name="announcement" type="org.fenixedu.academic.domain.messaging.Announcement" slot="place">
 				<fr:layout>
 					<fr:property name="size" value="30"/>
 				</fr:layout>
@@ -138,7 +138,7 @@
 	
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.keywords.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.keywords.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement" slot="keywords">
@@ -151,7 +151,7 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorName.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.authorName.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="author">
@@ -165,7 +165,7 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorEmail.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.authorEmail.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="authorEmail">
@@ -178,7 +178,7 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.referedSubjectBegin.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="referedSubjectBegin"/>			
@@ -187,7 +187,7 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectEnd.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.referedSubjectEnd.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="referedSubjectEnd"/>						
@@ -196,7 +196,7 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.publicationBegin.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="publicationBegin"/>			
@@ -205,7 +205,7 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.publicationEnd.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement"  slot="publicationEnd"/>			
@@ -214,7 +214,7 @@
 
 	<tr>
 		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
+			<bean:message bundle="MESSAGING_RESOURCES" key="org.fenixedu.academic.domain.messaging.Announcement.visible.label"/>:
 		</th>
 		<td>
 			<fr:edit name="announcement" slot="visible"/>

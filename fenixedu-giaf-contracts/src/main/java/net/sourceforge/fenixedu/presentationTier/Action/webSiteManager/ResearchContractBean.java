@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
+package org.fenixedu.academic.ui.struts.action.webSiteManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.ResearchContract.ResearchContractType;
+import org.fenixedu.academic.domain.organizationalStructure.ResearchUnit;
+import org.fenixedu.academic.domain.person.IDDocumentType;
 
 import org.joda.time.YearMonthDay;
 

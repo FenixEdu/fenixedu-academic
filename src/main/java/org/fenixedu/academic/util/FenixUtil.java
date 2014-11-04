@@ -19,7 +19,7 @@
 /*
  * Created on 20/Fev/2004
  */
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import java.io.Serializable;
 

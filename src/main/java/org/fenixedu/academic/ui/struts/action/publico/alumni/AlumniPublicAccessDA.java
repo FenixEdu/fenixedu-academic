@@ -16,34 +16,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico.alumni;
+package org.fenixedu.academic.ui.struts.action.publico.alumni;
 
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.alumni.RegisterAlumniData;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni.AlumniNotificationService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniErrorSendingMailBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniLinkRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPasswordBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
-import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.AlumniRequestType;
-import net.sourceforge.fenixedu.domain.Installation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.KaptchaAction;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication;
-import net.sourceforge.fenixedu.util.Bundle;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Alumni;
+import org.fenixedu.academic.domain.AlumniRequestType;
+import org.fenixedu.academic.domain.Installation;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.alumni.AlumniErrorSendingMailBean;
+import org.fenixedu.academic.dto.alumni.AlumniIdentityCheckRequestBean;
+import org.fenixedu.academic.dto.alumni.publicAccess.AlumniLinkRequestBean;
+import org.fenixedu.academic.dto.alumni.publicAccess.AlumniPasswordBean;
+import org.fenixedu.academic.dto.alumni.publicAccess.AlumniPublicAccessBean;
+import org.fenixedu.academic.service.services.alumni.RegisterAlumniData;
+import org.fenixedu.academic.service.services.commons.alumni.AlumniNotificationService;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.publico.KaptchaAction;
+import org.fenixedu.academic.ui.struts.action.publico.PublicApplication;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;

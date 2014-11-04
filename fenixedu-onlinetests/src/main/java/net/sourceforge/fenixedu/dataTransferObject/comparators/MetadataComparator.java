@@ -19,12 +19,12 @@
 /*
  * Created on 5/Mar/2004
  */
-package net.sourceforge.fenixedu.dataTransferObject.comparators;
+package org.fenixedu.academic.dto.comparators;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
+import org.fenixedu.academic.domain.onlineTests.Metadata;
+import org.fenixedu.academic.util.tests.QuestionDifficultyType;
 
 /**
  * @author Susana Fernandes

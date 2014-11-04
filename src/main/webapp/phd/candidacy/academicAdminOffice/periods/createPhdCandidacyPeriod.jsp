@@ -25,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="title.phd.candidacy.periods" bundle="PHD_RESOURCES" /></h2>
@@ -49,10 +49,10 @@
 	<fr:edit id="phdCandidacyPeriodBean" name="phdCandidacyPeriodBean" visible="false" />
 	
 	<fr:edit id="phdCandidacyPeriodBean.create" name="phdCandidacyPeriodBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriodBean">
 			<fr:slot name="type" required="true" />
 			<fr:slot name="executionYear" layout="menu-select" required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
 			<fr:slot name="start" required="true" />

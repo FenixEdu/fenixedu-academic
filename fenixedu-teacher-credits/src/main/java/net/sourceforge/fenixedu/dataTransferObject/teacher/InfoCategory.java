@@ -20,10 +20,10 @@
  * Created on 7/Nov/2003
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher;
+package org.fenixedu.academic.dto.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import org.fenixedu.academic.dto.InfoObject;
+import org.fenixedu.academic.domain.personnelSection.contracts.ProfessionalCategory;
 
 /**
  * @author Leonor Almeida
@@ -115,7 +115,7 @@ public class InfoCategory extends InfoObject {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * org.fenixedu.academic.dto.InfoObject#copyFromDomain
      * (Dominio.DomainObject)
      */
 

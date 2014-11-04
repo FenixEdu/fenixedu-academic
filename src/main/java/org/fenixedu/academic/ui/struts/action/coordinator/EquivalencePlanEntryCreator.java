@@ -1,16 +1,16 @@
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
+package org.fenixedu.academic.ui.struts.action.coordinator;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
-import net.sourceforge.fenixedu.domain.EquivalencePlan;
-import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.util.LogicOperator;
+import org.fenixedu.academic.domain.EquivalencePlan;
+import org.fenixedu.academic.domain.EquivalencePlanEntry;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.util.LogicOperator;
+import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 
 public class EquivalencePlanEntryCreator implements FactoryExecutor, Serializable {
 

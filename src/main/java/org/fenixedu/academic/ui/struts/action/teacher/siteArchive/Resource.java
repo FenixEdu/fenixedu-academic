@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive;
+package org.fenixedu.academic.ui.struts.action.teacher.siteArchive;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.rules.Rule;
 
 /**
  * A <tt>Resource</tt> represents something that needs to be retrieved by the
- * {@link net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher} .
+ * {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher} .
  * 
  * <p>
  * A <tt>Resource</tt> defines a local name for the content being retrieved and the url from where the content will be retrieved.
@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rule
  * 
  * <p>
  * Additionaly you can add rules to the resource. This rules are to be applyed by the
- * {@link net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher} to the content of the resource.
+ * {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher} to the content of the resource.
  * 
  * @author cfgi
  */

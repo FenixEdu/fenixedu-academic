@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd;
+package org.fenixedu.academic.domain.phd;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.CancelledCandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
-import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.CancelledCandidacySituation;
+import org.fenixedu.academic.domain.candidacy.CandidacySituation;
+import org.fenixedu.academic.domain.candidacy.NotAdmittedCandidacySituation;
+import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy;
+import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
 import org.joda.time.DateTime;
 
 public class PhdProgramProcessState extends PhdProgramProcessState_Base {

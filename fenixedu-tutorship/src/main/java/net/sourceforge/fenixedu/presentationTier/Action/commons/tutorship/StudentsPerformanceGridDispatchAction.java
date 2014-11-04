@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship;
+package org.fenixedu.academic.ui.struts.action.commons.tutorship;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,17 +26,17 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tutor.CreatePerformanceGridTable;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorStatisticsBean;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.teacher.tutor.CreatePerformanceGridTable;
+import org.fenixedu.academic.dto.teacher.tutor.PerformanceGridTableDTO;
+import org.fenixedu.academic.dto.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine;
+import org.fenixedu.academic.dto.teacher.tutor.TutorStatisticsBean;
+import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 public abstract class StudentsPerformanceGridDispatchAction extends FenixDispatchAction {
 

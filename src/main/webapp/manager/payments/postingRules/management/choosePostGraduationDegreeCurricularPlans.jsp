@@ -26,7 +26,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@ page import="net.sourceforge.fenixedu.domain.phd.PhdProgram" %>
+<%@ page import="org.fenixedu.academic.domain.phd.PhdProgram" %>
 
 <h2><bean:message key="label.manager.degreeCurricularPlan" bundle="MANAGER_RESOURCES" /></h2>
 <br/>

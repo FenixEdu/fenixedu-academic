@@ -30,7 +30,7 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="testForm">
                   <form-property type="java.lang.String" name="title"></form-property>
                   <form-property type="java.lang.String" name="information"></form-property>
-                  <form-property type="net.sourceforge.fenixedu.util.tests.Response[]" name="option"></form-property>
+                  <form-property type="org.fenixedu.academic.util.tests.Response[]" name="option"></form-property>
                   <form-property type="java.lang.String" name="objectCode"></form-property>
                   <form-property type="java.lang.String" name="metadataCode"></form-property>
                   <form-property type="java.lang.String" name="changesType"></form-property>
@@ -175,7 +175,7 @@
                   <form-property initial="" type="java.lang.String" name="teacherName"></form-property>
                   <form-property initial="" type="java.lang.String" name="teacherId"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.form.AlternativeSiteForm" name="customOptionsForm">
+            <form-bean dynamic="true" type="org.fenixedu.academic.ui.struts.action.teacher.form.AlternativeSiteForm" name="customOptionsForm">
                   <form-property type="java.lang.String" name="siteAddress"></form-property>
                   <form-property type="java.lang.String" name="mail"></form-property>
                   <form-property type="java.lang.String" name="initialStatement"></form-property>
@@ -321,7 +321,7 @@
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+            <exception handler="org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler" key="" type="org.fenixedu.academic.domain.exceptions.DomainException"></exception>
       </global-exceptions>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
@@ -329,33 +329,33 @@
 
                   TODO: Remove these. To do so, you must "merge" all the different formBeans and update the links accordingly
              -->
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" name="studentTestForm" path="/studentTestManagement">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" name="studentTestForm" path="/studentTestManagement">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" name="questionForm" path="/questionsManagementWithValue">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" name="questionForm" path="/questionsManagementWithValue">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/questionsManagement.do?method=showAvailableQuestions&amp;page=0" name="questionForm" path="/questionsManagement">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/questionsManagement.do?method=showAvailableQuestions&amp;page=0" name="questionForm" path="/questionsManagement">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testEdition.do?method=prepareEditTestHeader&amp;page=0" name="testForm" path="/testEdition">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testEdition.do?method=prepareEditTestHeader&amp;page=0" name="testForm" path="/testEdition">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testQuestionEdition.do?method=prepareEditTestQuestion&amp;page=0" name="testQuestionForm" path="/testQuestionEdition">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testQuestionEdition.do?method=prepareEditTestQuestion&amp;page=0" name="testQuestionForm" path="/testQuestionEdition">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=prepareDistributeTest&amp;page=0" name="distributedTestForm" path="/testDistribution">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=prepareDistributeTest&amp;page=0" name="distributedTestForm" path="/testDistribution">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testChecksumValidation.do?method=prepareValidateTestChecksum&amp;page=0" name="validateTestChecksumForm" path="/testChecksumValidation">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testChecksumValidation.do?method=prepareValidateTestChecksum&amp;page=0" name="validateTestChecksumForm" path="/testChecksumValidation">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=chooseShifts&amp;page=1" name="distributedTestForm" path="/testDistributionByShifts">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=chooseShifts&amp;page=1" name="distributedTestForm" path="/testDistributionByShifts">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=chooseStudents&amp;page=1" name="distributedTestForm" path="/testDistributionByStudents">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=chooseStudents&amp;page=1" name="distributedTestForm" path="/testDistributionByStudents">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/distributedTestEdition.do?method=prepareEditDistributedTest&amp;page=0" name="distributedTestForm" path="/distributedTestEdition">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/distributedTestEdition.do?method=prepareEditDistributedTest&amp;page=0" name="distributedTestForm" path="/distributedTestEdition">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=showDistributedTests&amp;page=0" name="testMarksForm" path="/distributedTestMarks">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.TestsManagementAction" parameter="method" scope="request" input="/testDistribution.do?method=showDistributedTests&amp;page=0" name="testMarksForm" path="/distributedTestMarks">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.ExercisesManagementAction" parameter="method" scope="request" input="/exercisesManagement.do?method=prepareChooseExerciseType&amp;page=0" name="exerciseCreationForm" path="/exerciseType">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.ExercisesManagementAction" parameter="method" scope="request" input="/exercisesManagement.do?method=prepareChooseExerciseType&amp;page=0" name="exerciseCreationForm" path="/exerciseType">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.ExercisesManagementAction" parameter="method" scope="request" input="/exerciseType.do?method=chooseQuestionType&amp;page=1" name="exerciseCreationForm" path="/exerciseCreation">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.ExercisesManagementAction" parameter="method" scope="request" input="/exerciseType.do?method=chooseQuestionType&amp;page=1" name="exerciseCreationForm" path="/exerciseCreation">
             </action>
-            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.ExercisesManagementAction" parameter="method" scope="request" input="/exercisesManagement.do?method=prepareEditExercise&amp;page=0" name="exerciseEditionForm" path="/exercisesEdition">
+            <action validate="true" type="org.fenixedu.academic.ui.struts.action.teacher.onlineTests.ExercisesManagementAction" parameter="method" scope="request" input="/exercisesManagement.do?method=prepareEditExercise&amp;page=0" name="exerciseEditionForm" path="/exercisesEdition">
             </action>
 
       </action-mappings>

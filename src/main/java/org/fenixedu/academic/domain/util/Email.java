@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.util;
+package org.fenixedu.academic.domain.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -39,9 +39,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;

@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="ShowExistentPersonsDetailsBeforeGenerateUserUID" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
+<schema name="ShowExistentPersonsDetailsBeforeGenerateUserUID" type="org.fenixedu.academic.domain.Person" bundle="MANAGER_RESOURCES">
 	<slot name="name"/>		
 	<slot name="documentIdNumber" />	
 	<slot name="idDocumentType"/>	
@@ -27,7 +27,7 @@
     </slot>	
 </schema>
 
-<schema name="SearchPersonAttributesToGenerateUserUID" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">	
+<schema name="SearchPersonAttributesToGenerateUserUID" type="org.fenixedu.academic.dto.person.PersonBean" bundle="MANAGER_RESOURCES">	
 	<slot name="username"/>	
 	<slot name="name">
 		<property name="size" value="50"/>
@@ -35,7 +35,7 @@
 	<slot name="documentIdNumber" />
 </schema>
 
-<schema name="alumni.identity.request.list" type="net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
+<schema name="alumni.identity.request.list" type="org.fenixedu.academic.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
 	<slot name="creationDateTime" key="label.creationDateTime" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator" >
 		<property name="size" value="12"/>
 	</slot>
@@ -52,12 +52,12 @@
 	<slot name="alumni.student.number" key="label.student.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property size="10" />
 	</slot>
-	<slot name="contactEmail" key="label.contactEmail" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator" >
+	<slot name="contactEmail" key="label.contactEmail" validator="org.fenixedu.academic.ui.renderers.validators.RequiredEmailValidator" >
 		<property size="40" />
 	</slot>
 </schema>
 
-<schema name="alumni.identity.closed.request.list" type="net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
+<schema name="alumni.identity.closed.request.list" type="org.fenixedu.academic.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
 	<slot name="decisionDateTime" key="label.decisionDateTime" >
 		<property name="size" value="12"/>
 	</slot>
@@ -82,7 +82,7 @@
 	</slot>
 </schema>
 
-<schema name="alumni.identity.request.header" type="net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
+<schema name="alumni.identity.request.header" type="org.fenixedu.academic.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
 	<slot name="requestType" key="label.requestType" >
 		<property size="40" />
 	</slot>
@@ -97,7 +97,7 @@
 	</slot>
 </schema>
 
-<schema name="alumni.identity.request.body" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
+<schema name="alumni.identity.request.body" type="org.fenixedu.academic.dto.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
 	<slot name="fullName" key="label.fullName" />
 	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirthYearMonthDay" />
 	<slot name="districtOfBirth" key="label.districtOfBirth" />
@@ -108,14 +108,14 @@
 	<slot name="nameOfMother" key="label.nameOfMother" />
 </schema>
 
-<schema name="alumni.identity.request.comment" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
+<schema name="alumni.identity.request.comment" type="org.fenixedu.academic.dto.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
 	<slot name="comment" key="label.comment" layout="longText" >
 		<property name="rows" value="4" />
 		<property name="columns" value="40" />
 	</slot>
 </schema>
 
-<schema name="alumni.person.body" type="net.sourceforge.fenixedu.domain.Person" >
+<schema name="alumni.person.body" type="org.fenixedu.academic.domain.Person" >
 	<slot name="fullName" />
 	<slot name="dateOfBirthYearMonthDay" />
 	<slot name="districtOfBirth" />
@@ -126,7 +126,7 @@
 	<slot name="nameOfMother" />
 </schema>
 
-<schema name="operator.photo.pending.list" type="net.sourceforge.fenixedu.domain.Photograph"
+<schema name="operator.photo.pending.list" type="org.fenixedu.academic.domain.Photograph"
 	bundle="MANAGER_RESOURCES">
 	<slot name="person" key="label.operator.photo.person.details" schema="operator.photo.photo.details">
 		<property name="classes" value="tstyle2 tdleft thright width100" />
@@ -158,7 +158,7 @@
 	</slot>
 </schema>
 
-<schema name="operator.photo.photo.details" type="net.sourceforge.fenixedu.domain.Person"
+<schema name="operator.photo.photo.details" type="org.fenixedu.academic.domain.Person"
 	bundle="MANAGER_RESOURCES">
 	<slot name="user.username" key="label.operator.photo.person.username" read-only="true" />
 	<slot name="name" read-only="true" />
@@ -166,6 +166,6 @@
 	<slot name="gender" read-only="true" />
 </schema>
 
-<schema name="operator.contacts.PartyContactValidation" type="net.sourceforge.fenixedu.domain.contacts.PartyContactValidation" bundle="APPLICATION_RESOURCES">
+<schema name="operator.contacts.PartyContactValidation" type="org.fenixedu.academic.domain.contacts.PartyContactValidation" bundle="APPLICATION_RESOURCES">
 	
 </schema>

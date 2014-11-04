@@ -19,12 +19,12 @@
 /*
  * Created on 29/Jul/2003
  */
-package net.sourceforge.fenixedu.domain.onlineTests;
+package org.fenixedu.academic.domain.onlineTests;
 
 import java.util.Collection;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
+import org.fenixedu.academic.util.tests.CorrectionFormula;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.bennu.core.domain.Bennu;

@@ -19,12 +19,12 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.externalServices;
+package org.fenixedu.academic.dto.externalServices;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.domain.WrittenEvaluation;
 
 public class EvaluationBean {
 

@@ -20,7 +20,7 @@
  * Created on Nov 7, 2005
  *  by jdnf
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
+package org.fenixedu.academic.ui.faces.bean.teacher.evaluation;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -29,19 +29,18 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateProject;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditProject;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.teacher.CreateProject;
+import org.fenixedu.academic.service.services.teacher.DeleteEvaluation;
+import org.fenixedu.academic.service.services.teacher.EditProject;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.FenixFramework;

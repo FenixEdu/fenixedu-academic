@@ -20,7 +20,7 @@
  * Created on Apr 14, 2010
  *	by rcro
  */
-package net.sourceforge.fenixedu.dataTransferObject.directiveCouncil;
+package org.fenixedu.academic.dto.directiveCouncil;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

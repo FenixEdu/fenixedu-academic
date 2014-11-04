@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
+package org.fenixedu.academic.ui.struts.action.student.inquiries;
 
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.inquiries.ViewQUCResultsPedagogicalCouncilDA;
+import org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.inquiries.ViewQUCResultsPedagogicalCouncilDA;
 
 import org.fenixedu.bennu.struts.annotations.Mapping;
 

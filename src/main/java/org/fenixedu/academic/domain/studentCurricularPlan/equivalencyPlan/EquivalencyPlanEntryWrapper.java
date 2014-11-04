@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan;
+package org.fenixedu.academic.domain.studentCurricularPlan.equivalencyPlan;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
+import org.fenixedu.academic.domain.EquivalencePlanEntry;
 
 public class EquivalencyPlanEntryWrapper {
 

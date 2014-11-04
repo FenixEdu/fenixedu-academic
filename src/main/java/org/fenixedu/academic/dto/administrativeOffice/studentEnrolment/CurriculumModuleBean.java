@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment;
+package org.fenixedu.academic.dto.administrativeOffice.studentEnrolment;
 
 import java.io.Serializable;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import org.fenixedu.academic.domain.enrolment.DegreeModuleToEnrol;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 
 public class CurriculumModuleBean implements Serializable {
 

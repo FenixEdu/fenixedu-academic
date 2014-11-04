@@ -47,7 +47,7 @@
 <html:link page="/manageAssociatedObjects.do?method=prepareAcademicOffice">Create</html:link><br/>
 <logic:present name="offices">
 <ul>
-<logic:iterate id="office" name="offices" type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice">
+<logic:iterate id="office" name="offices" type="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice">
 		<li><bean:message bundle="ENUMERATION_RESOURCES" key="<%= "AdministrativeOfficeType." + office.getAdministrativeOfficeType().toString() %>"/></li>
 </logic:iterate>
 </ul>
@@ -59,7 +59,7 @@
 <html:link page="/manageAssociatedObjects.do?method=prepareAssociatePersonUnit">Create</html:link><br/>
 <h3>Create empty degree</h3>
 <logic:notEmpty name="emptyDegree">
-<bean:define id="emptyDegree" type="net.sourceforge.fenixedu.domain.EmptyDegree" name="emptyDegree"></bean:define>
+<bean:define id="emptyDegree" type="org.fenixedu.academic.domain.EmptyDegree" name="emptyDegree"></bean:define>
 	Empty degree associated with : <%= emptyDegree.getAdministrativeOffice().getAdministrativeOfficeType().getDescription() %></br>
 	<html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Change</html:link><br/>
 </logic:notEmpty>

@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
+package org.fenixedu.academic.ui.struts.action.coordinator;
 
 public enum ProposalStatusType {
     TOTAL, FOR_APPROVAL, APPROVED, PUBLISHED;

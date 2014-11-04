@@ -125,7 +125,7 @@
 	<input type="hidden" name="method" value="" />
 	<logic:notEmpty name="guidingsList">
 		<fr:view name="guidingsList">
-			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.PersonInformationLog" bundle="PHD_RESOURCES">
 				<fr:slot name="name" key="label.username" >
 					<fr:property name="classes" value="nobullet noindent"/>   
 			   	</fr:slot>
@@ -158,7 +158,7 @@
 	<input type="hidden" name="method" value="" />
 	<logic:notEmpty name="assistantGuidingsList">
 		<fr:view name="assistantGuidingsList">
-			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.domain.PersonInformationLog" bundle="PHD_RESOURCES">
 				<fr:slot name="name" key="label.username" >
 					<fr:property name="classes" value="nobullet noindent"/>   
 			   	</fr:slot>

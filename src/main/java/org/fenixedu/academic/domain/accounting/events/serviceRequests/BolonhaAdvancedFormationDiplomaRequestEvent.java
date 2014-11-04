@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
+package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
 
 public class BolonhaAdvancedFormationDiplomaRequestEvent extends BolonhaAdvancedFormationDiplomaRequestEvent_Base {
 

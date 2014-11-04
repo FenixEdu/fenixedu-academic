@@ -45,7 +45,7 @@
 
 <table class="tstyle5 thlight">
 	<tr>
-		<td><bean:message key="label.username" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="COORDINATOR_RESOURCES"/></td>
+		<td><bean:message key="label.username" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="COORDINATOR_RESOURCES"/></td>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="newCoordinatorUsername" /></td>
 	</tr>
 </table>

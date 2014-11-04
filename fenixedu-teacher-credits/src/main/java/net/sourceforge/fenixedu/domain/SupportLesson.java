@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.WeekDay;
-import net.sourceforge.fenixedu.util.date.TimePeriod;
+import org.fenixedu.academic.dto.teacher.professorship.SupportLessonDTO;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.teacher.TeacherService;
+import org.fenixedu.academic.domain.time.calendarStructure.TeacherCreditsFillingCE;
+import org.fenixedu.academic.util.CalendarUtil;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.WeekDay;
+import org.fenixedu.academic.util.date.TimePeriod;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -139,7 +139,7 @@ public class SupportLesson extends SupportLesson_Base {
 
     @Deprecated
     public java.util.Date getEndTime() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndTimeHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEndTimeHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -148,13 +148,13 @@ public class SupportLesson extends SupportLesson_Base {
         if (date == null) {
             setEndTimeHourMinuteSecond(null);
         } else {
-            setEndTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEndTimeHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
     @Deprecated
     public java.util.Date getStartTime() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getStartTimeHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getStartTimeHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -163,7 +163,7 @@ public class SupportLesson extends SupportLesson_Base {
         if (date == null) {
             setStartTimeHourMinuteSecond(null);
         } else {
-            setStartTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setStartTimeHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

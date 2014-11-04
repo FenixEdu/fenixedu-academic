@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy;
+package org.fenixedu.academic.ui.renderers.providers.candidacy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
-import net.sourceforge.fenixedu.domain.EntryPhase;
+import org.fenixedu.academic.domain.EntryPhase;
+import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 

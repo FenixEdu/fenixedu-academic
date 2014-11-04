@@ -25,13 +25,13 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.domain.ScientificCommission"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.predicate.AccessControl"%>
+<%@page import="org.fenixedu.academic.domain.ScientificCommission"%><html:xhtml/>
 
 <jsp:include page="/coordinator/context.jsp" />
 
-<bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
-<bean:define id="executionYear" name="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
+<bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan"/>
+<bean:define id="executionYear" name="executionYear" type="org.fenixedu.academic.domain.ExecutionYear"/>
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="filter" name="filter"/>

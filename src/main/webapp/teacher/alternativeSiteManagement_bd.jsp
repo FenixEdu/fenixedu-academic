@@ -19,13 +19,13 @@
 
 --%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"%>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.messaging.ExecutionCourseAliasExpandingAction"%>
+<%@page import="org.fenixedu.academic.util.FenixConfigurationManager"%>
 
 <p>
 <span class="error"><!-- Error messages go here --><html:errors /></span>

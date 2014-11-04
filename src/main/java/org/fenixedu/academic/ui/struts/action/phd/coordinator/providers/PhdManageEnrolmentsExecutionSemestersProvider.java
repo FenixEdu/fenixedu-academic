@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers;
+package org.fenixedu.academic.ui.struts.action.phd.coordinator.providers;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.phd.ManageEnrolmentsBean;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
 public class PhdManageEnrolmentsExecutionSemestersProvider extends AbstractDomainObjectProvider {
 

@@ -18,13 +18,13 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="registration.view-degree-sigla" type="net.sourceforge.fenixedu.domain.student.Registration">
+<schema name="registration.view-degree-sigla" type="org.fenixedu.academic.domain.student.Registration">
 	<slot name="degree" layout="format">
 		<property name="format" value="${sigla} (${nome})"/>
 	</slot>
 </schema>
 
-<schema name="view-student-info" type="net.sourceforge.fenixedu.domain.Person" bundle="EXTERNAL_SUPERVISION_RESOURCES">
+<schema name="view-student-info" type="org.fenixedu.academic.domain.Person" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 	<slot name="username" key="label.showStats.username" />
 	<slot name="name" key="label.showStats.name"/>
 	<slot name="student.lastRegistration.degree" key="label.showStats.degreeSigla" layout="format">

@@ -28,11 +28,11 @@
 
 
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.YearViewBean"%>
+	import="org.fenixedu.academic.ui.struts.action.coordinator.xviews.YearViewBean"%>
 <%@page
-	import="net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup"%>
+	import="org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup"%>
 <%@page
-	import="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"%>
+	import="org.fenixedu.academic.domain.degreeStructure.DegreeModule"%>
 <%@page import="java.util.Set"%>
 
 

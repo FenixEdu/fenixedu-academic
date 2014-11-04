@@ -63,7 +63,7 @@
 
 	<global>
 		<validator name="greaterThanOrEqual" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateCompareTwoFields" 
 			method="validateGreaterThanOrEqual" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -74,7 +74,7 @@
 			msg="error.greaterThanOrEqual"/>
 			
 		<validator name="greaterThan" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateCompareTwoFields" 
 			method="validateGreaterThan" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -85,7 +85,7 @@
 			msg="error.greaterThan"/>
 			
 		<validator name="Equal" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateCompareTwoFields" 
 			method="validateEqual" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -96,7 +96,7 @@
 			msg="error.equal"/>
 			
 		<validator name="lessThan" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateCompareTwoFields" 
 			method="validateLessThan" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -107,7 +107,7 @@
 			msg="error.lessThan"/>
 			
 		<validator name="lessThanOrEqual" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateCompareTwoFields" 
 			method="validateLessThanOrEqual" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -118,7 +118,7 @@
 			msg="error.lessThanOrEqual"/>
 			
 		<validator name="twoFields" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateTwoFields" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateTwoFields" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -129,7 +129,7 @@
 			msg="errors.different.passwords"/>
 			
 		<validator name="validateDate" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateDate" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateDate" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -140,7 +140,7 @@
 			msg="errors.invalid.date"/>
 			
 		<validator name="floatGreaterThen" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.GreaterThen" 
+			classname="org.fenixedu.academic.ui.struts.validator.GreaterThen" 
 			method="validateFloat" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -151,7 +151,7 @@
 			msg="errors.invalid.floatValue"/>
 			
 		<validator name="floatGreater" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.GreaterThen" 
+			classname="org.fenixedu.academic.ui.struts.validator.GreaterThen" 
 			method="validateFloat0" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -162,7 +162,7 @@
 			msg="errors.invalid.floatValue"/>
 			
 		<validator name="threeArgsDate" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateDate" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateDate" 
 			method="threeArgsDate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -173,7 +173,7 @@
 			msg="errors.invalidThreeArgs.date"/>
 			
 		<validator name="multiBoxWithSelectAllCheckBox" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiBoxWithSelectAllCheckBox" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateMultiBoxWithSelectAllCheckBox" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -184,7 +184,7 @@
 			msg="errors.required.checkbox" />
 			
 		<validator name="requiredAttributes" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidatePublicationForm" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidatePublicationForm" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -218,7 +218,7 @@ Example:
 
 -->
 		<validator name="validateMultiBox" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiBox" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateMultiBox" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -230,7 +230,7 @@ Example:
                 />             
 
    	 <validator name="integerArray"
-            classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateIntegerArray"
+            classname="org.fenixedu.academic.ui.struts.validator.ValidateIntegerArray"
                method="validate"
          methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,
@@ -241,7 +241,7 @@ Example:
                   msg="error.integerArray"/>
 	
 	<validator name="multiRadioSelect" 
-			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiRadioSelect" 
+			classname="org.fenixedu.academic.ui.struts.validator.ValidateMultiRadioSelect" 
 			method="validate" 
 			methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,

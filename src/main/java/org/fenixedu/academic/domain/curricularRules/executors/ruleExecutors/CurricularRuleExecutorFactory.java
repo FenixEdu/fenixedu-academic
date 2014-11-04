@@ -16,35 +16,35 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
+package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
-import net.sourceforge.fenixedu.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
-import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCycle;
-import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
-import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator;
-import net.sourceforge.fenixedu.domain.curricularRules.EvenOddRule;
-import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
-import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
-import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
-import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
-import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
-import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionNotEnroledDegreeModule;
-import net.sourceforge.fenixedu.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.enrolments.PhdValidCurricularCoursesExecutor;
-import net.sourceforge.fenixedu.domain.phd.enrolments.PhdValidCurricularCoursesRule;
+import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
+import org.fenixedu.academic.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
+import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
+import org.fenixedu.academic.domain.curricularRules.CreditsLimitInExternalCycle;
+import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
+import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
+import org.fenixedu.academic.domain.curricularRules.EnrolmentToBeApprovedByCoordinator;
+import org.fenixedu.academic.domain.curricularRules.EvenOddRule;
+import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
+import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
+import org.fenixedu.academic.domain.curricularRules.ImprovementOfApprovedEnrolment;
+import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
+import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
+import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
+import org.fenixedu.academic.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
+import org.fenixedu.academic.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
+import org.fenixedu.academic.domain.curricularRules.RestrictionBetweenDegreeModules;
+import org.fenixedu.academic.domain.curricularRules.RestrictionDoneDegreeModule;
+import org.fenixedu.academic.domain.curricularRules.RestrictionEnroledDegreeModule;
+import org.fenixedu.academic.domain.curricularRules.RestrictionNotEnroledDegreeModule;
+import org.fenixedu.academic.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.enrolments.PhdValidCurricularCoursesExecutor;
+import org.fenixedu.academic.domain.phd.enrolments.PhdValidCurricularCoursesRule;
 
 public class CurricularRuleExecutorFactory {
 

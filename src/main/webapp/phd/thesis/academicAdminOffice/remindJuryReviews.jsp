@@ -20,10 +20,10 @@
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>

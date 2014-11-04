@@ -16,34 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.reports.CourseLoadAndResponsiblesReportFile;
-import net.sourceforge.fenixedu.domain.reports.CourseLoadReportFile;
-import net.sourceforge.fenixedu.domain.reports.DissertationsProposalsReportFile;
-import net.sourceforge.fenixedu.domain.reports.DissertationsWithExternalAffiliationsReportFile;
-import net.sourceforge.fenixedu.domain.reports.EctsLabelCurricularCourseReportFile;
-import net.sourceforge.fenixedu.domain.reports.EctsLabelDegreeReportFile;
-import net.sourceforge.fenixedu.domain.reports.EffectiveTeachingLoadReportFile;
-import net.sourceforge.fenixedu.domain.reports.EtiReportFile;
-import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
-import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
-import net.sourceforge.fenixedu.domain.reports.GepReportFile;
-import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
-import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
-import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
-import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
-import net.sourceforge.fenixedu.domain.reports.RaidesSpecializationReportFile;
-import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
-import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
-import net.sourceforge.fenixedu.domain.reports.SummaryOccupancyReportFile;
-import net.sourceforge.fenixedu.domain.reports.TeacherCreditsReportFile;
-import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
-import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
-import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
-import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
-import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.reports.CourseLoadAndResponsiblesReportFile;
+import org.fenixedu.academic.domain.reports.CourseLoadReportFile;
+import org.fenixedu.academic.domain.reports.DissertationsProposalsReportFile;
+import org.fenixedu.academic.domain.reports.DissertationsWithExternalAffiliationsReportFile;
+import org.fenixedu.academic.domain.reports.EctsLabelCurricularCourseReportFile;
+import org.fenixedu.academic.domain.reports.EctsLabelDegreeReportFile;
+import org.fenixedu.academic.domain.reports.EffectiveTeachingLoadReportFile;
+import org.fenixedu.academic.domain.reports.EtiReportFile;
+import org.fenixedu.academic.domain.reports.EurAceReportFile;
+import org.fenixedu.academic.domain.reports.FlunkedReportFile;
+import org.fenixedu.academic.domain.reports.GepReportFile;
+import org.fenixedu.academic.domain.reports.GraduationReportFile;
+import org.fenixedu.academic.domain.reports.RaidesDfaReportFile;
+import org.fenixedu.academic.domain.reports.RaidesGraduationReportFile;
+import org.fenixedu.academic.domain.reports.RaidesPhdReportFile;
+import org.fenixedu.academic.domain.reports.RaidesSpecializationReportFile;
+import org.fenixedu.academic.domain.reports.RegistrationReportFile;
+import org.fenixedu.academic.domain.reports.StatusAndApprovalReportFile;
+import org.fenixedu.academic.domain.reports.SummaryOccupancyReportFile;
+import org.fenixedu.academic.domain.reports.TeacherCreditsReportFile;
+import org.fenixedu.academic.domain.reports.TeachersByShiftReportFile;
+import org.fenixedu.academic.domain.reports.TeachersListFromGiafReportFile;
+import org.fenixedu.academic.domain.reports.TimetablesReportFile;
+import org.fenixedu.academic.domain.reports.TutorshipProgramReportFile;
+import org.fenixedu.academic.domain.reports.WrittenEvaluationReportFile;
 import pt.ist.fenixframework.Atomic;
 
 public class ReportFileFactory {

@@ -36,15 +36,15 @@
 		<fr:edit id="importation.bean" name="importationBean" visible="false" />
 		
 		<fr:edit id="importation.bean.edit" name="importationBean">
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.student.importation.DgesStudentImportationProcessDA$DgesBaseProcessBean">
+			<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.student.importation.DgesStudentImportationProcessDA$DgesBaseProcessBean">
 				<fr:slot name="executionYear" layout="menu-select" key="label.dges.exportation.degree.candidacies.for.passwords.execution.year" required="true" >
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
 					<fr:property name="format" value="${name}" />
 					<fr:property name="sortBy" value="name=desc"/>
 				</fr:slot>
 				
 				<fr:slot name="phase" layout="menu-select" key="label.dges.exportation.degree.candidacies.for.passwords.entry.phase" required="true" >
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.manager.student.importation.DgesStudentImportationProcessDA$EntryPhaseProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.manager.student.importation.DgesStudentImportationProcessDA$EntryPhaseProvider" />
 					<fr:property name="format" value="${localizedName}" />
 					<fr:property name="sortBy" value="localizedName"/>
 				</fr:slot>

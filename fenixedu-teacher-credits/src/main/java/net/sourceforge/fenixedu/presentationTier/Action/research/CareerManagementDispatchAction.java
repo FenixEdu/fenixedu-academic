@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.research;
+package org.fenixedu.academic.ui.struts.action.research;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -24,11 +24,11 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.research.ResearcherApplication.CurriculumApp;
+import org.fenixedu.academic.domain.CareerType;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.teacher.Career;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.research.ResearcherApplication.CurriculumApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

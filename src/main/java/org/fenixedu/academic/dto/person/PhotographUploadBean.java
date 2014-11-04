@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.person;
+package org.fenixedu.academic.dto.person;
 
 import java.awt.color.CMMException;
 import java.awt.geom.AffineTransform;
@@ -36,7 +36,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
-import net.sourceforge.fenixedu.util.ContentType;
+import org.fenixedu.academic.util.ContentType;
+
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import com.google.common.io.BaseEncoding;

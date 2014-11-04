@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration.common;
-
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncorrectDateFormatException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.InvalidGenderValueException;
+package org.fenixedu.academic.domain.phd.migration.common;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.person.Gender;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.IncorrectDateFormatException;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.InvalidGenderValueException;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 

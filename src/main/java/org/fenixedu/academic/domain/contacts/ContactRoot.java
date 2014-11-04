@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.contacts;
+package org.fenixedu.academic.domain.contacts;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;

@@ -24,9 +24,9 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%>
+<%@page import="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments"%>
+<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.SubmitJuryElementsDocuments"%>
 <html:xhtml/>
 
 <logic:present role="role(COORDINATOR)">

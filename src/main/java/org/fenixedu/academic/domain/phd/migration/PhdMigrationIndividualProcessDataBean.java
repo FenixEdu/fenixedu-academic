@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration;
+package org.fenixedu.academic.domain.phd.migration;
 
 import java.io.Serializable;
 import java.util.NoSuchElementException;
 
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
-import net.sourceforge.fenixedu.domain.phd.migration.common.FinalGradeTranslator;
-import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
-
+import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.migration.common.ConversionUtilities;
+import org.fenixedu.academic.domain.phd.migration.common.FinalGradeTranslator;
+import org.fenixedu.academic.domain.phd.migration.common.PhdProgramTranslator;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.IncompleteFieldsException;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
 import org.joda.time.LocalDate;
 
 public class PhdMigrationIndividualProcessDataBean implements Serializable {

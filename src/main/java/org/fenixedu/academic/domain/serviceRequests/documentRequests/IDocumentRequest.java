@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
+package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
-import net.sourceforge.fenixedu.domain.serviceRequests.IAcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.student.Student;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.documents.GeneratedDocument;
+import org.fenixedu.academic.domain.serviceRequests.IAcademicServiceRequest;
+import org.fenixedu.academic.domain.student.Student;
 import org.joda.time.DateTime;
 
 public interface IDocumentRequest extends IAcademicServiceRequest {

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd.student;
+package org.fenixedu.academic.ui.struts.action.phd.student;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,16 +24,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
+import org.fenixedu.academic.ui.struts.action.phd.CommonPhdIndividualProgramProcessDA;
+import org.fenixedu.academic.ui.struts.action.phd.PhdInactivePredicateContainer;
+import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentViewApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

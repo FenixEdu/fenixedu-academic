@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <logic:present name="person">
 <html:xhtml/>
-<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
+<bean:define id="person" name="person" type="org.fenixedu.academic.domain.Person"/>
 <fr:form  action="/partyContacts.do">
 <table class="tstyle2 thlight thleft">
     <tr>
@@ -41,7 +41,7 @@
 <bean:define id="pendingPhysicalAddresses" name="person" property="pendingPhysicalAddresses" />
 <bean:size id="size" name="pendingPhysicalAddresses" />
 <logic:notEmpty name="pendingPhysicalAddresses">
-	<logic:iterate id="contact" name="pendingPhysicalAddresses" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress">
+	<logic:iterate id="contact" name="pendingPhysicalAddresses" type="org.fenixedu.academic.domain.contacts.PhysicalAddress">
 			<tr>
 			<td><bean:message key="label.address" bundle="APPLICATION_RESOURCES"/> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -88,7 +88,7 @@
 <bean:define id="pendingPhones" name="person" property="pendingPhones" />
 <bean:size id="size" name="pendingPhones" />
 <logic:notEmpty name="pendingPhones">
-	<logic:iterate id="contact" name="pendingPhones" type="net.sourceforge.fenixedu.domain.contacts.Phone">
+	<logic:iterate id="contact" name="pendingPhones" type="org.fenixedu.academic.domain.contacts.Phone">
 			<tr>
 			<td><bean:message key="label.partyContacts.Phone" bundle="APPLICATION_RESOURCES"/> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -135,7 +135,7 @@
 <bean:define id="pendingMobilePhones" name="person" property="pendingMobilePhones" />
 <bean:size id="size" name="pendingMobilePhones" />
 <logic:notEmpty name="pendingMobilePhones">
-	<logic:iterate id="contact" name="pendingMobilePhones" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone">
+	<logic:iterate id="contact" name="pendingMobilePhones" type="org.fenixedu.academic.domain.contacts.MobilePhone">
 			<tr>
 			<td><bean:message key="label.partyContacts.MobilePhone" bundle="APPLICATION_RESOURCES"/> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -182,7 +182,7 @@
 <bean:define id="pendingEmailAddresses" name="person" property="pendingEmailAddresses" />
 <bean:size id="size" name="pendingEmailAddresses" />
 <logic:notEmpty name="pendingEmailAddresses">
-	<logic:iterate id="contact" name="pendingEmailAddresses" type="net.sourceforge.fenixedu.domain.contacts.EmailAddress">
+	<logic:iterate id="contact" name="pendingEmailAddresses" type="org.fenixedu.academic.domain.contacts.EmailAddress">
 		<tr>
 			<td>
 				<bean:message key="label.partyContacts.EmailAddress" bundle="APPLICATION_RESOURCES"/> 

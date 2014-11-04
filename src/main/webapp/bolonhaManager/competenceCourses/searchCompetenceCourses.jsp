@@ -31,7 +31,7 @@
 	<table>
 		<tr><td>
 			<fr:edit id="searchBean" name="searchBean">
-				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.SearchCompetenceCoursesDA$SearchCompetenceCourseBean" bundle="BOLONHA_MANAGER_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.ui.struts.action.BolonhaManager.SearchCompetenceCoursesDA$SearchCompetenceCourseBean" bundle="BOLONHA_MANAGER_RESOURCES">
 					<fr:slot name="searchName"/>
 					<fr:slot name="searchCode"/>
 				</fr:schema>
@@ -49,7 +49,7 @@
 	<bean:define id="searchName" name="searchBean" property="searchName"/>
 	<bean:define id="searchCode" name="searchBean" property="searchCode"/>
 	<fr:view name="searchResults">
-		<fr:schema type="net.sourceforge.fenixedu.domain.CompetenceCourse" bundle="BOLONHA_MANAGER_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.domain.CompetenceCourse" bundle="BOLONHA_MANAGER_RESOURCES">
 			<fr:slot name="name"/>
 			<fr:slot name="code"/>
 			<fr:slot name="departmentUnit.acronym"/>

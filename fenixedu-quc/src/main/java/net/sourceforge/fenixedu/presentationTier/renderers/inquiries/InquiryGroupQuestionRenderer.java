@@ -19,18 +19,18 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+package org.fenixedu.academic.ui.renderers.inquiries;
 
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryGroupQuestionBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryQuestionDTO;
-import net.sourceforge.fenixedu.domain.inquiries.ECTSVisibleCondition;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCheckBoxQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryRadioGroupQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTextBoxQuestion;
+import org.fenixedu.academic.dto.inquiries.InquiryGroupQuestionBean;
+import org.fenixedu.academic.dto.inquiries.InquiryQuestionDTO;
+import org.fenixedu.academic.domain.inquiries.ECTSVisibleCondition;
+import org.fenixedu.academic.domain.inquiries.InquiryCheckBoxQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryQuestionHeader;
+import org.fenixedu.academic.domain.inquiries.InquiryRadioGroupQuestion;
+import org.fenixedu.academic.domain.inquiries.InquiryTextBoxQuestion;
 
 import org.apache.commons.lang.StringUtils;
 

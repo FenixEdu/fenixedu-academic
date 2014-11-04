@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.candidacy.secondCycle;
+package org.fenixedu.academic.ui.struts.action.scientificCouncil.candidacy.secondCycle;
 
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-
+import org.fenixedu.academic.ui.struts.FenixActionForm;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -32,6 +31,6 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
         @Forward(name = "list-allowed-activities",
                 path = "/scientificCouncil/candidacy/secondCycle/listIndividualCandidacyActivities.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends
-        net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle.SecondCycleIndividualCandidacyProcessDA {
+        org.fenixedu.academic.ui.struts.action.candidacy.secondCycle.SecondCycleIndividualCandidacyProcessDA {
 
 }

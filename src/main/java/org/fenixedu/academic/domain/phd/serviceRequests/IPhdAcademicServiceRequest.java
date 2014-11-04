@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.serviceRequests;
+package org.fenixedu.academic.domain.phd.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 
 public interface IPhdAcademicServiceRequest {
     public PhdIndividualProgramProcess getPhdIndividualProgramProcess();

@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.migration.common;
+package org.fenixedu.academic.domain.phd.migration.common;
 
 import java.util.HashMap;
 
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.InvalidCountryCodeException;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.phd.migration.common.exceptions.InvalidCountryCodeException;
 
 public class NationalityTranslator {
     private static HashMap<Integer, String> translationMap = new HashMap<Integer, String>();

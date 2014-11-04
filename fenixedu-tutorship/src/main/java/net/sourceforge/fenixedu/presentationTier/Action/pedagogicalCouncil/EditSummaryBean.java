@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
+package org.fenixedu.academic.ui.struts.action.pedagogicalCouncil;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.TutorshipSummary;
+import org.fenixedu.academic.domain.TutorshipSummary;
 
 public class EditSummaryBean extends CreateSummaryBean implements Serializable {
 

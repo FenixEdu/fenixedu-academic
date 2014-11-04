@@ -41,7 +41,7 @@
 
 	<fr:view name="process">
 		<fr:schema bundle="RESEARCHER_RESOURCES"
-			type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess">
+			type="org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationProcess">
 			<fr:slot name="facultyEvaluationProcess.autoEvaluationInterval"
 				key="label.teacher.evaluation.facultyEvaluationProcess.autoEvaluationInterval" layout="format">
 				<fr:property name="format"
@@ -87,7 +87,7 @@
 
 	<div id="<%="warning" + processId%>" class="dnone">
 		<div class="warning1">
-			<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>"
+			<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>"
 				bundle="RESEARCHER_RESOURCES" /></p>
 			<div class="mtop1 mbottom05">
 				<form method="post" id="lockMark"
@@ -120,7 +120,7 @@
 			<bean:define id="externalId" name="process" property="externalId" />
 			<fr:view name="process" property="teacherAutoEvaluationFileBeanSet">
 				<fr:schema bundle="RESEARCHER_RESOURCES"
-					type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
+					type="org.fenixedu.academic.domain.teacher.evaluation.TeacherEvaluationFileBean">
 					<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
 					<fr:slot name="teacherEvaluationFile" layout="link" key="label.teacher.evaluation.file" />
 					<fr:slot name="teacherEvaluationFileUploadDate" key="label.teacher.evaluation.date" layout="null-as-label" />

@@ -23,9 +23,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
-<%@ page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
-<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+<%@ page import="org.fenixedu.academic.predicate.AccessControl" %>
+<%@ page import="org.fenixedu.academic.domain.person.RoleType" %>
 
 <html:xhtml/>
 

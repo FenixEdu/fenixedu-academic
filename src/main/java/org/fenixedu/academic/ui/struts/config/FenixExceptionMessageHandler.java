@@ -19,7 +19,7 @@
 /**
  * Oct 4, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.config;
+package org.fenixedu.academic.ui.struts.config;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

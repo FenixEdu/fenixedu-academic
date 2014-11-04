@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.accounting.Discount"%>
+<%@page import="org.fenixedu.academic.domain.accounting.Discount"%>
 
 <html:xhtml />
 
@@ -40,7 +40,7 @@
 
 <p class="mtop15 mbottom05"><strong><bean:message key="label.payments.details" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 <fr:view name="event">
-	<fr:schema type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<fr:schema type="org.fenixedu.academic.domain.accounting.Event" bundle="ACADEMIC_OFFICE_RESOURCES">
 		<fr:slot name="whenOccured" key="label.IndividualCandidacy.whenCreated" />
 		<fr:slot name="createdBy" key="label.responsible" layout="null-as-label"/>
 	</fr:schema>

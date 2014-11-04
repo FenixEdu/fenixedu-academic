@@ -19,7 +19,7 @@
 
 --%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
+<%@ page import="org.fenixedu.academic.servlet.taglib.sop.v3.TimeTableType" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

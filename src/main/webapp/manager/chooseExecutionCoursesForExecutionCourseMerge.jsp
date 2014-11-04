@@ -21,8 +21,8 @@
 <%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
-<%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval"%><html:xhtml/>
+<%@page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@page import="org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
@@ -65,13 +65,13 @@
 	
 
 	<fr:edit id="degreeBean" name="degreeBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">				
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">				
 			<fr:slot name="sourceExecutionCourse" layout="menu-select" key="label.mergedegrees.mergecourses.source" required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SourceExecutionCoursesProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.SourceExecutionCoursesProvider"/>
 				<fr:property name="format" value="${nome}" />
 			</fr:slot>
 			<fr:slot name="destinationExecutionCourse" layout="menu-select" key="label.mergedegrees.mergecourses.destination" required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationExecutionCoursesProvider"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DestinationExecutionCoursesProvider"/>
 				<fr:property name="format" value="${nome}"/>
 			</fr:slot>
 		</fr:schema>

@@ -1,4 +1,4 @@
-package org.fenixedu.core.ui.teacher;
+package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import javax.ws.rs.core.Response.Status;
 

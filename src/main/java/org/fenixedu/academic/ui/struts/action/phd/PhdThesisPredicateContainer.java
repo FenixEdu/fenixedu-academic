@@ -16,18 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.phd;
+package org.fenixedu.academic.ui.struts.action.phd;
 
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.JURY_VALIDATED;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.NEW;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.JURY_VALIDATED;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.NEW;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING;
+import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING;
+
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType;
+
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.OrPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;

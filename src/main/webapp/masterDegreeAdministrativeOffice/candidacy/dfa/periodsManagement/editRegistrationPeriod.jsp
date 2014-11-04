@@ -66,7 +66,7 @@
 	</fr:hasMessages>
 	<fr:create 	id="createRegistrationPeriod"
 				schema="RegistrationPeriodInDegreeCurricularPlan.create"
-				type="net.sourceforge.fenixedu.domain.RegistrationPeriodInDegreeCurricularPlan"
+				type="org.fenixedu.academic.domain.RegistrationPeriodInDegreeCurricularPlan"
 				action="<%="/dfaPeriodsManagement.do?method=showExecutionDegrees&executionYearId=" + executionYearId %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4" />

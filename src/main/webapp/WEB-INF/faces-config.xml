@@ -32,17 +32,17 @@
 	</application>
 	
  	<!-- <lifecycle>
-      <phase-listener>net.sourceforge.fenixedu.presentationTier.jsf.phaseListeners.PhaseTracker</phase-listener>
+      <phase-listener>org.fenixedu.academic.ui.faces.phaseListeners.PhaseTracker</phase-listener>
     </lifecycle>-->
 
 	<converter>
-		<converter-id>net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter</converter-id>
-		<converter-class>net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter</converter-class>
+		<converter-id>org.fenixedu.academic.ui.faces.converter.SimpleRoundConverter</converter-id>
+		<converter-class>org.fenixedu.academic.ui.faces.converter.SimpleRoundConverter</converter-class>
 	</converter>
 
 	<converter>
-		<converter-for-class>net.sourceforge.fenixedu.domain.GradeScale</converter-for-class>
-		<converter-class>net.sourceforge.fenixedu.presentationTier.jsf.converter.GradeScaleConverter</converter-class>
+		<converter-for-class>org.fenixedu.academic.domain.GradeScale</converter-for-class>
+		<converter-class>org.fenixedu.academic.ui.faces.converter.GradeScaleConverter</converter-class>
 	</converter>
 
 
@@ -51,7 +51,7 @@
 	<managed-bean>
 		<description>InfoExecutionPeriod</description>
 		<managed-bean-name>infoExecutionPeriod</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.dto.InfoExecutionPeriod</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<description>name</description>
@@ -63,13 +63,13 @@
 	<managed-bean>
 		<description>ExecutionPeriods</description>
 		<managed-bean-name>executionPeriods</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.example.ExecutionPeriods</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.example.ExecutionPeriods</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>listStudentThesis</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.ListStudentThesis</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.ListStudentThesis</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>degreeCurricularPlanID</property-name>
@@ -79,38 +79,38 @@
 
 	<managed-bean>
 		<managed-bean-name>listFirstTimeEnrolmentMasterDegreeStudents</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.gep.ListFirstTimeEnrolmentMasterDegreeStudents</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.gep.ListFirstTimeEnrolmentMasterDegreeStudents</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 
 	<managed-bean>
 		<managed-bean-name>updateGratuitySituations</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.gratuity.UpdateGratuitySituations</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.gratuity.UpdateGratuitySituations</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>displayCurricularPlan</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.DisplayCurricularPlan</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.DisplayCurricularPlan</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>createExecutionDegrees</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree.CreateExecutionDegreesForExecutionYearBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.degree.CreateExecutionDegreesForExecutionYearBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 
 	<!-- Backbeans from department member subapplication -->
 	<managed-bean>
 		<managed-bean-name>viewDepartmentTeachers</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.ViewDepartmentTeachers</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.departmentMember.ViewDepartmentTeachers</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 		
 	<managed-bean>
 		<managed-bean-name>viewTeacherService</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.teacherService.ViewTeacherService</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.departmentMember.teacherService.ViewTeacherService</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
@@ -120,13 +120,13 @@
 	<managed-bean>
 		<description>DisplayEvaluationsForStudentToEnrol</description>
 		<managed-bean-name>displayEvaluationsToEnrol</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.student.enrolment.DisplayEvaluationsForStudentToEnrol</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>ManageEvaluationsForStudent</description>
 		<managed-bean-name>manageEvaluationsForStudent</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.ManageEvaluationsForStudent</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.student.enrolment.ManageEvaluationsForStudent</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
@@ -136,7 +136,7 @@
 	<!-- BEGIN: COMMON Managed Beans -->
 	<managed-bean>
 		<managed-bean-name>SOPEvaluationManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.SOPEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.sop.evaluation.SOPEvaluationManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- END: COMMON Managed Beans -->
@@ -147,28 +147,28 @@
 	<managed-bean>
 		<description>EvaluationManagementBackingBean</description>
 		<managed-bean-name>evaluationManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.teacher.evaluation.EvaluationManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<description>EvaluationManagementMenuBackingBean</description>
 		<managed-bean-name>evaluationManagementMenuBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementMenuBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.teacher.evaluation.EvaluationManagementMenuBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<description>ProjectManagementBackingBean</description>
 		<managed-bean-name>projectManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.ProjectManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.teacher.evaluation.ProjectManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<description>AdHocEvaluationManagementBackingBean</description>
 		<managed-bean-name>adHocEvaluationManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.AdHocEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.teacher.evaluation.AdHocEvaluationManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
@@ -180,7 +180,7 @@
 	<managed-bean>
 		<description>ManagementGroupsBackingBean</description>
 		<managed-bean-name>ManagementGroupsBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.ManagementGroupsBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.departmentAdmOffice.ManagementGroupsBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
@@ -191,19 +191,19 @@
 	<managed-bean>
 		<description>FunctionsManagementBackingBean</description>
 		<managed-bean-name>functionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.departmentAdmOffice.FunctionsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>ManagerFunctionsManagementBackingBean</description>
 		<managed-bean-name>managerFunctionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.personManagement.ManagerFunctionsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>ScientificCouncilFunctionsManagementBackingBean</description>
 		<managed-bean-name>scientificCouncilFunctionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.ScientificCouncilFunctionsManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.scientificCouncil.ScientificCouncilFunctionsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
@@ -217,72 +217,72 @@
 	<managed-bean>
 		<description>coordinatorEvaluationManagementBackingBean</description>
 		<managed-bean-name>coordinatorEvaluationManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.evaluation.CoordinatorEvaluationManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>CoordinatorWrittenTestsInformationBackingBean</description>
 		<managed-bean-name>coordinatorWrittenTestsInformationBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorWrittenTestsInformationBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.evaluation.CoordinatorWrittenTestsInformationBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<managed-bean>
 		<description>CoordinatorWrittenTestsManagementBackingBean</description>
 		<managed-bean-name>coordinatorWrittenTestsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorWrittenTestsManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.evaluation.CoordinatorWrittenTestsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>		
 	<managed-bean>
 		<description>CoordinatorProjectsInformationBackingBean</description>
 		<managed-bean-name>coordinatorProjectsInformationBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorProjectsInformationBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.evaluation.CoordinatorProjectsInformationBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<managed-bean>
 		<managed-bean-name>CoordinatorEvaluationsBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorEvaluationsBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.evaluation.CoordinatorEvaluationsBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<managed-bean>
 		<description>CoordinatorProjectsManagementBackingBean</description>
 		<managed-bean-name>coordinatorProjectsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorProjectsManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.evaluation.CoordinatorProjectsManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>CoordinatorStudentsBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.CoordinatorStudentsBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.CoordinatorStudentsBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- END: COORDINATOR Managed Beans -->
 
 	<managed-bean>
 		<managed-bean-name>publicEvaluations</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.publico.PublicEvaluationsBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.publico.PublicEvaluationsBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>DepartmentManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.publico.DepartmentManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.publico.DepartmentManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>studentCalendar</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.StudentCalendarBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.student.StudentCalendarBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>writtenEvaluationsByRoom</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.sop.evaluation.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>publicWrittenEvaluationsByRoom</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.publico.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.publico.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
@@ -290,82 +290,82 @@
 	<managed-bean>
 		<description>DegreeManagement</description>
 		<managed-bean-name>DegreeManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.DegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>ManagerDegreeManagement</description>
 		<managed-bean-name>ManagerDegreeManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans.ManagerDegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.curricularPlans.ManagerDegreeManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>AcademicAdministrationDegreeManagement</description>
 		<managed-bean-name>AcademicAdministrationDegreeManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.academicAdministration.curricularPlans.AcademicAdministrationDegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans.AcademicAdministrationDegreeManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<description>DegreeCurricularPlanManagement</description>
 		<managed-bean-name>DegreeCurricularPlanManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.DegreeCurricularPlanManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeCurricularPlanManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>CurricularPlansMembersManagementBackingBean</description>
 		<managed-bean-name>CurricularPlansMembersManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.CurricularPlansMembersManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.CurricularPlansMembersManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>CurricularCourseManagementBackingBean</description>
 		<managed-bean-name>CurricularCourseManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>ManagerCurricularCourseManagementBackingBean</description>
 		<managed-bean-name>ManagerCurricularCourseManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans.ManagerCurricularCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.curricularPlans.ManagerCurricularCourseManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>AcademicAdministrationCurricularCourseManagementBackingBean</description>
 		<managed-bean-name>AcademicAdministrationCurricularCourseManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.academicAdministration.curricularPlans.AcademicAdministrationCurricularCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans.AcademicAdministrationCurricularCourseManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<managed-bean>
 		<description>CompetenceCourseManagementBackingBean</description>
 		<managed-bean-name>CompetenceCourseManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses.CompetenceCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.competenceCourses.CompetenceCourseManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>CourseGroupManagementBackingBean</description>
 		<managed-bean-name>CourseGroupManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CourseGroupManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CourseGroupManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<description>BranchCourseGroupManagementBackingBean</description>
 		<managed-bean-name>BranchCourseGroupManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.BranchCourseGroupManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.BranchCourseGroupManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<description>CycleCourseGroupInformationManagementBackingBean</description>
 		<managed-bean-name>CycleCourseGroupInformationManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CycleCourseGroupInformationManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CycleCourseGroupInformationManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<description>CourseGroupReportBackingBean</description>
 		<managed-bean-name>CourseGroupReport</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CourseGroupReportBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CourseGroupReportBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- END: Bolonha Management Beans -->
@@ -374,13 +374,13 @@
 	<managed-bean>
 		<description>CurricularRulesManagementBackingBean</description>
 		<managed-bean-name>CurricularRulesManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules.CurricularRulesManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules.CurricularRulesManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<managed-bean>
 		<description>CompositeRulesManagementBackingBean</description>
 		<managed-bean-name>CompositeRulesManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules.CompositeRulesManagementBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules.CompositeRulesManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- END: CurricularRules Management Beans -->
@@ -388,7 +388,7 @@
 	<!-- BEGIN: OrganizationalStructure Managed Beans -->
 	<managed-bean>
 		<managed-bean-name>organizationalStructure</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.person.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.person.OrganizationalStructureBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<!-- END: OrganizationalStructure Managed Beans -->
@@ -401,7 +401,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>organizationalStructureBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	
@@ -2014,104 +2014,104 @@
 	<!-- Custom Components -->
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIHtmlEditor
+			org.fenixedu.academic.ui.faces.components.UIHtmlEditor
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIHtmlEditor
+			org.fenixedu.academic.ui.faces.components.UIHtmlEditor
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState
+			org.fenixedu.academic.ui.faces.components.UIViewState
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState
+			org.fenixedu.academic.ui.faces.components.UIViewState
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIFenixCalendar
+			org.fenixedu.academic.ui.faces.components.UIFenixCalendar
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIFenixCalendar
+			org.fenixedu.academic.ui.faces.components.UIFenixCalendar
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan
+			org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeCurricularPlan
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan
+			org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeCurricularPlan
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIBreadCrumbs
+			org.fenixedu.academic.ui.faces.components.UIBreadCrumbs
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIBreadCrumbs
+			org.fenixedu.academic.ui.faces.components.UIBreadCrumbs
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLink
+			org.fenixedu.academic.ui.faces.components.UICommandLink
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLink
+			org.fenixedu.academic.ui.faces.components.UICommandLink
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandButton
+			org.fenixedu.academic.ui.faces.components.UICommandButton
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandButton
+			org.fenixedu.academic.ui.faces.components.UICommandButton
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne
+			org.fenixedu.academic.ui.faces.components.UISelectOne
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne
+			org.fenixedu.academic.ui.faces.components.UISelectOne
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeater
+			org.fenixedu.academic.ui.faces.components.UIDataRepeater
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeater
+			org.fenixedu.academic.ui.faces.components.UIDataRepeater
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoComplete
+			org.fenixedu.academic.ui.faces.components.UIAutoComplete
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoComplete
+			org.fenixedu.academic.ui.faces.components.UIAutoComplete
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText
+			org.fenixedu.academic.ui.faces.components.UIExtendedOutputText
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText
+			org.fenixedu.academic.ui.faces.components.UIExtendedOutputText
 		</component-class>
 	</component>
 	<component>
 		<component-type>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIContentLink
+			org.fenixedu.academic.ui.faces.components.UIContentLink
 		</component-type>
 		<component-class>
-			net.sourceforge.fenixedu.presentationTier.jsf.components.UIContentLink
+			org.fenixedu.academic.ui.faces.components.UIContentLink
 		</component-class>
 	</component>
 	
 	<validator>
 		<validator-id>regexValidator</validator-id>
-		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidator</validator-class>
+		<validator-class>org.fenixedu.academic.ui.faces.validators.RegexValidator</validator-class>
 		<attribute>
 			<attribute-name>regex</attribute-name>
 			<attribute-class>java.lang.String</attribute-class>
@@ -2119,7 +2119,7 @@
 	</validator>
 	<validator>
 		<validator-id>dateValidator</validator-id>
-		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.DateValidator</validator-class>
+		<validator-class>org.fenixedu.academic.ui.faces.validators.DateValidator</validator-class>
 		<attribute>
 			<attribute-name>format</attribute-name>
 			<attribute-class>java.lang.String</attribute-class>
@@ -2133,8 +2133,8 @@
 	<render-kit>
 		<renderer>
 			<component-family>DataRepeater</component-family>
-			<renderer-type>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterRenderer</renderer-type>
-			<renderer-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterRenderer</renderer-class>
+			<renderer-type>org.fenixedu.academic.ui.faces.components.UIDataRepeaterRenderer</renderer-type>
+			<renderer-class>org.fenixedu.academic.ui.faces.components.UIDataRepeaterRenderer</renderer-class>
 		</renderer>
 	</render-kit>
 	
@@ -2143,7 +2143,7 @@
 	<!-- Backing bean for evaluations consulting by delegates -->
 	<managed-bean>
 		<managed-bean-name>evaluationsForDelegates</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.delegate.EvaluationsForDelegatesConsultingBackingBean</managed-bean-class>
+		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.delegate.EvaluationsForDelegatesConsultingBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 			

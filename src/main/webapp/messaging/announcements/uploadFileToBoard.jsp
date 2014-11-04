@@ -31,7 +31,7 @@
 
 	<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="extraParameters" name="extraParameters" />
-	<bean:define id="announcementBoard" name="bean" property="fileHolder" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
+	<bean:define id="announcementBoard" name="bean" property="fileHolder" type="org.fenixedu.academic.domain.messaging.AnnouncementBoard"/>
 	<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>		
 
 <h2>

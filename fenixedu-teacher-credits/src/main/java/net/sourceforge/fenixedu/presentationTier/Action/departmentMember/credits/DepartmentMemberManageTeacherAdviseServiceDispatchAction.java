@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.departmentMember.credits;
+package org.fenixedu.academic.ui.struts.action.departmentMember.credits;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherAdviseServiceDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.credits.departmentMember.DepartmentMemberViewTeacherCreditsDA;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.ui.struts.action.credits.ManageTeacherAdviseServiceDispatchAction;
+import org.fenixedu.academic.ui.struts.action.credits.departmentMember.DepartmentMemberViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -56,11 +56,11 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 @Exceptions(
         value = {
                 @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException.class,
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixExceptionMessageHandler.class,
+                        type = org.fenixedu.academic.service.services.exceptions.FenixServiceException.class,
+                        handler = org.fenixedu.academic.ui.struts.config.FenixExceptionMessageHandler.class,
                         scope = "request"),
-                @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class,
+                @ExceptionHandling(type = org.fenixedu.academic.domain.exceptions.DomainException.class,
+                        handler = org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler.class,
                         scope = "request") })
 public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 

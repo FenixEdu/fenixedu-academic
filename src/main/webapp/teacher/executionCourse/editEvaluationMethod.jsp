@@ -56,7 +56,7 @@ margin: 0;
 	<bean:define id="url" type="java.lang.String">/manageEvaluationMethod.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 
 	<fr:edit name="executionCourse" property="evaluationMethod"
-			schema="net.sourceforge.fenixedu.domain.EvaluationMethod"
+			schema="org.fenixedu.academic.domain.EvaluationMethod"
 			action="<%= url %>">
 		<fr:layout name="flow">
 			<fr:property name="eachClasses" value="flowblock"/>

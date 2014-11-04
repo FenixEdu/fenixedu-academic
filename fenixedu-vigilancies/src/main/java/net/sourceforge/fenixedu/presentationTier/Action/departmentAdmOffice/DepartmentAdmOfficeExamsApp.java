@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
+package org.fenixedu.academic.ui.struts.action.departmentAdmOffice;
 
 import org.fenixedu.bennu.portal.StrutsApplication;
 

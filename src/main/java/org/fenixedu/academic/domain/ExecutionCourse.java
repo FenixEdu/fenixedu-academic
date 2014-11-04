@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 import java.text.Collator;
@@ -37,33 +37,32 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
-import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ProposalState;
-import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.executionCourse.SummariesSearchBean;
+import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.student.WeeklyWorkLoad;
+import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.dto.GenericPair;
+import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.ExecutionCoursePredicates;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.ProposalState;
+import org.fenixedu.academic.util.domain.OrderedRelationAdapter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
@@ -520,12 +519,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    public List<net.sourceforge.fenixedu.domain.Project> getAssociatedProjects() {
-        final List<net.sourceforge.fenixedu.domain.Project> result = new ArrayList<net.sourceforge.fenixedu.domain.Project>();
+    public List<org.fenixedu.academic.domain.Project> getAssociatedProjects() {
+        final List<org.fenixedu.academic.domain.Project> result = new ArrayList<org.fenixedu.academic.domain.Project>();
 
         for (Evaluation evaluation : this.getAssociatedEvaluationsSet()) {
-            if (evaluation instanceof net.sourceforge.fenixedu.domain.Project) {
-                result.add((net.sourceforge.fenixedu.domain.Project) evaluation);
+            if (evaluation instanceof org.fenixedu.academic.domain.Project) {
+                result.add((org.fenixedu.academic.domain.Project) evaluation);
             }
         }
         return result;
@@ -1330,10 +1329,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 final CompetenceCourseInformation competenceCourseInformation =
                         competenceCourse.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
                 if (competenceCourseInformation != null) {
-                    final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences bibliographicReferences =
+                    final org.fenixedu.academic.domain.degreeStructure.BibliographicReferences bibliographicReferences =
                             competenceCourseInformation.getBibliographicReferences();
                     if (bibliographicReferences != null) {
-                        for (final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference bibliographicReference : bibliographicReferences
+                        for (final org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference bibliographicReference : bibliographicReferences
                                 .getBibliographicReferencesList()) {
                             if (bibliographicReference.getType() == referenceType) {
                                 return true;

@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
-<bean:define id="submitMarksComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks"/>
+<bean:define id="submitMarksComponent" name="siteView" property="component" type="org.fenixedu.academic.dto.InfoSiteSubmitMarks"/>
 <logic:greaterThan name="submitMarksComponent" property="submited" value="0">
 	<p><h2><bean:message key="label.submitMarksNumber.submit" />
 	<bean:write name="submitMarksComponent" property="submited"/>

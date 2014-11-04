@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
+package org.fenixedu.academic.domain.phd.candidacy.activities;
 
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
-
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import org.fenixedu.academic.domain.phd.log.PhdLog;
 import org.fenixedu.bennu.core.domain.User;
 
 public abstract class PhdProgramCandidacyProcessActivity extends Activity<PhdProgramCandidacyProcess> {

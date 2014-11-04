@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %>
+<%@ page import="org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType" %>
 
 <html:xhtml/>
 
@@ -72,9 +72,9 @@
 		<fr:edit id="phd-academic-service-request-create-bean" name="phdAcademicServiceRequestCreateBean" visible="false" />
 	
 		<fr:edit id="phd-academic-service-request-create-bean-choose-document-type" name="phdAcademicServiceRequestCreateBean">
-			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean">
+			<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean">
 				<fr:slot name="documentRequestType" required="true" layout="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDocumentRequestTypeProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequestTypeProvider" />
 					<fr:property name="destination" value="postback" />
 				</fr:slot>
 			</fr:schema>

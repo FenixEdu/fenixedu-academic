@@ -18,29 +18,29 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
-		type="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
+<schema name="org.fenixedu.academic.domain.student.SearchStudentsWithEnrolmentsByDepartment"
+		type="org.fenixedu.academic.domain.student.SearchStudentsWithEnrolmentsByDepartment"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="executionYear" layout="menu-select" key="label.executionYear">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
 		<property name="format" value="${year}"/>
 	</slot>
 	<slot name="degrees" layout="option-select" key="label.degrees">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeSelectManySearchStudentsWithEnrolmentsByDepartment"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreeSelectManySearchStudentsWithEnrolmentsByDepartment"/>
 		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"/>
+		<property name="eachSchema" value="org.fenixedu.academic.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"/>
 		<property name="classes" value="list2"/>
 	</slot>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"
-		type="net.sourceforge.fenixedu.domain.Degree">
+<schema name="org.fenixedu.academic.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"
+		type="org.fenixedu.academic.domain.Degree">
 	<slot name="tipoCurso"/>
 	<slot name="name"/>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.StudentCurricularPlan.List"
-		type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
+<schema name="org.fenixedu.academic.domain.StudentCurricularPlan.List"
+		type="org.fenixedu.academic.domain.StudentCurricularPlan"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="degreeCurricularPlan.degree.sigla"/>
 	<slot name="registration.student.number"/>
@@ -48,7 +48,7 @@
 	<slot name="registration.student.person.email"/>
 </schema>
 
-<schema name="ViewSeniorInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="ViewSeniorInfo" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="person.name" key="label.student.name"/>
 	<slot name="person.address" key="address"/>
 	<slot name="person.areaCode" key="areaCode"/>
@@ -58,7 +58,7 @@
 	<slot name="person.email" key="email"/>	
 </schema>
 
-<schema name="EditSeniorExpectedInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="EditSeniorExpectedInfo" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="expectedDegreeTerminationYearMonthDay" key="label.senior.expectedDegreeTermination">
 		<property name="size" value="10" />
 		<property name="maxLength" value="10" />
@@ -66,23 +66,23 @@
 	<slot name="expectedDegreeAverageGrade" key="label.senior.expectedDegreeAverageGrade">
 		<property name="size" value="2" />
 		<property name="maxLength" value="2" />
-		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+		<validator class="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
 			<property name="lowerBound" value="0"/>
 			<property name="upperBound" value="20"/>
 		</validator>
 	</slot>
 </schema>
 
-<schema name="ViewSeniorExpectedInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="ViewSeniorExpectedInfo" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="expectedDegreeTerminationYearMonthDay" key="label.senior.expectedDegreeTermination" />
 	<slot name="expectedDegreeAverageGrade" key="label.senior.expectedDegreeAverageGrade" />
 </schema>
 
-<schema name="ViewSeniorInfoLastModificationDate" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="ViewSeniorInfoLastModificationDate" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="lastModificationDateDateTime" key="label.senior.lastModificationDate"/>
 </schema>
 
-<schema name="EditSeniorSpecialtyField" type="net.sourceforge.fenixedu.domain.student.Senior">
+<schema name="EditSeniorSpecialtyField" type="org.fenixedu.academic.domain.student.Senior">
 	<slot name="specialtyField" layout="rich-text" key="label.senior.specialtyField">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
@@ -90,7 +90,7 @@
    		<property name="config" value="intermediate" />
     </slot>
 </schema>
-<schema name="EditSeniorProfessionalInterests" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="EditSeniorProfessionalInterests" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="professionalInterests" layout="rich-text" key="label.senior.professionalInterests">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
@@ -98,7 +98,7 @@
    		<property name="config" value="intermediate" />
     </slot>
 </schema>
-<schema name="EditSeniorLanguageSkills" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="EditSeniorLanguageSkills" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="languageSkills" layout="rich-text" key="label.senior.languageSkills">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
@@ -106,7 +106,7 @@
    		<property name="config" value="intermediate" />
     </slot>
 </schema>
-<schema name="EditSeniorInformaticsSkillss" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="EditSeniorInformaticsSkillss" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="informaticsSkills" layout="rich-text" key="label.senior.informaticsSkills">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
@@ -114,7 +114,7 @@
    		<property name="config" value="intermediate" />
     </slot>
 </schema>
-<schema name="EditSeniorExtracurricularActivities" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="EditSeniorExtracurricularActivities" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="extracurricularActivities" layout="rich-text" key="label.senior.extracurricularActivities">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
@@ -122,7 +122,7 @@
    		<property name="config" value="intermediate" />
     </slot>
 </schema>
-<schema name="EditSeniorProfessionalExperience" type="net.sourceforge.fenixedu.domain.student.Senior" >
+<schema name="EditSeniorProfessionalExperience" type="org.fenixedu.academic.domain.student.Senior" >
 	<slot name="professionalExperience" layout="rich-text" key="label.senior.professionalExperience">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
@@ -132,20 +132,20 @@
 </schema>
 
 <schema name="BolonhaStudentOptionalEnrollmentBean.chooseCriteria" bundle="STUDENT_RESOURCES"
-	type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean">
+	type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean">
 	<slot name="degreeType" key="label.degreeType"
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="" />
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaDegreeTypesProvider" />
+			value="org.fenixedu.academic.ui.renderers.providers.BolonhaDegreeTypesProvider" />
 		<property name="destination" value="updateComboBoxes"/>
 	</slot>
 	<slot name="degree" key="label.degree"
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.DegreesByDegreeType" />
+			value="org.fenixedu.academic.ui.renderers.providers.enrollment.bolonha.DegreesByDegreeType" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="updateComboBoxes"/>
 	</slot>
@@ -153,31 +153,31 @@
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.DegreeCurricularPlansForDegree" />
+			value="org.fenixedu.academic.ui.renderers.providers.enrollment.bolonha.DegreeCurricularPlansForDegree" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="updateComboBoxes"/>
 	</slot>
 </schema>
 
 <schema name="CycleEnrolmentBean.chooseCycleCourseGroupToEnrol" 
-		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean"
+		type="org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="cycleCourseGroupToEnrol" 
 			layout="radio-select"
 			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.CompatibleCycleCourseGroupsProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.enrollment.bolonha.CompatibleCycleCourseGroupsProvider" />
 		<property name="eachSchema" value="CycleCourseGroup.view" />
 		<property name="eachLayout" value="values-dash" />
 	</slot>
 </schema>
 
-<schema name="CycleCourseGroup.view" type="net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup" bundle="APPLICATION_RESOURCES">
+<schema name="CycleCourseGroup.view" type="org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup" bundle="APPLICATION_RESOURCES">
 	<slot name="name" />		
 	<slot name="parentDegreeCurricularPlan.name" />
 </schema>
 
 <schema name="CycleEnrolmentBean.showAffinityToEnrol.source" 
-		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean" bundle="APPLICATION_RESOURCES">
+		type="org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean" bundle="APPLICATION_RESOURCES">
 	<slot name="sourceCycle.name" key="cycleCurriculumGroup" />
 	<slot name="sourceCycle.degreeCurricularPlanOfDegreeModule" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
 		<property name="format" value="${degree.name} - ${name}"/>
@@ -189,7 +189,7 @@
 </schema>
 
 <schema name="CycleEnrolmentBean.showAffinityToEnrol.destination" 
-		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean"
+		type="org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="cycleCourseGroupToEnrol.name" key="cycleCurriculumGroup" />
 	<slot name="cycleCourseGroupToEnrol.parentDegreeCurricularPlan" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
@@ -197,7 +197,7 @@
 	</slot>
 </schema>
 
-<schema name="student.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="student.thesis.details" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="title"/>
     <slot name="orientation" layout="flowLayout" key="label.thesis.orientation">
         <property name="eachInline" value="true"/>
@@ -212,7 +212,7 @@
     </slot>
 </schema>
 
-<schema name="student.thesis.details.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="student.thesis.details.edit" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="title" read-only="true"/>
     <slot name="orientation" read-only="true" layout="flowLayout" key="label.thesis.orientation">
         <property name="eachInline" value="true"/>
@@ -222,17 +222,17 @@
         <property name="eachSchema" value="student.thesis.person.name"/>
     </slot>
     <slot name="discussed" key="label.thesis.evaluate.discussion.date">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+        <validator class="org.fenixedu.academic.ui.renderers.validators.DateTimeValidator">
             <property name="required" value="true"/>
         </validator>
     </slot>
 </schema>
 
-<schema name="student.thesis.person.name" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+<schema name="student.thesis.person.name" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant">
     <slot name="person.name" layout="person-name"/>
 </schema>
 
-<schema name="student.thesis.details.abstract" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="student.thesis.details.abstract" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="thesisAbstractPt" layout="null-as-label" key="label.thesis.abstract.pt">
         <property name="label" value="label.thesis.field.empty"/>
         <property name="key" value="true"/>
@@ -243,9 +243,9 @@
     </slot>
 </schema>
 
-<schema name="student.thesis.abstract.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="student.thesis.abstract.edit" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+        <validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
             <property name="type" value="word"/>
             <property name="length" value="250"/>
         </validator>
@@ -254,7 +254,7 @@
         <property name="rows" value="12"/>
     </slot>
     <slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+        <validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
             <property name="type" value="word"/>
             <property name="length" value="250"/>
         </validator>
@@ -264,7 +264,7 @@
     </slot>
 </schema>
 
-<schema name="student.thesis.details.keywords" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="student.thesis.details.keywords" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="keywordsPt" layout="null-as-label" key="label.thesis.keywords.pt">
         <property name="label" value="label.thesis.field.empty"/>
         <property name="key" value="true"/>
@@ -275,7 +275,7 @@
     </slot>
 </schema>
 
-<schema name="student.thesis.keywords.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="student.thesis.keywords.edit" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="keywordsPt" key="label.thesis.keywords.pt"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
@@ -284,7 +284,7 @@
     </slot>
 </schema>
 
-<schema name="student.thesis.file.dissertation" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
+<schema name="student.thesis.file.dissertation" type="org.fenixedu.academic.domain.thesis.ThesisFile">
     <slot name="title" key="label.thesis.title"/>
     <slot name="subTitle" key="label.thesis.subtitle" layout="null-as-label">
         <property name="label" value="-"/>
@@ -300,7 +300,7 @@
     <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
 </schema>
 
-<schema name="student.thesis.file" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
+<schema name="student.thesis.file" type="org.fenixedu.academic.domain.thesis.ThesisFile">
     <slot name="displayName" layout="link" key="label.thesis.file.name">
         <property name="useParent" value="true"/>
         <property name="linkFormat" value="${downloadUrl}"/>
@@ -309,7 +309,7 @@
     <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
 </schema>
 
-<schema name="student.thesisBean.upload" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean">
+<schema name="student.thesisBean.upload" type="org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean">
     <slot name="file" key="label.thesis.file">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
             <property name="required" value="true"/>
@@ -323,7 +323,7 @@
     </slot>
 </schema>
 
-<schema name="student.thesisBean.upload.dissertation" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean">
+<schema name="student.thesisBean.upload.dissertation" type="org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean">
 <!-- 
     <slot name="title" key="label.thesis.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
@@ -349,7 +349,7 @@
     </slot>
 </schema>
 
-<schema name="student.thesis.details.declaration" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="student.thesis.details.declaration" type="org.fenixedu.academic.domain.thesis.Thesis">
     <slot name="declarationAccepted" key="label.thesis.declaration.state">
         <property name="trueLabel" value="label.thesis.declaration.accepted"/>
         <property name="falseLabel" value="label.thesis.declaration.notAccepted"/>
@@ -359,7 +359,7 @@
     </slot>
 </schema>
 
-<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
+<schema name="student.StudentsSearchBean" type="org.fenixedu.academic.dto.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
 	<slot name="number" />
 	<slot name="identificationNumber" />
 	<slot name="documentType" key="label.idDocumentType">
@@ -369,20 +369,20 @@
 	<slot name="username" />
 </schema>
 
-<schema name="Student.view-with-number-and-name" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+<schema name="Student.view-with-number-and-name" type="org.fenixedu.academic.domain.student.Student" bundle="APPLICATION_RESOURCES">
 	<slot name="number"/>
 	<slot name="person.name"/>
 </schema>
 
-<schema name="StudentNumberBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean" bundle="APPLICATION_RESOURCES">
+<schema name="StudentNumberBean.edit" type="org.fenixedu.academic.dto.commons.student.StudentNumberBean" bundle="APPLICATION_RESOURCES">
 	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="person.email" bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.Person">
 	<slot name="email" />
 </schema>
 
-<schema name="student.statistics.table" type="net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean" bundle="APPLICATION_RESOURCES">
+<schema name="student.statistics.table" type="org.fenixedu.academic.dto.student.ExecutionPeriodStatisticsBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionPeriod" key="label.student.statistics.executionYear-semester">
 		<property name="format" value="${executionYear.year} - ${semester}"/>
 	</slot>
@@ -392,7 +392,7 @@
 	<slot name="aritmeticAverage" key="label.student.statistics.aritmeticAverage"/>
 </schema>
 
-<schema name="student.registrations.with.transition.origin" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
+<schema name="student.registrations.with.transition.origin" type="org.fenixedu.academic.domain.student.Registration" bundle="APPLICATION_RESOURCES">
 	<slot name="lastStudentCurricularPlan.registration.degreeNameWithDescription"/>
 	<slot name="sourceRegistrationForTransition.lastStudentCurricularPlan.registration.degreeNameWithDescription"/>
 </schema>

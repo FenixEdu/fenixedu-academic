@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.util;
+package org.fenixedu.academic.domain.util;
 
 /**
  * @see <a href="http://en.wikipedia.org/wiki/Verhoeff_algorithm/">More Info</a>

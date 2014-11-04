@@ -36,7 +36,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
 
 	<h2><strong><bean:message key="label.person.title.personal.info" bundle="MANAGER_RESOURCES" /></strong></h2>
-	<fr:edit id="personData" name="externalPersonBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" >
+	<fr:edit id="personData" name="externalPersonBean" schema="org.fenixedu.academic.dto.person.ExternalPersonBean" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -44,7 +44,7 @@
 	</fr:edit>
 
 	<h2><strong><bean:message key="label.person.unit.info" bundle="MANAGER_RESOURCES" /></strong></h2>
-	<fr:edit id="unitData" name="externalPersonBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.Unit" >
+	<fr:edit id="unitData" name="externalPersonBean" schema="org.fenixedu.academic.dto.person.ExternalPersonBean.Unit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

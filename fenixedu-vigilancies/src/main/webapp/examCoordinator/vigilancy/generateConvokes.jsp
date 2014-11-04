@@ -47,7 +47,7 @@
 
 <logic:present name="bean" property="selectedVigilantGroup">
 <logic:present name="bean" property="writtenEvaluation">
-<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean"/>
+<bean:define id="bean" name="bean" type="org.fenixedu.academic.ui.struts.action.vigilancy.ConvokeBean"/>
 <bean:define id="groupName" name="bean" property="selectedVigilantGroup.name" type="java.lang.String"/>
 
 <p class="mvert15 breadcumbs"><span class="actual"><bean:message key="label.vigilancy.firstStep" bundle="VIGILANCY_RESOURCES"/></span> > <span><bean:message key="label.vigilancy.secondStep" bundle="VIGILANCY_RESOURCES"/></span></p>
@@ -154,7 +154,7 @@
 <p class="mtop2 mbottom05"><strong><bean:message key="label.vigilancy.whyUnavailable" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
 
 <ul>
-	<logic:iterate id="information" name="bean" property="unavailableInformation" type="net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation"> 
+	<logic:iterate id="information" name="bean" property="unavailableInformation" type="org.fenixedu.academic.domain.vigilancy.strategies.UnavailableInformation"> 
 		<li>
 			<fr:view name="information" property="vigilant.person.name"/>: <fr:view name="information" property="reason"/>
 			<logic:equal name="information" property="reason" value="UNAVAILABLE_PERIOD">

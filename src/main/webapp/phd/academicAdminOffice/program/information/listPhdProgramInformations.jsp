@@ -56,7 +56,7 @@
 
 <logic:notEmpty name="phdProgram" property="phdProgramInformations">
 	<fr:view name="phdProgram" property="phdProgramInformations" >
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgramInformation" >
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgramInformation" >
 			<fr:slot name="beginDate" />
 			<fr:slot name="minThesisEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.minThesisEctsCredits" />
 			<fr:slot name="maxThesisEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.maxThesisEctsCredits" />

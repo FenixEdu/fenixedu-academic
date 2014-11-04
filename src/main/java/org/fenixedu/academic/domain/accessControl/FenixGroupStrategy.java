@@ -1,7 +1,6 @@
-package net.sourceforge.fenixedu.domain.accessControl;
+package org.fenixedu.academic.domain.accessControl;
 
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.groups.GroupStrategy;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

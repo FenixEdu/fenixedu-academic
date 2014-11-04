@@ -20,14 +20,14 @@
  * Created on 10/Jan/2004
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
-import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
+import org.fenixedu.academic.domain.GratuitySituation;
+import org.fenixedu.academic.domain.gratuity.ExemptionGratuityType;
+import org.fenixedu.academic.domain.gratuity.GratuitySituationType;
 
 /**
  * @author Tânia Pousão
@@ -265,7 +265,7 @@ public class InfoGratuitySituation extends InfoObject {
      * (non-Javadoc)
      * 
      * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * org.fenixedu.academic.dto.InfoObject#copyFromDomain
      * (Dominio.DomainObject)
      */
     public void copyFromDomain(GratuitySituation gratuitySituation) {

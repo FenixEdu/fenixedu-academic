@@ -19,22 +19,24 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
+package org.fenixedu.academic.service.services.student.administrativeOfficeServices;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
-import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import static org.fenixedu.academic.predicate.AccessControl.check;
+
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Qualification;
+import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.student.PersonalIngressionData;
+import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean;
+import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
+import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
+import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
+import org.fenixedu.academic.dto.person.PersonBean;
+import org.fenixedu.academic.predicate.AcademicPredicates;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

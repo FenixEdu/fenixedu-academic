@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple;
+package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple;
 
 import java.util.Arrays;
 
@@ -28,14 +28,14 @@ public class ResearchContractResearchContractTypeProvider implements DataProvide
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays.asList(net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType
+        return Arrays.asList(org.fenixedu.academic.domain.organizationalStructure.ResearchContract.ResearchContractType
                 .values());
     }
 
     @Override
     public Converter getConverter() {
         return new EnumArrayConverter(
-                net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType.class);
+                org.fenixedu.academic.domain.organizationalStructure.ResearchContract.ResearchContractType.class);
     }
 
 }

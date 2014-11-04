@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package org.fenixedu.academic.ui.struts.action.teacher;
 
-import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.TutorshipSummaryDA;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.CurriculumDispatchAction;
+import org.fenixedu.academic.ui.struts.action.teacher.tutor.TutorshipSummaryDA;
 
 import org.fenixedu.bennu.struts.annotations.Mapping;
 

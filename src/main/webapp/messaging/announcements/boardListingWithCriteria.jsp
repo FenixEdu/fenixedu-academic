@@ -36,8 +36,8 @@
 
 <html:form action="/announcements/announcementsStartPageHandler.do" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="handleBoardListing"/>
-	<e:labelValues id="levelValues" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel" /> 
-	<e:labelValues id="typeValues" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType" /> 
+	<e:labelValues id="levelValues" bundle="ENUMERATION_RESOURCES" enumeration="org.fenixedu.academic.domain.messaging.AnnouncementBoardAccessLevel" /> 
+	<e:labelValues id="typeValues" bundle="ENUMERATION_RESOURCES" enumeration="org.fenixedu.academic.domain.messaging.AnnouncementBoardAccessType" /> 
 	
 	<p class="mbottom025"><strong><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.filtering"/></strong></p>
 	<table class="tstyle5 thlight thright mtop0">
@@ -65,9 +65,9 @@
 <logic:present name="unitAnnouncementBoards">	
 	<logic:notEmpty name="unitAnnouncementBoards">
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
-		<bean:define id="unitAnnouncementBoards" name="unitAnnouncementBoards" type="java.util.Collection<net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard>"/>
+		<bean:define id="unitAnnouncementBoards" name="unitAnnouncementBoards" type="java.util.Collection<org.fenixedu.academic.domain.messaging.AnnouncementBoard>"/>
 		<bean:define id="extraParameters" name="extraParameters" />
-		<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
+		<bean:define id="person" name="person" type="org.fenixedu.academic.domain.Person"/>
 
 		<%							
 			int indexOfLastSlash = contextPrefix.lastIndexOf("/");
@@ -107,9 +107,9 @@
 <logic:present name="executionCourseAnnouncementBoards">	
 	<logic:notEmpty name="executionCourseAnnouncementBoards">
 		<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
-		<bean:define id="executionCourseAnnouncementBoards" name="executionCourseAnnouncementBoards" type="java.util.Collection<net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard>"/>
+		<bean:define id="executionCourseAnnouncementBoards" name="executionCourseAnnouncementBoards" type="java.util.Collection<org.fenixedu.academic.domain.messaging.AnnouncementBoard>"/>
 		<bean:define id="extraParameters" name="extraParameters" />
-		<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
+		<bean:define id="person" name="person" type="org.fenixedu.academic.domain.Person"/>
 
 		<%							
 			int indexOfLastSlash = contextPrefix.lastIndexOf("/");

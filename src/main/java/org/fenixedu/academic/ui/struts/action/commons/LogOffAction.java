@@ -28,7 +28,7 @@
  *  
  */
 
-package net.sourceforge.fenixedu.presentationTier.Action.commons;
+package org.fenixedu.academic.ui.struts.action.commons;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

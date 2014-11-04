@@ -18,13 +18,13 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.Thesis"%>
+<%@page import="org.fenixedu.academic.domain.thesis.Thesis"%>
 <%@page import="java.util.Set"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean.Counter"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean.Counter"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%>
 <%@page import="java.util.Map.Entry"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean.ThesisPresentationStateCountMap"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean.ThesisPresentationStateCountMap"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -91,7 +91,7 @@
 				<bean:message key="label.scientificCouncil.title" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 			</th>
 		</tr>
-		<logic:iterate id="enrolment" name="enrolments" type="net.sourceforge.fenixedu.domain.Enrolment">
+		<logic:iterate id="enrolment" name="enrolments" type="org.fenixedu.academic.domain.Enrolment">
 			<%
 				final Set<Thesis> theses = enrolment.getThesesSet();
 				if (theses.isEmpty()) {

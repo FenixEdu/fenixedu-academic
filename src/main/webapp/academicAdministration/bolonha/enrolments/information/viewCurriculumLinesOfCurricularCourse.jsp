@@ -36,7 +36,7 @@
 
 <logic:notEmpty name="curricularCourse" property="curriculumModules">	
 	<fr:view name="curricularCourse" property="curriculumModules">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.studentCurriculum.CurriculumLine">
 			<fr:slot name="student.number" key="label.studentNumber" />
 			<fr:slot name="moduleTypeName" bundle="ENUMERATION_RESOURCES" />
 			<fr:slot name="name" />

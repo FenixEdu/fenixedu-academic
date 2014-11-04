@@ -141,11 +141,11 @@
 	
 	<div id="selectDegree" class="mtop3">
 		<fr:edit id="mobility.individual.application" name="mobilityIndividualApplicationProcessBean">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+			<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 				<fr:slot name="degree" key="label.mobility.degree" layout="menu-select-postback">
 					<fr:property name="format" value="${presentationName}" />
 					<fr:property name="destination" value="chooseDegreePostback"/>
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreesForExecutionYearProviderForMobilityIndividualApplicationProcess" />		
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.DegreesForExecutionYearProviderForMobilityIndividualApplicationProcess" />		
 				</fr:slot>
 			</fr:schema>
 			

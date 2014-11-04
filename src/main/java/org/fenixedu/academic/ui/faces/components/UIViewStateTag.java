@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components;
+package org.fenixedu.academic.ui.faces.components;
 
 import javax.faces.component.UIComponent;
 import javax.faces.webapp.UIComponentTag;
 
-import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfTagUtils;
+import org.fenixedu.academic.ui.faces.components.util.JsfTagUtils;
 
 public class UIViewStateTag extends UIComponentTag {
 
-    private static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState";
+    private static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.UIViewState";
 
     private String value;
 

@@ -42,10 +42,10 @@
 			</div>
 			<div id="txt">
 				<h1><bean:message key="message.alumni.data.reminder.title" bundle="APPLICATION_RESOURCES"/></h1>
-				<bean:message key="message.alumni.data.reminder.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES" />	
-				<bean:message key="message.alumni.data.reminder.advantages" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES" />   	   	
+				<bean:message key="message.alumni.data.reminder.text" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES" />	
+				<bean:message key="message.alumni.data.reminder.advantages" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES" />   	   	
    				<p><strong><bean:message key="message.alumni.data.reminder.fillInData" bundle="APPLICATION_RESOURCES" /></strong></p>   	
-   				<p><bean:message key="message.alumni.data.reminder.moreInformation" bundle="APPLICATION_RESOURCES" />: <a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>pt/alumni/" target="_blank"><%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>pt/alumni/</a></p>   		
+   				<p><bean:message key="message.alumni.data.reminder.moreInformation" bundle="APPLICATION_RESOURCES" />: <a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>pt/alumni/" target="_blank"><%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>pt/alumni/</a></p>   		
   			</div>
 			
 			<br />

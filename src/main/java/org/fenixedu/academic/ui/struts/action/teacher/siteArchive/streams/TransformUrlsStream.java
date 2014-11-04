@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams;
+package org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,9 +24,9 @@ import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
+import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.rules.Rule;
 
 /**
  * This output stream makes some parsing of the content written to it. The

@@ -20,9 +20,9 @@
 --%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseLogBean"%>
-<%@page import="net.sourceforge.fenixedu.util.Month"%>
-<%@page import="net.sourceforge.fenixedu.domain.Professorship"%>
+<%@page import="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseLogBean"%>
+<%@page import="org.fenixedu.academic.util.Month"%>
+<%@page import="org.fenixedu.academic.domain.Professorship"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -46,19 +46,19 @@
 <logic:present name="searchBean">
 	<fr:form action="/searchECLog.do?method=search&executionCourseID=${executionCourseID}">
 		<fr:edit id="searchBean" name="searchBean">
-			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseLogBean" bundle="MESSAGING_RESOURCES">
+			<fr:schema type="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseLogBean" bundle="MESSAGING_RESOURCES">
 				<fr:slot name="executionCourseLogTypes" layout="option-select" bundle="ENUMERATION_RESOURCES" key="ExecutionCourseLogTypes">
-	        		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseLogTypesProvider" />
+	        		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionCourseLogTypesProvider" />
 	        		<fr:property name="classes" value="nobullet noindent"/>
 	        		<fr:property name="selectAllShown" value="true"/>
 	    		</fr:slot>
 	    		<fr:slot name="months" layout="option-select" bundle="ENUMERATION_RESOURCES" key="MONTHS">
-	        		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseLogMonthProvider" />
+	        		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionCourseLogMonthProvider" />
 	        		<fr:property name="classes" value="nobullet noindent"/>
 	        		<fr:property name="selectAllShown" value="true"/>
 	    		</fr:slot>	
 	    		<fr:slot name="professorships" layout="option-select" bundle="APPLICATION_RESOURCES" key="title.teachers">
-	        		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseLogProfessorshipProvider" />
+	        		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionCourseLogProfessorshipProvider" />
 	        		<fr:property name="classes" value="nobullet noindent"/>
 	        		<fr:property name="eachSchema" value="executionCourseLog.professorship"/>
 	        		<fr:property name="eachLayout" value="values-dash"/>        		
@@ -92,7 +92,7 @@
 					numberOfPagesAttributeName="numberOfPages"/>
 			</div>
 			<fr:view name="logPagesBean" property="executionCourseLogs">
-				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseLogBean" bundle="APPLICATION_RESOURCES">
+				<fr:schema type="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseLogBean" bundle="APPLICATION_RESOURCES">
 					<fr:slot name="person" layout="view-as-image">
 						<fr:property name="photoCellClasses" value="personalcard_photo"/>
 				   		<fr:property name="imageFormat" value="<%=request.getContextPath() + "/user/photo/${externalId}"%>"/>

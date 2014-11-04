@@ -20,22 +20,21 @@
  * Created on Apr 3, 2004
  *
  */
-package net.sourceforge.fenixedu.presentationTier.Action.utils;
+package org.fenixedu.academic.ui.struts.action.utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.branch.BranchType;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-
+import org.fenixedu.academic.domain.branch.BranchType;
+import org.fenixedu.academic.dto.InfoBranch;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.service.services.commons.ReadExecutionDegreeByOID;
+import org.fenixedu.academic.service.services.commons.ReadExecutionYearsService;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.manager.ReadBranchesByDegreeCurricularPlan;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.core.domain.User;
 
 /**

@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields;
+package org.fenixedu.academic.domain.time.chronologies.dateTimeFields;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
-
+import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
 import org.joda.time.Chronology;
 import org.joda.time.DateTimeField;
 import org.joda.time.DateTimeFieldType;

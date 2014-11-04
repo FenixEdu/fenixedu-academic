@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.teacher;
+package org.fenixedu.academic.dto.teacher;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Shift;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
 
 public class ImportLessonPlanningsBean extends ImportContentBean implements Serializable {
 

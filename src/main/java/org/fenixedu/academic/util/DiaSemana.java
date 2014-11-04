@@ -22,7 +22,7 @@
  * Created on 11 de Outubro de 2002, 17:01
  */
 
-package net.sourceforge.fenixedu.util;
+package org.fenixedu.academic.util;
 
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;

@@ -37,18 +37,18 @@
     <html:hidden property="method" value="filterPostback" />
     <fr:edit id="filter" name="filter">
         <fr:schema bundle="DOMAIN_RESOURCES"
-            type="net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFilter">
+            type="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter">
             <fr:slot name="executionInterval" layout="menu-select" required="true" key="label.ExecutionYear.year">
                 <fr:property name="format" value="${pathName}" />
                 <fr:property name="providerClass"
-                    value="net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFilter$ExecutionIntervalProvider" />
+                    value="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter$ExecutionIntervalProvider" />
             </fr:slot>
             <fr:slot name="type" layout="menu-postback" required="true" key="label.ects.EctsTableType">
                 <fr:destination name="/manageEctsComparabilityTables.do?method=filterPostback" />
             </fr:slot>
             <fr:slot name="level" layout="menu-select" required="true" key="label.ects.EctsTableLevel">
                 <fr:property name="providerClass"
-                    value="net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFilter$EctsTableLevelProvider" />
+                    value="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter$EctsTableLevelProvider" />
                 <fr:property name="eachLayout" value="" />
             </fr:slot>
         </fr:schema>
@@ -73,7 +73,7 @@
                     <tr>
                         <td><fr:edit id="filter" name="filter">
                             <fr:schema bundle="GEP_RESOURCES"
-                                type="net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFilter">
+                                type="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter">
                                 <fr:slot name="inputStream" key="label.ects.tablesManagement.importTables" required="true">
                                     <fr:property name="fileNameSlot" value="filename" />
                                     <fr:property name="onChangeEvent" value="testValidFileInput(this.id);" />
@@ -114,7 +114,7 @@
             <bean:define id="sortByArg" value="" />
             <fr:view name="status">
                 <fr:schema bundle="GEP_RESOURCES"
-                    type="net.sourceforge.fenixedu.domain.degreeStructure.IEctsConversionTable">
+                    type="org.fenixedu.academic.domain.degreeStructure.IEctsConversionTable">
                     <logic:equal name="filter" property="type" value="ENROLMENT">
                         <logic:equal name="filter" property="level" value="COMPETENCE_COURSE">
                             <fr:slot name="targetEntity.externalId" key="label.externalId" />

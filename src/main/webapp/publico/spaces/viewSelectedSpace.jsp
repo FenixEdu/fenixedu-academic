@@ -18,7 +18,7 @@
 	</p>
 
 	<fr:view name="selectedSpace">	
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+		<fr:schema type="org.fenixedu.academic.dto.spaceManager.FindSpacesBean" bundle="DEFAULT">
 			<fr:slot name="space.presentationName" key="label.find.spaces.space.name"/>
 			<fr:slot name="suroundingSpacePath" key="label.find.spaces.location" layout="list-link">
 				<fr:property name="linkFormat" value="/findSpaces.do?method=${method}&amp;spaceID=${id}"/>

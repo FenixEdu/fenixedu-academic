@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
+package org.fenixedu.academic.ui.struts.action.externalServices;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -24,18 +24,6 @@ import java.net.URLDecoder;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail;
-import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserAlreadyHasEmailException;
-import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserDoesNotExistException;
-import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
@@ -46,6 +34,17 @@ import org.apache.commons.httpclient.protocol.SSLProtocolSocketFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
+import org.fenixedu.academic.domain.candidacy.IMDCandidacy;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.service.services.externalServices.SetEmail;
+import org.fenixedu.academic.service.services.externalServices.SetEmail.NotAuthorizedException;
+import org.fenixedu.academic.service.services.externalServices.SetEmail.UserAlreadyHasEmailException;
+import org.fenixedu.academic.service.services.externalServices.SetEmail.UserDoesNotExistException;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.HostAccessControl;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.slf4j.Logger;

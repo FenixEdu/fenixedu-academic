@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.vigilancy;
+package org.fenixedu.academic.domain.vigilancy;
 
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.WrittenEvaluation;
 
 import org.joda.time.DateTime;
 

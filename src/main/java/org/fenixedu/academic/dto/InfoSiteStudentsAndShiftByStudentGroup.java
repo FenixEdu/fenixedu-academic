@@ -20,7 +20,7 @@
  * Created on 8/Jan/2005
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
 import java.util.Comparator;
 import java.util.List;

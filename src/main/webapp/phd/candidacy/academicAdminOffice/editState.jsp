@@ -56,7 +56,7 @@
 	<fr:edit id="bean" name="bean" visible="false" />
 	
 	<fr:edit id="bean-edit" name="bean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean" bundle="PHD_RESOURCES" >
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean" bundle="PHD_RESOURCES" >
 			<fr:slot name="stateDate" required="true">
 				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.DateTimeValidator" />
 			</fr:slot>

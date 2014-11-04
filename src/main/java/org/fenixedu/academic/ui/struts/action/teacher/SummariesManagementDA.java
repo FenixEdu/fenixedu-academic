@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher;
+package org.fenixedu.academic.ui.struts.action.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,40 +26,39 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSummary;
-import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean;
-import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.ListSummaryType;
-import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.SummariesOrder;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean.LessonCalendarViewType;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SummaryTeacherBean;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.LessonPlanning;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Lesson;
+import org.fenixedu.academic.domain.LessonPlanning;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.ShowSummariesBean;
+import org.fenixedu.academic.dto.SummariesCalendarBean;
+import org.fenixedu.academic.dto.SummariesManagementBean;
+import org.fenixedu.academic.dto.ShowSummariesBean.ListSummaryType;
+import org.fenixedu.academic.dto.ShowSummariesBean.SummariesOrder;
+import org.fenixedu.academic.dto.SummariesCalendarBean.LessonCalendarViewType;
+import org.fenixedu.academic.dto.SummariesManagementBean.SummaryType;
+import org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
+import org.fenixedu.academic.dto.teacher.executionCourse.SummaryTeacherBean;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.service.services.teacher.CreateSummary;
+import org.fenixedu.academic.service.services.teacher.DeleteSummary;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
+import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

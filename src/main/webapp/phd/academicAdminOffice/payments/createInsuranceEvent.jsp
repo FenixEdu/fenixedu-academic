@@ -24,8 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"%>
+<%@page import="org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean"%>
+<%@page import="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"%>
 
 <html:xhtml/>
 

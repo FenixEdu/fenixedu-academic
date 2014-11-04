@@ -20,9 +20,9 @@
  * Created on Oct 14, 2003
  *
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
+import org.fenixedu.academic.domain.MasterDegreeThesis;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

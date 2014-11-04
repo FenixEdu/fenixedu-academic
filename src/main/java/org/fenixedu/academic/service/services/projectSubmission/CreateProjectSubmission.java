@@ -16,27 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
+package org.fenixedu.academic.service.services.projectSubmission;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.ProjectSubmission;
-import net.sourceforge.fenixedu.domain.ProjectSubmissionFile;
-import net.sourceforge.fenixedu.domain.ProjectSubmissionLog;
-import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.StudentGroupGroup;
-import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
-
+import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.Project;
+import org.fenixedu.academic.domain.ProjectSubmission;
+import org.fenixedu.academic.domain.ProjectSubmissionFile;
+import org.fenixedu.academic.domain.ProjectSubmissionLog;
+import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.accessControl.ProjectDepartmentGroup;
+import org.fenixedu.academic.domain.accessControl.StudentGroupGroup;
+import org.fenixedu.academic.domain.accessControl.TeacherGroup;
+import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;

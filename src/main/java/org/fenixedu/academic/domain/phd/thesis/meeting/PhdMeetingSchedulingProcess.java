@@ -16,27 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
+package org.fenixedu.academic.domain.phd.thesis.meeting;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.PhdMeetingSchedulingActivity;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeeting;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
-import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.caseHandling.Activity;
+import org.fenixedu.academic.domain.caseHandling.StartActivity;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
+import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.PhdMeetingSchedulingActivity;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeeting;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
+import org.fenixedu.academic.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -147,7 +146,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
 
     @Override
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessState> getStates() {
+    public java.util.Set<org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessState> getStates() {
         return getStatesSet();
     }
 

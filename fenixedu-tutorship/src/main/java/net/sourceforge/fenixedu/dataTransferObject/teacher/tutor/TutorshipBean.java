@@ -1,11 +1,11 @@
-package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
+package org.fenixedu.academic.dto.teacher.tutor;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
-import net.sourceforge.fenixedu.domain.student.Registration;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.domain.student.PersonalIngressionData;
+import org.fenixedu.academic.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
 

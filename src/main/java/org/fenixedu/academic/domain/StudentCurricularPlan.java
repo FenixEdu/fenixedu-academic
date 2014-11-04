@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -34,79 +34,78 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
-import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
-import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsManager;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroupFactory;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByApproval;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionSemester;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionYear;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByType;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.InternalSubstitution;
-import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
-import net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
-import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
-import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
-import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
+import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
+import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
+import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
+import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
+import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degree.enrollment.CurricularCourse2Enroll;
+import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
+import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
+import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.gratuity.GratuitySituationType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.student.curriculum.AverageType;
+import org.fenixedu.academic.domain.student.curriculum.Curriculum;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
+import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
+import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.Credits;
+import org.fenixedu.academic.domain.studentCurriculum.CreditsManager;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroupFactory;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
+import org.fenixedu.academic.domain.studentCurriculum.Equivalence;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.ExtraCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.InternalSubstitution;
+import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+import org.fenixedu.academic.domain.studentCurriculum.PropaedeuticsCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.RootCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.StandaloneCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.Substitution;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByApproval;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionSemester;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionYear;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByType;
+import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
+import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
+import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
+import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.StudentCurricularPlanPredicates;
+import org.fenixedu.academic.service.services.exceptions.BothAreasAreTheSameServiceException;
+import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedBranchChangeException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -1977,7 +1976,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 new EnrolmentContext(this, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
                         curricularRuleLevel);
 
-        return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
+        return org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
                 .manage();
     }
 
@@ -2033,7 +2032,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {
-        return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(
+        return org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(
                 EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(this, bean)).manage();
     }
 
@@ -2043,7 +2042,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         final EnrolmentContext context =
                 new EnrolmentContext(this, executionSemester, Collections.EMPTY_SET, curriculumModules,
                         groupType.getCurricularRuleLevel());
-        return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(context).manage();
+        return org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(context).manage();
     }
 
     final public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(final NoCourseGroupCurriculumGroupType groupType) {

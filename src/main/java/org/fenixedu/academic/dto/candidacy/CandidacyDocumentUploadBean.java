@@ -19,16 +19,17 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.candidacy;
+package org.fenixedu.academic.dto.candidacy;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
-import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.academic.domain.candidacy.CandidacyDocument;
+import org.fenixedu.academic.domain.candidacy.CandidacyDocumentFile;
+import org.fenixedu.academic.util.Bundle;
+
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 

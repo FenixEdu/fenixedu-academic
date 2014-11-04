@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.candidacy;
+package org.fenixedu.academic.domain.candidacy;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 

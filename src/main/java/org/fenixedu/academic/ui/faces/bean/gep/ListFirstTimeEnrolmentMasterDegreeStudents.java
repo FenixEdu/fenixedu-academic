@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.backBeans.gep;
+package org.fenixedu.academic.ui.faces.bean.gep;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,11 +26,11 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.gep.ListMasterDegreeStudents;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.gep.ListMasterDegreeStudents;
+import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 
 /**
  * 

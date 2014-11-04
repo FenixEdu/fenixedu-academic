@@ -28,7 +28,7 @@
 <logic:present name="siteView"> 
 	<br/>
 	<h2><bean:message key="label.rss"/></h2>
-	<p><bean:message key="message.rss.1" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></p>
+	<p><bean:message key="message.rss.1" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></p>
 
 	
 	<h2><bean:message key="message.rss.2"/></h2>
@@ -72,8 +72,8 @@
 	<table>
 		<tr>
 			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><strong><bean:message key="label.announcements"/></strong></td>
-			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%>"><%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%></a></td>
-			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif"></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((org.fenixedu.academic.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%>"><%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((org.fenixedu.academic.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%></a></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((org.fenixedu.academic.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif"></td>
 		</tr>
 	</table>
 </logic:present>

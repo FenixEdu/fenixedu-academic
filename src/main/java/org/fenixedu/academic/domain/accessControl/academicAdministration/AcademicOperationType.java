@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
+package org.fenixedu.academic.domain.accessControl.academicAdministration;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,14 +25,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicAccessTarget;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicProgramAccessTarget;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule.AdministrativeOfficeAccessTarget;
-import net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicAccessTarget;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicProgramAccessTarget;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule.AdministrativeOfficeAccessTarget;
+import org.fenixedu.academic.domain.accessControl.rules.AccessOperation;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;

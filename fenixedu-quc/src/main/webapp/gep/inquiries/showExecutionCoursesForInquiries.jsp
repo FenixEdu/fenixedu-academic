@@ -35,7 +35,7 @@
 	<fr:form action="/executionCourseInquiries.do">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 
-		<fr:edit id="executionCourseSearchBean" name="executionCourseSearchBean" schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean" >
+		<fr:edit id="executionCourseSearchBean" name="executionCourseSearchBean" schema="org.fenixedu.academic.domain.executionCourse.ExecutionCourseSearchBean" >
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle1"/>
 	        	<fr:property name="columnClasses" value=",,noborder"/>
@@ -45,7 +45,7 @@
 		<br/>
 
 		<logic:present name="executionCourses">
-			<fr:edit id="executionCourses" name="executionCourses" schema="net.sourceforge.fenixedu.domain.ExecutionCourse.ForInquiryEvaluationDefinition" >
+			<fr:edit id="executionCourses" name="executionCourses" schema="org.fenixedu.academic.domain.ExecutionCourse.ForInquiryEvaluationDefinition" >
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle1"/>
 	    	    	<fr:property name="columnClasses" value=",,noborder"/>

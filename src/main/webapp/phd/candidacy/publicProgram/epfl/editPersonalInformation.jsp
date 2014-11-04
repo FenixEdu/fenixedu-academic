@@ -28,8 +28,8 @@
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>"><%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= org.fenixedu.academic.domain.Installation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -79,7 +79,7 @@
 					<p class="mtop05"><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></p>
 
 					<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean">
-						<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+						<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="PHD_RESOURCES">
 							<fr:slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.EPFL.Public.PhdProgramCandidacyProcessBean.firstName">
 								<fr:property name="size" value="60"/>
 								<fr:property name="maxLength" value="255"/>
@@ -113,7 +113,7 @@
 								<fr:property name="size" value="40"/>
 							</fr:slot>
 							<fr:slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
+								<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.CountryProvider"/>
 								<fr:property name="format" value="${countryNationality}" />
 								<fr:property name="sortBy" value="countryNationality"/>
 							</fr:slot>
@@ -129,7 +129,7 @@
 						    <fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 								<fr:property name="format" value="${localizedName}"/>
 								<fr:property name="sortBy" value="localizedName=asc" />
-								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+								<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 							</fr:slot>
 							<fr:slot name="phone">
 						    	<fr:property name="size" value="20"/>

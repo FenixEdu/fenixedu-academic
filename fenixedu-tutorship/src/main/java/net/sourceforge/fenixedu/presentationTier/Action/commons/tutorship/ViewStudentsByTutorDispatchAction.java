@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship;
+package org.fenixedu.academic.ui.struts.action.commons.tutorship;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,13 +26,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorTutorshipsHistoryBean;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorshipBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.fenixedu.academic.dto.teacher.tutor.StudentsByTutorBean;
+import org.fenixedu.academic.dto.teacher.tutor.TutorTutorshipsHistoryBean;
+import org.fenixedu.academic.dto.teacher.tutor.TutorshipBean;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.Tutorship;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
 

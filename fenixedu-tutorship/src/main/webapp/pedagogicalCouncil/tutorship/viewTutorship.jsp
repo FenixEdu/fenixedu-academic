@@ -25,7 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipPeriodPartialBean"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorshipPeriodPartialBean"%>
 <%@page import="org.joda.time.Partial"%>
 
 <h2><bean:message key="title.tutorship.edit" bundle="PEDAGOGICAL_COUNCIL" /></h2>
@@ -51,17 +51,17 @@
 
 <logic:present name="periodBean">
 
-	<bean:define id="periodBean" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipPeriodPartialBean" name="periodBean" />
+	<bean:define id="periodBean" type="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorshipPeriodPartialBean" name="periodBean" />
 	
 	<fr:form action="/viewTutorship.do?method=changeTutorship">
 		<fr:edit id="periodBean" name="periodBean">
 			<fr:schema bundle="PEDAGOGICAL_COUNCIL"
-				type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipPeriodPartialBean">
+				type="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TutorshipPeriodPartialBean">
 				<fr:slot name="tutorship.student.name" key="label.name" readOnly="true"/>
 				<fr:slot name="teacher" layout="menu-select"
 					key="label.tutorship.tutor">
 					<fr:property name="providerClass"
-						value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
+						value="org.fenixedu.academic.ui.struts.action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
 					<fr:property name="format"
 						value="${teacher.teacherId} - ${name}" />
 					<fr:property name="defaultText" value="<%="-- " + ((TutorshipPeriodPartialBean)periodBean).getTutorship().getPerson().getName() + " --" %>" />

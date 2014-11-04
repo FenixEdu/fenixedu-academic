@@ -59,8 +59,8 @@
 	<html:form action="/studentTestManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="simulateTest"/>
 
-	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
-	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
+	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="org.fenixedu.academic.dto.onlineTests.InfoStudentTestQuestion"/>
+	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="org.fenixedu.academic.dto.onlineTests.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="externalId"/>
 		
 	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.externalId"/>

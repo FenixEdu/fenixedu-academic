@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy;
+package org.fenixedu.academic.dto.administrativeOffice.candidacy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-
+import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.joda.time.YearMonthDay;
 
 public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializable {

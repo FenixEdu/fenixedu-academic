@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests;
+package org.fenixedu.academic.service.services.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;

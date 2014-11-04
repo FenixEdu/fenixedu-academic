@@ -41,7 +41,7 @@
 
     <logic:notPresent name="partyContact">
         <fr:create schema="<%= "contacts." + partyContactClass + ".manage" %>"
-            type="<%= "net.sourceforge.fenixedu.domain.contacts." + partyContactClass  %>">
+            type="<%= "org.fenixedu.academic.domain.contacts." + partyContactClass  %>">
             <fr:layout name="tabular-editable">
                 <fr:property name="classes" value="tstyle5 thlight thright mtop025" />
                 <fr:property name="columnClasses" value=",,tdclear tderror1" />

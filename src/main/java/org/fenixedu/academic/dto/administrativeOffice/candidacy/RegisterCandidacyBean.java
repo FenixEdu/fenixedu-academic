@@ -19,13 +19,12 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy;
+package org.fenixedu.academic.dto.administrativeOffice.candidacy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
-
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.student.EnrolmentModel;
 import org.joda.time.YearMonthDay;
 
 /**

@@ -19,9 +19,10 @@
 /*
  * Created on May 3, 2006
  */
-package net.sourceforge.fenixedu.presentationTier.renderers.validators;
+package org.fenixedu.academic.ui.renderers.validators;
 
-import net.sourceforge.fenixedu.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScale;
+
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;

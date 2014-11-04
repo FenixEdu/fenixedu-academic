@@ -21,9 +21,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@page import="net.sourceforge.fenixedu.domain.AcademicProgram"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
+<%@page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
+<%@page import="org.fenixedu.academic.domain.AcademicProgram"%>
+<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 <html:xhtml/>
@@ -163,7 +163,7 @@
 								</logic:equal>
 							</tr>
 
-							<logic:iterate id="curricularCourse" name="curricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
+							<logic:iterate id="curricularCourse" name="curricularCourses" type="org.fenixedu.academic.dto.InfoCurricularCourse">
 								<bean:define id="curricularCourseId" name="curricularCourse" property="externalId"/>
 								<tr>	 			
 									<td class="listClasses" style="text-align:left">

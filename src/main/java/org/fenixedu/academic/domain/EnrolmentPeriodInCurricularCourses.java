@@ -20,13 +20,12 @@
  * Created on 2004/08/24
  *
  */
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 
 /**

@@ -104,7 +104,7 @@
 		<logic:notEmpty name="entryBean" property="entry">								
 			<bean:define id="nextEntry" name="entryBean" property="entry" toScope="request" />
 			<bean:define id="rootEntry" name="entryBean" property="rootEntry" toScope="request" />
-			<bean:define id="calendarEntrySelected" name="entryBean" property="entry" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" toScope="request"/>
+			<bean:define id="calendarEntrySelected" name="entryBean" property="entry" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry" toScope="request"/>
 		</logic:notEmpty>
 							
 		<div class="mbottom1">

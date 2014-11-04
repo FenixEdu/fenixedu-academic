@@ -19,7 +19,7 @@
 /*
  * Created on Apr 18, 2005
  */
-package net.sourceforge.fenixedu.presentationTier.TagLib;
+package org.fenixedu.academic.servlet.taglib;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

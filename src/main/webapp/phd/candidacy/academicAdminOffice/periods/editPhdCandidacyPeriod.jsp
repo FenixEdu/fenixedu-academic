@@ -19,15 +19,15 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.InstitutionPhdCandidacyPeriod"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod" %>
+<%@page import="org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="org.fenixedu.academic.domain.phd.candidacy.InstitutionPhdCandidacyPeriod" %>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="title.phd.candidacy.periods" bundle="PHD_RESOURCES" /></h2>
@@ -54,7 +54,7 @@
 	<fr:edit id="phdCandidacyPeriodBean" name="phdCandidacyPeriodBean" visible="false" />
 	
 	<fr:edit id="phdCandidacyPeriodBean.create" name="phdCandidacyPeriodBean">
-		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriodBean">
 			<fr:slot name="start" required="true" />
 			<fr:slot name="end" required="true" />
 		</fr:schema>
@@ -85,7 +85,7 @@
 	
 	<logic:notEmpty name="phdCandidacyPeriod" property="phdPrograms">
 		<fr:view name="phdCandidacyPeriod" property="phdPrograms">
-			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" >
+			<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgram" >
 				<fr:slot name="name" />
 			</fr:schema>
 			
@@ -103,9 +103,9 @@
 		<fr:edit id="phdCandidacyPeriodBean" name="phdCandidacyPeriodBean" visible="false" />
 		
 		<fr:edit id="phdCandidacyPeriod.add.phdProgram" name="phdCandidacyPeriodBean" >
-			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean">
+			<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriodBean">
 				<fr:slot name="phdProgramList" layout="option-select" required="true">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsMultipleProvider" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramsMultipleProvider" />
 					<fr:property name="eachLayout" value="values" />
 					<fr:property name="eachSchema" value="PhdProgram.name" />
 					<fr:property name="sortBy" value="name" />

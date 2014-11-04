@@ -43,7 +43,7 @@
 		<fr:property name="classes" value="tstyle1 thleft" />
 		<fr:property name="columnClasses" value=",,,tdclear tderror1" />
 	</fr:layout>
-	<fr:schema type="net.sourceforge.fenixedu.domain.ExecutionDegree"
+	<fr:schema type="org.fenixedu.academic.domain.ExecutionDegree"
 		bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<fr:slot name="executionYear.qualifiedName" key="label.executionYear" />
 		<fr:slot name="coordinatorsListSet" key="label.coordinationTeam">

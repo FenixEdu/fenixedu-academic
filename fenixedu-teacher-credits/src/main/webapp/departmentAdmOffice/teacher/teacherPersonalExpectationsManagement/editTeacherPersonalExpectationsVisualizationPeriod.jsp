@@ -60,7 +60,7 @@
 	<logic:empty name="period">		
 		<p class="mtop15 mbottom05"><bean:message key="label.common.executionYear"/>: <bean:write name="executionYear" property="year"/></p>
 		<bean:define id="executionYearId" name="executionYear" property="externalId"/>
-		<fr:create id="createInterval" type="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod" schema="createTeacherPersonalExpectationsVisualizationPeriod">
+		<fr:create id="createInterval" type="org.fenixedu.academic.domain.TeacherPersonalExpectationsVisualizationPeriod" schema="createTeacherPersonalExpectationsVisualizationPeriod">
 		   	<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>

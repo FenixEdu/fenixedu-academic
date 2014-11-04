@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule;
+package org.fenixedu.academic.dto.accounting.postingRule;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.PostingRule;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.dto.accounting.PaymentsBean;
 import org.joda.time.DateTime;
 
 abstract public class CreatePostingRuleBean implements Serializable, PaymentsBean {

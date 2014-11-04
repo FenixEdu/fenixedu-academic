@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.dataTransferObject.alumni;
+package org.fenixedu.academic.dto.alumni;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.Alumni;
+import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 
 public class AlumniAddressBean implements Serializable {
 

@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.teacher.workTime;
+package org.fenixedu.academic.domain.teacher.workTime;
 
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.util.date.TimePeriod;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.util.date.TimePeriod;
 
 public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base {
 
@@ -39,7 +39,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
 
     @Deprecated
     public java.util.Date getEndTime() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndTimeHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getEndTimeHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -48,13 +48,13 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
         if (date == null) {
             setEndTimeHourMinuteSecond(null);
         } else {
-            setEndTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setEndTimeHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 
     @Deprecated
     public java.util.Date getStartTime() {
-        net.sourceforge.fenixedu.util.HourMinuteSecond hms = getStartTimeHourMinuteSecond();
+        org.fenixedu.academic.util.HourMinuteSecond hms = getStartTimeHourMinuteSecond();
         return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
     }
 
@@ -63,7 +63,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
         if (date == null) {
             setStartTimeHourMinuteSecond(null);
         } else {
-            setStartTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+            setStartTimeHourMinuteSecond(org.fenixedu.academic.util.HourMinuteSecond.fromDateFields(date));
         }
     }
 

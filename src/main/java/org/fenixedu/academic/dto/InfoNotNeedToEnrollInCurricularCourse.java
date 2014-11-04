@@ -22,9 +22,9 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject;
+package org.fenixedu.academic.dto;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
+import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 /**
  * @author Ricardo Rodrigues

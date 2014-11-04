@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.util.stork;
+package org.fenixedu.academic.util.stork;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
+import org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributeType;
 
 public class SPUtil {
 

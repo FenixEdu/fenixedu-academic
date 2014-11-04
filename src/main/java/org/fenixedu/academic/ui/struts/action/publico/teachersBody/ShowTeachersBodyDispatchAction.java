@@ -20,7 +20,7 @@
  * Created on 19/Dez/2003
  *  
  */
-package net.sourceforge.fenixedu.presentationTier.Action.publico.teachersBody;
+package org.fenixedu.academic.ui.struts.action.publico.teachersBody;
 
 import java.text.Collator;
 import java.util.Collections;
@@ -31,28 +31,27 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYearId;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.academic.dto.InfoDepartment;
+import org.fenixedu.academic.dto.InfoExecutionDegree;
+import org.fenixedu.academic.dto.InfoExecutionYear;
+import org.fenixedu.academic.dto.comparators.ComparatorByNameForInfoExecutionDegree;
+import org.fenixedu.academic.dto.teacher.professorship.DetailedProfessorship;
+import org.fenixedu.academic.service.services.commons.ReadExecutionDegreeByOID;
+import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
+import org.fenixedu.academic.service.services.department.ReadAllDepartments;
+import org.fenixedu.academic.service.services.department.ReadDepartmentByOID;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod;
+import org.fenixedu.academic.service.services.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ReadExecutionDegreesByExecutionYearId;
+import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.ui.struts.action.publico.PublicApplication;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

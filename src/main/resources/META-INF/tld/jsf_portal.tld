@@ -37,7 +37,7 @@
 
     <tag>
         <name>select</name>
-        <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.jsf.PortalJSFTag</tag-class>
+        <tag-class>org.fenixedu.academic.servlet.taglib.PortalJSFTag</tag-class>
         <description>
             Tag that marks the given @StrutsFunctionality Action as the selected functionality.
         </description>

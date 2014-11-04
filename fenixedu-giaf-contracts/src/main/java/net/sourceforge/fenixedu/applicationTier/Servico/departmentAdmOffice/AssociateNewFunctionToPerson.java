@@ -20,17 +20,17 @@
  * Created on Oct 27, 2005
  *	by mrsp
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
+package org.fenixedu.academic.service.services.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import org.fenixedu.academic.service.filter.ManagerAuthorizationFilter;
+import org.fenixedu.academic.service.filter.OperatorAuthorizationFilter;
+import org.fenixedu.academic.service.filter.ScientificCouncilAuthorizationFilter;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Function;
+import org.fenixedu.academic.domain.organizationalStructure.PersonFunction;
 
 import org.joda.time.YearMonthDay;
 

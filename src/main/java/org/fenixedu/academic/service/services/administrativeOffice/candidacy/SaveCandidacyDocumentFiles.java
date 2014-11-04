@@ -19,19 +19,18 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
+package org.fenixedu.academic.service.services.administrativeOffice.candidacy;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.Candidacy;
+import org.fenixedu.academic.domain.candidacy.CandidacyDocument;
+import org.fenixedu.academic.domain.candidacy.CandidacyDocumentFile;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.dto.candidacy.CandidacyDocumentUploadBean;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 

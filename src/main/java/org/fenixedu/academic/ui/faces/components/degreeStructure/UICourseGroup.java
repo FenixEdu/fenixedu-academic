@@ -16,27 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
+package org.fenixedu.academic.ui.faces.components.degreeStructure;
 
 import java.io.IOException;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.util.Bundle;
-
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class UICourseGroup extends UIDegreeModule {
 
     public static final String COMPONENT_TYPE =
-            "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
+            "org.fenixedu.academic.ui.faces.components.degreeStructure.UICourseGroup";
 
     public static final String COMPONENT_FAMILY =
-            "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
+            "org.fenixedu.academic.ui.faces.components.degreeStructure.UICourseGroup";
 
     private final CourseGroup courseGroup;
     private Boolean onlyStructure;

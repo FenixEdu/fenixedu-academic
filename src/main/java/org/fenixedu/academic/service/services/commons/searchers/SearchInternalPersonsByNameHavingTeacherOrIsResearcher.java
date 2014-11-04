@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
+package org.fenixedu.academic.service.services.commons.searchers;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.person.RoleType;
 
 public class SearchInternalPersonsByNameHavingTeacherOrIsResearcher extends SearchParties<Person> {
 

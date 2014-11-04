@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement;
+package org.fenixedu.academic.service.services.residenceManagement;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
-import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
-import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
+import org.fenixedu.academic.domain.accounting.ResidenceEvent;
+import org.fenixedu.academic.domain.residence.ResidenceMonth;
+import org.fenixedu.academic.dto.residenceManagement.ResidenceEventBean;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateResidenceEvents {

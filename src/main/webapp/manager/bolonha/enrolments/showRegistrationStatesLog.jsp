@@ -25,7 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateLog"%>
+<%@page import="org.fenixedu.academic.domain.student.registrationStates.RegistrationStateLog"%>
 
 <logic:present role="role(MANAGER)">
 	<h2><bean:message key="student.registration.states.log" bundle="APPLICATION_RESOURCES" /></h2>
