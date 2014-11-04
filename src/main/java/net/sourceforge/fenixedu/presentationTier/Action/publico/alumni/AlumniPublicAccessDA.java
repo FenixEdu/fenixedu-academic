@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.KaptchaAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
@@ -44,6 +45,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,22 +56,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.EMail;
 
-@Mapping(module = "publico", path = "/alumni", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "alumniPublicAccessInner", path = "alumni.alumniPublicAccessInner"),
-        @Forward(name = "alumniCreateFormation", path = "alumni.alumniPublicAccessCreateFormation"),
-        @Forward(name = "alumniCreatePasswordRequest", path = "alumni.alumniCreatePasswordRequest"),
-        @Forward(name = "alumniPublicAccessInformationInquiry", path = "alumni.alumniPublicAccessInformationInquiry"),
-        @Forward(name = "alumniPublicAccessIdentityCheck", path = "alumni.alumniPublicAccessIdentityCheck"),
-        @Forward(name = "alumniPublicAccess", path = "alumni.alumniPublicAccess"),
-        @Forward(name = "alumniErrorSendMail", path = "alumni.errorSendMail"),
-        @Forward(name = "alumniRegistrationResult", path = "alumni.alumniRegistrationResult"),
-        @Forward(name = "alumniPasswordRequired", path = "alumni.alumniPasswordRequired"),
-        @Forward(name = "alumniPublicAccessMessage", path = "alumni.alumniPublicAccessMessage"),
-        @Forward(name = "alumniPublicAccessRegistrationEmail", path = "alumni.alumniPublicAccessRegistrationEmail") })
+@StrutsFunctionality(app = PublicApplication.class, path = "alumni", titleKey = "label.alumni.main.title")
+@Mapping(module = "publico", path = "/alumni")
+@Forwards({
+        @Forward(name = "alumniPublicAccessInner", path = "/publico/alumni/alumniPublicAccessInner.jsp"),
+        @Forward(name = "alumniCreatePasswordRequest", path = "/publico/alumni/alumniCreatePasswordRequest.jsp"),
+        @Forward(name = "alumniPublicAccessInformationInquiry", path = "/publico/alumni/alumniPublicAccessInformationInquiry.jsp"),
+        @Forward(name = "alumniPublicAccessIdentityCheck", path = "/publico/alumni/alumniPublicAccessIdentityCheck.jsp"),
+        @Forward(name = "alumniPublicAccess", path = "/publico/alumni/alumniPublicAccess.jsp"),
+        @Forward(name = "alumniErrorSendMail", path = "/publico/alumni/alumniPublicAccessErrorSendMail.jsp"),
+        @Forward(name = "alumniRegistrationResult", path = "/publico/alumni/alumniRegistrationResult.jsp"),
+        @Forward(name = "alumniPasswordRequired", path = "/publico/alumni/alumniPasswordRequired.jsp"),
+        @Forward(name = "alumniPublicAccessMessage", path = "/publico/alumni/alumniPublicAccessMessage.jsp"),
+        @Forward(name = "alumniPublicAccessRegistrationEmail", path = "/publico/alumni/alumniPublicAccessRegistrationEmail.jsp") })
 public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(AlumniPublicAccessDA.class);
 
+    @EntryPoint
     public ActionForward initFenixPublicAccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

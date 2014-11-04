@@ -165,8 +165,6 @@
       </global-exceptions>
       <!-- ========== Global Forward Definitions =============================== -->
       <global-forwards type="org.apache.struts.action.ActionForward">
-            <forward redirect="true" path="/index.html" name="index"></forward>
-            <forward path="/index.html" name="firstPage"></forward>
             <!-- global forwards indicating the site url for each unit site, may use arguments %1$s and %2$s for unitId and siteId respectivly -->
             <forward path="/units/viewSite.do?method=presentation&amp;unitID=%s" name="viewUnitSite"></forward>
             <forward path="/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=%2$s" name="viewResearchUnitSite"></forward>
@@ -238,10 +236,6 @@
                   <forward path="/viewShiftTimeTable.jsp" name="Sucess"></forward>
             </action>
             <!-- Start of Gesdis-->
-            <!-- Summaries -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchActionNew" validate="true" parameter="method" input="/executionCourseNotFoundNew.jsp" scope="request" name="showSummaryForm" path="/viewSiteNew">
-                  <forward path="/executionCourseSiteNew.jsp" name="sucess"></forward>
-            </action>
             <!-- Site viewer -->
             <!-- End of Gesdis-->
             <!-- EXAMS -->
@@ -273,10 +267,6 @@
             <!-- by gedl September the 11th, 2003 -->
             <!-- For degrees Site-->
             <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" path="/showDegrees">
-                  <forward path="showDegrees" name="showDegrees"></forward>
-            </action>
-            <!-- For degrees Site-->
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" path="/showDegreesNew">
                   <forward path="showDegrees" name="showDegrees"></forward>
             </action>
             <action scope="request" input="/showDegreeSite.do?method=showCurricularPlan" name="chooseContextDegreeForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeCurricularPlanAction" path="/showDegreeCurricularPlan">
@@ -343,7 +333,7 @@
             <!-- =================== Alumni Registration  =================== -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
@@ -378,13 +368,6 @@
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-publico.xml" property="pathnames"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/public/tiles-public-definitions.xml,/WEB-INF/tiles/public/tiles-public-pages-definitions.xml" property="definitions-config"></set-property>
-            <set-property value="true" property="moduleAware"></set-property>
-            <set-property value="true" property="definitions-parser-validate"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="definition.public.paddingLayout" property="defaultTileDefinition"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

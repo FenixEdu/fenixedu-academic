@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicCandidaciesApp;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -46,6 +47,8 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -53,13 +56,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 
+@StrutsFunctionality(app = PublicCandidaciesApp.class, path = "generic-applications", titleKey = "title.applications")
 @Mapping(path = "/genericApplications", module = "publico")
-@Forwards({ @Forward(name = "genericApplications.listApplicationPeriods", path = "genericApplications.listApplicationPeriods"),
-        @Forward(name = "genericApplications.viewApplicationPeriod", path = "genericApplications.viewApplicationPeriod"),
-        @Forward(name = "genericApplications.confirmEmail", path = "genericApplications.confirmEmail"),
-        @Forward(name = "genericApplications.uploadRecommendation", path = "genericApplications.uploadRecommendation") })
+@Forwards({
+        @Forward(name = "genericApplications.listApplicationPeriods",
+                path = "/publico/candidacy/genericApplications/listApplicationPeriods.jsp"),
+        @Forward(name = "genericApplications.viewApplicationPeriod",
+                path = "/publico/candidacy/genericApplications/viewApplicationPeriod.jsp"),
+        @Forward(name = "genericApplications.confirmEmail", path = "/publico/candidacy/genericApplications/confirmEmail.jsp"),
+        @Forward(name = "genericApplications.uploadRecommendation",
+                path = "/publico/candidacy/genericApplications/uploadRecommendation.jsp") })
 public class GenericCandidaciesDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward listApplicationPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

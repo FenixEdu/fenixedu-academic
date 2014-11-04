@@ -43,16 +43,18 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbac
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReviewDocumentsDownload;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicPhdApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * Serves as entry point to external phd programs access. To add new operations
@@ -67,23 +69,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  * Each new method will handle an operation in this page
  */
-
+@StrutsFunctionality(app = PublicPhdApp.class, path = "external-access", titleKey = "label.php.program")
 @Mapping(path = "/phdExternalAccess", module = "publico")
-@Forwards(tileProperties = @Tile(extend = "definition.phd.external.access"), value = {
-
-@Forward(name = "showOperations", path = "/phd/externalAccess/showOperations.jsp"),
-
-@Forward(name = "juryDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp"),
-
-@Forward(name = "juryReporterFeedbackUpload", path = "/phd/externalAccess/thesis/juryReporterFeedbackUpload.jsp"),
-
-@Forward(name = "candidacyFeedbackDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp"),
-
-@Forward(name = "candidacyFeedbackUpload", path = "/phd/externalAccess/candidacy/candidacyFeedbackUpload.jsp"),
-
-@Forward(name = "juryReviewDocumentsDownload", path = "/phd/externalAccess/thesis/juryReviewDocumentsDownload.jsp")
-
-})
+@Forwards({ @Forward(name = "showOperations", path = "/phd/externalAccess/showOperations.jsp"),
+        @Forward(name = "juryDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp"),
+        @Forward(name = "juryReporterFeedbackUpload", path = "/phd/externalAccess/thesis/juryReporterFeedbackUpload.jsp"),
+        @Forward(name = "candidacyFeedbackDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp"),
+        @Forward(name = "candidacyFeedbackUpload", path = "/phd/externalAccess/candidacy/candidacyFeedbackUpload.jsp"),
+        @Forward(name = "juryReviewDocumentsDownload", path = "/phd/externalAccess/thesis/juryReviewDocumentsDownload.jsp") })
 public class PhdExternalAccessDA extends PhdProcessDA {
 
     @Override
@@ -96,6 +89,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
         return super.execute(mapping, actionForm, request, response);
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("showOperations");
     }

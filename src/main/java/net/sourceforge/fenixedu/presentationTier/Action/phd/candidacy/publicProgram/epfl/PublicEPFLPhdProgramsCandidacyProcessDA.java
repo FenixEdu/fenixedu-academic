@@ -75,6 +75,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDo
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicPhdApp;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.EPFLPhdCandidacyProcessProperties;
@@ -83,6 +84,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
@@ -91,77 +94,35 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = PublicPhdApp.class, path = "epfl-candidacy", titleKey = "label.phd.ist.epfl.collaboration.type")
 @Mapping(path = "/applications/epfl/phdProgramCandidacyProcess", module = "publico")
-@Forwards(tileProperties = @Tile(extend = "definition.candidacy.process"), value = {
-
+@Forwards({
         @Forward(name = "createCandidacyIdentification",
-                path = "/phd/candidacy/publicProgram/epfl/createCandidacyIdentification.jsp", tileProperties = @Tile(
-                        hideLanguage = "true")),
-
+                path = "/phd/candidacy/publicProgram/epfl/createCandidacyIdentification.jsp"),
         @Forward(name = "createCandidacyIdentificationSuccess",
-                path = "/phd/candidacy/publicProgram/epfl/createCandidacyIdentificationSuccess.jsp", tileProperties = @Tile(
-                        hideLanguage = "true")),
-
+                path = "/phd/candidacy/publicProgram/epfl/createCandidacyIdentificationSuccess.jsp"),
         @Forward(name = "candidacyIdentificationRecovery",
-                path = "/phd/candidacy/publicProgram/epfl/candidacyIdentificationRecovery.jsp", tileProperties = @Tile(
-                        hideLanguage = "true")),
-
-        @Forward(name = "createCandidacyStepOne", path = "/phd/candidacy/publicProgram/epfl/createCandidacyStepOne.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "createCandidacyStepTwo", path = "/phd/candidacy/publicProgram/epfl/createCandidacyStepTwo.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "createCandidacyStepThree", path = "/phd/candidacy/publicProgram/epfl/createCandidacyStepThree.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "showCandidacySuccess", path = "/phd/candidacy/publicProgram/epfl/candidacySubmited.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "viewCandidacy", path = "/phd/candidacy/publicProgram/epfl/viewCandidacy.jsp", tileProperties = @Tile(
-                hideLanguage = "true")),
-
-        @Forward(name = "editPersonalInformation", path = "/phd/candidacy/publicProgram/epfl/editPersonalInformation.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "uploadCandidacyDocuments", path = "/phd/candidacy/publicProgram/epfl/uploadCandidacyDocuments.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
+                path = "/phd/candidacy/publicProgram/epfl/candidacyIdentificationRecovery.jsp"),
+        @Forward(name = "createCandidacyStepOne", path = "/phd/candidacy/publicProgram/epfl/createCandidacyStepOne.jsp"),
+        @Forward(name = "createCandidacyStepTwo", path = "/phd/candidacy/publicProgram/epfl/createCandidacyStepTwo.jsp"),
+        @Forward(name = "createCandidacyStepThree", path = "/phd/candidacy/publicProgram/epfl/createCandidacyStepThree.jsp"),
+        @Forward(name = "showCandidacySuccess", path = "/phd/candidacy/publicProgram/epfl/candidacySubmited.jsp"),
+        @Forward(name = "viewCandidacy", path = "/phd/candidacy/publicProgram/epfl/viewCandidacy.jsp"),
+        @Forward(name = "editPersonalInformation", path = "/phd/candidacy/publicProgram/epfl/editPersonalInformation.jsp"),
+        @Forward(name = "uploadCandidacyDocuments", path = "/phd/candidacy/publicProgram/epfl/uploadCandidacyDocuments.jsp"),
         @Forward(name = "editPhdIndividualProgramProcessInformation",
-                path = "/phd/candidacy/publicProgram/epfl/editPhdIndividualProgramProcessInformation.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "editCandidacyGuidings", path = "/phd/candidacy/publicProgram/epfl/editCandidacyGuidings.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "editQualifications", path = "/phd/candidacy/publicProgram/epfl/editQualifications.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/epfl/createRefereeLetter.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "createRefereeLetterSuccess", path = "/phd/candidacy/publicProgram/epfl/createRefereeLetterSuccess.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "editCandidacyReferees", path = "/phd/candidacy/publicProgram/epfl/editCandidacyReferees.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/epfl/uploadPhoto.jsp", tileProperties = @Tile(
-                hideLanguage = "true")),
-
-        @Forward(name = "out.of.candidacy.period", path = "/phd/candidacy/publicProgram/epfl/outOfCandidacyPeriod.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
-        @Forward(name = "validateCandidacy", path = "/phd/candidacy/publicProgram/epfl/validateCandidacy.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-
+                path = "/phd/candidacy/publicProgram/epfl/editPhdIndividualProgramProcessInformation.jsp"),
+        @Forward(name = "editCandidacyGuidings", path = "/phd/candidacy/publicProgram/epfl/editCandidacyGuidings.jsp"),
+        @Forward(name = "editQualifications", path = "/phd/candidacy/publicProgram/epfl/editQualifications.jsp"),
+        @Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/epfl/createRefereeLetter.jsp"),
+        @Forward(name = "createRefereeLetterSuccess", path = "/phd/candidacy/publicProgram/epfl/createRefereeLetterSuccess.jsp"),
+        @Forward(name = "editCandidacyReferees", path = "/phd/candidacy/publicProgram/epfl/editCandidacyReferees.jsp"),
+        @Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/epfl/uploadPhoto.jsp"),
+        @Forward(name = "out.of.candidacy.period", path = "/phd/candidacy/publicProgram/epfl/outOfCandidacyPeriod.jsp"),
+        @Forward(name = "validateCandidacy", path = "/phd/candidacy/publicProgram/epfl/validateCandidacy.jsp"),
         @Forward(name = "emailSentForIdentificationRecovery",
-                path = "/phd/candidacy/publicProgram/epfl/emailSentForIdentificationRecovery.jsp", tileProperties = @Tile(
-                        hideLanguage = "true"))
-
-})
+                path = "/phd/candidacy/publicProgram/epfl/emailSentForIdentificationRecovery.jsp") })
 public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCandidacyProcessDA {
 
     static private final List<String> DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS = Arrays.asList(
@@ -230,6 +191,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         return hashCode.getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod();
     }
 
+    @EntryPoint
     public ActionForward prepareCreateCandidacyIdentification(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 

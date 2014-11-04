@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
-<h1><bean:message key="title.search.spaces" bundle="DEFAULT"/></h1>
+<h2><bean:message key="title.search.spaces" bundle="DEFAULT"/></h2>
 
 <logic:notEmpty name="bean">
 
@@ -28,7 +28,7 @@
 		<bean:define id="schemaName" type="java.lang.String" value="PublicFindSpacesWithExtraOptions" />		
 	</logic:equal>
 	
-	<p><bean:message key="label.search.spaces.info" bundle="DEFAULT"/></p>
+	<div class="well"><bean:message key="label.search.spaces.info" bundle="DEFAULT"/></div>
 	
 <style>
 .form1 table ul li * {

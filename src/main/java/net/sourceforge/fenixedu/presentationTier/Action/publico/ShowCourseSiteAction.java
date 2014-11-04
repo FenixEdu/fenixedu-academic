@@ -25,17 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadCurriculumByCurricularCourseCode;
-import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -135,44 +128,6 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
         return mapping.findForward("showCurricularCourseSite");
 
-    }
-
-    public ActionForward showExecutionCourseSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        String degreeId = getFromRequest("degreeID", request);
-        request.setAttribute("degreeID", degreeId);
-
-        String executionCourseId = getFromRequest("executionCourseID", request);
-        request.setAttribute("executionCourseID", executionCourseId);
-
-        ISiteComponent firstPageComponent = new InfoSiteFirstPage();
-        ISiteComponent commonComponent = new InfoSiteCommon();
-
-        Object[] args = { commonComponent, firstPageComponent, null, executionCourseId, null, null };
-        ExecutionCourseSiteView siteView = null;
-
-        try {
-            siteView =
-                    ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
-                            firstPageComponent, null, executionCourseId, null, null);
-
-            request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteExternalId());
-            request.setAttribute("siteView", siteView);
-            request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getExternalId());
-            request.setAttribute("executionPeriodCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getInfoExecutionPeriod().getExternalId());
-            if (siteView.getComponent() instanceof InfoSiteSection) {
-                request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
-            }
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException("A disciplina", e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-        return mapping.findForward("showExecutionCourseSite");
     }
 
 }

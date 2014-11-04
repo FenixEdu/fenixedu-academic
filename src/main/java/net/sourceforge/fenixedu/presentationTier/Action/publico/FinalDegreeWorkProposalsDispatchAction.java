@@ -53,6 +53,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -63,15 +65,17 @@ import pt.ist.fenixframework.FenixFramework;
  * @author Luis Cruz
  * 
  */
+@StrutsFunctionality(app = PublicApplication.class, path = "final-degree-works", titleKey = "title.finalDegreeWorkProposal")
 @Mapping(module = "publico", path = "/finalDegreeWorks", input = "/finalDegreeWorks.do?method=prepareSearch&page=0",
-        attribute = "finalDegreeWorksForm", formBean = "finalDegreeWorksForm", scope = "request", parameter = "method")
+        formBean = "finalDegreeWorksForm")
 @Forwards(value = {
-        @Forward(name = "show-final-degree-work-proposal", path = "df.page.showFinalDegreeWorkProposal"),
-        @Forward(name = "show-final-degree-work-list", path = "df.page.showFinalDegreeWorkList"),
+        @Forward(name = "show-final-degree-work-proposal", path = "/publico/finalDegreeWork/showFinalDegreeWorkProposal.jsp"),
+        @Forward(name = "show-final-degree-work-list", path = "/publico/finalDegreeWork/showFinalDegreeWorkList.jsp"),
         @Forward(name = "show-final-degree-work-proposal-not-published-page",
-                path = "df.page.showFinalDegreeWorkProposal.not.published") })
+                path = "/publico/finalDegreeWork/showFinalDegreeWorkProposalNotPublished.jsp") })
 public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

@@ -70,6 +70,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RemoveCa
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicPhdApp;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessProperties;
@@ -78,6 +79,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
@@ -86,51 +89,35 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = PublicPhdApp.class, path = "candidacy", titleKey = "title.public.phd.program.candidacy")
 @Mapping(path = "/applications/phd/phdProgramApplicationProcess", module = "publico")
-@Forwards(tileProperties = @Tile(extend = "definition.candidacy.process"), value = {
+@Forwards({
         @Forward(name = "outOfCandidacyPeriod", path = "/phd/candidacy/publicProgram/institution/outOfCandidacyPeriod.jsp"),
         @Forward(name = "createIdentification", path = "/phd/candidacy/publicProgram/institution/createIdentification.jsp"),
         @Forward(name = "createIdentificationSuccess",
-                path = "/phd/candidacy/publicProgram/institution/createIdentificationSuccess.jsp", tileProperties = @Tile(
-                        hideLanguage = "true")),
+                path = "/phd/candidacy/publicProgram/institution/createIdentificationSuccess.jsp"),
         @Forward(name = "applicationSubmissionGuide",
                 path = "/phd/candidacy/publicProgram/institution/applicationSubmissionGuide.jsp"),
-        @Forward(name = "fillPersonalData", path = "/phd/candidacy/publicProgram/institution/fillPersonalData.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "fillPhdProgramData", path = "/phd/candidacy/publicProgram/institution/fillPhdProgramData.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
+        @Forward(name = "fillPersonalData", path = "/phd/candidacy/publicProgram/institution/fillPersonalData.jsp"),
+        @Forward(name = "fillPhdProgramData", path = "/phd/candidacy/publicProgram/institution/fillPhdProgramData.jsp"),
         @Forward(name = "applicationCreationReport",
-                path = "/phd/candidacy/publicProgram/institution/applicationCreationReport.jsp", tileProperties = @Tile(
-                        hideLanguage = "true")),
+                path = "/phd/candidacy/publicProgram/institution/applicationCreationReport.jsp"),
         @Forward(name = "view", path = "/phd/candidacy/publicProgram/institution/view.jsp"),
-        @Forward(name = "editPersonalData", path = "/phd/candidacy/publicProgram/institution/editPersonalData.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "editPhdInformationData", path = "/phd/candidacy/publicProgram/institution/editPhdInformationData.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "editQualifications", path = "/phd/candidacy/publicProgram/institution/editQualifications.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "uploadDocuments", path = "/phd/candidacy/publicProgram/institution/uploadDocuments.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "editReferees", path = "/phd/candidacy/publicProgram/institution/editReferees.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/institution/createRefereeLetter.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
+        @Forward(name = "editPersonalData", path = "/phd/candidacy/publicProgram/institution/editPersonalData.jsp"),
+        @Forward(name = "editPhdInformationData", path = "/phd/candidacy/publicProgram/institution/editPhdInformationData.jsp"),
+        @Forward(name = "editQualifications", path = "/phd/candidacy/publicProgram/institution/editQualifications.jsp"),
+        @Forward(name = "uploadDocuments", path = "/phd/candidacy/publicProgram/institution/uploadDocuments.jsp"),
+        @Forward(name = "editReferees", path = "/phd/candidacy/publicProgram/institution/editReferees.jsp"),
+        @Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/institution/createRefereeLetter.jsp"),
         @Forward(name = "createRefereeLetterSuccess",
-                path = "/phd/candidacy/publicProgram/institution/createRefereeLetterSuccess.jsp", tileProperties = @Tile(
-                        hideLanguage = "true")),
-        @Forward(name = "editGuidings", path = "/phd/candidacy/publicProgram/institution/editGuidings.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "validateApplication", path = "/phd/candidacy/publicProgram/institution/validateApplication.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
-        @Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/institution/uploadPhoto.jsp", tileProperties = @Tile(
-                hideLanguage = "true")),
-        @Forward(name = "identificationRecovery", path = "/phd/candidacy/publicProgram/institution/identificationRecovery.jsp",
-                tileProperties = @Tile(hideLanguage = "true")),
+                path = "/phd/candidacy/publicProgram/institution/createRefereeLetterSuccess.jsp"),
+        @Forward(name = "editGuidings", path = "/phd/candidacy/publicProgram/institution/editGuidings.jsp"),
+        @Forward(name = "validateApplication", path = "/phd/candidacy/publicProgram/institution/validateApplication.jsp"),
+        @Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/institution/uploadPhoto.jsp"),
+        @Forward(name = "identificationRecovery", path = "/phd/candidacy/publicProgram/institution/identificationRecovery.jsp"),
         @Forward(name = "emailSentForIdentificationRecovery",
-                path = "/phd/candidacy/publicProgram/institution/emailSentForIdentificationRecovery.jsp", tileProperties = @Tile(
-                        hideLanguage = "true")) })
+                path = "/phd/candidacy/publicProgram/institution/emailSentForIdentificationRecovery.jsp") })
 public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdProgramCandidacyProcessDA {
 
     static private final List<String> DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS = Arrays.asList(
@@ -179,6 +166,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     /*
      * Create application identification for submission with email
      */
+    @EntryPoint
     public ActionForward prepareCreateIdentification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final String hash = request.getParameter("hash");

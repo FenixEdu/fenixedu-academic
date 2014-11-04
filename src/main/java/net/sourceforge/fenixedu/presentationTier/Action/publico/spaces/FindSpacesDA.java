@@ -19,11 +19,14 @@ import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.spaces.domain.BlueprintFile;
 import org.fenixedu.spaces.domain.BlueprintFile.BlueprintTextRectangles;
 import org.fenixedu.spaces.domain.Space;
@@ -36,12 +39,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 
-@Mapping(module = "publico", path = "/findSpaces", attribute = "findSpacesForm", formBean = "findSpacesForm", scope = "request",
-        parameter = "method")
-@Forwards(value = { @Forward(name = "listFoundSpaces", path = "list-found-spaces"),
-        @Forward(name = "viewSelectedSpace", path = "view-selected-space") })
+@StrutsFunctionality(app = PublicApplication.class, path = "find-spaces", titleKey = "title.search.spaces")
+@Mapping(module = "publico", path = "/findSpaces")
+@Forwards({ @Forward(name = "listFoundSpaces", path = "/publico/spaces/findSpaces.jsp"),
+        @Forward(name = "viewSelectedSpace", path = "/publico/spaces/viewSelectedSpace.jsp") })
 public class FindSpacesDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearchSpaces(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

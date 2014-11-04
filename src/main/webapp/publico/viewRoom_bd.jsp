@@ -38,17 +38,17 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roomName" property="roomName" value="<%=room.toString()%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<table class="mvert15">
-		<tr>
+	<table>
+		<tr style="margin-bottom: 15px;">
 		    <td nowrap="nowrap" width="125"><bean:message key="property.execution.period"/>:</td>
 		    <td nowrap="nowrap">
 		        <html:select bundle="HTMLALT_RESOURCES"  property="selectedExecutionPeriodID" size="1" onchange="this.form.submit();">
    					<html:options property="value" labelProperty="label"
 						collection="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD %>" />
 				</html:select>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+		</tr>
+		<tr>
+			<td><br /></td><td></td>
 		</tr>
 		<tr>
 		    <td nowrap="nowrap" width="125"><bean:message key="property.week"/>:</td>
@@ -57,9 +57,6 @@
 	    			<html:options property="value" labelProperty="label" 
 						collection="<%= PresentationConstants.LABELLIST_WEEKS%>" />
 				</html:select>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
 			</td>
 		</tr>
 	</table>

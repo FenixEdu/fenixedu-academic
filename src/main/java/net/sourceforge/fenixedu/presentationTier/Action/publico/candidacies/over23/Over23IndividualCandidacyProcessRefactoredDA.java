@@ -38,13 +38,14 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyPr
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,21 +53,22 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/caseHandlingOver23IndividualCandidacyProcess", module = "publico",
-        formBeanClass = FenixActionForm.class)
-@Forwards({ @Forward(name = "begin-candidacy-process-intro", path = "over23.candidacy.process.intro"),
-        @Forward(name = "open-candidacy-process-closed", path = "candidacy.process.closed"),
-        @Forward(name = "show-pre-creation-candidacy-form", path = "show.pre.creation.candidacy.form"),
-        @Forward(name = "show-email-message-sent", path = "show.email.message.sent"),
-        @Forward(name = "show-application-submission-conditions", path = "show.application.submission.conditions"),
-        @Forward(name = "open-candidacy-processes-not-found", path = "individual.candidacy.not.found"),
-        @Forward(name = "show-candidacy-creation-page", path = "over23.candidacy.creation.page"),
-        @Forward(name = "candidacy-continue-creation", path = "over23.candidacy.continue.creation"),
-        @Forward(name = "inform-submited-candidacy", path = "inform.submited.candidacy"),
-        @Forward(name = "show-candidacy-details", path = "over23.show.candidacy.details"),
-        @Forward(name = "edit-candidacy", path = "over23.edit.candidacy"),
-        @Forward(name = "edit-candidacy-habilitations", path = "over23.edit.candidacy.habilitations"),
-        @Forward(name = "edit-candidacy-documents", path = "over23.edit.candidacy.documents") })
+@StrutsFunctionality(app = PublicCandidaciesApp.class, path = "over-23", titleKey = "title.application.name.over23")
+@Mapping(path = "/candidacies/caseHandlingOver23IndividualCandidacyProcess", module = "publico")
+@Forwards({
+        @Forward(name = "begin-candidacy-process-intro", path = "/publico/candidacy/over23/main.jsp"),
+        @Forward(name = "open-candidacy-process-closed", path = "/publico/candidacy/candidacyProcessClosed.jsp"),
+        @Forward(name = "show-pre-creation-candidacy-form", path = "/publico/candidacy/preCreationCandidacyForm.jsp"),
+        @Forward(name = "show-email-message-sent", path = "/publico/candidacy/showEmailSent.jsp"),
+        @Forward(name = "show-application-submission-conditions", path = "/publico/candidacy/applicationSubmissionConditions.jsp"),
+        @Forward(name = "open-candidacy-processes-not-found", path = "/publico/candidacy/individualCandidacyNotFound.jsp"),
+        @Forward(name = "show-candidacy-creation-page", path = "/publico/candidacy/over23/createCandidacyPartOne.jsp"),
+        @Forward(name = "candidacy-continue-creation", path = "/publico/candidacy/over23/createCandidacyPartTwo.jsp"),
+        @Forward(name = "inform-submited-candidacy", path = "/publico/candidacy/candidacySubmited.jsp"),
+        @Forward(name = "show-candidacy-details", path = "/publico/candidacy/over23/viewCandidacy.jsp"),
+        @Forward(name = "edit-candidacy", path = "/publico/candidacy/over23/editCandidacy.jsp"),
+        @Forward(name = "edit-candidacy-habilitations", path = "/publico/candidacy/over23/editCandidacyHabilitations.jsp"),
+        @Forward(name = "edit-candidacy-documents", path = "/publico/candidacy/over23/editCandidacyDocuments.jsp") })
 public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     private static final Logger logger = LoggerFactory.getLogger(Over23IndividualCandidacyProcessRefactoredDA.class);

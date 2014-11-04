@@ -38,12 +38,13 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleC
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,25 +53,27 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/caseHandlingSecondCycleCandidacyIndividualProcess", module = "publico",
-        formBeanClass = FenixActionForm.class)
-@Forwards({ @Forward(name = "begin-candidacy-process-intro", path = "second.cycle.candidacy.process.intro"),
-        @Forward(name = "begin-candidacy-process-intro-en", path = "second.cycle.candidacy.process.intro.en"),
-        @Forward(name = "open-candidacy-process-closed", path = "candidacy.process.closed"),
-        @Forward(name = "show-pre-creation-candidacy-form", path = "show.pre.creation.candidacy.form"),
-        @Forward(name = "show-email-message-sent", path = "show.email.message.sent"),
-        @Forward(name = "show-application-submission-conditions", path = "show.application.submission.conditions"),
-        @Forward(name = "open-candidacy-processes-not-found", path = "individual.candidacy.not.found"),
-        @Forward(name = "show-candidacy-creation-page", path = "second.cycle.candidacy.creation.page"),
-        @Forward(name = "candidacy-continue-creation", path = "second.cycle.candidacy.continue.creation"),
-        @Forward(name = "inform-submited-candidacy", path = "inform.submited.candidacy"),
-        @Forward(name = "show-candidacy-details", path = "second.cycle.show.candidacy.details"),
-        @Forward(name = "edit-candidacy", path = "second.cycle.edit.candidacy"),
-        @Forward(name = "edit-candidacy-habilitations", path = "second.cycle.edit.candidacy.habilitations"),
-        @Forward(name = "edit-candidacy-documents", path = "second.cycle.edit.candidacy.documents"),
-        @Forward(name = "show-recover-access-link-form", path = "second.cycle.show.access.link.form"),
-        @Forward(name = "show-recovery-email-sent", path = "second.cycle.recovery.email.sent"),
-        @Forward(name = "upload-photo", path = "second.cycle.upload.photo") })
+@StrutsFunctionality(app = PublicCandidaciesApp.class, path = "second-cycle",
+        titleKey = "title.application.name.secondCycle.short")
+@Mapping(path = "/candidacies/caseHandlingSecondCycleCandidacyIndividualProcess", module = "publico")
+@Forwards({
+        @Forward(name = "begin-candidacy-process-intro", path = "/publico/candidacy/secondCycle/main.jsp"),
+        @Forward(name = "begin-candidacy-process-intro-en", path = "/publico/candidacy/secondCycle/main_en.jsp"),
+        @Forward(name = "open-candidacy-process-closed", path = "/publico/candidacy/candidacyProcessClosed.jsp"),
+        @Forward(name = "show-pre-creation-candidacy-form", path = "/publico/candidacy/preCreationCandidacyForm.jsp"),
+        @Forward(name = "show-email-message-sent", path = "/publico/candidacy/showEmailSent.jsp"),
+        @Forward(name = "show-application-submission-conditions", path = "/publico/candidacy/applicationSubmissionConditions.jsp"),
+        @Forward(name = "open-candidacy-processes-not-found", path = "/publico/candidacy/individualCandidacyNotFound.jsp"),
+        @Forward(name = "show-candidacy-creation-page", path = "/publico/candidacy/secondCycle/createCandidacyPartOne.jsp"),
+        @Forward(name = "candidacy-continue-creation", path = "/publico/candidacy/secondCycle/createCandidacyPartTwo.jsp"),
+        @Forward(name = "inform-submited-candidacy", path = "/publico/candidacy/candidacySubmited.jsp"),
+        @Forward(name = "show-candidacy-details", path = "/publico/candidacy/secondCycle/viewCandidacy.jsp"),
+        @Forward(name = "edit-candidacy", path = "/publico/candidacy/secondCycle/editCandidacy.jsp"),
+        @Forward(name = "edit-candidacy-habilitations", path = "/publico/candidacy/secondCycle/editCandidacyHabilitations.jsp"),
+        @Forward(name = "edit-candidacy-documents", path = "/publico/candidacy/secondCycle/editCandidacyDocuments.jsp"),
+        @Forward(name = "show-recover-access-link-form", path = "/publico/candidacy/secondCycle/recoverAccess.jsp"),
+        @Forward(name = "show-recovery-email-sent", path = "/publico/candidacy/secondCycle/recoveryEmailSent.jsp"),
+        @Forward(name = "upload-photo", path = "/publico/candidacy/secondCycle/uploadPhoto.jsp") })
 public class SecondCycleIndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     private static final Logger logger = LoggerFactory.getLogger(SecondCycleIndividualCandidacyProcessRefactoredDA.class);

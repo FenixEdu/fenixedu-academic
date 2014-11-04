@@ -27,11 +27,13 @@
 
 <!-- alumniPublicAccess.jsp -->
 
-<h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/alumni.css"/>
 
-<h2><bean:message key="label.alumni.registration.form" bundle="ALUMNI_RESOURCES" /> <span class="color777 fwnormal"><bean:message key="label.step.1.3" bundle="ALUMNI_RESOURCES" /></span></h2>
+<h2><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h2>
 
-<div class="alumnilogo">
+<h3><bean:message key="label.alumni.registration.form" bundle="ALUMNI_RESOURCES" /> <span class="small"><bean:message key="label.step.1.3" bundle="ALUMNI_RESOURCES" /></span></h3>
+
+<div>
 <logic:present name="alumniPublicAccessMessage">
 	<span class="error0"><bean:write name="alumniPublicAccessMessage" scope="request" /></span><br/>
 </logic:present>

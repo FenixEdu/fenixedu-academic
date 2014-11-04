@@ -62,6 +62,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -124,6 +125,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         return mapping.findForward("begin-candidacy-process-intro");
     }
 
+    @EntryPoint
     public ActionForward preparePreCreationOfCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ActionForward actionForwardError = verifySubmissionPreconditions(mapping);

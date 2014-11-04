@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,104 +30,38 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.RoomSiteComponentServiceByExecutionPeriodID;
-import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.spaces.FindSpacesDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateMidnight;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/viewRoom", module = "publico", formBean = "indexForm", functionality = FindSpacesDA.class)
+@Forwards(@Forward(name = "roomViewer", path = "/publico/viewRoom_bd.jsp"))
 public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
-
-    public ActionForward curricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        setFromRequest(request);
-        String curricularCourseIdString = request.getParameter("ccCode");
-        if (curricularCourseIdString == null) {
-            curricularCourseIdString = (String) request.getAttribute("ccCode");
-        }
-        Integer curricularCourseId = new Integer(curricularCourseIdString);
-        ISiteComponent curricularCourseComponent = new InfoSiteCurricularCourse();
-        readSiteView(request, curricularCourseComponent, null, null, curricularCourseId);
-
-        return returnSuccessMappingForward(mapping, form, request);
-
-    }
-
-    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
-            Integer sectionIndex, Integer curricularCourseId) throws FenixActionException {
-        String objectCode = null;
-        if (infoExecutionCourseCode == null) {
-            String objectCodeString = request.getParameter("objectCode");
-            if (objectCodeString == null) {
-                objectCodeString = (String) request.getAttribute("objectCode");
-
-            }
-            objectCode = objectCodeString;
-        }
-
-        ISiteComponent commonComponent = new InfoSiteCommon();
-
-        try {
-            ExecutionCourseSiteView siteView =
-                    ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
-                            firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId);
-
-            List curricularCoursesByDegree = ((InfoSiteCommon) siteView.getCommonComponent()).getAssociatedDegreesByDegree();
-            Collections.sort(curricularCoursesByDegree, new BeanComparator("infoDegreeCurricularPlan.infoDegree.sigla"));
-
-            if (siteView != null) {
-                if (infoExecutionCourseCode != null) {
-                    request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteExternalId());
-                } else {
-                    request.setAttribute("objectCode", objectCode);
-                }
-
-                request.setAttribute("siteView", siteView);
-                request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                        .getExternalId());
-                request.setAttribute("sigla", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getSigla());
-                request.setAttribute("executionPeriodCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                        .getInfoExecutionPeriod().getExternalId());
-
-                if (siteView.getComponent() instanceof InfoSiteSection) {
-                    request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
-                }
-            }
-            return siteView;
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException("A disciplina", e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-    }
 
     public ActionForward roomViewer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        User userView = getUserView(request);
 
         String roomName = request.getParameter("roomName");
         if (roomName == null) {
@@ -237,24 +170,6 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
         }
         throw new FenixActionException();
 
-    }
-
-    private void setFromRequest(HttpServletRequest request) {
-
-        String shift = request.getParameter("shift");
-        if (shift == null) {
-            shift = (String) request.getAttribute("shift");
-        }
-        if (shift == null) {
-            shift = "false";
-        }
-
-        request.setAttribute("shift", shift);
-
-    }
-
-    private ActionForward returnSuccessMappingForward(ActionMapping mapping, ActionForm form, HttpServletRequest request) {
-        return mapping.findForward("sucess");
     }
 
 }

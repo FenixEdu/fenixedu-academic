@@ -46,12 +46,15 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -61,10 +64,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> 19/Dez/2003
  * 
  */
-@Mapping(module = "publico", path = "/searchProfessorships", attribute = "teachersBodyForm", formBean = "teachersBodyForm",
-        scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "showForm", path = "searchProfessorships"),
-        @Forward(name = "showProfessorships", path = "showProfessorships") })
+@StrutsFunctionality(app = PublicApplication.class, path = "show-teachers-body", titleKey = "title.teachers.body")
+@Mapping(module = "publico", path = "/searchProfessorships", formBean = "teachersBodyForm")
+@Forwards({ @Forward(name = "showForm", path = "/publico/services/teachers/searchProfessorships.jsp"),
+        @Forward(name = "showProfessorships", path = "/publico/services/teachers/showProfessorships.jsp") })
 public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
     private String makeBodyHeader(String executionYear, Integer semester, Integer teacherType) {
@@ -77,6 +80,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
     }
 
+    @EntryPoint
     public ActionForward prepareForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 

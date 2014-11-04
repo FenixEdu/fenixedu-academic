@@ -27,13 +27,14 @@
 
 <!-- alumniPublicAccessIdentityCheck.jsp -->
 
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/alumni.css"/>
 
-<h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
+<h2><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h2>
 
 <div class="alumnilogo" style="background: none;">
 <%-- <div class="col_right_alumni"><img src="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
 	
-	<h2><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></h2>
+	<h3><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></h3>
 	
 	<p class="mtop15 mbottom05">
 		<a href="<%= request.getContextPath() + "/publico/alumni.do?method=initFenixPublicAccess"%>">&laquo; <bean:message key="link.alumni.back" bundle="ALUMNI_RESOURCES" /></a>

@@ -52,7 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 @Mapping(path = "/searchInquiriesResultPage", module = "publico", formBeanClass = SearchInquiriesResultPageDTO.class)
-@Forwards({ @Forward(name = "searchPage", path = "/executionCourse/inquiries/searchInquiriesResultPage.jsp", useTile = false) })
+@Forwards(@Forward(name = "searchPage", path = "/publico/executionCourse/inquiries/searchInquiriesResultPage.jsp"))
 public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

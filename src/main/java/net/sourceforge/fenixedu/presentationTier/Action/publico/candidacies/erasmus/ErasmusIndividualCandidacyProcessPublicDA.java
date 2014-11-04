@@ -62,9 +62,9 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicApplication.PublicCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
@@ -78,6 +78,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -90,40 +91,45 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/caseHandlingMobilityApplicationIndividualProcess", module = "publico",
-        formBeanClass = FenixActionForm.class)
+@StrutsFunctionality(app = PublicCandidaciesApp.class, path = "mobility", titleKey = "title.application.name.mobility")
+@Mapping(path = "/candidacies/caseHandlingMobilityApplicationIndividualProcess", module = "publico")
 @Forwards({
-        @Forward(name = "show-pre-creation-candidacy-form", path = "mobility.show.pre.creation.candidacy.form"),
-        @Forward(name = "show-email-message-sent", path = "mobility.show.email.message.sent"),
-        @Forward(name = "show-application-submission-conditions", path = "mobility.show.application.submission.conditions"),
-        @Forward(name = "open-candidacy-processes-not-found", path = "mobility.individual.candidacy.not.found"),
-        @Forward(name = "show-candidacy-creation-page", path = "mobility.candidacy.creation.page"),
-        @Forward(name = "candidacy-continue-creation", path = "mobility.candidacy.continue.creation"),
-        @Forward(name = "choose-mobility-program", path = "mobility.candidacy.choose.program"),
-        @Forward(name = "fill-degree-and-courses-information", path = "mobility.fill.degree.and.courses.information"),
-        @Forward(name = "accept-honour-declaration", path = "mobility.fill.accept.honour.declaration"),
-        @Forward(name = "inform-submited-candidacy", path = "mobility.inform.submited.candidacy"),
-        @Forward(name = "show-candidacy-details", path = "mobility.show.candidacy.details"),
-        @Forward(name = "edit-candidacy", path = "mobility.edit.candidacy"),
-        @Forward(name = "edit-candidacy-information", path = "mobility.edit.candidacy.information"),
-        @Forward(name = "edit-candidacy-degree-and-courses", path = "mobility.edit.candidacy.degree.and.courses"),
-        @Forward(name = "edit-candidacy-documents", path = "mobility.edit.candidacy.documents"),
-        @Forward(name = "edit-candidacy-degree-and-courses", path = "mobility.edit.candidacy.degree.and.courses"),
-        @Forward(name = "redirect-to-peps", path = "mobility.redirect.to.peps"),
+        @Forward(name = "show-pre-creation-candidacy-form", path = "/publico/candidacy/mobility/preCreationCandidacyForm.jsp"),
+        @Forward(name = "show-email-message-sent", path = "/publico/candidacy/mobility/showEmailSent.jsp"),
+        @Forward(name = "show-application-submission-conditions",
+                path = "/publico/candidacy/mobility/applicationSubmissionConditions.jsp"),
+        @Forward(name = "open-candidacy-processes-not-found",
+                path = "/publico/candidacy/mobility/individualCandidacyNotFound.jsp"),
+        @Forward(name = "show-candidacy-creation-page", path = "/publico/candidacy/mobility/createCandidacyPartOne.jsp"),
+        @Forward(name = "candidacy-continue-creation", path = "/publico/candidacy/mobility/createCandidacyPartTwo.jsp"),
+        @Forward(name = "choose-mobility-program", path = "/publico/candidacy/mobility/chooseMobilityProgram.jsp"),
+        @Forward(name = "fill-degree-and-courses-information",
+                path = "/publico/candidacy/mobility/fillDegreeAndCoursesInformation.jsp"),
+        @Forward(name = "accept-honour-declaration", path = "/publico/candidacy/mobility/acceptHonourDeclaration.jsp"),
+        @Forward(name = "inform-submited-candidacy", path = "/publico/candidacy/mobility/candidacySubmited.jsp"),
+        @Forward(name = "show-candidacy-details", path = "/publico/candidacy/mobility/viewCandidacy.jsp"),
+        @Forward(name = "edit-candidacy", path = "/publico/candidacy/mobility/editCandidacy.jsp"),
+        @Forward(name = "edit-candidacy-information", path = "/publico/candidacy/mobility/editCandidacyInformation.jsp"),
+        @Forward(name = "edit-candidacy-degree-and-courses",
+                path = "/publico/candidacy/mobility/editCandidacyDegreeAndCourses.jsp"),
+        @Forward(name = "edit-candidacy-documents", path = "/publico/candidacy/mobility/editCandidacyDocuments.jsp"),
+        @Forward(name = "edit-candidacy-degree-and-courses",
+                path = "/publico/candidacy/mobility/editCandidacyDegreeAndCourses.jsp"),
+        @Forward(name = "redirect-to-peps", path = "/publico/candidacy/mobility/peps.jsp"),
         @Forward(name = "show-application-submission-conditions-for-stork",
-                path = "mobility.show.application.submission.conditions.for.stork"),
-        @Forward(name = "show-stork-error-page", path = "mobility.show.stork.error.page"),
-        @Forward(name = "stork-candidacy-already-bounded", path = "mobility.stork.candidacy.already.bounded"),
-        @Forward(name = "redirect-to-peps-to-access-application", path = "mobility.redirect.to.peps.to.access.application"),
-        @Forward(name = "stork-error-authentication-failed", path = "mobility.stork.authentication.failed"),
-        @Forward(name = "show-recover-access-link-form", path = "mobility.show.access.link.form"),
-        @Forward(name = "show-recovery-email-sent", path = "mobility.recovery.email.sent"),
-        @Forward(name = "stork-attr-list-test", path = "mobility.stork.attr.list.test"),
-        @Forward(name = "error-on-application-submission", path = "mobility.error.on.application.submission.contact.gri"),
+                path = "/publico/candidacy/mobility/applicationSubmissionConditionsForStork.jsp"),
+        @Forward(name = "show-stork-error-page", path = "/publico/candidacy/mobility/showStorkErrorPage.jsp"),
+        @Forward(name = "stork-candidacy-already-bounded", path = "/publico/candidacy/mobility/candidacyAlreadyBounded.jsp"),
+        @Forward(name = "redirect-to-peps-to-access-application", path = "/publico/candidacy/mobility/pepsAccessAplication.jsp"),
+        @Forward(name = "stork-error-authentication-failed", path = "/publico/candidacy/mobility/storkAuthenticationFailed.jsp"),
+        @Forward(name = "show-recover-access-link-form", path = "/publico/candidacy/mobility/recoverAccess.jsp"),
+        @Forward(name = "show-recovery-email-sent", path = "/publico/candidacy/mobility/recoveryEmailSent.jsp"),
+        @Forward(name = "stork-attr-list-test", path = "/publico/candidacy/mobility/storkAttrListTest.jsp"),
+        @Forward(name = "error-on-application-submission", path = "/publico/candidacy/mobility/errorOnSubmission.jsp"),
         @Forward(name = "bind-link-submited-individual-candidacy-with-stork",
-                path = "mobility.bind.submited.individua.candidacy.with.stork"),
-        @Forward(name = "show-bind-process-success", path = "mobility.show.bind.process.success"),
-        @Forward(name = "open-candidacy-process-closed", path = "mobility.candidacy.process.closed") })
+                path = "/publico/candidacy/mobility/bindSubmitedIndividualCandidacyWithStork.jsp"),
+        @Forward(name = "show-bind-process-success", path = "/publico/candidacy/mobility/showBindProcessSuccess.jsp"),
+        @Forward(name = "open-candidacy-process-closed", path = "/publico/candidacy/mobility/candidacyProcessClosed.jsp") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     private static final Logger logger = LoggerFactory.getLogger(ErasmusIndividualCandidacyProcessPublicDA.class);
