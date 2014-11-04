@@ -38,9 +38,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -361,40 +358,6 @@ public class Teacher extends Teacher_Base {
             }
         }
         return result;
-    }
-
-    public List<Proposal> getFinalDegreeWorksByExecutionYear(ExecutionYear executionYear) {
-        List<Proposal> proposalList = new ArrayList<Proposal>();
-        for (Proposal proposal : getPerson().getAssociatedProposalsByOrientatorSet()) {
-            if (proposal.getScheduleing().getExecutionDegreesSet().iterator().next().getExecutionYear().equals(executionYear)) {
-                // if it was attributed by the coordinator the proposal is
-                // efective
-                if (proposal.getGroupAttributed() != null) {
-                    proposalList.add(proposal);
-                }
-                // if not, we have to verify if the teacher has proposed it to
-                // any student(s) and if that(those) student(s) has(have)
-                // accepted it
-                else {
-                    FinalDegreeWorkGroup attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
-                    if (attributedGroupByTeacher != null) {
-                        boolean toAdd = false;
-                        for (GroupStudent groupStudent : attributedGroupByTeacher.getGroupStudentsSet()) {
-                            Proposal studentProposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
-                            if (studentProposal != null && studentProposal.equals(proposal)) {
-                                toAdd = true;
-                            } else {
-                                toAdd = false;
-                            }
-                        }
-                        if (toAdd) {
-                            proposalList.add(proposal);
-                        }
-                    }
-                }
-            }
-        }
-        return proposalList;
     }
 
     public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionYear(ExecutionYear executionYear) {

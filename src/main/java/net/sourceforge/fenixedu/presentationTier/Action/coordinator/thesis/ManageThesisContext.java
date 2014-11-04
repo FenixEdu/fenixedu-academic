@@ -25,7 +25,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 
 public class ManageThesisContext implements Serializable {
 
@@ -69,11 +68,6 @@ public class ManageThesisContext implements Serializable {
             executionDegrees.addAll(degreeCurricularPlan.getExecutionDegreesSet());
         }
         return executionDegrees;
-    }
-
-    public Scheduleing getScheduleing() {
-        final ExecutionDegree executionDegree = getPreviousExecutionDegree();
-        return executionDegree == null ? null : executionDegree.getScheduling();
     }
 
 }

@@ -57,8 +57,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -1672,18 +1670,6 @@ public class Thesis extends Thesis_Base {
     public boolean isAnual() {
         final Enrolment enrolment = getEnrolment();
         return enrolment.isAnual();
-    }
-
-    public boolean getHasMadeProposalPreviousYear() {
-        ExecutionYear enrolmentExecutionYear = getEnrolment().getExecutionYear();
-        for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudentsSet()) {
-            Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
-            if (proposal != null && proposal.isForExecutionYear(enrolmentExecutionYear.getPreviousExecutionYear())
-                    && proposal.getAttributionStatus().isFinalAttribution()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public List<Locale> getLanguages() {

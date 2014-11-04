@@ -44,12 +44,10 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.log.EnrolmentEvaluationLog;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
@@ -76,7 +74,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author dcs-rjao
@@ -1506,31 +1503,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getExecutionPeriod().isBefore(enrolment.getExecutionPeriod());
     }
 
-    final public Proposal getDissertationProposal() {
-        final Registration registration = getRegistration();
-        final Proposal proposal = getDissertationProposal(registration, getExecutionYear());
-        if (proposal != null) {
-            return proposal;
-        }
-        final Student student = registration.getStudent();
-        for (final Registration otherRegistration : student.getRegistrationsSet()) {
-            final Proposal otherProposal = getDissertationProposal(otherRegistration, getExecutionYear());
-            if (otherProposal != null) {
-                return otherProposal;
-            }
-        }
-        return null;
-    }
-
-    public static Proposal getDissertationProposal(final Registration registration, final ExecutionYear executionYear) {
-        final Proposal proposal = registration.getDissertationProposal(executionYear);
-        if (proposal != null) {
-            return proposal;
-        }
-        final ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
-        return previousExecutionYear == null ? null : getDissertationProposal(registration, previousExecutionYear);
-    }
-
     public Thesis getPreviousYearThesis() {
         ExecutionYear executionYear = getExecutionYear().getPreviousExecutionYear();
         Enrolment enrolment = getStudent().getDissertationEnrolment(null, executionYear);
@@ -1543,19 +1515,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public Thesis getPossibleThesis() {
         Thesis thesis = getThesis();
         return (thesis == null /*&& getDissertationProposal() == null */) ? getPreviousYearThesis() : thesis;
-    }
-
-    //
-    public MultiLanguageString getPossibleDissertationTitle() {
-        Thesis thesis = getThesis();
-        if (thesis == null) {
-            if (getDissertationProposal() == null) {
-                thesis = getPreviousYearThesis();
-            } else {
-                return new MultiLanguageString(getDissertationProposal().getTitle());
-            }
-        }
-        return thesis == null ? new MultiLanguageString("-") : thesis.getTitle();
     }
 
     @Override

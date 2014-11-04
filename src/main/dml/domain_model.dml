@@ -318,12 +318,6 @@ valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGro
     }
 }
 
-valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus {
-    externalizeWith {
-        Integer getStatus();
-    }
-}
-
 valueType net.sourceforge.fenixedu.util.HourMinuteSecond as HourMinuteSecond {
     externalizeWith {
         LocalTime toLocalTime();
@@ -2794,64 +2788,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 		LocalizedString graduateTitleSuffix;
 	}
 	
-    class finalDegreeWork.FinalDegreeWorkGroup  {
-    }
-
-    class finalDegreeWork.GroupProposal  {
-        Integer orderOfPreference;
-    }
-
-    class finalDegreeWork.GroupStudent  {
-    }
-
-    class finalDegreeWork.Proposal  {
-        String companionMail;
-        String companionName;
-        Integer companionPhone;
-        String companyAdress;
-        String companyName;
-        Integer coorientatorsCreditsPercentage;
-        DegreeType degreeType;
-        String deliverable;
-        String description;
-        String framing;
-        String location;
-        Integer maximumNumberOfGroupElements;
-        Integer minimumNumberOfGroupElements;
-        String objectives;
-        String observations;
-        Integer orientatorsCreditsPercentage;
-        Integer proposalNumber;
-        String requirements;
-        FinalDegreeWorkProposalStatus status;
-        String title;
-        String url;
-    }
-
-    class finalDegreeWork.Scheduleing  {
-        Boolean allowSimultaneousCoorientationAndCompanion;
-        Boolean attributionByTeachers;
-        Boolean allowCandaciesOnlyForStudentsWithADissertationEnrolment;
-        Integer currentProposalNumber;
-        YearMonthDay endOfCandidacyPeriodDateYearMonthDay;
-        HourMinuteSecond endOfCandidacyPeriodTimeHourMinuteSecond;
-        YearMonthDay endOfProposalPeriodDateYearMonthDay;
-        HourMinuteSecond endOfProposalPeriodTimeHourMinuteSecond;
-        Integer maximumNumberOfProposalsPerPerson;
-        Integer maximumCurricularYearToCountCompletedCourses;
-        Integer maximumNumberOfProposalCandidaciesPerGroup;
-        Integer maximumNumberOfStudents;
-        Integer minimumCompletedCurricularYear;
-        Integer minimumNumberOfCompletedCourses;
-        Integer minimumNumberOfStudents;
-        Integer minimumCompletedCreditsFirstCycle;
-        Integer minimumCompletedCreditsSecondCycle;
-        YearMonthDay startOfCandidacyPeriodDateYearMonthDay;
-        HourMinuteSecond startOfCandidacyPeriodTimeHourMinuteSecond;
-        YearMonthDay startOfProposalPeriodDateYearMonthDay;
-        HourMinuteSecond startOfProposalPeriodTimeHourMinuteSecond;
-    }
-
     class gesdis.CourseHistoric  {
         Integer approved;
         String curricularYear;
@@ -10422,58 +10358,6 @@ relation GratuityValuesExecutionDegree {
     ExecutionDegree playsRole executionDegree;
 }
 
-relation GroupExecutionDegree {
-    finalDegreeWork.FinalDegreeWorkGroup playsRole associatedFinalDegreeWorkGroups {
-        multiplicity *;
-    }
-    ExecutionDegree playsRole executionDegree;
-}
-
-relation GroupGroupProposal {
-    finalDegreeWork.FinalDegreeWorkGroup playsRole finalDegreeDegreeWorkGroup;
-    finalDegreeWork.GroupProposal playsRole groupProposals {
-        multiplicity *;
-    }
-}
-
-relation GroupGroupStudent {
-    finalDegreeWork.FinalDegreeWorkGroup playsRole finalDegreeDegreeWorkGroup;
-    finalDegreeWork.GroupStudent playsRole groupStudents {
-        multiplicity *;
-    }
-}
-
-relation GroupProposal {
-    finalDegreeWork.Proposal playsRole proposalAttributed;
-    finalDegreeWork.FinalDegreeWorkGroup playsRole groupAttributed;
-}
-
-relation GroupProposalByTeacher {
-    finalDegreeWork.Proposal playsRole proposalAttributedByTeacher;
-    finalDegreeWork.FinalDegreeWorkGroup playsRole groupAttributedByTeacher;
-}
-
-relation GroupProposalProposal {
-    finalDegreeWork.Proposal playsRole finalDegreeWorkProposal;
-    finalDegreeWork.GroupProposal playsRole groupProposals {
-        multiplicity *;
-    }
-}
-
-relation GroupStudentProposal {
-    finalDegreeWork.GroupStudent playsRole associatedGroupStudents {
-        multiplicity *;
-    }
-    finalDegreeWork.Proposal playsRole finalDegreeWorkProposalConfirmation;
-}
-
-relation GroupStudentStudent {
-    finalDegreeWork.GroupStudent playsRole associatedGroupStudents {
-        multiplicity *;
-    }
-    student.Registration playsRole student;
-}
-
 relation GroupingAttends {
     Attends playsRole attends {
         multiplicity *;
@@ -11488,36 +11372,6 @@ relation ProjectSubmissionStudentGroup {
     }
 }
 
-relation ProposalBranch {
-    finalDegreeWork.Proposal playsRole associatedFinalDegreeWorkProposals {
-        multiplicity *;
-    }
-    Branch playsRole branches {
-        multiplicity *;
-    }
-}
-
-relation ProposalExecutionDegree {
-    finalDegreeWork.Proposal playsRole proposals {
-        multiplicity *;
-    }
-    finalDegreeWork.Scheduleing playsRole scheduleing;
-}
-
-relation ProposalTeacherByCoorientator {
-    finalDegreeWork.Proposal playsRole associatedProposalsByCoorientator {
-        multiplicity *;
-    }
-    Person playsRole coorientator;
-}
-
-relation ProposalTeacherByOrientator {
-    finalDegreeWork.Proposal playsRole associatedProposalsByOrientator {
-        multiplicity *;
-    }
-    Person playsRole orientator;
-}
-
 relation PublicationCollaborators {
     organizationalStructure.ResearchUnit playsRole collaboratorIn {
         multiplicity *;
@@ -12513,27 +12367,6 @@ relation RootDomainObjectGratuityValues {
     }
 }
 
-relation RootDomainObjectGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    finalDegreeWork.FinalDegreeWorkGroup playsRole finalDegreeWorkGroups {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGroupProposal {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    finalDegreeWork.GroupProposal playsRole groupProposals {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGroupStudent {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    finalDegreeWork.GroupStudent playsRole groupStudents {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectGrouping {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Grouping playsRole groupings {
@@ -12889,13 +12722,6 @@ relation RootDomainObjectProjectSubmissionLog {
     }
 }
 
-relation RootDomainObjectProposal {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    finalDegreeWork.Proposal playsRole proposals {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPublicationsNumber {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.PublicationsNumber playsRole publicationsNumbers {
@@ -12988,7 +12814,6 @@ relation RootDomainObjectResidenceCandidacies {
 }
 
 
-
 relation RootDomainObjectRole {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Role playsRole roles {
@@ -12996,13 +12821,6 @@ relation RootDomainObjectRole {
     }
 }
 
-
-relation RootDomainObjectScheduleing {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    finalDegreeWork.Scheduleing playsRole scheduleings {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectSchoolClass {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -13470,13 +13288,6 @@ relation RootDomainVigilancy {
 relation RootDomainVigilantGroup {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     vigilancy.VigilantGroup playsRole vigilantGroups {
-        multiplicity *;
-    }
-}
-
-relation SchedulingExecutionDegree {
-    finalDegreeWork.Scheduleing playsRole scheduling;
-    ExecutionDegree playsRole executionDegrees {
         multiplicity *;
     }
 }

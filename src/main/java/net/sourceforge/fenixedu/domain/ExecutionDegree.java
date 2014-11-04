@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -164,7 +163,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!(getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty()
-                && getScheduling() == null && getAssociatedFinalDegreeWorkGroupsSet().isEmpty()
                 && getAssociatedInquiriesCoursesByCourseSet().isEmpty() && getAssociatedInquiriesCoursesByStudentSet().isEmpty()
                 && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "execution.degree.cannot.be.deleted"));
@@ -1043,13 +1041,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             }
         }
         return null;
-    }
-
-    public Set<Proposal> getProposals() {
-        if (getScheduling() != null) {
-            return getScheduling().getProposalsSet();
-        }
-        return Collections.emptySet();
     }
 
     public OccupationPeriod getPeriodLessons(final ExecutionSemester executionSemester) {

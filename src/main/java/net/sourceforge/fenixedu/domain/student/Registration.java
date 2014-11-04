@@ -84,9 +84,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
@@ -1489,16 +1486,6 @@ public class Registration extends Registration_Base {
             GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
             if (gratuitySituation != null) {
                 return gratuitySituation;
-            }
-        }
-        return null;
-    }
-
-    final public FinalDegreeWorkGroup findFinalDegreeWorkGroupForExecutionYear(final ExecutionDegree executionDegree) {
-        for (final GroupStudent groupStudent : getAssociatedGroupStudentsSet()) {
-            final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-            if (executionDegree == group.getExecutionDegree()) {
-                return group;
             }
         }
         return null;
@@ -3418,25 +3405,6 @@ public class Registration extends Registration_Base {
             enrolments.addAll(scp.getDissertationEnrolments());
         }
         return enrolments;
-    }
-
-    final public Proposal getDissertationProposal(final ExecutionYear executionYear) {
-        for (final GroupStudent groupStudent : getAssociatedGroupStudentsSet()) {
-            final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-            final Proposal proposalAttributedByCoordinator = group.getProposalAttributed();
-            if (proposalAttributedByCoordinator != null && proposalAttributedByCoordinator.isForExecutionYear(executionYear)) {
-                return proposalAttributedByCoordinator;
-            }
-            final Proposal proposalAttributedByTeacher = group.getProposalAttributedByTeacher();
-            if (proposalAttributedByTeacher != null && proposalAttributedByTeacher.isForExecutionYear(executionYear)) {
-                // if
-                // (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group))
-                // {
-                return proposalAttributedByTeacher;
-                // }
-            }
-        }
-        return null;
     }
 
     final public boolean isAvailableDegreeTypeForInquiries() {

@@ -89,7 +89,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
@@ -2796,13 +2795,6 @@ public class Person extends Person_Base {
         }
         Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
         return participants;
-    }
-
-    public Set<Proposal> findFinalDegreeWorkProposals() {
-        final Set<Proposal> proposals = new HashSet<Proposal>();
-        proposals.addAll(getAssociatedProposalsByCoorientatorSet());
-        proposals.addAll(getAssociatedProposalsByOrientatorSet());
-        return proposals;
     }
 
     public List<ResearchUnit> getWorkingResearchUnits() {

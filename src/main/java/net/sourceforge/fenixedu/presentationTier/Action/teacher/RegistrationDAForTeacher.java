@@ -19,12 +19,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.RegistrationDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.TutorshipSummaryDA;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-@Mapping(module = "teacher", path = "/registration", functionality = FinalWorkManagementAction.class)
+@Mapping(module = "teacher", path = "/registration", functionality = TutorshipSummaryDA.class)
 @Forwards({
         @Forward(name = "/student/curriculum/viewRegistrationCurriculum.jsp", path = "view-registration-curriculum"),
         @Forward(name = "/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp",

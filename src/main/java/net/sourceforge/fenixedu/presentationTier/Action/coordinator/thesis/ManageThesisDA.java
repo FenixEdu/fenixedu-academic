@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerso
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposal;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposalWithAssignment;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.DeleteThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ReviseThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis;
@@ -43,7 +42,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -197,17 +195,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
                     Thesis thesis = enrolment.getThesis();
 
                     if (thesis == null) {
-                        Proposal proposal = enrolment.getDissertationProposal();
-
-                        if (proposal != null) {
-                            request.setAttribute("hasAssignment", true);
-                            request.setAttribute("proposal", proposal);
-                            request.setAttribute("proposalEnrolment", enrolment);
-                            return mapping.findForward("search-student");
-                        } else {
                             request.setAttribute("proposeStartProcess", true);
                             return mapping.findForward("search-student");
-                        }
                     } else {
                         request.setAttribute("hasThesis", true);
                         request.setAttribute("thesis", thesis);
@@ -308,16 +297,11 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         if (thesis == null) {
             thesis = enrolment.getPossibleThesis();
         }
-        Proposal proposal = enrolment.getDissertationProposal();
-        if (proposal == null && thesis == null) {
-            ThesisBean bean = new ThesisBean();
-            bean.setStudent(student);
-            fillLastThesisInfo(bean, student, enrolment);
-            request.setAttribute("bean", bean);
-            return mapping.findForward("collect-basic-information");
-        } else {
-            return createProposalWithAssignment(mapping, actionForm, request, response, thesis);
-        }
+        ThesisBean bean = new ThesisBean();
+        bean.setStudent(student);
+        fillLastThesisInfo(bean, student, enrolment);
+        request.setAttribute("bean", bean);
+        return mapping.findForward("collect-basic-information");
     }
 
     private void fillLastThesisInfo(final ThesisBean bean, final Student student, final Enrolment enrolment) {
@@ -361,46 +345,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             Thesis thesis = CreateThesisProposal.run(degreeCurricularPlan, bean.getStudent(), bean.getTitle(), bean.getComment());
-            request.setAttribute("thesis", thesis);
-        } catch (DomainException e) {
-            addActionMessage("error", request, e.getKey(), e.getArgs());
-            return listThesis(mapping, actionForm, request, response);
-        }
-
-        return editProposal(mapping, actionForm, request, response);
-    }
-
-    private ActionForward createProposalWithAssignment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response, Thesis previousThesis) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-
-        Student student = getStudent(request);
-        Enrolment enrolment = student.getDissertationEnrolment();
-
-        try {
-            Thesis thesis =
-                    CreateThesisProposalWithAssignment.runCreateThesisProposalWithAssignment(degreeCurricularPlan, student,
-                            enrolment.getDissertationProposal(), previousThesis);
-            request.setAttribute("thesis", thesis);
-        } catch (DomainException e) {
-            addActionMessage("error", request, e.getKey(), e.getArgs());
-            return listThesis(mapping, actionForm, request, response);
-        }
-
-        return editProposal(mapping, actionForm, request, response);
-    }
-
-    public ActionForward createProposalWithAssignment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-
-        Student student = getStudent(request);
-        Enrolment enrolment = student.getDissertationEnrolment();
-
-        try {
-            Thesis thesis =
-                    CreateThesisProposalWithAssignment.runCreateThesisProposalWithAssignment(degreeCurricularPlan, student,
-                            enrolment.getDissertationProposal(), enrolment.getPreviousYearThesis());
             request.setAttribute("thesis", thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());

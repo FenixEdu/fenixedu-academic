@@ -178,7 +178,6 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
         if (dissertationsContextBean.getExecutionDegree() != null) {
             request.setAttribute("executionDegree", dissertationsContextBean.getExecutionDegree());
-            request.setAttribute("scheduling", dissertationsContextBean.getExecutionDegree().getScheduling());
         }
 
         request.setAttribute("dissertationsContextBean", dissertationsContextBean);

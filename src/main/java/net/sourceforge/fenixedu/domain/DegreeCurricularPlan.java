@@ -56,7 +56,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
@@ -451,23 +450,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
 
         return null;
-    }
-
-    public Set<ExecutionDegree> getExecutionDegreesWithProposalPeriodOpen() {
-        final Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(new Comparator<ExecutionDegree>() {
-
-            @Override
-            public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-                return o2.getExecutionYear().compareTo(o1.getExecutionYear());
-            }
-        });
-        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            final Scheduleing scheduling = executionDegree.getScheduling();
-            if (scheduling != null && scheduling.isInsideProposalSubmissionPeriod()) {
-                executionDegrees.add(executionDegree);
-            }
-        }
-        return Collections.unmodifiableSet(executionDegrees);
     }
 
     public Set<ExecutionYear> getExecutionYears() {

@@ -85,9 +85,6 @@ public class Branch extends Branch_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!this.getAssociatedFinalDegreeWorkProposalsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.branch.cant.delete"));
-        }
 
         if (this.representsCommonBranch() && !this.getScopesSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.branch.cant.delete"));

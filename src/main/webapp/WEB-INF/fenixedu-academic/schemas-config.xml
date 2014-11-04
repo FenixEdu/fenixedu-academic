@@ -325,50 +325,6 @@
 		<slot name="isPassInKerberos" />
 	</schema>
 
-	<schema name="final.degree.work.scheduleing"
-			type="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing">
-		<slot name="startOfProposalPeriodDate" layout="heading-date">
-			<property name="format" value="yyyy/MM/dd"/>
-		</slot>
-		<slot name="startOfProposalPeriodTime" layout="heading-date">
-			<property name="format" value="HH:mm"/>
-		</slot>
-		<slot name="endOfProposalPeriodDate" layout="heading-date">
-			<property name="format" value="yyyy/MM/dd"/>
-		</slot>
-		<slot name="endOfProposalPeriodTime" layout="heading-date">
-			<property name="format" value="HH:mm"/>
-		</slot>
-
-		<slot name="startOfCandidacyPeriodDate" layout="heading-date">
-			<property name="format" value="yyyy/MM/dd"/>
-		</slot>
-		<slot name="startOfCandidacyPeriodTime" layout="heading-date">
-			<property name="format" value="HH:mm"/>
-		</slot>
-		<slot name="endOfCandidacyPeriodDate" layout="heading-date">
-			<property name="format" value="yyyy/MM/dd"/>
-		</slot>
-		<slot name="endOfCandidacyPeriodTime" layout="heading-date">
-			<property name="format" value="HH:mm"/>
-		</slot>
-
-		<slot name="maximumNumberOfStudents"/>
-		<slot name="minimumNumberOfStudents"/>
-		<slot name="maximumNumberOfProposalCandidaciesPerGroup"/>
-		<slot name="minimumNumberOfCompletedCourses"/>
-		<slot name="minimumCompletedCreditsSecondCycle"/>
-	</schema>
-
-	<schema name="final.degree.work.proposal.short" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal">
-		<slot name="proposalNumber"/>
-		<slot name="title"/>
-		<slot name="orientator.person.name"/>
-		<slot name="coorientator.person.name"/>
-		<slot name="companionName"/>
-		<slot name="status"/>
-	</schema>
-
 	<schema name="student.curricular.plan.start.date" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
 		<slot name="startDate"/>
 	</schema>
