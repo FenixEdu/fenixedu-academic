@@ -33,12 +33,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 
 /**
@@ -49,11 +43,7 @@ import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 @WebServlet(urlPatterns = "*.faces")
 public class FenixFacesServlet implements Servlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(FenixFacesServlet.class);
-
-    public static ServletConfig servletConfig = null;
-
-    final FacesServlet facesServlet;
+    private final FacesServlet facesServlet;
 
     public FenixFacesServlet() {
         super();
@@ -63,7 +53,6 @@ public class FenixFacesServlet implements Servlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         facesServlet.init(config);
-        servletConfig = config;
     }
 
     @Override
@@ -73,27 +62,7 @@ public class FenixFacesServlet implements Servlet {
 
     @Override
     public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-        try {
-            facesServlet.service(RequestWrapperFilter.getFenixHttpServletRequestWrapper((HttpServletRequest) request), response);
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            handleException(request, response, e);
-            throw e;
-        } catch (ServletException e) {
-            logger.error(e.getMessage(), e);
-            int index = e.getMessage().indexOf("IllegalDataAccessException");
-            if (index > -1) {
-                String message = e.getMessage().substring(index);
-                throw new IllegalDataAccessException(message);
-            }
-            handleException(request, response, e);
-            throw e;
-        }
-    }
-
-    private void handleException(ServletRequest request, ServletResponse response, Exception e) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        httpServletRequest.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
+        facesServlet.service(RequestWrapperFilter.getFenixHttpServletRequestWrapper((HttpServletRequest) request), response);
     }
 
     @Override

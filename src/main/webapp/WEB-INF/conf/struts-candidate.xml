@@ -32,9 +32,6 @@
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
       </global-exceptions>
       <!-- ========== Global Forward Definitions =============================== -->
       <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>

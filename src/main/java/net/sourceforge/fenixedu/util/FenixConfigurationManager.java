@@ -36,17 +36,6 @@ public class FenixConfigurationManager {
                 defaultValue = "0000")
         public String appInstitutionPIN();
 
-        @Deprecated
-        @ConfigurationProperty(key = "barra.as.authentication.broker",
-                description = "CAS ticket validation through barra: https://fenix-ashes.ist.utl.pt/fenixWiki/Barra",
-                defaultValue = "false")
-        public Boolean barraAsAuthenticationBroker();
-
-        @Deprecated
-        @ConfigurationProperty(key = "barra.loginUrl",
-                description = "Login URL to use when barra is set as authentication broker")
-        public String barraLoginUrl();
-
         @ConfigurationProperty(key = "dges.username.prefix",
                 description = "The prefix for the username of students created via the DGES Student Importation Process.",
                 defaultValue = "ist1")
@@ -153,11 +142,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "lastYearForCredits", defaultValue = "2010/2011")
         public String getLastYearForCredits();
-
-        @Deprecated
-        @ConfigurationProperty(key = "login.page", description = "absolute path to the login page",
-                defaultValue = "http://localhost:8080/fenix/login")
-        public String getLoginPage();
 
         @ConfigurationProperty(key = "mailingList.host.name")
         public String getMailingListHostName();
@@ -269,13 +253,6 @@ public class FenixConfigurationManager {
                 description = "identifies the execution period after which mark sheet are to be managed in the fenix system.",
                 defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
-
-        @ConfigurationProperty(
-                key = "legacy.error.handling",
-                description = "Whether to keep using the legacy error handling mechanisms instead of Bennu's building error handling.",
-                defaultValue = "true")
-        public Boolean useLegacyErrorHandling();
-
     }
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());
@@ -283,8 +260,6 @@ public class FenixConfigurationManager {
     private static final class PrinterManagerHolder {
         private static PrinterManager printerManager = new PrinterManager(getConfiguration().getMarkSheetPrinters());
     }
-
-    private static Boolean barraAsAuthenticationBroker = getConfiguration().barraAsAuthenticationBroker();
 
     public static ConfigurationProperties getConfiguration() {
         return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
@@ -296,16 +271,6 @@ public class FenixConfigurationManager {
 
     public static PrinterManager getPrinterManager() {
         return PrinterManagerHolder.printerManager;
-    }
-
-    @Deprecated
-    public static Boolean isBarraAsAuthenticationBroker() {
-        return barraAsAuthenticationBroker;
-    }
-
-    @Deprecated
-    public static void setBarraAsAuthenticationBroker(Boolean state) {
-        barraAsAuthenticationBroker = state;
     }
 
 }

@@ -569,10 +569,6 @@ public abstract class PresentationConstants {
 
     public static final String AVAILABLE_INFO_SHIFT_LIST_KEY = "available_info_shift_list_key";
 
-    public static final String ORIGINAL_MAPPING_KEY = "original_mapping_key";
-
-    public static final String EXCEPTION_STACK_TRACE = "exception_stack_trace";
-
     public static final String ACADEMIC_INTERVAL = "academicInterval";
 
     public static final String CONTEXT_SELECTION_BEAN = "context_selection_bean";

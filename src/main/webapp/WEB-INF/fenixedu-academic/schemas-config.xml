@@ -58,7 +58,6 @@
     <!ENTITY delegatesSchemas SYSTEM "schemas/delegates-schemas.xml">
 	<!ENTITY caseHandlingSchemas SYSTEM "schemas/caseHandling-schemas.xml">
 	<!ENTITY residenceManagement SYSTEM "schemas/residenceManagement-schemas.xml">
-    <!ENTITY support SYSTEM "schemas/support-schemas.xml">
     <!ENTITY alumni SYSTEM "schemas/alumni-schemas.xml">
     <!ENTITY internationalRelationsOffice SYSTEM "schemas/internationalRelationsOffice-schemas.xml">
     <!ENTITY gep SYSTEM "schemas/gep-schemas.xml">
@@ -769,7 +768,6 @@
     &delegatesSchemas;
     &caseHandlingSchemas;
     &residenceManagement;
-    &support;
     &alumni;
     &internationalRelationsOffice;
     &gep;

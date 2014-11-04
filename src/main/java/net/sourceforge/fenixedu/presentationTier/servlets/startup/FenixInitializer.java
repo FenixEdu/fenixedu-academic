@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
@@ -51,8 +50,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.fenixedu.bennu.core.rest.SystemResource;
-import org.fenixedu.bennu.core.servlets.ExceptionHandlerFilter;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.portal.servlet.PortalBackendRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,9 +91,6 @@ public class FenixInitializer implements ServletContextListener {
         startContactValidationServices();
 
         registerChecksumFilterRules();
-        if (FenixConfigurationManager.getConfiguration().useLegacyErrorHandling()) {
-            registerUncaughtExceptionHandler();
-        }
 
         initializeFenixAPI();
         registerPresentationStrategy();
@@ -253,9 +247,6 @@ public class FenixInitializer implements ServletContextListener {
             @Override
             public boolean shouldFilter(HttpServletRequest request) {
                 final String uri = request.getRequestURI().substring(request.getContextPath().length());
-                if (uri.indexOf("redirect.do") >= 0) {
-                    return false;
-                }
                 if (uri.indexOf("home.do") >= 0) {
                     return false;
                 }
@@ -270,46 +261,11 @@ public class FenixInitializer implements ServletContextListener {
                 if (uri.indexOf("notAuthorized.do") >= 0) {
                     return false;
                 }
-
                 return (uri.indexOf("external/") == -1) && (uri.indexOf("login.do") == -1) && (uri.indexOf("loginCAS.do") == -1)
                         && (uri.indexOf("logoff.do") == -1) && (uri.indexOf("publico/") == -1)
-                        && (uri.indexOf("showErrorPage.do") == -1) && (uri.indexOf("showErrorPageRegistered.do") == -1)
-                        && (uri.indexOf("exceptionHandlingAction.do") == -1) && (uri.indexOf("siteMap.do") == -1)
-                        && (uri.indexOf("fenixEduIndex.do") == -1);
+                        && (uri.indexOf("siteMap.do") == -1) && (uri.indexOf("fenixEduIndex.do") == -1);
             }
 
-        });
-    }
-
-    /**
-     * Registers the custom exception handler.
-     * 
-     * @deprecated You should use Bennu's own Exception Handling mechanisms.
-     *             This handler is scheduler to be removed in version 4.0.
-     */
-    @Deprecated
-    private void registerUncaughtExceptionHandler() {
-        ExceptionHandlerFilter.setExceptionHandler((request, response, t) -> {
-            if (response.isCommitted()) {
-                // We cannot forward to the error form after the response is committed
-                return false;
-            }
-
-            HttpServletRequest req = (HttpServletRequest) request;
-
-            ExceptionInformation exceptionInfo = new ExceptionInformation(req, t);
-
-            logger.error("Request at " + req.getRequestURI() + " threw an exception: ", t);
-
-            if (CoreConfiguration.getConfiguration().developmentMode()) {
-                request.setAttribute("debugExceptionInfo", exceptionInfo);
-            } else {
-                request.setAttribute("requestBean", exceptionInfo.getRequestBean());
-                request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
-            }
-
-            request.getRequestDispatcher("/showErrorPage.do").forward(request, response);
-            return true;
         });
     }
 

@@ -101,24 +101,5 @@
     { "name": "internationalRelatOffice", "configFile": "struts-internationalRelatOffice.xml" },
     { "name": "pedagogicalCouncil", "configFile": "struts-pedagogicalCouncil.xml" },
     { "name": "student", "configFile": "struts-student.xml" }
-  ],
-  "exceptionHandlers": [
-    {
-      "handler": "net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler",
-      "mappings": [
-        {
-          "type": "java.lang.Exception",
-          "key": "error.Exception"
-        },
-        {
-          "type": "net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException",
-          "key": "error.NotAuthorized"
-        },
-        {
-          "type": "net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException",
-          "key": "error.NotAuthorized"
-        }
-      ]
-    }
   ]
 }

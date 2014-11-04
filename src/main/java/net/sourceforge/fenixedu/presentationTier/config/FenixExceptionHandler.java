@@ -28,20 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 /**
  * @author João Mota
@@ -74,16 +69,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
             HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-        if (ex instanceof InvalidSessionActionException) {
-            ActionErrors errors = new ActionErrors();
-            errors.add("error.invalid.session", new ActionError("error.invalid.session"));
-            request.setAttribute(Globals.ERROR_KEY, errors);
-            return new ActionForward("/loginPage.jsp");
-        }
-
-        request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
-        request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
-
         if (ae.getScope() != "request") {
             ae.setScope("session");
         }
@@ -102,19 +87,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
         // Store the exception
         request.setAttribute(Globals.EXCEPTION_KEY, ex);
         super.storeException(request, property, error, null, ae.getScope());
-
-        ExceptionInformation exceptionInfo = new ExceptionInformation(request, ex);
-
-        request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
-        request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
-
-        if (CoreConfiguration.getConfiguration().developmentMode()) {
-            request.setAttribute("debugExceptionInfo", exceptionInfo);
-        } else {
-            request.setAttribute("requestBean", exceptionInfo.getRequestBean());
-            request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
-        }
-
         return super.execute(ex, ae, mapping, formInstance, request, response);
     }
 
