@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExamStudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -38,7 +37,6 @@ public class UnEnrollStudentInWrittenEvaluation extends EnrolStudentInWrittenEva
     @Atomic
     public static void runUnEnrollStudentInWrittenEvaluation(String username, String writtenEvaluationOID)
             throws FenixServiceException {
-        ExamStudentAuthorizationFilter.instance.execute();
         serviceInstance.run(username, writtenEvaluationOID);
     }
 

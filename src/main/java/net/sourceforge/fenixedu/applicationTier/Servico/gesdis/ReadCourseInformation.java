@@ -18,11 +18,10 @@
  */
 /*
  * Created on 12/Nov/2003
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -55,17 +54,8 @@ public class ReadCourseInformation {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseOID);
             return serviceInstance.run(executionCourseOID);
         } catch (NotAuthorizedException ex1) {
-            try {
-                ReadCourseInformationCoordinatorAuthorizationFilter.instance.execute(executionCourseOID);
-                return serviceInstance.run(executionCourseOID);
-            } catch (NotAuthorizedException ex2) {
-                try {
-                    GEPAuthorizationFilter.instance.execute();
-                    return serviceInstance.run(executionCourseOID);
-                } catch (NotAuthorizedException ex3) {
-                    throw ex3;
-                }
-            }
+            ReadCourseInformationCoordinatorAuthorizationFilter.instance.execute(executionCourseOID);
+            return serviceInstance.run(executionCourseOID);
         }
     }
 

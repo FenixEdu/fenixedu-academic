@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -73,7 +72,6 @@ public class ReadStudentListByCurricularCourse {
     @Atomic
     public static List runReadStudentListByCurricularCourse(User userView, String curricularCourseID, String executionYear)
             throws FenixServiceException, NotAuthorizedException {
-        StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);
         return serviceInstance.run(userView, curricularCourseID, executionYear);
     }
 

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.ca
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.CandidateApprovalAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -69,7 +68,6 @@ public class ApproveCandidates {
     @Atomic
     public static void runApproveCandidates(String[] situations, String[] ids, String[] remarks, String[] substitutes)
             throws NotAuthorizedException {
-        CandidateApprovalAuthorizationFilter.instance.execute(situations, ids, remarks, substitutes);
         serviceInstance.run(situations, ids, remarks, substitutes);
     }
 

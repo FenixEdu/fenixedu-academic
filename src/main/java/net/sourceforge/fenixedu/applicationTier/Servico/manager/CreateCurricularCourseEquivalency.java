@@ -20,9 +20,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -45,24 +42,6 @@ public class CreateCurricularCourseEquivalency {
         final CurricularCourse oldCurricularCourse = (CurricularCourse) FenixFramework.getDomainObject(oldCurricularCourseID);
 
         new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, Collections.singleton(oldCurricularCourse));
-    }
-
-    // Service Invokers migrated from Berserk
-
-    @Atomic
-    public static void runCreateCurricularCourseEquivalency(String degreeCurricularPlanID, String curricularCourseID,
-            String oldCurricularCourseID) throws NotAuthorizedException {
-        try {
-            DegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
-            run(degreeCurricularPlanID, curricularCourseID, oldCurricularCourseID);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                ManagerAuthorizationFilter.instance.execute();
-                run(degreeCurricularPlanID, curricularCourseID, oldCurricularCourseID);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
     }
 
 }

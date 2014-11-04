@@ -21,9 +21,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.StudentCurriculumViewAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -56,22 +53,7 @@ public class ReadStudentCurriculum {
     @Atomic
     public static List runReadStudentCurriculum(String executionDegreeCode, String studentCurricularPlanID)
             throws FenixServiceException, NotAuthorizedException {
-        try {
-            StudentCurriculumViewAuthorizationFilter.instance.execute();
-            return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
-        } catch (NotAuthorizedException ex2) {
-            try {
-                CoordinatorAuthorizationFilter.instance.execute();
-                return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
-            } catch (NotAuthorizedException ex3) {
-                try {
-                    MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
-                    return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
-                } catch (NotAuthorizedException ex4) {
-                    throw ex4;
-                }
-            }
-        }
+        return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
     }
 
 }

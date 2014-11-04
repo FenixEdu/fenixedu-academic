@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -104,17 +103,8 @@ public class ReadCourseHistoric {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseId);
             return serviceInstance.run(executionCourseId);
         } catch (NotAuthorizedException ex1) {
-            try {
-                ReadCourseInformationCoordinatorAuthorizationFilter.instance.execute(executionCourseId);
-                return serviceInstance.run(executionCourseId);
-            } catch (NotAuthorizedException ex2) {
-                try {
-                    GEPAuthorizationFilter.instance.execute();
-                    return serviceInstance.run(executionCourseId);
-                } catch (NotAuthorizedException ex3) {
-                    throw ex3;
-                }
-            }
+            ReadCourseInformationCoordinatorAuthorizationFilter.instance.execute(executionCourseId);
+            return serviceInstance.run(executionCourseId);
         }
     }
 

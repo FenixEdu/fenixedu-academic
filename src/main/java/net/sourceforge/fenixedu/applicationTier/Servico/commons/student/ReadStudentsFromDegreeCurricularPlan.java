@@ -20,7 +20,7 @@
  * 
  * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
  * (jccm@rnl.ist.utl.pt)
- *  
+ * 
  */
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
@@ -28,8 +28,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByDegreeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -73,17 +71,7 @@ public class ReadStudentsFromDegreeCurricularPlan {
     @Atomic
     public static List runReadStudentsFromDegreeCurricularPlan(String degreeCurricularPlanID, DegreeType degreeType)
             throws FenixServiceException, NotAuthorizedException {
-        try {
-            StudentListByDegreeAuthorizationFilter.instance.execute(degreeCurricularPlanID, degreeType);
-            return serviceInstance.run(degreeCurricularPlanID, degreeType);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                GEPAuthorizationFilter.instance.execute();
-                return serviceInstance.run(degreeCurricularPlanID, degreeType);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
+        return serviceInstance.run(degreeCurricularPlanID, degreeType);
     }
 
 }

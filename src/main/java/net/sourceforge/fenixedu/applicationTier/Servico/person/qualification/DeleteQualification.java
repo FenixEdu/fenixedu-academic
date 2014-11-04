@@ -23,7 +23,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.person.ReadQualificationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Qualification;
 import pt.ist.fenixframework.Atomic;
@@ -45,7 +44,6 @@ public class DeleteQualification {
 
     @Atomic
     public static void runDeleteQualification(String qualificationId) throws NotAuthorizedException {
-        ReadQualificationAuthorizationFilter.instance.execute(qualificationId);
         run(qualificationId);
     }
 

@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -54,17 +53,8 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan {
     @Atomic
     public static List runReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan(ExecutionDegree executionDegree)
             throws NotAuthorizedException {
-        try {
-            ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter.instance.execute(executionDegree);
-            return serviceInstance.run(executionDegree);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                GEPAuthorizationFilter.instance.execute();
-                return serviceInstance.run(executionDegree);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
+        ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter.instance.execute(executionDegree);
+        return serviceInstance.run(executionDegree);
     }
 
 }

@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.WriteCandidateEnrolmentsAuhorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -118,8 +117,6 @@ public class WriteCandidateEnrolments {
     @Atomic
     public static void runWriteCandidateEnrolments(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits,
             String givenCreditsRemarks) throws FenixServiceException, NotAuthorizedException {
-        WriteCandidateEnrolmentsAuhorizationFilter.instance.execute(selectedCurricularCoursesIDs, candidateID, credits,
-                givenCreditsRemarks);
         serviceInstance.run(selectedCurricularCoursesIDs, candidateID, credits, givenCreditsRemarks);
     }
 

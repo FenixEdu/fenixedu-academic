@@ -18,25 +18,22 @@
  */
 /*
  * Created on Dec 14, 2003 by jpvl
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.student.tests;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
  */
-public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
+public abstract class ReadStudentTestBaseFilter {
 
     final public void execute(String testId) throws NotAuthorizedException {
-        super.execute();
 
         DistributedTest distributedTest = FenixFramework.getDomainObject(testId);
 
@@ -66,17 +63,6 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
         beginDate.set(Calendar.MINUTE, beginHour.get(Calendar.MINUTE));
         beginDate.set(Calendar.SECOND, 0);
         beginDate.set(Calendar.MILLISECOND, 0);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
-    @Override
-    final protected RoleType getRoleType() {
-
-        return RoleType.STUDENT;
     }
 
 }

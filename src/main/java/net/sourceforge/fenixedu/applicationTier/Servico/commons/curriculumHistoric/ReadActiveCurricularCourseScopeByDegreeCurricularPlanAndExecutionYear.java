@@ -24,14 +24,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHisto
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicCurriculumsViewAuthorization;
-import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -103,84 +95,12 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
     public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
             String degreeCurricularPlanID, AcademicInterval academicInterval) throws FenixServiceException,
             NotAuthorizedException {
-        try {
-            ManagerAuthorizationFilter.instance.execute();
-            return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                TeacherAuthorizationFilter.instance.execute();
-                return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-            } catch (NotAuthorizedException ex2) {
-                try {
-                    AcademicCurriculumsViewAuthorization.instance.execute();
-                    return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-                } catch (NotAuthorizedException ex3) {
-                    try {
-                        ResourceAllocationManagerAuthorizationFilter.instance.execute();
-                        return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-                    } catch (NotAuthorizedException ex4) {
-                        try {
-                            GEPAuthorizationFilter.instance.execute();
-                            return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-                        } catch (NotAuthorizedException ex5) {
-                            try {
-                                DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
-                                EmployeeAuthorizationFilter.instance.execute();
-                                return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-                            } catch (NotAuthorizedException ex6) {
-                                try {
-                                    OperatorAuthorizationFilter.instance.execute();
-                                    return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-                                } catch (NotAuthorizedException ex7) {
-                                    throw ex7;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return serviceInstance.run(degreeCurricularPlanID, academicInterval);
     }
 
     @Atomic
     public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
             String degreeCurricularPlanID, String executioYearID) throws FenixServiceException, NotAuthorizedException {
-        try {
-            ManagerAuthorizationFilter.instance.execute();
-            return serviceInstance.run(degreeCurricularPlanID, executioYearID);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                TeacherAuthorizationFilter.instance.execute();
-                return serviceInstance.run(degreeCurricularPlanID, executioYearID);
-            } catch (NotAuthorizedException ex2) {
-                try {
-                    AcademicCurriculumsViewAuthorization.instance.execute();
-                    return serviceInstance.run(degreeCurricularPlanID, executioYearID);
-                } catch (NotAuthorizedException ex3) {
-                    try {
-                        ResourceAllocationManagerAuthorizationFilter.instance.execute();
-                        return serviceInstance.run(degreeCurricularPlanID, executioYearID);
-                    } catch (NotAuthorizedException ex4) {
-                        try {
-                            GEPAuthorizationFilter.instance.execute();
-                            return serviceInstance.run(degreeCurricularPlanID, executioYearID);
-                        } catch (NotAuthorizedException ex5) {
-                            try {
-                                DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
-                                EmployeeAuthorizationFilter.instance.execute();
-                                return serviceInstance.run(degreeCurricularPlanID, executioYearID);
-                            } catch (NotAuthorizedException ex6) {
-                                try {
-                                    OperatorAuthorizationFilter.instance.execute();
-                                    return serviceInstance.run(degreeCurricularPlanID, executioYearID);
-                                } catch (NotAuthorizedException ex7) {
-                                    throw ex7;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return serviceInstance.run(degreeCurricularPlanID, executioYearID);
     }
 }

@@ -21,10 +21,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ExamStudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -75,8 +73,7 @@ public class EnrolStudentInWrittenEvaluation {
 
     @Atomic
     public static void runEnrolStudentInWrittenEvaluation(String username, String writtenEvaluationOID)
-            throws FenixServiceException, NotAuthorizedException {
-        ExamStudentAuthorizationFilter.instance.execute(username, writtenEvaluationOID);
+            throws FenixServiceException {
         serviceInstance.run(username, writtenEvaluationOID);
     }
 

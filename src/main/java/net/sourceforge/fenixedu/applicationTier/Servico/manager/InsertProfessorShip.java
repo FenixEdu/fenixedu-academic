@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.credits.DepartmentInsertProfessorshipAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -65,15 +64,6 @@ public class InsertProfessorShip {
                 throw ex2;
             }
         }
-    }
-
-    // Service Invokers migrated from Berserk
-
-    @Atomic
-    public static void runInsertProfessorshipByDepartment(String executionCourseId, String teacherId, Boolean responsibleFor,
-            Double hours) throws FenixServiceException, NotAuthorizedException {
-        DepartmentInsertProfessorshipAuthorization.instance.execute(teacherId);
-        serviceInstance.run(executionCourseId, teacherId, responsibleFor, hours);
     }
 
 }
