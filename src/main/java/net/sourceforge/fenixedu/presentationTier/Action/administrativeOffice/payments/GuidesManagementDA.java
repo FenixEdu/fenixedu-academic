@@ -23,7 +23,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.GuideDocument;
@@ -63,7 +62,7 @@ public class GuidesManagementDA extends PaymentsManagementDispatchAction {
     }
 
     public ActionForward printGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, JRException {
+            HttpServletResponse response) throws IOException {
 
         PaymentsManagementDTO managementDTO =
                 (PaymentsManagementDTO) RenderUtils.getViewState("paymentsManagementDTO").getMetaObject().getObject();

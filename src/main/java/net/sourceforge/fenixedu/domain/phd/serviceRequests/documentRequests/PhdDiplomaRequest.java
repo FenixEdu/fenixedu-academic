@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 import java.util.List;
 import java.util.Locale;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhdDiplomaRequestEvent;
@@ -283,7 +282,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;
-        } catch (JRException e) {
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
         }

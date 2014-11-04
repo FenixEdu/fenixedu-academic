@@ -28,7 +28,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
 import net.sourceforge.fenixedu.applicationTier.Servico.phd.CreateEnrolmentPeriods;
@@ -1146,7 +1145,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     // Print school registration declaration
 
     public ActionForward printSchoolRegistrationDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, JRException {
+            HttpServletResponse response) throws IOException {
 
         final PhdSchoolRegistrationDeclarationDocument report = new PhdSchoolRegistrationDeclarationDocument(getProcess(request));
         writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",

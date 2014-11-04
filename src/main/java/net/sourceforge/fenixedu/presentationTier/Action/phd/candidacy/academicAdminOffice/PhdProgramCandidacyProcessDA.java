@@ -28,7 +28,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -401,7 +400,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     public ActionForward printNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException {
+            HttpServletResponse response) throws IOException {
 
         final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request), getLanguage(request));
         writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
@@ -425,7 +424,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     public ActionForward printCandidacyDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, JRException {
+            HttpServletResponse response) throws IOException {
 
         final PhdCandidacyDeclarationDocument report =
                 new PhdCandidacyDeclarationDocument(getProcess(request), getLanguage(request));

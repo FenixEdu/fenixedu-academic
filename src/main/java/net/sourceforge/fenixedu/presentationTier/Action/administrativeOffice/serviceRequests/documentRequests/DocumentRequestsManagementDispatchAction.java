@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jvstm.cps.ConsistencyException;
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DocumentRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionBean;
@@ -108,7 +107,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixServiceException {
+            HttpServletResponse response) throws IOException, FenixServiceException {
         final IDocumentRequest documentRequest = getDocumentRequest(request);
         try {
             byte[] data = documentRequest.generateDocument();

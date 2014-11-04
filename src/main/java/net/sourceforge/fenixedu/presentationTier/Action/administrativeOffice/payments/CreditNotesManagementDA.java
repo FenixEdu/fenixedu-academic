@@ -23,7 +23,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ChangeCreditNoteState;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateCreditNote;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateCreditNoteBean;
@@ -161,7 +160,7 @@ public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
     }
 
     public ActionForward printCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException {
+            HttpServletResponse response) throws IOException {
 
         final CreditNote creditNote = getCreditNoteFromViewState();
 

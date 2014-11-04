@@ -25,7 +25,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.curriculumValidation.DocumentPrintRequest;
@@ -122,7 +121,7 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 
     @Override
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixServiceException {
+            HttpServletResponse response) throws IOException, FenixServiceException {
         final IDocumentRequest documentRequest = getDocumentRequest(request);
         try {
             final List<AdministrativeOfficeDocument> documents =

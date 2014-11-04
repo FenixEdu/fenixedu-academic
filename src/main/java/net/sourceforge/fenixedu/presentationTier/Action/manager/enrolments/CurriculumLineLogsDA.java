@@ -18,12 +18,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,10 +38,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.time.Second;
-import org.jfree.data.time.TimeTableXYDataset;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -149,34 +139,6 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
             return start == null || end == null ? null : new Interval(start, end);
         }
 
-        public byte[] getOperationsChart() throws IOException {
-            final TimeTableXYDataset dataset = new TimeTableXYDataset();
-
-            DateTime index = enrolmentPeriod.getStart();
-            for (int i = 0; i < enrolments.length; i++) {
-                final Second second = new Second(index.toDate());
-                index = index.plus(INTERVAL_SIZE_IN_MILLIS);
-
-                final int enrolmentCount = enrolments[i];
-                dataset.add(second, enrolmentCount, "Enrolments");
-
-                final int unenrolmentCount = unenrolments[i];
-                dataset.add(second, unenrolmentCount, "Unenrolments");
-            }
-
-            return getOperationsChart(dataset);
-        }
-
-        private byte[] getOperationsChart(final TimeTableXYDataset dataset) throws IOException {
-            final JFreeChart jfreeChart = ChartFactory.createTimeSeriesChart("", "", "", dataset, true, true, true);
-            final BufferedImage bufferedImage = jfreeChart.createBufferedImage(1000, 500);
-            final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "jpg", outputStream);
-            bufferedImage.flush();
-            outputStream.close();
-            return outputStream.toByteArray();
-        }
-
     }
 
     public ActionForward viewCurriculumLineLogStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -196,28 +158,4 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
         return prepareViewCurriculumLineLogs(mapping, form, request, response);
     }
 
-    public ActionForward viewCurriculumLineLogStatisticsChartOperations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
-
-        if (executionSemester != null) {
-            final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator =
-                    new CurriculumLineLogStatisticsCalculator(executionSemester);
-
-            ServletOutputStream writer = null;
-            try {
-                writer = response.getOutputStream();
-                response.setContentType("image/jpeg");
-                writer.write(curriculumLineLogStatisticsCalculator.getOperationsChart());
-                writer.flush();
-            } finally {
-                writer.close();
-                response.flushBuffer();
-            }
-
-        }
-
-        return null;
-    }
 }

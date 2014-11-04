@@ -23,7 +23,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.AcceptThesisDeclaration;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisAbstractFile;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile;
@@ -322,7 +321,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
             response.getOutputStream().write(data);
 
             return null;
-        } catch (JRException e) {
+        } catch (Exception e) {
             addActionMessage("error", request, "student.thesis.generate.identification.failed");
             return prepareThesisSubmission(mapping, actionForm, request, response);
         }
@@ -343,7 +342,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
             response.getOutputStream().write(data);
 
             return null;
-        } catch (JRException e) {
+        } catch (Exception e) {
             addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
             return prepareThesisSubmission(mapping, actionForm, request, response);
         }

@@ -23,7 +23,6 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
@@ -140,7 +139,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     public ActionForward generateNewIRSDeclaration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException {
+            HttpServletResponse response) {
 
         final Person person = getPerson(request);
         final IRSDeclarationDTO declarationDTO = getRenderedObject("declarationDTO");
@@ -167,7 +166,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     public ActionForward generateAgainAnnualIRSDeclarationDocument(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws JRException {
+            HttpServletRequest request, HttpServletResponse response) {
 
         try {
             final AnnualIRSDeclarationDocument document = getDomainObject(request, "annualIRSDocumentOid");
@@ -190,8 +189,8 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
         return showAnnualIRSDocumentsInPayments(mapping, actionForm, request, response);
     }
 
-    private byte[] buildIRSCustomDeclaration(final IRSDeclarationDTO declarationDTO, final Person person) throws JRException,
-            FenixActionException {
+    private byte[] buildIRSCustomDeclaration(final IRSDeclarationDTO declarationDTO, final Person person)
+            throws FenixActionException {
 
         addPayedAmount(person, declarationDTO.getCivilYear(), declarationDTO);
         final IRSCustomDeclaration customDeclaration = new IRSCustomDeclaration(declarationDTO);

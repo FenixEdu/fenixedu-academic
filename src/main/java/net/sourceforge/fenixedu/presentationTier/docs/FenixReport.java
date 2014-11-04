@@ -26,7 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.util.DateI18NUtil;
-import net.sourceforge.fenixedu.util.JasperPrintProcessor;
+import net.sourceforge.fenixedu.util.report.ReportPrinter.ReportDescription;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
@@ -34,7 +34,7 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract public class FenixReport implements Serializable {
+abstract public class FenixReport implements Serializable, ReportDescription {
 
     private static final Logger logger = LoggerFactory.getLogger(FenixReport.class);
 
@@ -73,10 +73,12 @@ abstract public class FenixReport implements Serializable {
         this.language = locale;
     }
 
+    @Override
     public final Collection<?> getDataSource() {
         return dataSource;
     }
 
+    @Override
     public final Map<String, Object> getParameters() {
         return parameters;
     }
@@ -89,12 +91,13 @@ abstract public class FenixReport implements Serializable {
         return language;
     }
 
-    public String getReportTemplateKey() {
-        return getClass().getName();
+    @Override
+    public String getKey() {
+        return getReportTemplateKey();
     }
 
-    public JasperPrintProcessor getPreProcessor() {
-        return null;
+    public String getReportTemplateKey() {
+        return getClass().getName();
     }
 
     public void addParameter(final String key, final Object value) {

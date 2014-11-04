@@ -25,7 +25,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -430,7 +429,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     public ActionForward printJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, JRException {
+            HttpServletResponse response) throws IOException {
 
         final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
 

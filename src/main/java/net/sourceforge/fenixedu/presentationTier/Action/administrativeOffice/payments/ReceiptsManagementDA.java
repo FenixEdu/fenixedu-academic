@@ -27,7 +27,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceipt;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.RegisterReceiptPrint;
@@ -244,7 +243,7 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
     }
 
     public ActionForward printReceipt(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, JRException {
+            HttpServletResponse response) throws IOException {
 
         final Receipt receipt = getRenderedObject("receipt");
         try {

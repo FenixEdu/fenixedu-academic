@@ -22,7 +22,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -182,7 +181,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
 
             return data;
-        } catch (JRException e) {
+        } catch (Exception e) {
             throw new DomainException("error.documentRequest.errorGeneratingDocument", e);
         }
     }

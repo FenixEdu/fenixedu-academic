@@ -24,7 +24,6 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisDiscussion;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
@@ -361,7 +360,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             response.getOutputStream().write(data);
 
             return null;
-        } catch (final JRException e) {
+        } catch (final Exception e) {
             addActionMessage("error", request, "student.thesis.generate.identification.failed");
             return showThesisDetails(mapping, request, thesis);
         }
@@ -382,7 +381,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             response.getOutputStream().write(data);
 
             return null;
-        } catch (final JRException e) {
+        } catch (final Exception e) {
             addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
             return showThesisDetails(mapping, request, thesis);
         }

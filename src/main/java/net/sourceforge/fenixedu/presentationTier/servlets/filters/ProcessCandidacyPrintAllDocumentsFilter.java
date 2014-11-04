@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,12 +38,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
@@ -53,6 +46,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.candidacydocfiller.PdfFiller;
 import net.sourceforge.fenixedu.util.Bundle;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -84,7 +78,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(ProcessCandidacyPrintAllDocumentsFilter.class);
 
-    private static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
+    private static final String ACADEMIC_ADMIN_SHEET_REPORT_KEY = "processOpeningAndUpdating";
     private ServletContext servletContext;
 
     private String getMail(Person person) {
@@ -223,8 +217,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
         PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
 
         try {
-            copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person).toByteArray()));
-        } catch (JRException e) {
+            copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person)));
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
         copy.addDocument(new PdfReader(originalDoc));
@@ -241,10 +235,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     }
 
     @SuppressWarnings("unchecked")
-    private ByteArrayOutputStream createAcademicAdminProcessSheet(Person person) throws JRException {
-        InputStream istream = getClass().getResourceAsStream(ACADEMIC_ADMIN_SHEET_REPORT_PATH);
-        JasperReport report = (JasperReport) JRLoader.loadObject(istream);
-
+    private byte[] createAcademicAdminProcessSheet(Person person) {
         @SuppressWarnings("rawtypes")
         HashMap map = new HashMap();
 
@@ -306,10 +297,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             // better than no form at all
         }
 
-        JasperPrint print = JasperFillManager.fillReport(report, map);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        JasperExportManager.exportReportToPdfStream(print, output);
-        return output;
+        return ReportsUtils.exportToPdfFileAsByteArray(ACADEMIC_ADMIN_SHEET_REPORT_KEY, map, null);
     }
 
     private Registration findRegistration(final Student student) {

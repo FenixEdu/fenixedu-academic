@@ -26,7 +26,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CancelSubmitThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
@@ -742,7 +741,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             response.getOutputStream().write(data);
 
             return null;
-        } catch (JRException e) {
+        } catch (Exception e) {
             addActionMessage("error", request, "coordinator.thesis.approved.print.failed");
             return viewSubmitted(mapping, actionForm, request, response);
         }
@@ -824,7 +823,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             response.getOutputStream().write(data);
 
             return null;
-        } catch (JRException e) {
+        } catch (Exception e) {
             addActionMessage("error", request, "student.thesis.generate.identification.failed");
             return listThesis(mapping, actionForm, request, response);
         }
@@ -845,7 +844,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             response.getOutputStream().write(data);
 
             return null;
-        } catch (JRException e) {
+        } catch (Exception e) {
             addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
             return listThesis(mapping, actionForm, request, response);
         }
