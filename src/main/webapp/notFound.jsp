@@ -19,7 +19,6 @@
 
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%
 response.setStatus(404);
 %>
@@ -27,7 +26,7 @@ response.setStatus(404);
 
 <head>
 	<title>
-		<bean:message key="public.general.notFount" bundle="TITLES_RESOURCES"/>
+		${portal.message('resources.TitlesResources', 'public.general.notFount')}
 	</title>
 	<link href="${pageContext.request.contextPath}/bennu-core/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -70,16 +69,16 @@ response.setStatus(404);
 				<img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo"/>
 			</div>
 			<div class="col-sm-6 col-sm-pull-6">
-				<bean:message key="error.message.resource.not.found" bundle="GLOBAL_RESOURCES" />
+				${portal.message('resources.GlobalResources', 'error.message.resource.not.found')}
 			</div>
 		</div>
 		<div class="content">
-			<p><bean:message key="error.message.resource.not.found.message" bundle="GLOBAL_RESOURCES" /></p>
+			<p>${portal.message('resources.GlobalResources', 'error.message.resource.not.found.message')}</p>
 			<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
 				<br />
 				<p><a href="${pageContext.request.contextPath}/login">Login</a></p>
 			</c:if>
 		</div>
 	</div>
-	<!-- Message: ${pageContext.findAttribute('javax.servlet.error.message')} -->
+	<!-- Message: '${pageContext.findAttribute('javax.servlet.error.message')}' -->
 </body>

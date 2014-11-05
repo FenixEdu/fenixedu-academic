@@ -19,7 +19,6 @@
 
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%
 response.setStatus(403);
 %>
@@ -27,7 +26,7 @@ response.setStatus(403);
 
 <head>
 	<title>
-		<bean:message key="title.not.authorized" bundle="APPLICATION_RESOURCES"/>
+		${portal.message('resources.ApplicationResources', 'title.not.authorized')}
 	</title>
 	<link href="${pageContext.request.contextPath}/bennu-core/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -70,11 +69,11 @@ response.setStatus(403);
 				<img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo"/>
 			</div>
 			<div class="col-sm-6 col-sm-pull-6">
-				<bean:message key="title.notAuthorized" bundle="GLOBAL_RESOURCES" />
+				${portal.message('resources.GlobalResources', 'title.notAuthorized')}
 			</div>
 		</div>
 		<div class="content">
-			<p><bean:message key="error.exception.notAuthorized" bundle="APPLICATION_RESOURCES" /></p>
+			<p>${portal.message('resources.ApplicationResources', 'error.exception.notAuthorized')}</p>
 			<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
 				<br />
 				<p><a href="${pageContext.request.contextPath}/login">Login</a></p>
