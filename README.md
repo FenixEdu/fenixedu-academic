@@ -1,7 +1,7 @@
-FenixEdu [![Build Status](https://travis-ci.org/FenixEdu/fenixedu-academic.png?branch=master)](https://travis-ci.org/FenixEdu/fenix)
+FenixEdu Academic [![Build Status](https://travis-ci.org/FenixEdu/fenixedu-academic.png?branch=master)](https://travis-ci.org/FenixEdu/fenix)
 ==========
 
-FenixEdu is a modular software platform for academic and administrative management of higher education institutions. It provides an integrated solution that spans all levels of the academic management process: from high level management tasks to the daily communication between students, faculty and staff. Take a look at [FenixEdu.org](http://fenixedu.org/) for more information.
+FenixEdu Academic is a open source Student Information System. It provides the back office system where schools manage students, teachers, degrees and courses. Take a look at [FenixEdu.org](http://fenixedu.org/) for more information.
 
 **Table of Contents**
 
