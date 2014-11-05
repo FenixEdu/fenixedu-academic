@@ -61,7 +61,6 @@ public class Email extends Email_Base {
         properties.put("mail.smtp.host", FenixConfigurationManager.getConfiguration().getMailSmtpHost());
         properties.put("mail.smtp.name", FenixConfigurationManager.getConfiguration().getMailSmtpName());
         properties.put("mailSender.max.recipients", FenixConfigurationManager.getConfiguration().getMailSenderMaxRecipients());
-        properties.put("mailingList.host.name", FenixConfigurationManager.getConfiguration().getMailingListHostName());
         properties.put("mail.debug", "false");
         final Session tempSession = Session.getDefaultInstance(properties, null);
         MAX_MAIL_RECIPIENTS = Integer.parseInt(properties.getProperty("mailSender.max.recipients"));

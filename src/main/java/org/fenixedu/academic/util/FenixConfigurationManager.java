@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.util;
 
-import java.util.Map;
-
 import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
 import org.fenixedu.commons.configuration.ConfigurationManager;
 import org.fenixedu.commons.configuration.ConfigurationProperty;
@@ -28,21 +26,10 @@ public class FenixConfigurationManager {
     @ConfigurationManager(description = "General Fenix Configuration")
     public interface ConfigurationProperties {
 
-        @ConfigurationProperty(key = "app.institution.AES128.secretKey",
-                description = "Secret for Institution ID card generation", defaultValue = "aa0bbfaf79654df4")
-        public String appInstitutionAES128SecretKey();
-
-        @ConfigurationProperty(key = "app.institution.PIN", description = "PIN for Institution ID card generation",
-                defaultValue = "0000")
-        public String appInstitutionPIN();
-
         @ConfigurationProperty(key = "dges.username.prefix",
                 description = "The prefix for the username of students created via the DGES Student Importation Process.",
                 defaultValue = "ist1")
         public String dgesUsernamePrefix();
-
-        @ConfigurationProperty(key = "ciistCostCenterCode", description = "Deprecated, to be removed", defaultValue = "8431")
-        public Integer getCIISTCostCenterCode();
 
         @ConfigurationProperty(key = "ciist.sms.gateway.url")
         public String getCIISTSMSGatewayUrl();
@@ -52,40 +39,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "ciist.sms.username")
         public String getCIISTSMSUsername();
-
-        @ConfigurationProperty(key = "consult.roles.admin.allowed.hosts", defaultValue = "127.0.0.1,localhost,192.168.1.101")
-        public String getConsultRolesAdminAllowedHosts();
-
-        @ConfigurationProperty(key = "consult.roles.admin.password", defaultValue = "xPtO")
-        public String getConsultRolesAdminPassword();
-
-        @ConfigurationProperty(
-                key = "email.admin.allowed.hosts",
-                description = "comma seperated values of hosts and/or ip addresses that are allowed to call external email administration",
-                defaultValue = "")
-        public String getEmailAdminAllowedHosts();
-
-        @ConfigurationProperty(key = "email.admin.password",
-                description = "password required to call external email administration", defaultValue = "xPtO!)&#.")
-        public String getEmailAdminPassword();
-
-        @ConfigurationProperty(key = "externalServices.AEIST.password")
-        public String getExternalServicesAEISTPassword();
-
-        @ConfigurationProperty(key = "externalServices.AEIST.username")
-        public String getExternalServicesAEISTUsername();
-
-        @ConfigurationProperty(key = "externalServices.ISTConnect.password")
-        public String getExternalServicesISTConnectPassword();
-
-        @ConfigurationProperty(key = "externalServices.ISTConnect.username")
-        public String getExternalServicesISTConnectUsername();
-
-        @ConfigurationProperty(key = "externalServices.koha.password")
-        public String getExternalServicesKohaPassword();
-
-        @ConfigurationProperty(key = "externalServices.koha.username")
-        public String getExternalServicesKohaUsername();
 
         @ConfigurationProperty(key = "fenix.api.events.rss.url.pt")
         public String getFenixApiEventsRSSUrlPt();
@@ -117,34 +70,11 @@ public class FenixConfigurationManager {
                 defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&confirmationCode=")
         public String getGenericApplicationEmailRecommendationLink();
 
-        @ConfigurationProperty(key = "google.analytics.snippet",
-                description = "Google Analytics snippet configuration (without <script> tags)", defaultValue = "")
-        public String getGoogleAnalyticsSnippet();
-
-        @ConfigurationProperty(
-                key = "gratuity.situation.creator.task.hour",
-                description = "Hour at which the task will be launched to create the gratuity situations. set to -1 to deactivate.",
-                defaultValue = "1")
-        public String getGratuitySituationCreatorTaskHour();
-
-        @ConfigurationProperty(
-                key = "host.control.name.*",
-                description = "Comma separated hostname values that are allowed to access the url host.control.name. See HostAccessControl.isAllowed(name, request)")
-        public Map<String, String> getHostControlName();
-
-        @ConfigurationProperty(key = "index.page.redirect",
-                description = "host specific initial page to be displayed from applications root",
-                defaultValue = "fenixEduIndex.do")
-        public String getIndexPageRedirect();
-
         @ConfigurationProperty(key = "lastSemesterForCredits")
         public String getLastSemesterForCredits();
 
         @ConfigurationProperty(key = "lastYearForCredits", defaultValue = "2010/2011")
         public String getLastYearForCredits();
-
-        @ConfigurationProperty(key = "mailingList.host.name")
-        public String getMailingListHostName();
 
         @ConfigurationProperty(key = "mailSender.max.recipients", defaultValue = "50")
         public String getMailSenderMaxRecipients();
@@ -154,16 +84,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "mail.smtp.name", description = "The name of the SMTP server used to send Emails")
         public String getMailSmtpName();
-
-        @ConfigurationProperty(key = "merge.units.emails",
-                description = "comma separated emails of persons who want to receive emails about merge of units.")
-        public String getMergeUnitsEmails();
-
-        @ConfigurationProperty(key = "nameresolution.name", defaultValue = "fenixRemoteRequests")
-        public String getNameResolutionName();
-
-        @ConfigurationProperty(key = "nameresolution.password")
-        public String getNameResolutionPassword();
 
         @ConfigurationProperty(key = "phd.public.candidacy.submission.link")
         public String getPhdPublicCandidacySubmissionLink();
@@ -186,22 +106,10 @@ public class FenixConfigurationManager {
                 defaultValue = "2")
         public String getSemesterForFromMarkSheetManagment();
 
-        @ConfigurationProperty(
-                key = "sibs.destinationInstitutionId",
-                description = "used in header payments file and represents entity service identification (i.e. sibs). Default value '50000000' (sibs identification)",
-                defaultValue = "50000000")
-        public String getSibsDestinationInstitutionId();
-
         @ConfigurationProperty(key = "sibs.entityCode",
                 description = "institution entity code to be used in atm machines with reference to perform payments",
                 defaultValue = "1111")
         public String getSibsEntityCode();
-
-        @ConfigurationProperty(
-                key = "sibs.sourceInstitutionId",
-                description = "used in header payments file, and represents institution identification accordding to transfer service (i.e. sibs). Must be given by the entity that is peforming this service. Format: '9XXXXXXX'",
-                defaultValue = "11111111")
-        public String getSibsSourceInstitutionId();
 
         @ConfigurationProperty(key = "startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments",
                 defaultValue = "2006/2007")
@@ -252,13 +160,8 @@ public class FenixConfigurationManager {
         public String getYearForFromMarkSheetManagment();
     }
 
-    private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());
-
     public static ConfigurationProperties getConfiguration() {
         return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
     }
 
-    public static HostAccessControl getHostAccessControl() {
-        return hostAccessControl;
-    }
 }

@@ -25,7 +25,6 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.portal.domain.MenuItem;
 import org.fenixedu.bennu.portal.domain.PortalConfiguration;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -39,7 +38,7 @@ public class HomeAction extends Action {
 
         final MenuItem initialMenuEntry = findTopLevelContainer();
         if (initialMenuEntry == null) {
-            response.sendRedirect(FenixConfigurationManager.getConfiguration().getIndexPageRedirect());
+            response.sendRedirect(request.getContextPath());
         } else {
             response.sendRedirect(request.getContextPath() + initialMenuEntry.getFullPath());
         }
