@@ -39,7 +39,7 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerPeopleApp;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.action.ActionForm;

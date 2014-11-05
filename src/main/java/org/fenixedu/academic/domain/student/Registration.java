@@ -40,6 +40,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
@@ -115,7 +116,6 @@ import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.RegistrationPredicates;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -3712,7 +3712,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isValidForRAIDES() {
-        return FenixConfigurationManager.getConfiguration().getRaidesRequestInfo() && isActive() && isBolonha()
+        return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && isActive() && isBolonha()
                 && !getDegreeType().isEmpty() && getRegistrationProtocol().isForOfficialMobilityReporting();
     }
 

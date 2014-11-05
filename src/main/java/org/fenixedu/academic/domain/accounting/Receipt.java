@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -39,7 +40,6 @@ import org.fenixedu.academic.dto.accounting.CreditNoteEntryDTO;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -50,14 +50,14 @@ public class Receipt extends Receipt_Base {
 
     public static final String GENERIC_CONTRIBUTOR_PARTY_NUMBER = " ";
 
-    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = FenixConfigurationManager.getConfiguration()
+    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = FenixEduAcademicConfiguration.getConfiguration()
             .getReceiptMinYearToCreate();
 
     private static final Map<Integer, String> NUMBER_SERIES_BY_YEAR = new HashMap<Integer, String>();
 
     static {
 
-        final String[] parts = FenixConfigurationManager.getConfiguration().getReceiptNumberSeriesForYears().split(",");
+        final String[] parts = FenixEduAcademicConfiguration.getConfiguration().getReceiptNumberSeriesForYears().split(",");
 
         for (final String part : parts) {
             if (!StringUtils.isEmpty(part)) {

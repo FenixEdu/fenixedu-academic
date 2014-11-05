@@ -18,7 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.util.FenixConfigurationManager"%>
+<%@page import="org.fenixedu.academic.FenixEduAcademicConfiguration"%>
 <%@page import="org.fenixedu.academic.domain.Installation"%>
 <%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>

@@ -21,12 +21,12 @@ package org.fenixedu.academic.domain.phd.alert;
 import java.util.Collections;
 import java.util.Set;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -60,7 +60,7 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
 
     private MultiLanguageString generateBody(final PhdProgramPublicCandidacyHashCode hashCode) {
         // TODO: if collaboration type change, then message must be different
-        String submissionAccessURL = FenixConfigurationManager.getConfiguration().getPhdPublicCandidacySubmissionLink();
+        String submissionAccessURL = FenixEduAcademicConfiguration.getConfiguration().getPhdPublicCandidacySubmissionLink();
         final String body =
                 String.format(BundleUtil.getString(Bundle.PHD, "message.phd.email.body.missing.candidacy"), submissionAccessURL,
                         hashCode.getValue());

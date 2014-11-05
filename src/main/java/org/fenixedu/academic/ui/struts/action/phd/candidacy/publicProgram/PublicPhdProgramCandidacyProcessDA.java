@@ -28,6 +28,7 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.PartySocialSecurityNumber;
@@ -36,11 +37,10 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.ui.struts.action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.commons.i18n.I18N;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
-    private static final String SIBS_ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
+    private static final String SIBS_ENTITY_CODE = FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

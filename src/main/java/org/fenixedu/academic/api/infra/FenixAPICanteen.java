@@ -24,8 +24,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.fenixedu.academic.util.FenixConfigurationManager;
-import org.fenixedu.academic.util.FenixConfigurationManager.ConfigurationProperties;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
+import org.fenixedu.academic.FenixEduAcademicConfiguration.ConfigurationProperties;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -51,7 +51,7 @@ public class FenixAPICanteen {
         String locale = I18N.getLocale().toString().replace("_", "-");
         if (canteenInfo == null || canteenInfo.isJsonNull() || oldInformation()) {
 
-            String canteenUrl = FenixConfigurationManager.getConfiguration().getFenixApiCanteenUrl();
+            String canteenUrl = FenixEduAcademicConfiguration.getConfiguration().getFenixApiCanteenUrl();
             try {
                 Response response =
                         HTTP_CLIENT.target(canteenUrl).request(MediaType.APPLICATION_JSON)
@@ -107,7 +107,7 @@ public class FenixAPICanteen {
     }
 
     private static String getServiceAuth() {
-        ConfigurationProperties config = FenixConfigurationManager.getConfiguration();
+        ConfigurationProperties config = FenixEduAcademicConfiguration.getConfiguration();
         String userpass = config.getFenixApiCanteenUser() + ":" + config.getFenixApiCanteenSecret();
         String encoding = new String(BaseEncoding.base64().encode(userpass.getBytes()));
         return "Basic " + encoding;

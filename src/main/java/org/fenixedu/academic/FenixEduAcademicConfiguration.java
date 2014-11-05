@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.academic.util;
+package org.fenixedu.academic;
 
 import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
 import org.fenixedu.commons.configuration.ConfigurationManager;
 import org.fenixedu.commons.configuration.ConfigurationProperty;
 
-public class FenixConfigurationManager {
-    @ConfigurationManager(description = "General Fenix Configuration")
+public class FenixEduAcademicConfiguration {
+    @ConfigurationManager(description = "FenixEdu Academic Configuration")
     public interface ConfigurationProperties {
 
         @ConfigurationProperty(key = "dges.username.prefix",

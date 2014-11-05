@@ -30,7 +30,7 @@ import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.residence.ResidenceMonth;
 import org.fenixedu.academic.domain.residence.ResidenceYear;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 
 public abstract class DebtsFile extends DebtsFile_Base {
 

@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
@@ -84,8 +84,8 @@ public class FenixAbout {
             institutionUrl = unit.getDefaultWebAddressUrl();
         }
         currentAcademicTerm = ExecutionSemester.readActualExecutionSemester().getQualifiedName();
-        rssPtFeed.add(new FenixRSSFeed("News", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlPt()));
-        rssPtFeed.add(new FenixRSSFeed("Events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlPt()));
+        rssPtFeed.add(new FenixRSSFeed("News", FenixEduAcademicConfiguration.getConfiguration().getFenixApiNewsRSSUrlPt()));
+        rssPtFeed.add(new FenixRSSFeed("Events", FenixEduAcademicConfiguration.getConfiguration().getFenixApiEventsRSSUrlPt()));
 
         languages = FluentIterable.from(CoreConfiguration.supportedLocales()).transform(new Function<Locale, String>() {
 
@@ -120,11 +120,11 @@ public class FenixAbout {
         final JsonObject jArr = new JsonObject();
 
         if (Locale.UK.equals(locale)) {
-            jArr.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlEn());
-            jArr.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlEn());
+            jArr.addProperty("news", FenixEduAcademicConfiguration.getConfiguration().getFenixApiNewsRSSUrlEn());
+            jArr.addProperty("events", FenixEduAcademicConfiguration.getConfiguration().getFenixApiEventsRSSUrlEn());
         } else {
-            jArr.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlPt());
-            jArr.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlPt());
+            jArr.addProperty("news", FenixEduAcademicConfiguration.getConfiguration().getFenixApiNewsRSSUrlPt());
+            jArr.addProperty("events", FenixEduAcademicConfiguration.getConfiguration().getFenixApiEventsRSSUrlPt());
         }
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

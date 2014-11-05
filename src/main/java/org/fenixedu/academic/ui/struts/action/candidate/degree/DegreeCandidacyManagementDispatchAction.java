@@ -38,6 +38,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents;
@@ -62,7 +63,6 @@ import org.fenixedu.academic.service.services.student.ReadStudentTimeTable;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.candidate.ViewCandidaciesDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -225,7 +225,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                     "firstInstallmentEndDate",
                     calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
                             .getAvailablePaymentCodesSet()));
-            request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
+            request.setAttribute("sibsEntityCode", FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode());
 
             final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
             request.setAttribute("infoLessons", infoLessons);
@@ -251,7 +251,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
             request.setAttribute("registration", getCandidacy(request).getRegistration());
             request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodesSet());
-            request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
+            request.setAttribute("sibsEntityCode", FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode());
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
                     administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodesSet()));
             request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)

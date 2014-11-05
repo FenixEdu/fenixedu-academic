@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;

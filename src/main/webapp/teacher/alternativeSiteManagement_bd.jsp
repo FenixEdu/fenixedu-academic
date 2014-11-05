@@ -25,7 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@page import="org.fenixedu.academic.ui.struts.action.messaging.ExecutionCourseAliasExpandingAction"%>
-<%@page import="org.fenixedu.academic.util.FenixConfigurationManager"%>
+<%@page import="org.fenixedu.academic.FenixEduAcademicConfiguration"%>
 
 <p>
 <span class="error"><!-- Error messages go here --><html:errors /></span>

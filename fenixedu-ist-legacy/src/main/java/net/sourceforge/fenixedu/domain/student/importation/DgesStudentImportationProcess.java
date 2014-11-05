@@ -58,7 +58,7 @@ import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;

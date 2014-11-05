@@ -21,13 +21,13 @@ package org.fenixedu.academic.domain.accounting;
 import java.util.Comparator;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.util.PaymentCodeGenerator;
 import org.fenixedu.academic.domain.accounting.util.PaymentCodeGeneratorFactory;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -38,7 +38,7 @@ import pt.ist.fenixframework.Atomic;
 
 public abstract class PaymentCode extends PaymentCode_Base {
 
-    private static final String ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
+    private static final String ENTITY_CODE = FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode();
     public static final String SIBS_IGNORE_MAX_AMOUNT = "99999999.99";
 
     public static Comparator<PaymentCode> COMPARATOR_BY_CODE = new Comparator<PaymentCode>() {

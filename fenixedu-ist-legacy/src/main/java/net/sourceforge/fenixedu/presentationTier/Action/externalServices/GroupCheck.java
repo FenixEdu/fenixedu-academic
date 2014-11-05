@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
 import org.fenixedu.academic.service.services.externalServices.GroupCheckService;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

@@ -35,7 +35,7 @@ import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;

@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Grouping;
@@ -43,7 +44,6 @@ import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.GroupEnro
 import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
@@ -59,7 +59,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class UnEnrollStudentInGroup {
 
     public static String mailServer() {
-        final String server = FenixConfigurationManager.getConfiguration().getMailSmtpHost();
+        final String server = FenixEduAcademicConfiguration.getConfiguration().getMailSmtpHost();
         return (server != null) ? server : "mail.adm";
     }
 

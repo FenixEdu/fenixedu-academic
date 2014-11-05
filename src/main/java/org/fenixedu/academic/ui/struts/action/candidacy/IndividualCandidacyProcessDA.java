@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -55,7 +56,6 @@ import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.service.services.caseHandling.CreateNewProcess;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.casehandling.CaseHandlingDispatchAction;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -89,7 +89,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
-    private static final String SIBS_ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
+    private static final String SIBS_ENTITY_CODE = FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode();
 
     abstract protected Class<? extends Process> getParentProcessType();
 

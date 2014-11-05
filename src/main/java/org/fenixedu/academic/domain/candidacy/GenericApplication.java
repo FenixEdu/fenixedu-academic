@@ -21,12 +21,12 @@ package org.fenixedu.academic.domain.candidacy;
 import java.util.Comparator;
 import java.util.Random;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -89,7 +89,7 @@ public class GenericApplication extends GenericApplication_Base {
                                 getEmail() + System.currentTimeMillis() + hashCode()
                                         + new Random(System.currentTimeMillis()).nextGaussian(), Charsets.UTF_8).toString();
         setConfirmationCode(confirmationCode);
-        return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailConfirmationLink() + confirmationCode
+        return FenixEduAcademicConfiguration.getConfiguration().getGenericApplicationEmailConfirmationLink() + confirmationCode
                 + "&applicationExternalId=" + getExternalId();
     }
 

@@ -25,9 +25,9 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
+import org.fenixedu.academic.FenixEduAcademicConfiguration.ConfigurationProperties;
 import org.fenixedu.academic.service.services.exceptions.PasswordInitializationException;
-import org.fenixedu.academic.util.FenixConfigurationManager;
-import org.fenixedu.academic.util.FenixConfigurationManager.ConfigurationProperties;
 import org.fenixedu.bennu.core.domain.User;
 
 import com.google.common.io.BaseEncoding;
@@ -42,7 +42,7 @@ public class InitializePassword {
     public static void run(User user, String password) throws PasswordInitializationException {
         Form form = new Form().param("istid", user.getUsername()).param("password", password);
         Response post =
-                HTTP_CLIENT.target(FenixConfigurationManager.getConfiguration().getWebServicesInternationalRegistrationUrl())
+                HTTP_CLIENT.target(FenixEduAcademicConfiguration.getConfiguration().getWebServicesInternationalRegistrationUrl())
                         .request(MediaType.APPLICATION_JSON).header("Authorization", getServiceAuth()).post(Entity.form(form));
 
         OutputBean output = null;
@@ -60,7 +60,7 @@ public class InitializePassword {
     }
 
     private static String getServiceAuth() {
-        ConfigurationProperties config = FenixConfigurationManager.getConfiguration();
+        ConfigurationProperties config = FenixEduAcademicConfiguration.getConfiguration();
         String userpass =
                 config.getWebServicesInternationalRegistrationUsername() + ":"
                         + config.getWebServicesInternationalRegistrationPassword();

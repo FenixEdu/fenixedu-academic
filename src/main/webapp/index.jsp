@@ -18,7 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.util.FenixConfigurationManager"%>
+<%@page import="org.fenixedu.academic.FenixEduAcademicConfiguration"%>
 <html>
 	<META http-equiv="refresh" content="0;URL=<%= FenixConfigurationManager.getConfiguration().getIndexPageRedirect() %>">
 <body>

@@ -30,7 +30,7 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.fenixedu.bennu.core.rest.SystemResource;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
@@ -70,9 +70,9 @@ public class PhoneValidationUtils {
     }
 
     private void initCIISTSMSGateway() {
-        final String CIIST_SMS_USERNAME = FenixConfigurationManager.getConfiguration().getCIISTSMSUsername();
-        final String CIIST_SMS_PASSWORD = FenixConfigurationManager.getConfiguration().getCIISTSMSPassword();
-        CIIST_SMS_GATEWAY_URL = FenixConfigurationManager.getConfiguration().getCIISTSMSGatewayUrl();
+        final String CIIST_SMS_USERNAME = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSUsername();
+        final String CIIST_SMS_PASSWORD = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSPassword();
+        CIIST_SMS_GATEWAY_URL = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSGatewayUrl();
         if (!StringUtils.isEmpty(CIIST_SMS_USERNAME) && !StringUtils.isEmpty(CIIST_SMS_PASSWORD)) {
             CIIST_CLIENT = new HttpClient();
             Credentials credentials = new UsernamePasswordCredentials(CIIST_SMS_USERNAME, CIIST_SMS_PASSWORD);
@@ -81,10 +81,10 @@ public class PhoneValidationUtils {
     }
 
     private void initTwilio() {
-        final String TWILIO_SID = FenixConfigurationManager.getConfiguration().getTwilioSid();
-        final String TWILIO_STOKEN = FenixConfigurationManager.getConfiguration().getTwilioStoken();
+        final String TWILIO_SID = FenixEduAcademicConfiguration.getConfiguration().getTwilioSid();
+        final String TWILIO_STOKEN = FenixEduAcademicConfiguration.getConfiguration().getTwilioStoken();
         final String URL = "/" + TwilioRestClient.DEFAULT_VERSION + "/Accounts/" + TWILIO_SID + ".json";
-        TWILIO_FROM_NUMBER = FenixConfigurationManager.getConfiguration().getTwilioFromNumber();
+        TWILIO_FROM_NUMBER = FenixEduAcademicConfiguration.getConfiguration().getTwilioFromNumber();
         if (!StringUtils.isEmpty(TWILIO_SID) && !StringUtils.isEmpty(TWILIO_STOKEN) && !StringUtils.isEmpty(TWILIO_FROM_NUMBER)) {
             TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
             SystemResource.registerHealthcheck(new Healthcheck() {

@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -40,7 +41,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.commons.ReadExecutionPeriods;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.academic.util.Month;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -506,46 +506,46 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public static ExecutionSemester readMarkSheetManagmentExecutionPeriod() {
         markSheetManagmentExecutionPeriod =
-                readFromProperties(markSheetManagmentExecutionPeriod, FenixConfigurationManager.getConfiguration()
-                        .getYearForFromMarkSheetManagment(), FenixConfigurationManager.getConfiguration()
+                readFromProperties(markSheetManagmentExecutionPeriod, FenixEduAcademicConfiguration.getConfiguration()
+                        .getYearForFromMarkSheetManagment(), FenixEduAcademicConfiguration.getConfiguration()
                         .getSemesterForFromMarkSheetManagment());
         return markSheetManagmentExecutionPeriod;
     }
 
     static public ExecutionSemester readFirstBolonhaExecutionPeriod() {
         firstBolonhaExecutionPeriod =
-                readFromProperties(firstBolonhaExecutionPeriod, FenixConfigurationManager.getConfiguration()
-                        .getStartYearForBolonhaDegrees(), FenixConfigurationManager.getConfiguration()
+                readFromProperties(firstBolonhaExecutionPeriod, FenixEduAcademicConfiguration.getConfiguration()
+                        .getStartYearForBolonhaDegrees(), FenixEduAcademicConfiguration.getConfiguration()
                         .getStartSemesterForBolonhaDegrees());
         return firstBolonhaExecutionPeriod;
     }
 
     static public ExecutionSemester readFirstBolonhaTransitionExecutionPeriod() {
         firstBolonhaTransitionExecutionPeriod =
-                readFromProperties(firstBolonhaTransitionExecutionPeriod, FenixConfigurationManager.getConfiguration()
-                        .getStartYearForBolonhaTransition(), FenixConfigurationManager.getConfiguration()
+                readFromProperties(firstBolonhaTransitionExecutionPeriod, FenixEduAcademicConfiguration.getConfiguration()
+                        .getStartYearForBolonhaTransition(), FenixEduAcademicConfiguration.getConfiguration()
                         .getStartSemesterForBolonhaTransition());
         return firstBolonhaTransitionExecutionPeriod;
     }
 
     static public ExecutionSemester readFirstEnrolmentsExecutionPeriod() {
         firstEnrolmentsExecutionPeriod =
-                readFromProperties(firstEnrolmentsExecutionPeriod, FenixConfigurationManager.getConfiguration()
-                        .getYearForFromEnrolments(), FenixConfigurationManager.getConfiguration().getSemesterForFromEnrolments());
+                readFromProperties(firstEnrolmentsExecutionPeriod, FenixEduAcademicConfiguration.getConfiguration()
+                        .getYearForFromEnrolments(), FenixEduAcademicConfiguration.getConfiguration().getSemesterForFromEnrolments());
         return firstEnrolmentsExecutionPeriod;
     }
 
     static public ExecutionSemester readStartExecutionSemesterForCredits() {
         startExecutionPeriodForCredits =
-                readFromProperties(startExecutionPeriodForCredits, FenixConfigurationManager.getConfiguration()
-                        .getStartYearForCredits(), FenixConfigurationManager.getConfiguration().getStartSemesterForCredits());
+                readFromProperties(startExecutionPeriodForCredits, FenixEduAcademicConfiguration.getConfiguration()
+                        .getStartYearForCredits(), FenixEduAcademicConfiguration.getConfiguration().getStartSemesterForCredits());
         return startExecutionPeriodForCredits;
     }
 
     static public ExecutionSemester readLastExecutionSemesterForCredits() {
         lastExecutionPeriodForCredits =
-                readFromProperties(lastExecutionPeriodForCredits, FenixConfigurationManager.getConfiguration()
-                        .getLastYearForCredits(), FenixConfigurationManager.getConfiguration().getLastSemesterForCredits());
+                readFromProperties(lastExecutionPeriodForCredits, FenixEduAcademicConfiguration.getConfiguration()
+                        .getLastYearForCredits(), FenixEduAcademicConfiguration.getConfiguration().getLastSemesterForCredits());
         return lastExecutionPeriodForCredits;
     }
 

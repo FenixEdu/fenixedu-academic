@@ -14,7 +14,7 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 

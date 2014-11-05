@@ -32,6 +32,7 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent;
@@ -41,7 +42,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateMidnight;
@@ -436,7 +436,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public static ExecutionYear readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() {
         startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments =
-                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments, FenixConfigurationManager
+                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments, FenixEduAcademicConfiguration
                         .getConfiguration().getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
         return startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments;
     }

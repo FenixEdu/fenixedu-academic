@@ -39,8 +39,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -58,9 +58,9 @@ public class Email extends Email_Base {
 
     private static synchronized Session init() {
         final Properties properties = new Properties();
-        properties.put("mail.smtp.host", FenixConfigurationManager.getConfiguration().getMailSmtpHost());
-        properties.put("mail.smtp.name", FenixConfigurationManager.getConfiguration().getMailSmtpName());
-        properties.put("mailSender.max.recipients", FenixConfigurationManager.getConfiguration().getMailSenderMaxRecipients());
+        properties.put("mail.smtp.host", FenixEduAcademicConfiguration.getConfiguration().getMailSmtpHost());
+        properties.put("mail.smtp.name", FenixEduAcademicConfiguration.getConfiguration().getMailSmtpName());
+        properties.put("mailSender.max.recipients", FenixEduAcademicConfiguration.getConfiguration().getMailSenderMaxRecipients());
         properties.put("mail.debug", "false");
         final Session tempSession = Session.getDefaultInstance(properties, null);
         MAX_MAIL_RECIPIENTS = Integer.parseInt(properties.getProperty("mailSender.max.recipients"));

@@ -34,6 +34,7 @@ import java.util.TreeSet;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -67,7 +68,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.predicate.StudentPredicates;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
@@ -1248,7 +1248,7 @@ public class Student extends Student_Base {
     }
 
     public boolean isValidAndActivePhdProcess(PhdIndividualProgramProcess phdProcess) {
-        return FenixConfigurationManager.getConfiguration().getRaidesRequestInfo() && phdProcess.isProcessActive()
+        return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && phdProcess.isProcessActive()
                 && hasValidInsuranceEvent();
     }
 

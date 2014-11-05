@@ -20,9 +20,9 @@ package org.fenixedu.academic.domain.candidacy;
 
 import java.util.Random;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -79,7 +79,7 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
     }
 
     private String generateConfirmationLink() {
-        return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailRecommendationLink()
+        return FenixEduAcademicConfiguration.getConfiguration().getGenericApplicationEmailRecommendationLink()
                 + getConfirmationCode() + "&recommendationExternalId=" + getExternalId();
     }
 

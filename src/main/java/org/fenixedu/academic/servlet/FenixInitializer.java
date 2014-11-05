@@ -27,13 +27,13 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
-import org.fenixedu.academic.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.rest.Healthcheck;
@@ -92,7 +92,7 @@ public class FenixInitializer implements ServletContextListener {
                 final Properties properties = new Properties();
                 properties.put("mail.transport.protocol", "smtp");
                 Transport transport = Session.getInstance(properties).getTransport();
-                transport.connect(FenixConfigurationManager.getConfiguration().getMailSmtpHost(), null, null);
+                transport.connect(FenixEduAcademicConfiguration.getConfiguration().getMailSmtpHost(), null, null);
                 String response = ((SMTPTransport) transport).getLastServerResponse();
                 transport.close();
                 return Result.healthy("SMTP server returned response: " + response);
