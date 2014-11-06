@@ -95,12 +95,12 @@ class ImportEmployeeUnitsFromGiaf extends ImportProcessor {
                         Contract workingContractOnDate =
                                 getLastContractByContractType(employee, accountabilityTypeEnum, new YearMonthDay(beginDate),
                                         endDate == null ? null : new YearMonthDay(endDate));
-
+ 
                         if (workingContractOnDate != null) {
                             if (unit != null && endDate == null) {
                                 if (!workingContractOnDate.getUnit().equals(unit)) {
-                                    modifications.add(createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit,
-                                            accountabilityTypeEnum, workingContractOnDate, log, logger));
+                                    modifications.addAll(createEmployeeContract(employee, new YearMonthDay(beginDate), null,
+                                            unit, accountabilityTypeEnum, workingContractOnDate, log, logger));
                                 } else if (!workingContractOnDate.getBeginDate().equals(beginDate)
                                         && !StringUtils.isEmpty(ccDateString)) {
                                     modifications.add(changeEmployeeContractDates(accountabilityTypeEnum, new YearMonthDay(
@@ -110,7 +110,7 @@ class ImportEmployeeUnitsFromGiaf extends ImportProcessor {
                                     log.println(accountabilityTypeEnum.getName() + ". Contrato do Funcionário:" + employeeNumber
                                             + " Voltou a abrir na mesma unidade :"
                                             + giafProfessionalDataByGiafPersonIdentification.getContractSituationDate());
-                                    modifications.add(createEmployeeContract(employee, new YearMonthDay(
+                                    modifications.addAll(createEmployeeContract(employee, new YearMonthDay(
                                             giafProfessionalDataByGiafPersonIdentification.getContractSituationDate()), null,
                                             unit, accountabilityTypeEnum, null, log, logger));
                                 } else {
@@ -125,7 +125,7 @@ class ImportEmployeeUnitsFromGiaf extends ImportProcessor {
                         } else {
                             if (unit != null && endDate == null) {
                                 // contrato novo
-                                modifications.add(createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit,
+                                modifications.addAll(createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit,
                                         accountabilityTypeEnum, null, log, logger));
 
                             } else {
@@ -248,20 +248,24 @@ class ImportEmployeeUnitsFromGiaf extends ImportProcessor {
         };
     }
 
-    private Modification createEmployeeContract(final Employee employee, final YearMonthDay begin, final YearMonthDay end,
+    private List<Modification> createEmployeeContract(final Employee employee, final YearMonthDay begin, final YearMonthDay end,
             final Unit unit, final AccountabilityTypeEnum accountabilityTypeEnum, final Contract currentWorkingContract,
             PrintWriter log, final Logger logger) {
-        return new Modification() {
+        List<Modification> modifications = new ArrayList<>();
+        if (currentWorkingContract != null) {
+            modifications.add(closeCurrentContract(accountabilityTypeEnum, currentWorkingContract, begin.minusDays(1), log,
+                    logger));
+        }
+        modifications.add(new Modification() {
             @Override
             public void execute() {
-                if (currentWorkingContract != null) {
-                    closeCurrentContract(accountabilityTypeEnum, currentWorkingContract, begin.minusDays(1), log, logger);
-                }
                 log.println(accountabilityTypeEnum.getName() + ". Novo contrato na unidade " + unit.getName()
                         + " para o funcionário:" + employee.getEmployeeNumber() + " " + begin + " " + end);
                 new EmployeeContract(employee.getPerson(), begin, end, unit, accountabilityTypeEnum, false);
             }
-        };
+        });
+
+        return modifications;
     }
 
     private String getEmployeeWorkingUnitsQuery() {
