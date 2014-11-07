@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
@@ -45,13 +47,15 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.scheduler.custom.CustomTask;
 import org.fenixedu.spaces.domain.Space;
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Minutes;
 import org.joda.time.Period;
 import org.joda.time.TimeOfDay;
+import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
 
-public class CreateAndInitializeExecutionCourses extends CustomTask {
+public class CreateAndInitializeExecutionCoursesX extends CustomTask {
 
     private static final Set<DegreeType> DEGREE_TYPES;
     static {
@@ -253,14 +257,6 @@ public class CreateAndInitializeExecutionCourses extends CustomTask {
                 continue;
             }
 
-            if (maxLessonsPeriod == null) {
-                taskLog("No lesson period for: ");
-                for (final CurricularCourse curricularCourse : newExecutionCourse.getAssociatedCurricularCoursesSet()) {
-                    taskLog(curricularCourse.getDegree().getSigla());
-                }
-                taskLog("\n");
-            }
-
             final Space allocatableSpace = oldLesson.getSala();
             final Space allocatableSpaceToSet;
             final int offset;
@@ -284,14 +280,22 @@ public class CreateAndInitializeExecutionCourses extends CustomTask {
                 offset = 0;
             }
             try {
-
                 if (occupationPeriod == null) {
                     new Lesson(oldLesson.getDiaSemana(), oldLesson.getInicio(), oldLesson.getFim(), newShift,
-                            oldLesson.getFrequency(), destinationExecutionSemester, maxLessonsPeriod.getLeft(),
+                            oldLesson.getFrequency(), destinationExecutionSemester, maxLessonsPeriod.getLeft().plusDays(7 * offset),
                             maxLessonsPeriod.getRight(), allocatableSpaceToSet);
                 } else {
-                    new Lesson(oldLesson.getDiaSemana(), oldLesson.getInicio(), oldLesson.getFim(), newShift,
-                            oldLesson.getFrequency(), destinationExecutionSemester, occupationPeriod, allocatableSpaceToSet);
+                    if (offset == 0) {
+                        new Lesson(oldLesson.getDiaSemana(), oldLesson.getInicio(), oldLesson.getFim(), newShift,
+                                oldLesson.getFrequency(), destinationExecutionSemester, occupationPeriod, allocatableSpaceToSet);                        
+                    } else {
+                        final OccupationPeriod lessonOP = new OccupationPeriod(getWeeks(oldLesson).sorted()
+                                .map(w -> map(occupationPeriod, w)).filter(i -> i != null).collect(Collectors.toList()).iterator());
+                        print("   op: ", lessonOP);
+                        new Lesson(oldLesson.getDiaSemana(), oldLesson.getInicio(), oldLesson.getFim(), newShift,
+                                oldLesson.getFrequency(), destinationExecutionSemester, lessonOP == null ? occupationPeriod : lessonOP,
+                                        allocatableSpaceToSet);
+                    }
                 }
                 countCopiedLessons++;
             } catch (DomainException de) {
@@ -338,6 +342,53 @@ public class CreateAndInitializeExecutionCourses extends CustomTask {
                 throw de;
             }
         }
+    }
+
+    private void print(final String prefix, final OccupationPeriod occupationPeriod) {
+        taskLog("%s %s", prefix, occupationPeriod.getPeriodInterval().toString());
+        final OccupationPeriod next = occupationPeriod.getNextPeriod();
+        if (next != null) {
+            print(" + ", next);
+        } else {
+            taskLog();
+        }
+    }
+
+    private Interval map(final OccupationPeriod occupationPeriod, final Integer w) {
+        final Interval startInterval = occupationPeriod.getPeriodInterval();
+        final DateTime s = startInterval.getStart().plusWeeks(w - 1);
+        final Interval i = new Interval(s, s.plusWeeks(1));
+        return intersect(occupationPeriod, i);
+    }
+
+    private Interval intersect(final OccupationPeriod occupationPeriod, final Interval i) {
+        final Interval pi = occupationPeriod.getPeriodInterval();
+        final Interval overlap = pi.overlap(i);
+        return overlap == null && occupationPeriod.getNextPeriod() != null ? intersect(occupationPeriod.getNextPeriod(), i) : overlap;
+    }
+
+    public Stream<Integer> getWeeks(final Lesson lesson) {
+        final SortedSet<Integer> weeks = new TreeSet<Integer>();
+        final ExecutionCourse executionCourse = lesson.getExecutionCourse();
+        final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
+        for (final Interval interval : lesson.getAllLessonIntervals()) {
+            final Integer week = Weeks.weeksBetween(firstPossibleLessonDay, interval.getStart().toLocalDate()).getWeeks() + 1;
+            weeks.add(week);
+        }
+        return weeks.stream();
+    }
+
+    public SortedSet<Integer> getOccurrenceWeeksAsString(final Lesson lesson) {
+        final SortedSet<Integer> weeks = new TreeSet<Integer>();
+
+        final ExecutionCourse executionCourse = lesson.getExecutionCourse();
+        final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
+        final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
+        for (final Interval interval : lesson.getAllLessonIntervals()) {
+            final Integer week = Weeks.weeksBetween(firstPossibleLessonDay, interval.getStart().toLocalDate()).getWeeks() + 1;
+            weeks.add(week);
+        }
+        return weeks;
     }
 
     private static int SATURDAY_IN_JODA_TIME = 6, SUNDAY_IN_JODA_TIME = 7;
@@ -499,18 +550,22 @@ public class CreateAndInitializeExecutionCourses extends CustomTask {
             }
 
             if (totalHours.compareTo(courseLoad.getTotalQuantity()) == 1) {
-//      final StringBuilder stringBuilder = new StringBuilder();
-//      stringBuilder.append("\n");
-//      stringBuilder.append(totalHours);
-//      stringBuilder.append(" : ");
-//      stringBuilder.append(courseLoad.getTotalQuantity());
-//      stringBuilder.append(" ... ");
-//      stringBuilder.append(finalNumberOfLessonInstances);
-//      stringBuilder.append(" : ");
-//      stringBuilder.append(lessonHours);
-//      stringBuilder.append(" : ");
-//      stringBuilder.append(newShift.getTotalHours());
-//      taskLog(stringBuilder.toString() + "\n");
+                final StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("\n");
+                stringBuilder.append(totalHours);
+                stringBuilder.append(" : ");
+                stringBuilder.append(courseLoad.getTotalQuantity());
+                stringBuilder.append(" ... ");
+                stringBuilder.append(finalNumberOfLessonInstances);
+                stringBuilder.append(" : ");
+                stringBuilder.append(lessonHours);
+                stringBuilder.append(" : ");
+                stringBuilder.append(newShift.getTotalHours());
+                stringBuilder.append(" : ");
+                stringBuilder.append(newShift.getExecutionCourse().getName());
+                stringBuilder.append(" : ");
+                stringBuilder.append(newShift.getExecutionCourse().getDegreePresentationString());
+                taskLog(stringBuilder.toString() + "\n");
                 countSkippedLessons2++;
                 return false;
             }
