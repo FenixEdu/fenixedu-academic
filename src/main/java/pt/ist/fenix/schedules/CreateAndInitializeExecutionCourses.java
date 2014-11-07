@@ -55,7 +55,7 @@ import org.joda.time.TimeOfDay;
 import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
 
-public class CreateAndInitializeExecutionCoursesX extends CustomTask {
+public class CreateAndInitializeExecutionCourses extends CustomTask {
 
     private static final Set<DegreeType> DEGREE_TYPES;
     static {
