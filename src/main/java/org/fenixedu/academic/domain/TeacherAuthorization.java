@@ -25,7 +25,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
-public class TeacherAuthorization extends TeacherAuthorization_Base {
+public class TeacherAuthorization extends TeacherAuthorization_Base implements Comparable<TeacherAuthorization> {
     protected TeacherAuthorization() {
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -126,5 +126,14 @@ public class TeacherAuthorization extends TeacherAuthorization_Base {
     public DateTime getRevokeTime() {
         // FIXME: Removed when framework support read-only slots
         return super.getRevokeTime();
+    }
+
+    @Override
+    public int compareTo(TeacherAuthorization o) {
+        int category = getTeacherCategory().compareTo(o.getTeacherCategory());
+        if (category != 0) {
+            return category;
+        }
+        return getExternalId().compareTo(o.getExternalId());
     }
 }

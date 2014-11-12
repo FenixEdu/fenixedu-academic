@@ -28,7 +28,7 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
         setRoot(Bennu.getInstance());
     }
 
-    public TeacherCategory(String bame, LocalizedString name, Integer weight) {
+    public TeacherCategory(LocalizedString name, Integer weight) {
         this();
         setName(name);
         setWeight(weight);
@@ -43,7 +43,7 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
     public int compareTo(TeacherCategory o) {
         int weigth = getWeight().compareTo(o.getWeight());
         if (weigth != 0) {
-            return weigth;
+            return -weigth;
         }
         int byName = getName().compareTo(o.getName());
         if (byName != 0) {
