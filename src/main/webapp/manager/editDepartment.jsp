@@ -18,8 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-
-<%@ page isELIgnored="true" %>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -31,22 +29,25 @@
 <html:xhtml/>
 
 <h2>Create Academic Office</h2>
-<fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=createAcademicOffice">
+<fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=editDepartment">
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
-        <fr:slot name="type" key="documents.type">
+
+        <fr:slot name="code" key="label.manager.code">
         </fr:slot>
 
-        <fr:slot name="nameLS" key="label.fullName">
+        <fr:slot name="name" key="label.name">
         </fr:slot>
 
-        <fr:slot name="building" layout="menu-select" key="label.date.begin">
-            <fr:property name="from" value="buildings"/>
-            <fr:property name="format" value="${name}"/>
+        <fr:slot name="realName" key="label.real.name">
         </fr:slot>
 
-        <fr:slot name="username" key="label.coordinator.id">
+        <fr:slot name="realNameEn" key="label.real.name.en">
         </fr:slot>
+
+        <fr:slot name="username" key="label.username">
+        </fr:slot>
+
     </fr:schema>
     <fr:layout name="tabular">
         <fr:property name="classes"

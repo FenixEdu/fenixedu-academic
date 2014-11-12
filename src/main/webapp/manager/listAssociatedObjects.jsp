@@ -1,3 +1,5 @@
+<%@ page import="pt.ist.fenixframework.DomainObject" %>
+<%@ page import="org.fenixedu.academic.domain.Department" %>
 <%--
 
     Copyright © 2002 Instituto Superior Técnico
@@ -18,52 +20,91 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page language="java"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@ page language="java" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@ taglib prefix="if" uri="http://jakarta.apache.org/struts/tags-logic" %>
 
-<html:xhtml />
+<html:xhtml/>
 
 <h2>Associated Objects</h2>
+
 <h3>Departments</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareCreateDepartment">Create</html:link><br/>
 <logic:present name="departments">
-<ul>
-<logic:iterate id="department" name="departments">
-		<li><bean:write name="department" property="name"/></li>
-</logic:iterate>
-</ul>
+    <ul>
+        <logic:iterate id="department" name="departments">
+            <li><bean:write name="department" property="name"/> - <html:link
+                    page="<%= "/manageAssociatedObjects.do?method=prepareEditDepartment&oid=" + ((Department) department).getExternalId() %>">Edit</html:link><br/>
+            </li>
+        </logic:iterate>
+    </ul>
 </logic:present>
 <logic:notPresent name="departments">
-	There are no departments
+    There are no departments
 </logic:notPresent>
-
 
 
 <h3>Administrative Offices</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareAcademicOffice">Create</html:link><br/>
 <logic:present name="offices">
-<ul>
-<logic:iterate id="office" name="offices" type="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice">
-		<li><bean:message bundle="ENUMERATION_RESOURCES" key="<%= "AdministrativeOfficeType." + office.getAdministrativeOfficeType().toString() %>"/></li>
-</logic:iterate>
-</ul>
+    <ul>
+        <logic:iterate id="office" name="offices" type="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice">
+            <li><bean:write name="office" property="name.content"/></li>
+        </logic:iterate>
+    </ul>
 </logic:present>
 <logic:notPresent name="offices">
-	There are no administrative offices
+    There are no administrative offices
 </logic:notPresent>
 <h3>Associate Person to Unit</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareAssociatePersonUnit">Create</html:link><br/>
+
 <h3>Create empty degree</h3>
 <logic:notEmpty name="emptyDegree">
-<bean:define id="emptyDegree" type="org.fenixedu.academic.domain.EmptyDegree" name="emptyDegree"></bean:define>
-	Empty degree associated with : <%= emptyDegree.getAdministrativeOffice().getAdministrativeOfficeType().getDescription() %></br>
-	<html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Change</html:link><br/>
+    <bean:define id="emptyDegree" type="org.fenixedu.academic.domain.EmptyDegree" name="emptyDegree"></bean:define>
+    Empty degree associated with : <%= emptyDegree.getAdministrativeOffice().getName().getContent() %></br>
+    <html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Change</html:link><br/>
 </logic:notEmpty>
 <logic:empty name="emptyDegree">
-	There is no empty degree.</br>
-<html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Create</html:link><br/>
+    There is no empty degree.</br>
+    <html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Create</html:link><br/>
 </logic:empty>
+<h3>Create Scientific Area</h3>
+<html:link page="/manageAssociatedObjects.do?method=prepareCreateScientificArea">Create Scientific Area</html:link><br/>
+<logic:present name="departments">
+    <ul>
+        <logic:iterate id="department" name="departments">
+            <li><bean:write name="department" property="name"/></li>
+
+            <logic:present name="department" property="departmentUnit">
+                <bean:define id="depunit" name="department" property="departmentUnit"/>
+                <ul>
+                    <logic:iterate id="unit" name="depunit" property="scientificAreaUnits">
+                        <li><bean:write name="unit" property="name"></bean:write> - <html:link
+                                page="<%= "/manageAssociatedObjects.do?method=prepareCreateCompetenceCourseGroup&oid=" + ((DomainObject) unit)
+                .getExternalId()%>">Create Competence Course Group</html:link></li>
+
+                        <logic:present name="unit" property="competenceCourseGroupUnits">
+                            <ul>
+                                <logic:iterate id="ccg" name="unit" property="competenceCourseGroupUnits">
+                                    <li><bean:write name="ccg" property="name"/></li>
+                                </logic:iterate>
+                            </ul>
+                        </logic:present>
+
+                    </logic:iterate>
+                </ul>
+            </logic:present>
+
+        </logic:iterate>
+    </ul>
+</logic:present>
+<logic:notPresent name="departments">
+    There are no departments
+</logic:notPresent>
+
+
