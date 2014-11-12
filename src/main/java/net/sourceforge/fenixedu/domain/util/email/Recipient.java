@@ -82,6 +82,7 @@ public class Recipient extends Recipient_Base {
         for (final Sender sender : getSendersSet()) {
             removeSenders(sender);
         }
+        setMembersGroup(null);
         for (Message message : getMessagesSet()) {
             if (message.getRootDomainObjectFromPendingRelation() == null) {
                 message.delete();
