@@ -33,23 +33,9 @@ public class DepartmentMemberApp extends ForwardAction {
     static final String BUNDLE = "DepartmentMemberResources";
     static final String ACCESS_GROUP = "role(DEPARTMENT_MEMBER)";
 
-    @StrutsApplication(bundle = BUNDLE, path = "teacher", titleKey = "label.teacher", hint = HINT, accessGroup = ACCESS_GROUP)
-    public static class DepartmentMemberTeacherApp {
-    }
-
     @StrutsApplication(bundle = BUNDLE, path = "department", titleKey = "title.department", hint = HINT,
             accessGroup = ACCESS_GROUP)
     public static class DepartmentMemberDepartmentApp {
-    }
-
-    @StrutsApplication(bundle = BUNDLE, path = "accompaniment", titleKey = "title.accompaniment", hint = HINT,
-            accessGroup = ACCESS_GROUP)
-    public static class DepartmentMemberAccompanimentApp {
-    }
-
-    @StrutsApplication(bundle = BUNDLE, path = "department-president", titleKey = "title.department.presidency", hint = HINT,
-            accessGroup = "departmentPresident")
-    public static class DepartmentMemberPresidentApp {
     }
 
     @StrutsApplication(bundle = "ResearcherResources", path = "messaging", titleKey = "title.unit.communication.section",

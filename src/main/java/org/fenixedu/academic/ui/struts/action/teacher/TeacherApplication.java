@@ -34,11 +34,6 @@ public class TeacherApplication {
     public static class TeacherFinalWorkApp {
     }
 
-    @StrutsApplication(bundle = "ApplicationResources", path = "tutor", titleKey = "link.teacher.tutor.operations",
-            accessGroup = ACCESS_GROUP, hint = "Teacher")
-    public static class TeacherTutorApp {
-    }
-
     @StrutsApplication(bundle = "ApplicationResources", path = "teaching", titleKey = "title.teaching",
             accessGroup = ACCESS_GROUP, hint = "Teacher")
     public static class TeacherTeachingApp {

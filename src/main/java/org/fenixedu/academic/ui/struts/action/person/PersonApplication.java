@@ -32,18 +32,6 @@ public class PersonApplication {
 
     }
 
-    @StrutsApplication(descriptionKey = "label.homepage", path = "homepage", titleKey = "label.homepage",
-            bundle = "ApplicationResources", accessGroup = "role(PERSON)", hint = "Person")
-    public static class HomepageApp {
-
-    }
-
-    @StrutsApplication(descriptionKey = "oauthapps.label", path = "external-applications", titleKey = "oauthapps.label",
-            bundle = "ApplicationResources", accessGroup = "role(PERSON)", hint = "Person")
-    public static class ExternalApplicationsApp {
-
-    }
-
     @StrutsFunctionality(app = PersonalAreaApp.class, path = "change-password", titleKey = "label.person.changePassword")
     @Mapping(path = "/changePassword", module = "person", parameter = "/person/showChangePassLink.jsp")
     public static class ShowPersonPasswordLink extends ForwardAction {

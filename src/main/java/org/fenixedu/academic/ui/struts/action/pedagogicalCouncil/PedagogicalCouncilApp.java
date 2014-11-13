@@ -38,11 +38,6 @@ public class PedagogicalCouncilApp extends ForwardAction {
     public static class PedagogicalBolonhaProcessApp {
     }
 
-    @StrutsApplication(bundle = "ResearcherResources", path = "communication", titleKey = "title.unit.communication.section",
-            accessGroup = ACCESS_GROUP, hint = HINT)
-    public static class PedagogicalCommunicationApp {
-    }
-
     @StrutsApplication(bundle = BUNDLE, path = "delegates", titleKey = "delegates.section", accessGroup = ACCESS_GROUP,
             hint = HINT)
     public static class PedagogicalDelegatesApp {
@@ -51,11 +46,6 @@ public class PedagogicalCouncilApp extends ForwardAction {
     @StrutsApplication(bundle = "ApplicationResources", path = "control", titleKey = "link.control", accessGroup = ACCESS_GROUP,
             hint = HINT)
     public static class PedagogicalControlApp {
-    }
-
-    @StrutsApplication(bundle = BUNDLE, path = "tutorship", titleKey = "link.tutorship", accessGroup = "role(TUTORSHIP)",
-            hint = HINT)
-    public static class TutorshipApp {
     }
 
     // Faces Entry Points

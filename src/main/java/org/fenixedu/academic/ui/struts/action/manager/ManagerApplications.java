@@ -43,11 +43,6 @@ public class ManagerApplications extends ForwardAction {
     public static class ManagerBolonhaTransitionApp {
     }
 
-    @StrutsApplication(path = "messages-notices", titleKey = "title.messages.and.notices", bundle = BUNDLE,
-            accessGroup = ACCESS_GROUP, hint = HINT)
-    public static class ManagerMessagesAndNoticesApp {
-    }
-
     @StrutsApplication(path = "organizational-structure", titleKey = "title.manager.organizationalStructureManagement",
             bundle = BUNDLE, accessGroup = ACCESS_GROUP, hint = HINT)
     public static class ManagerOrganizationalStructureApp {

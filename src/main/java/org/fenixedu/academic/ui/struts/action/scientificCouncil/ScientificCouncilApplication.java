@@ -43,16 +43,6 @@ public class ScientificCouncilApplication extends ForwardAction {
     public static class ScientificDisserationsApp {
     }
 
-    @StrutsApplication(bundle = BUNDLE, path = "credits", titleKey = "label.credits.navigation.header",
-            accessGroup = ACCESS_GROUP, hint = HINT)
-    public static class ScientificCreditsApp {
-    }
-
-    @StrutsApplication(bundle = "ResearcherResources", path = "messaging", titleKey = "title.unit.communication.section",
-            accessGroup = ACCESS_GROUP, hint = HINT)
-    public static class ScientificCommunicationApp {
-    }
-
     @StrutsApplication(bundle = "CandidateResources", path = "applications", titleKey = "title.applications",
             accessGroup = ACCESS_GROUP, hint = HINT)
     public static class ScientificApplicationsApp {

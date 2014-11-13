@@ -46,34 +46,14 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     public static class DepartmentAdmOfficeTeachersApp {
     }
 
-    @StrutsApplication(bundle = "TeacherCreditsSheetResources", path = "credits", titleKey = "label.credits", hint = HINT,
-            accessGroup = CREDITS_ACCESS_GROUP)
-    public static class DepartmentAdmOfficeCreditsApp {
-    }
-
     @StrutsApplication(bundle = BUNDLE, path = "expectations", titleKey = "link.group.teacherPersonalExpectations.title",
             hint = HINT, accessGroup = CREDITS_ACCESS_GROUP)
     public static class DepartmentAdmOfficeExpectationsApp {
     }
 
-    @StrutsApplication(bundle = BUNDLE, path = "students", titleKey = "link.group.students.title", hint = HINT,
-            accessGroup = ACCESS_GROUP)
-    public static class DepartmentAdmOfficeStudentsApp {
-    }
-
-    @StrutsApplication(bundle = "AcademicAdminOffice", path = "listings", titleKey = "label.lists", hint = HINT,
-            accessGroup = ACCESS_GROUP)
-    public static class DepartmentAdmOfficeListingsApp {
-    }
-
     @StrutsApplication(bundle = BUNDLE, path = "groups", titleKey = "link.group.managementGroups.title", hint = HINT,
             accessGroup = ACCESS_GROUP)
     public static class DepartmentAdmOfficeGroupsApp {
-    }
-
-    @StrutsApplication(bundle = "ResearcherResources", path = "messaging", titleKey = "title.unit.communication.section",
-            hint = HINT, accessGroup = ACCESS_GROUP)
-    public static class DepartmentAdmOfficeMessagingApp {
     }
 
     // Faces Entry Point
