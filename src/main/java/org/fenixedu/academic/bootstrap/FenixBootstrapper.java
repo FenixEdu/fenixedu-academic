@@ -64,8 +64,11 @@ import org.fenixedu.bennu.core.bootstrap.annotations.Section;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.spaces.domain.SpaceClassification;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.standards.geographic.Planet;
@@ -90,6 +93,7 @@ public class FenixBootstrapper {
         }
 
         createManagerUser(adminSection, schoolSetupSection);
+        createAcademicSpaceClassifications();
         createPartyTypeEnums();
         createAccountabilityTypeEnums();
         createCountries(schoolSetupSection);
@@ -348,6 +352,12 @@ public class FenixBootstrapper {
         Authenticate.mock(adminUser);
         AcademicOperationType.MANAGE_AUTHORIZATIONS.grant(adminUser);
         AcademicOperationType.MANAGE_ACADEMIC_CALENDARS.grant(adminUser);
+    }
+
+    private static void createAcademicSpaceClassifications() {
+        LocalizedString.Builder campusNameBuilder = new LocalizedString.Builder();
+        CoreConfiguration.supportedLocales().stream().forEach(l -> campusNameBuilder.with(l, "Campus"));
+        new SpaceClassification("1", campusNameBuilder.build());
     }
 
     private static void createPartyTypeEnums() {
