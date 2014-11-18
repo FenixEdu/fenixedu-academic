@@ -83,11 +83,7 @@
                       <bean:message key="link.equivalency.plan"/>
                     </a>
                   </li>
-                  <li>
-                    <a href="${base}/viewInquiriesResults.do?method=prepare&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
-                    </a>
-                  </li>
+                </c:if>
                 <li>
                   <a href="${base}/sendEmail.do?method=sendEmail&degreeCurricularPlanID=${dcp}">
                     <bean:message key="link.coordinator.sendMail"/>
@@ -96,21 +92,6 @@
               </ul>
             </li>
           </c:if>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.coordinator.degreeSite.tutorship"/> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="${pageContext.request.contextPath}/tutorado" target="_blank">
-                    <bean:message key="link.coordinator.gepTutorshipPage"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/tutorTeachers.do?method=prepareTutorSelection&executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.tutorTeachers" bundle="COORDINATOR_RESOURCES"/>
-                  </a>
-                </li>
-              </ul>
-            </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.coordinator.degreeSite.students"/> <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -127,11 +108,6 @@
                 <li>
                   <a href="${base}/weeklyWorkLoad.do?method=prepare&degreeCurricularPlanID=${dcp}">
                     <bean:message key="link.weekly.work.load" />
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/delegatesManagement.do?method=prepare&executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.delegatesManagement" bundle="COORDINATOR_RESOURCES" />
                   </a>
                 </li>
               </ul>

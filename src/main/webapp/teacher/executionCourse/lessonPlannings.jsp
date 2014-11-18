@@ -52,8 +52,14 @@
 
 	
 	<fr:form action="<%= uri %>">
-		<fr:edit id="lessonPlanningAvailable" name="executionCourse" property="site" schema="lessonPlanningAvailable" nested="true">
+		<fr:edit id="lessonPlanningAvailable" name="executionCourse">
 			<fr:destination name="postBack" path="<%= uri %>"/>
+			<fr:schema type="org.fenixedu.academic.domain.ExecutionCourse" bundle="DEFAULT">
+				<fr:slot name="lessonPlanningAvailable" key="label.executionCourse.lessonPlanningAvailable" layout="radio-postback">
+					<fr:property name="classes" value="list2 liinline"/>
+					<fr:property name="destination" value="postBack"/>
+				</fr:slot>
+			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 vamiddle thlight" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />

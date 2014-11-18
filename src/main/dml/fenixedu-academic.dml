@@ -821,6 +821,7 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         String siteUrl;
         String email;
         boolean dynamicMailDistribution;
+        boolean lessonPlanningAvailable;
     }
     
     
