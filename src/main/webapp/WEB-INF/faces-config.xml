@@ -313,12 +313,6 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<description>CurricularPlansMembersManagementBackingBean</description>
-		<managed-bean-name>CurricularPlansMembersManagementBackingBean</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.CurricularPlansMembersManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<description>CurricularCourseManagementBackingBean</description>
 		<managed-bean-name>CurricularCourseManagement</managed-bean-name>
 		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean</managed-bean-class>

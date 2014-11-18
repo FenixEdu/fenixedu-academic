@@ -36,15 +36,15 @@
 		<f:param value="#{bolonhaBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	
-	<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+	<h:panelGroup rendered="#{!empty CurricularCourseManagement.groupMembersLabels}">
 		<h:outputText value="<p class='mtop2 mbottom05'><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> (#{bolonhaBundle['groupMembersExplanation']}):</p>" escape="false" />
-		<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
+		<h:dataTable value="#{CurricularCourseManagement.groupMembersLabels}" var="memberLabel">
 			<h:column>
 				<h:outputText value="#{memberLabel}" escape="false"/>
 			</h:column>
 		</h:dataTable>
 	</h:panelGroup>
-	<h:panelGroup rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+	<h:panelGroup rendered="#{empty CurricularCourseManagement.groupMembersLabels}">
 		<h:outputText value="<p class='mtop15'><i>#{bolonhaBundle['label.empty.curricularPlanGroup.members']}</i></p>" escape="false" />
 	</h:panelGroup>
 

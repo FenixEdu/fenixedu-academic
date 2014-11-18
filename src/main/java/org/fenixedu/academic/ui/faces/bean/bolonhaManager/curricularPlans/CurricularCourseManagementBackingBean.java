@@ -69,6 +69,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -256,6 +257,19 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         return (degreeCurricularPlan == null) ? (degreeCurricularPlan =
                 FenixFramework.getDomainObject(getDegreeCurricularPlanID())) : degreeCurricularPlan;
+    }
+
+    public List<String> getGroupMembersLabels() {
+        List<String> result = new ArrayList<String>();
+
+        Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
+        if (curricularPlanMembersGroup != null) {
+            for (User user : curricularPlanMembersGroup.getMembers()) {
+                result.add(user.getPerson().getName() + " (" + user.getUsername() + ")");
+            }
+        }
+
+        return result;
     }
 
     public CourseGroup getCourseGroup() {

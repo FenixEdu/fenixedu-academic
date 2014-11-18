@@ -36,15 +36,15 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	
-	<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+	<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.groupMembersLabels}">
 	<h:outputText value="<p class='mtop15 mbottom05'><b id='members' class='highlight1'>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']}):</p>" escape="false" />
-	<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
+	<h:dataTable value="#{DegreeCurricularPlanManagement.groupMembersLabels}" var="memberLabel">
 		<h:column>
 			<h:outputText value="#{memberLabel}" escape="false"/>
 		</h:column>
 	</h:dataTable>
 	</h:panelGroup>
-	<h:panelGroup rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+	<h:panelGroup rendered="#{empty DegreeCurricularPlanManagement.groupMembersLabels}">
 		<h:outputText value="<br/><i>#{scouncilBundle['label.empty.curricularPlanGroup.members']}</i><br/>" escape="false" />
 	</h:panelGroup>
 

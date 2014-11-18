@@ -43,6 +43,8 @@ import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.
 import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.EditDegreeCurricularPlan;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -85,6 +87,19 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
     public void setDcp(DegreeCurricularPlan dcp) {
         this.dcp = dcp;
+    }
+
+    public List<String> getGroupMembersLabels() {
+        List<String> result = new ArrayList<String>();
+
+        Group curricularPlanMembersGroup = getDcp().getCurricularPlanMembersGroup();
+        if (curricularPlanMembersGroup != null) {
+            for (User user : curricularPlanMembersGroup.getMembers()) {
+                result.add(user.getPerson().getName() + " (" + user.getUsername() + ")");
+            }
+        }
+
+        return result;
     }
 
     public String getName() {

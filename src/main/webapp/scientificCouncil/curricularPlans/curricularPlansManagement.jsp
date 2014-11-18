@@ -101,11 +101,6 @@
 				<h:outputFormat value="#{scouncilBundle['delete']}"/>
 				<f:param name="dcpId" value="#{degreeCurricularPlan.externalId}"/>
 			</h:outputLink>
-			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editCurricularPlanMembersGroup.faces">
-				<h:outputText value="#{scouncilBundle['group']}" />
-				<f:param name="dcpId" value="#{degreeCurricularPlan.externalId}"/>
-			</h:outputLink>
 			<h:outputText value="</td></tr>" escape="false"/>
 		</fc:dataRepeater>
 

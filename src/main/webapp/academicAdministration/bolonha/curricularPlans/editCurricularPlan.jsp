@@ -76,15 +76,15 @@
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
 		<h:outputText value="<p><b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']}):<p/>" escape="false" />
-		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
-			<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
+		<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.groupMembersLabels}">
+			<h:dataTable value="#{DegreeCurricularPlanManagement.groupMembersLabels}" var="memberLabel">
 				<h:column>
 					<h:outputText value="#{memberLabel}" escape="false"/>
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
 		
-		<h:panelGroup rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+		<h:panelGroup rendered="#{empty DegreeCurricularPlanManagement.groupMembersLabels}">
 			<h:outputText value="<p><em>#{scouncilBundle['label.empty.curricularPlanGroup.members']}</em><p/>" escape="false" />
 		</h:panelGroup>
 		

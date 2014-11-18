@@ -76,29 +76,22 @@
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
 		<h:outputText value="<p><b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']}):<p/>" escape="false" />
-		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
-			<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
+		<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.groupMembersLabels}">
+			<h:dataTable value="#{DegreeCurricularPlanManagement.groupMembersLabels}" var="memberLabel">
 				<h:column>
 					<h:outputText value="#{memberLabel}" escape="false"/>
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
 		
-		<h:panelGroup rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+		<h:panelGroup rendered="#{empty DegreeCurricularPlanManagement.groupMembersLabels}">
 			<h:outputText value="<p><em>#{scouncilBundle['label.empty.curricularPlanGroup.members']}</em><p/>" escape="false" />
 		</h:panelGroup>
-		
-		<h:outputText value="<p class='mtop15'>" escape="false" />
-		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/editCurricularPlanMembersGroup.faces">
-			<h:outputText value="#{scouncilBundle['accessGroupManagement']}" />
-			<f:param name="dcpId" value="#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.externalId}"/>
-		</h:outputLink>
-		<h:outputText value="</p>" escape="false" />
 		
 		<!-- Your ticket out of hell! / Diogo was here. ;)-->
 		<h:outputText value="<br/><br/><p><strong>#{scouncilBundle['label.coordinationTeams']}</strong><p/>" escape="false" />
 		<h:outputText value="<p>#{scouncilBundle['editCoordinationExplanation']}<p/>" escape="false" />
-		<h:outputText value="<p><a href='#{CurricularPlansMembersManagementBackingBean.contextPath}/scientificCouncil/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId=#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.externalId}'>" escape="false"/>
+		<h:outputText value="<p><a href='#{DegreeCurricularPlanManagement.contextPath}/scientificCouncil/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId=#{DegreeCurricularPlanManagement.dcp.externalId}'>" escape="false"/>
 				<h:outputText value="#{scouncilBundle['accessCoordination']}"/>
 		<h:outputText value="</a></p>" escape="false"/>
 		<!-- Hack ends here. -->
