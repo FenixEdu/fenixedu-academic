@@ -335,4 +335,9 @@ Documentation:
 		<property name="escaped" value="false"/>
 		<property name="languageShown" value="false"/>
 	</renderer>
+    <renderer type="pt.utl.ist.fenix.tools.resources.LabelFormatter" class="org.fenixedu.academic.ui.renderers.LabelFormatterRenderer">
+    		<property name="bundleName(application)" value="APPLICATION_RESOURCES"/>
+    		<property name="bundleName(enum)" value="ENUMERATION_RESOURCES"/>
+    		<property name="bundleName(default)" value="APPLICATION_RESOURCES"/>
+    </renderer>
 </renderers-config>

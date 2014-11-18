@@ -34,17 +34,15 @@ import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.ContentType;
+import org.fenixedu.bennu.core.domain.Avatar;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
-
-import com.google.common.io.ByteStreams;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -125,13 +123,10 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     }
 
     public static void writeUnavailablePhoto(HttpServletResponse response, ActionServlet actionServlet) {
-        try {
-            response.setContentType("image/gif");
-            InputStream stream =
-                    RetrievePersonalPhotoAction.class.getClassLoader().getResourceAsStream(
-                            "images/photo_placer01_" + I18N.getLocale().getLanguage() + ".gif");
-            ByteStreams.copy(stream, response.getOutputStream());
-            stream.close();
+        response.setContentType("image/png");
+        try (InputStream mm =
+                RetrievePersonalPhotoAction.class.getClassLoader().getResourceAsStream("META-INF/resources/img/mysteryman.png")) {
+            response.getOutputStream().write(Avatar.process(mm, "image/png", 100));
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
