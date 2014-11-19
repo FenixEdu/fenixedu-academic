@@ -41,10 +41,6 @@ public class InfoProfessorship extends InfoObject {
         return InfoTeacher.newInfoFromDomain(this.getProfessorship().getTeacher());
     }
 
-    public Double getHours() {
-        return this.getProfessorship().getHours();
-    }
-
     public Boolean getResponsibleFor() {
         return this.getProfessorship().isResponsibleFor();
     }

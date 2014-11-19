@@ -47,7 +47,7 @@ public class DomainException extends org.fenixedu.bennu.core.domain.exceptions.D
 
     public static void throwWhenDeleteBlocked(Collection<String> blockers) {
         if (!blockers.isEmpty()) {
-            throw new DomainException(blockers.stream().collect(Collectors.joining(", ")));
+            throw new DomainException("key.return.argument", blockers.stream().collect(Collectors.joining(", ")));
         }
     }
 }

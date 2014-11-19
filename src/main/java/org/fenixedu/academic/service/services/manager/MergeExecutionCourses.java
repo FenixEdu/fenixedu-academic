@@ -54,8 +54,6 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -312,15 +310,13 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-            throws MaxResponsibleForExceed, InvalidCategory {
+    private static void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getProfessorshipsSet().isEmpty();) {
             final Professorship professorship = executionCourseFrom.getProfessorshipsSet().iterator().next();
             Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
             if (otherProfessorship == null) {
                 otherProfessorship =
-                        Professorship.create(professorship.getResponsibleFor(), executionCourseTo, professorship.getPerson(),
-                                professorship.getHours());
+                        Professorship.create(professorship.getResponsibleFor(), executionCourseTo, professorship.getPerson());
             }
             for (; !professorship.getAssociatedSummariesSet().isEmpty(); otherProfessorship.addAssociatedSummaries(professorship
                     .getAssociatedSummariesSet().iterator().next())) {

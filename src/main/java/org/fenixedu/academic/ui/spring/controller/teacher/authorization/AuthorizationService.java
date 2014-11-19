@@ -33,6 +33,14 @@ import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 
+/***
+ * Teacher authorization and categories service
+ * 
+ * This service provides methods to manage teacher authorizations and categories.
+ * 
+ * @author Sérgio Silva (sergio.silva@tecnico.ulisboa.pt)
+ *
+ */
 @Service
 public class AuthorizationService {
 
@@ -42,27 +50,89 @@ public class AuthorizationService {
     @Autowired
     private MessageSource messageSource;
 
+    /***
+     * Helper method to get message from message source easily
+     * 
+     * @param code the key
+     * @param args the arguments if necessary
+     * @return
+     */
     private String message(String code, Object... args) {
         return messageSource.getMessage(code, args, I18N.getLocale());
     }
 
+    /***
+     * Get all active deparments
+     * 
+     * @return {@link Department}
+     */
     public List<Department> getDepartments() {
         return Department.readActiveDepartments();
     }
 
+    /***
+     * Get all teacher categories
+     * 
+     * @return
+     */
     public List<TeacherCategory> getCategories() {
-        return Bennu.getInstance().getTeacherCategorySet().stream().sorted().collect(Collectors.toList());
+        return Bennu.getInstance().getTeacherCategorySet().stream().distinct().sorted().collect(Collectors.toList());
     }
 
+    /***
+     * Get all execution periods order by semester and year in descending order (most recent to oldest)
+     * 
+     * @return
+     */
     public List<ExecutionSemester> getExecutionPeriods() {
-        return Bennu.getInstance().getExecutionPeriodsSet().stream()
+        return Bennu.getInstance().getExecutionPeriodsSet().stream().distinct()
                 .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR.reversed()).collect(Collectors.toList());
     }
 
+    /***
+     * Get all execution periods that the teacher is authorized to
+     * 
+     * @param teacher
+     * @return
+     */
+    public List<ExecutionSemester> getExecutionPeriods(Teacher teacher) {
+        return teacher.getTeacherAuthorizationStream().map(TeacherAuthorization::getExecutionSemester).distinct()
+                .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR.reversed()).collect(Collectors.toList());
+    }
+
+    /***
+     * Get the current execution period
+     * 
+     * @return
+     */
+    public ExecutionSemester getCurrentPeriod() {
+        return ExecutionSemester.readActualExecutionSemester();
+    }
+
+    /***
+     * Create new teacher authorization using the bean
+     * 
+     * @param bean
+     * @return
+     */
     public TeacherAuthorization createTeacherAuthorization(FormBean bean) {
         return createTeacherAuthorization(bean.getUser(), bean.getDepartment(), bean.getPeriod(), bean.getCategory(),
                 bean.getContracted(), bean.getLessonHours());
     }
+
+    /***
+     * Create new teacher authorization in one atomic operation.
+     * Creates the teacher if the user doesn't have one
+     * 
+     * @param user The user
+     * @param department The associated deparment
+     * @param semester The period
+     * @param category The teacher category
+     * @param contracted true if the teacher is contracted, false if otherwise
+     * @param lessonHours the number of hours the teacher must teacher
+     * @return the created {@link TeacherAuthorization} object
+     * 
+     */
 
     @Atomic(mode = TxMode.WRITE)
     public TeacherAuthorization createTeacherAuthorization(User user, Department department, ExecutionSemester semester,
@@ -79,6 +149,15 @@ public class AuthorizationService {
         return TeacherAuthorization.createOrUpdate(teacher, department, semester, category, contracted, lessonHours);
     }
 
+    /***
+     * Creates a new teacher category.
+     * 
+     * @param code
+     * @param name
+     * @param weight The degree of importance (used by the comparator)
+     * @return
+     */
+
     @Atomic(mode = TxMode.WRITE)
     public TeacherCategory createTeacherCategory(String code, LocalizedString name, Integer weight) {
         return new TeacherCategory(code, name, weight);
@@ -94,29 +173,58 @@ public class AuthorizationService {
 
     }
 
+    /***
+     * Get all revoked teacher authorizations ordered descendingly by revoke time.
+     * 
+     * @return
+     */
     public List<TeacherAuthorization> getRevokedAuthorizations() {
         Comparator<TeacherAuthorization> byRevokeTime = (a1, a2) -> {
             return a1.getRevokeTime().compareTo(a2.getRevokeTime());
         };
 
-        return Bennu.getInstance().getRevokedTeacherAuthorizationSet().stream().sorted(byRevokeTime.reversed())
+        return Bennu.getInstance().getRevokedTeacherAuthorizationSet().stream().distinct().sorted(byRevokeTime.reversed())
                 .collect(Collectors.toList());
     }
 
-    public List<TeacherAuthorization> searchAuthorizations(final FormBean search) {
+    /**
+     * Get all valid teacher authorizations for the specific {@link Department} and {@link ExecutionSemester}
+     * 
+     * @param search {@link Department} and {@link ExecutionSemester} filter
+     * @return
+     */
+    public List<TeacherAuthorization> searchAuthorizations(final SearchBean search) {
         return getAuthorizations(search.getDepartment()).filter(t -> t.getExecutionSemester().equals(search.getPeriod()))
-                .collect(Collectors.toList());
+                .distinct().collect(Collectors.toList());
     }
+
+    /***
+     * Revokes the teacher authorization
+     * 
+     * @param authorization
+     */
 
     @Atomic(mode = TxMode.WRITE)
     public void revoke(TeacherAuthorization authorization) {
         authorization.revoke();
     }
 
+    /***
+     * Creates a new {@link TeacherCategory}
+     * 
+     * @param form
+     */
     @Atomic(mode = TxMode.WRITE)
     public void createCategory(CategoryBean form) {
         new TeacherCategory(form.getCode(), form.getName(), form.getWeight());
     }
+
+    /***
+     * Edits {@link TeacherCategory} instance
+     * 
+     * @param category
+     * @param form
+     */
 
     @Atomic(mode = TxMode.WRITE)
     public void editCategory(TeacherCategory category, CategoryBean form) {
@@ -125,7 +233,14 @@ public class AuthorizationService {
         category.setWeight(form.getWeight());
     }
 
-    public void dumpCSV(FormBean search, OutputStream out) throws IOException {
+    /***
+     * Write to outputstream csv file with {@link TeacherAuthorization} specified by the filter bean
+     * 
+     * @param search filter bean
+     * @param out the outputstream to dump the CSV to
+     * @throws IOException if write to the outputstream fails
+     */
+    public void dumpCSV(SearchBean search, OutputStream out) throws IOException {
 
         SpreadsheetBuilder builder = new SpreadsheetBuilder();
 
@@ -152,18 +267,30 @@ public class AuthorizationService {
         builder.build(WorkbookExportFormat.CSV, out);
     }
 
-    public String getCsvFilename(FormBean search) {
+  
+    public String getCsvFilename(SearchBean search) {
         return getSheetName(search);
     };
 
-    public String getSheetName(FormBean search) {
-        String department =
-                search.getDepartment() == null ? message("teacher.authorizations.department.all") : search.getDepartment()
-                        .getAcronym();
+    /**
+     * get the CSV sheet name when exporting existing teacher authorizations
+     * 
+     * @param filter bean
+     * @return
+     */
+    public String getSheetName(SearchBean search) {
+        String department = search.getDepartment() == null ? message("label.all") : search.getDepartment().getAcronym();
         String period = search.getPeriod().getQualifiedName().replace(" ", "_");
         return Joiner.on("_").join("teacherAuthorizations", department, period);
     }
 
+    /***
+     * Importation of teacher authorizations from a CSV file
+     * 
+     * @param period the period where to import
+     * @param partFile the CSV file
+     * @return
+     */
     public List<TeacherAuthorization> importCSV(ExecutionSemester period, MultipartFile partFile) {
         try {
             return importAuthorizations(period, csvService.readCsvFile(partFile.getInputStream(), ",", Charsets.UTF_8.toString()));
@@ -172,6 +299,15 @@ public class AuthorizationService {
         }
     }
 
+    /***
+     * Batch import of teacher authorizations
+     * Ignores empty lines.
+     * 
+     * @param period the {@link ExecutionSemester} where to import
+     * @param authorizationEntries list where each element is a map of the column and the value
+     * @throws RuntimeException if can't convert a specified value for a specific element
+     * @return the list of {@link TeacherAuthorization} created objects
+     */
     @Atomic(mode = TxMode.WRITE)
     private List<TeacherAuthorization> importAuthorizations(ExecutionSemester period,
             List<Map<String, String>> authorizationEntries) {

@@ -27,14 +27,67 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "teacher.authorizations.title",
         accessGroup = "academic(MANAGE_TEACHER_AUTHORIZATIONS)")
 @RequestMapping("/teacher/authorizations")
+/**
+ * Manage teacher authorizations controller
+ * 
+ * 
+ * @author Sérgio Silva (sergio.silva@tecnico.ulisboa.pt)
+ *
+ */
 public class AuthorizationController {
 
     @Autowired
     AuthorizationService service;
 
+    /***
+     * Helper method that returns webview resource for this context
+     * 
+     * @param string
+     * @return
+     */
     private String view(String string) {
         return "fenixedu-academic/teacher/authorization/" + string;
     }
+
+    /***
+     * Helper method to redirect to home view with search parameters
+     * 
+     * @param search deparment and period used to filter the home view
+     * @return
+     */
+    private String redirectHome(SearchBean search, RedirectAttributes attrs) {
+        attrs.addAttribute("department", search.getDepartment() == null ? null : search.getDepartment().getExternalId());
+        attrs.addAttribute("period", search.getPeriod().getExternalId());
+        return "redirect:/teacher/authorizations";
+    }
+
+
+    /***
+     * Functionality entry point
+     * 
+     * @param model
+     * @param search
+     * @return
+     */
+
+    @RequestMapping(method = GET)
+    public String home(Model model, @ModelAttribute FormBean search) {
+        if (search.getPeriod() == null) {
+            search.setPeriod(service.getExecutionPeriods().isEmpty() ? null : service.getExecutionPeriods().get(0));
+        }
+        model.addAttribute("search", search);
+        model.addAttribute("departments", service.getDepartments());
+        model.addAttribute("periods", service.getExecutionPeriods());
+        model.addAttribute("authorizations", service.searchAuthorizations(search));
+        return view("show");
+    }
+
+    /***
+     * Shows all teacher categories
+     * 
+     * @param model
+     * @return
+     */
 
     @RequestMapping(method = GET, value = "categories")
     public String categories(Model model) {
@@ -42,18 +95,40 @@ public class AuthorizationController {
         return view("categories/show");
     }
 
+    /***
+     * Shows form view to create a teacher category
+     * 
+     * @param model
+     * @return
+     */
+
     @RequestMapping(method = GET, value = "categories/create")
     public String showCreate(Model model) {
         model.addAttribute("form", new CategoryBean());
         return view("categories/create");
     }
 
+    /***
+     * Shows form view to edit an existing teacher category
+     * 
+     * @param model
+     * @param category the category to be edited
+     * @return
+     */
     @RequestMapping(method = GET, value = "categories/{category}")
     public String showEdit(Model model, @PathVariable TeacherCategory category) {
         model.addAttribute("form", category);
         return view("categories/create");
     }
 
+    /***
+     * Action to edit or create a teacher category
+     * 
+     * @param model
+     * @param category the category to edit. If null it will create a new one
+     * @param form the category information, {@link TeacherCategory#setCode(String)} must be unique.
+     * @return
+     */
     @RequestMapping(method = POST, value = "categories/{category}")
     public String createOrEdit(Model model, @Value("null") @PathVariable TeacherCategory category,
             @ModelAttribute CategoryBean form) {
@@ -72,8 +147,16 @@ public class AuthorizationController {
         return "redirect:/teacher/authorizations/categories";
     }
 
+    /***
+     * Downloads a CSV file with the authorization information filtered by {@link SearchBean}
+     * 
+     * @param model
+     * @param search
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(method = GET, value = "download")
-    public String download(Model model, @ModelAttribute FormBean search, RedirectAttributes attrs, HttpServletResponse response)
+    public String download(Model model, @ModelAttribute SearchBean search, RedirectAttributes attrs, HttpServletResponse response)
             throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "filename=" + service.getCsvFilename(search));
@@ -82,6 +165,14 @@ public class AuthorizationController {
         return redirectHome(search, attrs);
     }
 
+    /***
+     * Shows webview with instructions to upload teacher authorizations CSV file
+     * 
+     * @param model
+     * @param search
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(method = GET, value = "upload")
     public String showUpload(Model model) {
         model.addAttribute("currentUser", Authenticate.getUser());
@@ -90,6 +181,15 @@ public class AuthorizationController {
         model.addAttribute("periods", service.getExecutionPeriods());
         return view("upload");
     }
+
+    /***
+     * Creates authorizations based on the CSV file
+     * 
+     * @param model
+     * @param period the period where to import the teacher authorizations
+     * @param csv
+     * @return
+     */
 
     @RequestMapping(method = POST, value = "upload")
     public String upload(Model model, @RequestParam ExecutionSemester period, @RequestParam MultipartFile csv) {
@@ -102,18 +202,14 @@ public class AuthorizationController {
         return view("upload-finished");
     }
 
-    @RequestMapping(method = GET)
-    public String home(Model model, @ModelAttribute FormBean search) {
-        if (search.getPeriod() == null) {
-            search.setPeriod(service.getExecutionPeriods().isEmpty() ? null : service.getExecutionPeriods().get(0));
-        }
-        model.addAttribute("search", search);
-        model.addAttribute("departments", service.getDepartments());
-        model.addAttribute("periods", service.getExecutionPeriods());
-        model.addAttribute("authorizations", service.searchAuthorizations(search));
-        return view("show");
-    }
 
+    /***
+     * Shows form to create a new teacher authorization with the previous
+     * 
+     * @param model
+     * @param search
+     * @return
+     */
     @RequestMapping(method = GET, value = "create")
     public String showCreate(Model model, @Value("null") @ModelAttribute FormBean search) {
         if (search.getPeriod() == null) {
@@ -126,21 +222,44 @@ public class AuthorizationController {
         return view("create");
     }
 
+    /***
+     * Entrypoint to create a new teacher authorization
+     * 
+     * @param model
+     * @param form
+     * @param attrs
+     * @return
+     */
     @RequestMapping(method = POST, value = "create")
     public String create(Model model, @ModelAttribute FormBean form, final RedirectAttributes attrs) {
         service.createTeacherAuthorization(form);
         return redirectHome(form, attrs);
     }
 
+    /***
+     * Shows webview of all revoked teacher authorizations
+     * 
+     * @param model
+     * @return
+     */
     @RequestMapping(method = GET, value = "revoked")
     public String revoked(Model model) {
         model.addAttribute("authorizations", service.getRevokedAuthorizations());
         return view("revoked");
     }
 
+    /***
+     * Endpoint to revoke a specific teacher authorization
+     * 
+     * @param model
+     * @param authorization teacher authorization to revoke
+     * @param search
+     * @return
+     */
     @RequestMapping(method = POST, value = "{authorization}/revoke")
     public String revoke(Model model, @PathVariable TeacherAuthorization authorization,
-            @Value("null") @ModelAttribute FormBean search, final RedirectAttributes attrs) {
+            @Value("null") @ModelAttribute SearchBean search, final RedirectAttributes attrs) {
+
         service.revoke(authorization);
         return redirectHome(search, attrs);
     }

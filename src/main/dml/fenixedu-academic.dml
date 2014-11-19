@@ -1119,7 +1119,6 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
     }
 
     class Professorship  {
-        Double hours;
         Boolean responsibleFor;
     }
 
@@ -7861,15 +7860,6 @@ relation PersonCountryOfBirth {
         multiplicity *;
     }
     Country playsRole countryOfBirth;
-}
-
-relation PersonDepartment {
-    Person playsRole associatedPersons {
-        multiplicity *;
-    }
-    Department playsRole manageableDepartmentCredits {
-        multiplicity *;
-    }
 }
 
 relation PersonTeacher {

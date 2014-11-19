@@ -18,26 +18,15 @@
  */
 package org.fenixedu.academic.service.services.teacher;
 
-import java.util.Collection;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
-import org.fenixedu.academic.domain.ShiftProfessorship;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 
 import pt.ist.fenixframework.Atomic;
 
-public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson {
-
-    private static boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson) {
-        return loggedPerson == selectedPerson;
-    }
+public class DeleteProfessorshipWithPerson {
 
     @Atomic
     public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
@@ -48,8 +37,7 @@ public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWi
             Professorship selectedProfessorship = null;
             selectedProfessorship = person.getProfessorshipByExecutionCourse(executionCourse);
 
-            if ((loggedPerson == null) || (selectedProfessorship == null) || !loggedPerson.hasRole(RoleType.TEACHER)
-                    || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())
+            if ((loggedPerson == null) || (selectedProfessorship == null) || loggedPerson == selectedProfessorship.getPerson()
                     || selectedProfessorship.getResponsibleFor()) {
                 throw new NotAuthorizedException();
             }
@@ -59,24 +47,8 @@ public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWi
 
         Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
 
-        Collection shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorshipSet();
+        professorshipToDelete.delete();
 
-        boolean hasCredits = false;
-
-        if (!shiftProfessorshipList.isEmpty()) {
-            hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
-
-                @Override
-                public boolean evaluate(Object arg0) {
-                    ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
-                    return shiftProfessorship.getPercentage() != null && shiftProfessorship.getPercentage() != 0;
-                }
-            });
-        }
-
-        if (hasCredits) {
-            throw new DomainException("error.remove.professorship");
-        }
         return Boolean.TRUE;
     }
 }

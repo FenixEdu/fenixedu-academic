@@ -115,6 +115,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
                 }
             };
 
+    static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME =
+            new Comparator<ExecutionDegree>() {
+
+                @Override
+                public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+                    return Degree.COMPARATOR_BY_DEGREE_TYPE_DEGREE_NAME_AND_ID.compare(o1.getDegree(), o2.getDegree());
+                }
+
+            };
+
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR =
             new Comparator<ExecutionDegree>() {
 

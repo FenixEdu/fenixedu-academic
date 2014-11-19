@@ -106,9 +106,6 @@ import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.RolePredicates;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.academic.util.PeriodState;
@@ -734,7 +731,7 @@ public class Person extends Person_Base {
             getStudent().delete();
         }
 
-        getManageableDepartmentCreditsSet().clear();
+//        getManageableDepartmentCreditsSet().clear();
         getThesisEvaluationParticipantsSet().clear();
 
         for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete()) {
@@ -1958,48 +1955,6 @@ public class Person extends Person_Base {
         });
     }
 
-    public List<Professorship> getProfessorshipsByExecutionSemester(final ExecutionSemester executionSemester) {
-        final List<Professorship> professorships = new ArrayList<Professorship>();
-        for (final Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-                professorships.add(professorship);
-            }
-        }
-        return professorships;
-    }
-
-    public void updateResponsabilitiesFor(final String executionYearId, final List<String> executionCourses)
-            throws MaxResponsibleForExceed, InvalidCategory {
-
-        if (executionYearId == null || executionCourses == null) {
-            throw new NullPointerException();
-        }
-
-        boolean responsible;
-        for (final Professorship professorship : this.getProfessorshipsSet()) {
-            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getExecutionPeriod().getExecutionYear().getExternalId().equals(executionYearId)) {
-                responsible = executionCourses.contains(executionCourse.getExternalId());
-                if (!professorship.getResponsibleFor().equals(Boolean.valueOf(responsible)) && this.getTeacher() != null) {
-                    ResponsibleForValidator.getInstance().validateResponsibleForList(this.getTeacher(), executionCourse,
-                            professorship);
-                    professorship.setResponsibleFor(responsible);
-                }
-            }
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<Professorship> getResponsableProfessorships() {
-        final List<Professorship> result = new ArrayList<Professorship>();
-        for (final Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.isResponsibleFor()) {
-                result.add(professorship);
-            }
-        }
-        return result;
-    }
-
     public boolean hasProfessorshipForExecutionCourse(final ExecutionCourse executionCourse) {
         return getProfessorshipByExecutionCourse(executionCourse) != null;
     }
@@ -2047,15 +2002,6 @@ public class Person extends Person_Base {
                 this.getEventsSet().add(entry.getAccountingTransaction().getEvent());
             }
         }
-    }
-
-    public Professorship isResponsibleFor(final ExecutionCourse executionCourse) {
-        for (final Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getResponsibleFor() && professorship.getExecutionCourse() == executionCourse) {
-                return professorship;
-            }
-        }
-        return null;
     }
 
     public List<Professorship> getProfessorships(final ExecutionSemester executionSemester) {

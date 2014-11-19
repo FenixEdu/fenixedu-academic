@@ -159,7 +159,9 @@ public enum AcademicOperationType implements IPresentableEnum, AccessOperation<A
 
     /* MANAGE TEACHER AUTHORIZATIONS */
 
-    MANAGE_TEACHER_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION);
+    MANAGE_TEACHER_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION),
+
+    MANAGE_TEACHER_PROFESSORSHIPS(false, false, Scope.ADMINISTRATION);
 
     public static enum Scope {
         OFFICE, ADMINISTRATION;

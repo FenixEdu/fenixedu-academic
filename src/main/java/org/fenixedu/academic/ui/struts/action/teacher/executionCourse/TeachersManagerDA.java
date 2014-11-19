@@ -30,7 +30,6 @@ import org.apache.struts.action.ActionMessages;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.service.services.teacher.DeleteProfessorshipWithPerson;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
@@ -87,18 +86,14 @@ public class TeachersManagerDA extends ExecutionCourseBaseAction {
         Person person = Person.readPersonByUsername(request.getParameter("teacherId"));
 
         if (person != null) {
-            try {
-                if (person.getTeacher().hasTeacherAuthorization()) {
-                    Professorship professorship = Professorship.create(false, getExecutionCourse(request), person, 0.0);
-                    request.setAttribute("teacherOID", professorship.getExternalId());
-                } else {
-                    final ActionMessages actionErrors = new ActionErrors();
-                    actionErrors.add("error", new ActionMessage("label.invalid.teacher.without.auth"));
-                    saveErrors(request, actionErrors);
-                    return prepareAssociateTeacher(mapping, form, request, response);
-                }
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+            if (person.getTeacher().hasTeacherAuthorization()) {
+                Professorship professorship = Professorship.create(false, getExecutionCourse(request), person);
+                request.setAttribute("teacherOID", professorship.getExternalId());
+            } else {
+                final ActionMessages actionErrors = new ActionErrors();
+                actionErrors.add("error", new ActionMessage("label.invalid.teacher.without.auth"));
+                saveErrors(request, actionErrors);
+                return prepareAssociateTeacher(mapping, form, request, response);
             }
         } else {
             final ActionMessages actionErrors = new ActionErrors();

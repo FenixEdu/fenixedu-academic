@@ -24,18 +24,16 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -57,58 +55,24 @@ public class Professorship extends Professorship_Base {
         return this.getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }
 
-    public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Teacher teacher, Double hours)
-            throws MaxResponsibleForExceed, InvalidCategory {
-
-        for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
-            if (teacher == otherProfessorship.getTeacher()) {
-                throw new DomainException("error.teacher.already.associated.to.professorship");
-            }
-        }
-
-        if (responsibleFor == null || executionCourse == null || teacher == null) {
-            throw new NullPointerException();
-        }
-
-        Professorship professorShip = new Professorship();
-        professorShip.setHours((hours == null) ? new Double(0.0) : hours);
-        professorShip.setExecutionCourse(executionCourse);
-        professorShip.setPerson(teacher.getPerson());
-        professorShip.setCreator(AccessControl.getPerson());
-
-        professorShip.setResponsibleFor(responsibleFor);
-        executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
-
-        return professorShip;
-    }
-
     @Atomic
-    public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person, Double hours)
-            throws MaxResponsibleForExceed, InvalidCategory {
+    public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person) {
 
-        for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
-            if (person == otherProfessorship.getPerson()) {
-                throw new DomainException("error.teacher.already.associated.to.professorship");
-            }
-        }
+        Objects.requireNonNull(responsibleFor);
+        Objects.requireNonNull(executionCourse);
+        Objects.requireNonNull(person);
 
-        if (responsibleFor == null || executionCourse == null || person == null) {
-            throw new NullPointerException();
+        if (executionCourse.getProfessorshipsSet().stream().anyMatch(p -> person.equals(p.getPerson()))) {
+            throw new DomainException("error.teacher.already.associated.to.professorship");
         }
 
         Professorship professorShip = new Professorship();
-        professorShip.setHours((hours == null) ? new Double(0.0) : hours);
         professorShip.setExecutionCourse(executionCourse);
         professorShip.setPerson(person);
-        professorShip.setCreator(AccessControl.getPerson());
+        professorShip.setCreator(Authenticate.getUser().getPerson());
 
-        if (responsibleFor.booleanValue() && professorShip.getPerson().getTeacher() != null) {
-            ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(),
-                    professorShip.getExecutionCourse(), professorShip);
-            professorShip.setResponsibleFor(Boolean.TRUE);
-        } else {
-            professorShip.setResponsibleFor(Boolean.FALSE);
-        }
+        professorShip.setResponsibleFor(responsibleFor);
+
         if (person.getTeacher() != null) {
             executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
         }
@@ -120,19 +84,18 @@ public class Professorship extends Professorship_Base {
     }
 
     public void delete() {
-        if (isDeletable()) {
-            ProfessorshipManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
-                    "log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
-                            .getNome(), getExecutionCourse().getDegreePresentationString());
-            setExecutionCourse(null);
-            setPerson(null);
-            if (super.getPermissions() != null) {
-                getPermissions().delete();
-            }
-            setRootDomainObject(null);
-            setCreator(null);
-            deleteDomainObject();
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        ProfessorshipManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING, "log.executionCourse.professorship.removed",
+                getPerson().getPresentationName(), getExecutionCourse().getNome(), getExecutionCourse()
+                        .getDegreePresentationString());
+        setExecutionCourse(null);
+        setPerson(null);
+        if (super.getPermissions() != null) {
+            getPermissions().delete();
         }
+        setRootDomainObject(null);
+        setCreator(null);
+        deleteDomainObject();
     }
 
     @Override
@@ -241,6 +204,14 @@ public class Professorship extends Professorship_Base {
 
     public void setTeacher(Teacher teacher) {
         setPerson(teacher.getPerson());
+    }
+
+    @Override
+    public void setResponsibleFor(Boolean responsibleFor) {
+        if (responsibleFor == null) {
+            responsibleFor = Boolean.FALSE;
+        }
+        super.setResponsibleFor(responsibleFor);
     }
 
     public boolean hasTeacher() {

@@ -37,9 +37,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.messaging.Forum;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-import org.fenixedu.academic.service.services.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -117,26 +114,6 @@ public class Teacher extends Teacher_Base {
             }
         }
         return null;
-    }
-
-    public void updateResponsabilitiesFor(String executionYearId, List<Integer> executionCourses) throws MaxResponsibleForExceed,
-            InvalidCategory {
-
-        if (executionYearId == null || executionCourses == null) {
-            throw new NullPointerException();
-        }
-
-        boolean responsible;
-        for (final Professorship professorship : this.getProfessorships()) {
-            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getExecutionPeriod().getExecutionYear().getExternalId().equals(executionYearId)) {
-                responsible = executionCourses.contains(executionCourse.getExternalId());
-                if (!professorship.getResponsibleFor().equals(Boolean.valueOf(responsible))) {
-                    ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse, professorship);
-                    professorship.setResponsibleFor(responsible);
-                }
-            }
-        }
     }
 
     /**

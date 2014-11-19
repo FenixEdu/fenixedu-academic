@@ -65,6 +65,7 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
@@ -78,12 +79,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         public int compare(final Degree o1, final Degree o2) {
             String name1;
             String name2;
-            if (I18N.getLocale().toString().equalsIgnoreCase("pt")) {
-                name1 = o1.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.pt);
-                name2 = o2.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.pt);
-            } else {
-                name1 = o1.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.en);
-                name2 = o2.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.en);
+            name1 = o1.getNameFor((AcademicInterval) null).getContent(I18N.getLocale());
+            name2 = o2.getNameFor((AcademicInterval) null).getContent(I18N.getLocale());
+
+            if (Strings.isNullOrEmpty(name1) || Strings.isNullOrEmpty(name2)) {
+                name1 = o1.getNameFor((AcademicInterval) null).getContent();
+                name2 = o2.getNameFor((AcademicInterval) null).getContent();
             }
 
             return collator.compare(name1, name2);
@@ -98,20 +99,37 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
     };
 
-    static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE = new Comparator<Degree>() {
+    static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_NAME = new Comparator<Degree>() {
         @Override
         public int compare(final Degree o1, final Degree o2) {
             return collator.compare(o1.getDegreeType().getLocalizedName(), o2.getDegreeType().getLocalizedName());
         }
     };
 
+    static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE = new Comparator<Degree>() {
+        @Override
+        public int compare(final Degree o1, final Degree o2) {
+            return o1.getDegreeType().compareTo(o2.getDegreeType());
+        }
+    };
+
     private static class ComparatorByDegreeTypeAndNameAndId implements Serializable, Comparator<Degree> {
         @Override
         public int compare(final Degree o1, final Degree o2) {
-            final int typeResult = COMPARATOR_BY_DEGREE_TYPE.compare(o1, o2);
+            final int typeResult = COMPARATOR_BY_DEGREE_TYPE_NAME.compare(o1, o2);
             return typeResult == 0 ? COMPARATOR_BY_NAME_AND_ID.compare(o1, o2) : typeResult;
         }
     }
+
+    static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_DEGREE_NAME_AND_ID = new Comparator<Degree>() {
+
+        @Override
+        public int compare(Degree o1, Degree o2) {
+            final int typeResult = COMPARATOR_BY_DEGREE_TYPE.compare(o1, o2);
+            return typeResult == 0 ? COMPARATOR_BY_NAME_AND_ID.compare(o1, o2) : typeResult;
+        }
+
+    };
 
     static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new ComparatorByDegreeTypeAndNameAndId();
 

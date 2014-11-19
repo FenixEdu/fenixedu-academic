@@ -41,11 +41,6 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     public static class DepartmentAdmOfficeViewApp {
     }
 
-    @StrutsApplication(bundle = BUNDLE, path = "teachers", titleKey = "link.group.teacher.title", hint = HINT,
-            accessGroup = CREDITS_ACCESS_GROUP)
-    public static class DepartmentAdmOfficeTeachersApp {
-    }
-
     @StrutsApplication(bundle = BUNDLE, path = "expectations", titleKey = "link.group.teacherPersonalExpectations.title",
             hint = HINT, accessGroup = CREDITS_ACCESS_GROUP)
     public static class DepartmentAdmOfficeExpectationsApp {

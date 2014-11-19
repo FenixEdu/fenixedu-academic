@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -328,14 +329,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public List<Professorship> responsibleFors() {
-        final List<Professorship> res = new ArrayList<Professorship>();
-        for (final Professorship professorship : this.getProfessorshipsSet()) {
-            Boolean responsibleFor = professorship.getResponsibleFor();
-            if (responsibleFor != null && responsibleFor.booleanValue()) {
-                res.add(professorship);
-            }
-        }
-        return res;
+        return getProfessorshipsSet().stream().filter(Professorship::getResponsibleFor).collect(Collectors.toList());
     }
 
     public Attends getAttendsByStudent(final Registration registration) {

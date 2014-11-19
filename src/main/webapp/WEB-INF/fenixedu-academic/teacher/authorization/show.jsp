@@ -69,7 +69,7 @@ $(document).ready(function() {
 			<label for="selectDepartment" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.department" /></label>
 			<div class="col-sm-11">
 				<form:select path="department" id="selectDepartment" class="form-control">
-					<form:option label="${i18n.message('teacher.authorizations.department.all')}" value="null"/>
+					<form:option label="${i18n.message('label.all')}" value="null"/>
 					<form:options items="${departments}" itemLabel="nameI18n.content" itemValue="externalId"/>
 				</form:select>
 			</div>
