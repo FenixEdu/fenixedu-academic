@@ -30,7 +30,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -180,7 +179,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
 @SuppressWarnings("unchecked")
@@ -884,7 +882,7 @@ public class FenixAPIv1 {
         if (StringUtils.isBlank(day)) {
             day = dataFormatDay.format(new Date());
         }
-        return FenixAPICanteen.get(day);
+        return FenixAPIFromExternalServer.getCanteen(day);
     }
 
     @GET
@@ -892,16 +890,8 @@ public class FenixAPIv1 {
     @Path("contacts")
     @FenixAPIPublic
     public String contacts() {
-        Locale locale = I18N.getLocale();
-        String contactsFile = getFileInfo("/api/contacts.json");
-        JsonParser parser = new JsonParser();
-        JsonObject jObj = (JsonObject) parser.parse(contactsFile);
+        return FenixAPIFromExternalServer.getContacts();
 
-        if (Locale.UK.equals(locale)) {
-            return jObj.get(locale.toLanguageTag()).toString();
-        } else {
-            return jObj.get("pt-PT").toString();
-        }
     }
 
     @GET
@@ -909,19 +899,7 @@ public class FenixAPIv1 {
     @Path("shuttle")
     @FenixAPIPublic
     public String shuttle() {
-        return getFileInfo("/api/shuttle.json");
-    }
-
-    private String getFileInfo(String file) {
-        final InputStream resourceAsStream = getClass().getResourceAsStream(file);
-        if (resourceAsStream == null) {
-            return new JsonObject().toString();
-        }
-        try {
-            return new String(ByteStreams.toByteArray(resourceAsStream));
-        } catch (IOException e) {
-            return new JsonObject().toString();
-        }
+        return FenixAPIFromExternalServer.getShuttle();
     }
 
     @GET
