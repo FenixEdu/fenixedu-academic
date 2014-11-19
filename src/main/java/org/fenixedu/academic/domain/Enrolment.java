@@ -34,7 +34,6 @@ import java.util.TreeSet;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.curriculum.CurriculumValidationEvaluationPhase;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
@@ -1047,8 +1046,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
-        //FIXME: different behaviour based on administrative office type is not acceptable, workflows must converge
-        return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE ? getLatestEnrolmentEvalution(getAllFinalEnrolmentEvaluations()) : getLatestEnrolmentEvalution(getEvaluationsSet()));
+        return getLatestEnrolmentEvalution(getAllFinalEnrolmentEvaluations());
     }
 
     final public EnrolmentEvaluation getLatestEnrolmentEvaluationExceptImprovements() {
