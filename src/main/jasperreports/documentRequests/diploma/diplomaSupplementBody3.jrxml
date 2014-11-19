@@ -26,7 +26,7 @@
 	<parameter name="years" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="semesters" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="weeksOfStudyPerYear" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="ectsCredits" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="ectsCredits" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="bundle" class="java.util.ResourceBundle" isForPrompting="false"/>
 	<parameter name="accessToHigherLevelOfEducation" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="professionalStatus" class="java.lang.String" isForPrompting="false"/>

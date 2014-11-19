@@ -26,7 +26,7 @@
 	<parameter name="years" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="semesters" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="weeksOfStudyPerYear" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="ectsCredits" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="ectsCredits" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="programmeRequirements" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="classificationSystem" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="finalAverage" class="java.lang.Integer" isForPrompting="false"/>
