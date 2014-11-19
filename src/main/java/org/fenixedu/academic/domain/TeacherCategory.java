@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.Optional;
+
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -28,15 +31,21 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
         setRoot(Bennu.getInstance());
     }
 
-    public TeacherCategory(LocalizedString name, Integer weight) {
+    public TeacherCategory(String code, LocalizedString name, Integer weight) {
         this();
+        setCode(code);
         setName(name);
         setWeight(weight);
     }
 
+    @Deprecated
     public static TeacherCategory find(String name) {
         return Bennu.getInstance().getTeacherCategorySet().stream().filter(c -> c.getName().getContent().equalsIgnoreCase(name))
                 .findAny().orElse(null);
+    }
+
+    public static Optional<TeacherCategory> findByCode(String code) {
+        return Bennu.getInstance().getTeacherCategorySet().stream().filter(c -> c.getCode().equals(code)).findAny();
     }
 
     @Override
@@ -50,5 +59,14 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
             return byName;
         }
         return getExternalId().compareTo(o.getExternalId());
+    }
+
+    @Override
+    public void setCode(String code) {
+        Optional<TeacherCategory> category = findByCode(code);
+        if (category.isPresent() && !this.equals(category.get())) {
+            throw new DomainException("teacher.category.code.already.exists", code);
+        }
+        super.setCode(code);
     }
 }

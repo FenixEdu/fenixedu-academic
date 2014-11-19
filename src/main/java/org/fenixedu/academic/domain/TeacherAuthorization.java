@@ -64,8 +64,6 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     }
 
     public void revoke() {
-        setRevokedRootDomainObject(getRootDomainObject());
-        setRootDomainObject(null);
         setRevokedTeacher(getTeacher());
         setTeacher(null);
         setRevokedDepartment(getDepartment());
@@ -73,16 +71,25 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setRevokedExecutionSemester(getExecutionSemester());
         setExecutionSemester(null);
         setRevoker(Authenticate.getUser());
+        setRevokeTime(new DateTime());
+        setRevokedRootDomainObject(getRootDomainObject());
+        setRootDomainObject(null);
     }
 
     @Override
     public Department getDepartment() {
+        if (getRevokedRootDomainObject() != null) {
+            return getRevokedDepartment();
+        }
         // FIXME: Removed when framework support read-only slots
         return super.getDepartment();
     }
 
     @Override
     public ExecutionSemester getExecutionSemester() {
+        if (getRevokedRootDomainObject() != null) {
+            return getRevokedExecutionSemester();
+        }
         // FIXME: Removed when framework support read-only slots
         return super.getExecutionSemester();
     }
@@ -90,6 +97,10 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     @Override
     public Teacher getTeacher() {
         // FIXME: Removed when framework support read-only slots
+        if (getRevokedRootDomainObject() != null) {
+            return getRevokedTeacher();
+        }
+
         return super.getTeacher();
     }
 

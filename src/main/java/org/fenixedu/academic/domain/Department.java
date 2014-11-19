@@ -31,7 +31,6 @@ package org.fenixedu.academic.domain;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -292,14 +291,17 @@ public class Department extends Department_Base {
     }
 
     public static List<Department> readActiveDepartments() {
-        final List<Department> departments = new ArrayList<Department>();
-        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
-            if (department.getActive()) {
-                departments.add(department);
-            }
-        }
-        Collections.sort(departments, Department.COMPARATOR_BY_NAME);
-        return departments;
+        return Bennu.getInstance().getDepartmentsSet().stream().filter(Department::getActive)
+                .sorted(Department.COMPARATOR_BY_NAME).collect(Collectors.toList());
+
+//        final List<Department> departments = new ArrayList<Department>();
+//        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
+//            if (department.getActive()) {
+//                departments.add(department);
+//            }
+//        }
+//        Collections.sort(departments, Department.COMPARATOR_BY_NAME);
+//        return departments;
     }
 
 }

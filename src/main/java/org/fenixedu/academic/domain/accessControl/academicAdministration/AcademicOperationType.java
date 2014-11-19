@@ -155,7 +155,11 @@ public enum AcademicOperationType implements IPresentableEnum, AccessOperation<A
 
     VALIDATE_MOBILITY_OUTBOUND_CANDIDACIES(false, false, Scope.ADMINISTRATION),
 
-    VIEW_SCHEDULING_OVERSIGHT(false, false, Scope.ADMINISTRATION);
+    VIEW_SCHEDULING_OVERSIGHT(false, false, Scope.ADMINISTRATION),
+
+    /* MANAGE TEACHER AUTHORIZATIONS */
+
+    MANAGE_TEACHER_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION);
 
     public static enum Scope {
         OFFICE, ADMINISTRATION;
