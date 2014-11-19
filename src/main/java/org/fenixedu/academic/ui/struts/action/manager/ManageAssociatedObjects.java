@@ -18,7 +18,15 @@
  */
 package org.fenixedu.academic.ui.struts.action.manager;
 
-import com.sun.org.apache.xpath.internal.operations.Mult;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -28,7 +36,13 @@ import org.fenixedu.academic.domain.EmptyDegreeCurricularPlan;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
-import org.fenixedu.academic.domain.organizationalStructure.*;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
+import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
@@ -43,19 +57,11 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "manage-associated-objects",
         titleKey = "title.manage.associated.objects")
@@ -295,10 +301,12 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         department.setName(bean.getName());
         department.setRealNameEn(bean.getRealNameEn());
         department.setRootDomainObject(Bennu.getInstance());
-        DepartmentUnit.createNewInternalDepartmentUnit(department.getNameI18n(), null, null, department.getCode(),
-                new YearMonthDay(), null, Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
+        Unit departmentParent =
+                Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
                         .filter(x -> ((AggregateUnit) x).getName().equals("Departments")).findAny()
-                        .orElse(Bennu.getInstance().getInstitutionUnit()),
+                        .orElse(Bennu.getInstance().getInstitutionUnit());
+        DepartmentUnit.createNewInternalDepartmentUnit(department.getNameI18n(), null, null, department.getCode(),
+                new YearMonthDay(), null, departmentParent,
                 AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null, false, null);
 
     }
@@ -372,6 +380,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         request.setAttribute("bean", associatedObjectsBean);
         return mapping.findForward("associatePersonUnit");
     }
+
 //
 //    public ActionForward associatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 //            HttpServletResponse response) throws Exception {
@@ -395,9 +404,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean associatedObjectsBean = new AssociatedObjectsBean();
         request.setAttribute("bean", associatedObjectsBean);
-        associatedObjectsBean.setDepartments(
-                Department.readActiveDepartments().stream().filter(x -> x.getDepartmentUnit() != null)
-                        .collect(Collectors.toList()));
+        associatedObjectsBean.setDepartments(Department.readActiveDepartments().stream()
+                .filter(x -> x.getDepartmentUnit() != null).collect(Collectors.toList()));
 
         return mapping.findForward("createScientificArea");
     }
@@ -414,10 +422,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     @Atomic(mode = TxMode.WRITE)
     private void createScientificArea(AssociatedObjectsBean bean) {
         ScientificAreaUnit.createNewInternalScientificArea(MultiLanguageString.fromLocalizedString(bean.getNameLS()), null, null,
-                bean.getCode(), new YearMonthDay(), null,
-                bean.getDepartment().getDepartmentUnit(),
-                AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE),
-                null, null, false, null);
+                bean.getCode(), new YearMonthDay(), null, bean.getDepartment().getDepartmentUnit(),
+                AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, false, null);
     }
 
     public ActionForward prepareCreateCompetenceCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
