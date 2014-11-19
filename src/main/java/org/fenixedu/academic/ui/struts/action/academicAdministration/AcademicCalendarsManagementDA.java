@@ -100,9 +100,16 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
         AcademicCalendarEntry academicCalendar = getAcademicCalendarEntryFromParameter(request);
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        Partial begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
-        Partial end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
-
+        Partial begin;
+        Partial end;
+        if (currentExecutionYear != null) {
+            begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
+            end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
+        } else {
+            begin = CalendarEntryBean.getPartialFromYearMonthDay(new YearMonthDay().minusMonths(12));
+            end = CalendarEntryBean.getPartialFromYearMonthDay(new YearMonthDay().plusMonths(12));
+        }
+        
         CalendarEntryBean bean =
                 CalendarEntryBean.createCalendarEntryBeanToCreateEntry((AcademicCalendarRootEntry) academicCalendar,
                         academicCalendar, begin, end);

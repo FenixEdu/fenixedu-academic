@@ -68,6 +68,7 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.fenixedu.spaces.domain.SpaceClassification;
 import org.joda.time.YearMonthDay;
 
@@ -116,6 +117,12 @@ public class FenixBootstrapper {
         Installation installation = Installation.getInstance();
         installation.setInstituitionEmailDomain(schoolSetupSection.getSchoolEmailDomain());
         installation.setInstituitionURL(schoolSetupSection.getSchoolURL());
+        
+        if (Bennu.getInstance().getRootClassificationSet().isEmpty()) {
+            Builder campusNameBuilder = new LocalizedString.Builder();
+            CoreConfiguration.supportedLocales().stream().forEach(l -> campusNameBuilder.with(l, "Campus"));
+            new SpaceClassification("1", campusNameBuilder.build());
+        }
 
         return Lists.newArrayList();
     }
