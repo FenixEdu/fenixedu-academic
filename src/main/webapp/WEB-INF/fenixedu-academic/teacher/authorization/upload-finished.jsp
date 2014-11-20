@@ -46,10 +46,10 @@
 							<td>
 								<c:choose>
 									<c:when test="${auth.contracted}">
-										<spring:message code="teacher.authorizations.contracted.yes"></spring:message>
+										<spring:message code="label.yes"></spring:message>
 									</c:when>
 									<c:otherwise>
-										<spring:message code="teacher.authorizations.contracted.no"></spring:message>
+										<spring:message code="label.no"></spring:message>
 									</c:otherwise>
 								</c:choose>
 							</td>
