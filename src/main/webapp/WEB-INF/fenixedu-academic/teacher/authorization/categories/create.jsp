@@ -25,7 +25,7 @@ ${portal.toolkit()}
 		<div class="form-group">
 			<label for="code" class="col-sm-1 control-label"><spring:message code="teacher.categories.code" /></label>
 			<div class="col-sm-11">
-				<form:input class="form-control" path="code" id="code"/>
+				<input class="form-control" name="code" id="code" required/>
 			</div>
 		</div>
 		

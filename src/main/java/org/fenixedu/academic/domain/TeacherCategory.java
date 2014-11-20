@@ -24,6 +24,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
+import com.google.common.base.Strings;
+
 public class TeacherCategory extends TeacherCategory_Base implements Comparable<TeacherCategory> {
 
     protected TeacherCategory() {
@@ -45,7 +47,10 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
     }
 
     public static Optional<TeacherCategory> findByCode(String code) {
-        return Bennu.getInstance().getTeacherCategorySet().stream().filter(c -> c.getCode().equals(code)).findAny();
+        if (Strings.isNullOrEmpty(code)) {
+            return Optional.empty();
+        }
+        return Bennu.getInstance().getTeacherCategorySet().stream().filter(c -> code.equals(c.getCode())).findAny();
     }
 
     @Override
@@ -63,6 +68,9 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
 
     @Override
     public void setCode(String code) {
+        if (Strings.isNullOrEmpty(code)) {
+            throw new DomainException("teacher.category.code.empty", code);
+        }
         Optional<TeacherCategory> category = findByCode(code);
         if (category.isPresent() && !this.equals(category.get())) {
             throw new DomainException("teacher.category.code.already.exists", code);
