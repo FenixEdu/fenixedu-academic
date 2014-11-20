@@ -47,7 +47,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="343" splitType="Stretch">
+		<band height="363" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-1" x="0" y="0" width="455" height="20"/>
 				<textElement textAlignment="Justified">
@@ -91,7 +91,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-7" positionType="Float" x="0" y="291" width="455" height="13"/>
+				<reportElement key="textField-7" positionType="Float" x="0" y="291" width="455" height="40"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -130,7 +130,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{by}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-8" x="0" y="320" width="455" height="20"/>
+				<reportElement key="textField-8" x="0" y="340" width="455" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
