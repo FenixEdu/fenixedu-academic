@@ -442,4 +442,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return fromRequest;
     }
 
+    protected void atomic(Runnable runnable) {
+        FenixFramework.atomic(runnable);
+    }
+
 }

@@ -470,14 +470,16 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
     public ActionForward editDepartment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        AssociatedObjectsBean bean = getRenderedObject("admOffice");
-        Department d = bean.getDepartment();
+        AssociatedObjectsBean bean = getRenderedObject();
 
-        d.setCode(d.getCode());
-        d.setName(d.getName());
-        d.setRealName(d.getRealName());
-        d.setRealNameEn(d.getRealNameEn());
-        d.setCompetenceCourseMembersGroup(Group.parse(bean.getUsername()));
+        atomic(() -> {
+            Department d = bean.getDepartment();
+            d.setCode(bean.getCode());
+            d.setName(bean.getName());
+            d.setRealName(bean.getRealName());
+            d.setRealNameEn(bean.getRealNameEn());
+            d.setCompetenceCourseMembersGroup(Group.parse(bean.getUsername()));
+        });
 
         return list(mapping, form, request, response);
     }
