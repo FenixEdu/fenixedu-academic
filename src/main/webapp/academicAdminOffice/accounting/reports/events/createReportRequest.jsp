@@ -82,6 +82,7 @@
 				</fr:slot>
 			
 				<fr:slot name="exportGratuityEvents" required="true" />
+				<fr:slot name="exportAdminOfficeFeeAndInsuranceEvents" required="true" />
 				<fr:slot name="exportAcademicServiceRequestEvents" required="true" />
 			<logic:equal name="bean" property="administrativeOffice.hasAnyPhdProgram" value="false">
 				<fr:slot name="exportIndividualCandidacyEvents" required="true" />

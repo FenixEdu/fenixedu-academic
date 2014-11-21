@@ -36,6 +36,7 @@ public class EventReportQueueJobBean implements Serializable {
 
     private Boolean exportGratuityEvents;
     private Boolean exportAcademicServiceRequestEvents;
+    private Boolean exportAdminOfficeFeeAndInsuranceEvents;
     private Boolean exportIndividualCandidacyEvents;
     private Boolean exportPhdEvents;
     private Boolean exportResidenceEvents;
@@ -65,6 +66,14 @@ public class EventReportQueueJobBean implements Serializable {
 
     public void setExportAcademicServiceRequestEvents(Boolean exportAcademicServiceRequestEvents) {
         this.exportAcademicServiceRequestEvents = exportAcademicServiceRequestEvents;
+    }
+
+    public Boolean getExportAdminOfficeFeeAndInsuranceEvents() {
+        return exportAdminOfficeFeeAndInsuranceEvents;
+    }
+
+    public void setExportAdminOfficeFeeAndInsuranceEvents(Boolean exportAdminOfficeFeeAndInsuranceEvents) {
+        this.exportAdminOfficeFeeAndInsuranceEvents = exportAdminOfficeFeeAndInsuranceEvents;
     }
 
     public Boolean getExportIndividualCandidacyEvents() {
@@ -135,7 +144,8 @@ public class EventReportQueueJobBean implements Serializable {
     }
 
     public Set<AdministrativeOffice> getAvailableOffices() {
-        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_EVENT_REPORTS);
+        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_EVENT_REPORTS);
     }
 
     public Set<AdministrativeOffice> getAvailableOfficesForManager() {
@@ -147,6 +157,7 @@ public class EventReportQueueJobBean implements Serializable {
 
         bean.setExportGratuityEvents(true);
         bean.setExportAcademicServiceRequestEvents(true);
+        bean.setExportAdminOfficeFeeAndInsuranceEvents(true);
         bean.setExportIndividualCandidacyEvents(true);
         bean.setExportPhdEvents(true);
         bean.setExportResidenceEvents(true);
@@ -160,6 +171,7 @@ public class EventReportQueueJobBean implements Serializable {
 
         bean.setExportGratuityEvents(true);
         bean.setExportAcademicServiceRequestEvents(true);
+        bean.setExportAdminOfficeFeeAndInsuranceEvents(true);
         bean.setExportIndividualCandidacyEvents(true);
         bean.setExportPhdEvents(true);
         bean.setExportResidenceEvents(false);
@@ -167,5 +179,4 @@ public class EventReportQueueJobBean implements Serializable {
 
         return bean;
     }
-
 }

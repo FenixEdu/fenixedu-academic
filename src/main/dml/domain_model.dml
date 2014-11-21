@@ -6493,6 +6493,7 @@ class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
 class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
 	Boolean exportGratuityEvents;
 	Boolean exportAcademicServiceRequestEvents;
+	Boolean exportAdministrativeOfficeFeeAndInsuranceEvents;
 	Boolean exportIndividualCandidacyEvents;
 	Boolean exportPhdEvents;
 	Boolean exportResidenceEvents;

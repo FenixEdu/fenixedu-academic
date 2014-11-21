@@ -86,6 +86,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         setExportGratuityEvents(bean.getExportGratuityEvents());
         setExportAcademicServiceRequestEvents(bean.getExportAcademicServiceRequestEvents());
+        setExportAdministrativeOfficeFeeAndInsuranceEvents(bean.getExportAdminOfficeFeeAndInsuranceEvents());
         setExportIndividualCandidacyEvents(bean.getExportIndividualCandidacyEvents());
         setExportPhdEvents(bean.getExportPhdEvents());
         setExportResidenceEvents(bean.getExportResidenceEvents());
@@ -764,7 +765,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             return getExportAcademicServiceRequestEvents() ? new AcademicServiceRequestEventWrapper(
                     (AcademicServiceRequestEvent) event) : null;
         } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
-            return getExportAcademicServiceRequestEvents() ? new AdminFeeAndInsuranceEventWrapper(
+            return getExportAdministrativeOfficeFeeAndInsuranceEvents() ? new AdminFeeAndInsuranceEventWrapper(
                     (AdministrativeOfficeFeeAndInsuranceEvent) event) : null;
         } else if (event.isIndividualCandidacyEvent()) {
             return getExportIndividualCandidacyEvents() ? new IndividualCandidacyEventWrapper((IndividualCandidacyEvent) event) : null;
