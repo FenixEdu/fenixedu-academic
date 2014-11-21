@@ -529,7 +529,13 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         public AcademicUnitEntry(final Entry<Unit, String> entry) {
             this.identifier = entry.getValue();
-            this.name = getMLSTextContent(entry.getKey().getNameI18n());
+            Unit unit = entry.getKey();
+            String name = getMLSTextContent(unit.getNameI18n());
+            Unit univ = unit.getParentUnits().stream().filter(u -> u.isUniversityUnit()).findAny().orElse(null);
+            if (univ != null) {
+                name = getMLSTextContent(univ.getNameI18n()) + ", " + name;
+            }
+            this.name = name;
         }
 
         public String getIdentifier() {
