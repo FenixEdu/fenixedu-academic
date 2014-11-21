@@ -2455,7 +2455,16 @@
 </schema>
 
 <schema name="ErasmusIndividualCandidacyProcess.personalDataBean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES">
-	<slot name="name" key="label.name" >
+	<slot name="givenNames" key="label.given.name" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="100"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="100"/>
+	</slot>
+	<slot name="familyNames" key="label.family.name" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
