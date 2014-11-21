@@ -44,16 +44,12 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.IndividualCandidacyEvent;
-import org.fenixedu.academic.domain.accounting.events.dfa.DFACandidacyEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyEvent;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
@@ -77,20 +73,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(EventReportQueueJob.class);
 
-    private static final List<Class<? extends Event>> CANDIDACY_EVENT_TYPES = new ArrayList<Class<? extends Event>>();
-    private static final List<Class<? extends AnnualEvent>> ADMIN_OFFICE_AND_INSURANCE_TYPES =
-            new ArrayList<Class<? extends AnnualEvent>>();
     private static final String FIELD_SEPARATOR = "\t";
     private static final String LINE_BREAK = "\n";
-
-    static {
-        CANDIDACY_EVENT_TYPES.add(DFACandidacyEvent.class);
-        CANDIDACY_EVENT_TYPES.add(PhdProgramCandidacyEvent.class);
-        CANDIDACY_EVENT_TYPES.add(IndividualCandidacyEvent.class);
-
-        ADMIN_OFFICE_AND_INSURANCE_TYPES.add(AdministrativeOfficeFeeAndInsuranceEvent.class);
-        ADMIN_OFFICE_AND_INSURANCE_TYPES.add(InsuranceEvent.class);
-    }
 
     private EventReportQueueJob() {
         super();
@@ -102,6 +86,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         setExportGratuityEvents(bean.getExportGratuityEvents());
         setExportAcademicServiceRequestEvents(bean.getExportAcademicServiceRequestEvents());
+        setExportAdministrativeOfficeFeeAndInsuranceEvents(bean.getExportAdminOfficeFeeAndInsuranceEvents());
         setExportIndividualCandidacyEvents(bean.getExportIndividualCandidacyEvents());
         setExportPhdEvents(bean.getExportPhdEvents());
         setExportResidenceEvents(bean.getExportResidenceEvents());
@@ -780,6 +765,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         } else if (event.isAcademicServiceRequestEvent()) {
             return getExportAcademicServiceRequestEvents() ? new AcademicServiceRequestEventWrapper(
                     (AcademicServiceRequestEvent) event) : null;
+        } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+            return getExportAdministrativeOfficeFeeAndInsuranceEvents() ? new AdminFeeAndInsuranceEventWrapper(
+                    (AdministrativeOfficeFeeAndInsuranceEvent) event) : null;
         } else if (event.isIndividualCandidacyEvent()) {
             return getExportIndividualCandidacyEvents() ? new IndividualCandidacyEventWrapper((IndividualCandidacyEvent) event) : null;
         } else if (event.isPhdEvent()) {
