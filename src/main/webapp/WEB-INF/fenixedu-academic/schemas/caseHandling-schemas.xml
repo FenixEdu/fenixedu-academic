@@ -2457,7 +2457,7 @@
 <schema name="ErasmusIndividualCandidacyProcess.personalDataBean" type="org.fenixedu.academic.dto.person.PersonBean" bundle="APPLICATION_RESOURCES">
 	<slot name="givenNames" key="label.given.name" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+		<validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="100"/>
 		</validator>
