@@ -54,7 +54,7 @@ public class CoordinatorDegreeManagement extends FenixAction {
         return mapping.findForward("ChooseDegree");
     }
 
-    private Set<DegreeCurricularPlan> readCoordinatedDegrees() throws FenixServiceException {
+    public static Set<DegreeCurricularPlan> readCoordinatedDegrees() throws FenixServiceException {
         final Person person = AccessControl.getPerson();
 
         final Set<DegreeCurricularPlan> activeDegreeCurricularPlans =
