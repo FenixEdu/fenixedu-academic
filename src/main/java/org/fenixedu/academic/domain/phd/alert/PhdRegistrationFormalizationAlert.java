@@ -29,6 +29,7 @@ import org.fenixedu.academic.domain.phd.PhdProgramCalendarUtil;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
@@ -88,7 +89,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
         final Group group =
                 AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
 
-        Set<Person> members = FluentIterable.from(group.getMembers()).transform(Person.userToPerson).toSet();
+        Set<Person> members = FluentIterable.from(group.getMembers()).transform(User::getPerson).toSet();
         new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
 
         new Message(getSender(), new Recipient(group), buildMailSubject(), buildMailBody());

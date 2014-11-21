@@ -98,7 +98,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     protected ImmutableSet<Person> getTargetPeople() {
-        return FluentIterable.from(getTargetAccessGroup().getMembers()).transform(Person.userToPerson).toSet();
+        return FluentIterable.from(getTargetAccessGroup().getMembers()).transform(User::getPerson).toSet();
     }
 
     @Override

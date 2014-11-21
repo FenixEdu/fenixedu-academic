@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.ReplyTo;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -179,7 +180,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessage(Group group) {
-        Set<Person> members = FluentIterable.from(group.getMembers()).transform(Person.userToPerson).toSet();
+        Set<Person> members = FluentIterable.from(group.getMembers()).transform(User::getPerson).toSet();
         new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
         new Message(getSender(), new Recipient("", group), buildMailSubject(), buildMailBody());
     }

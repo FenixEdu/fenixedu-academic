@@ -101,10 +101,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public abstract MultiLanguageString getPartyName();
 
-    public abstract void setPartyName(MultiLanguageString partyName);
-
-    public abstract void setName(String name);
-
     public abstract String getName();
 
     public Party() {

@@ -29,6 +29,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.person.UpdateEmergencyContactDA.EmergencyContactBean;
+import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -45,7 +46,10 @@ public class UpdateNicknameDA extends FenixDispatchAction {
         EmergencyContactBean emergencyContactBean = new EmergencyContactBean(person);
 
         try {
-            person.setNickname(personBean.getNickname());
+            atomic(() -> {
+                UserProfile profile = person.getProfile();
+                profile.changeName(profile.getGivenNames(), profile.getFamilyNames(), personBean.getNickname());
+            });
         } catch (DomainException e) {
             addActionMessage(request, e.getKey());
             request.setAttribute("personBean", new PersonBean(person));

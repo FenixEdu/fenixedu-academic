@@ -64,11 +64,6 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
     }
 
     @Override
-    public void setName(String name) {
-        getPerson().setName(name);
-    }
-
-    @Override
     public String getDocumentIdNumber() {
         return getPerson().getDocumentIdNumber();
     }
@@ -296,17 +291,8 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
     }
 
     @Override
-    public void setGivenNames(String givenNames) {
-        getPerson().setGivenNames(givenNames);
-    }
-
-    @Override
     public String getFamilyNames() {
         return getPerson().getFamilyNames();
     }
 
-    @Override
-    public void setFamilyNames(String familyNames) {
-        getPerson().setFamilyNames(familyNames);
-    }
 }

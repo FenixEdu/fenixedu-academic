@@ -105,7 +105,6 @@ public class Unit extends Unit_Base {
         return getPartyName().getPreferedContent();
     }
 
-    @Override
     public void setName(String name) {
 
         if (name == null || StringUtils.isEmpty(name.trim())) {

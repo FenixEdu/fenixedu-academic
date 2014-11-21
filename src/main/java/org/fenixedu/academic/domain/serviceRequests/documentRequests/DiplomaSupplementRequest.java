@@ -75,8 +75,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
         if (!fullName.equals(composedName)) {
             throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
         }
-        getRegistration().getPerson().setGivenNames(bean.getGivenNames());
-        getRegistration().getPerson().setFamilyNames(bean.getFamilyNames());
+        getRegistration().getPerson().getProfile().changeName(bean.getGivenNames(), bean.getFamilyNames(), null);
         RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(bean.getRequestedCycle());
         DiplomaRequest diploma = getRegistration().getDiplomaRequest(bean.getRequestedCycle());
         if (registry == null && diploma == null) {

@@ -70,8 +70,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
         super.init(bean);
         checkParameters(bean);
 
-        getPhdIndividualProgramProcess().getPerson().setGivenNames(bean.getGivenNames());
-        getPhdIndividualProgramProcess().getPerson().setFamilyNames(bean.getFamilyNames());
+        getPhdIndividualProgramProcess().getPerson().getProfile().changeName(bean.getGivenNames(), bean.getFamilyNames(), null);
     }
 
     private void checkParameters(final PhdDocumentRequestCreateBean bean) {
