@@ -24,6 +24,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 
@@ -56,7 +57,7 @@ public class MonthAnnouncementArchiveEntry {
     }
 
     public Collection<Announcement> getAnnouncements() {
-        return announcements;
+        return announcements.stream().sorted(Announcement.NEWEST_FIRST).collect(Collectors.toList());
     }
 
     public void addAnnouncement(Announcement announcement) {
