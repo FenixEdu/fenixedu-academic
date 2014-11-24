@@ -18,8 +18,9 @@
  */
 package org.fenixedu.academic.ui.struts.action.academicAdministration;
 
-import java.util.Map;
+import java.util.Collections;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,112 +29,109 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
-import org.fenixedu.academic.domain.accessControl.rules.AccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Forward;
-import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 @StrutsFunctionality(app = AcademicAdministrationApplication.class, path = "authorizations", titleKey = "label.authorizations",
         accessGroup = "academic(MANAGE_AUTHORIZATIONS)")
 @Mapping(path = "/authorizations", module = "academicAdministration")
-@Forwards({ @Forward(name = "listAuthorizations", path = "/academicAdministration/authorizations/authorizations.jsp"),
-        @Forward(name = "managePartyAuthorization", path = "/academicAdministration/authorizations/authorizationsPerPerson.jsp") })
+@Forward(name = "listAuthorizations", path = "/academicAdministration/authorizations/authorizations.jsp")
+@Forward(name = "manageOperationAuthorization", path = "/academicAdministration/authorizations/authorizationsPerPerson.jsp")
 public class AcademicAuthorizationManagementDispatchAction extends FenixDispatchAction {
 
     @EntryPoint
     public ActionForward authorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        Map<Group, Set<AccessRule>> groups =
-                AcademicAccessRule.accessRules().sorted(AcademicAccessRule.COMPARATOR_BY_OPERATION)
-                        .collect(Collectors.groupingBy(AccessRule::getWhoCanAccess, Collectors.toSet()));
+        TreeMap<AcademicOperationType, Set<AuthorizationGroupBean>> groups =
+                AcademicAccessRule.accessRules().map(AuthorizationGroupBean::new).sorted()
+                        .collect(Collectors.groupingBy(r -> r.getRule().getOperation(), TreeMap::new, Collectors.toSet()));
+        for (AcademicOperationType operation : AcademicOperationType.values()) {
+            if (!groups.containsKey(operation)) {
+                groups.put(operation, Collections.emptySet());
+            }
+        }
         request.setAttribute("groups", groups.entrySet());
-        request.setAttribute("authorizationsBean", new AuthorizationsManagementBean());
         return mapping.findForward("listAuthorizations");
     }
 
-    public ActionForward managePartyAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward manageOperation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
         if (bean == null) {
-            Party party = getDomainObject(request, "partyId");
-            bean = new AuthorizationsManagementBean();
-            bean.setParty(party);
+            bean = new AuthorizationsManagementBean(AcademicOperationType.valueOf(request.getParameter("operation")));
         }
 
         if (request.getParameter("removeNewAuthorization") != null) {
             bean.removeAuthorization("-1");
         }
 
-        request.setAttribute("managementBean", bean);
+        request.setAttribute("authorizationsBean", bean);
 
-        return mapping.findForward("managePartyAuthorization");
+        return mapping.findForward("manageOperationAuthorization");
     }
 
     public ActionForward addNewAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+        AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
 
         bean.addNewAuthorization();
 
-        request.setAttribute("managementBean", bean);
+        request.setAttribute("authorizationsBean", bean);
 
-        return mapping.findForward("managePartyAuthorization");
+        return mapping.findForward("manageOperationAuthorization");
     }
 
     public ActionForward deleteAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+        AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
 
         bean.removeAuthorization(request.getParameter("oid"));
 
-        request.setAttribute("managementBean", bean);
+        request.setAttribute("authorizationsBean", bean);
 
-        return mapping.findForward("managePartyAuthorization");
+        return mapping.findForward("manageOperationAuthorization");
     }
 
     public ActionForward editAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+        AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
 
         bean.editAuthorization(request.getParameter("oid"));
 
-        request.setAttribute("managementBean", bean);
+        request.setAttribute("authorizationsBean", bean);
 
-        return mapping.findForward("managePartyAuthorization");
+        return mapping.findForward("manageOperationAuthorization");
     }
 
     public ActionForward editAuthorizationPrograms(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+        AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
 
         bean.editAuthorizationPrograms(request.getParameter("oid"), request.getParameter("courses"),
                 request.getParameter("offices"));
 
-        request.setAttribute("managementBean", bean);
+        request.setAttribute("authorizationsBean", bean);
 
-        return mapping.findForward("managePartyAuthorization");
+        return mapping.findForward("manageOperationAuthorization");
     }
 
     public ActionForward createAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+        AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
 
         try {
             bean.createAuthorization(request.getParameter("courses"), request.getParameter("offices"));
@@ -141,28 +139,20 @@ public class AcademicAuthorizationManagementDispatchAction extends FenixDispatch
             addActionMessage(request, e.getKey(), e.getArgs());
         }
 
-        request.setAttribute("managementBean", bean);
+        request.setAttribute("authorizationsBean", bean);
 
-        return mapping.findForward("managePartyAuthorization");
+        return mapping.findForward("manageOperationAuthorization");
     }
 
-    public ActionForward removePartyFromGroup(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward revokeRule(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-
-        AcademicAccessRule rule = getDomainObject(request, "groupId");
-        Party party = getDomainObject(request, "partyId");
-
-        revokePartyFromGroup(rule, party);
-
+        AcademicAccessRule rule = getDomainObject(request, "ruleId");
+        revoke(rule);
         return authorizations(mapping, actionForm, request, response);
     }
 
-    @Atomic
-    private void revokePartyFromGroup(AcademicAccessRule rule, Party party) {
-        if (party instanceof Person) {
-            rule.revoke(((Person) party).getUser());
-        } else {
-            rule.changeWhoCanAccess(rule.getWhoCanAccess().or(UnitGroup.recursiveWorkers((Unit) party)));
-        }
+    @Atomic(mode = TxMode.WRITE)
+    private void revoke(AcademicAccessRule rule) {
+        rule.revoke();
     }
 }

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accessControl.academicAdministration;
 
-import java.text.Collator;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -38,7 +36,7 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.joda.time.DateTime;
 
-public class AcademicAccessRule extends AcademicAccessRule_Base {
+public class AcademicAccessRule extends AcademicAccessRule_Base implements Comparable<AcademicAccessRule> {
     public static abstract class AcademicAccessTarget implements AccessTarget {
         public abstract void write(AcademicAccessRule academicAccessRule, AcademicOperationType operation);
     }
@@ -82,15 +80,6 @@ public class AcademicAccessRule extends AcademicAccessRule_Base {
             academicAccessRule.addOffice(office);
         }
     }
-
-    public static final Comparator<AcademicAccessRule> COMPARATOR_BY_OPERATION = new Comparator<AcademicAccessRule>() {
-        @Override
-        public int compare(AcademicAccessRule o1, AcademicAccessRule o2) {
-            String operationName1 = o1.getOperation().getLocalizedName();
-            String operationName2 = o2.getOperation().getLocalizedName();
-            return Collator.getInstance().compare(operationName1, operationName2);
-        }
-    };
 
     public AcademicAccessRule(AcademicOperationType operation, Group whoCanAccess, Set<AcademicAccessTarget> whatCanAffect) {
         super();
@@ -231,5 +220,18 @@ public class AcademicAccessRule extends AcademicAccessRule_Base {
 
     public static Stream<AdministrativeOffice> getOfficesAccessibleToFunction(AcademicOperationType function, User user) {
         return filter(function).filter(r -> r.getWhoCanAccess().isMember(user)).flatMap(r -> r.getOfficeSet().stream());
+    }
+
+    @Override
+    public int compareTo(AcademicAccessRule o) {
+        int op = getOperation().compareTo(o.getOperation());
+        if (op != 0) {
+            return op;
+        }
+        int group = getWhoCanAccess().compareTo(o.getWhoCanAccess());
+        if (group != 0) {
+            return group;
+        }
+        return getExternalId().compareTo(o.getExternalId());
     }
 }

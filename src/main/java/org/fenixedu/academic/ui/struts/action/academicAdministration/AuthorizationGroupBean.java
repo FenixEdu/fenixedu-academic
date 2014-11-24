@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.academicAdministration;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,7 +26,9 @@ import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicAccessTarget;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accessControl.rules.AccessTarget;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -42,21 +43,11 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
 
     private AcademicAccessRule rule;
 
-    private AcademicOperationType operation;
+    private Group whoCanAccess;
 
     private Set<AcademicProgram> programs;
 
     private Set<AdministrativeOffice> offices;
-
-    static public Comparator<AuthorizationGroupBean> COMPARATOR_BY_LOCALIZED_NAME = new Comparator<AuthorizationGroupBean>() {
-        @Override
-        public int compare(final AuthorizationGroupBean p1, final AuthorizationGroupBean p2) {
-            String operationName1 = p1.getOperation().getLocalizedName();
-            String operationName2 = p2.getOperation().getLocalizedName();
-            int res = operationName1.compareTo(operationName2);
-            return res;
-        }
-    };
 
     public AuthorizationGroupBean() {
         super();
@@ -79,21 +70,43 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
 
     private void setRule(AcademicAccessRule rule) {
         this.rule = rule;
-        this.operation = rule.getOperation();
-        this.programs = new HashSet<AcademicProgram>(rule.getProgramSet());
-        this.offices = new HashSet<AdministrativeOffice>(rule.getOfficeSet());
+        if (rule != null) {
+            this.whoCanAccess = rule.getWhoCanAccess();
+            this.programs = new HashSet<AcademicProgram>(rule.getProgramSet());
+            this.offices = new HashSet<AdministrativeOffice>(rule.getOfficeSet());
+        }
     }
 
-    public AcademicOperationType getOperation() {
-        return operation;
+    public Group getWhoCanAccess() {
+        return whoCanAccess;
     }
 
-    public void setOperation(AcademicOperationType operation) {
-        this.operation = operation;
+    public void setWhoCanAccess(Group whoCanAccess) {
+        this.whoCanAccess = whoCanAccess;
     }
 
     public boolean getNewObject() {
         return rule == null;
+    }
+
+    public Party getParty() {
+        if (whoCanAccess != null) {
+            if (whoCanAccess instanceof UnitGroup) {
+                return ((UnitGroup) whoCanAccess).getUnit();
+            }
+            if (whoCanAccess instanceof UserGroup) {
+                return ((UserGroup) whoCanAccess).getMembers().iterator().next().getPerson();
+            }
+        }
+        return null;
+    }
+
+    public void setParty(Party party) {
+        if (party instanceof Unit) {
+            whoCanAccess = UnitGroup.workers((Unit) party);
+        } else {
+            whoCanAccess = ((Person) party).getPersonGroup();
+        }
     }
 
     public Set<AcademicProgram> getPrograms() {
@@ -114,43 +127,31 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
 
     @Atomic
     public void edit() {
-        rule.changeOperation(operation);
+        rule.changeWhoCanAccess(whoCanAccess);
     }
 
     @Atomic
-    public void create(Party party, Set<AcademicProgram> newPrograms, Set<AdministrativeOffice> newOffices) {
-        setRule(operation.grant(makeGroup(party), newPrograms, newOffices).orElse(null));
-    }
-
-    private Group makeGroup(Party party) {
-        if (party instanceof Person) {
-            return UserGroup.of(((Person) party).getUser());
-        }
-        return UnitGroup.recursiveWorkers((Unit) party);
+    public <T extends AccessTarget> void create(AcademicOperationType operation, Set<AcademicAccessTarget> whatCanAffect) {
+        setRule(operation.grant(whoCanAccess, whatCanAffect).orElse(null));
     }
 
     @Atomic
-    public void editAuthorizationPrograms(Set<AcademicProgram> newPrograms, Set<AdministrativeOffice> newOffices) {
-        setRule(rule.changeProgramsAndOffices(newPrograms, newOffices));
+    public <T extends AccessTarget> void editAuthorizationPrograms(AcademicOperationType operation,
+            Set<AcademicAccessTarget> whatCanAffect) {
+        setRule((AcademicAccessRule) rule.changeWhatCanAffect(whatCanAffect).orElse(null));
     }
 
     @Atomic
-    public void delete(Party party) {
-        setRule((AcademicAccessRule) rule.changeWhoCanAccess(rule.getWhoCanAccess().minus(makeGroup(party))).orElse(null));
+    public void revoke() {
+        rule.revoke();
+        setRule(null);
     }
 
     @Override
-    public int compareTo(AuthorizationGroupBean bean) {
-        if (this.rule == bean.rule) {
-            return 0;
-        }
-        if (this.rule == null) {
-            return 1;
-        }
-        if (bean.rule == null) {
+    public int compareTo(AuthorizationGroupBean o) {
+        if (getId() == "-1") {
             return -1;
         }
-        return this.operation.compareTo(bean.operation);
+        return rule.compareTo(o.rule);
     }
-
 }

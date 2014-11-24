@@ -20,24 +20,27 @@ package org.fenixedu.academic.ui.struts.action.academicAdministration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicAccessTarget;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicProgramAccessTarget;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule.AdministrativeOfficeAccessTarget;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -46,7 +49,7 @@ import com.google.common.base.Splitter;
 public class AuthorizationsManagementBean implements Serializable {
     private static final long serialVersionUID = 604369029723208403L;
 
-    private Party party;
+    private AcademicOperationType operation;
 
     private List<AuthorizationGroupBean> groups;
 
@@ -54,22 +57,17 @@ public class AuthorizationsManagementBean implements Serializable {
         super();
     }
 
-    public Party getParty() {
-        return party;
+    public AuthorizationsManagementBean(AcademicOperationType operation) {
+        this.operation = operation;
+        if (operation != null) {
+            groups =
+                    AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(operation))
+                            .map(AuthorizationGroupBean::new).collect(Collectors.toList());
+        }
     }
 
-    public void setParty(Party party) {
-        this.party = party;
-        this.groups = new ArrayList<AuthorizationGroupBean>();
-//        if (party != null) {
-//            for (PersistentAccessGroup group : party.getPersistentAccessGroupSet()) {
-//                if (group instanceof PersistentAcademicAuthorizationGroup && group.getDeletedRootDomainObject() == null) {
-//                    AuthorizationGroupBean bean = new AuthorizationGroupBean((PersistentAcademicAuthorizationGroup) group);
-//                    groups.add(bean);
-//                }
-//            }
-//            Collections.sort(this.groups, AuthorizationGroupBean.COMPARATOR_BY_LOCALIZED_NAME);
-//        }
+    public AcademicOperationType getOperation() {
+        return operation;
     }
 
     public boolean getHasNewObject() {
@@ -116,7 +114,7 @@ public class AuthorizationsManagementBean implements Serializable {
         AuthorizationGroupBean bean = getBeanByOid(parameter);
         if (bean != null) {
             if (bean.getRule() != null) {
-                bean.delete(party);
+                bean.revoke();
             }
             getGroups().remove(bean);
         }
@@ -145,14 +143,7 @@ public class AuthorizationsManagementBean implements Serializable {
     public void createAuthorization(String courses, String officesStr) {
         AuthorizationGroupBean bean = getBeanByOid("-1");
         if (bean != null) {
-
-            Set<AcademicProgram> programs = new HashSet<AcademicProgram>();
-            Set<AdministrativeOffice> offices = new HashSet<AdministrativeOffice>();
-
-            extractPrograms(courses, programs);
-            extractOffices(officesStr, offices);
-
-            bean.create(party, programs, offices);
+            bean.create(operation, extractTargets(courses, officesStr));
         }
     }
 
@@ -161,54 +152,35 @@ public class AuthorizationsManagementBean implements Serializable {
     public void editAuthorizationPrograms(String oid, String courses, String officesStr) {
         AuthorizationGroupBean bean = getBeanByOid(oid);
         if (bean != null) {
-
-            Set<AcademicProgram> programs = new HashSet<AcademicProgram>();
-            Set<AdministrativeOffice> offices = new HashSet<AdministrativeOffice>();
-
-            extractPrograms(courses, programs);
-            extractOffices(officesStr, offices);
-
-            bean.editAuthorizationPrograms(programs, offices);
-
+            bean.editAuthorizationPrograms(operation, extractTargets(courses, officesStr));
         }
     }
 
-    private void extractPrograms(String courses, Set<AcademicProgram> programs) {
+    private Set<AcademicAccessTarget> extractTargets(String courses, String officesStr) {
+        Set<AcademicAccessTarget> targets = new HashSet<>();
         if (!courses.trim().isEmpty()) {
             for (String course : SPLITTER.split(courses)) {
                 AcademicProgram program = FenixFramework.getDomainObject(course);
-                programs.add(program);
+                targets.add(new AcademicProgramAccessTarget(program));
             }
         }
-    }
-
-    private void extractOffices(String officesStr, Set<AdministrativeOffice> offices) {
         if (!officesStr.trim().isEmpty()) {
             for (String officeStr : SPLITTER.split(officesStr)) {
                 AdministrativeOffice office = FenixFramework.getDomainObject(officeStr);
-                offices.add(office);
+                targets.add(new AdministrativeOfficeAccessTarget(office));
             }
         }
+        return targets;
     }
 
-    public Collection<Party> getPeopleInUnit() {
-        if (!party.isUnit()) {
-            return Collections.emptySet();
+    public Set<User> getMembers() {
+        if (operation != null) {
+            SortedSet<User> members = new TreeSet<>(User.COMPARATOR_BY_NAME);
+            members.addAll(AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(operation))
+                    .map(r -> r.getWhoCanAccess()).reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get)
+                    .getMembers());
+            return members;
         }
-
-        Set<Party> people = new TreeSet<Party>(Party.COMPARATOR_BY_NAME);
-
-        LinkedList<Party> units = new LinkedList<Party>();
-        units.add(party);
-
-        while (!units.isEmpty()) {
-            Party unit = units.removeFirst();
-
-            people.addAll(unit.getActiveChildParties(AccountabilityTypeEnum.WORKING_CONTRACT, Person.class));
-
-            units.addAll(unit.getActiveChildParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class));
-        }
-
-        return people;
+        return Collections.emptySet();
     }
 }

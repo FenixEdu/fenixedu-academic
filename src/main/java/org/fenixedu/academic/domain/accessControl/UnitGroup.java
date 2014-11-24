@@ -81,6 +81,10 @@ public class UnitGroup extends FenixGroup {
         return new UnitGroup(unit, null, relationFunctionType, includeSubUnits);
     }
 
+    public Unit getUnit() {
+        return unit;
+    }
+
     @Override
     public String[] getPresentationNameKeyArgs() {
         if (relationType != null) {
@@ -194,5 +198,4 @@ public class UnitGroup extends FenixGroup {
     public int hashCode() {
         return Objects.hashCode(unit, relationType, relationFunctionType, includeSubUnits);
     }
-
 }

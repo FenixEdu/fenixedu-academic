@@ -26,12 +26,9 @@
 
 <jsp:include page="authorizationsScripts.jsp"/>
 
-		<html:link action="/authorizations.do?method=managePartyAuthorization" paramId="partyId"
-					paramName="managementBean" paramProperty="party.externalId" styleId="reloadLink"/>
-
 		<header>
 			<h2><bean:message key="label.authorizations" bundle="ACADEMIC_OFFICE_RESOURCES" />
-			<span><bean:write name="managementBean" property="party.name"/>
+			<span><bean:write name="authorizationsBean" property="operation.localizedName"/>
 			</span>
 			</h2>
 		</header>
@@ -47,9 +44,9 @@
 
 			<section id="authorizations">
 			
-				<logic:equal value="false" name="managementBean" property="hasNewObject">
+				<logic:equal value="false" name="authorizationsBean" property="hasNewObject">
 					<fr:form action="/authorizations.do?method=addNewAuthorization">
-						<fr:edit id="managementBean" name="managementBean" visible="false" />
+						<fr:edit id="authorizationsBean" name="authorizationsBean" visible="false" />
 						<html:submit value="Criar nova Autorização"/>
 					</fr:form>
 				</logic:equal>
@@ -62,7 +59,8 @@
 				
 				<div id="authorizationList">
 
-				<logic:iterate id="group" name="managementBean" property="groups">
+				<logic:iterate id="group" name="authorizationsBean" property="groups">
+
 				<bean:define id="newObject" name="group" property="newObject" type="java.lang.Boolean"/>
 				
 				<bean:define id="id" name="group" property="id" type="java.lang.String" />
@@ -70,31 +68,34 @@
 				<div class="edit-authorizations">
 				<fr:form action="/authorizations.do">
 				
-				<html:hidden property="method" value="authorizationsPerPerson"/>
-				
-				<fr:edit id="managementBean" name="managementBean" visible="false" />
-								
+				<html:hidden property="method" value="manageOperation"/>
+
+				<fr:edit id="authorizationsBean" name="authorizationsBean" visible="false" />
+
 				<div id="period" class="authorization period <%= newObject ? "newObject" : "" %>">
 					<header id="header">
 						<h4>
-						<logic:notPresent name="group" property="operation">
+						<logic:notPresent name="group" property="party">
 							<bean:message key="label.new.authorization" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 						</logic:notPresent>
-						<logic:present name="group" property="operation">
-							<bean:write name="group" property="operation.localizedName"/>
+						<logic:present name="group" property="party">
+							<bean:write name="group" property="party.name"/>
 						</logic:present>
 						</h4>
 						<span class="saveButton"><i><bean:message key="label.authorizations.unsavedChanges" bundle="ACADEMIC_OFFICE_RESOURCES"/></i></span>
 						<a href="javascript:void(0);" class="edit-auth"><img src="../images/iconEditOff.png" /> <bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></a>
 					</header>
-					
+
 					<div class="authorization-edit">
 						<fr:edit name="group">
 							<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.AuthorizationGroupBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-								<fr:slot name="operation" key="label.operation">
-									<fr:property name="defaultOptionHidden" value="true"/>
-									<fr:property name="sort" value="true"/>
-									<fr:property name="onChange" value="changedValue($(this));"/>
+								<fr:slot name="party" layout="autoComplete" key="label.academicAdministration.authorizations.member">
+									<fr:property name="size" value="50" />
+									<fr:property name="labelField" value="presentationName" />
+									<fr:property name="indicatorShown" value="true" />
+									<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchAllActiveParties" />
+									<fr:property name="args" value="slot=name,size=50,internal=true" />
+									<fr:property name="minChars" value="4" />
 								</fr:slot>
 							</fr:schema>
 						</fr:edit>
@@ -114,6 +115,7 @@
 						</div>
 						</logic:equal>
 					</div>
+
 					<table width="100%" class="small">
 					<tr>
 					<td width="50%" align="left" valign="top" id="programs">
@@ -157,22 +159,20 @@
 				
 				</logic:iterate>				
 				
-				<logic:equal name="managementBean" property="party.unit" value="true">
-					<div class="edit-authorizations">
-						<div id="period" class="unit period">
-							<header id="header" align="center">
-								<h4>Pessoas na unidade</h4>
-							</header>
-							<ul style="display: none" class="small">
-								<logic:iterate id="person" name="managementBean" property="peopleInUnit">
-									<li><bean:write name="person" property="name"/>
-										<span style="float: right"><bean:write name="person" property="username"/></span>
-									</li>
-								</logic:iterate>
-							</ul>
-						</div>
+				<div class="edit-authorizations">
+					<div id="period" class="unit period">
+						<header id="header" align="center">
+							<h4>Pessoas com acesso</h4>
+						</header>
+						<ul style="display: none" class="small">
+							<logic:iterate id="user" name="authorizationsBean" property="members">
+								<li><bean:write name="user" property="profile.displayName"/>
+									<span style="float: right"><bean:write name="user" property="username"/></span>
+								</li>
+							</logic:iterate>
+						</ul>
 					</div>
-				</logic:equal>
+				</div>
 
 				</div>
 			
@@ -193,7 +193,7 @@
 					</div>
 					<div id="collapseOne" class="panel-collapse collapse in">
 						<div class="panel-body">
-							<logic:iterate id="office" name="managementBean" property="administrativeOffices" 
+							<logic:iterate id="office" name="authorizationsBean" property="administrativeOffices" 
 										   type="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice">
 								<div class="draggable_course office">
 									<div id="oid" style="display:none"><bean:write name="office" property="oid"/></div>
@@ -205,7 +205,7 @@
 					</div>
 				</div>
 		
-				<logic:iterate id="degreeType" name="managementBean" property="degreeTypes" type="org.fenixedu.academic.domain.degree.DegreeType">
+				<logic:iterate id="degreeType" name="authorizationsBean" property="degreeTypes" type="org.fenixedu.academic.domain.degree.DegreeType">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">
@@ -216,7 +216,7 @@
 					</div>
 					<div id="collapse${degreeType}" class="panel-collapse collapse">
 						<div class="panel-body">
-							<logic:iterate id="degree" name="managementBean" property="degrees">
+							<logic:iterate id="degree" name="authorizationsBean" property="degrees">
 								<logic:equal value="<%= degreeType.name() %>" name="degree" property="degreeType.name">
 										<div class="draggable_course degree">
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
@@ -240,7 +240,7 @@
 					</div>
 					<div id="collapseTwo" class="panel-collapse collapse">
 						<div class="panel-body">
-							<logic:iterate id="program" name="managementBean" property="phdPrograms" 
+							<logic:iterate id="program" name="authorizationsBean" property="phdPrograms" 
 										   type="org.fenixedu.academic.domain.phd.PhdProgram">
 								<div class="draggable_course degree">
 									<div id="oid" style="display:none"><bean:write name="program" property="oid"/></div>
