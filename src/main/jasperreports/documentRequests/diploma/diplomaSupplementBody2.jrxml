@@ -935,7 +935,7 @@
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.six")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-116" positionType="Float" stretchType="RelativeToTallestObject" x="13" y="215" width="353" height="13">
+					<reportElement key="textField-116" positionType="Float" stretchType="NoStretch" x="13" y="215" width="353" height="13">
 						<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
 					</reportElement>
 					<box>
