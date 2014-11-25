@@ -59,7 +59,8 @@ public class CandidateGroup extends GroupStrategy {
     private boolean hasActiveCandidacies(Person person) {
         for (Candidacy candidacy : person.getCandidaciesSet()) {
             CandidacySituationType situation = candidacy.getActiveCandidacySituationType();
-            if (situation != null && situation.isActive() && !situation.equals(CandidacySituationType.REGISTERED)) {
+            if (situation != null && situation.isActive() && !situation.equals(CandidacySituationType.REGISTERED)
+                    && !situation.equals(CandidacySituationType.ADMITTED)) {
                 return true;
             }
         }
