@@ -177,7 +177,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 "weeksOfStudyPerYear",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.weeksOfStudyPerYear."
                         + getDocumentRequest().getRequestedCycle()));
-        addParameter("ectsCredits", getDocumentRequest().getEctsCredits());
+        double ectsCreditsValue = getDocumentRequest().getEctsCredits();
+        String ectsCredits =
+                (long) ectsCreditsValue == ectsCreditsValue ? "" + Long.toString((long) ectsCreditsValue) : Double
+                        .toString(ectsCreditsValue);
+        addParameter("ectsCredits", ectsCredits);
     }
 
     protected String fillGroup2() {
@@ -263,7 +267,10 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         String labelThe =
                 getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE) ? BundleUtil.getString(Bundle.ACADEMIC,
                         getLocale(), "label.the.female") : BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.the.male");
-        long ectsCredits = getDocumentRequest().getEctsCredits();
+        double ectsCreditsValue = getDocumentRequest().getEctsCredits();
+        String ectsCredits =
+                (long) ectsCreditsValue == ectsCreditsValue ? "" + Long.toString((long) ectsCreditsValue) : Double
+                        .toString(ectsCreditsValue);
         DegreeOfficialPublication dr = getDocumentRequest().getDegreeOfficialPublication();
 
         if (dr == null) {
@@ -278,13 +285,13 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             programmeRequirements =
                     applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             "diploma.supplement.four.two.programmerequirements.template.noareas.with.official.publication"),
-                            labelThe, graduateDegree, Long.toString(ectsCredits), officialPublication);
+                            labelThe, graduateDegree, ectsCredits, officialPublication);
         } else if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)
                 || dr.getSpecializationAreaSet().size() == 0) {
             programmeRequirements =
                     applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             "diploma.supplement.four.two.programmerequirements.template.noareas"), labelThe, graduateDegree,
-                            Long.toString(ectsCredits));
+                            ectsCredits);
         } else {
             List<String> areas = new ArrayList<String>();
             for (DegreeSpecializationArea area : dr.getSpecializationAreaSet()) {
@@ -293,8 +300,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             programmeRequirements =
                     applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             "diploma.supplement.four.two.programmerequirements.template.withareas"), labelThe, graduateDegree,
-                            Long.toString(ectsCredits), Integer.toString(areas.size()), StringUtils.join(areas, "; "),
-                            officialPublication);
+                            ectsCredits, Integer.toString(areas.size()), StringUtils.join(areas, "; "), officialPublication);
         }
         programmeRequirements = programmeRequirements.substring(0, 1).toUpperCase() + programmeRequirements.substring(1);
         addParameter("programmeRequirements", programmeRequirements);
@@ -523,7 +529,13 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         public AcademicUnitEntry(final Entry<Unit, String> entry) {
             this.identifier = entry.getValue();
-            this.name = getMLSTextContent(entry.getKey().getNameI18n());
+            Unit unit = entry.getKey();
+            String name = getMLSTextContent(unit.getNameI18n());
+            Unit univ = unit.getParentUnits().stream().filter(u -> u.isUniversityUnit()).findAny().orElse(null);
+            if (univ != null) {
+                name = getMLSTextContent(univ.getNameI18n()) + ", " + name;
+            }
+            this.name = name;
         }
 
         public String getIdentifier() {

@@ -27,7 +27,7 @@
 	<parameter name="years" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="semesters" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="weeksOfStudyPerYear" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="ectsCredits" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="ectsCredits" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="programmeRequirements" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="bundle" class="java.util.ResourceBundle" isForPrompting="false"/>
 	<parameter name="languages" class="java.lang.String" isForPrompting="false"/>
@@ -346,7 +346,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{years}.toString() + " " + $P{bundle}.getString("label.years") + " / " + $P{semesters}.toString() + " "  + $P{bundle}.getString("label.semesters") + " / "  + $P{weeksOfStudyPerYear} + " / " + $P{ectsCredits}.toString() + " "  + $P{bundle}.getString("label.ects.credits")]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{years}.toString() + " " + $P{bundle}.getString("label.years") + " / " + $P{semesters}.toString() + " "  + $P{bundle}.getString("label.semesters") + " / "  + $P{weeksOfStudyPerYear} + " / " + $P{ectsCredits} + " "  + $P{bundle}.getString("label.ects.credits")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 					<reportElement key="textField-41" x="0" y="458" width="366" height="12"/>

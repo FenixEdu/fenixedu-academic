@@ -37,7 +37,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Serif" size="7" pdfFontName="Times-Roman" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["[" +  $F{identifier} + "] "+ $P{bundle}.getString("diploma.supplement.four.three.table.legend.one") + $P{universityName} +", " + $P{bundle}.getString("diploma.supplement.four.three.table.legend.two")+ " " +$F{name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["[" +  $F{identifier} + "] "+ $P{bundle}.getString("diploma.supplement.four.three.table.legend.one") + $F{name}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

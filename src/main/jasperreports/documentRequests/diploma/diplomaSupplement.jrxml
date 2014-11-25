@@ -29,7 +29,7 @@
 	<parameter name="years" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="semesters" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="weeksOfStudyPerYear" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="ectsCredits" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="ectsCredits" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="programmeRequirements" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="classificationSystem" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="finalAverage" class="java.lang.Integer" isForPrompting="false"/>
@@ -732,7 +732,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement").toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-19" positionType="Float" x="0" y="10" width="367" height="12"/>
+				<reportElement key="textField-19" positionType="Float" x="-26" y="10" width="419" height="12"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

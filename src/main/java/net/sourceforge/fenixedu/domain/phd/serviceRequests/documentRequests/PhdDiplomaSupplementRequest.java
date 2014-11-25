@@ -195,14 +195,14 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     }
 
     @Override
-    public long getEctsCredits() {
+    public double getEctsCredits() {
         PhdProgramInformation information = getPhdInformationForConclusionDate();
 
         if (information == null) {
             return 0;
         }
 
-        return information.getMaxStudyPlanEctsCredits().add(information.getMaxThesisEctsCredits()).longValue();
+        return information.getMaxStudyPlanEctsCredits().add(information.getMaxThesisEctsCredits()).doubleValue();
     }
 
     @Override
