@@ -22,8 +22,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -41,7 +39,6 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.icalendar.EvaluationEventBean;
 import org.fenixedu.academic.dto.InfoEvaluation;
 import org.fenixedu.academic.dto.InfoWrittenTest;
-import org.fenixedu.academic.predicate.WrittenTestPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.domain.User;
@@ -102,10 +99,9 @@ public class WrittenTest extends WrittenTest_Base {
 
     @Override
     public void setDayDate(Date date) {
-        check(this, WrittenTestPredicates.changeDatePredicate);
         final User requestor = Authenticate.getUser();
-        if (hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || isTeacher(requestor)
-                && allowedPeriod(date)) {
+        if (requestor != null && hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor)
+                || isTeacher(requestor) && allowedPeriod(date)) {
             super.setDayDate(date);
         } else {
             throw new DomainException("not.authorized.to.set.this.date");
