@@ -62,16 +62,6 @@
 	<slot name="year" />
 </schema>
 
-<schema name="InsertMandatoryInvitedPersonDetails" type="org.fenixedu.academic.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
-	<slot name="name">
-		<property name="size" value="50"/>
-	</slot>	
-	<slot name="documentIdNumber" />
-	<slot name="idDocumentType">
-		<property name="excludedValues" value="CITIZEN_CARD" />
-	</slot>	
-</schema>	
-
 <schema name="SearchPersonAttributes" type="org.fenixedu.academic.dto.person.PersonBean" bundle="MANAGER_RESOURCES">	
 	<slot name="username"/>	
 	<slot name="name">

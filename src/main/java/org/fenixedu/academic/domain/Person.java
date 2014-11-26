@@ -20,9 +20,7 @@ package org.fenixedu.academic.domain;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,7 +37,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accounting.AcademicEvent;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -56,8 +53,6 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
-import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
-import org.fenixedu.academic.domain.candidacy.DFACandidacy;
 import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
@@ -78,13 +73,10 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.documents.AnnualIRSDeclarationDocument;
 import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.messaging.Forum;
-import org.fenixedu.academic.domain.messaging.ForumSubscription;
 import org.fenixedu.academic.domain.organizationalStructure.Accountability;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.Gender;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.IdDocument;
@@ -95,9 +87,6 @@ import org.fenixedu.academic.domain.phd.alert.PhdAlertMessage;
 import org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
-import org.fenixedu.academic.domain.thesis.Thesis;
-import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
-import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -115,7 +104,6 @@ import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
-import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.joda.time.DateTime;
@@ -376,10 +364,6 @@ public class Person extends Person_Base {
         return this;
     }
 
-    public void editPersonWithExternalData(final PersonBean personBean) {
-        editPersonWithExternalData(personBean, false);
-    }
-
     public Person editPersonWithExternalData(final PersonBean personBean, final boolean updateExistingContacts) {
 
         setProperties(personBean);
@@ -487,18 +471,10 @@ public class Person extends Person_Base {
             getAssociatedPersonAccount().delete();
         }
 
-        /*
-         * One does not simply delete a User...
-         */
-//        if (hasUser()) {
-//            getUser().delete();
-//        }
-
         if (getStudent() != null) {
             getStudent().delete();
         }
 
-//        getManageableDepartmentCreditsSet().clear();
         getThesisEvaluationParticipantsSet().clear();
 
         for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete()) {
@@ -534,64 +510,16 @@ public class Person extends Person_Base {
         getProfile().setEmail(getEmailForSendingEmails());
     }
 
-    @Deprecated
-    public Registration readStudentByDegreeType(final DegreeType degreeType) {
-        for (final Registration registration : this.getStudents()) {
-            if (registration.getDegreeType().equals(degreeType)) {
-                return registration;
-            }
-        }
-        return null;
-    }
-
-    public Registration readRegistrationByDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
-        return getStudent().readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
-    }
-
-    public DFACandidacy getDFACandidacyByExecutionDegree(final ExecutionDegree executionDegree) {
-        for (final Candidacy candidacy : this.getCandidaciesSet()) {
-            if (candidacy instanceof DFACandidacy) {
-                final DFACandidacy dfaCandidacy = (DFACandidacy) candidacy;
-                if (dfaCandidacy.getExecutionDegree().equals(executionDegree)) {
-                    return dfaCandidacy;
-                }
-            }
-        }
-        return null;
-    }
-
-    public DegreeCandidacy getDegreeCandidacyByExecutionDegree(final ExecutionDegree executionDegree) {
+    public boolean hasDegreeCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
         for (final Candidacy candidacy : this.getCandidaciesSet()) {
             if (candidacy instanceof DegreeCandidacy && candidacy.isActive()) {
                 final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
                 if (degreeCandidacy.getExecutionDegree().equals(executionDegree)) {
-                    return degreeCandidacy;
+                    return true;
                 }
             }
         }
-        return null;
-    }
-
-    public List<DegreeCandidacy> getDegreeCandidaciesFor(final ExecutionYear executionYear,
-            final CandidacySituationType candidacySituationType) {
-
-        final List<DegreeCandidacy> result = new ArrayList<DegreeCandidacy>();
-        for (final Candidacy candidacy : this.getCandidaciesSet()) {
-            if (candidacy instanceof DegreeCandidacy) {
-                final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
-                if (degreeCandidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType
-                        && degreeCandidacy.getExecutionDegree().getExecutionYear() == executionYear) {
-
-                    result.add((DegreeCandidacy) candidacy);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public boolean hasDegreeCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
-        return getDegreeCandidacyByExecutionDegree(executionDegree) != null;
+        return false;
     }
 
     public StudentCandidacy getStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
@@ -612,26 +540,6 @@ public class Person extends Person_Base {
 
     public boolean hasStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
         return getStudentCandidacyForExecutionDegree(executionDegree) != null;
-    }
-
-    public StudentCandidacy getSomeStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
-        for (final Candidacy candidacy : this.getCandidaciesSet()) {
-            if (candidacy instanceof StudentCandidacy) {
-                if (candidacy instanceof PHDProgramCandidacy) {
-                    continue;
-                }
-
-                final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-                if (studentCandidacy.getExecutionDegree().equals(executionDegree)) {
-                    return studentCandidacy;
-                }
-            }
-        }
-        return null;
-    }
-
-    public boolean hasSomeStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
-        return getSomeStudentCandidacyForExecutionDegree(executionDegree) != null;
     }
 
     public static Person readPersonByUsername(final String username) {
@@ -657,16 +565,6 @@ public class Person extends Person_Base {
         return null;
     }
 
-    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber, final YearMonthDay dateOfBirth) {
-        for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
-            final Person person = idDocument.getPerson();
-            if (person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
     public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth, final Collection<Person> persons) {
         final List<Person> result = new ArrayList<Person>();
         for (final Person person : persons) {
@@ -683,16 +581,6 @@ public class Person extends Person_Base {
 
     public static Collection<Person> findPerson(final String name, final int size) {
         return findPersonStream(name, size).collect(Collectors.toSet());
-    }
-
-    public static List<Person> readAllPersons() {
-        final List<Person> allPersons = new ArrayList<Person>();
-        for (final Party party : Bennu.getInstance().getPartysSet()) {
-            if (party.isPerson()) {
-                allPersons.add((Person) party);
-            }
-        }
-        return allPersons;
     }
 
     public static Collection<Person> readPersonsByNameAndRoleType(final String name, final RoleType roleType) {
@@ -714,22 +602,6 @@ public class Person extends Person_Base {
             final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
             if (studentCurricularPlan != null) {
                 studentCurricularPlans.add(studentCurricularPlan);
-            }
-        }
-        return studentCurricularPlans;
-    }
-
-    public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
-        final SortedSet<StudentCurricularPlan> studentCurricularPlans =
-                new TreeSet<StudentCurricularPlan>(
-                        StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-
-        for (final Registration registration : getStudentsSet()) {
-            if (registration.isConcluded()) {
-                final StudentCurricularPlan lastStudent = registration.getLastStudentCurricularPlan();
-                if (lastStudent != null) {
-                    studentCurricularPlans.add(lastStudent);
-                }
             }
         }
         return studentCurricularPlans;
@@ -806,17 +678,6 @@ public class Person extends Person_Base {
         return getNotPayedEventsPayableOn(administrativeOffice, AcademicEvent.class, withInstallments);
     }
 
-    public Set<Event> getNotPayedEventsPayableOn(final AdministrativeOffice administrativeOffice) {
-        final Set<Event> result = new HashSet<Event>();
-        for (final Event event : getAcademicEvents()) {
-            if (event.isOpen() && isPayableOnAnyOfAdministrativeOffices(Collections.singleton(administrativeOffice), event)) {
-                result.add(event);
-            }
-        }
-
-        return result;
-    }
-
     public Set<Event> getNotPayedEvents() {
         final Set<Event> result = new HashSet<Event>();
         for (final Event event : getAcademicEvents()) {
@@ -870,17 +731,6 @@ public class Person extends Person_Base {
         return result;
     }
 
-    public Set<AccountingTransaction> getPaymentTransactions(final EventType... type) {
-        final Set<AccountingTransaction> transactions = new HashSet<AccountingTransaction>();
-        final List<EventType> types = Arrays.asList(type);
-        for (final Event event : getEventsSet()) {
-            if (!event.isCancelled() && types.contains(event.getEventType())) {
-                transactions.addAll(event.getNonAdjustingTransactions());
-            }
-        }
-        return transactions;
-    }
-
     public Set<Entry> getPaymentsWithoutReceipt() {
         return getPaymentsWithoutReceiptByAdministrativeOffices(null);
     }
@@ -918,10 +768,6 @@ public class Person extends Person_Base {
             total = total.add(entry.getAmountWithAdjustment());
         }
         return total;
-    }
-
-    public Set<? extends Event> getEventsByEventTypes(final EventType... eventTypes) {
-        return getEventsByEventTypes(Arrays.asList(eventTypes));
     }
 
     public Set<? extends Event> getEventsByEventTypes(final Collection<EventType> eventTypes) {
@@ -962,20 +808,6 @@ public class Person extends Person_Base {
             if (event instanceof AnnualEvent) {
                 final AnnualEvent annualEvent = (AnnualEvent) event;
                 if (annualEvent.isFor(executionYear) && !annualEvent.isCancelled()) {
-                    result.add(annualEvent);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public Set<AnnualEvent> getOpenAnnualEventsFor(final ExecutionYear executionYear) {
-        final Set<AnnualEvent> result = new HashSet<AnnualEvent>();
-        for (final Event event : getEventsSet()) {
-            if (event instanceof AnnualEvent) {
-                final AnnualEvent annualEvent = (AnnualEvent) event;
-                if (annualEvent.isFor(executionYear) && annualEvent.isOpen()) {
                     result.add(annualEvent);
                 }
             }
@@ -1178,86 +1010,6 @@ public class Person extends Person_Base {
         return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
     }
 
-    public static class AnyPersonSearchBean implements Serializable {
-        String name;
-
-        String documentIdNumber;
-
-        IDDocumentType idDocumentType;
-
-        public String getDocumentIdNumber() {
-            return documentIdNumber;
-        }
-
-        public void setDocumentIdNumber(final String documentIdNumber) {
-            this.documentIdNumber = documentIdNumber;
-        }
-
-        public IDDocumentType getIdDocumentType() {
-            return idDocumentType;
-        }
-
-        public void setIdDocumentType(final IDDocumentType idDocumentType) {
-            this.idDocumentType = idDocumentType;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(final String name) {
-            this.name = name;
-        }
-
-        private boolean matchesAnyCriteriaField(final String[] nameValues, final String string, final String stringFromPerson) {
-            return isSpecified(string) && areNamesPresent(stringFromPerson, nameValues);
-        }
-
-        public SortedSet<Person> search() {
-            final SortedSet<Person> people = new TreeSet<Person>(Party.COMPARATOR_BY_NAME_AND_ID);
-            if (isSpecified(name)) {
-                people.addAll(findPerson(name));
-            }
-            if (isSpecified(documentIdNumber)) {
-                for (final IdDocument idDocument : Bennu.getInstance().getIdDocumentsSet()) {
-                    final String[] documentIdNumberValues =
-                            documentIdNumber == null ? null : StringNormalizer.normalize(documentIdNumber).split("\\p{Space}+");
-                    if (matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, idDocument.getValue())) {
-                        people.add(idDocument.getPerson());
-                    }
-                }
-            }
-            return people;
-        }
-
-        public SortedSet<Person> getSearch() {
-            return search();
-        }
-
-        public boolean getHasBeenSubmitted() {
-            return isSpecified(name) || isSpecified(documentIdNumber);
-        }
-
-        private boolean isSpecified(final String string) {
-            return string != null && string.length() > 0;
-        }
-
-        private boolean areNamesPresent(final String name, final String[] searchNameParts) {
-            final String nameNormalized = StringNormalizer.normalize(name);
-            for (String searchNamePart : searchNameParts) {
-                final String namePart = searchNamePart;
-                if (!nameNormalized.contains(namePart)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-
-    public Registration getRegistration(final ExecutionCourse executionCourse) {
-        return executionCourse.getRegistration(this);
-    }
-
     public SortedSet<String> getOrganizationalUnitsPresentation() {
         final SortedSet<String> organizationalUnits = new TreeSet<String>();
         for (final Accountability accountability : getParentsSet()) {
@@ -1329,23 +1081,6 @@ public class Person extends Person_Base {
                 || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionSemester.getExecutionYear());
     }
 
-    private final static List<DegreeType> degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator = Arrays
-            .asList(new DegreeType[] { DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE });
-
-    public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(final ExecutionYear executionYear) {
-        return isCoordinatorFor(executionYear, degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator);
-
-    }
-
-    private final static List<DegreeType> degreeTypesForisDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor =
-            Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
-                    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
-
-    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(final ExecutionYear executionYear) {
-        return isCoordinatorFor(executionYear, degreeTypesForisDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor);
-
-    }
-
     public boolean isCoordinatorFor(final ExecutionYear executionYear, final List<DegreeType> degreeTypes) {
         for (final Coordinator coordinator : getCoordinatorsSet()) {
             final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
@@ -1366,10 +1101,6 @@ public class Person extends Person_Base {
             }
         }
         return null;
-    }
-
-    public boolean hasServiceAgreementFor(final ServiceAgreementTemplate serviceAgreementTemplate) {
-        return getServiceAgreementFor(serviceAgreementTemplate) != null;
     }
 
     public String getFirstAndLastName() {
@@ -1414,29 +1145,6 @@ public class Person extends Person_Base {
             }
         }
         return false;
-    }
-
-    public Set<Thesis> getOrientedOrCoorientedThesis(final ExecutionYear year) {
-        final Set<Thesis> thesis = new HashSet<Thesis>();
-        for (final ThesisEvaluationParticipant participant : getThesisEvaluationParticipantsSet()) {
-            if (participant.getThesis().getEnrolment().getExecutionYear().equals(year)
-                    && (participant.getType() == ThesisParticipationType.ORIENTATOR || participant.getType() == ThesisParticipationType.COORIENTATOR)) {
-                thesis.add(participant.getThesis());
-            }
-        }
-        return thesis;
-    }
-
-    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(final ExecutionSemester executionSemester) {
-        final ArrayList<ThesisEvaluationParticipant> participants = new ArrayList<ThesisEvaluationParticipant>();
-
-        for (final ThesisEvaluationParticipant participant : this.getThesisEvaluationParticipantsSet()) {
-            if (participant.getThesis().getEnrolment().getExecutionYear().equals(executionSemester.getExecutionYear())) {
-                participants.add(participant);
-            }
-        }
-        Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
-        return participants;
     }
 
     public boolean isPhotoAvailableToCurrentUser() {
@@ -1541,16 +1249,6 @@ public class Person extends Person_Base {
         }
     }
 
-    public List<UnitFile> getUploadedFiles(final Unit unit) {
-        final List<UnitFile> files = new ArrayList<UnitFile>();
-        for (final UnitFile file : getUploadedFilesSet()) {
-            if (file.getUnit().equals(unit)) {
-                files.add(file);
-            }
-        }
-        return files;
-    }
-
     public String getPresentationName() {
         final String username = getUsername();
         return username == null ? getName() : getName() + " (" + getUsername() + ")";
@@ -1559,27 +1257,6 @@ public class Person extends Person_Base {
     @Override
     public String getPartyPresentationName() {
         return getPresentationName();
-    }
-
-    public boolean isPedagogicalCouncilMember() {
-        return hasRole(RoleType.PEDAGOGICAL_COUNCIL);
-    }
-
-    public Collection<Forum> getForuns(final ExecutionSemester executionSemester) {
-        final Collection<Forum> foruns = new HashSet<Forum>();
-        if (getTeacher() != null) {
-            foruns.addAll(getTeacher().getForuns(executionSemester));
-        }
-
-        if (getStudent() != null) {
-            foruns.addAll(getStudent().getForuns(executionSemester));
-        }
-
-        for (final ForumSubscription forumSubscription : getForumSubscriptionsSet()) {
-            foruns.add(forumSubscription.getForum());
-        }
-
-        return foruns;
     }
 
     private boolean hasValidIndividualCandidacy(final Class<? extends IndividualCandidacy> clazz,
@@ -1624,19 +1301,6 @@ public class Person extends Person_Base {
                 Qualification.COMPARATOR_BY_YEAR) : null;
     }
 
-    public boolean hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(final ExecutionYear executionYear) {
-        for (final AnnualEvent annualEvent : getAnnualEventsFor(executionYear)) {
-            if (annualEvent instanceof GratuityEvent || annualEvent instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
-                if (annualEvent.isOpen()) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-
-    }
-
     public Set<AnnualIRSDeclarationDocument> getAnnualIRSDocuments() {
         final Set<AnnualIRSDeclarationDocument> result = new HashSet<AnnualIRSDeclarationDocument>();
 
@@ -1651,7 +1315,7 @@ public class Person extends Person_Base {
 
     public AnnualIRSDeclarationDocument getAnnualIRSDocumentFor(final Integer year) {
         for (final AnnualIRSDeclarationDocument each : getAnnualIRSDocuments()) {
-            if (each.getYear().compareTo(year) == 0) {
+            if (each.getYear().equals(year)) {
                 return each;
             }
         }
@@ -1734,28 +1398,6 @@ public class Person extends Person_Base {
         return null;
     }
 
-    @Atomic
-    public void transferEventsAndAccounts(final Person sourcePerson) {
-        if (!AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
-            throw new DomainException("permission.denied");
-        }
-
-        if (sourcePerson.getInternalAccount() != null) {
-            for (final Entry entry : sourcePerson.getInternalAccount().getEntriesSet()) {
-                this.getInternalAccount().transferEntry(entry);
-                this.getEventsSet().add(entry.getAccountingTransaction().getEvent());
-            }
-
-        }
-
-        if (sourcePerson.getExternalAccount() != null) {
-            for (final Entry entry : sourcePerson.getExternalAccount().getEntriesSet()) {
-                this.getExternalAccount().transferEntry(entry);
-                this.getEventsSet().add(entry.getAccountingTransaction().getEvent());
-            }
-        }
-    }
-
     public List<Professorship> getProfessorships(final ExecutionSemester executionSemester) {
         final List<Professorship> professorships = new ArrayList<Professorship>();
         for (final Professorship professorship : getProfessorshipsSet()) {
@@ -1817,15 +1459,6 @@ public class Person extends Person_Base {
         return emailAddress == null ? null : emailAddress.getValue();
     }
 
-    public boolean hasAnyRole(final RoleType[] roleTypes) {
-        for (final RoleType roleType : roleTypes) {
-            if (hasRole(roleType)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean areContactsRecent(final Class<? extends PartyContact> contactClass, final int daysNotUpdated) {
         final List<? extends PartyContact> partyContacts = getPartyContacts(contactClass);
         boolean isUpdated = false;
@@ -1859,23 +1492,6 @@ public class Person extends Person_Base {
     @Deprecated
     public void setFiscalCode(final String value) {
         super.setFiscalCode(value);
-    }
-
-    @Deprecated
-    public final boolean namesCorrectlyPartitioned() {
-        if (StringUtils.isEmpty(getGivenNames()) && StringUtils.isEmpty(getFamilyNames())) {
-            return true;
-        }
-        if (StringUtils.isEmpty(getGivenNames())) {
-            return false;
-        }
-
-        final String fullName = getName();
-        final String familyName = getFamilyNames();
-        final String composedName =
-                familyName == null || familyName.isEmpty() ? getGivenNames() : getGivenNames() + " " + familyName;
-
-        return fullName.equals(composedName);
     }
 
     public static Person findByUsername(final String username) {
@@ -1991,64 +1607,15 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public void setDateOfBirth(final java.util.Date date) {
-        if (date == null) {
-            setDateOfBirthYearMonthDay(null);
-        } else {
-            setDateOfBirthYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-        }
-    }
-
-    @Deprecated
     public java.util.Date getEmissionDateOfDocumentId() {
         final org.joda.time.YearMonthDay ymd = getEmissionDateOfDocumentIdYearMonthDay();
         return ymd == null ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
     }
 
     @Deprecated
-    public void setEmissionDateOfDocumentId(final java.util.Date date) {
-        if (date == null) {
-            setEmissionDateOfDocumentIdYearMonthDay(null);
-        } else {
-            setEmissionDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-        }
-    }
-
-    @Deprecated
     public java.util.Date getExpirationDateOfDocumentId() {
         final org.joda.time.YearMonthDay ymd = getExpirationDateOfDocumentIdYearMonthDay();
         return ymd == null ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-    }
-
-    @Deprecated
-    public void setExpirationDateOfDocumentId(final java.util.Date date) {
-        if (date == null) {
-            setExpirationDateOfDocumentIdYearMonthDay(null);
-        } else {
-            setExpirationDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-        }
-    }
-
-    @Deprecated
-    public static String readAllEmails() {
-        final StringBuilder builder = new StringBuilder();
-        for (final Party party : Bennu.getInstance().getPartysSet()) {
-            if (party.isPerson()) {
-                final Person person = (Person) party;
-                final String email = person.getEmailForSendingEmails();
-                if (email != null) {
-                    final User user = person.getUser();
-                    if (user != null) {
-                        final String username = user.getUsername();
-                        builder.append(username);
-                        builder.append("\t");
-                        builder.append(email);
-                        builder.append("\n");
-                    }
-                }
-            }
-        }
-        return builder.toString();
     }
 
     /*********************************

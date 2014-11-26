@@ -87,15 +87,6 @@
 	<slot name="profession" />
 	<slot name="maritalStatus" />  
 </schema>
-<schema name="org.fenixedu.academic.domain.Person.AnyPersonSearchBean" type="org.fenixedu.academic.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="name">
-		<property name="size" value="50"/>
-	</slot>
-	<slot name="idDocumentType" key="label.idDocumentType">
-		<property name="excludedValues" value="CITIZEN_CARD" />
-	</slot>
-	<slot name="documentIdNumber" key="label.identificationNumber"/>
-</schema>
 <schema name="org.fenixedu.academic.dto.person.ExternalPersonBean.Unit" type="org.fenixedu.academic.dto.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
 	<slot name="unit" key="unitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
