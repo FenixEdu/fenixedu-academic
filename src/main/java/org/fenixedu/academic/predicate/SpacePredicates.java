@@ -20,7 +20,6 @@ package org.fenixedu.academic.predicate;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
 import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
 import org.fenixedu.academic.domain.space.SpaceOccupation;
@@ -61,10 +60,6 @@ public class SpacePredicates {
 
                     Person loggedPerson = AccessControl.getPerson();
 
-                    if (loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-                        return true;
-                    }
-
                     ExecutionCourse executionCourse = spaceOccupation.getLesson().getExecutionCourse();
                     if (loggedPerson.hasProfessorshipForExecutionCourse(executionCourse)) {
                         return true;
@@ -89,10 +84,6 @@ public class SpacePredicates {
                 public boolean evaluate(LessonInstanceSpaceOccupation lessonInstanceSpaceOccupation) {
 
                     Person loggedPerson = AccessControl.getPerson();
-
-                    if (loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-                        return true;
-                    }
 
                     if (loggedPerson.getProfessorshipsSet().size() > 0) {
                         return true;

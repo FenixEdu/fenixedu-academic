@@ -21,9 +21,7 @@ package org.fenixedu.academic.service.services.teacher;
 import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.dto.SummariesManagementBean;
 import org.fenixedu.academic.service.ServiceMonitoring;
-import org.fenixedu.academic.service.filter.ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import org.fenixedu.academic.service.filter.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
 import org.fenixedu.academic.service.filter.SummaryManagementToTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 
@@ -54,35 +52,16 @@ public class CreateSummary {
 
     @Atomic
     public static void runCreateSummary(SummariesManagementBean bean) throws NotAuthorizedException {
-        try {
-            ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(bean);
-            serviceInstance.run(bean);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter.instance.execute(bean);
-                serviceInstance.run(bean);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(bean);
+        serviceInstance.run(bean);
     }
 
     // Service Invokers migrated from Berserk
 
     @Atomic
     public static void runEditSummary(SummariesManagementBean bean) throws NotAuthorizedException {
-        try {
-            SummaryManagementToTeacherAuthorizationFilter.instance.execute(bean.getSummary(), bean.getProfessorshipLogged());
-            serviceInstance.run(bean);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                SummaryManagementToDepartmentAdmOfficeAuthorizationFilter.instance.execute(bean.getSummary(),
-                        bean.getProfessorshipLogged());
-                serviceInstance.run(bean);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
+        SummaryManagementToTeacherAuthorizationFilter.instance.execute(bean.getSummary(), bean.getProfessorshipLogged());
+        serviceInstance.run(bean);
     }
 
 }

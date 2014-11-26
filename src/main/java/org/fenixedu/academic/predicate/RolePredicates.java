@@ -40,8 +40,7 @@ public class RolePredicates {
         }
 
         public static boolean eval(Person contactPerson) {
-            if (hasRole(RoleType.OPERATOR) || hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson)
-                    || hasRole(RoleType.PERSONNEL_SECTION)) {
+            if (hasRole(RoleType.OPERATOR) || hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson)) {
                 return true;
             }
 
@@ -106,22 +105,6 @@ public class RolePredicates {
                 @Override
                 public boolean evaluate(Object domainObject) {
                     return hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-                };
-            };
-
-    public static final AccessControlPredicate<Object> DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE =
-            new AccessControlPredicate<Object>() {
-                @Override
-                public boolean evaluate(Object domainObject) {
-                    return hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-                };
-            };
-
-    public static final AccessControlPredicate<Object> DEPARTMENT_CREDITS_MANAGER_PREDICATE =
-            new AccessControlPredicate<Object>() {
-                @Override
-                public boolean evaluate(Object domainObject) {
-                    return hasRole(RoleType.DEPARTMENT_CREDITS_MANAGER);
                 };
             };
 
@@ -203,13 +186,6 @@ public class RolePredicates {
         @Override
         public boolean evaluate(Object domainObject) {
             return hasRole(RoleType.PERSON);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> PERSONNEL_SECTION_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.PERSONNEL_SECTION);
         };
     };
 

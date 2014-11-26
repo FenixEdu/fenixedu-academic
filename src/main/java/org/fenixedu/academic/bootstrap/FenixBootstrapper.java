@@ -117,7 +117,7 @@ public class FenixBootstrapper {
         Installation installation = Installation.getInstance();
         installation.setInstituitionEmailDomain(schoolSetupSection.getSchoolEmailDomain());
         installation.setInstituitionURL(schoolSetupSection.getSchoolURL());
-        
+
         if (Bennu.getInstance().getRootClassificationSet().isEmpty()) {
             Builder campusNameBuilder = new LocalizedString.Builder();
             CoreConfiguration.supportedLocales().stream().forEach(l -> campusNameBuilder.with(l, "Campus"));
@@ -341,8 +341,6 @@ public class FenixBootstrapper {
         User adminUser = User.findByUsername(adminSection.getAdminUsername());
         final Person person = new Person(adminUser.getProfile());
         RoleType.grant(RoleType.SCIENTIFIC_COUNCIL, adminUser);
-        RoleType.grant(RoleType.PERSONNEL_SECTION, adminUser);
-        RoleType.grant(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, adminUser);
         RoleType.grant(RoleType.SPACE_MANAGER, adminUser);
         RoleType.grant(RoleType.SPACE_MANAGER_SUPER_USER, adminUser);
         RoleType.grant(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, adminUser);

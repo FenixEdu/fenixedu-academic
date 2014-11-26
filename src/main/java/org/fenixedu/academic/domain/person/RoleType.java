@@ -51,11 +51,7 @@ public enum RoleType implements IPresentableEnum {
 
     COORDINATOR("allCoordinators"),
 
-    PERSONNEL_SECTION("#personnelSection"),
-
     MANAGER("#managers"),
-
-    DEPARTMENT_CREDITS_MANAGER("#departmentCreditsManager"),
 
     /**
      * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
@@ -66,15 +62,9 @@ public enum RoleType implements IPresentableEnum {
 
     OPERATOR("#operator"),
 
-    GRANT_OWNER("#grantOwner"),
-
-    DEPARTMENT_ADMINISTRATIVE_OFFICE("#departmentAdmOffice"),
-
     GEP("#gep"),
 
     DIRECTIVE_COUNCIL("#directiveCouncil"),
-
-    DELEGATE("#delegate"),
 
     BOLONHA_MANAGER("#bolonhaManager"),
 
@@ -90,15 +80,9 @@ public enum RoleType implements IPresentableEnum {
 
     ACADEMIC_ADMINISTRATIVE_OFFICE("#academicAdmOffice"),
 
-    PARKING_MANAGER("#parkingManager"),
-
     LIBRARY("#library"),
 
     INTERNATIONAL_RELATION_OFFICE("#internationalRelationsOffice"),
-
-    IDENTIFICATION_CARD_MANAGER("#idCardManager"),
-
-    TUTORSHIP("#tutorship"),
 
     EXTERNAL_SUPERVISOR("externalSupervisor"),
 
@@ -110,9 +94,7 @@ public enum RoleType implements IPresentableEnum {
 
     RECTORATE("#rectorate"),
 
-    HTML_CAPABLE_SENDER("#htmlCapableSender"),
-
-    DEVELOPER("#developers")
+    HTML_CAPABLE_SENDER("#htmlCapableSender")
 
     ;
 

@@ -73,10 +73,6 @@ public class ResourceAllocationRolePredicates {
 
                     Person loggedPerson = AccessControl.getPerson();
 
-                    if (loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-                        return true;
-                    }
-
                     ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
                     if (loggedPerson.getProfessorshipsSet().size() > 0
                             && loggedPerson.hasProfessorshipForExecutionCourse(executionCourse)) {

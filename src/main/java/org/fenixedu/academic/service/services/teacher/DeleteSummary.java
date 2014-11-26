@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.service.ServiceMonitoring;
-import org.fenixedu.academic.service.filter.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
 import org.fenixedu.academic.service.filter.SummaryManagementToTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
@@ -64,17 +63,8 @@ public class DeleteSummary {
     @Atomic
     public static Boolean runDeleteSummary(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
             throws FenixServiceException, NotAuthorizedException {
-        try {
-            SummaryManagementToTeacherAuthorizationFilter.instance.execute(summary, professorship);
-            return serviceInstance.run(executionCourse, summary, professorship);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                SummaryManagementToDepartmentAdmOfficeAuthorizationFilter.instance.execute(summary, professorship);
-                return serviceInstance.run(executionCourse, summary, professorship);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
+        SummaryManagementToTeacherAuthorizationFilter.instance.execute(summary, professorship);
+        return serviceInstance.run(executionCourse, summary, professorship);
     }
 
 }
