@@ -3645,7 +3645,6 @@ class candidacyProcess.IndividualCandidacyInternalPersonDetails extends candidac
 }
 
 class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidacyProcess.IndividualCandidacyPersonalDetails {
-    String name;
     String givenNames;
     String familyNames;
     Gender gender;

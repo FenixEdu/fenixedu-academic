@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.candidacyProcess;
 
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.student.Student;
@@ -47,7 +51,6 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
         setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
         setGender(personBean.getGender());
         setIdDocumentType(personBean.getIdDocumentType());
-        setName(personBean.getName());
         setGivenNames(personBean.getGivenNames());
         setFamilyNames(personBean.getFamilyNames());
 
@@ -120,6 +123,11 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
     @Override
     public String getEidentifier() {
         return null;
+    }
+
+    @Override
+    public String getName() {
+        return Stream.of(getGivenNames(), getFamilyNames()).filter(Objects::nonNull).collect(Collectors.joining(" "));
     }
 
     @Deprecated

@@ -148,7 +148,6 @@ abstract public class PhdProcessDA extends PhdDA {
     }
 
     protected void initPersonBeanUglyHack(final PersonBean personBean, Person person) {
-        personBean.setName(person.getName());
         personBean.setGivenNames(person.getGivenNames());
         personBean.setFamilyNames(person.getFamilyNames());
         personBean.setUsername(person.getUsername());

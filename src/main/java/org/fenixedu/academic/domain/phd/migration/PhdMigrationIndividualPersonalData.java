@@ -194,7 +194,6 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
         bean.setSocialSecurityNumber(personalBean.getSocialSecurityNumber());
 
         bean.setGivenNames(readGivenName(personalBean.getFullName(), personalBean.getFamilyName()));
-        bean.setName(personalBean.getFullName());
         bean.setFamilyNames(personalBean.getFamilyName());
 
         bean.setDateOfBirth(new YearMonthDay(personalBean.getDateOfBirth().getYear(), personalBean.getDateOfBirth()

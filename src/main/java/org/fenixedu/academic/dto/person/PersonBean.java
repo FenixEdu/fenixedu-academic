@@ -172,7 +172,6 @@ public class PersonBean implements Serializable {
     }
 
     private void initPersonBeanFromPersonalDetails(IndividualCandidacyPersonalDetails personalDetails) {
-        setName(personalDetails.getName());
         setGivenNames(personalDetails.getGivenNames());
         setFamilyNames(personalDetails.getFamilyNames());
         setGender(personalDetails.getGender());
@@ -233,7 +232,6 @@ public class PersonBean implements Serializable {
     }
 
     private void initPerson(Person person) {
-        setName(person.getName());
         setNickname(person.getNickname());
         setGivenNames(person.getGivenNames());
         setFamilyNames(person.getFamilyNames());
@@ -280,12 +278,6 @@ public class PersonBean implements Serializable {
         setHomepageAvailable(person.getAvailableWebSite());
 
         setPerson(person);
-    }
-
-    public PersonBean(String name, String username, String documentIdNumber) {
-        setDocumentIdNumber(documentIdNumber);
-        setName(name);
-        setUsername(username);
     }
 
     public String getAddress() {
