@@ -114,7 +114,6 @@ enum org.fenixedu.academic.domain.student.RegistrationRegimeType                
 enum org.fenixedu.academic.domain.student.StudentStatuteType                                                           as StudentStatuteType;
 enum org.fenixedu.academic.domain.studentCurricularPlan.Specialization                                                 as Specialization;
 enum org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
-enum org.fenixedu.academic.domain.teacher.CategoryType                                                                 as CategoryType;
 enum org.fenixedu.academic.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
 enum org.fenixedu.academic.domain.thesis.ThesisState                                                                   as ThesisState;
 enum org.fenixedu.academic.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
