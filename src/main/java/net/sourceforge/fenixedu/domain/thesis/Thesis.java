@@ -845,7 +845,7 @@ public class Thesis extends Thesis_Base {
      * Generates a new mark sheet in the administrative office or merges the
      * grade for this enrolment in an existing, unconfirmed, mark sheet for this
      * enrolment.
-     * 
+     *
      * <p>
      * This is only done if there isn't already a MarkSheet with an evaluation for the Enrolment related to this Thesis and if
      * this Thesis has a positive grade or is the second Thesis of the enrolment.
@@ -874,7 +874,7 @@ public class Thesis extends Thesis_Base {
      * one for the same enrolment. A student can present up to two theses in a
      * single enrolment. This corresponds to 2 distinct evaluation chances:
      * first semester, second semester.
-     * 
+     *
      * @return <code>true</code> if the student can have a second thesis
      */
     public boolean isFinalThesis() {
@@ -884,7 +884,7 @@ public class Thesis extends Thesis_Base {
 
     /**
      * Same as the above but also ensures that the student had a positive grade.
-     * 
+     *
      * @return <code>true</code> if the student had a positive grade
      */
     public boolean isFinalAndApprovedThesis() {
@@ -894,7 +894,7 @@ public class Thesis extends Thesis_Base {
     /**
      * Verifies if the student has any EnrolmentEvaluation crated by a
      * MarkSheet.
-     * 
+     *
      * @return <code>true</code> if the Enrolment related to this Thesis has at
      *         least one EnrolmentEvaluation connected to a MarkSheet
      */
@@ -1507,7 +1507,11 @@ public class Thesis extends Thesis_Base {
 
     public void setOrientator(Person person) {
         check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
-        setParticipation(person, ThesisParticipationType.ORIENTATOR);
+        if (getPresident() == null || getPresident().getPerson().equals(person)) {
+            setParticipation(person, ThesisParticipationType.ORIENTATOR);
+        } else {
+            throw new DomainException("thesis.condition.president.not.orientator");
+        }
 
         if (!isCreditsDistributionNeeded()) {
             setCoorientatorCreditsDistribution(null);
@@ -1516,7 +1520,11 @@ public class Thesis extends Thesis_Base {
 
     public void setCoorientator(Person person) {
         check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
-        setParticipation(person, ThesisParticipationType.COORIENTATOR);
+        if (getPresident() == null || getPresident().getPerson().equals(person)) {
+            setParticipation(person, ThesisParticipationType.COORIENTATOR);
+        } else {
+            throw new DomainException("thesis.condition.president.not.orientator");
+        }
 
         if (!isCreditsDistributionNeeded()) {
             setCoorientatorCreditsDistribution(null);
@@ -1525,7 +1533,11 @@ public class Thesis extends Thesis_Base {
 
     public void setPresident(Person person) {
         check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
-        setParticipation(person, ThesisParticipationType.PRESIDENT);
+        if (getOrientation().stream().noneMatch(participant -> participant.getPerson().equals(person))) {
+            setParticipation(person, ThesisParticipationType.PRESIDENT);
+        } else {
+            throw new DomainException("thesis.condition.president.not.orientator");
+        }
     }
 
     public void setCreator(Person person) {
