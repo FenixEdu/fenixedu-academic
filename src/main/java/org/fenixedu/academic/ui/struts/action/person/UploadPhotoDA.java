@@ -56,12 +56,25 @@ import com.google.common.io.ByteStreams;
  * 
  * @author Pedro Santos (pmrsa)
  */
-@Mapping(module = "person", path = "/uploadPhoto", formBean = "voidForm", scope = "request", parameter = "method",
-        functionality = VisualizePersonalInfo.class)
+@Mapping(module = "person", path = "/uploadPhoto", functionality = VisualizePersonalInfo.class)
 @Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
         @Forward(name = "confirm", path = "/person/uploadPhoto.jsp"), @Forward(name = "upload", path = "/person/uploadPhoto.jsp") })
 public class UploadPhotoDA extends FenixDispatchAction {
     private static final int MAX_RAW_SIZE = 1000000; // 2M
+
+    public ActionForward togglePhotoAvailability(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        boolean availability = Boolean.parseBoolean(request.getParameter("available"));
+
+        atomic(() -> {
+            Authenticate.getUser().getPerson().setPhotoAvailable(availability);
+        });
+
+        request.setAttribute("personBean", new PersonBean(AccessControl.getPerson()));
+        request.setAttribute("emergencyContactBean", new EmergencyContactBean(AccessControl.getPerson()));
+        return mapping.findForward("visualizePersonalInformation");
+    }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

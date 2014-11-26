@@ -24,6 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html:xhtml/>
 
@@ -63,35 +64,43 @@
 	<table class="mvert1 tdtop">
 		<tbody>
 			<tr>
-				<td>
-				    <html:img align="middle"
-					src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto')}"
-					altKey="personPhoto" bundle="IMAGE_RESOURCES"
-					style="border: 1px solid #aaa; padding: 3px;" />
+				<td align="center">
+					<div class="items-container" data-toggle="tooltip" data-placement="right" title="${fr:message('resources.ApplicationResources', 'link.operator.submitPhoto')}">
+						<img src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto')}" width="100" height="100" align="middle" style="border: 2px #eee solid"/>
+						<html:link page="/uploadPhoto.do?method=prepare" styleClass="play">
+							<div class="play-bg"></div>
+							<span class="glyphicon glyphicon-camera"></span>
+						</html:link>
+					</div>
+					<span class="badge" style="margin-top: 5px" data-toggle="tooltip" data-placement="bottom" title="${fr:message('resources.ApplicationResources', 'label.available.for.'.concat(person.photoAvailable ? 'public' : 'user'))}">
+						${fr:message('resources.ApplicationResources', 'title.'.concat(person.photoAvailable ? 'public' : 'private'))}
+					</span>
 			    </td>
 				<td>
                     <div style="padding: 0 2em;">
-                    <div class="infoop2">
+                    <div class="infoop2" style="margin-top: 0">
                         <bean:message key="label.person.photo.info" />
+                    </div>
                     </div>
                 </td>
             </tr>
+            <tr>
+				<td></td>
+				<td style="padding: 0 2em;">
+					<span>
+						<html:link page="/uploadPhoto.do?method=togglePhotoAvailability&available=${!person.photoAvailable}">
+							${fr:message('resources.ApplicationResources', 'label.make.photo.'.concat(person.photoAvailable ? 'unavailable' : 'available'))}
+						</html:link>
+					</span>
+					<span class="pleft05">
+						<html:link page="/photoHistory.do?method=userHistory">
+							<bean:message key="link.person.photo.history" bundle="APPLICATION_RESOURCES" />
+						</html:link>
+					</span>
+				</td>
+            </tr>
         </tbody>
     </table>
-    
-	<p> 
-		<span class="mtop1 mbottom0">
-			<html:link page="/uploadPhoto.do?method=prepare">
-				<bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
-			</html:link>
-		</span>
-		
-		<span class="pleft05">
-			<html:link page="/photoHistory.do?method=userHistory">
-				<bean:message key="link.person.photo.history" bundle="APPLICATION_RESOURCES" />
-			</html:link>
-		</span>
-	</p>
 	
 		<p class="mvert05">
 			<logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
@@ -650,6 +659,33 @@
 
 </logic:present>
 
-<script type="text/javascript" language="javascript">
-switchGlobal();
+<style>
+.items-container{position: relative;}
+.items-container:hover .play, .items-container:hover .play-bg {display: block;}
+.play,.play-bg{
+	position : absolute;
+	text-align: center;
+    display:none;
+    top:0; 
+    width:100%;
+    height: 100%;
+    margin:0 auto;
+}
+.play-bg {
+    z-index:100;
+    opacity:0.1;
+    background-color: black;
+}
+.play>span{
+	font-size: 30pt;
+	color: white;
+    z-index:110;
+    top: 30%;
+    opacity: 0.9;
+}
+</style>
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
