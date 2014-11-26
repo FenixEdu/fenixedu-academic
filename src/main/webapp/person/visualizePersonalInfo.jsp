@@ -534,8 +534,6 @@
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
-        <td class="acenter">-</td>
-        <td class="acenter">-</td>
 		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
 				<bean:message key="label.add" />

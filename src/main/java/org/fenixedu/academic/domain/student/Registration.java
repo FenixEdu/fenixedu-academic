@@ -1596,14 +1596,8 @@ public class Registration extends Registration_Base {
 
     private boolean enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(final List<Shift> enroledShifts,
             final ExecutionCourse executionCourse, final ShiftType shiftType) {
-
-        return CollectionUtils.exists(enroledShifts, new Predicate() {
-            @Override
-            final public boolean evaluate(Object object) {
-                Shift enroledShift = (Shift) object;
-                return enroledShift.getExecutionCourse() == executionCourse && enroledShift.containsType(shiftType);
-            }
-        });
+        return enroledShifts.stream().anyMatch(
+                enroledShift -> enroledShift.getExecutionCourse() == executionCourse && enroledShift.containsType(shiftType));
     }
 
     final public Set<SchoolClass> getSchoolClassesToEnrol() {

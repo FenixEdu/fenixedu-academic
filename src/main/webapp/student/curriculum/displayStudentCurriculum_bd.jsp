@@ -49,8 +49,7 @@
 
 <%-- Foto --%>
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.username"/>
-	<html:img align="middle" src="<%= request.getContextPath() +"/user/photo/" + personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+	<img class="img-thumbnail" src="${pageContext.request.contextPath}/user/photo/${registration.student.person.username}?s=100" width="100" height="100" />
 </div>
 
 <%-- Person and Student short info --%>
@@ -66,29 +65,34 @@
 </p>
 
 
+<div class="clearfix">
 <%-- Registration Details --%>
 <logic:notPresent name="registration" property="ingression">
 	<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<div class="col-sm-6">
 	<fr:view name="registration" schema="student.registrationsWithStartData" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thnowrap_print thright thlight mtop0"/>
 			<fr:property name="rowClasses" value=",,,,,,"/>
 		</fr:layout>
 	</fr:view>
+	</div>
 </logic:notPresent>
 <logic:present name="registration" property="ingression">
 	<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	<fr:view name="registration" schema="student.registrationDetail" >
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thnowrap_print thright thlight mtop0"/>
-			<fr:property name="rowClasses" value=",,,,,,"/>
-		</fr:layout>
-	</fr:view>
+	<div class="col-sm-6">
+		<fr:view name="registration" schema="student.registrationDetail" >
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thnowrap_print thright thlight mtop0"/>
+				<fr:property name="rowClasses" value=",,,,,,"/>
+			</fr:layout>
+		</fr:view>
+	</div>
 </logic:present>
 
 <%-- Registration Average and Curricular Year calculations --%>
 
-	<p class="mtop1 mbottom1">
+	<p class="mtop1 mbottom1 hidden-print">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<bean:define id="url" value="<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getExternalId()%>"/>
 		<logic:present name="degreeCurricularPlanID">
@@ -99,6 +103,7 @@
 		<html:link target="_blank" page="<%=url%>">
 			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
+		<br />
 
 		<% if (registration.getIndividualCandidacy() != null) { %>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -107,6 +112,7 @@
 		</html:link>
 		<% } %>
 	</p>
+</div>
 
 <%-- Choose Student Curricular Plan form --%>
 <html:form action="<%="/viewStudentCurriculum.do?method=prepare&registrationOID=" + registration.getExternalId()%>">

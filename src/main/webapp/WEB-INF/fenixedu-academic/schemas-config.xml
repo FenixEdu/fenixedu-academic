@@ -593,7 +593,7 @@
 	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">
 		<slot name="name"/>
 		<slot name="idDocumentType"/>
-		<slot name="documentIdNumber"/>
+		<slot name="documentIdNumber" key="label.documentNumber"/>
 	</schema>
 	
 	<schema name="SimpleSearchPersonWithStudentBean.edit" type="org.fenixedu.academic.dto.person.SimpleSearchPersonWithStudentBean" bundle="APPLICATION_RESOURCES">

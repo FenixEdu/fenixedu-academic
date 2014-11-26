@@ -30,12 +30,12 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 </style>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<div class="photo" align="center" style="margin-bottom: 15px">
-	<img src="${pageContext.request.contextPath}/images/student_photo1.jpg" alt="<bean:message key="student_photo1" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
-	<img src="${pageContext.request.contextPath}/images/student_photo2.jpg" alt="<bean:message key="student_photo2" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
-	<img src="${pageContext.request.contextPath}/images/student_photo3.jpg" alt="<bean:message key="student_photo3" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
+<div class="hidden-xs" align="center" style="margin-bottom: 15px">
+	<img src="${pageContext.request.contextPath}/images/student_photo1.jpg" alt="<bean:message key="student_photo1" bundle="IMAGE_RESOURCES" />" width="185" height="123" class="img-thumbnail" />
+	<img src="${pageContext.request.contextPath}/images/student_photo2.jpg" alt="<bean:message key="student_photo2" bundle="IMAGE_RESOURCES" />" width="185" height="123" class="img-thumbnail" />
+	<img src="${pageContext.request.contextPath}/images/student_photo3.jpg" alt="<bean:message key="student_photo3" bundle="IMAGE_RESOURCES" />" width="185" height="123" class="img-thumbnail" />
 </div>
-<p>
+<p class="hidden-xs">
 	<bean:message key="message.info.student" />
 </p>
 
@@ -49,8 +49,8 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 </logic:messagesPresent>
 
 <logic:notEmpty name="genericDegreeWarnings">
-	<div class="warning1 mvert15">
-		<p class="mvert05"><b><bean:message key="group.enrolment" bundle="STUDENT_RESOURCES"/></b></p>
+	<div class="alert alert-warning">
+		<b><bean:message key="group.enrolment" bundle="STUDENT_RESOURCES"/></b>
 		<logic:iterate id="genericDegreeWarning" name="genericDegreeWarnings">
 			<p class="mvert05"><bean:write name="genericDegreeWarning"/>.</p>
 		</logic:iterate>
@@ -68,10 +68,10 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 			</logic:notEmpty>
 		</h3>
 		
-		
-		<table class="tstyle1 thlight mtop1">
+		<div class="table-responsive">
+		<table class="tstyle1 thlight table table-condensed">
 		<logic:iterate id="executionCoursesAnnouncement" name="studentPortalBean" property="executionCoursesAnnouncements">
-			<tr style="border-top: 3px solid #ddd;">
+			<tr style="border-top: 2px solid #ddd;">
 				<bean:size id="evaluationAnnouncementsNumber" name="executionCoursesAnnouncement" property="evaluationAnnouncements" />
 
 				<% String rowNumber = String.valueOf(evaluationAnnouncementsNumber + 1); %>
@@ -139,12 +139,6 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 					
 				</logic:iterate>
 			</logic:notEmpty>
-			<!-- <logic:empty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
-				<tr>
-					<td colspan="5"><span class="color888 smalltxt"><bean:message key="message.out.no.evaluations" bundle="STUDENT_RESOURCES" /></span></td>
-				</tr>
-			</logic:empty> -->
-
 				
 			<tr class="clear">
 				<td colspan="5" style="border: none; padding: 0.75em 0; background: #fff;"></td>
@@ -152,5 +146,6 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 
 		</logic:iterate>
 		</table>
+		</div>
 	</logic:iterate>
 </logic:notEmpty>
