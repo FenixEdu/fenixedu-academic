@@ -79,7 +79,7 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
         final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
         final Money payedAmount = event.getPayedAmount(when);
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, payedAmount, totalAmountToPay,
+        return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, payedAmount, totalAmountToPay.subtract(payedAmount),
                 event.getDescriptionForEntryType(getEntryType()), totalAmountToPay.subtract(payedAmount)));
     }
 
