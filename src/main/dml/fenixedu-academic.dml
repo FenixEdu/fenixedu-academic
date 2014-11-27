@@ -34,11 +34,9 @@ enum org.fenixedu.academic.domain.GraduationType                                
 enum org.fenixedu.academic.domain.GrantOwnerType                                                                       as GrantOwnerType;
 enum org.fenixedu.academic.domain.GuideState                                                                           as GuideState;
 enum org.fenixedu.academic.domain.JobApplicationType                                                                   as JobApplicationType;
-enum org.fenixedu.academic.domain.Level                                                                                as Level;
 enum org.fenixedu.academic.domain.MarkSheetState                                                                       as MarkSheetState;
 enum org.fenixedu.academic.domain.MarkSheetType                                                                        as MarkSheetType;
 enum org.fenixedu.academic.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
-enum org.fenixedu.academic.domain.Option                                                                               as Option;
 enum org.fenixedu.academic.domain.PhotoState                                                                           as PhotoState;
 enum org.fenixedu.academic.domain.PhotoType                                                                            as PhotoType;
 enum org.fenixedu.academic.domain.photograph.AspectRatio																  as AspectRatio;
@@ -49,7 +47,6 @@ enum org.fenixedu.academic.domain.ProfessionType                                
 enum org.fenixedu.academic.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
 enum org.fenixedu.academic.domain.QualificationType                                                                    as QualificationType;
 enum org.fenixedu.academic.domain.RequestState                                                                         as RequestState;
-enum org.fenixedu.academic.domain.RoleOperationType																	  as RoleOperationType;
 enum org.fenixedu.academic.domain.SalaryType                                                                           as SalaryType;
 enum org.fenixedu.academic.domain.SchoolLevelType                                                                      as SchoolLevelType;
 enum org.fenixedu.academic.domain.ShiftType                                                                            as ShiftType;
