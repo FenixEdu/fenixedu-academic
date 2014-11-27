@@ -271,7 +271,7 @@ public class Person extends Person_Base {
         ensureUserProfile();
         if (getProfile().getGivenNames() == null && getProfile().getFamilyNames() == null) {
             HumanName split = HumanName.decompose(name, false);
-            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), getProfile().getDisplayName());
+            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), null);
         } else {
             throw new Error("Could not edit person name using unseparated name input");
         }
@@ -299,7 +299,7 @@ public class Person extends Person_Base {
     @Deprecated
     public void setGivenNames(final String name) {
         ensureUserProfile();
-        getProfile().changeName(name, getProfile().getFamilyNames(), getProfile().getDisplayName());
+        getProfile().changeName(name, getProfile().getFamilyNames(), null);
     }
 
     /**
@@ -324,17 +324,17 @@ public class Person extends Person_Base {
     @Override
     public void setFamilyNames(final String name) {
         ensureUserProfile();
-        getProfile().changeName(getProfile().getGivenNames(), name, getProfile().getDisplayName());
+        getProfile().changeName(getProfile().getGivenNames(), name, null);
     }
 
     @Deprecated
     public void setNames(final String name, final String givenNames, final String familyNames) {
         ensureUserProfile();
         if (givenNames != null || familyNames != null) {
-            getProfile().changeName(givenNames, familyNames, getProfile().getDisplayName());
+            getProfile().changeName(givenNames, familyNames, null);
         } else {
             HumanName split = HumanName.decompose(name, false);
-            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), getProfile().getDisplayName());
+            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), null);
         }
     }
 
@@ -4390,7 +4390,7 @@ public class Person extends Person_Base {
     public boolean hasPersonRoles(Role role) {
         return getPersonRolesSet().contains(role);
     }
-    
+
     public void ensureUserProfile() {
         if (getProfile() == null) {
             String givenNames = super.getGivenNames();
