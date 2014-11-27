@@ -18,72 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<!-- SUMMARIES -->
-
-<schema name="summary.control.allDepartments" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement">
-	<slot name="department.realName" key="label.teacher.department" layout="link">
-		<property name="contextRelative" value="true"/>
-        <property name="moduleRelative" value="true"/>
-        <property name="useParent" value="true"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;departmentID=${department.externalId}&amp;executionSemesterID=${executionSemester.externalId}&amp;categoryControl="/>
-		<property name="linkIf" value="hasResumeData"/>
-	</slot>
-	<slot name="numberOfExecutionCoursesWithin020" key="label.summary.0to20" layout="link">
-		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="useParent" value="true"/>
-		<property name="linkIf" value="toDisplayCategoryLink020"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_0_20"/>
-	</slot>
-	<slot name="numberOfExecutionCoursesWithin2040" key="label.summary.20to40" layout="link">
-		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="useParent" value="true"/>
-		<property name="linkIf" value="toDisplayCategoryLink2040"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_20_40"/>
-	</slot>
-	<slot name="numberOfExecutionCoursesWithin4060" key="label.summary.40to60" layout="link">
-		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="useParent" value="true"/>
-		<property name="linkIf" value="toDisplayCategoryLink4060"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_40_60"/>
-	</slot>
-	<slot name="numberOfExecutionCoursesWithin6080" key="label.summary.60to80" layout="link">
-		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="useParent" value="true"/>
-		<property name="linkIf" value="toDisplayCategoryLink6080"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_60_80"/>
-	</slot>
-	<slot name="numberOfExecutionCoursesWithin80100" key="label.summary.80to100" layout="link">
-		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="useParent" value="true"/>
-		<property name="linkIf" value="toDisplayCategoryLink80100"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_80_100"/>
-	</slot>
-	<slot name="numberOfExecutionCoursesWithin0100" key="label.summary.total" layout="link">
-		<property name="contextRelative" value="true"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="useParent" value="true"/>
-		<property name="linkIf" value="toDisplayCategoryLink0100"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl="/>
-	</slot>
-</schema>
-
-<schema name="summary.control.department" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.dto.directiveCouncil.ExecutionCourseSummaryElement">
-	<slot name="executionCourse.nome" layout="link" key="label.executionCourse.name">
-		<property name="contextRelative" value="true"/>
-        <property name="moduleRelative" value="true"/>
-        <property name="useParent" value="true"/>
-		<property name="destination" value="executionCourseLink"/>
-	</slot>
-	<slot name="persons" key="label.teachers" layout="values-comma" schema="summary.control.teacher" bundle="GLOBAL_RESOURCES"/>
-	<slot name="numberOfLessonInstances" key="label.summary.numberOfLessonInstances"/>
-	<slot name="numberOfLessonInstancesWithSummary" key="label.summary.numberOfLessonInstancesWithSummary"/>
-	<slot name="percentageOfLessonsWithSummary" key="label.summary.percentageOfLessonsWithSummary"/>
-</schema>
 
 <schema name="summary.control.teacher" bundle="PEDAGOGICAL_COUNCIL" type="org.fenixedu.academic.domain.Person">
 	<slot name="name" layout="link">
@@ -119,8 +53,6 @@
         <property name="label" value="NA"/>
     </slot>
 </schema>
-
-
 
 <schema name="show.department" type="org.fenixedu.academic.domain.Department">
 	<slot name="name"/>
