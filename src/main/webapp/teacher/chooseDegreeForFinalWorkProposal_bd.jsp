@@ -166,12 +166,12 @@
 																	</c:if>
 																</td>
 																<td>
-																	<a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=attributeFinalDegreeWork&selectedGroupProposal=${groupProposal.externalId}&executionYear=${executionYear}&degree=${degree}" class="btn btn-danger btn-xs"><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.delete.attribution"/></a>
+																	<html:link action="/finalWorkManagement.do?method=attributeFinalDegreeWork&selectedGroupProposal=${groupProposal.externalId}&executionYear=${executionYear}&degree=${degree}" styleClass="btn btn-danger btn-xs"><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.delete.attribution"/></html:link>
 																</td>
 															</c:if>
 															<c:if test="${groupProposal.finalDegreeDegreeWorkGroup != proposal.groupAttributedByTeacher}">
 																<td><span class="glyphicon glyphicon-remove"></span></td>
-																<td><a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=attributeFinalDegreeWork&selectedGroupProposal=${groupProposal.externalId}&executionYear=${executionYear}&degree=${degree}" class="btn btn-success btn-xs"><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.attribution"/></button></td>
+																<td><html:link action="/finalWorkManagement.do?method=attributeFinalDegreeWork&selectedGroupProposal=${groupProposal.externalId}&executionYear=${executionYear}&degree=${degree}" styleClass="btn btn-success btn-xs"><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.attribution"/></html:link></td>
 															</c:if>
 														</tr>
 													</c:forEach>
