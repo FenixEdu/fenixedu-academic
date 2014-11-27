@@ -42,7 +42,6 @@ enum org.fenixedu.academic.domain.PhotoType                                     
 enum org.fenixedu.academic.domain.photograph.AspectRatio																  as AspectRatio;
 enum org.fenixedu.academic.domain.photograph.PictureMode																  as PictureMode;
 enum org.fenixedu.academic.domain.photograph.PictureSize																  as PictureSize;
-enum org.fenixedu.academic.domain.PrescriptionEnum                                                                     as PrescriptionEnum;
 enum org.fenixedu.academic.domain.ProfessionType                                                                       as ProfessionType;
 enum org.fenixedu.academic.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
 enum org.fenixedu.academic.domain.QualificationType                                                                    as QualificationType;
