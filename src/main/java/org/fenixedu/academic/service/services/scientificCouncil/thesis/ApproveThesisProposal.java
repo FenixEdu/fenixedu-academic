@@ -49,6 +49,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     private static final String WITH_DATE_KEY = "thesis.proposal.jury.approve.body.withDate";
     private static final String COORDINATOR_SENDER = "thesis.proposal.jury.approve.body.sender.coordinator";
     private static final String COUNCIL_MEMBER_SENDER = "thesis.proposal.jury.approve.body.sender.council";
+    private static final String COUNCIL_MEMBER_ROLE = "thesis.proposal.jury.approve.body.role.council";
 
     @Override
     void process(Thesis thesis) {
@@ -133,6 +134,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
         String sender =
                 thesis.isCoordinator() ? getMessage(locale, COORDINATOR_SENDER) : getMessage(locale, COUNCIL_MEMBER_SENDER);
+                String role = thesis.isCoordinator() ? "" : getMessage(locale, COUNCIL_MEMBER_ROLE);
 
         Calendar today = Calendar.getInstance(locale);
         return getMessage(locale, BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
@@ -141,7 +143,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
                 includeFlag(orientatorName), orientatorName, orientatorAffiliation, includeFlag(coorientatorName),
                 coorientatorName, coorientatorAffiliation, dateMessage, discussedDate, institutionName,
                 "" + today.get(Calendar.DAY_OF_MONTH), today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale),
-                "" + today.get(Calendar.YEAR), sender, currentPersonName);
+                "" + today.get(Calendar.YEAR), sender, currentPersonName,role);
     }
 
     private int includeFlag(String value) {
