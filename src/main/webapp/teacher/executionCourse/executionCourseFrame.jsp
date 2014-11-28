@@ -133,13 +133,6 @@
 					<bean:message key="link.evaluation"/>
 				</a>
 			</li>
-			<c:if test="${professorship.permissions.worksheets}">
-				<li>
-				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/testsManagement.do?method=testsFirstPage&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.testsManagement"/>
-					</a>
-				</li>
-			</c:if>
 			<c:if test="${professorship.permissions.groups}">
 				<li>
                 <a href="${base}/${executionCourse.externalId}/student-groups/show">
