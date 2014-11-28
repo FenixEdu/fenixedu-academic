@@ -69,7 +69,11 @@
 
 <schema name="candidacy.create.choose.person"
 	type="org.fenixedu.academic.dto.administrativeOffice.candidacy.CreateDFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
-	<slot name="name" key="label.name">
+	<slot name="givenNames" key="label.givenNames">
+		<property name="size" value="52" />
+		<property name="maxLength" value="50" />
+	</slot>
+	<slot name="familyNames" key="label.familyNames">
 		<property name="size" value="52" />
 		<property name="maxLength" value="50" />
 	</slot>	
