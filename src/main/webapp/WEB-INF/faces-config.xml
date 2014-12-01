@@ -174,17 +174,6 @@
 
 	<!-- END: TEACHER Managed Beans -->
 	
-	
-	<!-- BEGIN: Backbeans from department administrative office subapplication -->
-	
-	<managed-bean>
-		<description>ManagementGroupsBackingBean</description>
-		<managed-bean-name>ManagementGroupsBackingBean</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.departmentAdmOffice.ManagementGroupsBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<!-- END: Backbeans from department administrative office subapplication -->
 
 	<!-- BEGIN: FunctionsManagement Managed Beans -->
 
