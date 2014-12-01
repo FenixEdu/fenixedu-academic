@@ -1144,8 +1144,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             HttpServletResponse response) throws IOException {
 
         final PhdSchoolRegistrationDeclarationDocument report = new PhdSchoolRegistrationDeclarationDocument(getProcess(request));
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
-                ReportsUtils.exportToProcessedPdfAsByteArray(report));
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
         return null;
     }
 

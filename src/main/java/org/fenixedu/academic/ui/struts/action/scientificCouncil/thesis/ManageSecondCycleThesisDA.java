@@ -350,7 +350,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
         try {
             StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
-            byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+            byte[] data = ReportsUtils.generateReport(document).getData();
 
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
@@ -371,7 +371,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
         try {
             ThesisJuryReportDocument document = new ThesisJuryReportDocument(thesis);
-            byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+            byte[] data = ReportsUtils.generateReport(document).getData();
 
             response.setContentLength(data.length);
             response.setContentType("application/pdf");

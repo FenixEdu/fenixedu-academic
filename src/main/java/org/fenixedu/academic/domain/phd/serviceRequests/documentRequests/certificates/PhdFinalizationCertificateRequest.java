@@ -128,7 +128,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
                     AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
 
             final AdministrativeOfficeDocument[] array = {};
-            byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+            byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
 
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;

@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.fenixedu.academic.util.report.ReportPrinter.ReportDescription;
+import org.fenixedu.academic.util.report.ReportPrinter.ReportResult;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 
@@ -36,7 +37,7 @@ public class ReportsUtils {
         ReportsUtils.printer = Objects.requireNonNull(printer);
     }
 
-    static public byte[] exportToPdfFileAsByteArray(final String key, final Map<String, Object> parameters,
+    public static ReportResult generateReport(final String key, final Map<String, Object> parameters,
             final Collection<?> dataSource) {
         try {
             return printer.printReport(key, parameters, dataSource);
@@ -45,15 +46,7 @@ public class ReportsUtils {
         }
     }
 
-    static public byte[] exportToProcessedPdfAsByteArray(final ReportDescription report) {
-        try {
-            return printer.printReports(report);
-        } catch (Exception e) {
-            throw new RuntimeException("Exception while generating report '" + report.getKey() + "'", e);
-        }
-    }
-
-    static public byte[] exportMultipleToPdfAsByteArray(final ReportDescription... reports) {
+    public static ReportResult generateReport(final ReportDescription... reports) {
         try {
             return printer.printReports(reports);
         } catch (Exception e) {

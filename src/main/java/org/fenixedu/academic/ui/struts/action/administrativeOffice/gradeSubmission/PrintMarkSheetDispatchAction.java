@@ -202,7 +202,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
         try {
             markAsPrinted(markSheet);
             MarkSheetDocument document = new MarkSheetDocument(markSheet);
-            byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+            byte[] data = ReportsUtils.generateReport(document).getData();
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
@@ -226,7 +226,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
                     getExecutionSemester(form).getWebMarkSheetsNotPrinted(AccessControl.getPerson(),
                             getDegreeCurricularPlan(form));
             List<MarkSheetDocument> reports = markSheets.stream().map(MarkSheetDocument::new).collect(Collectors.toList());
-            byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(reports.toArray(new MarkSheetDocument[0]));
+            byte[] data = ReportsUtils.generateReport(reports.toArray(new MarkSheetDocument[0])).getData();
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition",
