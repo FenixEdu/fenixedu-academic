@@ -67,26 +67,12 @@ public class ManagerApplications extends ForwardAction {
     public static class ManagerStudentsApp {
     }
 
-    // Sub applications
-
-    @StrutsApplication(path = "person-management", titleKey = "label.manager.personManagement", bundle = BUNDLE,
-            accessGroup = "(role(OPERATOR) | #managers)", hint = HINT)
-    @Mapping(path = "/personManagementApp", module = "manager", parameter = "/manager/personManagement/welcomeScreen.jsp")
-    public static class ManagerPersonManagementApp extends ForwardAction {
-    }
-
     // Faces Entry Points
 
     @StrutsFunctionality(app = ManagerPaymentsApp.class, path = "update-gratuity-situations",
             titleKey = "title.gratuity.situations")
     @Mapping(path = "/gratuity/updateGratuitySituations", module = "manager")
     public static class UpdateGratuitySituations extends FacesEntryPoint {
-    }
-
-    @StrutsFunctionality(app = ManagerPersonManagementApp.class, path = "management-functions",
-            titleKey = "link.functions.management")
-    @Mapping(path = "/functionsManagement/personSearchForFunctionsManagement", module = "manager")
-    public static class ManagementFunctionsPage extends FacesEntryPoint {
     }
 
     @StrutsFunctionality(app = ManagerOrganizationalStructureApp.class, path = "manage",

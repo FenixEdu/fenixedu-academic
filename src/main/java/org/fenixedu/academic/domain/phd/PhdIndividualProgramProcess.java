@@ -290,7 +290,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 if (bean.getPersonBean().getPerson().getUser() != null) {
                     result = bean.getPersonBean().getPerson();
                 } else {
-                    result = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
+                    result = bean.getPersonBean().save();
                 }
             }
             return result;

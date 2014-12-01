@@ -32,10 +32,9 @@ public class EditPersonalInformation extends PhdIndividualProgramProcessActivity
 
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
-
         final Person person = process.getPerson();
         if (process.isAllowedToManageProcess(userView)) {
-            person.edit((PersonBean) object);
+            ((PersonBean) object).save(person);
         } else if (person.getUser() == null && person.getStudent() == null && process.getCandidacyProcess().isPublicCandidacy()) {
             // assuming public candidacy
             person.editPersonWithExternalData((PersonBean) object, true);

@@ -45,7 +45,7 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public void edit(PersonBean personBean) {
-        getPerson().edit(personBean);
+        personBean.save(getPerson());
     }
 
     @Override

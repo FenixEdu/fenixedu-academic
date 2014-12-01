@@ -43,30 +43,7 @@
 		<property name="format" value="${name}"/>
 	</slot>
 </schema>
-<schema name="org.fenixedu.academic.dto.person.ExternalPersonBean" type="org.fenixedu.academic.dto.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="excludedValues" value="CITIZEN_CARD" />
-	</slot>
-	<slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="documentIdEmissionLocation"/>
-	<slot name="documentIdEmissionDate">
-		<property name="size" value="12"/>
-		<property name="maxLength" value="10"/>
-	</slot>
-	<slot name="documentIdExpirationDate">
-		<property name="size" value="12"/>
-		<property name="maxLength" value="10"/>
-	</slot>
-	<slot name="socialSecurityNumber" />
-	<slot name="profession" />
-	<slot name="maritalStatus" />  
-	<slot name="email" validator="org.fenixedu.academic.ui.renderers.validators.NotRequiredEmailValidator">
-		<property name="size" value="40"/>
-		<property name="maxLength" value="100"/>
-	</slot>
-</schema>
+
 <schema name="org.fenixedu.academic.domain.Person" type="org.fenixedu.academic.domain.Person" bundle="MANAGER_RESOURCES" > 
 	<slot name="name"/>
 	<slot name="gender"/>
@@ -86,33 +63,6 @@
 	<slot name="socialSecurityNumber" />
 	<slot name="profession" />
 	<slot name="maritalStatus" />  
-</schema>
-<schema name="org.fenixedu.academic.dto.person.ExternalPersonBean.Unit" type="org.fenixedu.academic.dto.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="unit" key="unitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
-		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="org.fenixedu.academic.service.services.commons.ExternalUnitSearchService"/>
-		<property name="args" value="slot=name"/>
-		<property name="minChars" value="1"/>
-		<property name="maxCount" value="100"/>		
-		<property name="rawSlotName" value="unitName"/>
-		<property name="errorStyleClass" value="error0"/>
-	</slot>
-</schema>
-
-<schema name="org.fenixedu.academic.dto.person.ExternalPersonBean.allUnits" type="org.fenixedu.academic.dto.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="unitNameDomainReference" key="unitName" layout="autoComplete" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
-		<property name="size" value="50"/>
-		<property name="labelField" value="unit.presentationName"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchInternalUnits"/>
-		<property name="args" value="slot=name,size=20"/>
-		<property name="minChars" value="3"/>
-		<property name="maxCount" value="100"/>		
-		<property name="rawSlotName" value="unitName"/>
-		<property name="errorStyleClass" value="error0"/>
-	</slot>
 </schema>
 
 <schema name="org.fenixedu.academic.domain.organizationalStructure.Unit.name" type="org.fenixedu.academic.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES" > 
@@ -196,48 +146,43 @@
 <schema name="org.fenixedu.academic.domain.Person.contact.info.email" type="org.fenixedu.academic.domain.Person"> 
 	<slot name="email"/>
 </schema>
-<schema name="org.fenixedu.academic.domain.Person.personal.info.withPartitionedNames" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">
-	<slot name="name" key="label.person.name">
-		<property name="size" value="50"/>
-	</slot>	
-	<slot name="givenNames" key="label.givenNames">
-		<property name="size" value="50" />
-	</slot>
-	<slot name="familyNames" key="label.familyNames">
-		<property name="size" value="50" />
-	</slot>
-	<slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="idDocumentType" key="label.person.identificationDocumentType">
-		<property name="excludedValues" value="CITIZEN_CARD" />
-	</slot>
-	<slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
-	<slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/> 
-	<slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-	</slot>	 
-	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-	</slot>
-	<slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
-	<slot name="profession" key="label.person.occupation"/>
-	<slot name="maritalStatus" key="label.person.maritalStatus"/>
-	<slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
-	<slot name="country" layout="menu-select" key="label.person.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
-		<property name="format" value="${countryNationality}"/>
-		<property name="sortBy" value="name=asc" />
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
-	</slot>	
-	<slot name="countryOfBirth" layout="menu-select" key="label.person.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name=asc" />
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
-	</slot>
-	<slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
-	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
-	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
-	<setter signature="setIdentificationAndNames(documentIdNumber,idDocumentType,name,givenNames,familyNames)"/>
-</schema>
-<schema name="org.fenixedu.academic.domain.Person.personal.info" extends="org.fenixedu.academic.domain.Person.personal.info.withPartitionedNames" type="org.fenixedu.academic.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="org.fenixedu.academic.domain.Person.personal.info" type="org.fenixedu.academic.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
+    <slot name="givenNames" key="label.givenNames">
+        <property name="size" value="50" />
+    </slot>
+    <slot name="familyNames" key="label.familyNames">
+        <property name="size" value="50" />
+    </slot>
+    <slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="idDocumentType" key="label.person.identificationDocumentType">
+        <property name="excludedValues" value="CITIZEN_CARD" />
+    </slot>
+    <slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
+    <slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/> 
+    <slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+    </slot>  
+    <slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+    </slot>
+    <slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
+    <slot name="profession" key="label.person.occupation"/>
+    <slot name="maritalStatus" key="label.person.maritalStatus"/>
+    <slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
+    <slot name="country" layout="menu-select" key="label.person.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
+        <property name="format" value="${countryNationality}"/>
+        <property name="sortBy" value="name=asc" />
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+    </slot> 
+    <slot name="countryOfBirth" layout="menu-select" key="label.person.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+        <property name="format" value="${name}"/>
+        <property name="sortBy" value="name=asc" />
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+    </slot>
+    <slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
+    <slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
+    <slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
+    <setter signature="setIdentificationAndNames(documentIdNumber,idDocumentType,givenNames,familyNames)"/>
 </schema>
 
 <schema name="org.fenixedu.academic.domain.Person.family" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES"> 

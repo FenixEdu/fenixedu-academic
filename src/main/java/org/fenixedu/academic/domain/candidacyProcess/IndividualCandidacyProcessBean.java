@@ -151,7 +151,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
         } else if (isPublicCandidacy()) {
             return getPersonBean().getPerson().editByPublicCandidate(personBean);
         } else {
-            return getPersonBean().getPerson().edit(getPersonBean());
+            return getPersonBean().save();
         }
     }
 
