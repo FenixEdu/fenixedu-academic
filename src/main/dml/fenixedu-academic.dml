@@ -3892,12 +3892,6 @@ class reports.RaidesSpecializationReportFile extends reports.GepReportFile {}
 class reports.SummaryOccupancyReportFile extends reports.GepReportFile {}
 class reports.WrittenEvaluationReportFile extends reports.GepReportFile {}
 
-class PublicRelationsStudentListQueueJob extends QueueJobWithFile{
-    Boolean active;
-    Boolean concluded;
-    DegreeType degreeType;
-}
-
 class candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport extends QueueJobWithFile {
 }
 
@@ -10716,13 +10710,6 @@ relation ExecutionYearGepReportFile {
     }
 }
 
-relation ExecutionYearPublicRelationsStudentListQueueJob{
-    ExecutionYear playsRole executionYear;
-    PublicRelationsStudentListQueueJob playsRole publicRelationsStudentListQueueJob{
-            multiplicity *;
-    }
-}
-    
 relation QueueJobWithFileResult{
     QueueJobWithFile playsRole job;
     QueueJobResultFile playsRole file;
