@@ -30,8 +30,6 @@
     <f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
     <f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-    <h:outputText rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}"
-                  value="<em>#{bolonhaBundle['bolonhaManager']}</em>" escape="false"/>
     <h:outputText value="<h2>#{CompetenceCourseManagement.departmentToDisplay.realName}</h2>" escape="false"/>
 
     <h:form>
@@ -39,9 +37,6 @@
             <fc:selectOneMenu value="#{CompetenceCourseManagement.selectedDepartmentUnitID}" onchange="submit()">
                 <f:selectItems value="#{CurricularCourseManagement.allowedDepartmentUnits}"/>
             </fc:selectOneMenu>
-            <h:outputText
-                    value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>"
-                    escape="false"/>
         </h:panelGrid>
 
         <h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">

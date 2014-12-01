@@ -168,7 +168,7 @@ public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
             final CreditNoteDocument original = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), true);
             final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), false);
 
-            final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
+            final byte[] data = ReportsUtils.generateReport(original, duplicate).getData();
 
             CreditNoteGeneratedDocument.store(creditNote, original.getReportFileName() + ".pdf", data);
             response.setContentLength(data.length);

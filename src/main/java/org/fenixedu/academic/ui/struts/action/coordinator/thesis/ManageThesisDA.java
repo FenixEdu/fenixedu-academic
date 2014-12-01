@@ -624,7 +624,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             ApproveJuryDocument document = new ApproveJuryDocument(thesis);
-            byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+            byte[] data = ReportsUtils.generateReport(document).getData();
 
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
@@ -705,7 +705,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
-            byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+            byte[] data = ReportsUtils.generateReport(document).getData();
 
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
@@ -726,7 +726,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             ThesisJuryReportDocument document = new ThesisJuryReportDocument(thesis);
-            byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+            byte[] data = ReportsUtils.generateReport(document).getData();
 
             response.setContentLength(data.length);
             response.setContentType("application/pdf");

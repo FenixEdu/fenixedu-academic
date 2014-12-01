@@ -143,7 +143,7 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
             }
 
             final AdministrativeOfficeDocument[] array = {};
-            byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+            byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
 
             DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf",
                     data);

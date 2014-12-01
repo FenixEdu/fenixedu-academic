@@ -25,7 +25,9 @@ import org.joda.time.YearMonthDay;
 
 public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializable {
 
-    private String name;
+    private String givenNames;
+
+    private String familyNames;
 
     private String identificationNumber;
 
@@ -51,12 +53,20 @@ public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializ
         this.identificationNumber = identificationNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getGivenNames() {
+        return givenNames;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGivenNames(String givenNames) {
+        this.givenNames = givenNames;
+    }
+
+    public String getFamilyNames() {
+        return familyNames;
+    }
+
+    public void setFamilyNames(String familyNames) {
+        this.familyNames = familyNames;
     }
 
     public String getContributorNumber() {

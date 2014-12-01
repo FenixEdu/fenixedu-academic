@@ -46,22 +46,11 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     public static class DepartmentAdmOfficeExpectationsApp {
     }
 
-    @StrutsApplication(bundle = BUNDLE, path = "groups", titleKey = "link.group.managementGroups.title", hint = HINT,
-            accessGroup = ACCESS_GROUP)
-    public static class DepartmentAdmOfficeGroupsApp {
-    }
-
     // Faces Entry Point
 
     @StrutsFunctionality(app = DepartmentAdmOfficeViewApp.class, path = "teacher-service", titleKey = "link.teacherService")
     @Mapping(path = "/viewTeacherService/viewTeacherService", module = "departmentAdmOffice")
     public static class ViewTeacherService extends FacesEntryPoint {
-    }
-
-    @StrutsFunctionality(app = DepartmentAdmOfficeGroupsApp.class, path = "competence-course-management",
-            titleKey = "link.competenceCoursesManagementGroup")
-    @Mapping(path = "/managementGroups/competenceCoursesManagementGroup", module = "departmentAdmOffice")
-    public static class CompetenceCoursesManagementGroup extends FacesEntryPoint {
     }
 
     // Entry Points

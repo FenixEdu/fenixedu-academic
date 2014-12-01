@@ -270,7 +270,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
         MobilityIndividualApplicationProcess process = getProcess(request);
 
         final LearningAgreementDocument document = new LearningAgreementDocument(process);
-        byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(document);
+        byte[] data = ReportsUtils.generateReport(document).getData();
 
         response.setContentLength(data.length);
         response.setContentType("application/pdf");

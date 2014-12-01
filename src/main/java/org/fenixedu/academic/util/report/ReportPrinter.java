@@ -23,9 +23,10 @@ import java.util.Map;
 
 public interface ReportPrinter {
 
-    public byte[] printReports(ReportDescription... reports) throws Exception;
+    public ReportResult printReports(ReportDescription... reports) throws Exception;
 
-    public default byte[] printReport(String key, Map<String, Object> parameters, Collection<?> dataSource) throws Exception {
+    public default ReportResult printReport(String key, Map<String, Object> parameters, Collection<?> dataSource)
+            throws Exception {
         return printReports(new ReportDescription() {
 
             @Override
@@ -52,6 +53,32 @@ public interface ReportPrinter {
         public Map<String, Object> getParameters();
 
         public Collection<?> getDataSource();
+
+    }
+
+    public static class ReportResult {
+
+        private final byte[] data;
+        private final String contentType;
+        private final String fileExtension;
+
+        public ReportResult(byte[] data, String contentType, String fileExtension) {
+            this.data = data;
+            this.contentType = contentType;
+            this.fileExtension = fileExtension;
+        }
+
+        public byte[] getData() {
+            return data;
+        }
+
+        public String getContentType() {
+            return contentType;
+        }
+
+        public String getFileExtension() {
+            return fileExtension;
+        }
 
     }
 

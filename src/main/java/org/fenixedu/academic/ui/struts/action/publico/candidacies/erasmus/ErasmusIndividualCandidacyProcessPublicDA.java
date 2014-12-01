@@ -861,7 +861,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) getProcess(request);
 
         final LearningAgreementDocument document = new LearningAgreementDocument(process);
-        byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(document);
+        byte[] data = ReportsUtils.generateReport(document).getData();
 
         response.setContentLength(data.length);
         response.setContentType("application/pdf");
@@ -1188,7 +1188,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         MobilityIndividualApplicationProcessBean mobilityBean =
                 (MobilityIndividualApplicationProcessBean) individualCandidacyProcessBean;
 
-        // Email intro and error message 
+        // Email intro and error message
         sb.append(BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.intro"));
         sb.append("\n");
         sb.append("\nError message: ");

@@ -40,8 +40,6 @@ import org.fenixedu.academic.domain.CompetenceCourseType;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
@@ -70,6 +68,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -136,10 +135,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Department getPersonDepartment() {
-        final User userView = getUserView();
-        final Person person = userView == null ? null : userView.getPerson();
-        final Teacher teacher = person == null ? null : person.getTeacher();
-        return teacher == null ? null : teacher.getDepartment();
+        final User user = Authenticate.getUser();
+        return Bennu.getInstance().getDepartmentsSet().stream()
+                .filter(dep -> dep.getCompetenceCourseMembersGroup().isMember(user)).findAny().orElse(null);
     }
 
     public Department getDepartmentToDisplay() {

@@ -22,7 +22,6 @@
 <%@page import="com.google.common.base.Strings"%>
 <%@page import="com.google.common.base.Joiner"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
-<%@page import="org.fenixedu.academic.domain.Employee"%>
 <%@page import="org.fenixedu.academic.domain.student.Student"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -44,7 +43,7 @@
 
 		<fr:slot name="roleType" layout="menu-postback" key="label.type">
 			<fr:property name="includedValues"
-				value="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE,ALUMNI" />
+				value="STUDENT,TEACHER,ALUMNI" />
 			<fr:property name="destination" value="postback" />
 			<fr:destination name="postback" path="/findPerson.do?method=postback" />
 		</fr:slot>
@@ -138,24 +137,13 @@
 		<% 
 			String username = personalInfo.getUser() !=null ? personalInfo.getUser().getUsername() : null;
 			Integer studentNumber = personalInfo.getStudent() != null ? personalInfo.getStudent().getNumber() : null;
-			Integer employeeNumber = personalInfo.getEmployee() != null ? personalInfo.getEmployee().getEmployeeNumber() : null;
-			String personalIds = Joiner.on(", ").skipNulls().join(username, studentNumber, employeeNumber);
+			String personalIds = Joiner.on(", ").skipNulls().join(username, studentNumber);
 			personalIds = StringUtils.isNotBlank(personalIds) ? "(" + personalIds + ")" : "";
 		%>
 		<div class="pp">
 			<table class="ppid" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="70%"><strong> <bean:write name="personalInfo" property="name" /> </strong> <%= personalIds %>
-					<bean:size	id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size>
-						<logic:greaterThan name="mainRolesSize" value="0">
-							<logic:iterate id="role" name="personalInfo" property="mainRoles"
-								indexId="i">
-								<em><bean:write name="role" /> <logic:notEqual
-										name="mainRolesSize"
-										value="<%= String.valueOf(i.intValue() + 1) %>">, </logic:notEqual>
-								</em>
-							</logic:iterate>
-						</logic:greaterThan> <logic:equal name="mainRolesSize" value="0"></logic:equal></td>
+					<td width="70%"><strong> <bean:write name="personalInfo" property="name" /> </strong> <%= personalIds %></td>
 					<td width="30%" style="text-align: right;"><bean:define
 							id="aa" value="<%= "aa" + personIndex %>" /> <bean:define
 							id="id" value="<%= "id" + (personIndex.intValue() + 40)  %>" />
@@ -201,54 +189,6 @@
 
 			<div id="collapse${personalInfo.username}" class="collapse">
 				<table class="ppdetails">
-
-					<logic:present name="personalInfo" property="employee">
-						<logic:present name="personalInfo"
-							property="employee.currentWorkingPlace">
-							<bean:define id="infoUnit" name="personalInfo"
-								property="employee.currentWorkingPlace" />
-							<tr>
-								<td valign="top" class="ppleft2"><bean:message
-										key="label.person.workPlace" />
-								</td>
-								<td class="ppright"><bean:write name="infoUnit"
-										property="presentationNameWithParentsAndBreakLine"
-										filter="false" /></td>
-							</tr>
-						</logic:present>
-
-						<logic:present name="personalInfo"
-							property="employee.currentMailingPlace">
-							<tr>
-								<td class="ppleft2"><bean:message
-										key="label.person.mailingPlace" />
-								</td>
-								<bean:define id="costCenterNumber" name="personalInfo"
-									property="employee.currentMailingPlace.costCenterCode" />
-								<bean:define id="unitName" name="personalInfo"
-									property="employee.currentMailingPlace.name" />
-								<td class="ppright"><bean:write name="costCenterNumber" />
-									- <bean:write name="unitName" />
-								</td>
-							</tr>
-						</logic:present>
-					</logic:present>
-
-					<%-- <bean:define id="personSpaces" name="personalInfo"
-						property="activePersonSpaces"></bean:define>
-					<logic:notEmpty name="personSpaces">
-						<tr>
-							<td class="ppleft2"><bean:message key="label.person.rooms" />:</td>
-							<td><fr:view name="personSpaces">
-									<fr:layout name="list">
-										<fr:property name="classes" value="mvert05 ulindent0 nobullet" />
-										<fr:property name="eachSchema" value="FindPersonSpaceSchema" />
-										<fr:property name="eachLayout" value="values" />
-									</fr:layout>
-								</fr:view></td>
-						</tr>
-					</logic:notEmpty> --%>
-
 					<logic:notEmpty name="personalInfo" property="teacher">
 						<logic:notEmpty name="personalInfo"
 							property="teacher.category">
@@ -272,18 +212,6 @@
 							<fr:property name="rightColumnClasses" value="ppright" />
 						</fr:layout>
 					</fr:view>
-
-					<logic:equal name="personalInfo" property="homePageAvailable"
-						value="true">
-						<tr>
-							<td class="ppleft2"><bean:message key="label.homepage" />
-							</td>
-							<td class="ppright"><html:link href="${personalInfo.homepage.fullPath}"
-									target="_blank">
-									${personalInfo.homepage.fullPath}
-								</html:link></td>
-						</tr>
-					</logic:equal>
 
 					<logic:present name="personalInfo" property="student">
 						<logic:notEmpty name="personalInfo"

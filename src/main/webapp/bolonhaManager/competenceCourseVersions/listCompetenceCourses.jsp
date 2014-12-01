@@ -27,8 +27,7 @@
 <%@page import="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
 <%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
 
-<em><bean:message key="bolonhaManager" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
-<h2><bean:write name="department" property="realName"/></h2>
+	<h2><bean:write name="department" property="realName"/></h2>
 <h3><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h3>
 
 <logic:notEmpty name="department" property="competenceCourseMembersGroup.members">
@@ -68,7 +67,7 @@
 		<fr:layout name="competence-course-list">
 			<fr:property name="scientificAreaNameClasses" value="bold"/>
 			<fr:property name="showOldCompetenceCourses" value="<%= ((Boolean) showOldCompetenceCourses) ? "true" : "false" %>"/>
-			<fr:property name="tableClasses" value="showinfo1 smallmargin mtop05 width100"/>
+			<fr:property name="tableClasses" value="smallmargin mtop05 table-condensed"/>
 			<fr:property name="link(manageVersions)" value="/competenceCourses/manageVersions.do?method=showVersions"/>
 			<fr:property name="key(manageVersions)" value="label.view.versions"/>
 			<fr:property name="bundle(manageVersions)" value="BOLONHA_MANAGER_RESOURCES" />

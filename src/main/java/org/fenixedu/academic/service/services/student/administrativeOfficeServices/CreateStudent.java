@@ -102,8 +102,7 @@ public class CreateStudent {
     private static Person getPerson(PersonBean personBean) {
         Person person = null;
         if (personBean.getPerson() != null) {
-            person = personBean.getPerson();
-            person.edit(personBean);
+            personBean.save();
         } else {
             // create person
             person = new Person(personBean);

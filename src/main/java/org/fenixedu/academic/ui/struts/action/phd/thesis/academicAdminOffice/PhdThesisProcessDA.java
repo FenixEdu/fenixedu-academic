@@ -432,8 +432,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
         final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
 
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
-                ReportsUtils.exportToProcessedPdfAsByteArray(report));
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
 
         return null;
     }

@@ -39,6 +39,9 @@ import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.MaritalStatus;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * @author - Angela Almeida (argelina@ist.utl.pt)
@@ -689,5 +692,43 @@ public class PersonBean implements Serializable {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Person save() {
+        return save(getPerson());
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    public Person save(Person person) {
+        person.getProfile().changeName(this.getGivenNames(), this.getFamilyNames(), null);
+
+        person.setGender(this.getGender());
+        person.setProfession(this.getProfession());
+        person.setMaritalStatus(this.getMaritalStatus());
+
+        // identification
+        person.setIdentification(this.getDocumentIdNumber(), this.getIdDocumentType());
+        person.setEmissionLocationOfDocumentId(this.getDocumentIdEmissionLocation());
+        person.setEmissionDateOfDocumentIdYearMonthDay(this.getDocumentIdEmissionDate());
+        person.setExpirationDateOfDocumentIdYearMonthDay(this.getDocumentIdExpirationDate());
+        person.setSocialSecurityNumber(this.getSocialSecurityNumber());
+        person.setEidentifier(this.getEidentifier());
+
+        // filiation
+        person.setDateOfBirthYearMonthDay(this.getDateOfBirth());
+        person.setCountry(this.getNationality());
+        person.setParishOfBirth(this.getParishOfBirth());
+        person.setDistrictSubdivisionOfBirth(this.getDistrictSubdivisionOfBirth());
+        person.setDistrictOfBirth(this.getDistrictOfBirth());
+        person.setCountryOfBirth(this.getCountryOfBirth());
+        person.setNameOfMother(this.getMotherName());
+        person.setNameOfFather(this.getFatherName());
+
+        person.setDefaultPhysicalAddressData(this.getPhysicalAddressData(), true);
+        person.setDefaultPhoneNumber(this.getPhone());
+        person.setDefaultMobilePhoneNumber(this.getMobile());
+        person.setDefaultWebAddressUrl(this.getWebAddress());
+        person.setDefaultEmailAddressValue(this.getEmail(), true);
+        return person;
     }
 }

@@ -90,7 +90,6 @@ import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.academic.util.PeriodState;
@@ -208,9 +207,9 @@ public class Person extends Person_Base {
         setIdDocumentType(idDocumentType);
     }
 
-    public void setIdentificationAndNames(String documentIdNumber, final IDDocumentType idDocumentType, final String name,
-            final String givenNames, final String familyNames) {
-        getProfile().changeName(givenNames, familyNames, name);
+    public void setIdentificationAndNames(String documentIdNumber, final IDDocumentType idDocumentType, final String givenNames,
+            final String familyNames) {
+        getProfile().changeName(givenNames, familyNames, null);
         setIdentification(documentIdNumber, idDocumentType);
     }
 
@@ -309,17 +308,6 @@ public class Person extends Person_Base {
         PhysicalAddress.createPhysicalAddress(this, physicalAddressData, PartyContactType.PERSONAL, true);
         Phone.createPhone(this, candidacyPersonalDetails.getTelephoneContact(), PartyContactType.PERSONAL, true);
         EmailAddress.createEmailAddress(this, candidacyPersonalDetails.getEmail(), PartyContactType.PERSONAL, true);
-    }
-
-    public Person edit(final PersonBean personBean) {
-        check(this, RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE);
-        setProperties(personBean);
-        setDefaultPhysicalAddressData(personBean.getPhysicalAddressData(), true);
-        setDefaultPhoneNumber(personBean.getPhone());
-        setDefaultMobilePhoneNumber(personBean.getMobile());
-        setDefaultWebAddressUrl(personBean.getWebAddress());
-        setDefaultEmailAddressValue(personBean.getEmail(), true);
-        return this;
     }
 
     public Person editPersonalInformation(final PersonBean personBean) {

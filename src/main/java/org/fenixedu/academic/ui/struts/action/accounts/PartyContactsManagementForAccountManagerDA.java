@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.academic.ui.struts.action.manager.personManagement.manager;
+package org.fenixedu.academic.ui.struts.action.accounts;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,24 +29,51 @@ import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactValidation;
 import org.fenixedu.academic.domain.contacts.PartyContactValidationState;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.ui.struts.action.manager.personManagement.FindPersonAction;
-import org.fenixedu.academic.ui.struts.action.manager.personManagement.PartyContactsManagementDispatchAction;
+import org.fenixedu.academic.dto.contacts.PartyContactBean;
+import org.fenixedu.academic.service.services.contacts.CreatePartyContact;
+import org.fenixedu.academic.service.services.contacts.EditPartyContact;
+import org.fenixedu.academic.ui.struts.action.person.PartyContactsManagementDispatchAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
-import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "manager", path = "/partyContacts", functionality = FindPersonAction.class)
-@Forwards({ @Forward(name = "visualizePersonalInformation", path = "/manager/personManagement/viewPerson.jsp"),
-        @Forward(name = "editPartyContact", path = "/manager/personManagement/contacts/editPartyContact.jsp"),
-        @Forward(name = "createPartyContact", path = "/manager/personManagement/contacts/createPartyContact.jsp") })
-public class PartyContactsManagementDispatchActionForManager extends PartyContactsManagementDispatchAction {
+@Mapping(path = "/accounts/partyContacts", functionality = ManageAccountsDA.class)
+@Forward(name = "visualizePersonalInformation", path = "/accounts/viewPerson.jsp")
+@Forward(name = "editPartyContact", path = "/accounts/editPartyContact.jsp")
+@Forward(name = "createPartyContact", path = "/accounts/createPartyContact.jsp")
+public class PartyContactsManagementForAccountManagerDA extends PartyContactsManagementDispatchAction {
 
     @Override
     protected Party getParty(HttpServletRequest request) {
         final String personID = (String) getFromRequest(request, "personID");
         return FenixFramework.getDomainObject(personID);
+    }
+
+    @Override
+    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("person", getParty(request));
+
+        return mapping.findForward("visualizePersonalInformation");
+    }
+
+    @Override
+    public boolean editContact(PartyContactBean contact) {
+        return EditPartyContact.run(contact, false);
+    }
+
+    @Override
+    public PartyContact createContact(PartyContactBean contact) {
+        return CreatePartyContact.run(contact, false);
+    }
+
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
+    }
+
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
     }
 
     public ActionForward validate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -56,20 +83,6 @@ public class PartyContactsManagementDispatchActionForManager extends PartyContac
         partyContactValidation.setState(PartyContactValidationState.VALID);
         request.setAttribute("personID", partyContactValidation.getPartyContact().getParty().getExternalId());
         return backToShowInformation(mapping, actionForm, request, response);
-    }
-
-    @Override
-    public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response, PartyContact partyContact) {
-        request.setAttribute("personID", partyContact.getParty().getExternalId());
-        return backToShowInformation(mapping, actionForm, request, response);
-    }
-
-    @Override
-    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        return new ActionForward("redirectToShowInformation", "/findPerson.do?method=viewPerson&personID="
-                + getFromRequest(request, "personID"), false, "/manager");
     }
 
     public ActionForward resetValidationRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

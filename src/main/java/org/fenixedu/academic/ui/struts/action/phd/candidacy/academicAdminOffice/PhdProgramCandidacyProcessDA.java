@@ -396,8 +396,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
             HttpServletResponse response) throws IOException {
 
         final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request), getLanguage(request));
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
-                ReportsUtils.exportToProcessedPdfAsByteArray(report));
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
 
         return null;
 
@@ -421,8 +420,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
         final PhdCandidacyDeclarationDocument report =
                 new PhdCandidacyDeclarationDocument(getProcess(request), getLanguage(request));
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
-                ReportsUtils.exportToProcessedPdfAsByteArray(report));
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
 
         return null;
 

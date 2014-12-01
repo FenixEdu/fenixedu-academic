@@ -295,7 +295,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             // better than no form at all
         }
 
-        return ReportsUtils.exportToPdfFileAsByteArray(ACADEMIC_ADMIN_SHEET_REPORT_KEY, map, null);
+        return ReportsUtils.generateReport(ACADEMIC_ADMIN_SHEET_REPORT_KEY, map, null).getData();
     }
 
     private Registration findRegistration(final Student student) {
