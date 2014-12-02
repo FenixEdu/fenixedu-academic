@@ -284,6 +284,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                         if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
                                 || evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
                             CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
+                            calendarLink.setAsLink(false);
                             calendarLinks.add(calendarLink);
                             calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                         }
@@ -292,14 +293,14 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                         final String evaluationTypeClassname = getEvaluationTypeClassname();
                         if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
                                 || evaluationTypeClassname.equals(project.getClass().getName())) {
-                            CalendarLink calendarLinkBegin = new CalendarLink();
+                            CalendarLink calendarLinkBegin = new CalendarLink(false);
                             calendarLinks.add(calendarLinkBegin);
                             calendarLinkBegin.setObjectOccurrence(project.getBegin());
                             calendarLinkBegin.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project,
                                     project.getBegin(), messages.getMessage("label.evaluation.project.begin")));
                             calendarLinkBegin.setLinkParameters(constructLinkParameters(executionCourse));
 
-                            CalendarLink calendarLinkEnd = new CalendarLink();
+                            CalendarLink calendarLinkEnd = new CalendarLink(false);
                             calendarLinks.add(calendarLinkEnd);
                             calendarLinkEnd.setObjectOccurrence(project.getEnd());
                             calendarLinkEnd.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project,

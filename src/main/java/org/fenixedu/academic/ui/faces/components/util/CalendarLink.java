@@ -41,9 +41,14 @@ public class CalendarLink {
     private String objectLinkLabel;
     private Map<String, String> linkParameters = new HashMap<String, String>();
 
-    private boolean asLink = true;
+    private boolean asLink;
+
+    public CalendarLink(boolean asLink) {
+        setAsLink(asLink);
+    }
 
     public CalendarLink() {
+        this(true);
     }
 
     public CalendarLink(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation, final Locale locale) {

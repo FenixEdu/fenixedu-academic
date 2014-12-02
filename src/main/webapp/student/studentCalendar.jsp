@@ -77,7 +77,6 @@
 			 	<fc:fenixCalendar
 				 		begin="#{studentCalendar.calendarStartDate}"
 				 		end="#{studentCalendar.calendarEndDate}"
-				 		editLinkPage="#{studentCalendar.applicationContext}/publico/executionCourse.do"
 				 		editLinkParameters="#{studentCalendar.calendarLinks}"/>
 			</h:panelGroup>
 		</h:form>

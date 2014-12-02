@@ -59,7 +59,6 @@
 		 	<fc:fenixCalendar 
 		 		begin="#{publicWrittenEvaluationsByRoom.calendarBegin}"	
 		 		end="#{publicWrittenEvaluationsByRoom.calendarEnd}"
-		 		editLinkPage="#{publicWrittenEvaluationsByRoom.contextPath}/publico/executionCourse.do"		 		
 		 		editLinkParameters="#{calendarLinks.value}" />
 		 			 			
 		</h:panelGroup>

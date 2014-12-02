@@ -1349,7 +1349,7 @@
 		</attribute>
 		<attribute>
 			<name>editLinkPage</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 			<description>Page link to set on a edit link of a certain object in the a given date of the calendar. Type: String</description>
 		</attribute>

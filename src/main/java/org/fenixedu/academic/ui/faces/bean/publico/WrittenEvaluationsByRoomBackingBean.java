@@ -55,6 +55,7 @@ public class WrittenEvaluationsByRoomBackingBean extends
                                         writtenEvaluation.getAssociatedExecutionCoursesSet().iterator().next();
                                 final CalendarLink calendarLink =
                                         new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
+                                calendarLink.setAsLink(false);
                                 calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
                                 calendarLinks.add(calendarLink);
                             }
