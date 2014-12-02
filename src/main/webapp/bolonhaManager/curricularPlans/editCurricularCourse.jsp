@@ -61,7 +61,7 @@
 			<h:outputText value="</p>" escape="false"/>		
 			<h:panelGroup rendered="#{(!empty CurricularCourseManagement.competenceCourseID) && (CurricularCourseManagement.competenceCourseID != 0) }">
 				<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
-				<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
+				<h:outputLink value="#{CurricularCourseManagement.contextPath}/bolonhaManager/competenceCourses/showCompetenceCourse.faces" target="_blank">
 					<h:outputText value="#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']}"/>
 					<f:param name="competenceCourseID" value="#{CurricularCourseManagement.competenceCourseID}"/>
 				</h:outputLink>
@@ -145,7 +145,7 @@
 			<h:outputText value="<br/>" escape="false"/>
 		</h:panelGroup>
 
-		<h:dataTable value="#{CurricularCourseManagement.curricularCourse.parentContexts}" var="context">
+		<h:dataTable value="#{CurricularCourseManagement.curricularCourseParentContexts}" var="context">
 			<h:column>
 				<h:panelGroup rendered="#{context.externalId != CurricularCourseManagement.contextID}">
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>

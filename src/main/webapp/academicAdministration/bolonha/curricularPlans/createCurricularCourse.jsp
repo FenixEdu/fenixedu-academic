@@ -74,7 +74,7 @@
 				<h:outputText value="</p>" escape="false"/>		
 				<h:panelGroup rendered="#{(!empty AcademicAdministrationCurricularCourseManagement.competenceCourseID) && (AcademicAdministrationCurricularCourseManagement.competenceCourseID != 0) }">
 					<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
-					<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
+					<h:outputLink value="#{AcademicAdministrationCurricularCourseManagement.contextPath}/bolonhaManager/competenceCourses/showCompetenceCourse.faces" target="_blank">
 						<h:outputText value="#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']}"/>
 						<f:param name="competenceCourseID" value="#{AcademicAdministrationCurricularCourseManagement.competenceCourseID}"/>
 					</h:outputLink>
