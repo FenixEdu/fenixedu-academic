@@ -25,8 +25,6 @@ import java.util.Set;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Accountability;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
-import org.fenixedu.academic.domain.organizationalStructure.Function;
-import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
@@ -48,37 +46,29 @@ public class UnitGroup extends FenixGroup {
     private AccountabilityTypeEnum relationType;
 
     @GroupArgument
-    private FunctionType relationFunctionType;
-
-    @GroupArgument
     private Boolean includeSubUnits;
 
     private UnitGroup() {
         super();
     }
 
-    private UnitGroup(Unit unit, AccountabilityTypeEnum relationType, FunctionType relationFunctionType, Boolean includeSubUnits) {
+    private UnitGroup(Unit unit, AccountabilityTypeEnum relationType, Boolean includeSubUnits) {
         this();
         this.unit = unit;
         this.relationType = relationType;
-        this.relationFunctionType = relationFunctionType;
         this.includeSubUnits = includeSubUnits;
     }
 
     public static UnitGroup recursiveWorkers(Unit unit) {
-        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, null, true);
+        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, true);
     }
 
     public static UnitGroup workers(Unit unit) {
-        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, null, false);
+        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, false);
     }
 
     public static UnitGroup get(Unit unit, AccountabilityTypeEnum relationType, Boolean includeSubUnits) {
-        return new UnitGroup(unit, relationType, null, includeSubUnits);
-    }
-
-    public static UnitGroup get(Unit unit, FunctionType relationFunctionType, Boolean includeSubUnits) {
-        return new UnitGroup(unit, null, relationFunctionType, includeSubUnits);
+        return new UnitGroup(unit, relationType, includeSubUnits);
     }
 
     public Unit getUnit() {
@@ -90,7 +80,7 @@ public class UnitGroup extends FenixGroup {
         if (relationType != null) {
             return new String[] { unit.getNameI18n().getContent(), relationType.getLocalizedName() };
         }
-        return new String[] { unit.getNameI18n().getContent(), relationFunctionType.getName() };
+        return new String[] { unit.getNameI18n().getContent() };
     }
 
     @Override
@@ -114,16 +104,6 @@ public class UnitGroup extends FenixGroup {
         }
         for (Accountability accountability : accs) {
             if (accountability.isActive(when.toYearMonthDay())) {
-                if (relationFunctionType != null) {
-                    if (accountability.getAccountabilityType() instanceof Function) {
-                        Function function = (Function) accountability.getAccountabilityType();
-                        if (!function.getFunctionType().equals(relationFunctionType)) {
-                            continue;
-                        }
-                    } else {
-                        continue;
-                    }
-                }
                 Party party = accountability.getChildParty();
                 if (party instanceof Person) {
                     User user = ((Person) party).getUser();
@@ -180,7 +160,7 @@ public class UnitGroup extends FenixGroup {
 
     @Override
     public PersistentGroup toPersistentGroup() {
-        return PersistentUnitGroup.getInstance(unit, relationType, relationFunctionType, includeSubUnits);
+        return PersistentUnitGroup.getInstance(unit, relationType, includeSubUnits);
     }
 
     @Override
@@ -188,7 +168,6 @@ public class UnitGroup extends FenixGroup {
         if (object instanceof UnitGroup) {
             UnitGroup other = (UnitGroup) object;
             return Objects.equal(unit, other.unit) && Objects.equal(relationType, other.relationType)
-                    && Objects.equal(relationFunctionType, other.relationFunctionType)
                     && Objects.equal(includeSubUnits, other.includeSubUnits);
         }
         return false;
@@ -196,6 +175,6 @@ public class UnitGroup extends FenixGroup {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(unit, relationType, relationFunctionType, includeSubUnits);
+        return Objects.hashCode(unit, relationType, includeSubUnits);
     }
 }

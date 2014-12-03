@@ -95,7 +95,6 @@ enum org.fenixedu.academic.domain.masterDegree.GuideRequester                   
 enum org.fenixedu.academic.domain.masterDegree.MasterDegreeClassification                                              as MasterDegreeClassification;
 enum org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType                                    as AcademicalInstitutionType;
 enum org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum                                       as AccountabilityTypeEnum;
-enum org.fenixedu.academic.domain.organizationalStructure.FunctionType                                                 as FunctionType;
 enum org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
 enum org.fenixedu.academic.domain.organizationalStructure.UnitClassification                                           as UnitClassification;
 enum org.fenixedu.academic.domain.person.Gender                                                                        as Gender;
@@ -2494,22 +2493,11 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         AccountabilityTypeEnum type;
     }
     
-        class organizationalStructure.Function extends organizationalStructure.AccountabilityType {
-            YearMonthDay beginDateYearMonthDay;
-            YearMonthDay endDateYearMonthDay;
-            FunctionType functionType;
-            Integer functionOrder;
-        }
-        
     class organizationalStructure.Accountability  {
         YearMonthDay beginDate;
         YearMonthDay endDate;
     }       
             
-    class organizationalStructure.PersonFunction extends organizationalStructure.Accountability {
-        Double credits;
-    }
-
     class organizationalStructure.ConnectionRule  {
     }
 
@@ -4604,11 +4592,8 @@ class accessControl.PersistentTeachersWithGradesToSubmitGroup extends accessCont
 
 class accessControl.PersistentTeachersWithMarkSheetsToConfirmGroup extends accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup;
 
-class accessControl.PersistentPersonsInFunctionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-
 class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
     public AccountabilityTypeEnum relationType;
-    public FunctionType relationFunctionType;
     public Boolean includeSubUnits (REQUIRED);
 }
 
@@ -7332,13 +7317,6 @@ relation ForumCreator {
     }
 }
 
-relation FunctionParentInherentFunction {
-    organizationalStructure.Function playsRole inherentFunctions {
-        multiplicity *;
-    }
-    organizationalStructure.Function playsRole parentInherentFunction;
-}
-
 relation GoalExecutionCourse {
     ExportGrouping playsRole exportGroupings {
         multiplicity *;
@@ -9817,13 +9795,6 @@ relation UnitFileUnit {
     }
 }
 
-relation UnitFunction {
-    organizationalStructure.Function playsRole functions {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
-}
-
 relation UnitNameUnitNamePart {
     organizationalStructure.UnitName playsRole unitName {
         multiplicity *;
@@ -10030,20 +10001,6 @@ relation CourseLoadShift {
 relation CourseLoadLessonInstance {
     CourseLoad playsRole courseLoad;
     LessonInstance playsRole lessonInstances {
-        multiplicity *;
-    }
-}
-
-relation PersonFunctionCurricularYear {
-    CurricularYear playsRole curricularYear;
-    organizationalStructure.PersonFunction playsRole personFunctions {
-        multiplicity *;
-    }
-}
-
-relation PersonFunctionSharedExecutionInterval {
-    ExecutionInterval playsRole executionInterval;
-    organizationalStructure.PersonFunction playsRole personFunction {
         multiplicity *;
     }
 }
@@ -10895,6 +10852,21 @@ relation RootDomainObjectEnrolmentInstructions {
 relation ExecutionSemesterEnrolmentInstructions {
 	ExecutionSemester playsRole executionSemester;
 	EnrolmentInstructions playsRole enrolmentInstructions;
+}
+
+
+relation UniversityUnitPresident {
+    .org.fenixedu.bennu.core.domain.User playsRole president;
+    organizationalStructure.UniversityUnit playsRole universityUnitAsPresident {
+        multiplicity *;
+    }
+}
+
+relation UniversityUnitPrincipal {
+    .org.fenixedu.bennu.core.domain.User playsRole principal;
+    organizationalStructure.UniversityUnit playsRole universityUnitAsPrincipal {
+        multiplicity *;
+    }
 }
 
 
@@ -11942,15 +11914,6 @@ relation PersistentTeachersWithIncompleteEvaluationWorkGroupDegreeCurricularPlan
         multiplicity *;
     }
     public DegreeCurricularPlan playsRole degreeCurricularPlan {
-        multiplicity 1..1;
-    }
-}
-
-relation PersistentPersonsInFunctionGroupFunction {
-    public accessControl.PersistentPersonsInFunctionGroup playsRole personsInFunctionGroup {
-        multiplicity 0..1;
-    }
-    public organizationalStructure.Function playsRole function {
         multiplicity 1..1;
     }
 }

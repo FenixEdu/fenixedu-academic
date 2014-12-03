@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities;
 
-import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.StringFormatter;
@@ -42,8 +41,7 @@ abstract public class DiplomaReport extends FenixReport {
     protected void fillReport() {
         final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
         addParameter("universityName", institutionsUniversityUnit.getName());
-        addParameter("universityPrincipalName",
-                institutionsUniversityUnit.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL).getValidatedName());
+        addParameter("universityPrincipalName", institutionsUniversityUnit.getCurrentPrincipal().getValidatedName());
 
         addParameter("name", StringFormatter.prettyPrint(this.studentDiplomaInformation.getName()));
         addParameter("nameOfFather", StringFormatter.prettyPrint(this.studentDiplomaInformation.getNameOfFather()));

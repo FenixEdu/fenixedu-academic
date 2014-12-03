@@ -25,7 +25,6 @@ import org.apache.commons.lang.WordUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -137,22 +136,19 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     private void addInstitutionParameters() {
 
         addParameter("universityName", getUniversity(getDocumentRequest().getRequestDate()).getName());
-        addParameter("universityPrincipal", getUniversity(getDocumentRequest().getRequestDate())
-                .getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL));
+        addParameter("universityPrincipal", getUniversity(getDocumentRequest().getRequestDate()).getCurrentPrincipal());
 
         final String institutionUnitName = getInstitutionName();
 
-        Person principal =
-                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
-        final Person presidentIst =
-                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
+        Person principal = getUniversity(getDocumentRequest().getRequestDate()).getCurrentPrincipal();
+        final Person president = getUniversity(getDocumentRequest().getRequestDate()).getCurrentPresident();
 
         final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
         String universityName = university.getPartyName().getPreferedContent();
 
         String rectorGender, rectorGrant, presidentGender;
 
-        if (presidentIst.isMale()) {
+        if (president.isMale()) {
             presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentMale");
         } else {
             presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentFemale");

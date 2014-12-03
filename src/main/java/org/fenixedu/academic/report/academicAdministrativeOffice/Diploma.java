@@ -26,7 +26,6 @@ import org.apache.commons.lang.WordUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -105,17 +104,15 @@ public class Diploma extends AdministrativeOfficeDocument {
 
         final String institutionUnitName = getInstitutionName();
 
-        Person principal =
-                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
-        final Person presidentIst =
-                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
+        Person principal = getUniversity(getDocumentRequest().getRequestDate()).getCurrentPrincipal();
+        Person president = getUniversity(getDocumentRequest().getRequestDate()).getCurrentPresident();
 
         final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
         String universityName = university.getPartyName().getPreferedContent();
 
         String rectorGender, rectorGrant, presidentGender;
 
-        if (presidentIst.isMale()) {
+        if (president.isMale()) {
             presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentMale");
         } else {
             presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentFemale");

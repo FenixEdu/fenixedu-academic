@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
@@ -131,11 +130,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final UniversityUnit university = getUniversity(new DateTime());
         String universityName = university.getPartyName().getPreferedContent();
 
-        final Person rectorIst = university.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+        final Person rector = university.getCurrentPrincipal();
 
         String rectorGender, rectorGrant;
 
-        if (rectorIst.isMale()) {
+        if (rector.isMale()) {
             rectorGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.rectorMale");
             rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentGrantMale");
         } else {
@@ -145,7 +144,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         String firstParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.firstParagraph");
         addParameter("firstParagraph", MessageFormat.format(firstParagraph, rectorGender, universityName, rectorGrant,
-                rectorIst.getValidatedName(), request.getRegistryCode().getCode()));
+                rector.getValidatedName(), request.getRegistryCode().getCode()));
     }
 
     void setSecondParagraph(Person person, IRegistryDiplomaRequest request) {
@@ -179,36 +178,36 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     protected void setFooter() {
         final UniversityUnit university = getUniversity(new DateTime());
         final String institutionUnitName = getInstitutionName();
-        final Person presidentIst = university.getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
+        final Person president = university.getCurrentPresident();
 
-        final Person rectorIst = university.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+        final Person rector = university.getCurrentPrincipal();
 
         String presidentGender;
 
-        if (presidentIst.isMale()) {
+        if (president.isMale()) {
             presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentMale");
             addParameter("presidentName",
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentGrantMale") + " "
-                            + presidentIst.getName());
+                            + president.getName());
 
         } else {
             presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentFemale");
             addParameter("presidentName",
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentGrantFemale") + " "
-                            + presidentIst.getName());
+                            + president.getName());
         }
 
         String rectorGender;
-        if (rectorIst.isMale()) {
+        if (rector.isMale()) {
             rectorGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.rectorMale");
             addParameter("rectorName",
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentGrantMale") + " "
-                            + rectorIst.getName());
+                            + rector.getName());
         } else {
             rectorGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.rectorFemale");
             addParameter("rectorName",
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentGrantFemale") + " "
-                            + rectorIst.getName());
+                            + rector.getName());
         }
 
         String universityName = university.getPartyName().getPreferedContent();

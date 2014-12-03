@@ -63,14 +63,6 @@ public class Accountability extends Accountability_Base {
         return getEndDate() != null && getEndDate().isBefore(new YearMonthDay());
     }
 
-    public boolean isPersonFunction() {
-        return false;
-    }
-
-    public boolean isPersonFunctionShared() {
-        return false;
-    }
-
     public Date getBeginDateInDateType() {
         return (getBeginDate() != null) ? getBeginDate().toDateTimeAtCurrentTime().toDate() : null;
     }

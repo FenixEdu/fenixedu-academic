@@ -47,7 +47,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.domain.OrderedRelationAdapter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -59,12 +58,6 @@ import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Unit extends Unit_Base {
-
-    public static OrderedRelationAdapter<Unit, Function> FUNCTION_ORDERED_ADAPTER;
-    static {
-        FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions", "functionOrder");
-        getRelationUnitFunction().addListener(FUNCTION_ORDERED_ADAPTER);
-    }
 
     protected Unit() {
         super();
@@ -199,7 +192,7 @@ public class Unit extends Unit_Base {
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!(getParentsSet().isEmpty() || (getParentsSet().size() == 1 && getParentUnits().size() == 1))
-                && getChildsSet().isEmpty() && getFunctionsSet().isEmpty()) {
+                && getChildsSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
         if (!(getUnitServiceAgreementTemplate() == null && getOwnedReceiptsSet().isEmpty())) {
@@ -317,29 +310,6 @@ public class Unit extends Unit_Base {
             }
         }
         return null;
-    }
-
-    final public Collection<Function> getFunctions(final FunctionType functionType) {
-        final Collection<Function> result = new HashSet<Function>();
-
-        for (Function function : super.getFunctionsSet()) {
-            if (function.getFunctionType() == functionType) {
-                result.add(function);
-            }
-        }
-
-        return result;
-    }
-
-    final public Function getUnitCoordinatorFunction() {
-        final Collection<Function> possibleCoordinators = getFunctions(FunctionType.ASSIDUOUSNESS_RESPONSIBLE);
-        if (possibleCoordinators.isEmpty()) {
-            throw new DomainException("Unit.no.one.entitled.to.be.unit.coordinator");
-        } else if (possibleCoordinators.size() > 1) {
-            throw new DomainException("Unit.more.than.one.person.entitled.to.be.unit.coordinator");
-        }
-
-        return possibleCoordinators.iterator().next();
     }
 
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
@@ -975,48 +945,6 @@ public class Unit extends Unit_Base {
         return new ArrayList<Group>();
     }
 
-    public Collection<Function> getVirtualFunctions() {
-        return getFunctions(FunctionType.VIRTUAL);
-    }
-
-    public void setFunctionsOrder(Collection<Function> functions) {
-        Unit.FUNCTION_ORDERED_ADAPTER.updateOrder(this, functions);
-    }
-
-    public Collection<Function> getFunctions(boolean active) {
-        List<Function> result = new ArrayList<Function>();
-        YearMonthDay today = new YearMonthDay();
-        for (Function function : getFunctionsSet()) {
-            if (function.isActive(today) != active) {
-                continue;
-            }
-            result.add(function);
-        }
-        return result;
-    }
-
-    public Collection<Function> getActiveFunctions() {
-        return getFunctions(true);
-    }
-
-    public Collection<Function> getInactiveFunctions() {
-        return getFunctions(false);
-    }
-
-    public SortedSet<Function> getOrderedFunctions() {
-        SortedSet<Function> functions = new TreeSet<Function>(Function.COMPARATOR_BY_ORDER);
-        functions.addAll(getFunctionsSet());
-
-        return functions;
-    }
-
-    public SortedSet<Function> getOrderedActiveFunctions() {
-        SortedSet<Function> functions = new TreeSet<Function>(Function.COMPARATOR_BY_ORDER);
-        functions.addAll(getActiveFunctions());
-
-        return functions;
-    }
-
     static public MultiLanguageString getInstitutionName() {
         final Bennu root = Bennu.getInstance();
         MultiLanguageString result = new MultiLanguageString();
@@ -1048,21 +976,6 @@ public class Unit extends Unit_Base {
 
         return result;
     }
-
-    @Override
-    public Set<Function> getFunctionsSet() {
-        Set<Function> result = new HashSet<Function>();
-        for (Function function : super.getFunctionsSet()) {
-            if (function.getType().equals(AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {
-                result.add(function);
-            }
-        }
-        return result;
-    }
-
-    /*
-     * ResearchResultPublication getters
-     */
 
     @Override
     public Country getCountry() {

@@ -21,27 +21,20 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.Objects;
 
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
-import org.fenixedu.academic.domain.organizationalStructure.FunctionType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.groups.Group;
 
 public class PersistentUnitGroup extends PersistentUnitGroup_Base {
-    protected PersistentUnitGroup(Unit unit, AccountabilityTypeEnum relationType, FunctionType relationFunctionType,
-            boolean includeSubUnits) {
+    protected PersistentUnitGroup(Unit unit, AccountabilityTypeEnum relationType, boolean includeSubUnits) {
         super();
         setUnit(unit);
         setRelationType(relationType);
-        setRelationFunctionType(relationFunctionType);
         setIncludeSubUnits(includeSubUnits);
     }
 
     @Override
     public Group toGroup() {
-        if (getRelationType() != null) {
-            return UnitGroup.get(getUnit(), getRelationType(), getIncludeSubUnits());
-        } else {
-            return UnitGroup.get(getUnit(), getRelationFunctionType(), getIncludeSubUnits());
-        }
+        return UnitGroup.get(getUnit(), getRelationType(), getIncludeSubUnits());
     }
 
     @Override
@@ -51,15 +44,13 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
     }
 
     public static PersistentUnitGroup getInstance(final Unit unit, final AccountabilityTypeEnum relationType,
-            FunctionType relationFunctionType, final Boolean includeSubUnits) {
-        final FunctionType relationFunctionType1 = relationFunctionType;
+            final Boolean includeSubUnits) {
         return singleton(
                 () -> unit
                         .getUnitGroupSet()
                         .stream()
                         .filter(group -> Objects.equals(group.getRelationType(), relationType)
-                                && Objects.equals(group.getRelationFunctionType(), relationFunctionType1)
                                 && Objects.equals(group.getIncludeSubUnits(), includeSubUnits)).findAny(),
-                () -> new PersistentUnitGroup(unit, relationType, relationFunctionType, includeSubUnits));
+                () -> new PersistentUnitGroup(unit, relationType, includeSubUnits));
     }
 }

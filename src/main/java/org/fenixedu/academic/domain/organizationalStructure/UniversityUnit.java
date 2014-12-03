@@ -151,33 +151,20 @@ public class UniversityUnit extends UniversityUnit_Base {
 
     }
 
-    /**
-     * @deprecated Use {@link #getInstitutionsUniversityResponsible(FunctionType)} instead.
-     */
-    @Deprecated
-    final public Person getInstitutionsUniversityPrincipal() {
-        return getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
-    }
-
-    final public Person getInstitutionsUniversityResponsible(FunctionType functionType) {
+    public final Person getCurrentPresident() {
         final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
         if (!getChildParties(Unit.class).contains(institutionUnit)) {
             throw new DomainException("UniversityUnit.not.parent.of.institution.unit");
         }
+        return getPresident() != null ? getPresident().getPerson() : null;
+    }
 
-        final Collection<? extends Accountability> childAccountabilities =
-                institutionUnit.getChildAccountabilities(PersonFunction.class, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
-        for (final Accountability accountability : childAccountabilities) {
-            if (!accountability.isActive((new DateTime()).toYearMonthDay())) {
-                continue;
-            }
-
-            if (((Function) accountability.getAccountabilityType()).getFunctionType() == functionType) {
-                return ((PersonFunction) accountability).getPerson();
-            }
+    public final Person getCurrentPrincipal() {
+        final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
+        if (!getChildParties(Unit.class).contains(institutionUnit)) {
+            throw new DomainException("UniversityUnit.not.parent.of.institution.unit");
         }
-
-        return null;
+        return getPrincipal() != null ? getPrincipal().getPerson() : null;
     }
 
     @Override

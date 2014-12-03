@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.organizationalStructure;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.academic.domain.accessControl.PersonsInFunctionGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.groups.Group;
@@ -31,9 +30,6 @@ import org.joda.time.YearMonthDay;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
-
-    private static final String COORDINATION_COMMITTEE_NAME = "Comissão Executiva";
-    private static final String COORDINATION_COMMITTEE_MEMBER_NAME = "Membro";
 
     public ScientificCouncilUnit() {
         super();
@@ -51,42 +47,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
 
         groups.add(RoleType.SCIENTIFIC_COUNCIL.actualGroup());
 
-        Function function = getCoordinationCommitteeMembersFunction();
-        if (function != null) {
-            groups.add(PersonsInFunctionGroup.get(function));
-        }
-
         return groups;
-    }
-
-    private Function getCoordinationCommitteeMembersFunction() {
-        Unit subUnit = getSubUnitWithName(COORDINATION_COMMITTEE_NAME);
-
-        if (subUnit == null) {
-            return null;
-        } else {
-            return getFunctionWithName(subUnit, COORDINATION_COMMITTEE_MEMBER_NAME);
-        }
-    }
-
-    private Unit getSubUnitWithName(String name) {
-        for (Unit sub : getSubUnits()) {
-            if (sub.getName().equals(name)) {
-                return sub;
-            }
-        }
-
-        return null;
-    }
-
-    private Function getFunctionWithName(Unit unit, String name) {
-        for (Function function : unit.getFunctionsSet()) {
-            if (function.getName().equals(name)) {
-                return function;
-            }
-        }
-
-        return null;
     }
 
     public static ScientificCouncilUnit getScientificCouncilUnit() {
