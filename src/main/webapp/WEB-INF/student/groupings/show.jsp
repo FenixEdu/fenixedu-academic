@@ -1,4 +1,4 @@
--<%--		
+<%--		
 -		
 -    Copyright © 2002 Instituto Superior Técnico		
 -		
@@ -26,13 +26,11 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers"
 	prefix="fr"%>
 <spring:url var="phase" value="/student/groups/phase" />
-
 <div ng-app="studentGroupingsApp">
 <div ng-view>
 </div>
 </div>
     ${portal.bennuPortal()}
-
 <script
 	src="${pageContext.request.contextPath}/bennu-core/js/angular.min.js"></script>
 <script

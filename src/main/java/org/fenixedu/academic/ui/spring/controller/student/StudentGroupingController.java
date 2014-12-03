@@ -1,4 +1,4 @@
-package org.fenixedu.core.ui.student;
+package org.fenixedu.academic.ui.spring.controller.student;
 
 import java.util.Calendar;
 import java.util.List;
@@ -13,7 +13,9 @@ import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.student.StudentGroupingService;
 import org.fenixedu.bennu.core.rest.JsonAwareResource;
 import org.fenixedu.bennu.spring.portal.SpringApplication;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
@@ -32,11 +34,12 @@ import pt.ist.fenixframework.FenixFramework;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-@SpringApplication(description = "link.student.group", path = "enroll-spring", group = "role(STUDENT)", hint = "Student",
-title = "label.enroll")
-@SpringFunctionality(app = StudentGroupingController.class, title = "link.groupEnrolment")
+@SpringApplication(description = "link.student.group", path = "enroll-spring", group = "anyone", hint = "Student",
+title = "label.enroll.spring")
+@SpringFunctionality(app = StudentGroupingController.class, title = "link.groupEnrolment.spring")
 @RequestMapping("/student/groups")
 public class StudentGroupingController extends JsonAwareResource {
+
     @Autowired
     StudentGroupingService studentGroupingService;
 
@@ -256,7 +259,8 @@ public class StudentGroupingController extends JsonAwareResource {
             @RequestBody List<PersonBean> studentsToEnrollBean) {
         try {
             List<Person> studentsToEnroll =
-                    studentsToEnrollBean.stream().map(personBean -> (Person) FenixFramework.getDomainObject(personBean.getId()))
+                    studentsToEnrollBean.stream()
+                            .map(personBean -> (Person) FenixFramework.getDomainObject(personBean.getEidentifier()))
                     .collect(Collectors.toList());
             studentGroupingService.createStudentGroup(grouping, shift, studentsToEnroll);
             return new ResponseEntity<String>(HttpStatus.OK);

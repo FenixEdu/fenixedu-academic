@@ -1,4 +1,4 @@
-package org.fenixedu.core.ui.student;
+package org.fenixedu.academic.json.adapters;
 
 import org.fenixedu.academic.domain.Grouping;
 import org.fenixedu.academic.util.EnrolmentGroupPolicyType;
@@ -18,12 +18,12 @@ public class GroupingJsonAdapter implements JsonViewer<Grouping> {
     @Override
     public JsonElement view(Grouping grouping, JsonBuilder ctx) {
         JsonObject object = new JsonObject();
-        DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("HH:mm dd/MM/yyyy");
         object.addProperty("externalId", grouping.getExternalId());
         object.addProperty("name", grouping.getName());
         object.addProperty("description", grouping.getProjectDescription());
-        object.addProperty("enrolmentBeginDay", grouping.getEnrolmentBeginDayDateDateTime().toString(timeFormatter));
-        object.addProperty("enrolmentEndDay", grouping.getEnrolmentEndDayDateDateTime().toString(timeFormatter));
+        object.addProperty("enrolmentBeginDay", grouping.getEnrolmentBeginDayDateDateTime().getMillis());
+        object.addProperty("enrolmentEndDay", grouping.getEnrolmentEndDayDateDateTime().getMillis());
         object.addProperty("shiftType", grouping.getShiftType() == null ? "" : grouping.getShiftType().toString());
         object.addProperty("atomicEnrolmentPolicy", grouping.getEnrolmentPolicy().getType() == EnrolmentGroupPolicyType.ATOMIC);
         object.addProperty("differentiatedCapacity", grouping.getDifferentiatedCapacity());

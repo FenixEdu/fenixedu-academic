@@ -1,4 +1,4 @@
-package org.fenixedu.core.ui.student;
+package org.fenixedu.academic.service.student;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,7 +91,7 @@ public class StudentGroupingService {
 
         List<Registration> registrationsList =
                 grouping.getAttendsSet().stream().map(Attends::getRegistration)
-                .filter(reg -> personList.contains(reg.getPerson())).collect(Collectors.toList());
+                        .filter(reg -> personList.contains(reg.getPerson())).collect(Collectors.toList());
 
         if (!groupingIsOpenForEnrollment(grouping)) {
             throw new DomainException("error.grouping.notOpenToEnrollment");
@@ -99,7 +99,7 @@ public class StudentGroupingService {
 
         if (personList.stream().anyMatch(
                 person -> !personInGroupingAttends(grouping, person)
-                || grouping.getStudentGroupsSet().stream().anyMatch(sg -> personInStudentGroupAttends(sg, person)))) {
+                        || grouping.getStudentGroupsSet().stream().anyMatch(sg -> personInStudentGroupAttends(sg, person)))) {
             throw new DomainException("error.studentGroup.notEnroled");
         }
 

@@ -1,4 +1,4 @@
-package org.fenixedu.core.ui.student;
+package org.fenixedu.academic.json.adapters;
 
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.bennu.core.annotation.DefaultJsonAdapter;
