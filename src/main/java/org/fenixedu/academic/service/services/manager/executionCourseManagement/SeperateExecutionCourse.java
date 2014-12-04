@@ -41,6 +41,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.services.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
 import org.fenixedu.academic.service.utils.ExecutionCourseUtils;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -157,7 +159,8 @@ public class SeperateExecutionCourse {
 
         final ExecutionCourse destinationExecutionCourse =
                 new ExecutionCourse(originExecutionCourse.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
-
+        Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(destinationExecutionCourse));
+        
         for (CourseLoad courseLoad : originExecutionCourse.getCourseLoadsSet()) {
             new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
                     courseLoad.getTotalQuantity());

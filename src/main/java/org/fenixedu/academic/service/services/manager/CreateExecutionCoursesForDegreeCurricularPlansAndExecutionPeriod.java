@@ -32,6 +32,8 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -73,6 +75,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
                         final String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, originalCode);
                         final ExecutionCourse executionCourse =
                                 new ExecutionCourse(curricularCourse.getName(), sigla, executionSemester, null);
+                        Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(executionCourse));
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
                         numberExecutionCourses++;
                         curricularCodes.append(curricularCourse.getAcronym() + ", ");

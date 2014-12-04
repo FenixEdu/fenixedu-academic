@@ -26,6 +26,8 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoExecutionCourseEditor;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -55,5 +57,6 @@ public class InsertExecutionCourseAtExecutionPeriod {
         final ExecutionCourse executionCourse =
                 new ExecutionCourse(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionSemester,
                         infoExecutionCourse.getEntryPhase());
+        Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(executionCourse));
     }
 }
