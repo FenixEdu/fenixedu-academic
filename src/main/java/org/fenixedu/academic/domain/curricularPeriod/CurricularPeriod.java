@@ -27,10 +27,13 @@ import java.util.List;
 import java.util.Locale;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.AcademicPeriodType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.academic.util.CurricularPeriodLabelFormatter;
@@ -335,5 +338,4 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public boolean hasChildOrderValue(final Integer order) {
         return hasChildOrder() && getChildOrder().equals(order);
     }
-
 }

@@ -21,10 +21,15 @@ package org.fenixedu.academic.domain.degreeStructure;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -35,6 +40,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
 
@@ -179,5 +185,40 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         }
 
         return new CycleCourseGroupInformation(this, executionYear, graduatedTitleSuffix, graduatedTitleSuffixEn);
+    }
+
+    public Set<CycleCourseGroup> getAllPossibleAffinities() {
+
+        final Set<CycleType> affinityCycles = new HashSet<CycleType>();
+        for (final CycleType cycleType : CycleType.values()) {
+            if (cycleType.getSourceCycleAffinity() == getCycleType()) {
+                affinityCycles.add(cycleType);
+            }
+        }
+
+        final Set<CycleCourseGroup> result = new HashSet<CycleCourseGroup>();
+        for (final Degree degree : Degree.readNotEmptyDegrees()) {
+            for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+                for (final CycleType affinityCycle : affinityCycles) {
+                    final CycleCourseGroup cycleCourseGroup = degreeCurricularPlan.getCycleCourseGroup(affinityCycle);
+                    if (cycleCourseGroup != null && cycleCourseGroup != this) {
+                        result.add(cycleCourseGroup);
+                    }
+                }
+            }
+        }
+
+        return result;
+
+    }
+
+    public CycleCourseGroupInformation findCycleCourseGroupInformationBy(final ExecutionInterval executionInterval) {
+        for (final CycleCourseGroupInformation each : getCycleCourseGroupInformationSet()) {
+            if (each.isFor(executionInterval)) {
+                return each;
+            }
+        }
+
+        return null;
     }
 }

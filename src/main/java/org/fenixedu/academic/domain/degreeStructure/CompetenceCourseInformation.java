@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -36,6 +37,7 @@ import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGrou
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -356,6 +358,23 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return getExecutionPeriod();
+    }
+
+    public AcademicPeriod getAcademicPeriod() {
+        AcademicPeriod result = null;
+        final RegimeType regime = getRegime();
+        if (regime.equals(RegimeType.SEMESTRIAL)) {
+            result = AcademicPeriod.SEMESTER;
+        } else if (regime.equals(RegimeType.ANUAL)) {
+            result = AcademicPeriod.YEAR;
+        } else {
+            throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
+        }
+        return result;
     }
 
 }

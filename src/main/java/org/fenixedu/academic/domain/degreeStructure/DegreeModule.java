@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.EquivalencePlan;
 import org.fenixedu.academic.domain.EquivalencePlanEntry;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -205,6 +206,22 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     protected String getNameEn(final ExecutionSemester executionSemester) {
         return getNameEn();
+    }
+
+    public MultiLanguageString getNameI18N(ExecutionInterval executionInterval) {
+        if (executionInterval instanceof ExecutionSemester) {
+            return getNameI18N((ExecutionSemester) executionInterval);
+        }
+        if (executionInterval instanceof ExecutionYear) {
+            return getNameI18N((ExecutionYear) executionInterval);
+        }
+
+        if (executionInterval == null) {
+            return getNameI18N((ExecutionSemester) null);
+        }
+
+        throw new DomainException("error.DegreeModule.getNameI18N.does.not.support.provided.executionInterval.type",
+                executionInterval.getClass().getName());
     }
 
     public void delete() {
@@ -645,4 +662,26 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate);
 
+    public void deleteOrphanCurricularRules() {
+
+        for (final CurricularRule curricularRule : getCurricularRulesSet()) {
+
+            boolean appliesToAnyContext = false;
+            for (final Context context : getParentContextsSet()) {
+
+                if (curricularRule.appliesToContext(context)) {
+                    appliesToAnyContext = true;
+                    break;
+                }
+            }
+
+            if (!appliesToAnyContext) {
+                curricularRule.delete();
+            }
+        }
+    }
+
+    public boolean isOptionalCourseGroup() {
+        return false;
+    }
 }

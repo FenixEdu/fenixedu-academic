@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -48,6 +49,11 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
 
         this(minimumNumberOfCredits);
         init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
+    }
+
+    public void edit(CourseGroup courseGroup, ExecutionInterval begin, ExecutionInterval end, Double minCredits) {
+        edit(begin, end);
+        edit(courseGroup, minCredits);
     }
 
     protected void edit(final CourseGroup contextCourseGroup, final Double minimumNumberOfCredits) {
@@ -88,4 +94,10 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
+    public static MinimumNumberOfCreditsToEnrol create(DegreeModule degreeModule, CourseGroup courseGroup,
+            ExecutionInterval begin, ExecutionInterval end, Double minCredits) {
+        return new MinimumNumberOfCreditsToEnrol(degreeModule, courseGroup, ExecutionInterval.assertExecutionIntervalType(
+                ExecutionSemester.class, begin), ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end),
+                minCredits);
+    }
 }
