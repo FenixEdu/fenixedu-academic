@@ -11,7 +11,7 @@ To start developing using FenixEdu Academic you should take a look to our docume
 
 [https://confluence.fenixedu.org/display/ACADEMIC/Welcome](https://confluence.fenixedu.org/display/ACADEMIC/Welcome)
 
-It includes tutorials and examples so you can learn how to use the Bennu Framework
+It includes tutorials and examples so you can learn how to use the FenixEdu Academic
 
 ##Issue Tracking
 
