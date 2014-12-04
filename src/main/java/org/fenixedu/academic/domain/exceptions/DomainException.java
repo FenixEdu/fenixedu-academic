@@ -50,4 +50,5 @@ public class DomainException extends org.fenixedu.bennu.core.domain.exceptions.D
             throw new DomainException("key.return.argument", blockers.stream().collect(Collectors.joining(", ")));
         }
     }
+
 }

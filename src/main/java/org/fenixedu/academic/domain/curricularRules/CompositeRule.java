@@ -19,9 +19,11 @@
 package org.fenixedu.academic.domain.curricularRules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
@@ -32,6 +34,7 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.util.LogicOperator;
 import org.fenixedu.academic.dto.GenericPair;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -164,4 +167,53 @@ public abstract class CompositeRule extends CompositeRule_Base {
         return false;
     }
 
+    protected static void checkParameters(LogicOperator logicOperator, Collection<CurricularRule> curricularRules) {
+
+        if (logicOperator == null) {
+            throw new DomainException("error.curricularRules.CompositeRule.logicOperator.cannot.be.null");
+        }
+
+        if (curricularRules == null || curricularRules.size() < 2) {
+            throw new DomainException("error.curricularRules.CompositeRule.at.least.two.rules.are.required.for.composition");
+        }
+    }
+
+    public static CompositeRule create(CourseGroup courseGroup, ExecutionInterval begin, ExecutionInterval end,
+            LogicOperator logicOperator, Collection<CurricularRule> rules) {
+
+        CompositeRule.checkParameters(logicOperator, rules);
+
+        final CompositeRule result = CompositeRule.createCompositeRule(logicOperator, rules);
+        result.edit(begin, end);
+        result.setContextCourseGroup(courseGroup);
+
+        return result;
+
+    }
+
+    protected static CompositeRule createCompositeRule(LogicOperator logicOperator, Collection<CurricularRule> curricularRules) {
+        switch (logicOperator) {
+        case AND:
+            return new AndRule(curricularRules.toArray(new CurricularRule[] {}));
+        case OR:
+            return new OrRule(curricularRules.toArray(new CurricularRule[] {}));
+        default:
+            throw new DomainException("error.curricularRules.CompositeRule.unsupported.logic.operator");
+        }
+    }
+
+    public void edit(CourseGroup courseGroup, ExecutionInterval begin, ExecutionInterval end) {
+        edit(begin, end);
+        setContextCourseGroup(courseGroup);
+    }
+
+    public void split() {
+
+        for (final CurricularRule curricularRule : getCurricularRulesSet()) {
+            curricularRule.setDegreeModuleToApplyRule(getDegreeModuleToApplyRule());
+            curricularRule.setParentCompositeRule(null);
+        }
+
+        delete();
+    }
 }

@@ -440,6 +440,16 @@ public class Unit extends Unit_Base {
         return allSubUnits;
     }
 
+    public Collection<Unit> getAllSubUnits(final PartyTypeEnum partyType) {
+        final Set<Unit> result = new HashSet<Unit>();
+        final Collection<Unit> subUnits = getSubUnits(partyType);
+        result.addAll(subUnits);
+        for (final Unit subUnit : getSubUnits()) {
+            result.addAll(subUnit.getAllSubUnits(partyType));
+        }
+        return result;
+    }
+
     public Collection<Unit> getAllParentUnits() {
         Set<Unit> allParentUnits = new HashSet<Unit>();
         Collection<Unit> parentUnits = getParentUnits();
@@ -706,6 +716,32 @@ public class Unit extends Unit_Base {
         String parentUnits = getParentUnitsPresentationNameWithBreakLine();
         return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits
                 + BundleUtil.getString(Bundle.APPLICATION, "label.html.breakLine") + getPresentationName() : getPresentationName();
+    }
+
+    public String getParentUnitsPresentationNameWithoutRootInstitution() {
+        return getParentUnitsPresentationNameWithoutRootInstitution(" - ");
+    }
+
+    public String getParentUnitsPresentationNameWithoutRootInstitution(String separator) {
+        StringBuilder builder = new StringBuilder();
+        List<Unit> parentUnits = getParentUnitsPath(false);
+        int index = 1;
+
+        for (Unit unit : parentUnits) {
+            if (index == 1) {
+                builder.append(unit.getNameWithAcronym());
+            } else {
+                builder.append(separator + unit.getNameWithAcronym());
+            }
+            index++;
+        }
+
+        return builder.toString();
+    }
+
+    public String getPresentationNameWithParentsWithoutRootInstitution() {
+        String parentUnits = getParentUnitsPresentationNameWithoutRootInstitution();
+        return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " - " + getPresentationName() : getPresentationName();
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {

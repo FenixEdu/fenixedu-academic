@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -50,7 +52,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
         init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.ANY_CURRICULAR_COURSE);
 
-        checkYears(minimumYear, maximumYear);
+        checkParameters(contextCourseGroup, minimumCredits, maximumCredits, degreeType, degree, minimumYear, maximumYear);
 
         setMinimumCredits(minimumCredits);
         setMaximumCredits(maximumCredits);
@@ -62,11 +64,59 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         setDepartmentUnit(departmentUnit);
     }
 
+    protected void checkParameters(CourseGroup courseGroup, Double minCredits, Double maxCredits, DegreeType degreeType,
+            Degree degree, Integer minimumYear, Integer maximumYear) {
+
+        if (minimumYear != null && maximumYear != null && minimumYear.intValue() > maximumYear.intValue()) {
+            throw new DomainException("error.minimum.greater.than.maximum");
+        }
+
+        if (minCredits != null && maxCredits != null && minCredits.doubleValue() > maxCredits.doubleValue()) {
+            throw new DomainException("error.curricularRules.AnyCurricularCourse.minimum.credits.cannot.be.greater.than.maximum");
+        }
+
+        if (degreeType != null && degree != null && degree.getDegreeType() != degreeType) {
+            throw new DomainException("error.curricularRules.AnyCurricularCourse.degree.must.belong.to.specified.degree.type");
+        }
+
+    }
+
+    public static AnyCurricularCourse create(OptionalCurricularCourse toApplyRule, CourseGroup courseGroup,
+            ExecutionInterval beginInterval, ExecutionInterval endInterval, Double minCredits, Double maxCredits,
+            DegreeType degreeType, Degree degree, DepartmentUnit departmentUnit, CurricularPeriod curricularPeriod) {
+
+        final Integer curricularPeriodOrder = curricularPeriod != null ? curricularPeriod.getChildOrder() : null;
+        //TODO: check behavior on degrees with less than 1 year
+        final Integer year = curricularPeriod != null ? curricularPeriod.getParentOrder() : null;
+        final ExecutionSemester begin = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, beginInterval);
+        final ExecutionSemester end = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, endInterval);
+
+        return new AnyCurricularCourse(toApplyRule, courseGroup, begin, end, minCredits, maxCredits, curricularPeriodOrder, year,
+                year, degreeType, degree, departmentUnit);
+
+    }
+
+    public void edit(CourseGroup courseGroup, ExecutionInterval begin, ExecutionInterval end, Double minCredits,
+            Double maxCredits, DegreeType degreeType, Degree degree, DepartmentUnit departmentUnit) {
+
+        checkParameters(courseGroup, minCredits, maxCredits, degreeType, degree, getMinimumYear(), getMaximumYear());
+
+        edit(begin, end);
+        setContextCourseGroup(courseGroup);
+        setMinimumCredits(minCredits);
+        setMaximumCredits(maxCredits);
+        setBolonhaDegreeType(degreeType);
+        setDegree(degree);
+        setDepartmentUnit(departmentUnit);
+
+    }
+
     protected void edit(final CourseGroup contextCourseGroup, final Double credits, final Integer curricularPeriodOrder,
             final Integer minimumYear, final Integer maximumYear, final DegreeType degreeType, final Degree degree,
             final DepartmentUnit departmentUnit) {
 
-        checkYears(minimumYear, maximumYear);
+        checkParameters(contextCourseGroup, getMinimumCredits(), getMaximumCredits(), degreeType, degree, minimumYear,
+                maximumYear);
         setContextCourseGroup(contextCourseGroup);
         setCredits(credits);
         setCurricularPeriodOrder(curricularPeriodOrder);
@@ -75,12 +125,6 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         setBolonhaDegreeType(degreeType);
         setDegree(degree);
         setDepartmentUnit(departmentUnit);
-    }
-
-    private void checkYears(Integer minimumYear, Integer maximumYear) throws DomainException {
-        if (minimumYear != null && maximumYear != null && minimumYear.intValue() > maximumYear.intValue()) {
-            throw new DomainException("error.minimum.greater.than.maximum");
-        }
     }
 
     @Override

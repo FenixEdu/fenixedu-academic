@@ -2184,6 +2184,9 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
             }
 
             class curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod extends curricularRules.Rule {
+	            Double maximumCredits;
+				Double maximumCreditsForPartialTime;
+				AcademicPeriod periodForPartialTimeLimit;
             }
 
             class curricularRules.MinimumNumberOfCreditsToEnrol extends curricularRules.Rule {
@@ -2357,6 +2360,8 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
             }
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
+        	Boolean isBranch;
+			Boolean isOptional;
         }
 
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {

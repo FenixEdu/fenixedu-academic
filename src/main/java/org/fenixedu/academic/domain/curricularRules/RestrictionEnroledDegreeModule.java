@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.RestrictionEnroledDegreeModuleVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -62,6 +64,32 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         setContextCourseGroup(contextCourseGroup);
         setAcademicPeriod(curricularPeriodInfoDTO.getPeriodType());
         setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
+    }
+
+    public static RestrictionEnroledDegreeModule create(CurricularCourse degreeModule, CourseGroup courseGroup,
+            ExecutionInterval begin, ExecutionInterval end, CurricularCourse toBeEnroled, CurricularPeriod curricularPeriod) {
+
+        final CurricularPeriodInfoDTO curricularPeriodInfoDTO =
+                curricularPeriod != null ? new CurricularPeriodInfoDTO(curricularPeriod.getChildOrder(),
+                        curricularPeriod.getAcademicPeriod()) : null;
+
+        return new RestrictionEnroledDegreeModule(degreeModule, toBeEnroled, courseGroup, curricularPeriodInfoDTO,
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, begin),
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end));
+    }
+
+    public void edit(CourseGroup courseGroup, ExecutionInterval begin, ExecutionInterval end, CurricularCourse precedence) {
+
+        final CurricularPeriodInfoDTO curricularPeriodInfoDTO;
+        if (getAcademicPeriod() != null && getCurricularPeriodOrder() != null) {
+            curricularPeriodInfoDTO = new CurricularPeriodInfoDTO(getCurricularPeriodOrder(), getAcademicPeriod());
+        } else {
+            curricularPeriodInfoDTO = null;
+        }
+
+        edit(begin, end);
+        edit(precedence, courseGroup, curricularPeriodInfoDTO);
+
     }
 
     @Override
