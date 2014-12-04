@@ -30,7 +30,6 @@
 
 <c:set var="base" value="${pageContext.request.contextPath}/teacher" />
 <c:set var="req" value="${pageContext.request}" />
-
 <div class="row">
 	<main class="col-sm-10 col-sm-push-2">
 		<ol class="breadcrumb">
@@ -52,20 +51,6 @@
 					</a>
 				</li>
 			</c:if>
-			<c:if test="${professorship.permissions.personalization}">
-				<li>
-					<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/alternativeSite.do?method=prepareCustomizationOptions&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.personalizationOptions"/>
-					</a>
-				</li>
-			</c:if>
-			<c:if test="${professorship.permissions.siteArchive}">
-				<li>
-				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/generateArchive.do?method=prepare&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.executionCourse.archive.generate"/>
-					</a>
-				</li>
-			</c:if>
 			<c:if test="${professorship.permissions.summaries}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/searchECLog.do?method=prepareInit&executionCourseID='.concat(executionCourse.externalId))}">
@@ -78,24 +63,28 @@
 			<li class="navheader">
 				<strong><bean:message key="label.executionCourseManagement.menu.communication"/></strong>
 			</li>
-			<c:if test="${professorship.permissions.announcements}">
+			<c:if test="${professorship.permissions.personalization}">
 				<li>
-				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/announcementManagement.do?method=viewAnnouncements&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.announcements"/>
-					</a>
+					<!-- NO_CHECKSUM --><a href="${base}/${executionCourse.externalId}/communication">
+					<bean:message key="label.executionCourseManagement.menu.communication"/>
+				</a>
 				</li>
 			</c:if>
-			<li>
-			<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/executionCourseForumManagement.do?method=viewForuns&executionCourseID='.concat(executionCourse.externalId))}">
-					<bean:message key="link.teacher.executionCourseManagement.foruns"/>
-				</a>
-			</li>
-			<c:if test="${professorship.permissions.sections}">
-				<li>
-				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/manageExecutionCourseSite.do?method=sections&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="label.executionCourseManagement.menu.sections"/>
-					</a>
-				</li>
+			<c:if test="${executionCourse.cmsSite!=null}">
+				<c:if test="${professorship.permissions.announcements}">
+					<li>
+					<!-- NO_CHECKSUM --><a href="${base}/${executionCourse.externalId}/announcements">
+							<bean:message key="link.announcements"/>
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${professorship.permissions.sections}">
+					<li>
+						<!-- NO_CHECKSUM --><a href="${base}/${executionCourse.externalId}/pages">
+							<bean:message key="label.executionCourseManagement.menu.sections"/>
+						</a>
+					</li>
+				</c:if>
 			</c:if>
 		</ul>
 		<ul class="nav nav-pills nav-stacked">

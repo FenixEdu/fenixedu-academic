@@ -33,6 +33,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -47,6 +49,8 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * 
  */
 public class Summary extends Summary_Base {
+    public static final String CREATE_SIGNAL = "academic.summary.create.signal";
+    public static final String EDIT_SIGNAL = "academic.summary.edit.signal";
 
     public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new Comparator<Summary>() {
         @Override
@@ -98,6 +102,8 @@ public class Summary extends Summary_Base {
         ContentManagementLog.createLog(shift.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.summary.edited", title.getContent(), shift.getPresentationName(), shift
                         .getExecutionCourse().getNome(), shift.getExecutionCourse().getDegreePresentationString());
+
+        Signal.emit(EDIT_SIGNAL, new DomainObjectEvent<Summary>(this));
     }
 
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
