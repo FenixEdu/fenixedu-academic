@@ -1316,4 +1316,47 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
         return null;
     }
+
+    /**
+     * Find the most recent <b>until</b> given {@link ExecutionInterval}:
+     * usefull for getting current info
+     * 
+     */
+    public CompetenceCourseInformation findInformationMostRecentUntil(final ExecutionInterval input) {
+        CompetenceCourseInformation result = null;
+
+        if (!getCompetenceCourseInformationsSet().isEmpty()) {
+            final TreeSet<CompetenceCourseInformation> sorted = getOrderedCompetenceCourseInformations();
+            final ExecutionInterval until = input == null ? ExecutionSemester.readActualExecutionSemester() : input;
+
+            result = getOrderedCompetenceCourseInformations().first();
+            for (final CompetenceCourseInformation iter : sorted) {
+                if (!iter.getExecutionInterval().isAfter(until)
+                        && iter.getExecutionInterval().isAfter(result.getExecutionInterval())) {
+                    result = iter;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public boolean isAnual(final ExecutionInterval input) {
+        return getAcademicPeriod(input) == AcademicPeriod.YEAR;
+    }
+
+    public CompetenceCourseLevel getCompetenceCourseLevel(final ExecutionInterval interval) {
+        final CompetenceCourseInformation information = findInformationMostRecentUntil(interval);
+        return information != null ? information.getCompetenceCourseLevel() : null;
+    }
+
+    public AcademicPeriod getAcademicPeriod(final ExecutionInterval input) {
+        final CompetenceCourseInformation information = findInformationMostRecentUntil(input);
+        return information != null ? information.getAcademicPeriod() : null;
+    }
+
+    public AcademicPeriod getAcademicPeriod() {
+        return getAcademicPeriod(null);
+    }
+
 }

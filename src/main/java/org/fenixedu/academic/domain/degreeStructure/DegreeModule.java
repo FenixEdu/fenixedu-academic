@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.EquivalencePlan;
 import org.fenixedu.academic.domain.EquivalencePlanEntry;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -205,6 +206,22 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     protected String getNameEn(final ExecutionSemester executionSemester) {
         return getNameEn();
+    }
+
+    public MultiLanguageString getNameI18N(ExecutionInterval executionInterval) {
+        if (executionInterval instanceof ExecutionSemester) {
+            return getNameI18N((ExecutionSemester) executionInterval);
+        }
+        if (executionInterval instanceof ExecutionYear) {
+            return getNameI18N((ExecutionYear) executionInterval);
+        }
+
+        if (executionInterval == null) {
+            return getNameI18N((ExecutionSemester) null);
+        }
+
+        throw new DomainException("error.DegreeModule.getNameI18N.does.not.support.provided.executionInterval.type",
+                executionInterval.getClass().getName());
     }
 
     public void delete() {
