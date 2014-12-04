@@ -85,6 +85,7 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
+    public static final String CREATED_SIGNAL = "academic.executionCourse.create";
 
     public static List<ExecutionCourse> readNotEmptyExecutionCourses() {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>(Bennu.getInstance().getExecutionCoursesSet());
