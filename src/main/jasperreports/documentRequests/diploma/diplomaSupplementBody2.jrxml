@@ -978,7 +978,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="12" splitType="Stretch">
+		<band height="12" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-44" stretchType="RelativeToTallestObject" x="253" y="0" width="33" height="12">
 					<printWhenExpression><![CDATA[!$P{isExemptedFromStudy}]]></printWhenExpression>
