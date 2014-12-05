@@ -43,6 +43,7 @@ import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGrou
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
@@ -338,6 +339,13 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         office.setName(bean.getNameLS());
         office.setCoordinator(User.findByUsername(bean.getUsername()));
         office.setRootDomainObject(Bennu.getInstance());
+        Unit servicesParent =
+                Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
+                        .filter(x -> ((AggregateUnit) x).getName().equals("Services")).findAny()
+                        .orElse(Bennu.getInstance().getInstitutionUnit());
+        Unit.createNewUnit(MultiLanguageString.fromLocalizedString(office.getName()), null, null, null, new YearMonthDay(), null,
+                servicesParent, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
+                UnitClassification.CENTRAL_ORG, office, false, bean.getBuilding());
     }
 
     public ActionForward prepareEmptyDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
