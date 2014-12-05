@@ -21,7 +21,9 @@ package org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -47,6 +49,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean {
@@ -57,9 +60,19 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     private DegreeCurricularPlan dcp;
     private String name;
     private String gradeScale;
+    private String[] selectedGroupMembersToDelete;
+    private String newGroupMember;
 
     public String getAction() {
         return getAndHoldStringParameter("action");
+    }
+
+    public String getNewGroupMember() {
+        return newGroupMember == null ? newGroupMember = getAndHoldStringParameter("newGroupMember") : newGroupMember;
+    }
+
+    public void setNewGroupMember(String newGroupMember) {
+        this.newGroupMember = newGroupMember;
     }
 
     public String getDegreeId() {
@@ -90,16 +103,49 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public List<String> getGroupMembersLabels() {
-        List<String> result = new ArrayList<String>();
+        return getGroupMembers().stream().map(SelectItem::getLabel).collect(Collectors.toList());
+    }
+
+    public List<SelectItem> getGroupMembers() {
+        List<SelectItem> result = new ArrayList<SelectItem>();
 
         Group curricularPlanMembersGroup = getDcp().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
             for (User user : curricularPlanMembersGroup.getMembers()) {
-                result.add(user.getPerson().getName() + " (" + user.getUsername() + ")");
+                result.add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " (" + user.getUsername() + ")"));
             }
         }
 
         return result;
+    }
+
+    @Atomic
+    public void addUserToGroup() {
+        if (getNewGroupMember() != null) {
+            User user = FenixFramework.getDomainObject(getNewGroupMember());
+            if (user != null) {
+                Group group = getDcp().getCurricularPlanMembersGroup();
+                getDcp().setCurricularPlanMembersGroup(group.grant(user));
+            }
+        }
+    }
+
+    @Atomic
+    public void removeUsersFromGroup(ActionEvent event) {
+        if (selectedGroupMembersToDelete != null && selectedGroupMembersToDelete.length > 0) {
+
+            Group group = getDcp().getCurricularPlanMembersGroup();
+
+            for (String userExternalId : selectedGroupMembersToDelete) {
+                User user = FenixFramework.getDomainObject(userExternalId);
+                if (user != null) {
+                    group = group.revoke(user);
+                }
+            }
+
+            getDcp().setCurricularPlanMembersGroup(group);
+        }
+
     }
 
     public String getName() {
@@ -286,6 +332,14 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
         this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeCurricularPlan.deleted"));
         return "curricularPlansManagement";
+    }
+
+    public String[] getSelectedGroupMembersToDelete() {
+        return selectedGroupMembersToDelete;
+    }
+
+    public void setSelectedGroupMembersToDelete(String[] selectedGroupMembersToDelete) {
+        this.selectedGroupMembersToDelete = selectedGroupMembersToDelete;
     }
 
 }
