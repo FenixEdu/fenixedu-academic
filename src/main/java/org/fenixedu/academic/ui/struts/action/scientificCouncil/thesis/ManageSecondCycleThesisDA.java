@@ -307,6 +307,11 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
+            if (thesis.getTitle() != null) {
+                bean.setTitle(thesis.getTitle().toString());
+            } else {
+                throw new DomainException("thesis.files.dissertation.title.required");
+            }
             byte[] bytes = ByteStreams.toByteArray(bean.getFile());
             if (dissertationFile) {
                 CreateThesisDissertationFile.runCreateThesisDissertationFile(thesis, bytes, bean.getSimpleFileName(),
