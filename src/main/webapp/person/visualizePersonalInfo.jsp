@@ -51,8 +51,6 @@
 	</html:link>
 </span>
 		
-<script type="text/javascript" src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
-	
     <!-- Photo -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>

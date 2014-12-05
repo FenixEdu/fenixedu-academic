@@ -33,9 +33,6 @@
 	<p><span class="error0"><!-- Error messages go here --><html:errors /></span>
 	</p>
 
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
-
 	<logic:messagesPresent message="true">
 		<ul class="nobullet list6">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">

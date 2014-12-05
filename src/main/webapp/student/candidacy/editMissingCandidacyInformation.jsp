@@ -43,9 +43,6 @@
 	</style>
 </head>
 <body>
-	<div id="header">
-		<jsp:include page="/commons/fenixEduBar.jsp" />
-	</div>
 	<div id="content">
 
 <div style="float: right;">
