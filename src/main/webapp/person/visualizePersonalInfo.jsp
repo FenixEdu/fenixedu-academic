@@ -212,8 +212,6 @@
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
-        <td class="acenter">-</td>
-        <td class="acenter">-</td>
 		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress">
 				<bean:message key="label.add" />
@@ -288,8 +286,6 @@
 	<tr>
 		<td><bean:message key="label.partyContacts.Phone" />:</td>
         <td>-</td>
-        <td class="acenter">-</td>
-        <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
@@ -370,8 +366,6 @@
 	<tr>
 		<td><bean:message key="label.partyContacts.MobilePhone" />:</td>
         <td>-</td>
-        <td class="acenter">-</td>
-        <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
@@ -459,8 +453,6 @@
 	<tr>
 		<td><bean:message key="label.partyContacts.EmailAddress" />:</td>
         <td>-</td>
-        <td class="acenter">-</td>
-        <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
