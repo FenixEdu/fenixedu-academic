@@ -66,6 +66,22 @@ public class DegreeInfo extends DegreeInfo_Base {
         new DegreeInfoFuture(this);
     }
 
+    protected DegreeInfo() {
+        super();
+        setRootDomainObject(Bennu.getInstance());
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return getExecutionYear();
+    }
+
+    public void setExecutionInterval(final ExecutionInterval input) {
+        if (input == null) {
+            throw new DomainException("error.DegreeInfo.required.ExecutionInterval");
+        }
+        super.setExecutionYear(ExecutionInterval.assertExecutionIntervalType(ExecutionYear.class, input));
+    }
+
     @Override
     public void setName(MultiLanguageString name) {
         if (hasSameName(name)) {
