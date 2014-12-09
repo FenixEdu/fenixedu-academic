@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
@@ -47,6 +48,7 @@ import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
@@ -126,6 +128,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
             if (user != null) {
                 Group group = getDcp().getCurricularPlanMembersGroup();
                 getDcp().setCurricularPlanMembersGroup(group.grant(user));
+                RoleType.grant(RoleType.BOLONHA_MANAGER, user);
             }
         }
     }
@@ -140,12 +143,19 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
                 User user = FenixFramework.getDomainObject(userExternalId);
                 if (user != null) {
                     group = group.revoke(user);
+                    removeRoleIfNecessary(user);
                 }
             }
-
             getDcp().setCurricularPlanMembersGroup(group);
         }
+    }
 
+    private void removeRoleIfNecessary(User user) {
+        if (!Degree.readBolonhaDegrees().stream().flatMap(d -> d.getDegreeCurricularPlansSet().stream())
+                .filter(dcp -> !dcp.equals(getDcp())).map(dcp -> dcp.getCurricularPlanMembersGroup())
+                .reduce(NobodyGroup.get(), (g1, g2) -> g1.or(g2)).isMember(user)) {
+            RoleType.revoke(RoleType.BOLONHA_MANAGER, user);
+        }
     }
 
     public String getName() {
