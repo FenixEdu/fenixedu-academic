@@ -66,7 +66,7 @@
 	</a>
 	<logic:equal name="process" property="juryPresidentDocument.documentAccepted" value="false">
 		<span style="color:red"> 
-			<bean:message key="label.net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
+			<bean:message key="label.org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
 		</span>
 	</logic:equal>
 	<br/>
@@ -82,7 +82,7 @@
 	</a>
 	<logic:equal name="process" property="juryElementsDocument.documentAccepted" value="false">
 		<span style="color:red"> 
-			<bean:message key="label.net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
+			<bean:message key="label.org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
 		</span>
 	</logic:equal>
 	<br/>
@@ -116,10 +116,10 @@
 	
 	<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
-			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type">
+			<fr:slot name="type" readOnly="true" key="label.org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean.type">
 				<fr:property name="bundle" value="PHD_RESOURCES"/>
 			</fr:slot>
-			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
+			<fr:slot name="file" key="label.org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean.file">
 				<fr:validator name="<%= FileValidator.class.getName() %>" />
 				<fr:property name="fileNameSlot" value="filename"/>
 				<fr:property name="size" value="20"/>

@@ -59,7 +59,7 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
         if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.invalid.degreeType");
+                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.invalid.degreeType");
         }
     }
 

@@ -74,7 +74,7 @@ public class DegreeInfo extends DegreeInfo_Base {
 
         if (hasName() && !canEdit()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.DegreeInfo.can.only.change.name.for.future.execution.years");
+                    "error.org.fenixedu.academic.domain.DegreeInfo.can.only.change.name.for.future.execution.years");
         }
         super.setName(name);
     }

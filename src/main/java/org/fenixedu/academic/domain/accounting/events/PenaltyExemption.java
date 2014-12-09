@@ -57,7 +57,7 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
 //    @Override
 //    public void setResponsible(Person responsible) {
 //        throw new DomainException(
-//                "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.cannot.modify.responsible");
+//                "error.org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.cannot.modify.responsible");
 //    }
 
     public PenaltyExemptionJustificationType getJustificationType() {

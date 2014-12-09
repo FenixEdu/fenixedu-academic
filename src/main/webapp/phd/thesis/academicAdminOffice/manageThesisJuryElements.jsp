@@ -103,7 +103,7 @@
 	</a>
 	<logic:equal name="process" property="juryPresidentDocument.documentAccepted" value="false">
 		<span style="color:red"> 
-			<bean:message key="label.net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
+			<bean:message key="label.org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
 		</span>
 	</logic:equal>
 	<br/>
@@ -118,7 +118,7 @@
 	</a>
 	<logic:equal name="process" property="juryElementsDocument.documentAccepted" value="false"> 
 		<span style="color:red">
-			<bean:message key="label.net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
+			<bean:message key="label.org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
 		</span>
 	</logic:equal>
 	<br/><br/>
@@ -142,7 +142,7 @@
 
 	<fr:schema bundle="PHD_RESOURCES" type="<%= ThesisJuryElement.class.getName() %>">
 		<fr:slot name="elementOrder" />
-		<fr:slot name="nameWithTitleAndRoleOnProcess" key="label.net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement.nameWithTitle"/>
+		<fr:slot name="nameWithTitleAndRoleOnProcess" key="label.org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement.nameWithTitle"/>
 		<fr:slot name="category" />
 		<%-- 
 		<fr:slot name="workLocation" />

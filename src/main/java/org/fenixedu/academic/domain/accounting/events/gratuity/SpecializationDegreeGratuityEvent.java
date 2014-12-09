@@ -59,7 +59,7 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
     private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
         if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent.invalid.degreeType");
+                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent.invalid.degreeType");
         }
     }
 

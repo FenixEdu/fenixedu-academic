@@ -117,7 +117,7 @@ public abstract class Event extends Event_Base {
     @Override
     public EventState getEventState() {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.Event.dot.not.call.this.method.directly.use.isInState.instead");
+                "error.org.fenixedu.academic.domain.accounting.Event.dot.not.call.this.method.directly.use.isInState.instead");
     }
 
     protected EventState getCurrentEventState() {
@@ -170,7 +170,7 @@ public abstract class Event extends Event_Base {
     protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
 
-        throw new UnsupportedOperationException("error.net.sourceforge.fenixedu.domain.accounting.Event.operation.not.supported");
+        throw new UnsupportedOperationException("error.org.fenixedu.academic.domain.accounting.Event.operation.not.supported");
     }
 
     protected void closeEvent() {
@@ -476,7 +476,7 @@ public abstract class Event extends Event_Base {
     public final void recalculateState(final DateTime whenRegistered) {
         if (isCancelled()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events");
+                    "error.org.fenixedu.academic.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events");
         }
 
         internalRecalculateState(whenRegistered);
@@ -674,7 +674,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void addPaymentCodes(AccountingEventPaymentCode paymentCode) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.paymentCode");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.add.paymentCode");
     }
 
     @Override
@@ -683,13 +683,13 @@ public abstract class Event extends Event_Base {
         //  Not really deprecated, but be advised, this method should be returning the code below, but framework says no.
         //  Can`t throw DomainException because it is called from the Event_Base.class. Should not be called from anywhere else.
         //        throw new DomainException(
-        //                "error.net.sourceforge.fenixedu.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
+        //                "error.org.fenixedu.academic.domain.accounting.Event.paymentCodes.cannot.be.accessed.directly");
         return super.getPaymentCodesSet();
     }
 
     @Override
     public void removePaymentCodes(AccountingEventPaymentCode paymentCode) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.paymentCode");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.remove.paymentCode");
     }
 
     public static List<Event> readNotCancelled() {
@@ -913,7 +913,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void addExemptions(Exemption exemption) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.exemption");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.add.exemption");
     }
 
     @Override
@@ -923,7 +923,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void removeExemptions(Exemption exemption) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.exemption");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.remove.exemption");
     }
 
     public boolean isExemptionAppliable() {
@@ -1009,7 +1009,7 @@ public abstract class Event extends Event_Base {
 
         if (this == targetEvent) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.Event.target.event.must.be.different.from.source");
+                    "error.org.fenixedu.academic.domain.accounting.Event.target.event.must.be.different.from.source");
         }
     }
 

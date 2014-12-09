@@ -45,7 +45,7 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     private void checkParameters(PenaltyExemptionJustificationType justificationType) {
         if (justificationType == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.justificationType.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustification.justificationType.cannot.be.null");
         }
 
     }
@@ -53,7 +53,7 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     @Override
     public void setPenaltyExemptionJustificationType(PenaltyExemptionJustificationType penaltyExemptionJustificationType) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustification.cannot.modify.penaltyExemptionJustificationType");
+                "error.org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustification.cannot.modify.penaltyExemptionJustificationType");
     }
 
     @Override

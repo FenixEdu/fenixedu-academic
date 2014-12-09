@@ -445,9 +445,9 @@
 </schema>
 
 <schema name="DegreeCandidacy.view-with-person-details" type="org.fenixedu.academic.domain.candidacy.DegreeCandidacy" bundle="CANDIDATE_RESOURCES">
-	<slot name="person.name" key="label.net.sourceforge.fenixedu.domain.Person.name"/>
+	<slot name="person.name" key="label.org.fenixedu.academic.domain.Person.name"/>
 	<slot name="person.student.number" key="label.studentNumber"/>
-	<slot name="person.username" key="label.net.sourceforge.fenixedu.domain.person.username"/>
+	<slot name="person.username" key="label.org.fenixedu.academic.domain.person.username"/>
 	<slot name="number" key="org.fenixedu.academic.domain.candidacy.Candidacy.number"/>
 	<slot name="executionDegree" key="org.fenixedu.academic.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" layout="format">
 		<property name="format" value="${degreeName} - ${degreeCurricularPlan.name}" />
@@ -887,9 +887,9 @@
 <!-- End of First Time Student Schemas -->
 
 <schema name="StudentCandidacy.view" type="org.fenixedu.academic.domain.candidacy.StudentCandidacy" bundle="CANDIDATE_RESOURCES">
-	<slot name="number" key="label.net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.number" />
-	<slot name="person.username" key="label.net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.person.username" />
-	<slot name="person.name" key="label.net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.person.name" />
+	<slot name="number" key="label.org.fenixedu.academic.domain.candidacy.StudentCandidacy.number" />
+	<slot name="person.username" key="label.org.fenixedu.academic.domain.candidacy.StudentCandidacy.person.username" />
+	<slot name="person.name" key="label.org.fenixedu.academic.domain.candidacy.StudentCandidacy.person.name" />
 </schema>
 
 

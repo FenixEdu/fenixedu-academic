@@ -76,12 +76,12 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
     private void checkParameters(final BigDecimal ectsForAmount, final List<ExecutionSemester> executionSemesters) {
         if (ectsForAmount == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment.ectsForAmount.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.installments.PartialRegimeInstallment.ectsForAmount.cannot.be.null");
         }
 
         if (executionSemesters == null || executionSemesters.isEmpty()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment.executionSemesters.cannot.be.null.or.empty");
+                    "error.org.fenixedu.academic.domain.accounting.installments.PartialRegimeInstallment.executionSemesters.cannot.be.null.or.empty");
         }
     }
 

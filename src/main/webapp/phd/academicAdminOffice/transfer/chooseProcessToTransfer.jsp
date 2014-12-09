@@ -96,7 +96,7 @@
 		
 		<fr:link 	name="choose" 
 					link="<%= "/phdIndividualProgramProcess.do?method=prepareFillRemarksOnTransfer&amp;destinyId=${externalId}&amp;processId=" + processId %>" 
-					label="link.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.choose.process,PHD_RESOURCES"/>
+					label="link.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.choose.process,PHD_RESOURCES"/>
 	</fr:layout>
 </fr:view>
 

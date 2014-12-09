@@ -58,16 +58,16 @@
 	<fr:view name="phdProgram" property="phdProgramInformations" >
 		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.PhdProgramInformation" >
 			<fr:slot name="beginDate" />
-			<fr:slot name="minThesisEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.minThesisEctsCredits" />
-			<fr:slot name="maxThesisEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.maxThesisEctsCredits" />
-			<fr:slot name="minStudyPlanEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.minStudyPlanEctsCredits"/>
-			<fr:slot name="maxStudyPlanEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.maxStudyPlanEctsCredits" />
-			<fr:slot name="numberOfYears" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.numberOfYears" />
-			<fr:slot name="numberOfSemesters" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.numberOfSemesters" />
+			<fr:slot name="minThesisEctsCredits" key="label.org.fenixedu.academic.domain.phd.PhdProgramInformation.table.minThesisEctsCredits" />
+			<fr:slot name="maxThesisEctsCredits" key="label.org.fenixedu.academic.domain.phd.PhdProgramInformation.table.maxThesisEctsCredits" />
+			<fr:slot name="minStudyPlanEctsCredits" key="label.org.fenixedu.academic.domain.phd.PhdProgramInformation.table.minStudyPlanEctsCredits"/>
+			<fr:slot name="maxStudyPlanEctsCredits" key="label.org.fenixedu.academic.domain.phd.PhdProgramInformation.table.maxStudyPlanEctsCredits" />
+			<fr:slot name="numberOfYears" key="label.org.fenixedu.academic.domain.phd.PhdProgramInformation.table.numberOfYears" />
+			<fr:slot name="numberOfSemesters" key="label.org.fenixedu.academic.domain.phd.PhdProgramInformation.table.numberOfSemesters" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
-			<fr:link 	label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.edit,PHD_RESOURCES" 
+			<fr:link 	label="link.org.fenixedu.academic.domain.phd.PhdProgramInformation.edit,PHD_RESOURCES" 
 						name="edit"
 						link="<%= "/phdProgramInformation.do?method=prepareEditPhdProgramInformation&amp;phdProgramInformationId=${externalId}&amp;phdProgramId=" + phdProgramId %>"/>
 		</fr:layout>

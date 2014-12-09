@@ -63,17 +63,17 @@ public abstract class Alert extends Alert_Base {
 
     @Override
     public void setActive(Boolean active) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.cannot.modify.active");
+        throw new DomainException("error.org.fenixedu.academic.domain.alert.Alert.cannot.modify.active");
     }
 
     @Override
     public MultiLanguageString getBody() {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.use.getFormattedBody.instead");
+        throw new DomainException("error.org.fenixedu.academic.domain.alert.Alert.use.getFormattedBody.instead");
     }
 
     @Override
     public MultiLanguageString getSubject() {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.use.getFormattedSubject.instead");
+        throw new DomainException("error.org.fenixedu.academic.domain.alert.Alert.use.getFormattedSubject.instead");
     }
 
     public MultiLanguageString getFormattedBody() {

@@ -69,7 +69,7 @@
 			<fr:property name="classes" value="tstyle2 thlight mtop10 thleft" />
 			<fr:link 	name="edit" 
 						link="<%= "/phdIndividualProgramProcess.do?method=prepareEditPhdParticipant&amp;phdParticipantId=${externalId}&amp;processId=" + processId %>"
-						label="link.net.sourceforge.fenixedu.domain.phd.PhdParticipant.edit,PHD_RESOURCES" />
+						label="link.org.fenixedu.academic.domain.phd.PhdParticipant.edit,PHD_RESOURCES" />
 		</fr:layout>
 	</fr:view>
 

@@ -75,7 +75,7 @@
 						<fr:property name="format" value="${name}" />
 						<fr:property name="sortBy" value="name" /> 
 					</fr:slot>
-					<fr:slot name="thesisTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.thesis.title.proposed">
+					<fr:slot name="thesisTitle" key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.thesis.title.proposed">
 						<fr:property name="size" value="80"/>
 					</fr:slot>
 				</fr:schema>

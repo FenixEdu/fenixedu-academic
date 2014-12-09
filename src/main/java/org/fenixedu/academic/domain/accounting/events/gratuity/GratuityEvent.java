@@ -255,7 +255,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
             return isCancelled();
         } else {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
         }
     }
 

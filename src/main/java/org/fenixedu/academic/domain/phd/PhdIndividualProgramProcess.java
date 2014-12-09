@@ -328,7 +328,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public void removeLastState() {
         if (getStatesSet().size() == 1) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.has.only.one.state");
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.has.only.one.state");
         }
 
         getMostRecentState().delete();

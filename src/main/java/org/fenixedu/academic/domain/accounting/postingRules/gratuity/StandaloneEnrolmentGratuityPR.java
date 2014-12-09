@@ -278,19 +278,19 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
     @Override
     public void setEctsForYear(BigDecimal ectsForYear) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsForYear");
+                "error.org.fenixedu.academic.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsForYear");
     }
 
     @Override
     public void setGratuityFactor(BigDecimal gratuityFactor) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.gratuityFactor");
+                "error.org.fenixedu.academic.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.gratuityFactor");
     }
 
     @Override
     public void setEctsFactor(BigDecimal ectsFactor) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsFactor");
+                "error.org.fenixedu.academic.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsFactor");
     }
 
 }

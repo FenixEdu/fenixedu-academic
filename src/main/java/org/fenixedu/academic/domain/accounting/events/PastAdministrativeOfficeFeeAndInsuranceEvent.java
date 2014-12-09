@@ -54,7 +54,7 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
     private void checkParameters(Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
         if (pastAdministrativeOfficeFeeAndInsuranceAmount == null || pastAdministrativeOfficeFeeAndInsuranceAmount.isZero()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.pastAdministrativeOfficeFeeAndInsuranceAmount.cannot.be.null.and.must.be.greather.than.zero");
+                    "error.org.fenixedu.academic.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.pastAdministrativeOfficeFeeAndInsuranceAmount.cannot.be.null.and.must.be.greather.than.zero");
         }
     }
 
@@ -63,7 +63,7 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
         check(this, RolePredicates.MANAGER_PREDICATE);
         super.setPastAdministrativeOfficeFeeAndInsuranceAmount(pastAdministrativeOfficeFeeAndInsuranceAmount);
         // throw new DomainException(
-        // "error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.cannot.modify.pastAdministrativeOfficeFeeAndInsuranceAmount"
+        // "error.org.fenixedu.academic.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.cannot.modify.pastAdministrativeOfficeFeeAndInsuranceAmount"
         // );
     }
 

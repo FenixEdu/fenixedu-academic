@@ -68,7 +68,7 @@
 			<fr:slot name="version" />
 			<fr:slot name="whenCreated" />
 			<fr:slot name="conclusionDate" />
-			<fr:slot name="finalGrade.localizedName" key="label.net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess.finalGrade" bundle="PHD_RESOURCES"/>
+			<fr:slot name="finalGrade.localizedName" key="label.org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess.finalGrade" bundle="PHD_RESOURCES"/>
 			<fr:slot name="thesisEctsCredits" />
 
 		<logic:notEqual name="process" property="individualProgramProcess.candidacyProcess.studyPlanExempted" value="true">

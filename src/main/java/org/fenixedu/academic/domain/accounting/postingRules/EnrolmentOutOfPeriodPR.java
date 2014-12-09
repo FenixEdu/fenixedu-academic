@@ -67,17 +67,17 @@ public class EnrolmentOutOfPeriodPR extends EnrolmentOutOfPeriodPR_Base {
 
         if (baseAmount == null || baseAmount.isZero()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.baseAmount.cannot.be.null.and.must.be.greater.than.zero");
+                    "error.org.fenixedu.academic.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.baseAmount.cannot.be.null.and.must.be.greater.than.zero");
         }
 
         if (amountPerDay == null || amountPerDay.isZero()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.amountPerDay.cannot.be.null.and.must.be.greater.than.zero");
+                    "error.org.fenixedu.academic.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.amountPerDay.cannot.be.null.and.must.be.greater.than.zero");
         }
 
         if (maxAmount == null || maxAmount.isZero()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.maxAmount.cannot.be.null.and.must.be.greater.than.zero");
+                    "error.org.fenixedu.academic.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.maxAmount.cannot.be.null.and.must.be.greater.than.zero");
         }
 
     }

@@ -135,22 +135,22 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     @Override
     public void setStartDate(YearMonthDay startDate) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.startDate");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.startDate");
     }
 
     @Override
     public void setEndDate(YearMonthDay endDate) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.endDate");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.endDate");
     }
 
     @Override
     public void setMinAmount(Money minAmount) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.minAmount");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.minAmount");
     }
 
     @Override
     public void setMaxAmount(Money maxAmount) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.maxAmount");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.maxAmount");
     }
 
     @Override

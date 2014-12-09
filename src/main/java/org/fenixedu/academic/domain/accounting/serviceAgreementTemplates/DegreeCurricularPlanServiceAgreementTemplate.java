@@ -61,7 +61,7 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
     private void checkRulesToCreate(DegreeCurricularPlan degreeCurricularPlan) {
         if (readByDegreeCurricularPlan(degreeCurricularPlan) != null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.degree.curricular.plan.already.has.template.defined");
+                    "error.org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.degree.curricular.plan.already.has.template.defined");
         }
 
     }
@@ -88,7 +88,7 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
                     } else if (!result.hasPrecedenceOver(gratuityPaymentPlan.getClass())) {
                         // Incompatible payment plans
                         throw new DomainException(
-                                "error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");
+                                "error.org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");
                     }
                 }
             }

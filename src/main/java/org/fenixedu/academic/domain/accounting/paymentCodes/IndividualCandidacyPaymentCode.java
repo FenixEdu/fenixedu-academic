@@ -149,7 +149,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
     @Override
     public void setPerson(Person student) {
         if (this.getPerson() != null || !this.isNew()) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
+            throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.person");
         }
 
         super._setPerson(student);

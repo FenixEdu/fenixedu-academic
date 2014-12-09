@@ -139,7 +139,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     @Override
     public void addAdjustmentTransactions(AccountingTransaction accountingTransaction) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.AccountingTransaction.cannot.add.accountingTransaction");
+                "error.org.fenixedu.academic.domain.accounting.AccountingTransaction.cannot.add.accountingTransaction");
     }
 
     @Override
@@ -150,7 +150,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     @Override
     public void removeAdjustmentTransactions(AccountingTransaction adjustmentTransactions) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.AccountingTransaction.cannot.remove.accountingTransaction");
+                "error.org.fenixedu.academic.domain.accounting.AccountingTransaction.cannot.remove.accountingTransaction");
     }
 
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
@@ -211,7 +211,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
         if (StringUtils.isEmpty(reason)) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.AccountingTransaction.cannot.annul.without.reason");
+                    "error.org.fenixedu.academic.domain.accounting.AccountingTransaction.cannot.annul.without.reason");
         }
 
         checkRulesToAnnul();

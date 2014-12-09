@@ -45,11 +45,11 @@
 
 <fr:view name="phdAcademicServiceRequest" >
 	<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest">
-		<fr:slot name="serviceRequestNumberYear" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />
-		<fr:slot name="academicServiceRequestType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
-		<fr:slot name="requestDate" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.requestDate" />
-		<fr:slot name="activeSituation.academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.activeSituation" />
-		<fr:slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.creationDate" />
+		<fr:slot name="serviceRequestNumberYear" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />
+		<fr:slot name="academicServiceRequestType" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
+		<fr:slot name="requestDate" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.requestDate" />
+		<fr:slot name="activeSituation.academicServiceRequestSituationType" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.activeSituation" />
+		<fr:slot name="creationDate" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.creationDate" />
 	</fr:schema>
 	
 	<fr:layout name="tabular">

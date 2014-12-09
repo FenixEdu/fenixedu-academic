@@ -80,7 +80,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
             MultiLanguageString body) {
         String[] args = {};
         if (process == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.process.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.process.cannot.be.null",
                     args);
         }
         String[] args1 = {};
@@ -99,12 +99,12 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
     @Override
     public void setProcess(PhdIndividualProgramProcess process) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.process");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.modify.process");
     }
 
     @Override
     public void addPersons(Person person) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.add.person");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.add.person");
     }
 
     @Override
@@ -114,22 +114,22 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
     @Override
     public void removePersons(Person person) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.remove.person");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.remove.person");
     }
 
     @Override
     public void setSubject(MultiLanguageString subject) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.subject");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.modify.subject");
     }
 
     @Override
     public void setBody(MultiLanguageString body) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.body");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.modify.body");
     }
 
     @Override
     public void setReaded(Boolean readed) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.readed");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.modify.readed");
     }
 
     @Atomic
@@ -137,7 +137,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         String[] args = {};
         if (person == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.personWhoMarkAsReaded.cannot.be.null", args);
+                    "error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.personWhoMarkAsReaded.cannot.be.null", args);
         }
 
         super.setReaded(true);

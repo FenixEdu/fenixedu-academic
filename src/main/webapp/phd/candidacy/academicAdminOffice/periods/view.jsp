@@ -47,7 +47,7 @@
 <fr:view name="phdCandidacyPeriod">
 	<fr:schema type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod" bundle="PHD_RESOURCES">
 			<fr:slot name="type" />
-			<fr:slot name="executionInterval.name" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod.executionYear"/>
+			<fr:slot name="executionInterval.name" key="label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod.executionYear"/>
 			<fr:slot name="start" />
 			<fr:slot name="end" />
 	</fr:schema>
@@ -65,10 +65,10 @@
 <logic:notEmpty name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses" >
 	<table class="tstyle2 thlight mtop15 thleft">
 		<tr>
-			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber"/></td>
-			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.person.PersonBean.name"/></td>
-			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean.phdProgram"/></td>
-			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.candidacyDate"/></td>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber"/></td>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.org.fenixedu.academic.dto.person.PersonBean.name"/></td>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriodBean.phdProgram"/></td>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.candidacyDate"/></td>
 			<td></td>
 		</tr>
 		<logic:iterate id="process" name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses"

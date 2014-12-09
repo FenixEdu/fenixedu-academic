@@ -129,13 +129,13 @@
 				<fr:slot name="name" key="label.username" >
 					<fr:property name="classes" value="nobullet noindent"/>   
 			   	</fr:slot>
-			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
-				<fr:slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>
-				<fr:slot name="workLocation" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.workLocation"/>
-				<fr:slot name="institution" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.institution"/>
-				<fr:slot name="address" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.address"/>
-				<fr:slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
-				<fr:slot name="phone" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.phone"/>
+			   	<fr:slot name="qualification" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.qualification"/>
+				<fr:slot name="category" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.category"/>
+				<fr:slot name="workLocation" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.workLocation"/>
+				<fr:slot name="institution" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.institution"/>
+				<fr:slot name="address" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.address"/>
+				<fr:slot name="email" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.email"/>
+				<fr:slot name="phone" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.phone"/>
 				<fr:slot name="acceptanceLetter" layout="link" />		
 			</fr:schema>
 			<fr:layout name="tabular">
@@ -162,13 +162,13 @@
 				<fr:slot name="name" key="label.username" >
 					<fr:property name="classes" value="nobullet noindent"/>   
 			   	</fr:slot>
-			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
-				<fr:slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>
-				<fr:slot name="workLocation" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.workLocation"/>
-				<fr:slot name="institution" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.institution"/>
-				<fr:slot name="address" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.address"/>
-				<fr:slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
-				<fr:slot name="phone" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.phone"/>
+			   	<fr:slot name="qualification" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.qualification"/>
+				<fr:slot name="category" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.category"/>
+				<fr:slot name="workLocation" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.workLocation"/>
+				<fr:slot name="institution" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.institution"/>
+				<fr:slot name="address" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.address"/>
+				<fr:slot name="email" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.email"/>
+				<fr:slot name="phone" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.phone"/>
 				<fr:slot name="acceptanceLetter" layout="link" />		
 			</fr:schema>
 			<fr:layout name="tabular">

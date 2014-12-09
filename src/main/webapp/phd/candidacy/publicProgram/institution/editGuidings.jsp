@@ -81,7 +81,7 @@
 						<fr:slot name="institution" required="true">
 							<fr:property name="size" value="50"/>
 						</fr:slot>
-						<fr:slot name="address" required="true"  key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.institution.address">
+						<fr:slot name="address" required="true"  key="label.org.fenixedu.academic.domain.phd.PhdParticipantBean.institution.address">
 							<fr:property name="size" value="50"/>
 						</fr:slot>
 						<fr:slot name="email">
@@ -171,7 +171,7 @@
 						<fr:slot name="institution" required="true">
 							<fr:property name="size" value="50"/>
 						</fr:slot>
-						<fr:slot name="address" required="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.institution.address">
+						<fr:slot name="address" required="true" key="label.org.fenixedu.academic.domain.phd.PhdParticipantBean.institution.address">
 							<fr:property name="size" value="50"/>
 						</fr:slot>
 						<fr:slot name="email">

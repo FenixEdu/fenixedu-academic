@@ -111,7 +111,7 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
             }
         } else {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.invalid.degree.module.to.verify");
+                    "error.org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.invalid.degree.module.to.verify");
         }
 
         return RuleResult.createTrue(degreeModuleToVerify);

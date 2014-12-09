@@ -187,7 +187,7 @@ public class CreditNote extends CreditNote_Base {
         } else if (state == CreditNoteState.PAYED) {
             confirm(responsible, paymentMode);
         } else {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.CreditNote.cannot.change.to.given.state");
+            throw new DomainException("error.org.fenixedu.academic.domain.accounting.CreditNote.cannot.change.to.given.state");
         }
 
     }

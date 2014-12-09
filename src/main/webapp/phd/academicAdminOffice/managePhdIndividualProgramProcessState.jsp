@@ -66,10 +66,10 @@
 <strong><bean:message key="label.phd.states" bundle="PHD_RESOURCES" /></strong>
 <fr:view name="process" property="states">
 	<fr:schema type="org.fenixedu.academic.domain.phd.PhdProgramProcessState" bundle="PHD_RESOURCES" >
-		<fr:slot name="whenCreated" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.whenCreated" />
+		<fr:slot name="whenCreated" key="label.org.fenixedu.academic.domain.phd.PhdProgramProcessState.whenCreated" />
 		<fr:slot name="stateDate" layout="null-as-label" />
-		<fr:slot name="type.localizedName" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.type" />
-		<fr:slot name="remarks" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.remarks" />
+		<fr:slot name="type.localizedName" key="label.org.fenixedu.academic.domain.phd.PhdProgramProcessState.type" />
+		<fr:slot name="remarks" key="label.org.fenixedu.academic.domain.phd.PhdProgramProcessState.remarks" />
 	</fr:schema>
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
@@ -77,13 +77,13 @@
 
 		<fr:link 	name="editState" 
 					link="<%= String.format("/phdIndividualProgramProcess.do?method=prepareEditState&processId=%s&stateId=${externalId}", processId)  %>" 
-					label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.editState,PHD_RESOURCES"/>
+					label="link.org.fenixedu.academic.domain.phd.PhdProgramProcessState.editState,PHD_RESOURCES"/>
 
 		<fr:link 	name="removeState" 
 					link="<%= String.format("/phdIndividualProgramProcess.do?method=removeLastState&processId=%s", processId)  %>" 
-					label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"
+					label="link.org.fenixedu.academic.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"
 					condition="last" 
-					confirmation="message.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"/>
+					confirmation="message.org.fenixedu.academic.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"/>
 	</fr:layout>
 </fr:view>
 

@@ -38,7 +38,7 @@ public class InternalPhdStudyPlanEntry extends InternalPhdStudyPlanEntry_Base {
 
         String[] args = {};
         if (competenceCourse == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.enclosing_type.competenceCourse.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.enclosing_type.competenceCourse.cannot.be.null",
                     args);
         }
 
@@ -51,7 +51,7 @@ public class InternalPhdStudyPlanEntry extends InternalPhdStudyPlanEntry_Base {
     @Override
     public void setCompetenceCourse(CompetenceCourse competenceCourse) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.phd.InternalPhdStudyPlanEntry.cannot.modify.competenceCourse");
+                "error.org.fenixedu.academic.domain.phd.InternalPhdStudyPlanEntry.cannot.modify.competenceCourse");
     }
 
     @Override

@@ -46,11 +46,11 @@
 			<div class='mtop15 mbottom2'>
 				<b><bean:write name="project" property="name"/></b>,
 				<span class='color888'>
-				<bean:message key="label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime" bundle="APPLICATION_RESOURCES"/>
+				<bean:message key="label.org.fenixedu.academic.domain.Project.projectBeginDateTime" bundle="APPLICATION_RESOURCES"/>
 			</span>
 			<bean:write name="project" property="begin" format="dd/MM/yyyy"/>,
 			<span class='color888'>
-				<bean:message key="label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime" bundle="APPLICATION_RESOURCES"/>
+				<bean:message key="label.org.fenixedu.academic.domain.Project.projectEndDateTime" bundle="APPLICATION_RESOURCES"/>
 			</span>
 			<bean:write name="project" property="end" format="dd/MM/yyyy"/>
 			<logic:notEmpty name="project" property="description">

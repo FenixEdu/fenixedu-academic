@@ -70,7 +70,7 @@ public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividual
 
         if (this == targetEvent) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.Event.target.event.must.be.different.from.source");
+                    "error.org.fenixedu.academic.domain.accounting.Event.target.event.must.be.different.from.source");
         }
     }
 

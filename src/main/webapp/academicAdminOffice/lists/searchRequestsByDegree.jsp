@@ -81,7 +81,7 @@
 				<fr:property name="eachLayout" value="" />
 			</fr:slot>
 			<fr:slot name="academicServiceRequestSituationType"
-				key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
+				key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 			<fr:slot name="urgentRequest" key="label.only.urgent" />
 			<%
 			    if (documentRequestSearchBean.getAcademicServiceRequestType() == AcademicServiceRequestType.DOCUMENT) {
@@ -138,9 +138,9 @@
 				</fr:slot>
 				<fr:slot name="requestDate" key="label.requestDate" />
 				<fr:slot name="description"
-					key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description" />
+					key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.description" />
 				<fr:slot name="student.number"
-					key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber"
+					key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber"
 					layout="link">
 					<fr:property name="linkFormat"
 						value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}" />
@@ -149,7 +149,7 @@
 					<fr:property name="useParent" value="true" />
 				</fr:slot>
 				<fr:slot name="student.name"
-					key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name" />
+					key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name" />
 				<fr:slot name="registration.degree.presentationName" key="label.degree"/>	
 			</fr:schema>
 			<fr:layout name="tabular">

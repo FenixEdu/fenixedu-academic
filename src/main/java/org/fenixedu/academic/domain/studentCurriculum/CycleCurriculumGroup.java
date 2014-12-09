@@ -328,7 +328,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
             final String notes) {
         if (!isConclusionProcessed()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
+                    "error.org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
         }
         String[] args = {};
 

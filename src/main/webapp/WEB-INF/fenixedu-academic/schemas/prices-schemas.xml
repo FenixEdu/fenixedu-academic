@@ -21,49 +21,49 @@
 <schema name="PostingRule.view"
 	type="org.fenixedu.academic.domain.accounting.PostingRule"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.creationDate" />
-	<slot name="startDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.startDate" />
-	<slot name="endDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.endDate"/>
+	<slot name="creationDate" key="label.org.fenixedu.academic.domain.accounting.postingRules.PostingRule.creationDate" />
+	<slot name="startDate" key="label.org.fenixedu.academic.domain.accounting.postingRules.PostingRule.startDate" />
+	<slot name="endDate" key="label.org.fenixedu.academic.domain.accounting.postingRules.PostingRule.endDate"/>
 </schema>
 
 <schema name="PostingRule.view-with-eventType"
 	type="org.fenixedu.academic.domain.accounting.PostingRule" extends="PostingRule.view"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="eventType" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.eventType"/>
+	<slot name="eventType" key="label.org.fenixedu.academic.domain.accounting.postingRules.PostingRule.eventType"/>
 </schema>
 
 <schema name="ImprovementOfApprovedEnrolmentPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"/>
-	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty"/>
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"/>
+	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty"/>
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="DegreeChangeIndividualCandidacyPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="DegreeTransferIndividualCandidacyPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="FixedAmountPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 </schema>
 
 <schema name="DeclarationRequestPR.view"
@@ -94,13 +94,13 @@
 <schema name="FixedAmountWithPenaltyPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
-	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 </schema>
 
 <schema name="FixedAmountWithPenaltyFromDatePR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
-	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
+	<slot name="whenToApplyFixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
 </schema>
 
 <schema name="AdministrativeOfficeFeePR.view"
@@ -256,22 +256,22 @@
 <schema name="BaseAmountPlusAmountPerUnitPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
-	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
-	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
+	<slot name="amountPerUnit" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
 </schema>
 
 <schema name="BaseAmountPlusAmountPerPagePR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
 <schema name="CertificateRequestPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.view">
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
 
 <schema name="CertificateRequestWithoutBasePR.view"
@@ -282,7 +282,7 @@
 <schema name="EnrolmentCertificateRequestPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
-	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
+	<slot name="maximumAmountDescription" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
 </schema>
 
 <schema name="StandaloneEnrolmentCertificateRequestPR.view"
@@ -300,7 +300,7 @@
 	type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
 	<slot name="amountPerUnit" />
-	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
+	<slot name="maximumAmountDescription" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
 </schema>
 
 <schema name="ExtraCurricularEnrolmentCertificateRequestPR.view"
@@ -313,9 +313,9 @@
 </schema>
 
 <schema name="CourseLoadRequestPR.view" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
 <schema name="ExternalCourseLoadRequestPR.view" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
@@ -323,9 +323,9 @@
 </schema>
 
 <schema name="ProgramCertificateRequestPR.view" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
 <schema name="ExternalProgramCertificateRequestPR.view" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
@@ -339,39 +339,39 @@
 <schema name="ImprovementOfApprovedEnrolmentPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
-	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
 	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
 </schema>
 
 <schema name="DegreeChangeIndividualCandidacyPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
 	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
 </schema>
 
 <schema name="DegreeTransferIndividualCandidacyPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
 	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
 </schema>
 
 <schema name="FixedAmountPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
 	<setter signature="edit(fixedAmount)"/>
 </schema>
 
@@ -403,21 +403,21 @@
 <schema name="InsurancePR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.InsurancePR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
 	<setter signature="edit(fixedAmount)"/>
 </schema>
 
 <schema name="FixedAmountWithPenaltyPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
-	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
 </schema>
 
 <schema name="FixedAmountWithPenaltyFromDatePR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
-	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
+	<slot name="whenToApplyFixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
 	<setter signature="edit(fixedAmount,fixedAmountPenalty,whenToApplyFixedAmountPenalty)"/>
 </schema>
 
@@ -462,22 +462,22 @@
 <schema name="BaseAmountPlusAmountPerUnitPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" />
-	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
-	<slot name="maximumAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" />
+	<slot name="amountPerUnit" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
+	<slot name="maximumAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
 </schema>
 
 <schema name="BaseAmountPlusAmountPerPagePR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
 <schema name="CertificateRequestPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.edit">
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
 </schema>
 
@@ -523,9 +523,9 @@
 </schema>
 
 <schema name="CourseLoadRequestPR.edit" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 	<setter signature="edit(baseAmount,amountFirstPage,amountPerPage)"/>
 </schema>
 
@@ -534,9 +534,9 @@
 </schema>
 
 <schema name="ProgramCertificateRequestPR.edit" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
-	<slot  name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot  name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 	<setter signature="edit(baseAmount,amountFirstPage,amountPerPage)"/>
 </schema>
 
@@ -554,12 +554,12 @@
 </schema>
 
 <schema name="ImprovementOfApprovedEnrolmentPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
-	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 </schema>
 
 <schema name="FixedAmountPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 </schema>
 
 <schema name="InsurancePR.view-student"
@@ -595,11 +595,11 @@
 </schema>
 
 <schema name="FixedAmountWithPenaltyPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR" extends="FixedAmountPR.view-student" bundle="APPLICATION_RESOURCES" >
-	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 </schema>
 
 <schema name="FixedAmountWithPenaltyFromDatePR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
-	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
+	<slot name="whenToApplyFixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
 </schema>
 
 <schema name="DFACandidacyPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.dfa.DFACandidacyPR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
@@ -632,20 +632,20 @@
 </schema>
 
 <schema name="BaseAmountPlusAmountPerUnitPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
-	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
-	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
+	<slot name="amountPerUnit" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
 </schema>
 
 <schema name="BaseAmountPlusAmountPerPagePR.view-student"
 	type="org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
 <schema name="CertificateRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" extends="BaseAmountPlusAmountPerUnitPR.view-student" bundle="APPLICATION_RESOURCES">
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
 
 <schema name="CertificateRequestWithoutBasePR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR" extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
@@ -653,7 +653,7 @@
 
 <schema name="EnrolmentCertificateRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR" 
 		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
-		<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
+		<slot name="maximumAmountDescription" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
 </schema>
 
 <schema name="ExtraCurricularEnrolmentCertificateRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR" 
@@ -671,7 +671,7 @@
 <schema name="EquivalencePlanRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR" 
 		extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="amountPerUnit" />
-	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
+	<slot name="maximumAmountDescription" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
 </schema>
 
 <schema name="PhotocopyRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
@@ -679,9 +679,9 @@
 </schema>
 
 <schema name="CourseLoadRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
 <schema name="ExternalCourseLoadRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
@@ -689,9 +689,9 @@
 </schema>
 
 <schema name="ProgramCertificateRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
-	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<slot name="baseAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.org.fenixedu.academic.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
 <schema name="ExternalProgramCertificateRequestPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
@@ -813,7 +813,7 @@
 
 <schema name="GratuityWithPaymentPlanPR.view" type="org.fenixedu.academic.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
 		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-		<slot name="defaultGratuityAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.defaultGratuityAmount"></slot>
+		<slot name="defaultGratuityAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.PostingRule.defaultGratuityAmount"></slot>
 </schema>
 
 <schema name="GratuityWithPaymentPlanPR.edit" type="org.fenixedu.academic.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
@@ -847,22 +847,22 @@
 <schema name="DegreeCandidacyForGraduatedPersonPR.view-student"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="DegreeChangeIndividualCandidacyPR.view-student"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="DegreeTransferIndividualCandidacyPR.view-student"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
 
 
@@ -990,7 +990,7 @@
 <schema name="PostingRule.view.with.formula.description"
 	type="org.fenixedu.academic.domain.accounting.PostingRule"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-with-eventType">
-	<slot name="formulaDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.formulaDescription" />
+	<slot name="formulaDescription" key="label.org.fenixedu.academic.domain.accounting.postingRules.PostingRule.formulaDescription" />
 </schema>
 
 
@@ -1056,7 +1056,7 @@
 <schema name="PartialRegistrationRegimeRequestPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
 	<setter signature="edit(fixedAmount)"/>
 </schema>
 

@@ -167,7 +167,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Deprecated
     public void setIsExtraCurricular(Boolean isExtraCurricular) {
         if (isBoxStructure()) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.Enrolment.use.markAsExtraCurricular.method.instead");
+            throw new DomainException("error.org.fenixedu.academic.domain.Enrolment.use.markAsExtraCurricular.method.instead");
         }
 
         super.setIsExtraCurricular(isExtraCurricular);

@@ -53,7 +53,7 @@
 	<fr:form>
 		<fr:edit name="executionYearBean" id="executionYearBean" >
 			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.ui.struts.action.commons.administrativeOffice.pricesManagement.PricesManagementDispatchAction$ExecutionYearBean">
-				<fr:slot name="executionYear" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR.executionYear" layout="menu-select-postback">
+				<fr:slot name="executionYear" key="label.org.fenixedu.academic.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR.executionYear" layout="menu-select-postback">
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsForAcademicServiceRequestProvider" />
 					<fr:property name="format" value="${year}" />
 					<fr:property name="postback" value="postback" />

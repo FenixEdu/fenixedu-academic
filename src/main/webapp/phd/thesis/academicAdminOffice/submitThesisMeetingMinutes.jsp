@@ -94,8 +94,8 @@
 	<fr:edit id="meetingBean.edit.document" name="meetingBean" property="document">
 	
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
-			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
-			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
+			<fr:slot name="type" readOnly="true" key="label.org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
+			<fr:slot name="file" key="label.org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean.file">
 				<fr:property name="fileNameSlot" value="filename"/>
 				<fr:property name="size" value="20"/>
 			</fr:slot>

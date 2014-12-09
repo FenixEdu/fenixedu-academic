@@ -37,7 +37,7 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
                         if (toAdd != null && shift != null) {
                             if (shift.getRoomByName(toAdd.getName()) != null) {
                                 throw new DomainException(
-                                        "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.already.contains.room.with.same.name");
+                                        "error.org.fenixedu.academic.domain.candidacy.MeasurementTestShift.already.contains.room.with.same.name");
                             }
 
                         }
@@ -64,18 +64,18 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
         String[] args = {};
 
         if (shift == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom.shift.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.candidacy.MeasurementTestRoom.shift.cannot.be.null",
                     args);
         }
         String[] args2 = {};
         if (name == null || name.isEmpty()) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom.name.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.candidacy.MeasurementTestRoom.name.cannot.be.null",
                     args2);
         }
         String[] args1 = {};
         if (capacity == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom.capacity.cannot.be.null", args1);
+                    "error.org.fenixedu.academic.domain.candidacy.MeasurementTestRoom.capacity.cannot.be.null", args1);
         }
 
         setRoomOrder(shift.getRoomsSet().size() + 1);

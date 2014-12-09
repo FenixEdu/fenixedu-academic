@@ -50,17 +50,17 @@
 	<fr:view name="phdCandidacyPeriods">
 		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod">
 			<fr:slot name="type" />
-			<fr:slot name="executionInterval.name" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod.executionYear"/>
+			<fr:slot name="executionInterval.name" key="label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod.executionYear"/>
 			<fr:slot name="start" />
 			<fr:slot name="end" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
 	
-			<fr:link 	label="link.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod.view,PHD_RESOURCES" 
+			<fr:link 	label="link.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod.view,PHD_RESOURCES" 
 						name="view"
 						link="/phdCandidacyPeriodManagement.do?method=view&amp;phdCandidacyPeriodId=${externalId}" />
-			<fr:link 	label="link.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod.edit,PHD_RESOURCES" 
+			<fr:link 	label="link.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod.edit,PHD_RESOURCES" 
 						name="edit"
 						link="/phdCandidacyPeriodManagement.do?method=prepareEditPhdCandidacyPeriod&amp;phdCandidacyPeriodId=${externalId}" />
 		</fr:layout>
@@ -69,6 +69,6 @@
 
 <p>
 	<html:link action="/phdCandidacyPeriodManagement.do?method=prepareCreatePhdCandidacyPeriod">
-		<bean:message key="link.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod.create" bundle="PHD_RESOURCES" />
+		<bean:message key="link.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod.create" bundle="PHD_RESOURCES" />
 	</html:link>
 </p>

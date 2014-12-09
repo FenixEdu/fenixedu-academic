@@ -456,29 +456,29 @@
 
 
 <schema name="PhdProgramGuiding.view" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
-	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle">
+	<slot name="nameWithTitle" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
-	<slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
-	<slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>
-	<slot name="workLocation" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.workLocation"/>
-	<slot name="institution" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.institution"/>
-	<slot name="address" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.address"/>
-	<slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
-	<slot name="phone" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.phone"/>
+	<slot name="qualification" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.qualification"/>
+	<slot name="category" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.category"/>
+	<slot name="workLocation" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.workLocation"/>
+	<slot name="institution" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.institution"/>
+	<slot name="address" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.address"/>
+	<slot name="email" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.email"/>
+	<slot name="phone" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.phone"/>
 </schema>
 
 <schema name="PhdCandidacyFeedbackRequestElement.PhdProgramGuiding.view" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
-	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle"/>
-	<slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
-	<slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
+	<slot name="nameWithTitle" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.nameWithTitle"/>
+	<slot name="qualification" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.qualification"/>
+	<slot name="email" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.email"/>
 </schema>
 
 <schema name="PhdProgramGuiding.view.simple" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
-	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle">
+	<slot name="nameWithTitle" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
-	<slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
+	<slot name="qualification" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.qualification"/>
 </schema>
 
 <schema name="PhdProgramGuidingBean.select.type" type="org.fenixedu.academic.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
@@ -1278,7 +1278,7 @@
 	<slot name="whenRequestJury" />
 	<slot name="whenReceivedJury" />
 	<slot name="whenJuryValidated" />
-	<slot name="individualProgramProcess.thesisTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.thesisTitle" />
+	<slot name="individualProgramProcess.thesisTitle" key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.thesisTitle" />
 	<slot name="phdMeetingSchedulingActiveState" layout="phd-enum-renderer"/>
 	<slot name="discussionDate" />
 	<slot name="discussionPlace" />
@@ -1335,33 +1335,33 @@
 </schema>
 
 <schema name="PhdParticipant.view.name.with.title" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
-	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle"/>
+	<slot name="nameWithTitle" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.nameWithTitle"/>
 </schema>
 
 <schema name="PhdAcademicServiceRequest.new.situation-PROCESSING" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
-	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
+	<slot name="whenNewSituationOccured" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
 </schema>
 
 <schema name="PhdAcademicServiceRequest.new.situation-CANCELLED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
-	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+	<slot name="justification" required="true" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
 <schema name="PhdAcademicServiceRequest.new.situation-REJECTED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
-	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+	<slot name="justification" required="true" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
 <schema name="PhdAcademicServiceRequest.new.situation-CONCLUDED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
-	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
-	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+	<slot name="whenNewSituationOccured" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
+	<slot name="justification" required="true" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
 <schema name="PhdAcademicServiceRequest.new.situation-RECEIVED_FROM_EXTERNAL_ENTITY" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
-	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" required="true"/>
-	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+	<slot name="whenNewSituationOccured" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" required="true"/>
+	<slot name="justification" required="true" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
 <schema name="PhdAcademicServiceRequest.new.situation-DELIVERED" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
-	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
+	<slot name="whenNewSituationOccured" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
 </schema>
 
 <schema name="PhdIndividualProgramProcessEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean">

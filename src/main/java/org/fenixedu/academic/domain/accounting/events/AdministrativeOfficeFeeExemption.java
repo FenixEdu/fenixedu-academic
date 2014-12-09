@@ -43,7 +43,7 @@ public class AdministrativeOfficeFeeExemption extends AdministrativeOfficeFeeExe
                             (AdministrativeOfficeFeeAndInsuranceEvent) event;
                     if (administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
                         throw new DomainException(
-                                "error.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.event.already.has.exemption");
+                                "error.org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.event.already.has.exemption");
 
                     }
                 }

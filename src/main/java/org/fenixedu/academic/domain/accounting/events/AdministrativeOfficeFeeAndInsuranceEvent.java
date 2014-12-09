@@ -73,7 +73,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
                     if (person.hasAdministrativeOfficeFeeInsuranceEventFor(administrativeOfficeFeeAndInsuranceEvent
                             .getExecutionYear())) {
                         throw new DomainException(
-                                "error.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.event.is.already.defined.for.execution.year");
+                                "error.org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.event.is.already.defined.for.execution.year");
 
                     }
 
@@ -371,7 +371,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     public void setPaymentEndDate(YearMonthDay paymentEndDate) {
         if (!isOpen()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.payment.end.date.can.only.be.modified.on.open.events");
+                    "error.org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.payment.end.date.can.only.be.modified.on.open.events");
         }
 
         super.setPaymentEndDate(paymentEndDate);
@@ -476,7 +476,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
             return isCancelled();
         } else {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
         }
     }
 

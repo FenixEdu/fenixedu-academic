@@ -75,10 +75,10 @@
 	
 	<table class="tstyle2 thlight mtop10">
 		<tr>
-			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.name" bundle="PHD_RESOURCES" /></th>
-			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.ectsCredits" bundle="PHD_RESOURCES" /></th>
-			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.executionPeriod.qualifiedName" bundle="PHD_RESOURCES" /></th>
-			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.enrolmentCondition" bundle="PHD_RESOURCES" /></th>
+			<th><bean:message key="label.org.fenixedu.academic.domain.Enrolment.name" bundle="PHD_RESOURCES" /></th>
+			<th><bean:message key="label.org.fenixedu.academic.domain.Enrolment.ectsCredits" bundle="PHD_RESOURCES" /></th>
+			<th><bean:message key="label.org.fenixedu.academic.domain.Enrolment.executionPeriod.qualifiedName" bundle="PHD_RESOURCES" /></th>
+			<th><bean:message key="label.org.fenixedu.academic.domain.Enrolment.enrolmentCondition" bundle="PHD_RESOURCES" /></th>
 		</tr>
 		<logic:iterate id="enrolment" name="manageEnrolmentsBean" property="enrolmentsPerformedByStudent">
 			<tr>

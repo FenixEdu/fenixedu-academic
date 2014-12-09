@@ -98,15 +98,15 @@
 	<fr:view name="serviceRequestSituations">
 
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= AcademicServiceRequestSituation.class.getName() %>">
-			<fr:slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType">
+			<fr:slot name="academicServiceRequestSituationType" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType">
 			</fr:slot>
 			<fr:slot name="finalSituationDate" key="label.date"/>
-			<fr:slot name="creator" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
+			<fr:slot name="creator" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 				<fr:property name="label" value=" - "/>
 				<fr:property name="subLayout" value="values"/>
 				<fr:property name="subSchema" value="responsible.name"/>
 			</fr:slot>
-			<fr:slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
+			<fr:slot name="justification" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.justification" />
 		</fr:schema>
 
 		<fr:layout name="tabular">

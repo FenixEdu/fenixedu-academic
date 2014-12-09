@@ -93,7 +93,7 @@
 			
 			<fr:link 	name="replaceDocument" 
 						link="<%= "/phdThesisProcess.do?method=prepareReplaceDocument&type=${documentType}&processId=" + processId %>" 
-						label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.replace,PHD_RESOURCES" order="1" 
+						label="link.org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean.replace,PHD_RESOURCES" order="1" 
 						condition="replaceable"/>
 				
 			<fr:property name="linkFormat(delete)" value="/phdThesisProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>

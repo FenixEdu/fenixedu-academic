@@ -60,15 +60,15 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     private void checkParameters(String code, String name, District district) {
 
         if (code == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.DistrictSubdivision.code.cannot.be.null");
+            throw new DomainException("error.org.fenixedu.academic.domain.DistrictSubdivision.code.cannot.be.null");
         }
 
         if (name == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.DistrictSubdivision.name.cannot.be.null");
+            throw new DomainException("error.org.fenixedu.academic.domain.DistrictSubdivision.name.cannot.be.null");
         }
 
         if (district == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.DistrictSubdivision.district.cannot.be.null");
+            throw new DomainException("error.org.fenixedu.academic.domain.DistrictSubdivision.district.cannot.be.null");
         }
 
     }

@@ -50,10 +50,10 @@
 <logic:notEmpty name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
 	<fr:view name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
 		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest">
-			<fr:slot name="serviceRequestNumberYear" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />
-			<fr:slot name="description" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
-			<fr:slot name="requestDate" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.requestDate" />
-			<fr:slot name="activeSituation.academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.activeSituation" />
+			<fr:slot name="serviceRequestNumberYear" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />
+			<fr:slot name="description" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
+			<fr:slot name="requestDate" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.requestDate" />
+			<fr:slot name="activeSituation.academicServiceRequestSituationType" key="label.org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest.activeSituation" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />

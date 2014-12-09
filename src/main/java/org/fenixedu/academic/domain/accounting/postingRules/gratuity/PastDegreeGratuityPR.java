@@ -78,7 +78,7 @@ public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
 
         if (entryDTOs.size() != 1) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR.invalid.number.of.entryDTOs");
+                    "error.org.fenixedu.academic.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR.invalid.number.of.entryDTOs");
         }
 
         checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());

@@ -105,11 +105,11 @@
 	<logic:notEqual name="size" value="0">
 		<table class="tstyle2 thlight thleft">
 			<tr>
-				<th class="col1"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
-				<th class="col2"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
+				<th class="col1"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
+				<th class="col2"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
 				<th class="col3"><bean:message key="label.phd.messages" bundle="PHD_RESOURCES"/></th>
-				<th class="col4"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
-				<th class="col5"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
+				<th class="col4"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
+				<th class="col5"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
 				<th class="col7"></th>
 			</tr>
 			<logic:iterate id="process" name="processList">
@@ -166,12 +166,12 @@
 	<logic:notEqual name="size" value="0">
 		<table class="tstyle2 thlight thleft">
 			<tr>
-				<th class="col1"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
-				<th class="col2"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
+				<th class="col1"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
+				<th class="col2"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
 				<th class="col3"><bean:message key="label.phd.messages" bundle="PHD_RESOURCES"/></th>
-				<th class="col4"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
-				<th class="col5"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
-				<th class="col6"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.seminarProcess.activeState" bundle="PHD_RESOURCES"/></th>
+				<th class="col4"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
+				<th class="col5"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
+				<th class="col6"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.seminarProcess.activeState" bundle="PHD_RESOURCES"/></th>
 				<th class="col7"></th>
 			</tr>
 			<logic:iterate id="process" name="processList">
@@ -228,11 +228,11 @@
 	<logic:notEqual name="size" value="0">
 		<table class="tstyle2 thlight thleft">
 			<tr>
-				<th class="col1"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
-				<th class="col2"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
+				<th class="col1"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
+				<th class="col2"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
 				<th class="col3"><bean:message key="label.phd.messages" bundle="PHD_RESOURCES"/></th>
-				<th class="col4"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
-				<th class="col5"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
+				<th class="col4"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
+				<th class="col5"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
 				<th class="col7"></th>
 			</tr>
 			<logic:iterate id="process" name="processList">
@@ -288,11 +288,11 @@
 <logic:notEqual name="size" value="0">
 	<table class="tstyle2 thlight thleft">
 		<tr>
-			<th class="col1"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
-			<th class="col2"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
+			<th class="col1"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
+			<th class="col2"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
 			<th class="col3"><bean:message key="label.phd.messages" bundle="PHD_RESOURCES"/></th>
-			<th class="col4"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
-			<th class="col5"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
+			<th class="col4"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
+			<th class="col5"><bean:message key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
 			<th class="col7"></th>
 		</tr>
 		<logic:iterate id="process" name="processList">

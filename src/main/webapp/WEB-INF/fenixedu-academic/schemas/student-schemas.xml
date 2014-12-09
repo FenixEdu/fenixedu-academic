@@ -179,7 +179,7 @@
 <schema name="CycleEnrolmentBean.showAffinityToEnrol.source" 
 		type="org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean" bundle="APPLICATION_RESOURCES">
 	<slot name="sourceCycle.name" key="cycleCurriculumGroup" />
-	<slot name="sourceCycle.degreeCurricularPlanOfDegreeModule" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
+	<slot name="sourceCycle.degreeCurricularPlanOfDegreeModule" layout="format" key="label.org.fenixedu.academic.domain.DegreeCurricularPlan.degree.name">
 		<property name="format" value="${degree.name} - ${name}"/>
 	</slot>
 	<slot name="sourceCycle.concluded" key="label.student.curricular.plan.state">
@@ -192,7 +192,7 @@
 		type="org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="cycleCourseGroupToEnrol.name" key="cycleCurriculumGroup" />
-	<slot name="cycleCourseGroupToEnrol.parentDegreeCurricularPlan" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
+	<slot name="cycleCourseGroupToEnrol.parentDegreeCurricularPlan" layout="format" key="label.org.fenixedu.academic.domain.DegreeCurricularPlan.degree.name">
 		<property name="format" value="${degree.name} - ${name}"/>
 	</slot>
 </schema>

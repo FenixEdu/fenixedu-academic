@@ -36,7 +36,7 @@ public class ExternalPhdStudyPlanEntry extends ExternalPhdStudyPlanEntry_Base {
         String[] args = {};
         if (courseName == null || courseName.isEmpty()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.ExternalPhdStudyPlanEntry.courseName.cannot.be.null", args);
+                    "error.org.fenixedu.academic.domain.phd.ExternalPhdStudyPlanEntry.courseName.cannot.be.null", args);
         }
 
         super.setCourseName(courseName);
@@ -47,7 +47,7 @@ public class ExternalPhdStudyPlanEntry extends ExternalPhdStudyPlanEntry_Base {
 
     @Override
     public void setCourseName(String courseName) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.ExternalPhdStudyPlanEntry.cannot.modify.courseName");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.ExternalPhdStudyPlanEntry.cannot.modify.courseName");
     }
 
     @Override

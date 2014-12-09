@@ -53,7 +53,7 @@
 </p>
 
 <logic:empty name="phdProgram" property="phdProgramContextPeriods">
-	<em><bean:message key="message.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.empty" bundle="PHD_RESOURCES" /></em>
+	<em><bean:message key="message.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.empty" bundle="PHD_RESOURCES" /></em>
 </logic:empty>
 
 <logic:notEmpty name="phdProgram" property="phdProgramContextPeriods">
@@ -67,9 +67,9 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
 	
-			<fr:link 	label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.remove,PHD_RESOURCES" 
+			<fr:link 	label="link.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.remove,PHD_RESOURCES" 
 						name="remove"
-						confirmation="message.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.remove.confirmation,PHD_RESOURCES"
+						confirmation="message.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.remove.confirmation,PHD_RESOURCES"
 						link="<%= "/phdProgram.do?method=removePhdProgramPeriod&amp;phdProgramContextPeriodId=${externalId}&amp;phdProgramId=" + phdProgramId %>"/>
 		</fr:layout>
 	</fr:view>
@@ -77,6 +77,6 @@
 
 <p>
 	<html:link action="/phdProgram.do?method=prepareAddPhdProgramPeriod" paramId="phdProgramId"  paramName="phdProgram" paramProperty="externalId" >
-		<bean:message key="link.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.add.period" bundle="PHD_RESOURCES" />
+		<bean:message key="link.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.add.period" bundle="PHD_RESOURCES" />
 	</html:link>
 </p>

@@ -23,40 +23,40 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="forum.view-full" type="org.fenixedu.academic.domain.messaging.Forum">
-	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name">
+	<slot name="name" key="label.org.fenixedu.academic.domain.messaging.Forum.name">
 		<property name="classes" value="bold"/>
 	</slot>
-	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
+	<slot name="description" key="label.org.fenixedu.academic.domain.messaging.Forum.description"/>
 	<slot name="conversationThreadCount" key="label.forum.totalConversationThreads"/>
 	<slot name="conversationMessagesCount" key="label.forum.totalConversationMessages"/>
-	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate"/>
+	<slot name="creationDate" key="label.org.fenixedu.academic.domain.messaging.Forum.creationDate"/>
 	
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.create" type="org.fenixedu.academic.domain.messaging.ConversationThread">
-   	<slot name="title" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+   	<slot name="title" key="label.org.fenixedu.academic.domain.messaging.ConversationThread.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-full" type="org.fenixedu.academic.domain.messaging.ConversationThread">
-   	<slot name="title" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" layout="link">
+   	<slot name="title" key="label.org.fenixedu.academic.domain.messaging.ConversationThread.subject" layout="link">
    		<property name="useParent" value="true"/>
    		<property name="destination" value="viewForum"/>
    	</slot>
-   	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creator" layout="person-email-identity">
+   	<slot name="creator" key="label.org.fenixedu.academic.domain.messaging.ConversationThread.creator" layout="person-email-identity">
 		<property name="collapsed" value="true"/>
 		<property name="text" value="name"/>
 		<property name="address" value="email"/>
 	</slot>
-   	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creationDate"/>
+   	<slot name="creationDate" key="label.org.fenixedu.academic.domain.messaging.ConversationThread.creationDate"/>
    	<slot name="messageCount" key="label.forum.ConversationMessages"/>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThreadAndMessage.create" type="org.fenixedu.academic.dto.messaging.CreateConversationThreadAndMessageBean">
-   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
+   	<slot name="subject" key="label.org.fenixedu.academic.domain.messaging.ConversationThread.subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>
 		<property name="maxLength" value="255" />
    	</slot>
-   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
+   	<slot name="body" key="label.org.fenixedu.academic.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
@@ -65,7 +65,7 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationMessage.create" type="org.fenixedu.academic.dto.messaging.CreateConversationMessageBean">
-   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
+   	<slot name="body" key="label.org.fenixedu.academic.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 	   	<property name="safe" value="true" />
 	   	<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
@@ -75,27 +75,27 @@
 
 
 <schema bundle="MESSAGING_RESOURCES" name="forum.view-with-name-description-and-creation-date" type="org.fenixedu.academic.domain.messaging.Forum">
-	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name"/>
-	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
-	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate"/>
+	<slot name="name" key="label.org.fenixedu.academic.domain.messaging.Forum.name"/>
+	<slot name="description" key="label.org.fenixedu.academic.domain.messaging.Forum.description"/>
+	<slot name="creationDate" key="label.org.fenixedu.academic.domain.messaging.Forum.creationDate"/>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-with-subject-creation-date-and-message-count" type="org.fenixedu.academic.domain.messaging.ConversationThread">
-	<slot name="title" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject">
+	<slot name="title" key="label.org.fenixedu.academic.domain.messaging.ConversationThread.subject">
 		<property name="classes" value="bold" />	
 	</slot>
-	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creationDate"/>
+	<slot name="creationDate" key="label.org.fenixedu.academic.domain.messaging.ConversationThread.creationDate"/>
 	<slot name="messageCount" key="label.forum.totalConversationMessages"/>	
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationMessage.view-with-author-creationDate-and-body" type="org.fenixedu.academic.domain.messaging.ConversationMessage">
-	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.creator" layout="person-email-identity">
+	<slot name="creator" key="label.org.fenixedu.academic.domain.messaging.ConversationMessage.creator" layout="person-email-identity">
 		<property name="collapsed" value="false"/>
 		<property name="text" value="name"/>
 		<property name="address" value="email"/>
 	</slot>
-	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.creationDate"/>
-	<slot name="body" layout="html" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body"/>	
+	<slot name="creationDate" key="label.org.fenixedu.academic.domain.messaging.ConversationMessage.creationDate"/>
+	<slot name="body" layout="html" key="label.org.fenixedu.academic.domain.messaging.ConversationMessage.body"/>	
 </schema>
 
 <schema name="researchUnitGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">

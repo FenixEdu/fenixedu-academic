@@ -56,7 +56,7 @@ abstract public class VerifyRuleExecutor {
 
         if (!rootOrCycleCurriculumGroup.isCycleCourseGroup() && !rootOrCycleCurriculumGroup.isRoot()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor.parent.course.group.should.be.root.or.cycle.course.group");
+                    "error.org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor.parent.course.group.should.be.root.or.cycle.course.group");
         }
 
         if (verifyRuleLevel == VerifyRuleLevel.ENROLMENT_WITH_RULES) {
@@ -69,7 +69,7 @@ abstract public class VerifyRuleExecutor {
                     rootOrCycleCurriculumGroup);
         } else {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor.invalid.verify.level");
+                    "error.org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor.invalid.verify.level");
         }
     }
 

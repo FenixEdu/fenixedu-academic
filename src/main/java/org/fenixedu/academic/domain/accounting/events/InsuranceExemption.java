@@ -44,12 +44,12 @@ public class InsuranceExemption extends InsuranceExemption_Base {
                     if (annualEvent.isInsuranceEvent()) {
                         if (((InsuranceEvent) annualEvent).hasInsuranceExemption()) {
                             throw new DomainException(
-                                    "error.net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption.event.already.has.exemption");
+                                    "error.org.fenixedu.academic.domain.accounting.events.InsuranceExemption.event.already.has.exemption");
                         }
                     } else if (annualEvent.isAdministrativeOfficeAndInsuranceEvent()) {
                         if (((AdministrativeOfficeFeeAndInsuranceEvent) annualEvent).hasInsuranceExemption()) {
                             throw new DomainException(
-                                    "error.net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption.event.already.has.exemption");
+                                    "error.org.fenixedu.academic.domain.accounting.events.InsuranceExemption.event.already.has.exemption");
                         }
                     }
                 }

@@ -139,7 +139,7 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 
     @Override
     public void setPerson(Person student) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.person");
     }
 
     protected void _setPerson(Person person) {

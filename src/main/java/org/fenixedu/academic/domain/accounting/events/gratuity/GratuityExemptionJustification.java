@@ -53,7 +53,7 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
     @Override
     public void setGratuityExemptionJustificationType(GratuityExemptionJustificationType gratuityExemptionJustificationType) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustification.cannot.modify.gratuityExemptionJustificationType");
+                "error.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustification.cannot.modify.gratuityExemptionJustificationType");
     }
 
     @Override

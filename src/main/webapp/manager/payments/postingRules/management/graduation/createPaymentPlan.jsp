@@ -77,7 +77,7 @@
 
 
 	<strong>
-		<bean:message  key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean.installments" bundle="APPLICATION_RESOURCES"/>
+		<bean:message  key="label.org.fenixedu.academic.dto.accounting.paymentPlan.PaymentPlanBean.installments" bundle="APPLICATION_RESOURCES"/>
 	</strong>
 	<br/>
 	<logic:empty name="paymentPlanEditor" property="installments">

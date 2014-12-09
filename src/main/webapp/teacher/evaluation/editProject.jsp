@@ -42,7 +42,7 @@
 			<h:panelGrid columns="2" styleClass="tstyle5" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>
-					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: " />
+					<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.name']}: " />
 				</h:panelGroup>	
 				<h:panelGroup>
 					<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="35" value="#{projectManagementBackingBean.name}" />			
@@ -50,7 +50,7 @@
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>				
-					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}: " />
+					<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.projectBeginDateTime']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:inputText alt="#{htmlAltBundle['inputText.beginProjectDate']}" id="beginDate" required="true" maxlength="10" size="10" value="#{projectManagementBackingBean.beginProjectDate}" />
@@ -62,7 +62,7 @@
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>					
-					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}: " />
+					<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.projectEndDateTime']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:inputText alt="#{htmlAltBundle['inputText.endProjectDate']}" id="endDate" required="true" maxlength="10" size="10" value="#{projectManagementBackingBean.endProjectDate}" />
@@ -78,29 +78,29 @@
 					<f:selectItems value="#{projectManagementBackingBean.gradeScaleOptions}"/>
 				</h:selectOneMenu>
 						
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.description']}: " />
+				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.description']}: " />
 				<h:inputTextarea rows="4" cols="40" value="#{projectManagementBackingBean.description}" />
 				
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.onlineSubmissionsAllowed']}:" />
+				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.onlineSubmissionsAllowed']}:" />
 				<h:panelGroup>
 					<h:selectBooleanCheckbox id="onlineSubmissionsAllowed" required="true" value="#{projectManagementBackingBean.onlineSubmissionsAllowed}" />
 					<h:message for="onlineSubmissionsAllowed" styleClass="error"/>
 				</h:panelGroup>
 
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.maxSubmissionsToKeep']}:" />				
+				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.maxSubmissionsToKeep']}:" />				
 				<h:panelGroup>
 					<h:inputText alt="#{htmlAltBundle['inputText.maxSubmissionsToKeep']}" id="maxSubmissionsToKeep" required="false" value="#{projectManagementBackingBean.maxSubmissionsToKeep}" maxlength="2" size="2"/>
 					<h:message for="maxSubmissionsToKeep" styleClass="error"/>
 				</h:panelGroup>
 				
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.grouping.name']}:" />
+				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.grouping.name']}:" />
 				<h:panelGroup>
 					<h:selectOneMenu id="groupingID" value="#{projectManagementBackingBean.groupingID}">
 						<f:selectItems value="#{projectManagementBackingBean.executionCourseGroupings}"/>
 					</h:selectOneMenu>
 					<h:message for="groupingID" styleClass="error"/>
 				</h:panelGroup>
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.deparments']}:" />
+				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.deparments']}:" />
 				<h:panelGroup>
 					<h:selectManyCheckbox id="departments" value="#{projectManagementBackingBean.selectedDepartments}" layout="pageDirection">
 						<f:selectItems value="#{projectManagementBackingBean.departments}"/>

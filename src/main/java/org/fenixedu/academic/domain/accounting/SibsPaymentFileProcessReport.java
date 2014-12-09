@@ -93,7 +93,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
         if (SibsPaymentFileProcessReport.readBy(sibsPaymentFileProcessReportDTO.getWhenProcessedBySibs(),
                 sibsPaymentFileProcessReportDTO.getFileVersion()) != null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport.file.already.processed");
+                    "error.org.fenixedu.academic.domain.accounting.SibsPaymentFileProcessReport.file.already.processed");
         }
 
     }
@@ -102,17 +102,17 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 
         if (sibsPaymentFileProcessReportDTO.getFilename() == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport.filename.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.SibsPaymentFileProcessReport.filename.cannot.be.null");
         }
 
         if (sibsPaymentFileProcessReportDTO.getWhenProcessedBySibs() == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport.whenProcessedBySibs.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.SibsPaymentFileProcessReport.whenProcessedBySibs.cannot.be.null");
         }
 
         if (sibsPaymentFileProcessReportDTO.getFileVersion() == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport.fileVersion.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.SibsPaymentFileProcessReport.fileVersion.cannot.be.null");
         }
     }
 

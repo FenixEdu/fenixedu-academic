@@ -59,11 +59,11 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
     protected void init(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan) {
         String[] args = {};
         if (type == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry.type.cannot.be.null", args);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlanEntry.type.cannot.be.null", args);
         }
         String[] args1 = {};
         if (studyPlan == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry.studyPlan.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlanEntry.studyPlan.cannot.be.null",
                     args1);
         }
 

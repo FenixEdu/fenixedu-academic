@@ -56,7 +56,7 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
 
-		<fr:link 	label="link.net.sourceforge.fenixedu.domain.phd.PhdProgram.view,PHD_RESOURCES" 
+		<fr:link 	label="link.org.fenixedu.academic.domain.phd.PhdProgram.view,PHD_RESOURCES" 
 					name="view"
 					link="/phdProgramInformation.do?method=listPhdProgramInformations&amp;phdProgramId=${externalId}" />
 	</fr:layout>

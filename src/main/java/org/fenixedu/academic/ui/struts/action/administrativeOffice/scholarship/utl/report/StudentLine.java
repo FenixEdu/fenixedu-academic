@@ -1088,7 +1088,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
                 .format(BundleUtil
                         .getString(
                                 Bundle.ACADEMIC,
-                                "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
+                                "label.org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
                         Unit.getInstitutionName().getContent());
     }
 
@@ -1096,7 +1096,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
         return BundleUtil
                 .getString(
                         Bundle.ACADEMIC,
-                        "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionCode");
+                        "label.org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionCode");
     }
 
     private Registration getActiveRegistration(Student student) {

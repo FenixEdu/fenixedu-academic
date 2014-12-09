@@ -182,7 +182,7 @@
 		<td colspan="6" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.average.atribution"/></td>
 	</tr>
 	<tr>
-		<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/></td>
+		<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/></td>
 		<td style="padding: 5px;"><bean:write name="registrationConclusionBean" property="average"/></td>		
 		
 		<logic:equal name="registration" property="degreeType" value="MASTER_DEGREE">
@@ -190,7 +190,7 @@
 		</logic:equal>
 	</tr>
 	<tr>
-		<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.registration.averageType"/></td>
+		<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.registration.averageType"/></td>
 		<bean:define id="averageType">
 			<bean:write name="registrationConclusionBean" property="registration.averageType.qualifiedName"/>
 		</bean:define>	

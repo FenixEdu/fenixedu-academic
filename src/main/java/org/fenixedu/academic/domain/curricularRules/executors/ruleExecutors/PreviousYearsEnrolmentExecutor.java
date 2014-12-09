@@ -86,7 +86,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
                 double creditsMissing = ectsCredits - this.ectsCredits;
                 if (this.parentContext == null) {
                     throw new DomainException(
-                            "error.net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CollectContext.parentContent.is.expected");
+                            "error.org.fenixedu.academic.domain.curricularRules.ruleExecutors.CollectContext.parentContent.is.expected");
                 }
 
                 this.parentContext.useCredits(creditsMissing);

@@ -210,7 +210,7 @@
 		
 		<p>
 			<html:link target="_blank" page="/phdIndividualProgramProcess.do?method=viewProcess"  paramId="processId" paramName="phdProcess" paramProperty="externalId">
-				<bean:message key="link.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.view" bundle="PHD_RESOURCES" />
+				<bean:message key="link.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.view" bundle="PHD_RESOURCES" />
 			</html:link>
 		</p>
 		</academic:allowed>

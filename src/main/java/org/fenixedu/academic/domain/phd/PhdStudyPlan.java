@@ -46,7 +46,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
                         if (studyPlan != null && process != null) {
                             if (process.getStudyPlan() != null) {
                                 throw new DomainException(
-                                        "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
+                                        "error.org.fenixedu.academic.domain.phd.PhdStudyPlan.process.already.has.study.play");
                             }
                         }
 
@@ -73,7 +73,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
         String[] args = {};
         if (process == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.cannot.be.null", args);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlan.process.cannot.be.null", args);
         }
         super.setProcess(process);
 
@@ -86,11 +86,11 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
         if (!exempted) {
             String[] args = {};
             if (degree == null) {
-                throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.cannot.be.null", args);
+                throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlan.degree.cannot.be.null", args);
             }
 
             if (!degree.isEmpty() && !degree.isDEA()) {
-                throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.must.be.of.type.DEA");
+                throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlan.degree.must.be.of.type.DEA");
             }
 
             super.setDegree(degree);
@@ -103,12 +103,12 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     @Override
     public void setProcess(PhdIndividualProgramProcess process) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.enclosing_type.cannot.modify.process");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.enclosing_type.cannot.modify.process");
     }
 
     @Override
     public void addEntries(PhdStudyPlanEntry entry) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.cannot.add.entry");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlan.cannot.add.entry");
     }
 
     @Override
@@ -118,7 +118,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     @Override
     public void removeEntries(PhdStudyPlanEntry entry) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.cannot.remove.entry");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlan.cannot.remove.entry");
     }
 
     public Set<PhdStudyPlanEntry> getNormalEntries() {

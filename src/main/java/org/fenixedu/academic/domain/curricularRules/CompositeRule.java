@@ -139,7 +139,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
     @Override
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.curricularRules.CompositeRule.does.not.support.createVerifyRuleExecutor");
+                "error.org.fenixedu.academic.domain.curricularRules.CompositeRule.does.not.support.createVerifyRuleExecutor");
     }
 
     @Override

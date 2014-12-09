@@ -41,7 +41,7 @@
 		<fr:view name="debts">
 			<fr:layout name="tabular">
 				<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdGratuityExternalScholarshipExemption">
-					<fr:slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
+					<fr:slot name="description" key="label.org.fenixedu.academic.domain.accounting.Event.description" />
 				</fr:schema>				
 				<fr:property name="linkFormat(liquidate)" value="/fctDebts.do?method=prepareLiquidation&exemptiontId=${externalId}" />
 				<fr:property name="key(liquidate)" value="label.payments.liquidate" />

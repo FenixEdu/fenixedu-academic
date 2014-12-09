@@ -38,14 +38,14 @@
 	<fr:edit id="searchBean-form" name="searchBean">
 		<fr:schema type="org.fenixedu.academic.ui.struts.action.manager.curricularCourses.SearchCurricularCourseBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="name" required="true" bundle="ACADEMIC_OFFICE_RESOURCES"
-					 key="label.net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean.name"/>
+					 key="label.org.fenixedu.academic.ui.struts.action.manager.curricularCourses.SearchCurricularCourseBean.name"/>
 			<fr:slot name="beginExecutionYear" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES"
-					 key="label.net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean.beginExecutionYear">
+					 key="label.org.fenixedu.academic.ui.struts.action.manager.curricularCourses.SearchCurricularCourseBean.beginExecutionYear">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
 			<fr:slot name="endExecutionYear" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES"
-					 key="label.net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean.endExecutionYear">
+					 key="label.org.fenixedu.academic.ui.struts.action.manager.curricularCourses.SearchCurricularCourseBean.endExecutionYear">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>

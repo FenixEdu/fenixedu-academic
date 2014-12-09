@@ -85,22 +85,22 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 
         if (administrativeOffice == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent.administrativeOffice.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent.administrativeOffice.cannot.be.null");
         }
 
         if (studentCurricularPlan == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent.studentCurricularPlan.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent.studentCurricularPlan.cannot.be.null");
         }
 
         if (executionSemester == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent.executionPeriod.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent.executionPeriod.cannot.be.null");
         }
 
         if (numberOfDelayDays == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent.numberOfDelayDays.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent.numberOfDelayDays.cannot.be.null");
         }
 
     }

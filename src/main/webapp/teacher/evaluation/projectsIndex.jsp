@@ -57,11 +57,11 @@
 					<h:outputText value="<div class='mtop15 mbottom2'>" escape="false" />
 					<h:outputText value="<b>#{project.name}</b>, " escape="false" />
 					
-					<h:outputText value="<span class='color888'>#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}:</span> " escape="false" />
+					<h:outputText value="<span class='color888'>#{bundle['label.org.fenixedu.academic.domain.Project.projectBeginDateTime']}:</span> " escape="false" />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.begin}" />
 					</h:outputFormat>
-					<h:outputText value=", <span class='color888'>#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}:</span> " escape="false" />
+					<h:outputText value=", <span class='color888'>#{bundle['label.org.fenixedu.academic.domain.Project.projectEndDateTime']}:</span> " escape="false" />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.end}" />
 					</h:outputFormat>

@@ -52,9 +52,9 @@
 		<fr:slot name="capacity" layout="null-as-label" />
 		<fr:slot name="comparisonGroup" layout="null-as-label" />
 		<fr:slot name="rankInClass" layout="null-as-label" />
-		<fr:slot name="academicPerformance.localizedName" layout="null-as-label" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.academicPerformance" />
-		<fr:slot name="socialAndCommunicationSkills.localizedName" layout="null-as-label" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.socialAndCommunicationSkills"/>
-		<fr:slot name="potencialToExcelPhd.localizedName" layout="null-as-label" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.potencialToExcelPhd" />
+		<fr:slot name="academicPerformance.localizedName" layout="null-as-label" key="label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.academicPerformance" />
+		<fr:slot name="socialAndCommunicationSkills.localizedName" layout="null-as-label" key="label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.socialAndCommunicationSkills"/>
+		<fr:slot name="potencialToExcelPhd.localizedName" layout="null-as-label" key="label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.potencialToExcelPhd" />
 		<fr:slot name="comments" layout="null-as-label" />
 		<fr:slot name="refereeName" layout="null-as-label" />
 		<fr:slot name="refereePosition" layout="null-as-label" />
@@ -62,7 +62,7 @@
 		<fr:slot name="refereeAddress" layout="null-as-label" />
 		<fr:slot name="refereeCity" layout="null-as-label" />
 		<fr:slot name="refereeZipCode" layout="null-as-label" />
-		<fr:slot name="refereeCountry.localizedName" layout="null-as-label" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCountry" />
+		<fr:slot name="refereeCountry.localizedName" layout="null-as-label" key="label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCountry" />
 	</fr:schema>
 
 	<fr:layout name="tabular">

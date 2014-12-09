@@ -61,15 +61,15 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         setMembers(TeacherGroup.get(executionCourse));
         final String labelECTeachers =
                 BundleUtil.getString(Bundle.SITE,
-                        "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroupWithName",
+                        "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseTeachersGroupWithName",
                         new String[] { executionCourse.getNome() });
         final String labelECStudents =
                 BundleUtil.getString(Bundle.SITE,
-                        "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroupWithName",
+                        "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseStudentsGroupWithName",
                         new String[] { executionCourse.getNome() });
         final String labelECResponsibleTeachers =
                 BundleUtil.getString(Bundle.SITE,
-                        "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
+                        "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
                         new String[] { executionCourse.getNome() });
         // fixed recipients
         addRecipients(new Recipient(labelECTeachers, TeacherGroup.get(executionCourse)));

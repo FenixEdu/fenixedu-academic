@@ -100,24 +100,24 @@ padding: 0.5em 1em;
 <logic:equal name="canEditPersonalInformation" value="true">
 	<fr:view name="pendingPartyContactBean">
 		<fr:schema type="org.fenixedu.academic.dto.contacts.PendingPartyContactBean" bundle="PHD_RESOURCES">
-			<fr:slot name="person.name" key="label.net.sourceforge.fenixedu.domain.Person.name" >
+			<fr:slot name="person.name" key="label.org.fenixedu.academic.domain.Person.name" >
 				<property name="classes" value="bold nowrap"/>
 			</fr:slot>
-			<fr:slot name="person.gender" key="label.net.sourceforge.fenixedu.domain.Person.gender" />
-			<fr:slot name="person.idDocumentType" key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" />
-			<fr:slot name="person.documentIdNumber" key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" />
-			<fr:slot name="person.emissionLocationOfDocumentId" key="label.net.sourceforge.fenixedu.domain.Person.emissionLocationOfDocumentId" />
-			<fr:slot name="person.socialSecurityNumber" key="label.net.sourceforge.fenixedu.domain.Person.socialSecurityNumber" />
-		   	<fr:slot name="person.dateOfBirth" key="label.net.sourceforge.fenixedu.domain.Person.dateOfBirth" />
-			<fr:slot name="person.districtSubdivisionOfBirth" key="label.net.sourceforge.fenixedu.domain.Person.districtSubdivisionOfBirth" />
-			<fr:slot name="person.nationality.countryNationality" key="label.net.sourceforge.fenixedu.domain.Person.nationality" />
-			<fr:slot name="defaultPhysicalAddress.address" key="label.net.sourceforge.fenixedu.domain.Person.address" />
-			<fr:slot name="defaultPhysicalAddress.area" key="label.net.sourceforge.fenixedu.domain.Person.area" />
-			<fr:slot name="defaultPhysicalAddress.areaCode" key="label.net.sourceforge.fenixedu.domain.Person.areaCode" />
-		    <fr:slot name="defaultPhysicalAddress.countryOfResidence.localizedName" key="label.net.sourceforge.fenixedu.domain.Person.countryOfResidence.localizedName" />
-			<fr:slot name="defaultPhone.number" key="label.net.sourceforge.fenixedu.domain.Person.phone" />
-			<fr:slot name="defaultMobilePhone.number" key="label.net.sourceforge.fenixedu.domain.Person.mobile" />
-			<fr:slot name="defaultEmailAddress.value" key="label.net.sourceforge.fenixedu.domain.Person.email" />
+			<fr:slot name="person.gender" key="label.org.fenixedu.academic.domain.Person.gender" />
+			<fr:slot name="person.idDocumentType" key="label.org.fenixedu.academic.domain.Person.idDocumentType" />
+			<fr:slot name="person.documentIdNumber" key="label.org.fenixedu.academic.domain.Person.documentIdNumber" />
+			<fr:slot name="person.emissionLocationOfDocumentId" key="label.org.fenixedu.academic.domain.Person.emissionLocationOfDocumentId" />
+			<fr:slot name="person.socialSecurityNumber" key="label.org.fenixedu.academic.domain.Person.socialSecurityNumber" />
+		   	<fr:slot name="person.dateOfBirth" key="label.org.fenixedu.academic.domain.Person.dateOfBirth" />
+			<fr:slot name="person.districtSubdivisionOfBirth" key="label.org.fenixedu.academic.domain.Person.districtSubdivisionOfBirth" />
+			<fr:slot name="person.nationality.countryNationality" key="label.org.fenixedu.academic.domain.Person.nationality" />
+			<fr:slot name="defaultPhysicalAddress.address" key="label.org.fenixedu.academic.domain.Person.address" />
+			<fr:slot name="defaultPhysicalAddress.area" key="label.org.fenixedu.academic.domain.Person.area" />
+			<fr:slot name="defaultPhysicalAddress.areaCode" key="label.org.fenixedu.academic.domain.Person.areaCode" />
+		    <fr:slot name="defaultPhysicalAddress.countryOfResidence.localizedName" key="label.org.fenixedu.academic.domain.Person.countryOfResidence.localizedName" />
+			<fr:slot name="defaultPhone.number" key="label.org.fenixedu.academic.domain.Person.phone" />
+			<fr:slot name="defaultMobilePhone.number" key="label.org.fenixedu.academic.domain.Person.mobile" />
+			<fr:slot name="defaultEmailAddress.value" key="label.org.fenixedu.academic.domain.Person.email" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="thlight thleft"/>

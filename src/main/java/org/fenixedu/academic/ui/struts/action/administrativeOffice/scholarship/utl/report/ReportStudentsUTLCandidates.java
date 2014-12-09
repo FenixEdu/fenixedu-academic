@@ -374,7 +374,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 
     protected String getHeaderInBundle(String field) {
         return BundleUtil.getString(Bundle.ACADEMIC,
-                "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.StudentLine."
+                "label.org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.StudentLine."
                         + field);
     }
 

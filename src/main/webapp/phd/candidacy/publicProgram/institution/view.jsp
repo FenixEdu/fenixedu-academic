@@ -297,7 +297,7 @@ max-width: 231px;
 			<fr:property name="subLayout" value="values" />
 			<fr:property name="subSchema" value="PhdProgram.name" />
 		</fr:slot>
-		<fr:slot name="thesisTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.thesis.title.proposed" />
+		<fr:slot name="thesisTitle" key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.thesis.title.proposed" />
 		<fr:slot name="executionYear" layout="format">
 			<fr:property name="format" value="${year}" />
 		</fr:slot>	

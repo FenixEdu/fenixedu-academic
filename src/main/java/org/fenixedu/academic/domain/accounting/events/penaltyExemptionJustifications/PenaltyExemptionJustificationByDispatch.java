@@ -60,7 +60,7 @@ public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJus
     @Override
     public void setPenaltyExemptionDispatchDate(YearMonthDay penaltyExemptionDispatchDate) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch.cannot.modify.penaltyExemptionDispatchDate");
+                "error.org.fenixedu.academic.domain.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch.cannot.modify.penaltyExemptionDispatchDate");
     }
 
     @Override

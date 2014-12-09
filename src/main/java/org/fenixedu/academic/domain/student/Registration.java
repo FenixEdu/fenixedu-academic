@@ -3134,7 +3134,7 @@ public class Registration extends Registration_Base {
     final public void setStudentCandidacy(StudentCandidacy studentCandidacy) {
         if (getStudentCandidacy() != null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.student.Registration.studentCandidacy.cannot.be.modified");
+                    "error.org.fenixedu.academic.domain.student.Registration.studentCandidacy.cannot.be.modified");
         }
 
         super.setStudentCandidacy(studentCandidacy);

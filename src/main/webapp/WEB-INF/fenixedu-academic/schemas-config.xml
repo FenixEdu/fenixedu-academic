@@ -514,13 +514,13 @@
 	    <slot name="description" layout="null-as-label">
 	    	<property name="label" value="-"/>
 	    </slot>
-	    <slot name="projectBeginDateTime" key="label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime"/>
-	    <slot name="projectEndDateTime" key="label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime"/>
+	    <slot name="projectBeginDateTime" key="label.org.fenixedu.academic.domain.Project.projectBeginDateTime"/>
+	    <slot name="projectEndDateTime" key="label.org.fenixedu.academic.domain.Project.projectEndDateTime"/>
    	    <slot name="grouping.name" />
 	</schema>
 	
 	<schema name="list.student.execution.periods" type="org.fenixedu.academic.dto.student.ManageStudentStatuteBean" bundle="APPLICATION_RESOURCES">
-	<slot name="executionPeriod" key="label.net.sourceforge.fenixedu.domain.ProjectSubmission.execution.semester" layout="menu-select-postback">
+	<slot name="executionPeriod" key="label.org.fenixedu.academic.domain.ProjectSubmission.execution.semester" layout="menu-select-postback">
     	<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider"/>
     	<property name="format" value="${year} - ${semester}º Sem."/>	
     	<property name="destination" value="postBack"/>

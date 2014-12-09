@@ -107,13 +107,13 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     private void checkParameters(final EquivalencePlan equivalencePlan) {
         if (equivalencePlan == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
+            throw new DomainException("error.org.fenixedu.academic.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
         }
     }
 
     @Override
     public void addNewDegreeModules(DegreeModule newDegreeModule) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.add.newDegreeModule");
+        throw new DomainException("error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.add.newDegreeModule");
     }
 
     public List<DegreeModule> getNewDegreeModulesSortedByType() {
@@ -141,12 +141,12 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     @Override
     public void removeNewDegreeModules(DegreeModule newDegreeModule) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.remove.newDegreeModule");
+        throw new DomainException("error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.remove.newDegreeModule");
     }
 
     @Override
     public void addOldDegreeModules(DegreeModule oldDegreeModules) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.add.oldDegreeModules");
+        throw new DomainException("error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.add.oldDegreeModules");
     }
 
     @Override
@@ -156,30 +156,30 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     @Override
     public void removeOldDegreeModules(DegreeModule oldDegreeModules) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.remove.oldDegreeModules");
+        throw new DomainException("error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.remove.oldDegreeModules");
     }
 
     @Override
     public void setPreviousCourseGroupForNewDegreeModules(CourseGroup previousCourseGroupForNewDegreeModules) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.previousCourseGroupForNewDegreeModules");
+                "error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.modify.previousCourseGroupForNewDegreeModules");
     }
 
     @Override
     public void setEctsCredits(Double ectsCredits) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.ectsCredits");
+        throw new DomainException("error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.modify.ectsCredits");
     }
 
     @Override
     public void setSourceDegreeModulesOperator(LogicOperator sourceDegreeModulesOperator) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.sourceDegreeModulesOperator");
+                "error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.modify.sourceDegreeModulesOperator");
     }
 
     @Override
     public void setNewDegreeModulesOperator(LogicOperator newDegreeModulesOperator) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.newDegreeModulesOperator");
+                "error.org.fenixedu.academic.domain.EquivalencePlanEntry.cannot.modify.newDegreeModulesOperator");
     }
 
     private boolean isOneCourseGroup(final Set<DegreeModule> degreeModules) {

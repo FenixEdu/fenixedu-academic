@@ -125,7 +125,7 @@ public class Entry extends Entry_Base {
 
     @Override
     public void removeReceipts(Receipt receipt) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Entry.cannot.remove.receipt");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.Entry.cannot.remove.receipt");
     }
 
     public void setActiveReceipt(Receipt receipt) {

@@ -120,46 +120,46 @@ public class RecommendationLetterReport extends PhdReport {
 
         addHeaderCell(
                 sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.howLongKnownApplicant"),
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.howLongKnownApplicant"),
                 4);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.capacity"), 5);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.capacity"), 5);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.comparisonGroup"), 6);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.comparisonGroup"), 6);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.rankInClass"), 7);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.rankInClass"), 7);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.academicPerformance"),
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.academicPerformance"),
                 8);
         addHeaderCell(
                 sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.socialAndCommunicationSkills"),
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.socialAndCommunicationSkills"),
                 9);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.potencialToExcelPhd"),
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.potencialToExcelPhd"),
                 10);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeName"), 11);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeName"), 11);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereePosition"), 12);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereePosition"), 12);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeInstitution"),
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeInstitution"),
                 13);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeAddress"), 14);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeAddress"), 14);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCity"), 15);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCity"), 15);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeZipCode"), 16);
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeZipCode"), 16);
         addHeaderCell(sheet,
-                getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCountry"), 17);
-        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.email"),
+                getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCountry"), 17);
+        addHeaderCell(sheet, getResource("label.org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter.email"),
                 18);
     }
 
     private String getHeaderInBundle(String field) {
         return BundleUtil.getString(Bundle.PHD,
-                "label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport." + field);
+                "label.org.fenixedu.academic.domain.phd.reports.PhdIndividualProgramProcessesReport." + field);
     }
 
     private String getResource(String key) {

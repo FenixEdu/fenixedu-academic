@@ -46,7 +46,7 @@
 
 <p>
 	<strong>
-		<bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.add.period" bundle="PHD_RESOURCES"/>
+		<bean:message key="label.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.add.period" bundle="PHD_RESOURCES"/>
 	</strong>
 </p>
 

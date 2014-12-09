@@ -194,9 +194,9 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction {
 
         BundleUtil.getString(Bundle.APPLICATION, "label.curricularPlan"),
 
-        BundleUtil.getString(Bundle.APPLICATION, "label.net.sourceforge.fenixedu.domain.student.Registration.startDate"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.org.fenixedu.academic.domain.student.Registration.startDate"),
 
-        BundleUtil.getString(Bundle.APPLICATION, "label.net.sourceforge.fenixedu.domain.student.Registration.conclusionDate"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.org.fenixedu.academic.domain.student.Registration.conclusionDate"),
 
         BundleUtil.getString(Bundle.APPLICATION, "label.student.curricular.plan.state"),
 

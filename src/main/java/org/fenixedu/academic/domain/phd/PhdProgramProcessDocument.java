@@ -115,7 +115,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         String[] args1 = {};
         if (uploader == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument.uploader.cannot.be.null",
+                    "error.org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessDocument.uploader.cannot.be.null",
                     args1);
         }
 

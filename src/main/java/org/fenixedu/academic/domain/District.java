@@ -53,11 +53,11 @@ public class District extends District_Base {
 
     private void checkParameters(final String code, final String name) {
         if (code == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.District.code.cannot.be.null");
+            throw new DomainException("error.org.fenixedu.academic.domain.District.code.cannot.be.null");
         }
 
         if (name == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.District.name.cannot.be.null");
+            throw new DomainException("error.org.fenixedu.academic.domain.District.name.cannot.be.null");
         }
     }
 

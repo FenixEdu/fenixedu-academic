@@ -304,7 +304,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 
         if (getGratuityValues().getEndPaymentYearMonthDay() == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.GratuitySituation.paymentMode.is.not.correctly.defined");
+                    "error.org.fenixedu.academic.domain.GratuitySituation.paymentMode.is.not.correctly.defined");
         }
 
         return getGratuityValues().getEndPaymentYearMonthDay();
@@ -339,12 +339,12 @@ public class GratuitySituation extends GratuitySituation_Base {
 
     @Override
     public void setTotalValue(Double value) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
+        throw new DomainException("error.org.fenixedu.academic.domain.GratuitySituation.cannot.modify.value");
     }
 
     @Override
     public void setRemainingValue(Double value) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
+        throw new DomainException("error.org.fenixedu.academic.domain.GratuitySituation.cannot.modify.value");
     }
 
     public void editPenaltyExemption(final Boolean hasPenaltyExemption, final String justification) {

@@ -67,7 +67,7 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
 
         if (endPeriod != null && !endPeriod.isAfter(beginPeriod)) {
             throw new PhdDomainOperationException(
-                    "error.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.endPeriod.is.after.of.beginPeriod");
+                    "error.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.endPeriod.is.after.of.beginPeriod");
         }
 
         checkOverlaps(phdProgram, beginPeriod, endPeriod);
@@ -81,7 +81,7 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
 
             if (period.overlaps(beginPeriod, endPeriod)) {
                 throw new PhdDomainOperationException(
-                        "error.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.period.is.overlaping.another");
+                        "error.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.period.is.overlaping.another");
             }
         }
     }
@@ -107,7 +107,7 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
     public void closePeriod(DateTime endPeriod) {
         if (endPeriod == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.endPeriod.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.endPeriod.cannot.be.null");
         }
 
         setEndDate(endPeriod);

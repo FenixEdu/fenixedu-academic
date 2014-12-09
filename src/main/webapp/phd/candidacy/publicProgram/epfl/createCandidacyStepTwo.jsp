@@ -82,7 +82,7 @@
 		<table class="tstyle2 thlight mtop15">
 			<tr>
 				<td class="aright"><bean:message key="label.order" bundle="PHD_RESOURCES"/></td>
-				<td><bean:message key="label.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name" bundle="PHD_RESOURCES"/></td>
+				<td><bean:message key="label.org.fenixedu.academic.domain.phd.ThesisSubject.name" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
 			</tr>

@@ -58,7 +58,7 @@ public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJ
     @Override
     public void setGratuityExemptionDispatchDate(YearMonthDay dispatchDate) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationByDispatch.cannot.modify.dispatchDate");
+                "error.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustificationByDispatch.cannot.modify.dispatchDate");
     }
 
     @Override

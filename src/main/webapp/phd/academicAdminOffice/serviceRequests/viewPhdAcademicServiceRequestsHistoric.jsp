@@ -49,21 +49,21 @@
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest">
 			<fr:slot name="requestDate" readOnly="true" key="label.requestDate" layout="no-time" />
 			<fr:slot name="activeSituationDate" readOnly="true" key="last.modification" layout="no-time" />
-			<fr:slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>	
+			<fr:slot name="urgentRequest" key="label.org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>	
 			<fr:slot name="campus" key="campus" layout="null-as-label">
 				<fr:property name="label" value="-"/>
 				<fr:property name="subLayout" value="spaceInformation-presentationName-label" />
 			</fr:slot>	    
 			<fr:slot name="serviceRequestNumberYear"  />
-			<fr:slot name="description" readOnly="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
+			<fr:slot name="description" readOnly="true" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.description"/>
 			<fr:slot name="executionYear" layout="null-as-label">
 		        <fr:property name="label" value="-"/>
 		        <fr:property name="subLayout" value="values"/>
 		        <fr:property name="subSchema" value="org.fenixedu.academic.domain.ExecutionYear.view"/>
 			</fr:slot>
-			<fr:slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />
+			<fr:slot name="freeProcessed" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />
 			<fr:slot name="language"/>	
-			<fr:slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
+			<fr:slot name="academicServiceRequestSituationType" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mtop0" />

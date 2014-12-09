@@ -42,7 +42,7 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
                         final GratuityEvent gratuityEvent = (GratuityEvent) event;
                         if (gratuityEvent.hasGratuityExemption()) {
                             throw new DomainException(
-                                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption.event.already.has.gratuity.exemption");
+                                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.event.already.has.gratuity.exemption");
                         }
 
                         final GratuityExemption gratuityExemption = (GratuityExemption) exemption;

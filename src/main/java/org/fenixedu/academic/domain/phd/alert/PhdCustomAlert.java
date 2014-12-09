@@ -64,7 +64,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         String[] args = {};
 
         if (whenToFire == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.whenToFire.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdCustomAlert.whenToFire.cannot.be.null",
                     args);
         }
         String[] args1 = {};
@@ -78,11 +78,11 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         String[] args3 = {};
         if (userDefined == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.userDefined.cannot.be.null", args3);
+                    "error.org.fenixedu.academic.domain.phd.alert.PhdCustomAlert.userDefined.cannot.be.null", args3);
         }
         String[] args4 = {};
         if (shared == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.shared.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdCustomAlert.shared.cannot.be.null",
                     args4);
         }
 

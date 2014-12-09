@@ -56,23 +56,23 @@ public class ThesisSubject extends ThesisSubject_Base {
             Teacher teacher) {
         String[] args = {};
         if (focusArea == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.focusArea.required", args);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.ThesisSubject.focusArea.required", args);
         }
 
         if (name == null) {
             String[] args1 = {};
             if (name == null) {
-                throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.required", args1);
+                throw new DomainException("error.org.fenixedu.academic.domain.phd.ThesisSubject.name.required", args1);
             }
         }
 
         if (!name.hasContent(MultiLanguageString.en)) {
             throw new PhdDomainOperationException(
-                    "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.in.english.required");
+                    "error.org.fenixedu.academic.domain.phd.ThesisSubject.name.in.english.required");
         }
 
         if (teacher == null) {
-            throw new PhdDomainOperationException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.teacher.required");
+            throw new PhdDomainOperationException("error.org.fenixedu.academic.domain.phd.ThesisSubject.teacher.required");
         }
     }
 

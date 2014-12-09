@@ -84,7 +84,7 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
         if (bean.getExecutionPeriod() == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest.executionPeriod.cannot.be.null");
+                    "error.org.fenixedu.academic.domain.serviceRequests.documentRequests.ExamDateCertificateRequest.executionPeriod.cannot.be.null");
         }
 
     }

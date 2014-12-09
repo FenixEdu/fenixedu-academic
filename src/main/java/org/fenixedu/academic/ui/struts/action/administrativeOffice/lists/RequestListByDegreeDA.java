@@ -319,7 +319,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
         spreadsheet.addHeader(getResourceMessage("label.serviceRequestNumber"));
         spreadsheet.addHeader(getResourceMessage("label.requestDate"));
         spreadsheet
-                .addHeader(getResourceMessage("label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"));
+                .addHeader(getResourceMessage("label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.description"));
         spreadsheet.addHeader(getResourceMessage("label.studentNumber"));
         spreadsheet.addHeader(getResourceMessage("label.student.name"));
         spreadsheet.addHeader(getResourceMessage("degree.concluded"));

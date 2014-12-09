@@ -48,13 +48,13 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
     @Override
     public void setExemption(Exemption exemption) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification.cannot.modify.exemption");
+                "error.org.fenixedu.academic.domain.accounting.events.ExemptionJustification.cannot.modify.exemption");
     }
 
     @Override
     public void setReason(String reason) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification.cannot.modify.reason");
+                "error.org.fenixedu.academic.domain.accounting.events.ExemptionJustification.cannot.modify.reason");
     }
 
     public void delete() {

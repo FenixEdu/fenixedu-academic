@@ -43,16 +43,16 @@ public class MeasurementTest extends MeasurementTest_Base {
 
         if (entryPhase == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTest.entryPhase.cannot.be.null", args);
+                    "error.org.fenixedu.academic.domain.candidacy.MeasurementTest.entryPhase.cannot.be.null", args);
         }
         String[] args1 = {};
         if (executionYear == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTest.executionYear.cannot.be.null", args1);
+                    "error.org.fenixedu.academic.domain.candidacy.MeasurementTest.executionYear.cannot.be.null", args1);
         }
         String[] args2 = {};
         if (campus == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTest.campus.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.candidacy.MeasurementTest.campus.cannot.be.null",
                     args2);
         }
 

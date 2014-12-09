@@ -192,7 +192,7 @@
 	
 	<logic:present role="role(INTERNATIONAL_RELATION_OFFICE)">
 		<html:link action="/erasmusCandidacyProcessReport.do?method=list" paramId="erasmusCandidacyProcessId" paramName="process" paramProperty="externalId">
-			<bean:message key="label.net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			<bean:message key="label.org.fenixedu.academic.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport" bundle="ACADEMIC_OFFICE_RESOURCES" />
 		</html:link>
 	</logic:present>
 	

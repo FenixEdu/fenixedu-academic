@@ -194,8 +194,8 @@
 </schema>
 
 <schema name="Unit.view-nameWithAcronym-and-costCenterCode" type="org.fenixedu.academic.domain.organizationalStructure.Unit" bundle="APPLICATION_RESOURCES"> 
-	<slot name="nameWithAcronym" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name"/>
-	<slot name="costCenterCode" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Unit.costCenterCode"/>
+	<slot name="nameWithAcronym" key="label.org.fenixedu.academic.domain.organizationalStructure.Unit.name"/>
+	<slot name="costCenterCode" key="label.org.fenixedu.academic.domain.organizationalStructure.Unit.costCenterCode"/>
 </schema>
 <schema name="party.photo.upload" type="org.fenixedu.academic.dto.person.PhotographUploadBean"
 	bundle="APPLICATION_RESOURCES">

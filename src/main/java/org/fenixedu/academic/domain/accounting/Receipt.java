@@ -377,7 +377,7 @@ public class Receipt extends Receipt_Base {
     @Override
     @Deprecated
     public Integer getNumber() {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Receipt.use.getNumberWithSeries.instead");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.Receipt.use.getNumberWithSeries.instead");
     }
 
     private Integer getReceiptNumber() {

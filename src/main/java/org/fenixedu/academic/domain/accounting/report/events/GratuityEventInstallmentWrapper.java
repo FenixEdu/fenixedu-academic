@@ -43,7 +43,7 @@ public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
         String label =
                 BundleUtil
                         .getString(Bundle.ACADEMIC,
-                                "label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.date");
+                                "label.org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJob.installment.expiration.date");
         return String.format(label, this.installment.getOrder());
     }
 
@@ -52,7 +52,7 @@ public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
         String label =
                 BundleUtil
                         .getString(Bundle.ACADEMIC,
-                                "label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.amountToPay");
+                                "label.org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJob.installment.expiration.amountToPay");
         return String.format(label, this.installment.getOrder());
     }
 
@@ -61,7 +61,7 @@ public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
         String label =
                 BundleUtil
                         .getString(Bundle.ACADEMIC,
-                                "label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.remainingAmount");
+                                "label.org.fenixedu.academic.domain.accounting.report.events.EventReportQueueJob.installment.expiration.remainingAmount");
         return String.format(label, this.installment.getOrder());
     }
 

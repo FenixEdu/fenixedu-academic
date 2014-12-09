@@ -49,7 +49,7 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
                         if (toAdd != null && test != null) {
                             if (test.getShiftByName(toAdd.getName()) != null) {
                                 throw new DomainException(
-                                        "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.already.contains.shift.with.same.name");
+                                        "error.org.fenixedu.academic.domain.candidacy.MeasurementTestShift.already.contains.shift.with.same.name");
 
                             }
                         }
@@ -70,17 +70,17 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
         String[] args2 = {};
 
         if (name == null || name.isEmpty()) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.name.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.candidacy.MeasurementTestShift.name.cannot.be.null",
                     args2);
         }
         String[] args = {};
         if (date == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.date.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.candidacy.MeasurementTestShift.date.cannot.be.null",
                     args);
         }
         String[] args1 = {};
         if (test == null) {
-            throw new DomainException("error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.test.cannot.be.null",
+            throw new DomainException("error.org.fenixedu.academic.domain.candidacy.MeasurementTestShift.test.cannot.be.null",
                     args1);
         }
 

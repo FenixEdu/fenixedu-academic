@@ -58,12 +58,12 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
     private void checkParameters(StudentCurricularPlan studentCurricularPlan, Money pastDegreeGratuityAmount) {
         if (studentCurricularPlan.getDegreeType() != DegreeType.DEGREE) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.invalid.degree.type.for.student.curricular.plan");
+                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.PastDegreeGratuityEvent.invalid.degree.type.for.student.curricular.plan");
         }
 
         if (pastDegreeGratuityAmount == null || pastDegreeGratuityAmount.isZero()) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.pastDegreeGratuityAmount.cannot.be.null.and.must.be.greather.than.zero");
+                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.PastDegreeGratuityEvent.pastDegreeGratuityAmount.cannot.be.null.and.must.be.greather.than.zero");
         }
 
     }

@@ -59,36 +59,36 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
     @Override
     public void setYear(Integer year) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.year");
+                "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.year");
     }
 
     @Override
     public void setNumber(Integer number) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.number");
+                "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.number");
     }
 
     @Override
     public void setPhdStudentNumber(Integer phdStudentNumber) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.phdStudentNumber");
+                "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.phdStudentNumber");
     }
 
     private void checkParameters(Integer number, Integer year, Integer phdStudentNumber) {
         String[] args = {};
         if (number == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.number.cannot.be.null", args);
+                    "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.number.cannot.be.null", args);
         }
         String[] args1 = {};
         if (year == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.year.cannot.be.null", args1);
+                    "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.year.cannot.be.null", args1);
         }
 
         if (phdStudentNumber != null && hasProcessWithPhdStudentNumber(phdStudentNumber)) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.phdStudentNumber.exists");
+                    "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.phdStudentNumber.exists");
         }
     }
 
@@ -110,7 +110,7 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
         }
 
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.phdStudentNumber.exists");
+                "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.phdStudentNumber.exists");
     }
 
     static public PhdIndividualProgramProcessNumber generateNextForYear(final Integer year, final Integer phdStudentNumber) {

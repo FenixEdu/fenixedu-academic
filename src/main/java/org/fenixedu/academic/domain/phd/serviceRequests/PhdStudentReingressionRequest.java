@@ -117,7 +117,7 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
                     String.format(
                             BundleUtil
                                     .getString(Bundle.PHD,
-                                            "message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+                                            "message.org.fenixedu.academic.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
                             getServiceRequestNumberYear());
 
             process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);

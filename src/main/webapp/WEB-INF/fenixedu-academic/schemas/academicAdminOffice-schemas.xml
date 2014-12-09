@@ -1293,7 +1293,7 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 	<slot name="academicServiceRequestSituationType" 
-		key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType"
+		key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType"
 		layout="menu-select-postback">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<property name="providerClass"
@@ -1312,8 +1312,8 @@
 	</slot>
 	<slot name="registration.person.name" key="label.name" read-only="true"/>
   	<slot name="registration.degreeNameWithDegreeCurricularPlanName" key="label.degree" read-only="true"/>
- 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description" read-only="true" />
- 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
+ 	<slot name="description" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.description" read-only="true" />
+ 	<slot name="academicServiceRequestSituationType" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="serviceRequestNumberYear"/>
 </schema>
 
@@ -1432,17 +1432,17 @@
 <schema name="RegistrationConclusionBean.viewConclusionPreviewForRegistration" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize" />
-	<slot name="calculatedEctsCredits" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.ectsCredits"/>
-	<slot name="calculatedAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/>
+	<slot name="calculatedEctsCredits" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.ectsCredits"/>
+	<slot name="calculatedAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
 	<slot name="registration.averageType"/>	
-	<slot name="calculatedFinalAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.finalAverage"/>
+	<slot name="calculatedFinalAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
 	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
-	<slot name="calculatedConclusionDate" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.conclusionDate"/>
+	<slot name="calculatedConclusionDate" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.conclusionDate"/>
 	<slot name="calculatedConclusionYear.name" key="conclusionYear"/>
 </schema>
 
@@ -1525,16 +1525,16 @@
 	<slot name="cycleCurriculumGroup.name" />
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
-	<slot name="calculatedEctsCredits" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.ectsCredits"/>
-	<slot name="calculatedAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/>
-	<slot name="calculatedFinalAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.finalAverage"/>
+	<slot name="calculatedEctsCredits" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.ectsCredits"/>
+	<slot name="calculatedAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
+	<slot name="calculatedFinalAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
 	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
-	<slot name="calculatedConclusionDate" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.conclusionDate"/>
+	<slot name="calculatedConclusionDate" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.conclusionDate"/>
 	<slot name="calculatedConclusionYear.name" key="conclusionYear"/>	
 </schema>
 
@@ -1819,7 +1819,7 @@
 		layout="no-time" />
 	<slot name="student.number" key="label.studentNumber" />
 	<slot name="description"
-		key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description" />
+		key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.description" />
 	<slot name="academicServiceRequestSituationType"
 		key="label.currentSituation" />
 </schema>

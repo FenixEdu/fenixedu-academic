@@ -66,12 +66,12 @@ public class PhdNotification extends PhdNotification_Base {
         String[] args = {};
         if (type == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.notification.PhdNotification.type.cannot.be.null", args);
+                    "error.org.fenixedu.academic.domain.phd.notification.PhdNotification.type.cannot.be.null", args);
         }
         String[] args1 = {};
         if (candidacyProcess == null) {
             throw new DomainException(
-                    "error.net.sourceforge.fenixedu.domain.phd.notification.PhdNotification.candidacyProcess.cannot.be.null",
+                    "error.org.fenixedu.academic.domain.phd.notification.PhdNotification.candidacyProcess.cannot.be.null",
                     args1);
         }
 
@@ -86,18 +86,18 @@ public class PhdNotification extends PhdNotification_Base {
 
     @Override
     public void setType(PhdNotificationType type) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.notification.PhdNotification.cannot.modify.type");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.notification.PhdNotification.cannot.modify.type");
     }
 
     @Override
     public void setCandidacyProcess(PhdProgramCandidacyProcess candidacyProcess) {
         throw new DomainException(
-                "error.net.sourceforge.fenixedu.domain.phd.notification.PhdNotification.cannot.modify.candidacyProcess");
+                "error.org.fenixedu.academic.domain.phd.notification.PhdNotification.cannot.modify.candidacyProcess");
     }
 
     @Override
     public void setState(PhdNotificationState state) {
-        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.notification.PhdNotification.cannot.modify.state");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.notification.PhdNotification.cannot.modify.state");
     }
 
     private Integer generateNumber(int year) {

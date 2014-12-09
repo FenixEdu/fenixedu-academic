@@ -43,7 +43,7 @@
 			<h:panelGrid columns="2" styleClass="tstyle5" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:panelGroup>
 					<h:outputText value="* " style="color: #c00"/>
-					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.AdHocEvaluation.name']}: " />
+					<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.AdHocEvaluation.name']}: " />
 				</h:panelGroup>	
 				<h:panelGroup>
 					<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="35" value="#{adHocEvaluationManagementBackingBean.name}" />			
@@ -51,12 +51,12 @@
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:outputText value="* " style="color: #c00"/>
-					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.AdHocEvaluation.gradeScale']}:" escape="false"/>
+					<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.AdHocEvaluation.gradeScale']}:" escape="false"/>
 				</h:panelGroup>
 				<h:selectOneMenu value="#{adHocEvaluationManagementBackingBean.gradeScale}">
 					<f:selectItems value="#{adHocEvaluationManagementBackingBean.gradeScaleOptions}"/>
 				</h:selectOneMenu>
-				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.AdHocEvaluation.description']}:" />
+				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.AdHocEvaluation.description']}:" />
 				<h:inputTextarea rows="4" cols="40" value="#{adHocEvaluationManagementBackingBean.description}" />
 			</h:panelGrid>			
 			
