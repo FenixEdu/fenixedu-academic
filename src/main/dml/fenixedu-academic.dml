@@ -152,7 +152,6 @@ enum org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriodType										
 enum org.fenixedu.academic.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 enum org.fenixedu.academic.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
 enum org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
-enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
 enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 enum org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
