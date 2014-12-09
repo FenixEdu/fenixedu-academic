@@ -55,7 +55,8 @@ import org.slf4j.LoggerFactory;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.EMail;
 
-@StrutsFunctionality(app = PublicApplication.class, path = "alumni", titleKey = "label.alumni.main.title")
+@StrutsFunctionality(app = PublicApplication.class, path = "alumni", titleKey = "label.alumni.main.title",
+        bundle = "AlumniResources")
 @Mapping(module = "publico", path = "/alumni")
 @Forwards({
         @Forward(name = "alumniPublicAccessInner", path = "/publico/alumni/alumniPublicAccessInner.jsp"),
