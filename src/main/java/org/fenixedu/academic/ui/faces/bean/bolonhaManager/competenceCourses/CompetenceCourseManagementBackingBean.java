@@ -27,8 +27,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.faces.component.UISelectItems;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -106,6 +108,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private String type;
     private String url;
 
+    // group management
+    private String newGroupMember;
+    private String[] selectedGroupMembersToDelete;
+    private Boolean groupEditMode;
+
     private UISelectItems departmentUnitItems;
     private UISelectItems scientificAreaUnitItems;
     private UISelectItems competenceCourseGroupUnitItems;
@@ -114,6 +121,38 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private UISelectItems futureExecutionSemesterItems;
 
     private List<SelectItem> selectedYears = null;
+
+    public String[] getSelectedGroupMembersToDelete() {
+        return selectedGroupMembersToDelete;
+    }
+
+    public Boolean getGroupEditMode() {
+        if (groupEditMode == null) {
+            String requestParameter = getRequestParameter("groupEditMode");
+            setGroupEditMode("true".equals(requestParameter));
+        }
+        return groupEditMode;
+    }
+
+    public void setGroupEditMode(Boolean groupEditMode) {
+        this.groupEditMode = groupEditMode;
+    }
+
+    public void toggleGroupEditMode() {
+        setGroupEditMode(!getGroupEditMode());
+    }
+
+    public void setSelectedGroupMembersToDelete(String[] selectedGroupMembersToDelete) {
+        this.selectedGroupMembersToDelete = selectedGroupMembersToDelete;
+    }
+
+    public String getNewGroupMember() {
+        return newGroupMember == null ? newGroupMember = getAndHoldStringParameter("newGroupMember") : newGroupMember;
+    }
+
+    public void setNewGroupMember(String newGroupMember) {
+        this.newGroupMember = newGroupMember;
+    }
 
     public String getAction() {
         return getAndHoldStringParameter("action");
@@ -191,7 +230,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<String> getGroupMembersLabels() {
-        List<String> result = null;
+        return getGroupMembers().stream().map(SelectItem::getLabel).collect(Collectors.toList());
+    }
+
+    public List<SelectItem> getGroupMembers() {
+        List<SelectItem> result = new ArrayList<SelectItem>();
 
         if (getSelectedDepartmentUnit() == null || getSelectedDepartmentUnit().getDepartment() == null
                 || getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup() == null) {
@@ -199,15 +242,44 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
 
         Group competenceCoursesManagementGroup = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
+
         if (competenceCoursesManagementGroup != null) {
-            result = new ArrayList<String>();
+            result = new ArrayList<SelectItem>();
 
             for (User user : competenceCoursesManagementGroup.getMembers()) {
-                result.add(user.getPerson().getName() + " (" + user.getUsername() + ")");
+                result.add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " (" + user.getUsername() + ")"));
             }
         }
 
         return result;
+    }
+
+    @Atomic
+    public void addUserToGroup() {
+        if (getNewGroupMember() != null) {
+            User user = FenixFramework.getDomainObject(getNewGroupMember());
+            if (user != null) {
+                Group group = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
+                getSelectedDepartmentUnit().getDepartment().setCompetenceCourseMembersGroup(group.grant(user));
+            }
+        }
+    }
+
+    @Atomic
+    public void removeUsersFromGroup(ActionEvent event) {
+        if (selectedGroupMembersToDelete != null && selectedGroupMembersToDelete.length > 0) {
+
+            Group group = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
+
+            for (String userExternalId : selectedGroupMembersToDelete) {
+                User user = FenixFramework.getDomainObject(userExternalId);
+                if (user != null) {
+                    group = group.revoke(user);
+                }
+            }
+
+            getSelectedDepartmentUnit().getDepartment().setCompetenceCourseMembersGroup(group);
+        }
     }
 
     public String getCompetenceCourseGroupUnitID() {

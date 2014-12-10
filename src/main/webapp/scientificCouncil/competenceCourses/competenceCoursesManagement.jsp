@@ -25,7 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication$ScientificCompetenceCoursesManagement" />
-
+${portal.toolkit()}
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
@@ -46,23 +46,52 @@
 		</h:panelGrid>
 
 
-<%--
-		<h:outputText value="<p class='mtop2 mbottom2'><a href='#members' title='#{scouncilBundle['view.group.members.description']}'>#{scouncilBundle['view.group.members']}</a></p>" escape="false"/>
---%>
+		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembers}">
 
-
-
-		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
 			<h:outputText value="<p class='mtop15 mbottom05'><b id='members' class='highlight1'>#{scouncilBundle['groupMembers']}</b> #{scouncilBundle['label.group.members.explanation']}:</p>" escape="false" />
-			<h:outputText value="<ul>" escape="false"/>
-			<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
-				<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
-			</fc:dataRepeater>
-			<h:outputText value="</ul>" escape="false"/>
+			<h:outputText escape="false" value="<input alt='input.selectedDepartmentUnitID' id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
+			
+			<h:panelGroup rendered="#{CompetenceCourseManagement.groupEditMode}">
+				<h:selectManyCheckbox value="#{CompetenceCourseManagement.selectedGroupMembersToDelete}" layout="pageDirection">
+					<f:selectItems value="#{CompetenceCourseManagement.groupMembers}"  />
+				</h:selectManyCheckbox>
+				<h:outputText value="<p>" escape="false" />	
+				<h:commandLink value="#{scouncilBundle['removeMembers']}" actionListener="#{CompetenceCourseManagement.removeUsersFromGroup}" />
+				<h:outputText value="</p>" escape="false" />
+				<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembers}">
+					<h:outputText value="<br/><i>#{scouncilBundle['label.empty.curricularPlanGroup.members']}</i><br/>" escape="false" />
+				</h:panelGroup>
+				
+				<h:outputText value="<p><b>#{scouncilBundle['addNewMembers']}</b>:<p/>" escape="false" />
+				<div class="form-group">
+					<h:outputText value="<input bennu-user-autocomplete id='newGroupMember' name='newGroupMember' type='text' size='60' placeHolder='#{htmlAltBundle[\'placeholder.user.autocomplete\']}'/>" escape="false"/>
+				</div>
+				
+				<h:outputText escape="false" value="<input alt='input.groupEditMode' id='groupEditMode' name='groupEditMode' type='hidden' value='#{CompetenceCourseManagement.groupEditMode}'/>"/>
+				<h:commandButton alt="#{scouncilBundle['addPerson']}" styleClass="inputbutton" value="#{scouncilBundle['addPerson']}"  action="#{CompetenceCourseManagement.addUserToGroup}" />
+				
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{!CompetenceCourseManagement.groupEditMode}">
+				<h:outputText value="<ul>" escape="false"/>
+				<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
+					<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
+				</fc:dataRepeater>
+				<h:outputText value="</ul>" escape="false"/>
+				
+				<h:commandButton alt="#{scouncilBundle['accessGroupManagement']}" styleClass="inputbutton" value="#{scouncilBundle['accessGroupManagement']}"
+					action="#{CompetenceCourseManagement.toggleGroupEditMode}" />
+			</h:panelGroup>
+			
 		</h:panelGroup>
+		
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels && !empty CompetenceCourseManagement.selectedDepartmentUnitID}">
 			<h:outputText value="<br/><i>#{scouncilBundle['label.empty.group.members']}</i><br/>" escape="false" />
 		</h:panelGroup>
+		
+		
+			
+		<!--  Scientific Area Units -->
 
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">	
 		<h:outputText value="<p class='mtop2 mbottom05'><b>Opções de listagem:</b></p>" escape="false"/>
