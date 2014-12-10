@@ -19,10 +19,8 @@
 package org.fenixedu.academic.ui.struts.action.departmentMember;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
-import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsApplication(bundle = DepartmentMemberApp.BUNDLE, path = "department-member", titleKey = "title.department",
         hint = DepartmentMemberApp.HINT, accessGroup = DepartmentMemberApp.ACCESS_GROUP)
@@ -41,18 +39,6 @@ public class DepartmentMemberApp extends ForwardAction {
     @StrutsApplication(bundle = "ResearcherResources", path = "messaging", titleKey = "title.unit.communication.section",
             hint = HINT, accessGroup = ACCESS_GROUP)
     public static class DepartmentMemberMessagingApp {
-    }
-
-    // Faces Entry Points
-
-    @StrutsFunctionality(app = DepartmentMemberDepartmentApp.class, path = "teachers", titleKey = "link.departmentTeachers")
-    @Mapping(path = "/viewDepartmentTeachers/listDepartmentTeachers", module = "departmentMember")
-    public static class ListDepartmentTeachers extends FacesEntryPoint {
-    }
-
-    @StrutsFunctionality(app = DepartmentMemberDepartmentApp.class, path = "teacher-service", titleKey = "link.teacherService")
-    @Mapping(path = "/viewTeacherService/viewTeacherService", module = "departmentMember")
-    public static class ViewTeacherService extends FacesEntryPoint {
     }
 
 }

@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.departmentAdmOffice;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
@@ -47,11 +46,6 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     }
 
     // Faces Entry Point
-
-    @StrutsFunctionality(app = DepartmentAdmOfficeViewApp.class, path = "teacher-service", titleKey = "link.teacherService")
-    @Mapping(path = "/viewTeacherService/viewTeacherService", module = "departmentAdmOffice")
-    public static class ViewTeacherService extends FacesEntryPoint {
-    }
 
     // Entry Points
 

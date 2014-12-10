@@ -101,21 +101,6 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 
-	<!-- Backbeans from department member subapplication -->
-	<managed-bean>
-		<managed-bean-name>viewDepartmentTeachers</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.departmentMember.ViewDepartmentTeachers</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-		
-	<managed-bean>
-		<managed-bean-name>viewTeacherService</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.departmentMember.teacherService.ViewTeacherService</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
-	<!-- End of Backbeans from department member subapplication -->
-
 	<!-- BEGIN: STUDENT Managed Beans -->
 	<managed-bean>
 		<description>DisplayEvaluationsForStudentToEnrol</description>
@@ -564,33 +549,6 @@
 	
 	<!-- Navigation rules from department member subapplication -->
 	
-	<!-- View Department Teachers Process -->
-	<navigation-rule>
-		<from-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>viewDetails</from-outcome>
-			<to-view-id>/departmentMember/viewDepartmentTeachers/viewTeacherDetails.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/viewTeacherService/chooseExecutionYear.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>listDistributionTeachersByTeacher</from-outcome>
-			<to-view-id>/departmentMember/viewTeacherService/viewTeacherService.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>listDistributionTeachersByCourse</from-outcome>
-			<to-view-id>/departmentMember/viewTeacherService/viewTeacherServiceByCourse.jsp</to-view-id>
-		</navigation-case>	
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/viewDepartmentTeachers/viewTeacherDetails.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>
-	<!-- End Process -->
 	
 	<!-- Manage Teacher Personal Expectations Process -->
 	<!-- Create Personal Expectation SubProcess -->
