@@ -52,9 +52,6 @@
 -->
 </style>
 
-<h2><bean:message key="link.manage.turnos"/></h2>
-
-<jsp:include page="context.jsp"/>
 
 	<%
 		final Lesson lesson = ((InfoLesson) pageContext.findAttribute("lesson")).getLesson();
@@ -62,8 +59,28 @@
 		final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
 		final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
 	%>
-		<h4>
-		</h4>
+
+<h2><bean:message key="link.manage.turnos"/></h2>
+
+
+<html:form action="/manageShift.do?method=prepareEditShift">
+
+			<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
+			 			value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
+			 			value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.EXECUTION_COURSE_OID %>" property="<%= PresentationConstants.EXECUTION_COURSE_OID %>"
+			 			value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.SHIFT_OID %>" property="<%= PresentationConstants.SHIFT_OID %>"
+			 			value="<%= lesson.getShift().getExternalId().toString() %>"/>
+
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton">
+				<bean:message key="label.return"/>
+			</html:submit>
+</html:form>
+</br>
+	
+
 		<table class="tstyle1 mtop025 mbottom0 tdcenter">
 			<tr>
 				<th>
@@ -182,7 +199,7 @@
 		</table>
 
 		<h2>
-			<bean:message key="title.editAula"/>
+			<bean:message key="label.lesson.choose.room"/>
 		</h2>
 		<html:form action="/manageLesson.do?method=changeRoom">
 
@@ -198,15 +215,20 @@
 			 			value="<%= pageContext.findAttribute("lessonOID").toString() %>"/>
 			<html:hidden alt="<%= PresentationConstants.SHIFT_OID %>" property="<%= PresentationConstants.SHIFT_OID %>"
 			 			value="<%= lesson.getShift().getExternalId().toString() %>"/>
+			 <html:hidden alt="<%= PresentationConstants.ACADEMIC_INTERVAL %>" property="<%= PresentationConstants.ACADEMIC_INTERVAL %>"
+			 			value="<%= pageContext.findAttribute("academicInterval").toString() %>"/>
 
 			<select name="spaceOID">
+				<logic:equal name="action" value="create">
+					<option value=""><bean:message key="label.lesson.no.room"/></option>
+				</logic:equal>
 				<% for (final Space space : (List<Space>) request.getAttribute("emptySpaces")) { %>
 					<option value="<%= space.getExternalId() %>"><%= space.getPresentationName() %></option>
 				<% } %>
 			</select>
-
-			<br/>
-
+			
+			</br>
+			</br>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton">
 				<bean:message key="label.save"/>
 			</html:submit>
@@ -237,3 +259,5 @@
 				</tr>
 			</logic:iterate>
 		</table>
+		
+		

@@ -83,11 +83,10 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(path = "/manageLesson", module = "resourceAllocationManager", input = "/manageLesson.do?method=findInput&page=0",
 formBean = "manageLessonForm", functionality = ExecutionPeriodDA.class)
 @Forwards({ @Forward(name = "ShowLessonForm", path = "/resourceAllocationManager/manageLesson_bd.jsp"),
-    @Forward(name = "ShowChooseRoomForm", path = "/resourceAllocationManager/chooseRoomForLesson_bd.jsp"),
-    @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
-    @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
-    @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
-    @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
+        @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
+        @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
 @Exceptions({
     @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
             handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
@@ -309,131 +308,6 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
         return viewAllLessonDates(mapping, form, request, response);
     }
 
-    public ActionForward chooseRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        DynaActionForm manageLessonForm = (DynaActionForm) form;
-        ContextUtils.setExecutionPeriodContext(request);
-
-        DiaSemana weekDay = new DiaSemana(new Integer(formDay2EnumerateDay((String) manageLessonForm.get("diaSemana"))));
-
-        Calendar inicio = Calendar.getInstance();
-        inicio.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) manageLessonForm.get("horaInicio")));
-        inicio.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosInicio")));
-        inicio.set(Calendar.SECOND, 0);
-
-        Calendar fim = Calendar.getInstance();
-        fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) manageLessonForm.get("horaFim")));
-        fim.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosFim")));
-        fim.set(Calendar.SECOND, 0);
-
-        Boolean quinzenal = (Boolean) manageLessonForm.get("quinzenal");
-        if (quinzenal == null) {
-            quinzenal = new Boolean(false);
-        }
-
-        ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
-
-        if (actionErrors.isEmpty()) {
-
-            FrequencyType frequency = null;
-            if (quinzenal.booleanValue()) {
-                frequency = FrequencyType.BIWEEKLY;
-            } else {
-                frequency = FrequencyType.WEEKLY;
-            }
-
-            InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
-            InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
-
-            String action = request.getParameter("action");
-
-            final Shift shift;
-            if (action != null && action.equals("edit")) {
-                final Lesson lesson = FenixFramework.getDomainObject(infoLesson.getExternalId());
-                shift = lesson.getShift();
-            } else {
-                shift = FenixFramework.getDomainObject(infoShift.getExternalId());
-            }
-            final GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
-
-            YearMonthDay lessonNewBeginDate = getDateFromForm(manageLessonForm, "newBeginDate");
-            YearMonthDay lessonEndDate = getDateFromForm(manageLessonForm, "newEndDate");
-
-            List<InfoRoom> emptyRoomsList = null;
-
-            if (lessonEndDate != null) {
-
-                YearMonthDay executionDegreeLessonsBeginDate = maxLessonsPeriod.getLeft();
-                YearMonthDay executionDegreeLessonsEndDate = maxLessonsPeriod.getRight();
-
-                if (lessonNewBeginDate == null || lessonNewBeginDate.isAfter(lessonEndDate)
-                        || lessonNewBeginDate.isBefore(executionDegreeLessonsBeginDate)) {
-                    actionErrors.add("error.Lesson.invalid.new.begin.date",
-                            new ActionError("error.Lesson.invalid.new.begin.date"));
-                    saveErrors(request, actionErrors);
-                    return mapping.getInputForward();
-                }
-
-                if (lessonEndDate.isAfter(executionDegreeLessonsEndDate)) {
-                    actionErrors.add("error.Lesson.invalid.new.end.date", new ActionError("error.Lesson.invalid.new.end.date"));
-                    saveErrors(request, actionErrors);
-                    return mapping.getInputForward();
-                }
-
-                emptyRoomsList =
-                        SpaceUtils.allocatableSpace(lessonNewBeginDate, lessonEndDate,
-                                HourMinuteSecond.fromCalendarFields(inicio), HourMinuteSecond.fromCalendarFields(fim), weekDay,
-                                null, frequency, true);
-
-            } else if (action != null && action.equals("edit")) {
-                actionErrors.add("error.Lesson.already.finished", new ActionError("error.Lesson.already.finished"));
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-
-            } else {
-                actionErrors.add("error.executionDegree.empty.lessonsPeriod", new ActionError(
-                        "error.executionDegree.empty.lessonsPeriod"));
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }
-
-            if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
-                actionErrors.add("search.empty.rooms.no.rooms", new ActionError("search.empty.rooms.no.rooms"));
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }
-
-            if (action != null && action.equals("edit")) {
-                final InfoLesson il = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
-                final Space allocatableSpace = il.getAllocatableSpace();
-                if (allocatableSpace != null) {
-                    emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());
-                    manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
-                }
-            }
-
-            Collections.sort(emptyRoomsList);
-            List<LabelValueBean> listaSalas = new ArrayList<LabelValueBean>();
-            for (int i = 0; i < emptyRoomsList.size(); i++) {
-                InfoRoom elem = emptyRoomsList.get(i);
-                String roomLabel = elem.getNome() + " - " + elem.getEdificio();
-                listaSalas.add(new LabelValueBean(roomLabel, elem.getNome()));
-            }
-            listaSalas.add(0, new LabelValueBean("- Sem Sala -", ""));
-
-            request.setAttribute("action", action);
-            request.setAttribute("listaSalas", listaSalas);
-            request.setAttribute("manageLessonForm", manageLessonForm);
-
-            return mapping.findForward("ShowChooseRoomForm");
-        }
-
-        saveErrors(request, actionErrors);
-        return mapping.getInputForward();
-
-    }
-
     public ActionForward createEditLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -470,7 +344,7 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
         }
 
         ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
-
+        Lesson lesson = null;
         if (actionErrors.isEmpty()) {
 
             InfoShift infoShift = (InfoShift) (request.getAttribute(PresentationConstants.SHIFT));
@@ -502,9 +376,9 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
                 Boolean createLessonInstances = (Boolean) manageLessonForm.get("createLessonInstances");
 
                 try {
-
-                    EditLesson.run(infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate,
-                            newEndDate, createLessonInstances);
+                    lesson =
+                            EditLesson.run(infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift,
+                                    newBeginDate, newEndDate, createLessonInstances);
 
                 } catch (DomainException domainException) {
                     actionErrors.add(domainException.getMessage(),
@@ -514,8 +388,9 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
             } else {
                 try {
-
-                    CreateLesson.run(weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate, newEndDate);
+                    lesson =
+                            CreateLesson.run(weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate,
+                                    newEndDate);
 
                 } catch (DomainException domainException) {
                     actionErrors.add(domainException.getMessage(),
@@ -523,8 +398,14 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
                     saveErrors(request, actionErrors);
                 }
             }
-
+            if (lesson != null) {
+                request.setAttribute(PresentationConstants.LESSON, InfoLesson.newInfoFromDomain(lesson));
+                request.setAttribute("action", action != null ? action : "create");
+                request.setAttribute("lesson", InfoLesson.newInfoFromDomain(lesson));
+                return prepareChangeRoom(mapping, manageLessonForm, request, response);
+            }
             return mapping.findForward("EditShift");
+
         }
         saveErrors(request, actionErrors);
         return mapping.getInputForward();
