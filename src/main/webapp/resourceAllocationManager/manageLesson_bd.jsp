@@ -89,7 +89,7 @@
 </script>
 
 <html:form action="/manageLesson" focus="diaSemana">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseRoom"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createEditLesson"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<logic:present name="action">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="<%= pageContext.findAttribute("action").toString() %>"/>
@@ -183,7 +183,7 @@
 
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="lable.chooseRoom"/>
+			<bean:message key="label.lesson.create"/>
 		</html:submit>
 		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 			<bean:message key="label.clear"/>
