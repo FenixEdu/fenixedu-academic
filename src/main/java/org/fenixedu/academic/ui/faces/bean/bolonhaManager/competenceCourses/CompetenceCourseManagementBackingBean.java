@@ -39,6 +39,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CompetenceCourseType;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -53,6 +54,7 @@ import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGrou
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.dto.bolonhaManager.CourseLoad;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
@@ -69,6 +71,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -254,6 +257,23 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
+    private boolean isUserMemberOfAnyCurricularPlanGroup(User user) {
+        return Degree.readBolonhaDegrees().stream().flatMap(d -> d.getDegreeCurricularPlansSet().stream())
+                .map(dcp -> dcp.getCurricularPlanMembersGroup()).reduce(NobodyGroup.get(), (g1, g2) -> g1.or(g2)).isMember(user);
+    }
+
+    private boolean isUserMemberOfAnyDepartmentCompetenceCourseGroup(User user) {
+        return Bennu.getInstance().getDepartmentsSet().stream()
+                .filter(d -> !d.equals(getSelectedDepartmentUnit().getDepartment()))
+                .anyMatch(d -> d.getCompetenceCourseMembersGroup().isMember(user));
+    }
+
+    private void removeRoleIfNecessary(User user) {
+        if (!isUserMemberOfAnyCurricularPlanGroup(user) && !isUserMemberOfAnyDepartmentCompetenceCourseGroup(user)) {
+            RoleType.revoke(RoleType.BOLONHA_MANAGER, user);
+        }
+    }
+
     @Atomic
     public void addUserToGroup() {
         if (getNewGroupMember() != null) {
@@ -261,6 +281,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             if (user != null) {
                 Group group = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
                 getSelectedDepartmentUnit().getDepartment().setCompetenceCourseMembersGroup(group.grant(user));
+                RoleType.grant(RoleType.BOLONHA_MANAGER, user);
             }
         }
     }
@@ -269,16 +290,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public void removeUsersFromGroup(ActionEvent event) {
         if (selectedGroupMembersToDelete != null && selectedGroupMembersToDelete.length > 0) {
 
-            Group group = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
+            final Department department = getSelectedDepartmentUnit().getDepartment();
+            Group group = department.getCompetenceCourseMembersGroup();
 
             for (String userExternalId : selectedGroupMembersToDelete) {
                 User user = FenixFramework.getDomainObject(userExternalId);
                 if (user != null) {
                     group = group.revoke(user);
+                    removeRoleIfNecessary(user);
                 }
             }
 
-            getSelectedDepartmentUnit().getDepartment().setCompetenceCourseMembersGroup(group);
+            department.setCompetenceCourseMembersGroup(group);
         }
     }
 

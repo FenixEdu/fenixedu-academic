@@ -46,9 +46,9 @@ import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.
 import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.EditDegreeCurricularPlan;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
@@ -150,10 +150,17 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         }
     }
 
+    private boolean isUserMemberOfAnyCurricularPlanGroup(User user) {
+        return Degree.readBolonhaDegrees().stream().flatMap(d -> d.getDegreeCurricularPlansSet().stream())
+                .filter(dcp -> !dcp.equals(getDcp())).anyMatch(dcp -> dcp.getCurricularPlanMembersGroup().isMember(user));
+    }
+
+    private boolean isUserMemberOfAnyDepartmentCompetenceCourseGroup(User user) {
+        return Bennu.getInstance().getDepartmentsSet().stream().anyMatch(d -> d.getCompetenceCourseMembersGroup().isMember(user));
+    }
+
     private void removeRoleIfNecessary(User user) {
-        if (!Degree.readBolonhaDegrees().stream().flatMap(d -> d.getDegreeCurricularPlansSet().stream())
-                .filter(dcp -> !dcp.equals(getDcp())).map(dcp -> dcp.getCurricularPlanMembersGroup())
-                .reduce(NobodyGroup.get(), (g1, g2) -> g1.or(g2)).isMember(user)) {
+        if (!isUserMemberOfAnyCurricularPlanGroup(user) && !isUserMemberOfAnyDepartmentCompetenceCourseGroup(user)) {
             RoleType.revoke(RoleType.BOLONHA_MANAGER, user);
         }
     }
