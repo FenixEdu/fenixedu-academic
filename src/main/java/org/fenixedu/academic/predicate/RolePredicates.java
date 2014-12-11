@@ -108,13 +108,6 @@ public class RolePredicates {
                 };
             };
 
-    public static final AccessControlPredicate<Object> DEPARTMENT_MEMBER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.DEPARTMENT_MEMBER);
-        };
-    };
-
     public static final AccessControlPredicate<Object> DIRECTIVE_COUNCIL_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object object) {

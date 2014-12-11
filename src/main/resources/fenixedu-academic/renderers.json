@@ -89,7 +89,6 @@
     { "name": "publicRelations", "configFile": "struts-publicRelations.xml" },
     { "name": "rectorate", "configFile": "struts-rectorate.xml" },
     { "name": "alumni", "configFile": "struts-alumni.xml" },
-    { "name": "departmentAdmOffice", "configFile": "struts-departmentAdmOffice.xml" },
     { "name": "coordinator", "configFile": "struts-coordinator.xml" },
     { "name": "library", "configFile": "struts-library.xml" },
     { "name": "gep", "configFile": "struts-gep.xml" },
