@@ -1017,12 +1017,6 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         YearMonthDay endDateYearMonthDay;
     }
 
-    class IrsDeclarationLink  {
-    	MultiLanguageString title;
-    	Boolean available;
-    	String irsLink;
-    }
-
     class Lesson  {
         HourMinuteSecond beginHourMinuteSecond;
         DiaSemana diaSemana;
@@ -10883,12 +10877,6 @@ relation ErasmusAlertPerson {
 		multiplicity *;
 	} 
 }
-
-relation RootDomainObjectIrsDeclarationLink {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	IrsDeclarationLink playsRole irsDeclarationLink;
-}
-
 
 relation RootDomainObjectMobilityQuota {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
