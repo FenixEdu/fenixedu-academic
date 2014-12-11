@@ -18,24 +18,13 @@
  */
 package org.fenixedu.academic.ui.struts.action.person;
 
-import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
-import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 public class PersonApplication {
 
     @StrutsApplication(descriptionKey = "label.navheader.person", path = "personal-area", titleKey = "label.navheader.person",
-            bundle = "ApplicationResources", accessGroup = "role(PERSON)", hint = "Person")
-    @Mapping(path = "/index", module = "person", parameter = "/person/personMainPage.jsp")
-    public static class PersonalAreaApp extends ForwardAction {
-
-    }
-
-    @StrutsFunctionality(app = PersonalAreaApp.class, path = "change-password", titleKey = "label.person.changePassword")
-    @Mapping(path = "/changePassword", module = "person", parameter = "/person/showChangePassLink.jsp")
-    public static class ShowPersonPasswordLink extends ForwardAction {
-
+            bundle = "ApplicationResources", accessGroup = "logged", hint = "Person")
+    public static class PersonalAreaApp {
     }
 
 }
