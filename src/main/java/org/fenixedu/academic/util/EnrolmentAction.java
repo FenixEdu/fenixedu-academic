@@ -63,6 +63,10 @@ public class EnrolmentAction implements Comparable<EnrolmentAction> {
         return this.value;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public int compareTo(EnrolmentAction other) {
         return this.value - other.value;

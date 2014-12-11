@@ -38,13 +38,13 @@
 		<slot name="firstExecutionYear" key="label.registration.year.from" layout="menu-select">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 			<property name="format" value="${year}" />
-			<property name="class" value="dinline" />
+			<property name="classes" value="dinline" />
 			<property name="required" value="false"/>
 		</slot>
 		<slot name="finalExecutionYear" key="label.date.to" layout="menu-select">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 			<property name="format" value="${year}" />
-			<property name="class" value="dinline" />
+			<property name="classes" value="dinline" />
 			<property name="required" value="false"/>
 		</slot>
 	</schema>
@@ -68,13 +68,13 @@
 		<slot name="firstExecutionYear" key="label.registration.year.from" layout="menu-select">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 			<property name="format" value="${year}" />
-			<property name="class" value="dinline" />
+			<property name="classes" value="dinline" />
 			<property name="required" value="false"/>
 		</slot>
 		<slot name="finalExecutionYear" key="label.date.to" layout="menu-select">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 			<property name="format" value="${year}" />
-			<property name="class" value="dinline" />
+			<property name="classes" value="dinline" />
 			<property name="required" value="false"/>
 		</slot>
 	</schema>
@@ -175,7 +175,7 @@
 		<slot name="endExecutionYear" key="label.alumni.registration.year.end" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 			<property name="format" value="${year}" />
-			<property name="class" value="dinline" />
+			<property name="classes" value="dinline" />
 		</slot>
 	</schema>
 

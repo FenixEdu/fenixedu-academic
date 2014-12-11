@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -62,8 +61,8 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
     public ActionForward removeManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         String id = request.getParameter("managerID");
-        Person person = FenixFramework.getDomainObject(id);
-        RoleType.revoke(RoleType.PUBLIC_RELATIONS_OFFICE, person.getUser());
+        User person = FenixFramework.getDomainObject(id);
+        RoleType.revoke(RoleType.PUBLIC_RELATIONS_OFFICE, person);
         return managePeople(mapping, actionForm, request, response);
     }
 

@@ -53,8 +53,8 @@
 </fr:form>
 <br>
 <br>
-<fr:view name="persons">
-    <fr:schema name="unitSite.manager" type="org.fenixedu.academic.domain.Person" bundle="SITE_RESOURCES">
+<fr:view name="role" property="members">
+    <fr:schema type="org.fenixedu.academic.domain.Person" bundle="SITE_RESOURCES">
         <fr:slot name="username" key="label.alias"/>
         <fr:slot name="name" key="label.name"/>
     </fr:schema>

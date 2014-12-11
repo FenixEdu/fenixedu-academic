@@ -24,7 +24,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
 <%-- 
@@ -110,13 +109,10 @@
 			<logic:iterate id="executionCourse" name="executionCourses">
 				<tr>
 					<td>
-						<logic:present name="executionCourse" property="site">
-							<bean:define id="executionCourse" name="executionCourse" toScope="request"/>
-							<app:contentLink name="executionCourse" property="site" target="_blank">
+						<logic:present name="executionCourse" property="siteUrl">
 								<bean:write name="executionCourse" property="nome"/>
-							</app:contentLink>
 						</logic:present>
-						<logic:notPresent name="executionCourse" property="site">
+						<logic:notPresent name="executionCourse" property="siteUrl">
 							<bean:write name="executionCourse" property="nome"/>
 						</logic:notPresent>
 					</td>

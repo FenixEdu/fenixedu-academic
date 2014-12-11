@@ -34,7 +34,7 @@
 	<fr:edit id="sessionBean" name="sessionBean">
 		<fr:schema type="org.fenixedu.academic.ui.struts.action.directiveCouncil.manageExternalSupervision.ManageExternalSupervisionBean" bundle="DIRECTIVE_COUNCIL_RESOURCES">
 			<fr:slot name="registrationProtocol" layout="menu-select" key="label.selectRegistrationAgreement.registrationAgreement" required="true">
-				<fr:property name="format" value="${description}"/>
+				<fr:property name="format" value="${description.content}"/>
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.lists.RegistrationAgreementTypeProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
