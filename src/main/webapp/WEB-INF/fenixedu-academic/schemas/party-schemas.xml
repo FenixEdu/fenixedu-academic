@@ -146,7 +146,7 @@
 <schema name="org.fenixedu.academic.domain.Person.contact.info.email" type="org.fenixedu.academic.domain.Person"> 
 	<slot name="email"/>
 </schema>
-<schema name="org.fenixedu.academic.domain.Person.personal.info" type="org.fenixedu.academic.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="org.fenixedu.academic.domain.Person.personal.info" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">
     <slot name="givenNames" key="label.givenNames">
         <property name="size" value="50" />
     </slot>

@@ -28,10 +28,16 @@
 
 <html:xhtml/>
 
-<logic:present role="role(PERSON)">
 <bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 
-<h2><bean:message key="label.person.title.personalConsult"/></h2>
+<h2>
+	<bean:message key="label.person.title.personalConsult"/>
+	<small class="mtop5 pull-right">		
+		<html:link action="/partyContacts.do?method=viewStudentLog">
+			<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+		</html:link>
+	</small>
+</h2>
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
@@ -45,14 +51,8 @@
     <span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
 		
-<span class="mtop5 mbottom5">		
-	<html:link action="/partyContacts.do?method=viewStudentLog">
-		<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
-	</html:link>
-</span>
-		
     <!-- Photo -->
-	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
+	<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop" width="25"><span class="emphasis-box">1</span></td>
 			<td class="infoop"><strong><bean:message key="label.person.title.photo" /></strong></td>
@@ -75,8 +75,8 @@
 					</span>
 			    </td>
 				<td>
-                    <div style="padding: 0 2em;">
-                    <div class="infoop2" style="margin-top: 0">
+                    <div style="padding: 0 0 0 2em;">
+                    <div class="alert well well-sm" style="margin-top: 0; font-weight: initial">
                         <bean:message key="label.person.photo.info" />
                     </div>
                     </div>
@@ -115,7 +115,7 @@
 	</div>
 
 	<!-- Contactos -->
-<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.contactAndAuthorization" /></strong></td>
@@ -130,8 +130,9 @@
 	</ul>
 </logic:messagesPresent>
 
-	<fr:form  action="/partyContacts.do">
-<table class="tstyle2 thlight thleft">
+<div class="row">
+	<div class="col-sm-10">
+<table class="tstyle2 thlight thleft table table-condensed">
     <tr>
         <th></th>
         <th></th>
@@ -541,12 +542,9 @@
 	</tr>
 </logic:empty>
 </table>
-</fr:form>
-
-
 <logic:notEmpty name="person" property="allPendingPartyContacts">
 <!--  Contactos Pendentes -->
-<table class="mtop15" width="98%" cellpadding="0" cellspacing="0" id="pendingContacts">
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0" id="pendingContacts">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">2.1</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.contactAndAuthorization.pending" /></strong></td>
@@ -568,7 +566,8 @@
 	</fr:form>
 </logic:equal>
 
-
+</div>
+<div class="col-sm-2">
 <!-- Emergency Contact -->
 <fr:form action="/updateEmergencyContact.do?method=updateEmergencyContact">
 	<p class="mtop15">
@@ -583,71 +582,80 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
+			<fr:property name="displayLabel" value="false"/>
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
 		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
 	</html:submit>
 </fr:form>
-
+</div>
+</div>
 
 <!-- Dados Pessoais -->
-<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">3</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong></td>
 	</tr>
 </table>
-<fr:form action="/updateNickname.do?method=updateNickname">
-	<p class="mtop15">
-		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
-	</p>
-	<fr:edit id="nickname" name="personBean" schema="org.fenixedu.academic.dto.person.PersonBean.nickname">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
-			<fr:property name="columnClasses" value=",,tdclear "/>
-		</fr:layout>
-	</fr:edit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
-		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
-	</html:submit>
-</fr:form>
-
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.personal.info">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
-	</fr:layout>	
-</fr:view>
+<div class="row">
+	<div class="col-sm-6">
+		<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.personal.info">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thleft thlight mtop15"/>
+			</fr:layout>	
+		</fr:view>
+	</div>
+	<div class="col-sm-6">
+		<fr:form action="/updateNickname.do?method=updateNickname">
+			<p class="mtop15">
+				<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
+			</p>
+			<fr:edit id="nickname" name="personBean" schema="org.fenixedu.academic.dto.person.PersonBean.nickname">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
+					<fr:property name="columnClasses" value=",,tdclear "/>
+					<fr:property name="displayLabel" value="false"/>
+				</fr:layout>
+			</fr:edit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
+				<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
+			</html:submit>
+		</fr:form>
+	</div>
+</div>
 
 
 <!-- Informação de Utilizador -->
-<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
-		<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
-	</tr>
-</table>
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.user.info">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
-	</fr:layout>	
-</fr:view>
-
-
-<!-- Filiação -->
-<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
-		<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
-	</tr>
-</table>
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.family">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
-	</fr:layout>	
-</fr:view>
-
-</logic:present>
+<div class="row">
+	<div class="col-sm-6">
+		<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
+				<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
+			</tr>
+		</table>
+		<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.family">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
+			</fr:layout>	
+		</fr:view>
+	</div>
+	<div class="col-sm-4">
+		<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
+				<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
+			</tr>
+		</table>
+		<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="org.fenixedu.academic.domain.Person.user.info">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
+			</fr:layout>	
+		</fr:view>
+	</div>
+</div>
 
 <style>
 .items-container{position: relative;}
