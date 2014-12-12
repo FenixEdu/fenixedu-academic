@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.struts.action.departmentAdmOffice;
 
 import org.apache.struts.actions.ForwardAction;
+import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
@@ -40,19 +41,10 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     public static class DepartmentAdmOfficeViewApp {
     }
 
-    @StrutsApplication(bundle = BUNDLE, path = "expectations", titleKey = "link.group.teacherPersonalExpectations.title",
-            hint = HINT, accessGroup = CREDITS_ACCESS_GROUP)
-    public static class DepartmentAdmOfficeExpectationsApp {
-    }
-
     // Faces Entry Point
 
-    // Entry Points
-
-    @StrutsFunctionality(app = DepartmentAdmOfficeExpectationsApp.class, path = "periods", titleKey = "label.periodDefinition")
-    @Mapping(path = "/expectationPeriods", module = "departmentAdmOffice",
-            parameter = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/defineExpectationPeriods.jsp")
-    public static class DefineExpectationPeriods extends ForwardAction {
+    @StrutsFunctionality(app = DepartmentAdmOfficeViewApp.class, path = "teacher-service", titleKey = "link.teacherService")
+    @Mapping(path = "/viewTeacherService/viewTeacherService", module = "departmentAdmOffice")
+    public static class ViewTeacherService extends FacesEntryPoint {
     }
-
 }

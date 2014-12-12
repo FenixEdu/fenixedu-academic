@@ -205,14 +205,6 @@ Documentation:
     
     <renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean" layout="bolonha-student-optional-enrolments" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentInputRenderer"/>
     
-    <renderer layout="viewDepartmentTeachersExpectationsNestedTemplateLayout" type="pt.ist.fenixframework.DomainObject" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
-        <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/showPersonalExpectationTemplate.jsp"/>
-    </renderer>
-    
-    <renderer layout="printDepartmentTeachersExpectationsNestedTemplateLayout" type="pt.ist.fenixframework.DomainObject" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
-        <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/printPersonalExpectationTemplate.jsp"/>
-    </renderer>
-    
     <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
     <renderer type="org.fenixedu.bennu.core.groups.Group" layout="show-groups" class="org.fenixedu.academic.ui.renderers.GroupRenderer"/>
     

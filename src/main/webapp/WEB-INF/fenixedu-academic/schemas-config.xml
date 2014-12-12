@@ -191,43 +191,6 @@
     <slot name="username"/>
   </schema>
 
-  <schema name="teacherPersonalExpectation.view-all-except-tutorComment" type="org.fenixedu.academic.domain.Person">
-  	<slot name="teacher.teacherId" />
-    <slot name="teacher.person.name" />
-	<slot name="graduations" />
-	<slot name="graduationsDescription" />
-	<slot name="cientificPosGraduations" />
-	<slot name="cientificPosGraduationsDescription" />
-	<slot name="professionalPosGraduations" />
-	<slot name="professionalPosGraduationsDescription" />
-	<slot name="seminaries" />
-	<slot name="seminariesDescription" />
-	<slot name="educationMainFocus" />
-	<slot name="researchAndDevProjects" />
-	<slot name="jornalArticlePublications" />
-	<slot name="bookPublications" />
-	<slot name="conferencePublications" />
-	<slot name="technicalReportPublications" />
-	<slot name="patentPublications" />
-	<slot name="otherPublications" />
-	<slot name="otherPublicationsDescription" />
-	<slot name="researchAndDevProjects" />
-	<slot name="phdOrientations" />
-	<slot name="masterDegreeOrientations" />
-	<slot name="finalDegreeWorkOrientations" />
-	<slot name="orientationsMainFocus" />
-	<slot name="departmentOrgans" />
-	<slot name="istOrgans" />
-	<slot name="utlOrgans" />
-	<slot name="universityServiceMainFocus" />
-	<slot name="cientificComunityService" />
-	<slot name="societyService" />
-	<slot name="consulting" />
-	<slot name="companySocialOrgans" />
-	<slot name="companyPositions" />
-	<slot name="professionalActivityMainFocus" />
-  </schema>
-
   <schema name="person.admin.simple" type="org.fenixedu.academic.domain.Person">
     <slot name="username" layout="link"/>
     <slot name="name"/>

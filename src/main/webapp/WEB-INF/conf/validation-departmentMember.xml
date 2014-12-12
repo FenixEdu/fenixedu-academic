@@ -59,11 +59,6 @@
         	<constant-value>1.0</constant-value>
         </constant>
 
-		<form name="viewDepartmentTeachersPersonalExpectationsForm">
-			<field property="executionYearID" depends="integer" page="1" >
-				<arg0 key="label.common.executionYear"/>
-			</field>
-		</form>    
 		<!-- ================================================================ -->    	
 	   	<form name="teacherInstitutionWorkingTimeForm">
 			<field property="startTimeHour" depends="required,integer,intRange" page="1">
