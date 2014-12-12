@@ -207,7 +207,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void checkIntervalBetweenEvaluations() {
         final User userView = Authenticate.getUser();
-        if (userView == null || !userView.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (userView == null || !RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(userView.getPerson().getUser())) {
             checkIntervalBetweenEvaluationsCondition();
         }
     }

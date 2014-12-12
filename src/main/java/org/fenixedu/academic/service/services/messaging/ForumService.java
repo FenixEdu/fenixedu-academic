@@ -76,7 +76,7 @@ public abstract class ForumService {
                 if (subscriber.getEmail() == null) {
                     subscription.setReceivePostsByEmail(false);
                 } else {
-                    if (subscriber.hasRole(RoleType.TEACHER)) {
+                    if (RoleType.TEACHER.isMember(subscriber.getUser())) {
                         teachers.add(subscriber);
                     } else {
                         students.add(subscriber);
@@ -104,7 +104,7 @@ public abstract class ForumService {
                     .isPersonReceivingMessagesByEmail(nextToLastMessageReplier)) {
                 final Set<Person> teachers = new HashSet<Person>();
                 final Set<Person> students = new HashSet<Person>();
-                if (nextToLastMessageReplier.hasRole(RoleType.TEACHER)) {
+                if (RoleType.TEACHER.isMember(nextToLastMessageReplier.getUser())) {
                     teachers.add(nextToLastMessageReplier);
                 } else {
                     students.add(nextToLastMessageReplier);

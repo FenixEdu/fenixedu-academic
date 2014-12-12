@@ -330,7 +330,7 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     protected boolean isResponsiblePersonManager() {
-        return getResponsiblePerson().hasRole(RoleType.MANAGER);
+        return RoleType.MANAGER.isMember(getResponsiblePerson().getUser());
     }
 
     // Old AcademicAdminOffice role check
@@ -341,15 +341,15 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     protected boolean isResponsibleInternationalRelationOffice() {
-        return getResponsiblePerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
+        return RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(getResponsiblePerson().getUser());
     }
 
     protected boolean isResponsiblePersonStudent() {
-        return getResponsiblePerson().hasRole(RoleType.STUDENT);
+        return RoleType.STUDENT.isMember(getResponsiblePerson().getUser());
     }
 
     protected boolean isResponsiblePersonCoordinator() {
-        return getResponsiblePerson().hasRole(RoleType.COORDINATOR);
+        return RoleType.COORDINATOR.isMember(getResponsiblePerson().getUser());
     }
 
     abstract protected void unEnrol();

@@ -248,10 +248,10 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     public boolean isLoggedPersonAllowedToEdit() {
         Person person = AccessControl.getPerson();
-        if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
             return true;
         }
-        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
+        if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
             return false;
         }
         return getCompetenceCourse().getDepartmentUnit(getExecutionPeriod()).getDepartment()

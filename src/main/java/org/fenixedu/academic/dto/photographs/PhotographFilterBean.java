@@ -127,7 +127,7 @@ public class PhotographFilterBean implements Serializable {
         }
         Person person = photograph.getPerson();
         if (person != null) {
-            if (getPersonType() != null && !person.hasRole(getPersonType())) {
+            if (getPersonType() != null && !getPersonType().isMember(person.getUser())) {
                 return false;
             }
             if (getName() != null && !HumanName.namesMatch(person.getName(), name)) {

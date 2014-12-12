@@ -36,11 +36,11 @@ public class StudentCurricularPlanPredicates {
                 @Override
                 public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
-                    return person.hasRole(RoleType.STUDENT)
+                    return RoleType.STUDENT.isMember(person.getUser())
                             || hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS,
                                     studentCurricularPlan.getDegree())
-                            || person.hasRole(RoleType.MANAGER)
-                            || person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)
+                            || RoleType.MANAGER.isMember(person.getUser())
+                            || RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(person.getUser())
                             /*
                              * used in PhdIndividualProgramProcess enrolments management
                              */
@@ -55,15 +55,15 @@ public class StudentCurricularPlanPredicates {
                 public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
 
-                    if (person.hasRole(RoleType.MANAGER)) {
+                    if (RoleType.MANAGER.isMember(person.getUser())) {
                         return true;
                     }
 
                     if (!studentCurricularPlan.isConclusionProcessed()) {
-                        return person.hasRole(RoleType.STUDENT)
+                        return RoleType.STUDENT.isMember(person.getUser())
                                 || hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS,
                                         studentCurricularPlan.getDegree())
-                                || person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
+                                || RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(person.getUser());
                     }
 
                     if (studentCurricularPlan.isEmptyDegree()) {
@@ -82,7 +82,7 @@ public class StudentCurricularPlanPredicates {
                 public boolean evaluate(final StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
 
-                    if (person.hasRole(RoleType.MANAGER)) {
+                    if (RoleType.MANAGER.isMember(person.getUser())) {
                         return true;
                     }
 
@@ -98,7 +98,7 @@ public class StudentCurricularPlanPredicates {
                 public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
                     return hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS, studentCurricularPlan.getDegree())
-                            || person.hasRole(RoleType.MANAGER);
+                            || RoleType.MANAGER.isMember(person.getUser());
                 }
             };
 
@@ -109,7 +109,7 @@ public class StudentCurricularPlanPredicates {
                 public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
 
-                    if (person.hasRole(RoleType.MANAGER)) {
+                    if (RoleType.MANAGER.isMember(person.getUser())) {
                         return true;
                     }
 

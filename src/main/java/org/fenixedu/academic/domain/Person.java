@@ -377,10 +377,6 @@ public class Person extends Person_Base {
         return user == null ? null : user.getUsername();
     }
 
-    public Boolean hasRole(final RoleType roleType) {
-        return roleType.isMember(getUser());
-    }
-
     public Registration getStudentByType(final DegreeType degreeType) {
         for (final Registration registration : this.getStudents()) {
             if (registration.getDegreeType() == degreeType) {
@@ -575,7 +571,7 @@ public class Person extends Person_Base {
         final Collection<Person> people = findPerson(name);
         for (final Iterator<Person> iter = people.iterator(); iter.hasNext();) {
             final Person person = iter.next();
-            if (!person.hasRole(roleType)) {
+            if (!roleType.isMember(person.getUser())) {
                 iter.remove();
             }
         }
@@ -1143,7 +1139,7 @@ public class Person extends Person_Base {
         if (isPhotoPubliclyAvailable()) {
             return true;
         }
-        return requester != null && requester.hasRole(RoleType.PERSON);
+        return requester != null && RoleType.PERSON.isMember(requester.getUser());
     }
 
     @Override

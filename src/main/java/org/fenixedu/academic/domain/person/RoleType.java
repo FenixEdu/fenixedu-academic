@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
+@Deprecated
 public enum RoleType implements IPresentableEnum {
 
     MESSAGING("logged"),

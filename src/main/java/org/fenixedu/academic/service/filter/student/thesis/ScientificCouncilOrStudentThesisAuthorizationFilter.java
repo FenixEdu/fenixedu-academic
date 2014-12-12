@@ -32,7 +32,7 @@ public class ScientificCouncilOrStudentThesisAuthorizationFilter extends Student
     @Override
     public void execute(Thesis thesis) throws NotAuthorizedException {
         final User userView = Authenticate.getUser();
-        if (!userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!RoleType.SCIENTIFIC_COUNCIL.isMember(userView.getPerson().getUser())) {
             super.execute(thesis);
         }
     }

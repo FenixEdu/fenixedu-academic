@@ -37,7 +37,7 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     protected void removePreviousFile(Thesis thesis) {
         ThesisFile dissertation = thesis.getDissertation();
         if (dissertation != null) {
-            if (Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (RoleType.SCIENTIFIC_COUNCIL.isMember(Authenticate.getUser().getPerson().getUser())) {
                 dissertation.deleteWithoutStateCheck();
             } else {
                 dissertation.delete();

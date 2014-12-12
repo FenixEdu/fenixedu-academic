@@ -105,7 +105,7 @@ public class Account extends Account_Base {
     }
 
     public void transferEntry(Entry entry) {
-        if (!AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+        if (!RoleType.MANAGER.isMember(AccessControl.getPerson().getUser())) {
             throw new DomainException("permission.denied");
         }
 

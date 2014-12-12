@@ -196,7 +196,7 @@ public class MarkSheet extends MarkSheet_Base {
             ExecutionSemester executionSemester, Teacher responsibleTeacher, MarkSheetType markSheetType) throws DomainException {
 
         if (curricularCourse.isDissertation()) {
-            if (responsibleTeacher.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (RoleType.SCIENTIFIC_COUNCIL.isMember(responsibleTeacher.getPerson().getUser())) {
                 return;
             }
             for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {

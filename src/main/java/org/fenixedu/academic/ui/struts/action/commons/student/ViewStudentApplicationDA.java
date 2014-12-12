@@ -80,7 +80,7 @@ public class ViewStudentApplicationDA extends FenixDispatchAction {
         final User user = Authenticate.getUser();
         if (user != null) {
             final Person person = user.getPerson();
-            if (person.hasRole(RoleType.MANAGER) || isMobilityCoordinator(document, person)) {
+            if (RoleType.MANAGER.isMember(person.getUser()) || isMobilityCoordinator(document, person)) {
                 return true;
             }
         }

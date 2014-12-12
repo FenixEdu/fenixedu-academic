@@ -330,7 +330,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             if (creator == null) {
                 throw new DomainException("DEGREE.degree.curricular.plan.creator.cannot.be.null");
             }
-            if (!creator.hasRole(RoleType.BOLONHA_MANAGER)) {
+            if (!RoleType.BOLONHA_MANAGER.isMember(creator.getUser())) {
                 RoleType.grant(RoleType.BOLONHA_MANAGER, creator.getUser());
             }
 

@@ -136,6 +136,6 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     }
 
     private boolean isAllowedToViewChangeRequest(Person loggedPerson, CompetenceCourseInformationChangeRequest changeRequest) {
-        return loggedPerson.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+        return RoleType.SCIENTIFIC_COUNCIL.isMember(loggedPerson.getUser());
     }
 }

@@ -65,7 +65,7 @@ abstract public class PhdProcessDA extends PhdDA {
         final Person loggedPerson = getLoggedPerson(request);
         if (loggedPerson != null) {
             request.setAttribute("alertMessagesToNotify", loggedPerson.getUnreadedPhdAlertMessages());
-            request.setAttribute("isTeacher", loggedPerson.hasRole(RoleType.TEACHER)
+            request.setAttribute("isTeacher", RoleType.TEACHER.isMember(loggedPerson.getUser())
                     || !loggedPerson.getProfessorshipsSet().isEmpty());
         }
 

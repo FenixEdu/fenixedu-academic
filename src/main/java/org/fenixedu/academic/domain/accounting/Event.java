@@ -607,7 +607,7 @@ public abstract class Event extends Event_Base {
     }
 
     private void checkRulesToCancel(final Person responsible) {
-        if (!responsible.hasRole(RoleType.MANAGER) && !isOpen()) {
+        if (!RoleType.MANAGER.isMember(responsible.getUser()) && !isOpen()) {
             throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
         }
 

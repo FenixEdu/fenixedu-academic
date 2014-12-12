@@ -52,7 +52,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAu
     public void execute(String executionCourseID) throws NotAuthorizedException {
         Person person = Authenticate.getUser().getPerson();
 
-        if (!person.hasRole(RoleType.COORDINATOR)) {
+        if (!RoleType.COORDINATOR.isMember(person.getUser())) {
             deny();
         }
 

@@ -112,7 +112,7 @@ public class EditWrittenEvaluation {
             if (writtenTest.getRequestRoomSentDate() != null) {
                 if (!prevTestDate.equals(writtenEvaluationDate) || !prevStartTime.equals(writtenEvaluationStartTime)
                         || !prevTestEnd.equals(writtenEvaluationEndTime)) {
-                    if (!AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+                    if (!RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(AccessControl.getPerson().getUser())) {
                         GOPSendMessageService.requestChangeRoom(writtenTest, prevTestDate, prevStartTime, prevTestEnd);
                     }
                 }

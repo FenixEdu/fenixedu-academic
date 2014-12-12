@@ -124,8 +124,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     @Override
     public boolean canExecuteActivity(User userView) {
-        return isAllowedToManageProcess(this, userView) || userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
-                || userView.getPerson().hasRole(RoleType.COORDINATOR);
+        return isAllowedToManageProcess(this, userView) || RoleType.SCIENTIFIC_COUNCIL.isMember(userView.getPerson().getUser())
+                || RoleType.COORDINATOR.isMember(userView.getPerson().getUser());
     }
 
     @Override
@@ -305,7 +305,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
         @Override
         public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
-            if (!isAllowedToManageProcess(process, userView) && !userView.getPerson().hasRole(RoleType.COORDINATOR)) {
+            if (!isAllowedToManageProcess(process, userView) && !RoleType.COORDINATOR.isMember(userView.getPerson().getUser())) {
                 throw new PreConditionNotValidException();
             }
 

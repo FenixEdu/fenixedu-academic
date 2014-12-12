@@ -53,7 +53,7 @@ public abstract class Operation implements Serializable, Comparable<Operation> {
 
     public boolean isAuthorized(Person person) {
         for (final RoleType roleType : getAuthorizedRoleTypes()) {
-            if (person.hasRole(roleType)) {
+            if (roleType.isMember(person.getUser())) {
                 return true;
             }
         }

@@ -264,16 +264,16 @@ public class FenixAPIv1 {
 
         final Set<FenixRole> roles = new HashSet<FenixRole>();
 
-        if (isTeacher(person) || person.hasRole(RoleType.TEACHER)) {
+        if (isTeacher(person) || RoleType.TEACHER.isMember(person.getUser())) {
             roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartment()));
         }
 
-        if (person.hasRole(RoleType.STUDENT)) {
+        if (RoleType.STUDENT.isMember(person.getUser())) {
             roles.add(new FenixPerson.StudentFenixRole(pib.getStudentRegistrations()));
 
         }
 
-        if (person.hasRole(RoleType.ALUMNI)) {
+        if (RoleType.ALUMNI.isMember(person.getUser())) {
 
             ArrayList<Registration> concludedRegistrations = new ArrayList<>();
             if (person.getStudent() != null) {
@@ -472,7 +472,7 @@ public class FenixAPIv1 {
     public Response calendarEvaluation(@QueryParam("format") String format) {
         validateFormat(format);
         final Person person = getPerson();
-        if (!person.hasRole(RoleType.STUDENT)) {
+        if (!RoleType.STUDENT.isMember(person.getUser())) {
             return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, JSON_UTF8).entity("{}").build();
         }
 
@@ -689,7 +689,7 @@ public class FenixAPIv1 {
 
         Person person = getPerson();
         final Student student = person.getStudent();
-        if (!person.hasRole(RoleType.STUDENT) || student == null) {
+        if (!RoleType.STUDENT.isMember(person.getUser()) || student == null) {
             return new ArrayList<FenixCourseEvaluation.WrittenEvaluation>();
         }
 

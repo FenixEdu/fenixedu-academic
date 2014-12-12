@@ -72,7 +72,7 @@ public class ReadShiftsAndGroups {
 
     private static void checkPermissions(Grouping grouping) {
         Person person = AccessControl.getPerson();
-        if (person.hasRole(RoleType.STUDENT)) {
+        if (RoleType.STUDENT.isMember(person.getUser())) {
             return;
         }
         for (ExecutionCourse executionCourse : grouping.getExecutionCourses()) {

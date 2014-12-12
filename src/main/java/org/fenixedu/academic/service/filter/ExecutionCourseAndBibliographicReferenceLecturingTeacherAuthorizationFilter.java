@@ -56,7 +56,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 
     public void execute(String bibliographicReferenceID) throws NotAuthorizedException {
         User id = Authenticate.getUser();
-        if ((id == null) || !id.getPerson().hasRole(getRoleType())
+        if ((id == null) || !getRoleType().isMember(id.getPerson().getUser())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {
             throw new NotAuthorizedException();
         }

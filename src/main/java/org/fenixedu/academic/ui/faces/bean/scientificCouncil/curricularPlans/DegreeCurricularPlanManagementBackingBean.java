@@ -284,7 +284,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
         for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
             Person loggedPerson = AccessControl.getPerson();
-            if (loggedPerson.hasRole(RoleType.MANAGER) || notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
+            if (RoleType.MANAGER.isMember(loggedPerson.getUser()) || notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
                 result.add(new SelectItem(notClosedInfoExecutionYear.getExternalId(), notClosedInfoExecutionYear.getYear()));
             }
         }

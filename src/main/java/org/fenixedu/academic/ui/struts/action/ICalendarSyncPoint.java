@@ -201,7 +201,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
                     if (user.getPrivateKey().getPrivateKeyValidity().isBeforeNow()) {
                         returnError(httpServletResponse, "private.key.validity.expired");
                     } else {
-                        if (user.getPerson().hasRole(RoleType.STUDENT)) {
+                        if (RoleType.STUDENT.isMember(user.getPerson().getUser())) {
 
                             encodeAndTransmitResponse(httpServletResponse,
                                     getCalendar(method, user, user.getPrivateKey().getPrivateKeyValidity(), request));

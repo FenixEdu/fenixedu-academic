@@ -58,11 +58,11 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
     }
 
     private boolean hasPrivilege(User id, String executionDegreeId) {
-        if (id.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(id.getPerson().getUser())) {
             return true;
         }
 
-        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
+        if (RoleType.COORDINATOR.isMember(id.getPerson().getUser())) {
             String executionDegreeID = executionDegreeId;
 
             if (executionDegreeID == null) {

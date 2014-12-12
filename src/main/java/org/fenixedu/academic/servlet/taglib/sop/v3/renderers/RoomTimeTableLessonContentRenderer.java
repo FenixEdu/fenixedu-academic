@@ -122,7 +122,7 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
             final User userView = Authenticate.getUser();
             if (infoGenericEvent.getOccupation().isActive() && userView != null
-                    && userView.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+                    && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(userView.getPerson().getUser())) {
                 strBuffer.append("<a href=\"");
                 strBuffer.append(context).append("/resourceAllocationManager/");
                 strBuffer.append("roomsPunctualScheduling.do?method=prepareView&genericEventID=")

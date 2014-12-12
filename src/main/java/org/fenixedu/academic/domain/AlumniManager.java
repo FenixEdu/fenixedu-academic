@@ -117,7 +117,7 @@ public class AlumniManager {
 
     private boolean checkAlumni(Student alumniStudent) {
 
-        if (alumniStudent.getAlumni() != null || alumniStudent.getPerson().hasRole(RoleType.ALUMNI)) {
+        if (alumniStudent.getAlumni() != null || RoleType.ALUMNI.isMember(alumniStudent.getPerson().getUser())) {
             return true;
         }
 

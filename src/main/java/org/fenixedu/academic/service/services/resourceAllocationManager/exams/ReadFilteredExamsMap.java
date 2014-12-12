@@ -72,7 +72,7 @@ public class ReadFilteredExamsMap {
         result.setExecutionCourses(infoExecutionCourses);
 
         User user = Authenticate.getUser();
-        if (user == null || !user.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (user == null || !RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(user.getPerson().getUser())) {
             PublishedExamsMapAuthorizationFilter.execute(result);
         }
 

@@ -162,10 +162,10 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     private Person selectPerson(final Person responsiblePerson) {
         if (responsiblePerson != null) {
-            return responsiblePerson.hasRole(RoleType.MANAGER) ? null : responsiblePerson;
+            return RoleType.MANAGER.isMember(responsiblePerson.getUser()) ? null : responsiblePerson;
         } else {
             final Person loggedPerson = AccessControl.getPerson();
-            return (loggedPerson == null) ? null : (loggedPerson.hasRole(RoleType.MANAGER) ? null : loggedPerson);
+            return (loggedPerson == null) ? null : (RoleType.MANAGER.isMember(loggedPerson.getUser()) ? null : loggedPerson);
         }
     }
 

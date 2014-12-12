@@ -52,7 +52,7 @@ public class AlumniViewCurriculum extends CurriculumDispatchAction {
             }
             return super.prepare(mapping, form, request, response);
         } else {
-            if (getLoggedPerson(request).hasRole(RoleType.ALUMNI)) {
+            if (RoleType.ALUMNI.isMember(getLoggedPerson(request).getUser())) {
                 return super.prepare(mapping, form, request, response);
             } else {
                 return mapping.findForward("alumni.view.curriculum.not.authorized");

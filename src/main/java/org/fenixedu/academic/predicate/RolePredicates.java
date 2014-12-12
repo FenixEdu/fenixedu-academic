@@ -237,7 +237,7 @@ public class RolePredicates {
 
     private static boolean hasRole(final RoleType roleType) {
         final Person person = AccessControl.getPerson();
-        return person != null && person.hasRole(roleType);
+        return person != null && roleType.isMember(person.getUser());
     }
 
     private static boolean isTeacher() {

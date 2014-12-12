@@ -161,7 +161,7 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public boolean hasCoordinatorPrivledges(final User requestor) {
-        if (requestor != null && requestor.getPerson().hasRole(RoleType.COORDINATOR)) {
+        if (requestor != null && RoleType.COORDINATOR.isMember(requestor.getPerson().getUser())) {
             final Person person = requestor.getPerson();
             if (person != null) {
                 for (final Coordinator coordinator : person.getCoordinatorsSet()) {
@@ -183,7 +183,7 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public boolean hasTimeTableManagerPrivledges(final User requestor) {
-        return requestor != null && requestor.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
+        return requestor != null && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(requestor.getPerson().getUser());
     }
 
     @Override

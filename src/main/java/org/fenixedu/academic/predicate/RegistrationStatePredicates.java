@@ -40,7 +40,7 @@ public class RegistrationStatePredicates {
                     final Person person = AccessControl.getPerson();
                     return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, c
                             .getRegistration().getDegree(), person.getUser())
-                            || person.hasRole(RoleType.MANAGER);
+                            || RoleType.MANAGER.isMember(person.getUser());
                 }
             };
 

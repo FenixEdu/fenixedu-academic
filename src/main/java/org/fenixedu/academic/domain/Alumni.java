@@ -174,11 +174,11 @@ public class Alumni extends Alumni_Base {
         // (n�o � docente, nao � aluno, nao � funcionario, ...)
 
         Person p = getStudent().getPerson();
-        if (p.hasRole(RoleType.TEACHER)) {
+        if (RoleType.TEACHER.isMember(p.getUser())) {
             return Boolean.FALSE;
         }
 
-        if (p.hasRole(RoleType.STUDENT)) {
+        if (RoleType.STUDENT.isMember(p.getUser())) {
             return Boolean.FALSE;
         }
 
@@ -386,7 +386,7 @@ public class Alumni extends Alumni_Base {
                 Person person = (Person) contact.getParty();
                 partyRead.add(person);
 
-                if (!person.hasRole(RoleType.ALUMNI) || person.getStudent() == null) {
+                if (!RoleType.ALUMNI.isMember(person.getUser()) || person.getStudent() == null) {
                     continue;
                 }
                 for (Registration registration : person.getStudent().getRegistrationsSet()) {

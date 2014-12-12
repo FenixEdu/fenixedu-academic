@@ -150,7 +150,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
                 request.getSession().setAttribute(getClass().getName(), username);
                 return null;
             }
-        } else if (userView.getPerson().hasRole(RoleType.MANAGER)) {
+        } else if (RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
             return null;
         }
         return displayUnAuhtorizedPage(request, response);

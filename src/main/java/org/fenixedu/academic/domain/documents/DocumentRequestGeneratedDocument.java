@@ -44,7 +44,7 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Override
     public boolean isAccessible(User user) {
-        if (user != null && user.getPerson() != null && user.getPerson().hasRole(RoleType.RECTORATE)
+        if (user != null && user.getPerson() != null && RoleType.RECTORATE.isMember(user.getPerson().getUser())
                 && getSource().hasRegistryCode()) {
             return true;
         }

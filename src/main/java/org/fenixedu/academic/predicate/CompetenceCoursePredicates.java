@@ -45,7 +45,7 @@ public class CompetenceCoursePredicates {
             }
 
             Person person = AccessControl.getPerson();
-            if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
                 return true;
             }
 
@@ -80,7 +80,7 @@ public class CompetenceCoursePredicates {
 
             Person person = AccessControl.getPerson();
 
-            if (person.hasRole(RoleType.MANAGER)) {
+            if (RoleType.MANAGER.isMember(person.getUser())) {
                 return true;
             }
 
@@ -95,7 +95,7 @@ public class CompetenceCoursePredicates {
             case PUBLISHED:
                 return isCompetenceGroupMember || isDegreeCurricularPlansMember;
             case APPROVED:
-                return person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+                return RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser());
             default:
                 return false;
             }
@@ -116,9 +116,9 @@ public class CompetenceCoursePredicates {
                     case DRAFT:
                         return isCompetenceGroupMember;
                     case PUBLISHED:
-                        return isCompetenceGroupMember || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+                        return isCompetenceGroupMember || RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser());
                     case APPROVED:
-                        return person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+                        return RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser());
                     default:
                         return false;
                     }

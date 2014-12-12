@@ -33,7 +33,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
     public void execute(String writtenEvaluationId) throws NotAuthorizedException {
         final User userView = Authenticate.getUser();
 
-        if (!userView.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (!RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(userView.getPerson().getUser())) {
 
             final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(writtenEvaluationId);
 

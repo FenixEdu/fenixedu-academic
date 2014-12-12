@@ -29,7 +29,7 @@ public class RegistrationPredicates {
     public static final AccessControlPredicate<Registration> TRANSIT_TO_BOLONHA = new AccessControlPredicate<Registration>() {
         @Override
         public boolean evaluate(final Registration registration) {
-            return AccessControl.getPerson().hasRole(RoleType.MANAGER);
+            return RoleType.MANAGER.isMember(AccessControl.getPerson().getUser());
         };
     };
 
@@ -38,7 +38,7 @@ public class RegistrationPredicates {
 
                 @Override
                 public boolean evaluate(final Registration registration) {
-                    if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+                    if (RoleType.MANAGER.isMember(AccessControl.getPerson().getUser())) {
                         return true;
                     }
 

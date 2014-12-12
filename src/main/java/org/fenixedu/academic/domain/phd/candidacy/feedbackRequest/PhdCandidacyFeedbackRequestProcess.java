@@ -333,7 +333,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
                 if (process.isCoordinatorForPhdProgram(person)) {
                     return AlertMessage.get("message.phd.candidacy.feedback.coordinator.access");
 
-                } else if (process.isGuiderOrAssistentGuider(person) || person.hasRole(RoleType.TEACHER)) {
+                } else if (process.isGuiderOrAssistentGuider(person) || RoleType.TEACHER.isMember(person.getUser())) {
                     return AlertMessage.get("message.phd.candidacy.feedback.teacher.access");
                 }
             }

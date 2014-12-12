@@ -55,7 +55,7 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
 
             boolean isNew = externalId == null;
 
-            if (((id != null && !id.getPerson().hasRole(getRoleType()))) || (id == null)
+            if (((id != null && !getRoleType().isMember(id.getPerson().getUser()))) || (id == null)
                     || ((!isNew) && (!verifyCondition(id, externalId)))) {
                 throw new NotAuthorizedException();
             }

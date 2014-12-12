@@ -181,8 +181,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     @Override
     public boolean canExecuteActivity(User userView) {
-        return isAllowedToManageProcess(this, userView) || userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
-                || userView.getPerson().hasRole(RoleType.COORDINATOR) || isCoordinatorOfProcess(userView);
+        return isAllowedToManageProcess(this, userView) || RoleType.SCIENTIFIC_COUNCIL.isMember(userView.getPerson().getUser())
+                || RoleType.COORDINATOR.isMember(userView.getPerson().getUser()) || isCoordinatorOfProcess(userView);
     }
 
     @Override
@@ -200,11 +200,11 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     static private boolean isInternationalRelationsOfficer(User userView) {
-        return userView.getPerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
+        return RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(userView.getPerson().getUser());
     }
 
     static private boolean isManager(User userView) {
-        return userView.getPerson().hasRole(RoleType.MANAGER);
+        return RoleType.MANAGER.isMember(userView.getPerson().getUser());
     }
 
     private boolean isCoordinatorOfProcess(User userView) {

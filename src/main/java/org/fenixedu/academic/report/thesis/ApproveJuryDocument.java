@@ -49,7 +49,7 @@ public class ApproveJuryDocument extends ThesisDocument {
             author = date = ccAuthor = ccDate = StringUtils.EMPTY;
         } else {
             final Person person = thesisEvaluationParticipant.getPerson();
-            if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
                 author = date = StringUtils.EMPTY;
                 ccAuthor = thesisEvaluationParticipant.getPerson().getName();
                 ccDate = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", thesis.getApproval().toDate());

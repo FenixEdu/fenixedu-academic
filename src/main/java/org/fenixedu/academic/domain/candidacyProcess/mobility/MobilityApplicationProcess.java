@@ -273,8 +273,8 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     @Override
     public boolean canExecuteActivity(User userView) {
-        return isAllowedToManageProcess(userView) || userView.getPerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)
-                || userView.getPerson().hasRole(RoleType.COORDINATOR);
+        return isAllowedToManageProcess(userView) || RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(userView.getPerson().getUser())
+                || RoleType.COORDINATOR.isMember(userView.getPerson().getUser());
     }
 
     private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_MASTER_DEGREE,
@@ -291,11 +291,11 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     static private boolean isInternationalRelationsOfficer(User userView) {
-        return userView.getPerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
+        return RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(userView.getPerson().getUser());
     }
 
     static private boolean isManager(User userView) {
-        return userView.getPerson().hasRole(RoleType.MANAGER);
+        return RoleType.MANAGER.isMember(userView.getPerson().getUser());
     }
 
     @Override

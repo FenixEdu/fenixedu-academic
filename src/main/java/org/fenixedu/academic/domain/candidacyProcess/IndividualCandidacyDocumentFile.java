@@ -70,7 +70,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         }
 
         // International Relation Office permissions
-        if (person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)) {
+        if (RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(person.getUser())) {
             return true;
         }
 

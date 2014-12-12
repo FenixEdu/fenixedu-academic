@@ -76,7 +76,7 @@ public class GenericApplicationPeriodBean implements Serializable {
     @Atomic
     public void createNewPeriod() {
         final User userView = Authenticate.getUser();
-        if (userView != null && userView.getPerson().hasRole(RoleType.MANAGER)) {
+        if (userView != null && RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
             if (title != null && title.hasContent() && start != null && end != null) {
                 new GenericApplicationPeriod(title, description, start, end);
             }

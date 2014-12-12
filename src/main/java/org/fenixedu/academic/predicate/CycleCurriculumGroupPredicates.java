@@ -33,7 +33,7 @@ public class CycleCurriculumGroupPredicates {
                 public boolean evaluate(final CycleCurriculumGroup cycleCurriculumGroup) {
                     final Person person = AccessControl.getPerson();
 
-                    if (person.hasRole(RoleType.MANAGER)) {
+                    if (RoleType.MANAGER.isMember(person.getUser())) {
                         return true;
                     }
 

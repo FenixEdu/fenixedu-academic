@@ -44,7 +44,7 @@ public class DegreeCurricularPlanPredicates {
 
                     Person person = AccessControl.getPerson();
 
-                    if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+                    if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
                         return true;
                     }
 
@@ -54,7 +54,7 @@ public class DegreeCurricularPlanPredicates {
                     case DRAFT:
                         return isCurricularPlanMember;
                     case PUBLISHED:
-                        return isCurricularPlanMember || person.hasRole(RoleType.BOLONHA_MANAGER);
+                        return isCurricularPlanMember || RoleType.BOLONHA_MANAGER.isMember(person.getUser());
                     case APPROVED:
                         return true;
                     default:
@@ -71,7 +71,7 @@ public class DegreeCurricularPlanPredicates {
                 @Override
                 public boolean evaluate(DegreeCurricularPlan dcp) {
                     final Person person = AccessControl.getPerson();
-                    return person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || !dcp.isBolonhaDegree();
+                    return RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser()) || !dcp.isBolonhaDegree();
                 }
 
             };

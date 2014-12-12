@@ -60,7 +60,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
     protected boolean isAcademicRelationsOfficeMember() {
         final Person person = AccessControl.getPerson();
-        return person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE) || canPerformStudentEnrolments;
+        return RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(person.getUser()) || canPerformStudentEnrolments;
     }
 
     private boolean contains(List<CurricularCourse> curricularCourseList, final IDegreeModuleToEvaluate degreeModule) {

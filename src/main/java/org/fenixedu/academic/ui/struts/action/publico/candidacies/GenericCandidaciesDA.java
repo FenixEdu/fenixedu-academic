@@ -75,7 +75,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         request.setAttribute("periods", periods);
 
         final User userView = Authenticate.getUser();
-        if (userView != null && userView.getPerson().hasRole(RoleType.MANAGER)) {
+        if (userView != null && RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
             final GenericApplicationPeriodBean genericApplicationPeriodBean = new GenericApplicationPeriodBean();
             request.setAttribute("genericApplicationPeriodBean", genericApplicationPeriodBean);
         }

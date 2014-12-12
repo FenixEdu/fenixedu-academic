@@ -42,7 +42,7 @@ public class ThesisPredicates {
 
         @Override
         public boolean evaluate(Thesis thesis) {
-            return AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL);
+            return RoleType.SCIENTIFIC_COUNCIL.isMember(AccessControl.getPerson().getUser());
         }
 
     };
@@ -76,7 +76,7 @@ public class ThesisPredicates {
                     Person person = AccessControl.getPerson();
                     return (person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation())
                             || (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS,
-                                    thesis.getDegree(), person.getUser())) || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+                                    thesis.getDegree(), person.getUser())) || RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser());
                 }
 
             };

@@ -59,7 +59,7 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
     public void execute(String executionDegreeId) throws NotAuthorizedException {
         User id = Authenticate.getUser();
         try {
-            if ((id == null) || !id.getPerson().hasRole(getRoleType())
+            if ((id == null) || !getRoleType().isMember(id.getPerson().getUser())
                     || !isResponsibleCoordinatorOfExecutionDegree(id, executionDegreeId)) {
                 throw new NotAuthorizedException();
             }

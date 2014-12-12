@@ -105,7 +105,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             throw new DomainException("error.EventReportQueueJob.permission.denied");
         }
 
-        if (loggedPerson.hasRole(RoleType.MANAGER)) {
+        if (RoleType.MANAGER.isMember(loggedPerson.getUser())) {
             return;
         }
 

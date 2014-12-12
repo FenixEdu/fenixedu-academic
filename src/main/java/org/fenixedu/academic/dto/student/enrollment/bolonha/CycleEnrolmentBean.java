@@ -124,7 +124,7 @@ public class CycleEnrolmentBean implements Serializable {
     }
 
     private boolean isStudent() {
-        return Authenticate.getUser().getPerson().hasRole(RoleType.STUDENT);
+        return RoleType.STUDENT.isMember(Authenticate.getUser().getPerson().getUser());
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {

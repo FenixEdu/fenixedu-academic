@@ -181,7 +181,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
                 final User userView = Authenticate.getUser();
                 if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getRegistration()
                         .getDegree(), userView.getPerson().getUser())
-                        || userView.getPerson().hasRole(RoleType.MANAGER)) {
+                        || RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
                     return;
                 }
             }

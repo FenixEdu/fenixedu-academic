@@ -29,14 +29,14 @@ public class StudentPredicates {
                 @Override
                 public boolean evaluate(Student student) {
                     final Person person = AccessControl.getPerson();
-                    return person.getStudent() == student || person.hasRole(RoleType.MANAGER);
+                    return person.getStudent() == student || RoleType.MANAGER.isMember(person.getUser());
                 }
             };
 
     public static final AccessControlPredicate<Student> checkIfLoggedPersonIsCoordinator = new AccessControlPredicate<Student>() {
         @Override
         public boolean evaluate(Student student) {
-            return AccessControl.getPerson().hasRole(RoleType.COORDINATOR);
+            return RoleType.COORDINATOR.isMember(AccessControl.getPerson().getUser());
         }
     };
 

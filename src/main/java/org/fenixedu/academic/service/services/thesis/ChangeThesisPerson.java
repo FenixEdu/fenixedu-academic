@@ -54,7 +54,7 @@ public class ChangeThesisPerson {
             throws FenixServiceException {
         Person person = change.person;
 
-        if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!RoleType.SCIENTIFIC_COUNCIL.isMember(AccessControl.getPerson().getUser())) {
             thesis.checkIsScientificCommission();
         }
 
@@ -87,7 +87,7 @@ public class ChangeThesisPerson {
     @Atomic
     public static void remove(final ThesisEvaluationParticipant thesisEvaluationParticipant) {
         final Thesis thesis = thesisEvaluationParticipant.getThesis();
-        if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!RoleType.SCIENTIFIC_COUNCIL.isMember(AccessControl.getPerson().getUser())) {
             thesis.checkIsScientificCommission();
         }
         thesisEvaluationParticipant.delete();
@@ -100,7 +100,7 @@ public class ChangeThesisPerson {
     @Atomic
     public static void add(final Thesis thesis, final ThesisParticipationType thesisParticipationType, final Person person) {
         if (person != null) {
-            if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (!RoleType.SCIENTIFIC_COUNCIL.isMember(AccessControl.getPerson().getUser())) {
                 thesis.checkIsScientificCommission();
             }
 

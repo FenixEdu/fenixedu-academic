@@ -89,7 +89,7 @@ public class ViewSentEmailsDA extends FenixDispatchAction {
         request.setAttribute("sendersGroupsCourses", sendersGroupsCourses);
 
         final Person person = AccessControl.getPerson();
-        if (person != null && person.hasRole(RoleType.MANAGER)) {
+        if (person != null && RoleType.MANAGER.isMember(person.getUser())) {
             SearchSendersBean searchSendersBean = getRenderedObject("searchSendersBean");
             if (searchSendersBean == null) {
                 searchSendersBean = new SearchSendersBean();

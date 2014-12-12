@@ -1359,11 +1359,11 @@ public class Student extends Student_Base {
         final Person person = getPerson();
         final RoleType roleType = RoleType.STUDENT;
         if (shouldHaveStudentRole()) {
-            if (!person.hasRole(roleType)) {
+            if (!roleType.isMember(person.getUser())) {
                 RoleType.grant(roleType, person.getUser());
             }
         } else {
-            if (person.hasRole(roleType)) {
+            if (roleType.isMember(person.getUser())) {
                 RoleType.revoke(roleType, person.getUser());
             }
         }

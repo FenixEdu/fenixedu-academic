@@ -141,7 +141,7 @@ public class EnrolmentContext {
     }
 
     public boolean isResponsiblePersonStudent() {
-        return userView.getPerson().hasRole(RoleType.STUDENT);
+        return RoleType.STUDENT.isMember(userView.getPerson().getUser());
     }
 
     public boolean isRegistrationFromResponsiblePerson() {

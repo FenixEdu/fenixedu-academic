@@ -275,7 +275,7 @@ public class SearchPerson implements Serializable {
             if (roleBd != null) {
                 for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
                     final Person person = peopleIterator.next();
-                    if (!person.hasRole(roleBd)) {
+                    if (!roleBd.isMember(person.getUser())) {
                         peopleIterator.remove();
                     }
                 }
@@ -343,7 +343,7 @@ public class SearchPerson implements Serializable {
         }
 
         protected boolean verifyActiveState(Boolean activePersons, Person person) {
-            return (activePersons == null || person.hasRole(RoleType.PERSON).equals(activePersons));
+            return (activePersons == null || ((Boolean) RoleType.PERSON.isMember(person.getUser())).equals(activePersons));
         }
 
         protected boolean verifyUsernameEquality(String usernameToSearch, Person person) {

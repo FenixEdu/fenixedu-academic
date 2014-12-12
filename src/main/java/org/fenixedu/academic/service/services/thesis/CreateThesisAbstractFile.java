@@ -36,7 +36,7 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
     protected void removePreviousFile(Thesis thesis) {
         ThesisFile extendedAbstract = thesis.getExtendedAbstract();
         if (extendedAbstract != null) {
-            if (Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (RoleType.SCIENTIFIC_COUNCIL.isMember(Authenticate.getUser().getPerson().getUser())) {
                 extendedAbstract.deleteWithoutStateCheck();
             } else {
                 extendedAbstract.delete();

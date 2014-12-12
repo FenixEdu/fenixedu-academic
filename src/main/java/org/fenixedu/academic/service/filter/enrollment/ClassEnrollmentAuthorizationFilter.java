@@ -73,7 +73,7 @@ public class ClassEnrollmentAuthorizationFilter {
             return;
         }
 
-        if (person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser())) {
             person = registration.getPerson();
         }
 

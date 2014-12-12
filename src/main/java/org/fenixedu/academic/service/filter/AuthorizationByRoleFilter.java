@@ -40,7 +40,7 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
 
     public void execute() throws NotAuthorizedException {
         User userView = Authenticate.getUser();
-        if (((userView != null && !userView.getPerson().hasRole(getRoleType()))) || (userView == null)) {
+        if (((userView != null && !getRoleType().isMember(userView.getPerson().getUser()))) || (userView == null)) {
             throw new NotAuthorizedException();
         }
 

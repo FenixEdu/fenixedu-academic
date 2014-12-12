@@ -367,7 +367,7 @@ public class Shift extends Shift_Base {
 
     private boolean isResourceAllocationManager() {
         final Person person = AccessControl.getPerson();
-        return person != null && person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
+        return person != null && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser());
     }
 
     public SortedSet<ShiftEnrolment> getShiftEnrolmentsOrderedByDate() {

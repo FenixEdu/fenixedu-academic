@@ -52,7 +52,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
     public void execute(String executionDegreeId) throws NotAuthorizedException {
         User id = Authenticate.getUser();
         try {
-            if ((id == null) || !id.getPerson().hasRole(getRoleType()) || !isCoordinatorOfExecutionDegree(id, executionDegreeId)) {
+            if ((id == null) || !getRoleType().isMember(id.getPerson().getUser()) || !isCoordinatorOfExecutionDegree(id, executionDegreeId)) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {

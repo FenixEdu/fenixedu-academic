@@ -36,11 +36,11 @@ public abstract class CreateThesisFile {
     public ThesisFile run(Thesis thesis, byte[] bytes, String fileName, String title, String subTitle, Locale language)
             throws FenixServiceException, IOException {
 
-        if (!thesis.isWaitingConfirmation() && !Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!thesis.isWaitingConfirmation() && !RoleType.SCIENTIFIC_COUNCIL.isMember(Authenticate.getUser().getPerson().getUser())) {
             throw new DomainException("thesis.files.submit.unavailable");
         }
 
-        if (!thesis.isDeclarationAccepted() && !Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!thesis.isDeclarationAccepted() && !RoleType.SCIENTIFIC_COUNCIL.isMember(Authenticate.getUser().getPerson().getUser())) {
             throw new DomainException("thesis.files.submit.unavailable");
         }
 

@@ -77,11 +77,11 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
      * @return
      */
     private boolean hasPrivilege(User id, String executionCourseID) {
-        if (id.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(id.getPerson().getUser())) {
             return true;
         }
 
-        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
+        if (RoleType.COORDINATOR.isMember(id.getPerson().getUser())) {
 
             final Person person = id.getPerson();
 

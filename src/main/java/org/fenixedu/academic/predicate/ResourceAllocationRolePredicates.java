@@ -33,7 +33,7 @@ public class ResourceAllocationRolePredicates {
     public static final AccessControlPredicate<Lesson> checkPermissionsToManageLessons = new AccessControlPredicate<Lesson>() {
         @Override
         public boolean evaluate(Lesson lesson) {
-            return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
+            return RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(AccessControl.getPerson().getUser());
         }
     };
 
@@ -42,7 +42,7 @@ public class ResourceAllocationRolePredicates {
     public static final AccessControlPredicate<Shift> checkPermissionsToManageShifts = new AccessControlPredicate<Shift>() {
         @Override
         public boolean evaluate(Shift shift) {
-            return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
+            return RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(AccessControl.getPerson().getUser());
         }
     };
 
@@ -52,7 +52,7 @@ public class ResourceAllocationRolePredicates {
             new AccessControlPredicate<SchoolClass>() {
                 @Override
                 public boolean evaluate(SchoolClass schoolClass) {
-                    return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
+                    return RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(AccessControl.getPerson().getUser());
                 }
             };
 
@@ -62,7 +62,7 @@ public class ResourceAllocationRolePredicates {
             new AccessControlPredicate<LessonInstance>() {
                 @Override
                 public boolean evaluate(LessonInstance lessonInstance) {
-                    return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
+                    return RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(AccessControl.getPerson().getUser());
                 }
             };
 
@@ -79,7 +79,7 @@ public class ResourceAllocationRolePredicates {
                         return true;
                     }
 
-                    return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
+                    return RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(AccessControl.getPerson().getUser());
                 }
             };
 

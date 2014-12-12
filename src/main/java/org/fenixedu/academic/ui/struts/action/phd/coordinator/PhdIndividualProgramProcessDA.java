@@ -212,7 +212,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     private boolean isPerformedByStudent(Enrolment enrolment) {
         final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
-        return person.hasRole(RoleType.STUDENT) && enrolment.getStudent().equals(person.getStudent());
+        return RoleType.STUDENT.isMember(person.getUser()) && enrolment.getStudent().equals(person.getStudent());
     }
 
     public ActionForward prepareValidateEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

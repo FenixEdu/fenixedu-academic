@@ -42,7 +42,7 @@ public class ExecutionCoursePredicates {
                         return true;
                     }
 
-                    if (person.hasRole(RoleType.COORDINATOR)) {
+                    if (RoleType.COORDINATOR.isMember(person.getUser())) {
                         Collection<DegreeCurricularPlan> degreeCurricularPlans =
                                 executionCourse.getAssociatedDegreeCurricularPlans();
                         for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {

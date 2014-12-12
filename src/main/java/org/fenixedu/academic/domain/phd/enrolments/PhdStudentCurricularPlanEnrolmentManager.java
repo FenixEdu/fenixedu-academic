@@ -87,7 +87,7 @@ public class PhdStudentCurricularPlanEnrolmentManager extends StudentCurricularP
 
     private boolean wasPerformedByStudent(final Enrolment enrolment) {
         final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
-        return person.hasRole(RoleType.STUDENT) && enrolment.getStudent().equals(person.getStudent());
+        return RoleType.STUDENT.isMember(person.getUser()) && enrolment.getStudent().equals(person.getStudent());
     }
 
 }

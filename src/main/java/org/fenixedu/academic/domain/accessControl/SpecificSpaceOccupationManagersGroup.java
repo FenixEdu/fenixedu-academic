@@ -43,7 +43,7 @@ public class SpecificSpaceOccupationManagersGroup extends FenixGroupStrategy {
     @Override
     public boolean isMember(User user) {
         Person person = user.getPerson();
-        if (person != null && person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (person != null && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser())) {
             return true;
         }
         for (Space space : SpaceUtils.allocatableSpaces().collect(Collectors.toSet())) {

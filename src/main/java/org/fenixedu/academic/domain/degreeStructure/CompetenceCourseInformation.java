@@ -345,10 +345,10 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         if (isCompetenceCourseInformationChangeRequestDraftAvailable()) {
             return false;
         }
-        if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
             return true;
         }
-        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
+        if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
             return false;
         }
         return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);

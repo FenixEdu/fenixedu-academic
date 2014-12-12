@@ -92,8 +92,8 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
     @Override
     public boolean canExecuteActivity(User userView) {
-        return isAllowedToManageProcess(userView) || userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
-                || userView.getPerson().hasRole(RoleType.COORDINATOR);
+        return isAllowedToManageProcess(userView) || RoleType.SCIENTIFIC_COUNCIL.isMember(userView.getPerson().getUser())
+                || RoleType.COORDINATOR.isMember(userView.getPerson().getUser());
     }
 
     @Override

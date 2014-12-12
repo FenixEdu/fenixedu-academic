@@ -113,7 +113,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 
     @Override
     public boolean canExecuteActivity(User userView) {
-        return isAllowedToManageProcess(userView) || userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL);
+        return isAllowedToManageProcess(userView) || RoleType.SCIENTIFIC_COUNCIL.isMember(userView.getPerson().getUser());
     }
 
     @Override

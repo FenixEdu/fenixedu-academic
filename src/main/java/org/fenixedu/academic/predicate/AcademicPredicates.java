@@ -114,7 +114,7 @@ public class AcademicPredicates {
 
         @Override
         public boolean evaluate(Object c) {
-            return Authenticate.getUser().getPerson().hasRole(RoleType.MANAGER);
+            return RoleType.MANAGER.isMember(Authenticate.getUser().getPerson().getUser());
             // return
             // new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PAYMENTS).isMember(
             // AccessControl.getPerson());
@@ -126,7 +126,7 @@ public class AcademicPredicates {
 
         @Override
         public boolean evaluate(Object c) {
-            return Authenticate.getUser().getPerson().hasRole(RoleType.MANAGER);
+            return RoleType.MANAGER.isMember(Authenticate.getUser().getPerson().getUser());
             // return new
             // AcademicAuthorizationGroup(AcademicOperationType.DEPOSIT_AMOUNT_ON_PAYMENT_EVENT).isMember(AccessControl
             // .getPerson()) || MANAGE_PAYMENTS.evaluate(c);
@@ -137,7 +137,7 @@ public class AcademicPredicates {
 
         @Override
         public boolean evaluate(Object c) {
-            return Authenticate.getUser().getPerson().hasRole(RoleType.MANAGER);
+            return RoleType.MANAGER.isMember(Authenticate.getUser().getPerson().getUser());
             // return new
             // AcademicAuthorizationGroup(AcademicOperationType.CREATE_PAYMENT_EVENT).isMember(Authenticate.getUser())
             // || MANAGE_PAYMENTS.evaluate(c);
