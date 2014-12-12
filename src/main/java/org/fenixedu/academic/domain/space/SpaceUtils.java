@@ -62,7 +62,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Ordering;
 
 public class SpaceUtils {
-    public static final String SCHOOL_SPACES = "SCHOOL_SPACES";
+    public static final String SCHOOL_SPACES = "School Spaces";
     public static final String CAMPUS = "Campus";
     public static final String BUILDING = "Building";
     public static final String FLOOR = "Floor";
