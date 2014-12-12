@@ -19,7 +19,10 @@
 package org.fenixedu.academic.ui.struts.action.messaging;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +46,9 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Strings;
 
 @StrutsFunctionality(app = MessagingEmailsApp.class, path = "new-email", titleKey = "label.email.new")
 @Mapping(path = "/emails", module = "messaging")
@@ -73,11 +79,26 @@ public class EmailsDA extends FenixDispatchAction {
 
         if (emailBean == null) {
             emailBean = new EmailBean();
-            final Set<Sender> availableSenders = Sender.getAvailableSenders();
-            if (availableSenders.size() == 1) {
-                emailBean.setSender(availableSenders.iterator().next());
+            String senderExternalId = request.getParameter("sender");
+            if (Strings.isNullOrEmpty(senderExternalId)) {
+                final Set<Sender> availableSenders = Sender.getAvailableSenders();
+                if (availableSenders.size() == 1) {
+                    emailBean.setSender(availableSenders.iterator().next());
+                }
+            } else {
+                Sender sender = FenixFramework.getDomainObject(senderExternalId);
+                emailBean.setSender(sender);
+                String[] recipientsParameter = request.getParameterValues("recipient");
+                if (recipientsParameter != null) {
+                    List<Recipient> recipients =
+                            Stream.of(recipientsParameter)
+                                    .map(recipientExternalId -> (Recipient) FenixFramework.getDomainObject(recipientExternalId))
+                                    .collect(Collectors.toList());
+                    emailBean.setRecipients(recipients);
+                }
             }
         }
+
         RenderUtils.invalidateViewState();
         request.setAttribute("emailBean", emailBean);
         return mapping.findForward("new.email");
