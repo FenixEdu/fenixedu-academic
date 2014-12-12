@@ -62,10 +62,12 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Ordering;
 
 public class SpaceUtils {
+    public static final String SCHOOL_SPACES = "SCHOOL_SPACES";
     public static final String CAMPUS = "Campus";
     public static final String BUILDING = "Building";
     public static final String FLOOR = "Floor";
     public static final String ROOM_SUBDIVISION = "Room Subdivision";
+    public static final String ROOM = "Room";
 
     public static final String LABORATORY_FOR_EDUCATION_CODE = "2.1", LABORATORY_FOR_RESEARCHER_CODE = "2.2";
 

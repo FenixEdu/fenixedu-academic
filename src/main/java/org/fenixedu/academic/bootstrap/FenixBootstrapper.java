@@ -54,6 +54,7 @@ import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.bootstrap.BootstrapError;
@@ -119,9 +120,29 @@ public class FenixBootstrapper {
         installation.setInstituitionURL(schoolSetupSection.getSchoolURL());
 
         if (Bennu.getInstance().getRootClassificationSet().isEmpty()) {
-            Builder campusNameBuilder = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> campusNameBuilder.with(l, "Campus"));
-            new SpaceClassification("1", campusNameBuilder.build());
+            Builder schoolSpaces = new LocalizedString.Builder();
+            CoreConfiguration.supportedLocales().stream().forEach(l -> schoolSpaces.with(l, SpaceUtils.SCHOOL_SPACES));
+            SpaceClassification sc = new SpaceClassification("1", schoolSpaces.build());
+
+            Builder campus = new LocalizedString.Builder();
+            CoreConfiguration.supportedLocales().stream().forEach(l -> campus.with(l, SpaceUtils.CAMPUS));
+            sc.addChildren(new SpaceClassification("1.1", campus.build()));
+
+            Builder building = new LocalizedString.Builder();
+            CoreConfiguration.supportedLocales().stream().forEach(l -> building.with(l, SpaceUtils.BUILDING));
+            sc.addChildren(new SpaceClassification("1.2", building.build()));
+
+            Builder floor = new LocalizedString.Builder();
+            CoreConfiguration.supportedLocales().stream().forEach(l -> floor.with(l, SpaceUtils.FLOOR));
+            sc.addChildren(new SpaceClassification("1.3", floor.build()));
+
+            Builder roomSubdivision = new LocalizedString.Builder();
+            CoreConfiguration.supportedLocales().stream().forEach(l -> roomSubdivision.with(l, SpaceUtils.ROOM_SUBDIVISION));
+            sc.addChildren(new SpaceClassification("1.4", roomSubdivision.build()));
+
+            Builder room = new LocalizedString.Builder();
+            CoreConfiguration.supportedLocales().stream().forEach(l -> room.with(l, SpaceUtils.ROOM));
+            sc.addChildren(new SpaceClassification("1.4", room.build()));
         }
 
         return Lists.newArrayList();
