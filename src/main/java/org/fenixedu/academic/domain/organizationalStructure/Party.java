@@ -141,6 +141,19 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T extends Party> Set<T> getPartysSet(Class<T> input) {
+        Set<T> partySet = new HashSet<T>();
+
+        for (Party party : Bennu.getInstance().getPartysSet()) {
+            if (input.isAssignableFrom(party.getClass())) {
+                partySet.add((T) party);
+            }
+        }
+
+        return partySet;
+    }
+
     public Account getAccountBy(AccountType accountType) {
         for (final Account account : getAccountsSet()) {
             if (account.getAccountType() == accountType) {

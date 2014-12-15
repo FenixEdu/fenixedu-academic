@@ -21,7 +21,9 @@ package org.fenixedu.academic.domain.organizationalStructure;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
@@ -141,5 +143,25 @@ public class SchoolUnit extends SchoolUnit_Base {
         List<Unit> parents = getParentUnitsPath();
         output.append(parents.get(parents.size() - 1).getName());
         return output.toString();
+    }
+
+    public static SchoolUnit find(String code) {
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        SchoolUnit schoolUnitFound = null;
+        for (final SchoolUnit schoolUnit : getSchoolUnitsSet()) {
+            if (schoolUnitFound != null) {
+                throw new DomainException("error.SchoolUnit.found.duplicate", code, schoolUnit.toString(),
+                        schoolUnitFound.toString());
+            }
+            schoolUnitFound = schoolUnit;
+        }
+        return schoolUnitFound;
+    }
+
+    public static Set<SchoolUnit> getSchoolUnitsSet() {
+        return getPartysSet(SchoolUnit.class);
     }
 }

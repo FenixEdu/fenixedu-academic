@@ -20,7 +20,9 @@ package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Person;
@@ -181,4 +183,23 @@ public class UniversityUnit extends UniversityUnit_Base {
         return getName();
     }
 
+    public static UniversityUnit find(String code) {
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        UniversityUnit universityUnitFound = null;
+        for (UniversityUnit universityUnit : getUniversityUnitsSet()) {
+            if (universityUnitFound != null) {
+                throw new DomainException("error.UniversityUnit.found.duplicate", code, universityUnit.toString(),
+                        universityUnitFound.toString());
+            }
+            universityUnitFound = universityUnit;
+        }
+        return universityUnitFound;
+    }
+
+    public static Set<UniversityUnit> getUniversityUnitsSet() {
+        return getPartysSet(UniversityUnit.class);
+    }
 }
