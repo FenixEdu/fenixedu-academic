@@ -29,9 +29,9 @@ public class SerializationTool {
     public static String yearMonthDaySerialize(final YearMonthDay yearMonthDay) {
         if (yearMonthDay != null) {
             final String dateString =
-                    String.format("%d-%02d-%02d", yearMonthDay.get(DateTimeFieldType.year()),
+                    String.format("%04d-%02d-%02d", yearMonthDay.get(DateTimeFieldType.year()),
                             yearMonthDay.get(DateTimeFieldType.monthOfYear()), yearMonthDay.get(DateTimeFieldType.dayOfMonth()));
-            return dateString.length() != 10 ? null : dateString;
+            return dateString;
         }
         return null;
     }

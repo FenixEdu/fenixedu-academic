@@ -84,7 +84,9 @@
 					<f:validateLongRange minimum="1" maximum="12" />
 				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText alt="#{htmlAltBundle['inputText.year']}" required="true" maxlength="4" size="4" value="#{SOPEvaluationManagementBackingBean.year}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.year']}" required="true" maxlength="4" size="4" value="#{SOPEvaluationManagementBackingBean.year}">
+					<f:validateLongRange minimum="1000" maximum="9999" />
+				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.date.instructions.small']}</i>" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
