@@ -35,6 +35,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
@@ -1321,6 +1322,21 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         }
 
+        return result;
+    }
+
+    public static CompetenceCourse find(final String code) {
+        CompetenceCourse result = null;
+        if (StringUtils.isNotBlank(code)) {
+            for (final CompetenceCourse iter : Bennu.getInstance().getCompetenceCoursesSet()) {
+                if (StringUtils.equals(code, iter.getCode())) {
+                    if (result != null) {
+                        throw new DomainException("error.CompetenceCourse.found.duplicate", result.toString(), iter.toString());
+                    }
+                    result = iter;
+                }
+            }
+        }
         return result;
     }
 

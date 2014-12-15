@@ -89,6 +89,23 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
         return result;
     }
 
+    public static DistrictSubdivision find(District district, String code) {
+        if (district == null || StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        DistrictSubdivision foundSubdivision = null;
+        for (DistrictSubdivision subdivision : district.getDistrictSubdivisionsSet()) {
+            if (StringUtils.equalsIgnoreCase(code, subdivision.getCode())) {
+                if (foundSubdivision != null) {
+                    throw new DomainException("error.DistrictSubdivision.found.duplicate", district.getCode(), code);
+                }
+                foundSubdivision = subdivision;
+            }
+        }
+        return foundSubdivision;
+    }
+
     static public DistrictSubdivision readByCode(final String code) {
         DistrictSubdivision result = null;
 

@@ -181,4 +181,21 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
         return result;
     }
 
+    public static ExternalCurricularCourse find(String code) {
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        ExternalCurricularCourse foundExternalCourse = null;
+        for (ExternalCurricularCourse externalCourse : Bennu.getInstance().getExternalCurricularCoursesSet()) {
+            if (StringUtils.equalsIgnoreCase(code, externalCourse.getCode())) {
+                if (foundExternalCourse != null) {
+                    throw new DomainException("error.ExternalCurricularCourse.found.duplicate", externalCourse.toString());
+                }
+                foundExternalCourse = externalCourse;
+            }
+        }
+
+        return foundExternalCourse;
+    }
 }
