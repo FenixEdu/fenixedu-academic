@@ -139,31 +139,7 @@ Documentation:
     <renderer type="pt.ist.fenixframework.DomainObject" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${class.simpleName}:${externalId}"/>
     </renderer>
-    
-    <!--@ Tag Renderers -->
-    
-    <renderer type="java.util.Collection" layout="tag-count" class="org.fenixedu.academic.ui.renderers.TagCountRenderer">
-    	<property name="moduleRelative" value="true"/>
-    	<property name="contextRelative" value="true"/>
-    	<property name="separator" value="|"/>
-    </renderer>
-
-    <renderer type="java.util.Collection" layout="tag-cloud" class="org.fenixedu.academic.ui.renderers.TagCloudRenderer">
-    	<property name="moduleRelative" value="true"/>
-    	<property name="contextRelative" value="true"/>
-    	<property name="numberOfLevels" value="6"/>
-    </renderer>
-    
-
-    <renderer type="java.util.Collection" layout="tag-search" class="org.fenixedu.academic.ui.renderers.AdvancedTagCloudSearchRenderer">
-    	<property name="moduleRelative" value="true"/>
-    	<property name="contextRelative" value="true"/>
-    	<property name="numberOfLevels" value="6"/>
-    	<property name="parameter" value="tags"/>
-    	<property name="selectedTagClass" value="tcloudselected"/>
-    	<property name="nearByTagClass" value="tcloudnearBy"/>
-    </renderer>
-     
+         
      <renderer type="org.fenixedu.academic.domain.Department" layout="competence-course-list" class="org.fenixedu.academic.ui.renderers.CompetenceCourseVersionList">
      	<property name="approvedClass" value="approved"/>
 		<property name="draftClass" value="draft"/>
@@ -173,10 +149,6 @@ Documentation:
 		<property name="showOldCompetenceCourses" value="false"/>
 		<property name="messageClass" value="warning0"/>
      </renderer>   
-
-    <renderer mode="input" type="java.lang.String" layout="tag-cloud" class="org.fenixedu.academic.ui.renderers.TagInputCloudRenderer">
-    	<property name="textClasses" value="smalltxt color888"/>
-    </renderer>
 
     <renderer type="org.fenixedu.academic.domain.student.curriculum.Curriculum" class="org.fenixedu.academic.ui.renderers.student.curriculum.CurriculumRenderer"/>   
 

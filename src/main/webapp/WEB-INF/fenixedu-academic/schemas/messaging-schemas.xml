@@ -102,23 +102,6 @@
 	<slot name="presentationName"/>
 </schema>
 
-<schema name="messaging.file.sourceGroup" type="org.fenixedu.academic.ui.struts.action.person.PersonFileSourceGroupBean">
-	<slot name="name"/>
-	<slot name="count" layout="format">
-		<property name="format" value="(${})"/>
-	</slot>
-</schema>
-
-<schema name="messaging.file.source" type="org.fenixedu.academic.ui.struts.action.person.PersonFileSourceBean">
-	<slot name="name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="destination" value="files.view"/>
-	</slot>
-	<slot name="count" layout="format">
-		<property name="format" value="(${})"/>
-	</slot>
-</schema>
-
 <schema name="delegatesGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
 	<slot name="presentationName"/>
 </schema>

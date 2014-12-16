@@ -425,26 +425,6 @@
 </schema>
  -->
  
-<schema name="ViewPersistentGroup" type="org.fenixedu.academic.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES" constructor="name, type"> 	
-	<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50" />
-	</slot>
-	<slot name="type" key="label.type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="personsCount" key="label.persistent.group.number.of.members" />
-</schema>
-
-<schema name="EditPersistentGroup" type="org.fenixedu.academic.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES"> 	
-	<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50" />
-	</slot>
-	<slot name="type" key="label.type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<setter signature="edit(name, type)" />
-</schema>
-
-<schema name="AddNewMemberToPersistentGroup" type="org.fenixedu.academic.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES"> 		
-	<slot name="newPersonToMembersList" key="label.responsibility.person.username" layout="username-as-person" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
-</schema>
-
 <schema name="PersonInfoWithUsername" type="org.fenixedu.academic.domain.Person" bundle="MANAGER_RESOURCES">			
 	<slot name="name"/>
 	<slot name="username"/>		

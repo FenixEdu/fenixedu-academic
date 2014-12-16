@@ -38,10 +38,6 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.NonAffiliatedTeacher;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.UnitFile;
-import org.fenixedu.academic.domain.UnitFileTag;
-import org.fenixedu.academic.domain.accessControl.MembersLinkGroup;
-import org.fenixedu.academic.domain.accessControl.PersistentGroupMembers;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
@@ -172,10 +168,6 @@ public class Unit extends Unit_Base {
             getParentsSet().iterator().next().delete();
         }
 
-        for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTagsSet().iterator().next().delete()) {
-            ;
-        }
-
         getUnitName().delete();
         getAllowedPeopleToUploadFilesSet().clear();
 
@@ -201,9 +193,8 @@ public class Unit extends Unit_Base {
 
         if (!(getAssociatedNonAffiliatedTeachersSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
                 && getPrecedentDegreeInformationsSet().isEmpty() && getCandidacyPrecedentDegreeInformationsSet().isEmpty()
-                && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty() && getPersistentGroupsSet().isEmpty()
-                && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet()
-                .isEmpty())) {
+                && getExternalRegistrationDatasSet().isEmpty() && getExternalCourseLoadRequestsSet().isEmpty()
+                && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
     }
@@ -842,59 +833,6 @@ public class Unit extends Unit_Base {
         return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
     }
 
-    public List<UnitFile> getAccessibileFiles(Person person) {
-        List<UnitFile> files = new ArrayList<UnitFile>();
-        for (UnitFile file : getFilesSet()) {
-            if (file.isPersonAllowedToAccess(person)) {
-                files.add(file);
-            }
-        }
-        return files;
-    }
-
-    public List<UnitFile> getAccessibileFiles(Person person, Collection<UnitFileTag> tag) {
-        List<UnitFile> files = new ArrayList<UnitFile>();
-        for (UnitFile file : getAccessibileFiles(person)) {
-            if (file.hasUnitFileTags(tag)) {
-                files.add(file);
-            }
-        }
-        return files;
-    }
-
-    public List<UnitFile> getAccessibileFiles(Person person, UnitFileTag tag) {
-        List<UnitFile> files = new ArrayList<UnitFile>();
-        if (tag != null) {
-            for (UnitFile file : tag.getTaggedFilesSet()) {
-                if (file.isPersonAllowedToAccess(person)) {
-                    files.add(file);
-                }
-            }
-        }
-        return files;
-
-    }
-
-    public List<UnitFile> getAccessibileFiles(Person person, String tagName) {
-        return getAccessibileFiles(person, getUnitFileTag(tagName));
-    }
-
-    public UnitFileTag getUnitFileTag(String name) {
-        for (UnitFileTag tag : getUnitFileTagsSet()) {
-            if (tag.getName().equalsIgnoreCase(name)) {
-                return tag;
-            }
-        }
-        return null;
-    }
-
-    public void removeGroupFromUnitFiles(PersistentGroupMembers members) {
-        MembersLinkGroup group = MembersLinkGroup.get(members);
-        for (UnitFile file : getFilesSet()) {
-            file.updatePermissions(group);
-        }
-    }
-
     public boolean isUserAllowedToUploadFiles(Person person) {
         return getAllowedPeopleToUploadFilesSet().contains(person);
     }
@@ -910,14 +848,6 @@ public class Unit extends Unit_Base {
 
     public MultiLanguageString getNameI18n() {
         return getPartyName();
-    }
-
-    public List<Group> getUserDefinedGroups() {
-        final List<Group> groups = new ArrayList<Group>();
-        for (final PersistentGroupMembers persistentMembers : this.getPersistentGroupsSet()) {
-            groups.add(MembersLinkGroup.get(persistentMembers));
-        }
-        return groups;
     }
 
     public boolean isEarth() {
@@ -937,7 +867,6 @@ public class Unit extends Unit_Base {
     public List<Group> getGroups() {
         List<Group> groups = new ArrayList<Group>();
         groups.addAll(getDefaultGroups());
-        groups.addAll(getUserDefinedGroups());
         return groups;
     }
 

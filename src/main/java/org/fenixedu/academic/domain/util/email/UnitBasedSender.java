@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.util.email;
 
 import java.util.Set;
 
-import org.fenixedu.academic.domain.accessControl.MembersLinkGroup;
-import org.fenixedu.academic.domain.accessControl.PersistentGroupMembers;
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.groups.Group;
@@ -74,65 +72,6 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         throw new Error("method.not.available.for.this.type.of.sender");
     }
 
-    protected boolean hasRecipientWithToName(final String toName) {
-        for (final Recipient recipient : super.getRecipientsSet()) {
-            if (recipient.getToName().equals(toName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean hasPersistentGroup(final String toName) {
-        final Unit unit = getUnit();
-        for (final PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
-            if (persistentGroupMembers.getName().equals(toName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Atomic
-    private void updateRecipients() {
-        final Unit unit = getUnit();
-        if (unit != null) {
-
-            for (final Group group : unit.getGroups()) {
-                if (!hasRecipientWithToName(group.getPresentationName())) {
-                    createRecipient(group);
-                }
-            }
-
-            for (final PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
-                if (!hasRecipientWithToName(persistentGroupMembers.getName())) {
-                    createRecipient(persistentGroupMembers);
-                }
-            }
-            for (final Recipient recipient : super.getRecipientsSet()) {
-                if (recipient.getMembers() instanceof MembersLinkGroup) {
-                    if (!hasPersistentGroup(recipient.getToName())) {
-                        if (recipient.getMessagesSet().isEmpty()) {
-                            recipient.delete();
-                        } else {
-                            removeRecipients(recipient);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public Set<Recipient> getRecipientsWithoutUpdate() {
-        return super.getRecipientsSet();
-    }
-
-    @Override
-    public Set<Recipient> getRecipientsSet() {
-        updateRecipients();
-        return super.getRecipientsSet();
-    }
-
     @Atomic
     @Override
     public void addRecipients(final Recipient recipients) {
@@ -143,11 +82,6 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     @Override
     public void removeRecipients(final Recipient recipients) {
         super.removeRecipients(recipients);
-    }
-
-    @Atomic
-    protected void createRecipient(final PersistentGroupMembers persistentGroupMembers) {
-        addRecipients(new Recipient(null, MembersLinkGroup.get(persistentGroupMembers)));
     }
 
     protected void createRecipient(final Group group) {

@@ -29,12 +29,3 @@
 <schema name="showName" bundle="RESEARCHER_RESOURCES" type="org.fenixedu.academic.domain.Person">
     <slot name="nickname" key="researcher.viewCurriculum.name" />
 </schema>
-
-<schema name="view.persistent.group" type="org.fenixedu.academic.domain.accessControl.PersistentGroupMembers" bundle="RESEARCHER_RESOURCES">
-    <slot name="name" key="label.groupName" />
-    <slot name="persons" key="label.members">
-        <property name="eachLayout" value="values" />
-        <property name="eachSchema" value="showNickName" />
-        <property name="sortBy" value="name" />
-    </slot>
-</schema>

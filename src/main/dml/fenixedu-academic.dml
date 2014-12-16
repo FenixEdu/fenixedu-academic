@@ -50,7 +50,6 @@ enum org.fenixedu.academic.domain.SalaryType                                    
 enum org.fenixedu.academic.domain.SchoolLevelType                                                                      as SchoolLevelType;
 enum org.fenixedu.academic.domain.ShiftType                                                                            as ShiftType;
 enum org.fenixedu.academic.domain.UnitBoardPermittedGroupType                                                          as UnitBoardPermittedGroupType;
-enum org.fenixedu.academic.domain.accessControl.PersistentGroupMembersType                                             as PersistentGroupMembersType;
 enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
 enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType.Scope                     as AcademicOperationTypeScope;
 enum org.fenixedu.academic.domain.accounting.AccountType                                                               as AccountType;
@@ -924,10 +923,6 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         class ProjectSubmissionFile extends File {
         }
 
-        class UnitFile extends File {
-            String description;
-        }
-
         class candidacy.CandidacyDocumentFile extends File {
         }
         
@@ -1234,10 +1229,6 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
 	    Integer weight (REQUIRED);
 	}
 
-    class UnitFileTag  {
-        String name;
-    }
-
     class University  {
         String code;
         String name;
@@ -1246,11 +1237,6 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
     class WrittenEvaluationEnrolment  {
     }
 
-    class accessControl.PersistentGroupMembers  {
-        String name;
-        PersistentGroupMembersType type;
-    }
-    
     class accounting.Account  {
         AccountType accountType;
         DateTime creationDate;
@@ -4599,11 +4585,6 @@ class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPre
 	public AcademicPeriod onCurrentPeriod (REQUIRED);
 }
 
-class accessControl.PersistentMembersLinkGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-
-
-
-
 /*
  * Relations definitions
  * 
@@ -7240,15 +7221,6 @@ relation PhotographOriginal {
 	photograph.PictureOriginal playsRole original;
 }
 
-relation FileTagging {
-    UnitFileTag playsRole unitFileTags {
-        multiplicity *;
-    }
-    UnitFile playsRole taggedFiles {
-        multiplicity *;
-    }
-}
-
 relation ExecutionCourseForumCourse {
     messaging.ExecutionCourseForum playsRole forum {
         multiplicity *;
@@ -7775,22 +7747,6 @@ relation AcademicAccessRuleOffices {
         multiplicity *;
     }
     protected administrativeOffice.AdministrativeOffice playsRole office {
-        multiplicity *;
-    }
-}
-
-relation PersistentGroupMembersPerson {
-    Person playsRole persons {
-        multiplicity *;
-    }
-    accessControl.PersistentGroupMembers playsRole persistentGroups {
-        multiplicity *;
-    }
-}
-
-relation PersistentGroupMembersUnit {
-    organizationalStructure.Unit playsRole unit;
-    accessControl.PersistentGroupMembers playsRole persistentGroups {
         multiplicity *;
     }
 }
@@ -9001,13 +8957,6 @@ relation RootDomainObjectPaymentPlan {
     }
 }
 
-relation RootDomainObjectPersistentGroupMembers {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accessControl.PersistentGroupMembers playsRole persistentGroupMembers {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPersonAccount {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonAccount playsRole personAccounts {
@@ -9767,27 +9716,6 @@ relation UnitCampus {
     }
 }
 
-relation UnitFilePerson {
-    Person playsRole uploader;
-    UnitFile playsRole uploadedFiles {
-        multiplicity *;
-    }
-}
-
-relation UnitFileTagRootDomainObject {
-    UnitFileTag playsRole unitFileTags {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation UnitFileUnit {
-    organizationalStructure.Unit playsRole unit;
-    UnitFile playsRole files {
-        multiplicity *;
-    }
-}
-
 relation UnitNameUnitNamePart {
     organizationalStructure.UnitName playsRole unitName {
         multiplicity *;
@@ -9814,13 +9742,6 @@ relation UnitNonAffiliatedTeacher {
 relation UnitServiceAgreementTemplate {
     organizationalStructure.Unit playsRole unit;
     accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate playsRole unitServiceAgreementTemplate;
-}
-
-relation UnitUnitFileTag {
-    UnitFileTag playsRole unitFileTags {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
 }
 
 relation UnitUnitName {
@@ -12001,15 +11922,6 @@ relation PersistentAlumniGroupDegree {
 	}
 	public Degree playsRole degree {
 		multiplicity 0..1;
-	}
-}
-
-relation PersistentMembersLinkGroupPersistentGroupMembers {
-	public accessControl.PersistentMembersLinkGroup playsRole membersLinkGroup {
-		multiplicity 0..1;
-	}
-	public accessControl.PersistentGroupMembers playsRole persistentGroupMembers {
-		multiplicity 1..1;
 	}
 }
 
