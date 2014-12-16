@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.space;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -104,28 +103,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
     @Override
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
-
-        List<Interval> result = new ArrayList<Interval>();
-        OccupationPeriod occupationPeriod = getPeriod();
-
-        if (getPeriod() != null) {
-
-            result.addAll(generateEventSpaceOccupationIntervals(occupationPeriod.getStartYearMonthDay(),
-                    occupationPeriod.getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(),
-                    getFrequency(), getDayOfWeek(), getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday(),
-                    startDateToSearch, endDateToSearch));
-
-            while (occupationPeriod.getNextPeriod() != null) {
-                result.addAll(generateEventSpaceOccupationIntervals(occupationPeriod.getNextPeriod().getStartYearMonthDay(),
-                        occupationPeriod.getNextPeriod().getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(),
-                        getEndTimeDateHourMinuteSecond(), getFrequency(), getDayOfWeek(), getDailyFrequencyMarkSaturday(),
-                        getDailyFrequencyMarkSunday(), startDateToSearch, endDateToSearch));
-
-                occupationPeriod = occupationPeriod.getNextPeriod();
-            }
-        }
-
-        return result;
+        return Lists.newArrayList(getLesson().getAllLessonIntervalsWithoutInstanceDates());
     }
 
     @Override

@@ -99,6 +99,11 @@ public class SpaceUtils {
                 .map(space -> InfoRoom.newInfoFromDomain(space)).collect(Collectors.toList());
     }
 
+    public static List<InfoRoom> allocatableSpace(Integer normalCapacity, boolean withLabs, List<Interval> intervals) {
+        return allocatableSpace(normalCapacity, withLabs).filter(space -> isFree(space, intervals))
+                .map(space -> InfoRoom.newInfoFromDomain(space)).collect(Collectors.toList());
+    }
+
     public static List<Space> allocatableSpace(final Integer normalCapacity, final boolean withLabs, final Interval... intervals) {
         return allocatableSpace(normalCapacity, withLabs).filter(space -> space.isFree(intervals)).collect(Collectors.toList());
     }
@@ -149,20 +154,17 @@ public class SpaceUtils {
     }
 
     private static boolean isForEducation(Space space, Person person) {
-        final Group lessonGroup = space.getOccupationsGroup();
 
+        if (!space.isActive() || !(isRoom(space) || isRoomSubdivision(space))) {
+            return false;
+        }
+
+        final Group lessonGroup = space.getOccupationsGroupWithChainOfResponsability();
         if (lessonGroup != null && lessonGroup.getMembers().size() > 0
                 && (person == null || lessonGroup.isMember(person.getUser()))) {
             return true;
         }
-
-        final Space parent = space.getParent();
-        if (parent != null && parent.isActive() && (isRoom(parent) || isRoomSubdivision(parent))) {
-            return isForEducation(parent, person);
-        }
-
         return false;
-
     }
 
     public static boolean isFree(Space space, YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime,
@@ -205,6 +207,15 @@ public class SpaceUtils {
             }
         }
 
+        return true;
+    }
+
+    public static boolean isFree(Space space, List<Interval> intervals) {
+        for (Occupation spaceOccupation : getResourceAllocationsForCheck(space)) {
+            if (spaceOccupation.overlaps(intervals)) {
+                return false;
+            }
+        }
         return true;
     }
 

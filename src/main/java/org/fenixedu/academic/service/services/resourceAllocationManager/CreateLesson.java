@@ -45,7 +45,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateLesson {
 
     @Atomic
-    public static void run(DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
+    public static Lesson run(DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
             InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay beginDate, YearMonthDay endDate)
             throws FenixServiceException {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
@@ -62,6 +62,6 @@ public class CreateLesson {
                             .findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome()) : null;
         }
 
-        new Lesson(weekDay, begin, end, shift, frequency, executionSemester, beginDate, endDate, room);
+        return new Lesson(weekDay, begin, end, shift, frequency, executionSemester, beginDate, endDate, room);
     }
 }
