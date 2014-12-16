@@ -24,9 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "teacher.authorizations.title",
-        accessGroup = "academic(MANAGE_TEACHER_AUTHORIZATIONS)")
-@RequestMapping("/teacher/authorizations")
 /**
  * Manage teacher authorizations controller
  * 
@@ -34,6 +31,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Sérgio Silva (sergio.silva@tecnico.ulisboa.pt)
  *
  */
+@SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "teacher.authorizations.title",
+        accessGroup = "academic(MANAGE_TEACHER_AUTHORIZATIONS)")
+@RequestMapping("/teacher/authorizations")
 public class AuthorizationController {
 
     @Autowired
@@ -60,7 +60,6 @@ public class AuthorizationController {
         attrs.addAttribute("period", search.getPeriod().getExternalId());
         return "redirect:/teacher/authorizations";
     }
-
 
     /***
      * Functionality entry point
@@ -201,7 +200,6 @@ public class AuthorizationController {
         }
         return view("upload-finished");
     }
-
 
     /***
      * Shows form to create a new teacher authorization with the previous

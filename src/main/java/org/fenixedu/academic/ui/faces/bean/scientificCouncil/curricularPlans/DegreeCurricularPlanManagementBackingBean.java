@@ -124,7 +124,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     @Atomic
     public void addUserToGroup() {
         if (getNewGroupMember() != null) {
-            User user = FenixFramework.getDomainObject(getNewGroupMember());
+            User user = User.findByUsername(getNewGroupMember());
             if (user != null) {
                 Group group = getDcp().getCurricularPlanMembersGroup();
                 getDcp().setCurricularPlanMembersGroup(group.grant(user));

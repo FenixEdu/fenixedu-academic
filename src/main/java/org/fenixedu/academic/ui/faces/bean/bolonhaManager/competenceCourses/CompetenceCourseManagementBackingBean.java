@@ -277,7 +277,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     @Atomic
     public void addUserToGroup() {
         if (getNewGroupMember() != null) {
-            User user = FenixFramework.getDomainObject(getNewGroupMember());
+            User user = User.findByUsername(getNewGroupMember());
             if (user != null) {
                 Group group = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
                 getSelectedDepartmentUnit().getDepartment().setCompetenceCourseMembersGroup(group.grant(user));

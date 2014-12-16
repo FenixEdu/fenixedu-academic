@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-${portal.toolkit()}	
+${portal.toolkit()}
 
 <spring:url var="authorizationsUrl" value="/teacher/authorizations"></spring:url>
 <spring:url var="createUrl" value="/teacher/authorizations/create"></spring:url>
@@ -41,7 +41,7 @@ ${portal.toolkit()}
 		<div class="form-group">
 			<label for="username" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.username" /></label>
 			<div class="col-sm-11">
-				<input id="username" class="form-control col-sm-11 user-search" required placeholder="${i18n.message('teacher.authorizations.placeholder.user')}"/>
+				<input id="user" name="user" bennu-user-autocomplete class="form-control col-sm-11 user-search" required placeholder="${i18n.message('teacher.authorizations.placeholder.user')}" value=""/>
 			</div>
 		</div>
 		
@@ -61,8 +61,6 @@ ${portal.toolkit()}
 			</div>
 		</div>
 		
-		<form:hidden path="user" class="form-control user-search"/>
-		
 		<div class="form-group">
 			<div class="col-sm-push-1 col-sm-11">
 				<a class="btn btn-default" href="${authorizationsUrl}"><spring:message code="label.cancel"/></a>
@@ -72,66 +70,3 @@ ${portal.toolkit()}
 		
 	</form:form>
 </section>
-
-<script type='text/javascript'>
-
-	var example = new Bloodhound({
-	    datumTokenizer: function (d) {
-	        return Bloodhound.tokenizers.whitespace(d.value);
-	    },
-	    queryTokenizer: Bloodhound.tokenizers.whitespace,
-	    limit:10,
-	    remote: {
-	        url: Bennu.contextPath + "/api/bennu-core/users/find",
-	
-	        replace: function (url, query) {
-	            return url + "?query=" + query + "&maxHits=10";
-	        },
-	
-	        ajax: {
-	            beforeSend: function (jqXhr, settings) {
-	                //settings.data = $.param({q: queryInput.val()});
-	            },
-	            type: "POST"
-	
-	        },
-	
-	        filter: function (response) {
-	            return response.users;
-	        }
-	    }
-	});
-	
-	example.initialize();
-	
-	$('.user-search').typeahead({
-	    hint: true,
-	    highlight: true,
-	    minLength: 3,
-	}, {
-	    name: 'username',
-	    displayKey: function(user) {
-	    	return user.displayName;
-	    },
-	    source: example.ttAdapter(),
-	    templates: {
-	        empty: [
-	            '<div class="empty-message">',
-	            'No User Found',
-	            '</div>'
-	        ].join('\n'),
-	        suggestion: function (x) {
-	//             Bennu.group.userCache[x.username] = x;
-	            return '<p><div class="row">' +
-	                '<div class="col-xs-1"><img class="img-circle" src="' + x.avatar + '?s=32" alt="" /></div>' +
-	                '<div class="col-sm-11">' +
-	                '<div>' + x.displayName + '</div>' +
-	                '<div>' + x.username + '</div>' +
-	                '</div></div></p>';
-	        }
-	    }
-	}).on("typeahead:autocompleted typeahead:selected", function (el, user, elName) {
-		$("#user").val(user.id);
-	});
-
-</script>
