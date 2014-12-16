@@ -41,22 +41,23 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditLesson {
 
     @Atomic
-    public static void run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
+    public static Lesson run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
             InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
             Boolean createLessonInstances) throws FenixServiceException {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
-        Lesson aula = FenixFramework.getDomainObject(aulaAntiga.getExternalId());
+        Lesson lesson = FenixFramework.getDomainObject(aulaAntiga.getExternalId());
 
-        if (aula != null) {
+        if (lesson != null) {
 
             Space newRoom = null;
             if (infoRoomOccupation != null && infoRoomOccupation.getInfoRoom() != null) {
                 newRoom = SpaceUtils.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
             }
 
-            aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);
+            lesson.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);
         }
+        return lesson;
     }
 
     @Atomic

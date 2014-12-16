@@ -177,7 +177,12 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     }
 
     @Override
-    public boolean overlaps(final Interval[] intervals) {
+    public Boolean overlaps(List<Interval> intervals) {
+        return overlaps(intervals.toArray(new Interval[0]));
+    }
+
+    @Override
+    public boolean overlaps(final Interval... intervals) {
         for (final Interval interval : intervals) {
             if (overlaps(interval)) {
                 return true;
