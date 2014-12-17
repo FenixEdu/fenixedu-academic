@@ -927,6 +927,29 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return executionYear.getDegreeInfo(this);
     }
 
+    public DegreeInfo createInformation(final ExecutionInterval executionInterval, final MultiLanguageString name) {
+        if (findInformation(executionInterval) != null) {
+            throw new DomainException(
+                    "error.net.sourceforge.fenixdu.domain.cannot.create.degreeInfo.already.exists.one.for.that.degree.and.executionYear");
+        }
+        final DegreeInfo result = new DegreeInfo();
+        result.setDegree(this);
+        result.setExecutionInterval(executionInterval);
+        result.setName(name);
+        new DegreeInfoCandidacy(result);
+        new DegreeInfoFuture(result);
+        return result;
+    }
+
+    public DegreeInfo findInformation(final ExecutionInterval executionInterval) {
+        final AcademicInterval academicInterval = executionInterval.getAcademicInterval();
+        DegreeInfo result = getMostRecentDegreeInfo(academicInterval);
+        if (result != null && !result.getExecutionInterval().equals(executionInterval)) {
+            result = null;
+        }
+        return result;
+    }
+
     @Deprecated
     public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
         DegreeInfo result = null;

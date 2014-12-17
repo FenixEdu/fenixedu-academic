@@ -1909,6 +1909,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return sortedExecutionDegrees.last().getExecutionYear().equals(executionYear.getPreviousExecutionYear());
     }
 
+    public ExecutionInterval getBegin() {
+        final List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>(getBeginContextExecutionYears());
+        Collections.sort(executionYears, ExecutionYear.COMPARATOR_BY_YEAR);
+        return executionYears.isEmpty() ? null : executionYears.iterator().next();
+    }
+
     public Set<ExecutionYear> getBeginContextExecutionYears() {
         return isBoxStructure() ? getRoot().getBeginContextExecutionYears() : Collections.EMPTY_SET;
     }
