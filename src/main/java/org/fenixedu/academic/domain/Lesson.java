@@ -782,16 +782,12 @@ public class Lesson extends Lesson_Base {
             final DateTime start =
                     new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
                             b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
-            if (start.isAfter(intervalEnd)) {
-                continue;
-            }
             final DateTime end =
                     new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
                             e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
-            if (end.isBefore(intervalStart)) {
-                continue;
+            if (new Interval(start, end).overlaps(interval)) {
+                return true;
             }
-            return true;
         }
         return false;
     }
