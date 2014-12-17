@@ -22,6 +22,7 @@ import java.util.Comparator;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -126,4 +127,18 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         return getAttemptAlmaMatterFromPrecedent() != null && getAttemptAlmaMatterFromPrecedent().booleanValue();
     }
 
+    public static RegistrationProtocol findByCode(String code) {
+        RegistrationProtocol foundProtocol = null;
+        for (RegistrationProtocol protocol : Bennu.getInstance().getRegistrationProtocolsSet()) {
+            if (code.equals(protocol.getCode()) && foundProtocol != null) {
+                throw new DomainException("error.Agreement.agreements.with.same.code.exists");
+            }
+
+            if (code.equals(protocol.getCode())) {
+                foundProtocol = protocol;
+            }
+        }
+
+        return foundProtocol;
+    }
 }
