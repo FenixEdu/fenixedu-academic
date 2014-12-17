@@ -226,7 +226,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
         } else if (!getExecutionDegreesSet().isEmpty() && curricularStage == CurricularStage.DRAFT) {
             throw new DomainException("degreeCurricularPlan.has.already.been.executed");
-        } else if (isBolonhaDegree() && curricularStage == CurricularStage.APPROVED) {
+        } else if (curricularStage == CurricularStage.APPROVED) {
             approve(beginExecutionYear);
         } else {
             setCurricularStage(curricularStage);
