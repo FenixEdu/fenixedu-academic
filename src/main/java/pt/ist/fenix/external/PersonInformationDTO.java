@@ -3,6 +3,7 @@ package pt.ist.fenix.external;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.idcards.domain.SantanderCardInformation;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -85,6 +87,8 @@ public class PersonInformationDTO {
     private String campus;
 
     private String eIdentifier;
+
+    private String istCardMifareSerialNumber;
 
     private List<String> workingCostCenters = new ArrayList<String>();
 
@@ -189,6 +193,22 @@ public class PersonInformationDTO {
 
         this.eIdentifier = person.getEidentifier();
 
+        this.istCardMifareSerialNumber = getLastMifareSerialNumber(person);
+    }
+
+    private static int compareDHCPLines(final String l1, String l2) {
+        return l1.substring(1, 9).compareTo(l2.substring(1, 9));
+    }
+
+    private static String getLastMifareSerialNumber(final Person person) {
+        final Stream<SantanderCardInformation> infos = person.getSantanderCardsInformationSet().stream();
+        final String line = infos.map(i -> i.getDchpRegisteLine()).max(PersonInformationDTO::compareDHCPLines).orElse(null);
+        return line == null ? null : getMifareSerialNumber(line);
+    }
+
+    private static String getMifareSerialNumber(String line) {
+        final int offset = line.length() - 550 -1;
+        return line.substring(offset - 10, offset);
     }
 
     private void fillPersonalAndWorkContacts(final List<? extends PartyContact> contacts, List<String> personalContacts,
@@ -428,6 +448,14 @@ public class PersonInformationDTO {
 
     public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
         this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+    }
+
+    public String getIstCardMifareSerialNumber() {
+        return istCardMifareSerialNumber;
+    }
+
+    public void setIstCardMifareSerialNumber(String istCardMifareSerialNumber) {
+        this.istCardMifareSerialNumber = istCardMifareSerialNumber;
     }
 
 }
