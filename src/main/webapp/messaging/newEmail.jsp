@@ -22,7 +22,7 @@
 <%@ page language="java" %>
 <%@page import="org.fenixedu.academic.domain.util.email.Sender"%>
 <%@page import="org.fenixedu.academic.domain.person.RoleType"%>
-<%@page import="org.fenixedu.academic.predicate.AccessControl"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -75,8 +75,8 @@
 				<fr:property name="rows" value="10"/>
 			</fr:slot>
 			<%
-				if (AccessControl.getPerson().hasRole(RoleType.MANAGER)
-						|| AccessControl.getPerson().hasRole(RoleType.HTML_CAPABLE_SENDER)) {
+				if (RoleType.MANAGER.isMember(Authenticate.getUser())
+						|| RoleType.HTML_CAPABLE_SENDER.isMember(Authenticate.getUser())) {
 			%>
 					<fr:slot name="htmlMessage" bundle="MESSAGING_RESOURCES" key="label.email.message.html.content" layout="longText">
 						<fr:property name="columns" value="80"/>
