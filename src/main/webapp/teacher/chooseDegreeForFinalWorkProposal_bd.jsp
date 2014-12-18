@@ -107,6 +107,9 @@
 							${proposal.title} (${proposal.proposalNumber})
 						</h4>
 						<span class="col-sm-4 text-right">
+							<c:if test="${proposal.scheduleing.proposalInterval.containsNow()}">
+								<html:link action="/finalWorkManagement.do?method=editFinalDegreeWorkProposal&finalDegreeWorkProposalOID=${proposal.externalId}" styleClass="btn btn-default">${fr:message('resources.ApplicationResources', 'edit')}</html:link>
+							</c:if>
 							<html:link target="_blank" action="/finalWorkManagement.do?method=print&finalDegreeWorkProposalOID=${proposal.externalId}" styleClass="btn btn-default">${fr:message('resources.ApplicationResources', 'print')}</html:link>
 							<html:link target="_self" action="finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&finalDegreeWorkProposalOID=${proposal.externalId}" styleClass="btn btn-default">${fr:message('resources.ApplicationResources', 'finalDegreeWorkProposalHeader.transpose')}</html:link>
 						</span>
