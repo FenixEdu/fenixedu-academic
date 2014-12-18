@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl.academicAdministration;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -114,9 +115,13 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
     }
 
     public AcademicAccessRule changeProgramsAndOffices(Set<AcademicProgram> programs, Set<AdministrativeOffice> offices) {
-        Set<AccessTarget> targets =
-                Stream.concat(programs.stream().map(AcademicProgramAccessTarget::new),
-                        offices.stream().map(AdministrativeOfficeAccessTarget::new)).collect(Collectors.toSet());
+        Set<AccessTarget> targets = new HashSet<>();
+        if (programs != null) {
+            programs.stream().forEach(p -> targets.add(new AcademicProgramAccessTarget(p)));
+        }
+        if (offices != null) {
+            offices.stream().forEach(p -> targets.add(new AdministrativeOfficeAccessTarget(p)));
+        }
         return (AcademicAccessRule) changeWhatCanAffect(targets).get();
     }
 
@@ -143,14 +148,26 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
 
     protected static Stream<AcademicAccessRule> filter(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices) {
-        return filter(function).filter(r -> r.getProgramSet().containsAll(programs)).filter(
-                r -> r.getOfficeSet().containsAll(offices));
+        Stream<AcademicAccessRule> stream = filter(function);
+        if (programs != null) {
+            stream = stream.filter(r -> r.getProgramSet().containsAll(programs));
+        }
+        if (offices != null) {
+            stream = stream.filter(r -> r.getOfficeSet().containsAll(offices));
+        }
+        return stream;
     }
 
     protected static Stream<AcademicAccessRule> filter(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices, DateTime when) {
-        return filter(function, when).filter(r -> r.getProgramSet().containsAll(programs)).filter(
-                r -> r.getOfficeSet().containsAll(offices));
+        Stream<AcademicAccessRule> stream = filter(function, when);
+        if (programs != null) {
+            stream = stream.filter(r -> r.getProgramSet().containsAll(programs));
+        }
+        if (offices != null) {
+            stream = stream.filter(r -> r.getOfficeSet().containsAll(offices));
+        }
+        return stream;
     }
 
     public static Set<User> getMembers(Predicate<? super AcademicAccessRule> filter) {
