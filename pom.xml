@@ -10,7 +10,7 @@
 
     <artifactId>fenixedu-academic</artifactId>
     <packaging>jar</packaging>
-    <version>4.1.0-SNAPSHOT</version>
+    <version>4.0.1</version>
 
     <name>FenixEdu Academic</name>
     <url>http://fenixedu.org</url>
