@@ -99,7 +99,6 @@ enum org.fenixedu.academic.domain.organizationalStructure.UnitClassification    
 enum org.fenixedu.academic.domain.person.Gender                                                                        as Gender;
 enum org.fenixedu.academic.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum org.fenixedu.academic.domain.person.MaritalStatus                                                                 as MaritalStatus;
-enum org.fenixedu.academic.domain.person.RoleType                                                                      as RoleType;
 enum org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
 enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
 enum org.fenixedu.academic.domain.student.EnrolmentModel                                                               as EnrolmentModel;
@@ -4513,7 +4512,7 @@ class Installation {
 }
 
 class accessControl.PersistentRoleGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
-    protected RoleType roleType;
+    protected String targetGroup;
 }
 
 class accessControl.FenixPredicateGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;

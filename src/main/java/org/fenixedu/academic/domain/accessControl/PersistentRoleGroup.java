@@ -19,9 +19,18 @@
 package org.fenixedu.academic.domain.accessControl;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * This class exists for the sole purpose of keeping compatibility with the old
+ * Role system. It is scheduled to be removed in FenixEdu Academic 5.
+ */
 @Deprecated
 public class PersistentRoleGroup extends PersistentRoleGroup_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(PersistentRoleGroup.class);
 
     private PersistentRoleGroup() {
         super();
@@ -29,7 +38,13 @@ public class PersistentRoleGroup extends PersistentRoleGroup_Base {
 
     @Override
     public Group toGroup() {
-        return getRoleType().actualGroup();
+        try {
+            logger.trace("Processing legacy group {}", getTargetGroup());
+            return Group.parse(getTargetGroup());
+        } catch (Exception e) {
+            logger.error("Error parsing target group for " + this, e);
+            return NobodyGroup.get();
+        }
     }
 
 }
