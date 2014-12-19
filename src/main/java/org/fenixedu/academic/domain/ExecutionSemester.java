@@ -473,10 +473,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     static transient private ExecutionSemester firstEnrolmentsExecutionPeriod = null;
 
-    static transient private ExecutionSemester startExecutionPeriodForCredits = null;
-
-    static transient private ExecutionSemester lastExecutionPeriodForCredits = null;
-
     public static ExecutionSemester readActualExecutionSemester() {
         if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != Bennu.getInstance()
                 || !currentExecutionPeriod.isCurrent()) {
@@ -531,22 +527,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     static public ExecutionSemester readFirstEnrolmentsExecutionPeriod() {
         firstEnrolmentsExecutionPeriod =
                 readFromProperties(firstEnrolmentsExecutionPeriod, FenixEduAcademicConfiguration.getConfiguration()
-                        .getYearForFromEnrolments(), FenixEduAcademicConfiguration.getConfiguration().getSemesterForFromEnrolments());
+                        .getYearForFromEnrolments(), FenixEduAcademicConfiguration.getConfiguration()
+                        .getSemesterForFromEnrolments());
         return firstEnrolmentsExecutionPeriod;
-    }
-
-    static public ExecutionSemester readStartExecutionSemesterForCredits() {
-        startExecutionPeriodForCredits =
-                readFromProperties(startExecutionPeriodForCredits, FenixEduAcademicConfiguration.getConfiguration()
-                        .getStartYearForCredits(), FenixEduAcademicConfiguration.getConfiguration().getStartSemesterForCredits());
-        return startExecutionPeriodForCredits;
-    }
-
-    static public ExecutionSemester readLastExecutionSemesterForCredits() {
-        lastExecutionPeriodForCredits =
-                readFromProperties(lastExecutionPeriodForCredits, FenixEduAcademicConfiguration.getConfiguration()
-                        .getLastYearForCredits(), FenixEduAcademicConfiguration.getConfiguration().getLastSemesterForCredits());
-        return lastExecutionPeriodForCredits;
     }
 
     public static ExecutionSemester readFirstExecutionSemester() {

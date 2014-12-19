@@ -702,12 +702,6 @@
       </field>
     </form>
     
-	<form name="oldPublicationForm">
-		<field property="publication" depends="required" page="1">
-			<arg0 key="label.oldPublication.publication"/>
-		</field>
-	</form>
-
 	<form name="finalWorkInformationForm">
 		<field property="degree" depends="required,string" page="1">
 			<arg0 key="finalWorkInformationForm.degree" resource="true"/>
