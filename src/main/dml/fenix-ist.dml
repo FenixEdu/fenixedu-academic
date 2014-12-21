@@ -4,9 +4,45 @@ class user.management.IstUsernameCounter {
     long lastValue;
 }
 
+class cgd.CgdCardCounter {
+	int year;
+	int count;
+}
+
+class cgd.CgdCard {
+	int serialNumber;
+}
+
 relation BennuHasIstUsernameCounter {
     .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
         multiplicity 1..1;
     }
     user.management.IstUsernameCounter playsRole istUsernameCounter;
+}
+
+relation BennuCgdCardCounter {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+    cgd.CgdCardCounter playsRole cgdCardCounter {
+    	multiplicity *;
+    }
+}
+
+relation CgdCardCounterCgdCard {
+    cgd.CgdCardCounter playsRole cgdCardCounter {
+    	multiplicity 1..1;
+    }
+    cgd.CgdCard playsRole cgdCard {
+    	multiplicity *;
+    }
+}
+
+relation CgdCardUser {
+    cgd.CgdCard playsRole cgdCard {
+    	multiplicity *;
+    }
+    .org.fenixedu.bennu.core.domain.User playsRole user {
+    	multiplicity 1..1;
+    }
 }
