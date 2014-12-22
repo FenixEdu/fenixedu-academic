@@ -33,8 +33,12 @@ public class CgdCardCounter extends CgdCardCounter_Base {
     }
 
     private static CgdCardCounter getCounterForYear(final int year) {
-        return Bennu.getInstance().getCgdCardCounterSet().stream().filter(c -> c.getYear() == year).findAny()
-                .orElse(new CgdCardCounter(year));
+        for (final CgdCardCounter counter : Bennu.getInstance().getCgdCardCounterSet()) {
+            if (counter.getYear() == year) {
+                return counter;
+            }
+        }
+        return new CgdCardCounter(year);
     }
 
 }

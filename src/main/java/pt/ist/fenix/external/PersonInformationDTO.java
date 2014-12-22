@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.idcards.domain.SantanderCardInformation;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
@@ -35,6 +36,10 @@ import com.google.common.io.BaseEncoding;
 public class PersonInformationDTO {
 
     private String name;
+
+    private String givenName;
+
+    private String surName;
 
     private String displayName;
 
@@ -95,6 +100,12 @@ public class PersonInformationDTO {
     public PersonInformationDTO(final Person person) {
         this.name = person.getName();
         this.displayName = person.getNickname();
+
+        final UserProfile profile = person.getProfile();
+        if (profile != null) {
+            this.givenName = profile.getGivenNames();
+            this.surName = profile.getFamilyNames();
+        }
 
         final Phone defaultPhone = person.getDefaultPhone();
         this.phone = defaultPhone != null ? defaultPhone.getPresentationValue() : StringUtils.EMPTY;
@@ -456,6 +467,22 @@ public class PersonInformationDTO {
 
     public void setIstCardMifareSerialNumber(String istCardMifareSerialNumber) {
         this.istCardMifareSerialNumber = istCardMifareSerialNumber;
+    }
+
+    public String getGivenName() {
+        return givenName;
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
+
+    public String getSurName() {
+        return surName;
+    }
+
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
 }
