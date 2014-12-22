@@ -9,7 +9,7 @@
 
     <groupId>pt.ist</groupId>
     <artifactId>fenix-ist</artifactId>
-    <version>1.6.0-SNAPSHOT</version>
+    <version>1.5.1</version>
 
     <name>Fenix IST</name>
     <url>http://www.fenixedu.org</url>
