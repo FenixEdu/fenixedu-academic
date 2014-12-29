@@ -11952,7 +11952,7 @@ relation FilePermittedGroup {
 }
 
 relation RecipientMembers {
-	protected util.email.Recipient playsRole recipientAsMembers {
+	public util.email.Recipient playsRole recipientAsMembers {
 		multiplicity *;
 	}
 	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
