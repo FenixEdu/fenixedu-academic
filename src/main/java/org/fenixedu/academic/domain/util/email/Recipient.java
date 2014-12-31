@@ -157,6 +157,11 @@ public class Recipient extends Recipient_Base {
         return recipients;
     }
 
+    public static Recipient getRecipientFromGroup(Group group) {
+        return group.toPersistentGroup().getRecipientAsMembersSet().stream().findAny()
+                .orElseGet(() -> Recipient.newInstance(group));
+    }
+
     public Collection<Recipient> asCollection() {
         return Collections.singletonList(this);
     }
