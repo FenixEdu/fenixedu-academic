@@ -104,8 +104,8 @@ public class FenixInitializer implements ServletContextListener {
         User.registerUserPresentationStrategy(new UserPresentationStrategy() {
             @Override
             public String shortPresent(User user) {
-                if (user.getPerson() != null) {
-                    return user.getPerson().getNickname();
+                if (user.getProfile() != null) {
+                    return user.getProfile().getDisplayName();
                 } else {
                     return user.getUsername();
                 }
@@ -113,8 +113,8 @@ public class FenixInitializer implements ServletContextListener {
 
             @Override
             public String present(User user) {
-                if (user.getPerson() != null) {
-                    return user.getPerson().getNickname();
+                if (user.getProfile() != null) {
+                    return user.getProfile().getDisplayName();
                 } else {
                     return user.getUsername();
                 }
