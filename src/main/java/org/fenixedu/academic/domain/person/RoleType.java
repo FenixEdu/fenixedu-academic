@@ -55,7 +55,7 @@ public enum RoleType implements IPresentableEnum {
     MANAGER("#managers"),
 
     /**
-     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
+     * @deprecated Use {@link AcademicAuthorizationGroup#get(AcademicOperationType#MANAGE_DEGREE_CURRICULAR_PLANS)} instead
      */
     DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER("#degreeAdmOfficeSudo"),
 

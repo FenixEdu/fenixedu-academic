@@ -22,9 +22,12 @@
 package org.fenixedu.academic.predicate;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -43,14 +46,15 @@ public class CourseGroupPredicates {
                         return true;
                     }
 
-                    final Person person = AccessControl.getPerson();
-                    if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser()) || RoleType.MANAGER.isMember(person.getUser())
-                            || RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER.isMember(person.getUser())
-                            || RoleType.OPERATOR.isMember(person.getUser())) {
+                    User user = Authenticate.getUser();
+                    if (RoleType.SCIENTIFIC_COUNCIL.isMember(user)
+                            || RoleType.MANAGER.isMember(user)
+                            || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS)
+                                    .isMember(user) || RoleType.OPERATOR.isMember(user)) {
                         return true;
                     }
 
-                    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person.getUser());
+                    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(user);
                 }
 
             };

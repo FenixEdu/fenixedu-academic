@@ -100,11 +100,16 @@ public class RolePredicates {
         };
     };
 
+    /**
+     * @deprecated use {@link AcademicAuthorizationGroup#get(AcademicOperationType#MANAGE_DEGREE_CURRICULAR_PLANS)}
+     */
+    @Deprecated
     public static final AccessControlPredicate<Object> DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_PREDICATE =
             new AccessControlPredicate<Object>() {
                 @Override
                 public boolean evaluate(Object domainObject) {
-                    return hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+                    return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS).isMember(
+                            Authenticate.getUser());
                 };
             };
 
@@ -225,6 +230,7 @@ public class RolePredicates {
         };
     };
 
+    @Deprecated
     public static final AccessControlPredicate<Object> BOLOGNA_OR_DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_OR_MANAGER_OR_OPERATOR_PREDICATE =
             new AccessControlPredicate<Object>() {
                 @Override
