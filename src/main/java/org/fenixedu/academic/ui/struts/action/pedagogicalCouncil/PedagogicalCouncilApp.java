@@ -25,7 +25,7 @@ import org.fenixedu.bennu.struts.portal.StrutsApplication;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsApplication(bundle = PedagogicalCouncilApp.BUNDLE, path = "pedagogical-council", titleKey = "pedagogical.council",
-        accessGroup = "(role(PEDAGOGICAL_COUNCIL) | role(TUTORSHIP))", hint = PedagogicalCouncilApp.HINT)
+        accessGroup = "role(PEDAGOGICAL_COUNCIL)", hint = PedagogicalCouncilApp.HINT)
 @Mapping(path = "/index", module = "pedagogicalCouncil", parameter = "/pedagogicalCouncil/index.jsp")
 public class PedagogicalCouncilApp extends ForwardAction {
 
