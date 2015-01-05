@@ -49,35 +49,17 @@ public class PersistentCoordinatorGroup extends PersistentCoordinatorGroup_Base 
     }
 
     public static PersistentCoordinatorGroup getInstance() {
-        return getInstance(filter(PersistentCoordinatorGroup.class), null, null);
-    }
-
-    public static PersistentCoordinatorGroup getInstance(DegreeType degreeType) {
-        return getInstance(filter(PersistentCoordinatorGroup.class), degreeType, null);
-    }
-
-    public static PersistentCoordinatorGroup getInstance(Degree degree) {
-        return getInstance(degree.getCoordinatorGroupSet().stream(), null, degree);
+        return getInstance(null, null);
     }
 
     public static PersistentCoordinatorGroup getInstance(DegreeType degreeType, Degree degree) {
-        if (degreeType != null) {
-            return getInstance(degreeType);
-        }
-        if (degree != null) {
-            return getInstance(degree);
-        }
-        return getInstance();
+        return singleton(() -> select(degreeType, degree), () -> new PersistentCoordinatorGroup(degreeType, degree));
     }
 
-    private static PersistentCoordinatorGroup getInstance(Stream<PersistentCoordinatorGroup> options, DegreeType degreeType,
-            Degree degree) {
-        return singleton(() -> select(options, degreeType, degree), () -> new PersistentCoordinatorGroup(degreeType, degree));
-    }
-
-    private static Optional<PersistentCoordinatorGroup> select(Stream<PersistentCoordinatorGroup> options,
-            final DegreeType degreeType, final Degree degree) {
-        return options.filter(
+    private static Optional<PersistentCoordinatorGroup> select(final DegreeType degreeType, final Degree degree) {
+        Stream<PersistentCoordinatorGroup> stream =
+                degree != null ? degree.getCoordinatorGroupSet().stream() : filter(PersistentCoordinatorGroup.class);
+        return stream.filter(
                 group -> Objects.equals(group.getDegreeType(), degreeType) && Objects.equals(group.getDegree(), degree))
                 .findAny();
     }
