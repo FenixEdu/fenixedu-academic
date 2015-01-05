@@ -154,10 +154,6 @@ public class FenixInitializer implements ServletContextListener {
                         && request.getQueryString().indexOf("method=viewThread") >= 0) {
                     return false;
                 }
-                if ((uri.equals("/oldOnlineTests/testsManagement.do") || uri.equals("/student/studentTests.do"))
-                        && "showImage".equals(request.getParameter("method"))) {
-                    return false;
-                }
                 if (uri.indexOf("notAuthorized.do") >= 0) {
                     return false;
                 }
