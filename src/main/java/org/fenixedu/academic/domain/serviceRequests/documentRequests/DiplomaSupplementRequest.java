@@ -219,11 +219,10 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     }
 
     @Override
-    public long getEctsCredits() {
+    public double getEctsCredits() {
         ExecutionYear conclusion = getConclusionYear();
 
-        return Math.round(getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle())
-                .getDefaultEcts(conclusion));
+        return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getDefaultEcts(conclusion);
     }
 
     @Override
