@@ -85,7 +85,7 @@ import org.fenixedu.academic.api.beans.publico.FenixPeriod;
 import org.fenixedu.academic.api.beans.publico.FenixRoomEvent;
 import org.fenixedu.academic.api.beans.publico.FenixSchedule;
 import org.fenixedu.academic.api.beans.publico.FenixSpace;
-import org.fenixedu.academic.api.infra.FenixAPICanteen;
+import org.fenixedu.academic.api.infra.FenixAPIFromExternalServer;
 import org.fenixedu.academic.api.infra.FenixAPIPublic;
 import org.fenixedu.academic.api.infra.FenixAPIScope;
 import org.fenixedu.academic.api.infra.JerseyFacesContext;
@@ -908,7 +908,6 @@ public class FenixAPIv1 {
     @FenixAPIPublic
     public String contacts() {
         return FenixAPIFromExternalServer.getContacts();
-
     }
 
     @GET

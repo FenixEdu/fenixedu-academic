@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.webServices.jersey.api;
+package org.fenixedu.academic.api.infra;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,9 +27,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager.ConfigurationProperties;
-
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -69,12 +67,12 @@ public class FenixAPIFromExternalServer {
 
     private static synchronized void getInformation() {
 
-        String canteenUrl = FenixConfigurationManager.getConfiguration().getFenixApiCanteenUrl();
-        String shuttleUrl = FenixConfigurationManager.getConfiguration().getFenixApiShuttleUrl();
-        String contactsUrl = FenixConfigurationManager.getConfiguration().getFenixApiContactsUrl();
-        String canteenFile = FenixConfigurationManager.getConfiguration().getFenixApiCanteenFile();
-        String shuttleFile = FenixConfigurationManager.getConfiguration().getFenixApiShuttleFile();
-        String contactsFile = FenixConfigurationManager.getConfiguration().getFenixApiContactsFile();
+        String canteenUrl = FenixEduAcademicConfiguration.getConfiguration().getFenixApiCanteenUrl();
+        String shuttleUrl = FenixEduAcademicConfiguration.getConfiguration().getFenixApiShuttleUrl();
+        String contactsUrl = FenixEduAcademicConfiguration.getConfiguration().getFenixApiContactsUrl();
+        String canteenFile = FenixEduAcademicConfiguration.getConfiguration().getFenixApiCanteenFile();
+        String shuttleFile = FenixEduAcademicConfiguration.getConfiguration().getFenixApiShuttleFile();
+        String contactsFile = FenixEduAcademicConfiguration.getConfiguration().getFenixApiContactsFile();
 
         if (oldInformation()) {
             canteenInfo = getInformation(canteenUrl, canteenFile);
@@ -190,7 +188,7 @@ public class FenixAPIFromExternalServer {
     }
 
     private static String getServiceAuth() {
-        ConfigurationProperties config = FenixConfigurationManager.getConfiguration();
+        FenixEduAcademicConfiguration.ConfigurationProperties config = FenixEduAcademicConfiguration.getConfiguration();
         String userpass = config.getFenixApiCanteenUser() + ":" + config.getFenixApiCanteenSecret();
         String encoding = new String(BaseEncoding.base64().encode(userpass.getBytes()));
         return "Basic " + encoding;
