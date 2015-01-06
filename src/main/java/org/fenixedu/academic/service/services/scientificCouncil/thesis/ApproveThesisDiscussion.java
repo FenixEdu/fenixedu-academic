@@ -43,6 +43,7 @@ import com.google.common.io.ByteStreams;
 public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     private static final String SUBJECT_KEY = "thesis.evaluation.approve.subject";
     private static final String BODY_KEY = "thesis.evaluation.approve.body";
+    private static final String COUNCIL_MEMBER_ROLE = "thesis.proposal.jury.approve.body.role.council";
 
     @Override
     public void process(Thesis thesis) {
@@ -101,10 +102,11 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
         Calendar today = Calendar.getInstance(locale);
         String currentPersonName = currentPerson.getNickname();
+        String role = thesis.isCoordinator() ? "" : getMessage(locale, COUNCIL_MEMBER_ROLE);
 
         return getMessage(locale, BODY_KEY, year, degreeName, studentName, studentNumber, institutionName,
                 "" + today.get(Calendar.DAY_OF_MONTH), today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale),
-                "" + today.get(Calendar.YEAR), currentPersonName);
+                "" + today.get(Calendar.YEAR), currentPersonName, role);
     }
 
     @Override
