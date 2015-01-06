@@ -33,11 +33,18 @@ import com.google.common.collect.ImmutableSet;
 public class EvaluationEventBean extends EventBean {
 
     Set<ExecutionCourse> course;
+    Space assignedRoom;
 
     public EvaluationEventBean(String title, DateTime begin, DateTime end, boolean allDay, Set<Space> rooms, String url,
             String note, Set<ExecutionCourse> course) {
+        this(title, begin, end, allDay, null, rooms, url, note, course);
+    }
+
+    public EvaluationEventBean(String title, DateTime begin, DateTime end, boolean allDay, Space assignedRoom, Set<Space> rooms,
+            String url, String note, Set<ExecutionCourse> course) {
         super(title, begin, end, allDay, rooms, url, note);
         setCourses(course);
+        this.assignedRoom = assignedRoom;
     }
 
     @Override
@@ -64,5 +71,9 @@ public class EvaluationEventBean extends EventBean {
 
     public void setCourses(Set<ExecutionCourse> course) {
         this.course = course;
+    }
+
+    public Space getAssignedRoom() {
+        return assignedRoom;
     }
 }
