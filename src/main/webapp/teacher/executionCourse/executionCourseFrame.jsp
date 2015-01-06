@@ -19,7 +19,6 @@
 
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <style>
@@ -47,26 +46,26 @@
 			<c:if test="${not empty executionCourse.siteUrl}">
 				<li>
 				    <!-- NO_CHECKSUM --><a href="${executionCourse.siteUrl}" target="_blank">
-						<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
+						${fr:message('resources.ApplicationResources', 'link.executionCourseManagement.menu.view.course.page')}
 					</a>
 				</li>
 			</c:if>
 			<c:if test="${professorship.permissions.summaries}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/searchECLog.do?method=prepareInit&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.executionCourse.log"/>
+						${fr:message('resources.ApplicationResources', 'link.executionCourse.log')}
 					</a>
 				</li>
 			</c:if>
 		</ul>
 		<ul class="nav nav-pills nav-stacked">
 			<li class="navheader">
-				<strong><bean:message key="label.executionCourseManagement.menu.communication"/></strong>
+				<strong>${fr:message('resources.ApplicationResources', 'label.executionCourseManagement.menu.communication')}</strong>
 			</li>
 			<c:if test="${professorship.permissions.personalization}">
 				<li>
 					<!-- NO_CHECKSUM --><a href="${base}/${executionCourse.externalId}/communication">
-					<bean:message key="label.executionCourseManagement.menu.communication"/>
+					${fr:message('resources.ApplicationResources', 'label.executionCourseManagement.menu.communication')}
 				</a>
 				</li>
 			</c:if>
@@ -74,14 +73,14 @@
 				<c:if test="${professorship.permissions.announcements}">
 					<li>
 					<!-- NO_CHECKSUM --><a href="${base}/${executionCourse.externalId}/announcements">
-							<bean:message key="link.announcements"/>
+							${fr:message('resources.ApplicationResources', 'link.announcements')}
 						</a>
 					</li>
 				</c:if>
 				<c:if test="${professorship.permissions.sections}">
 					<li>
 						<!-- NO_CHECKSUM --><a href="${base}/${executionCourse.externalId}/pages">
-							<bean:message key="label.executionCourseManagement.menu.sections"/>
+							${fr:message('resources.ApplicationResources', 'label.executionCourseManagement.menu.sections')}
 						</a>
 					</li>
 				</c:if>
@@ -89,96 +88,96 @@
 		</ul>
 		<ul class="nav nav-pills nav-stacked">
 			<li class="navheader">
-				<strong><bean:message key="label.executionCourseManagement.menu.management"/></strong>
+				<strong>${fr:message('resources.ApplicationResources', 'label.executionCourseManagement.menu.management')}</strong>
 			</li>
 			<c:if test="${professorship.permissions.summaries}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/summariesManagement.do?method=prepareShowSummaries&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.summaries"/>
+						${fr:message('resources.ApplicationResources', 'link.summaries')}
 					</a>
 				</li>
 			</c:if>
 			<li>
 			<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/teachersManagerDA.do?method=viewTeachersByProfessorship&executionCourseID='.concat(executionCourse.externalId))}">
-					<bean:message key="link.teachers"/>
+					${fr:message('resources.ApplicationResources', 'link.teachers')}
 				</a>
 			</li>
 			<c:if test="${professorship.permissions.summaries}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/searchECAttends.do?method=prepare&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.students"/>
+						${fr:message('resources.ApplicationResources', 'link.students')}
 					</a>
 				</li>
 			</c:if>
 			<c:if test="${professorship.permissions.planning}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/manageExecutionCourse.do?method=lessonPlannings&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.lessonPlannings"/>
+						${fr:message('resources.ApplicationResources', 'link.lessonPlannings')}
 					</a>
 				</li>
 			</c:if>
 			<li>
 			<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/markSheetManagement.do?method=evaluationIndex&executionCourseID='.concat(executionCourse.externalId))}">
-					<bean:message key="link.evaluation"/>
+					${fr:message('resources.ApplicationResources', 'link.evaluation')}
 				</a>
 			</li>
 			<c:if test="${professorship.permissions.groups}">
 				<li>
                 <a href="${base}/${executionCourse.externalId}/student-groups/show">
-						<bean:message key="link.groupsManagement"/>
+						${fr:message('resources.ApplicationResources', 'link.groupsManagement')}
 					</a>
 				</li>
 			</c:if>
 			<c:if test="${professorship.permissions.shift}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/manageExecutionCourse.do?method=manageShifts&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="label.shifts"/>
+						${fr:message('resources.ApplicationResources', 'label.shifts')}
 					</a>
 				</li>
 			</c:if>
 		</ul>
 		<ul class="nav nav-pills nav-stacked">
 			<li class="navheader">
-				<strong><bean:message key="label.executionCourseManagement.menu.curricularInfo"/></strong>
+				<strong>${fr:message('resources.ApplicationResources', 'label.executionCourseManagement.menu.curricularInfo')}</strong>
 			</li>
 			<li>
 			<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/manageObjectives.do?method=objectives&executionCourseID='.concat(executionCourse.externalId))}">
-					<bean:message key="link.objectives"/>
+					${fr:message('resources.ApplicationResources', 'link.objectives')}
 				</a>
 			</li>
 			<li>
 			<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/manageProgram.do?method=program&executionCourseID='.concat(executionCourse.externalId))}">
-					<bean:message key="link.program"/>
+					${fr:message('resources.ApplicationResources', 'link.program')}
 				</a>
 			</li>
 			<c:if test="${professorship.permissions.evaluationMethod}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/manageEvaluationMethod.do?method=evaluationMethod&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.evaluationMethod"/>
+						${fr:message('resources.ApplicationResources', 'link.evaluationMethod')}
 					</a>
 				</li>
 			</c:if>
 			<c:if test="${professorship.permissions.bibliografy}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/manageBibliographicReference.do?method=bibliographicReference&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.bibliography"/>
+						${fr:message('resources.ApplicationResources', 'link.bibliography')}
 					</a>
 				</li>
 			</c:if>
 		</ul>
 		<ul class="nav nav-pills nav-stacked">
 			<li class="navheader">
-				<strong><bean:message key="label.executionCourseManagement.menu.curricularUnitsQuality"/></strong>
+				<strong>${fr:message('resources.ApplicationResources', 'label.executionCourseManagement.menu.curricularUnitsQuality')}</strong>
 			</li>
 			<li>
 			<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/teachingInquiry.do?method=showInquiriesPrePage&executionCourseID='.concat(executionCourse.externalId))}">
-					<bean:message key="link.teachingReportManagement"/>
+					${fr:message('resources.ApplicationResources', 'link.teachingReportManagement')}
 				</a>
 			</li>
 			<c:if test="${professorship.responsibleFor}">
 				<li>
 				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/regentInquiry.do?method=showInquiriesPrePage&executionCourseID='.concat(executionCourse.externalId))}">
-						<bean:message key="link.regentReportManagement"/>
+						${fr:message('resources.ApplicationResources', 'link.regentReportManagement')}
 					</a>
 				</li>
 			</c:if>
