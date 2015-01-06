@@ -70,7 +70,7 @@
 				</a>
 				</li>
 			</c:if>
-			<c:if test="${executionCourse.cmsSite!=null}">
+			<c:if test="${not empty executionCourse.site}">
 				<c:if test="${professorship.permissions.announcements}">
 					<li>
 					<!-- NO_CHECKSUM --><a href="${base}/${executionCourse.externalId}/announcements">
