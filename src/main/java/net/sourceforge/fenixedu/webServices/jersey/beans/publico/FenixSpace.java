@@ -161,9 +161,12 @@ public class FenixSpace {
 
     }
 
-
     public String id;
     public String name;
+
+    @JsonInclude(Include.NON_NULL)
+    @JsonSerialize(typing = Typing.DYNAMIC)
+    public FenixSpace topLevelSpace;
 
     @JsonInclude(Include.NON_NULL)
     @JsonSerialize(typing = Typing.DYNAMIC)
@@ -184,6 +187,9 @@ public class FenixSpace {
     protected FenixSpace(Space space, boolean withParentAndContainedSpaces) {
         this.id = space.getExternalId();
         this.name = space.getName();
+
+        this.topLevelSpace = space.getParent() == null ? null : getSimpleSpace(SpaceUtils.getSpaceCampus(space));
+
         if (withParentAndContainedSpaces) {
             setParentSpace(space);
             setContainedSpaces(space);
