@@ -157,6 +157,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.oauth.annotation.OAuthEndpoint;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.BlueprintFile;
 import org.fenixedu.spaces.domain.Space;
@@ -193,11 +194,11 @@ public class FenixAPIv1 {
 
     private static final Logger logger = LoggerFactory.getLogger(FenixAPIv1.class);
 
-    public final static String PERSONAL_SCOPE = "info";
-    public final static String SCHEDULE_SCOPE = "schedule";
-    public final static String EVALUATIONS_SCOPE = "evaluations";
-    public final static String CURRICULAR_SCOPE = "curricular";
-    public final static String PAYMENTS_SCOPE = "payments";
+    public final static String PERSONAL_SCOPE = "INFO";
+    public final static String SCHEDULE_SCOPE = "SCHEDULE";
+    public final static String EVALUATIONS_SCOPE = "EVALUATIONS";
+    public final static String CURRICULAR_SCOPE = "CURRICULAR";
+    public final static String PAYMENTS_SCOPE = "PAYMENTS";
 
     public final static String JSON_UTF8 = "application/json; charset=utf-8";
 
@@ -257,6 +258,7 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     @Path("person")
     @FenixAPIScope(PERSONAL_SCOPE)
+    @OAuthEndpoint(PERSONAL_SCOPE)
     public FenixPerson person() {
 
         final Person person = getPerson();
@@ -310,6 +312,7 @@ public class FenixAPIv1 {
      * @servicetag CURRICULAR_SCOPE
      */
     @FenixAPIScope(CURRICULAR_SCOPE)
+    @OAuthEndpoint(CURRICULAR_SCOPE)
     @GET
     @Produces(JSON_UTF8)
     @Path("person/courses/")
@@ -467,6 +470,7 @@ public class FenixAPIv1 {
      * @servicetag SCHEDULE_SCOPE
      */
     @FenixAPIScope(SCHEDULE_SCOPE)
+    @OAuthEndpoint(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/evaluations")
     public Response calendarEvaluation(@QueryParam("format") String format) {
@@ -519,6 +523,7 @@ public class FenixAPIv1 {
      * @servicetag SCHEDULE_SCOPE
      */
     @FenixAPIScope(SCHEDULE_SCOPE)
+    @OAuthEndpoint(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/classes")
     public Response calendarClasses(@QueryParam("format") String format) {
@@ -540,6 +545,7 @@ public class FenixAPIv1 {
      * @servicetag CURRICULAR_SCOPE
      */
     @FenixAPIScope(CURRICULAR_SCOPE)
+    @OAuthEndpoint(CURRICULAR_SCOPE)
     @GET
     @Path("person/curriculum")
     @Produces(JSON_UTF8)
@@ -632,6 +638,7 @@ public class FenixAPIv1 {
      * @servicetag PAYMENTS_SCOPE
      */
     @FenixAPIScope(PAYMENTS_SCOPE)
+    @OAuthEndpoint(PAYMENTS_SCOPE)
     @GET
     @Path("person/payments")
     @Produces(JSON_UTF8)
@@ -681,6 +688,7 @@ public class FenixAPIv1 {
      * @servicetag EVALUATIONS_SCOPE
      */
     @FenixAPIScope(EVALUATIONS_SCOPE)
+    @OAuthEndpoint(EVALUATIONS_SCOPE)
     @GET
     @Path("person/evaluations")
     @Produces(JSON_UTF8)
@@ -731,6 +739,7 @@ public class FenixAPIv1 {
      * @servicetag EVALUATIONS_SCOPE
      */
     @FenixAPIScope(EVALUATIONS_SCOPE)
+    @OAuthEndpoint(EVALUATIONS_SCOPE)
     @PUT
     @Produces(JSON_UTF8)
     @Path("person/evaluations/{id}")
