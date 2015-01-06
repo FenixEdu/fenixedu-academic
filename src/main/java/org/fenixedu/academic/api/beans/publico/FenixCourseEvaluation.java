@@ -28,12 +28,15 @@ import org.fenixedu.spaces.domain.Space;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
-public abstract class FenixCourseEvaluation {
+public class FenixCourseEvaluation {
 
-    public abstract static class WrittenEvaluation extends FenixCourseEvaluation {
+    @JsonSubTypes({ @Type(value = Exam.class), @Type(value = Test.class) })
+    public static class WrittenEvaluation extends FenixCourseEvaluation {
 
         private static FenixSpace.Room noSpaceRoom = new FenixSpace.Room();
 

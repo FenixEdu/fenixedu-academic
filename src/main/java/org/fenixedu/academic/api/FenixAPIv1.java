@@ -1091,6 +1091,10 @@ public class FenixAPIv1 {
         String academicTerm = executionCourse.getExecutionPeriod().getQualifiedName();
         String courseUrl = executionCourse.getSiteUrl();
 
+        if (courseUrl == null) {
+            courseUrl = "";
+        }
+
         Map<CompetenceCourse, Set<CurricularCourse>> curricularCourses =
                 executionCourse.getCurricularCoursesIndexedByCompetenceCourse();
 
@@ -1141,11 +1145,11 @@ public class FenixAPIv1 {
             teachers.add(new FenixTeacher(tname, istid, mail, url));
         }
 
-        String summaryLink =
-                getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getExternalId().toString());
+        String summaryLink = courseUrl.concat("/rss/summary");
+        String announcementLink = courseUrl.concat("/rss/announcement");
 
-        return new FenixCourseExtended(acronym, name, evaluationMethod, academicTerm, numberOfStudents, summaryLink, courseUrl,
-                moreInfo, teachers);
+        return new FenixCourseExtended(acronym, name, evaluationMethod, academicTerm, numberOfStudents, summaryLink,
+                announcementLink, courseUrl, moreInfo, teachers);
     }
 
     /**
