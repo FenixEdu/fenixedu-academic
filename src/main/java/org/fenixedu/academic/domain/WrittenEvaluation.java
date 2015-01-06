@@ -804,8 +804,15 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
             }
         }
 
-        result.add(new EvaluationEventBean(description, this.getBeginningDateTime(), this.getEndDateTime(), false, rooms, url
-                + executionCourses.iterator().next().getSiteUrl(), null, executionCourses));
+        WrittenEvaluationEnrolment writtenEvaluationEnrolment = getWrittenEvaluationEnrolmentFor(registration);
+        Space assignedRoom = null;
+
+        if (writtenEvaluationEnrolment != null) {
+            assignedRoom = writtenEvaluationEnrolment.getRoom();
+        }
+
+        result.add(new EvaluationEventBean(description, this.getBeginningDateTime(), this.getEndDateTime(), false, assignedRoom,
+                rooms, executionCourses.iterator().next().getSiteUrl(), null, executionCourses));
 
         return result;
     }

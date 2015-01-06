@@ -95,10 +95,13 @@ public class FenixCalendar {
     public static class FenixEvaluationEvent extends FenixCalendarEvent {
 
         Set<FenixCourse> courses;
+        FenixSpace assignedRoom;
 
-        public FenixEvaluationEvent(FenixPeriod eventPeriod, Set<FenixSpace> location, String title, Set<FenixCourse> courses) {
+        public FenixEvaluationEvent(FenixPeriod eventPeriod, FenixSpace assignedRoom, Set<FenixSpace> location, String title,
+                Set<FenixCourse> courses) {
             super(eventPeriod, location, title);
             setCourses(courses);
+            this.assignedRoom = assignedRoom;
         }
 
         @Override
@@ -113,6 +116,10 @@ public class FenixCalendar {
 
         public void setCourses(Set<FenixCourse> courses) {
             this.courses = courses;
+        }
+
+        public FenixSpace getAssignedRoom() {
+            return assignedRoom;
         }
 
     }

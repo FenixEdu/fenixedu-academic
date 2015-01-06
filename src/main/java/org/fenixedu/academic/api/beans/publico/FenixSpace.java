@@ -146,8 +146,24 @@ public class FenixSpace {
         }
     }
 
+    public static class RoomSubdivision extends FenixSpace {
+
+        private RoomSubdivision(Space space, boolean withParentAndContainedSpaces) {
+            super(space, withParentAndContainedSpaces);
+        }
+
+        private RoomSubdivision(Space space) {
+            super(space);
+        }
+
+    }
+
     public String id;
     public String name;
+
+    @JsonInclude(Include.NON_NULL)
+    @JsonSerialize(typing = Typing.DYNAMIC)
+    public FenixSpace topLevelSpace;
 
     @JsonInclude(Include.NON_NULL)
     @JsonSerialize(typing = Typing.DYNAMIC)
@@ -168,6 +184,9 @@ public class FenixSpace {
     protected FenixSpace(Space space, boolean withParentAndContainedSpaces) {
         this.id = space.getExternalId();
         this.name = space.getName();
+
+        this.topLevelSpace = space.getParent() == null ? null : getSimpleSpace(SpaceUtils.getSpaceCampus(space));
+
         if (withParentAndContainedSpaces) {
             setParentSpace(space);
             setContainedSpaces(space);

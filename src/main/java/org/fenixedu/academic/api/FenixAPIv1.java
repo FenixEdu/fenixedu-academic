@@ -416,7 +416,10 @@ public class FenixAPIv1 {
                                     }
 
                                 }).toSet();
-                event = new FenixEvaluationEvent(eventPeriod, rooms, title, fenixCourses);
+
+                FenixSpace assignedRoom = FenixSpace.getSimpleSpace(((EvaluationEventBean) eventBean).getAssignedRoom());
+
+                event = new FenixEvaluationEvent(eventPeriod, assignedRoom, rooms, title, fenixCourses);
                 break;
             }
 
