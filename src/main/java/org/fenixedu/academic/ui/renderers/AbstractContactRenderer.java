@@ -24,14 +24,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.fenixedu.academic.domain.contacts.ContactRoot;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.WebAddress;
-import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -77,7 +75,7 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
 
         List<MetaObject> contacts = new ArrayList<MetaObject>();
         for (PartyContact contact : unfiltered) {
-            if (isVisible(contact, publicSpace) && typeEnums.contains(contact.getType())) {
+            if (contact.isVisible() && typeEnums.contains(contact.getType())) {
                 contacts.add(MetaObjectFactory.createObject(contact, RenderKit.getInstance().findSchema(getSchema())));
             }
         }
@@ -102,22 +100,6 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
             }
         });
         return contacts;
-    }
-
-    private boolean isVisible(PartyContact contact, boolean publicSpace) {
-        if (publicSpace && contact.getVisibleToPublic()) {
-            return true;
-        }
-        if (contact.getVisibleToStudents() && ContactRoot.getInstance().getStudentVisibility().isMember(Authenticate.getUser())) {
-            return true;
-        }
-        if (contact.getVisibleToStaff() && ContactRoot.getInstance().getStaffVisibility().isMember(Authenticate.getUser())) {
-            return true;
-        }
-        if (ContactRoot.getInstance().getManagementVisibility().isMember(Authenticate.getUser())) {
-            return true;
-        }
-        return false;
     }
 
     protected HtmlComponent getValue(PartyContact contact) {

@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -119,6 +120,22 @@ public abstract class PartyContact extends PartyContact_Base {
         if (!visibleToStaff.booleanValue()) {
             super.setVisibleToPublic(Boolean.FALSE);
         }
+    }
+
+    public boolean isVisible() {
+        if (getVisibleToPublic()) {
+            return true;
+        }
+        if (getVisibleToStudents() && ContactRoot.getInstance().getStudentVisibility().isMember(Authenticate.getUser())) {
+            return true;
+        }
+        if (getVisibleToStaff() && ContactRoot.getInstance().getStaffVisibility().isMember(Authenticate.getUser())) {
+            return true;
+        }
+        if (ContactRoot.getInstance().getManagementVisibility().isMember(Authenticate.getUser())) {
+            return true;
+        }
+        return false;
     }
 
     public void setDefaultContactInformation(final boolean defaultContact) {
