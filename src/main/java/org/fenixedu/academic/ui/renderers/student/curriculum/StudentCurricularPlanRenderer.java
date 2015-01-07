@@ -751,9 +751,16 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                     codeAndName += curricularCourse.getCode() + " - ";
                 }
                 codeAndName += dismissal.getName().getContent();
-                final HtmlLink curricularCourseLink = createCurricularCourseLink(codeAndName, curricularCourse);
+
+                ExecutionCourse executionCourse =
+                        dismissal.getCurricularCourse().getExecutionCoursesByExecutionPeriod(dismissal.getExecutionPeriod())
+                                .stream().findAny().orElse(null);
+
+                final HtmlComponent executionCourseLink = createExecutionCourseLink(codeAndName, executionCourse);
+
                 container.addChild(new HtmlText(": "));
-                container.addChild(curricularCourseLink);
+                container.addChild(executionCourseLink);
+
             }
 
             // } else {
@@ -1126,23 +1133,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             result.setModuleRelative(false);
             result.setTarget("_blank");
 
-            if (degreeCurricularPlan.isBoxStructure()) {
-                result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
-
-                result.setParameter("organizeBy", "groups");
-                result.setParameter("showRules", "false");
-                result.setParameter("hideCourses", "false");
-            } else {
-                result.setUrl("/publico/prepareConsultCurricularPlanNew.do");
-
-                result.setParameter("method", "prepare");
-                result.setParameter("degreeInitials", degreeCurricularPlan.getDegree().getSigla());
-            }
-
-            result.setParameter("degreeID", degreeCurricularPlan.getDegree().getExternalId().toString());
-            result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getExternalId().toString());
-
-            result.setParameter("executionPeriodOID", executionSemester.getExternalId().toString());
+            result.setUrl(degreeCurricularPlan.getDegree().getSiteUrl());
 
             return result;
         }
@@ -1159,8 +1150,12 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 inlineContainer.addChild(checkBox);
             }
 
-            inlineContainer.addChild(createCurricularCourseLink(getPresentationNameFor(enrolment),
-                    enrolment.getCurricularCourse()));
+            ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
+
+            final HtmlComponent executionCourseLink =
+                    createExecutionCourseLink(getPresentationNameFor(enrolment), executionCourse);
+
+            inlineContainer.addChild(executionCourseLink);
 
             final HtmlTableCell cell = enrolmentRow.createCell();
             cell.setClasses(getLabelCellClass());
@@ -1182,27 +1177,18 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             }
         }
 
-        private HtmlLink createCurricularCourseLink(final String text, final CurricularCourse curricularCourse) {
+        private HtmlComponent createExecutionCourseLink(final String text, final ExecutionCourse executionCourse) {
 
-            final HtmlLink result = new HtmlLink();
-            result.setBody(new HtmlText(text));
-            result.setModuleRelative(false);
-            result.setTarget(HtmlLink.Target.BLANK);
-
-            result.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getExternalId());
-            result.setParameter("curricularCourseID", curricularCourse.getExternalId());
-            result.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getExternalId());
-
-            if (curricularCourse.isBolonhaDegree()) {
-                result.setParameter("organizeBy", "groups");
-                result.setParameter("showRules", "false");
-                result.setParameter("hideCourses", "false");
-                result.setUrl("/publico/degreeSite/viewCurricularCourse.faces");
-            } else {
-                result.setUrl("/publico/showCourseSite.do?method=showCurricularCourseSite");
+            if (executionCourse != null && executionCourse.getSiteUrl() != null) {
+                final HtmlLink result = new HtmlLink();
+                result.setBody(new HtmlText(text));
+                result.setModuleRelative(false);
+                result.setTarget(HtmlLink.Target.BLANK);
+                result.setUrl(executionCourse.getSiteUrl());
+                return result;
             }
 
-            return result;
+            return new HtmlText(text);
         }
 
         private HtmlLink createExecutionCourseStatisticsLink(final String text, final ExecutionCourse executionCourse) {
