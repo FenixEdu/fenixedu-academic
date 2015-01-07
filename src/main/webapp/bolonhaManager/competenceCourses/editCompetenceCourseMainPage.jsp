@@ -25,14 +25,17 @@
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.BolonhaManager.BolonhaManagerApplication$CompetenceCoursesManagement"/>
 
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false" />
-	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name} " style="font-weight: bold" escape="false"/>	
-	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}" value="(#{CompetenceCourseManagement.competenceCourse.acronym})" style="font-weight: bold" escape="false"/>
+	<h:outputText value="<h2>" style="font-weight: bold" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.code} - " rendered="#{!empty CompetenceCourseManagement.competenceCourse.code}" style="font-weight: bold" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name} " style="font-weight: bold" escape="false"/>	
+		<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}" value="(#{CompetenceCourseManagement.competenceCourse.acronym})" style="font-weight: bold" escape="false"/>
 	<h:outputText value="</h2>" style="font-weight: bold" escape="false"/>		
 
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop2'>" escape="false"/>

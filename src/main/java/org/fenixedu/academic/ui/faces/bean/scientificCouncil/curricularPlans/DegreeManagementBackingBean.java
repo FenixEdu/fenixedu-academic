@@ -87,6 +87,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private String academicAdminOfficeId;
 
+    private String code;
+
+    private String ministryCode;
+
     private HtmlInputText nameInputComponent;
 
     private HtmlInputText nameEnInputComponent;
@@ -184,6 +188,22 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     public void setGradeScale(String gradeScale) {
         this.gradeScale = gradeScale;
+    }
+
+    public String getCode() {
+        return (code == null && getDegree() != null) ? (code = getDegree().getCode()) : code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMinistryCode() {
+        return (ministryCode == null && getDegree() != null) ? (ministryCode = getDegree().getMinistryCode()) : ministryCode;
+    }
+
+    public void setMinistryCode(String ministryCode) {
+        this.ministryCode = ministryCode;
     }
 
     public Double getEctsCredits() {
@@ -298,7 +318,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         try {
             EditDegree.run(this.getDegreeId(), name, nameEn, this.acronym, DegreeType.valueOf(getBolonhaDegreeType()),
-                    this.getEctsCredits(), null, this.prevailingScientificArea, getSelectedExecutionYear());
+                    this.getEctsCredits(), null, this.prevailingScientificArea, getSelectedExecutionYear(), getCode(),
+                    getMinistryCode());
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";

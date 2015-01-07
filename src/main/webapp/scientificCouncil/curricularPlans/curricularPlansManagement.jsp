@@ -26,6 +26,7 @@
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication$ScientificCurricularPlansManagement" />
 
+
 <f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -48,7 +49,10 @@
 		<h:outputText value="<table style='width: 100%;' class='showinfo1'>" escape="false"/>
 		<h:outputText value="<tr class='bgcolor1'><th style='width: 80px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 
-		<h:outputText value="<td><em>#{degree.presentationName} (#{degree.sigla})</em></td>" escape="false"/>
+		<h:outputText value="<td><em>#{degree.presentationName} (#{degree.sigla})" escape="false"/>
+			<h:outputText value=" [#{degree.code}]" rendered="#{!empty degree.code}" escape="false"/>
+		<h:outputText value="</em></td>" escape="false"/>
+		
 		<h:outputText value="<td style='width: 230px'>" escape="false"/>
 		<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>
