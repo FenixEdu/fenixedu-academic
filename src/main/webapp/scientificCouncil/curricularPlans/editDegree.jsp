@@ -25,6 +25,7 @@
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication$ScientificCurricularPlansManagement" />
 
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
@@ -84,6 +85,25 @@
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{scouncilBundle['label.code']}:</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText alt="#{htmlAltBundle['inputText.code']}" id="code" value="#{DegreeManagement.code}" maxlength="9" size="9"/>
+			<h:message for="code" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{scouncilBundle['label.ministryCode']}:</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText alt="#{htmlAltBundle['inputText.ministryCode']}" id="ministryCode" value="#{DegreeManagement.ministryCode}" maxlength="9" size="9"/>
+			<h:message for="ministryCode" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+	
 
 		<h:outputText value="<tr>" escape="false"/>
 		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['degreeType']}:</th><td>" escape="false"/>

@@ -1001,6 +1001,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Override
     public void setCode(String code) {
         check(this, CompetenceCoursePredicates.writePredicate);
+        final CompetenceCourse existing = CompetenceCourse.find(code);
+
+        if (existing != null && existing != this) {
+            throw new DomainException("error.CompetenceCourse.found.duplicate");
+        }
+
         super.setCode(code);
     }
 
