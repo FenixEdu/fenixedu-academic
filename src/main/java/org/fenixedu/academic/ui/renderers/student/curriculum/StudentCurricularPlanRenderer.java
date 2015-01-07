@@ -72,6 +72,8 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.contexts.InputContext;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
+import com.google.common.base.Strings;
+
 public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private static final String SCPLANTEMPORARYDISMISSAL = "scplantemporarydismissal";
@@ -1127,15 +1129,19 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 return new HtmlText(degreeCurricularPlan.getName());
             }
 
-            final HtmlLink result = new HtmlLink();
+            final String siteUrl = degreeCurricularPlan.getDegree().getSiteUrl();
 
-            result.setText(degreeCurricularPlan.getName());
-            result.setModuleRelative(false);
-            result.setTarget("_blank");
-
-            result.setUrl(degreeCurricularPlan.getDegree().getSiteUrl());
-
-            return result;
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                return new HtmlText(degreeCurricularPlan.getName());
+            } else {
+                final HtmlLink result = new HtmlLink();
+                result.setText(degreeCurricularPlan.getName());
+                result.setModuleRelative(false);
+                result.setContextRelative(false);
+                result.setTarget("_blank");
+                result.setUrl(siteUrl);
+                return result;
+            }
         }
 
         private void generateCurricularCourseCodeAndNameCell(final HtmlTableRow enrolmentRow, final Enrolment enrolment,
@@ -1181,8 +1187,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
             if (executionCourse != null && executionCourse.getSiteUrl() != null) {
                 final HtmlLink result = new HtmlLink();
-                result.setBody(new HtmlText(text));
+                result.setText(text);
                 result.setModuleRelative(false);
+                result.setContextRelative(false);
                 result.setTarget(HtmlLink.Target.BLANK);
                 result.setUrl(executionCourse.getSiteUrl());
                 return result;
