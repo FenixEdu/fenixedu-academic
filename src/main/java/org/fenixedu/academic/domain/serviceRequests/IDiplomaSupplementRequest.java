@@ -36,7 +36,7 @@ public interface IDiplomaSupplementRequest extends IDocumentRequest {
 
     public String getPrevailingScientificArea(final Locale locale);
 
-    public long getEctsCredits();
+    public double getEctsCredits();
 
     public DegreeOfficialPublication getDegreeOfficialPublication();
 
