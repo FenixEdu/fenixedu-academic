@@ -26,10 +26,10 @@
     <description>${name}</description>
 
     <ordering>
-        <before>
-            <others />
-        </before>
-    </ordering>
+		<after>
+			<name>bennu-renderers</name>
+		</after>
+	</ordering>
 	
 	<distributable/>
 	<locale-encoding-mapping-list>
