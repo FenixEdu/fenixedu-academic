@@ -2358,6 +2358,7 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
             }
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
+        	Boolean isOptional;
         }
 
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {

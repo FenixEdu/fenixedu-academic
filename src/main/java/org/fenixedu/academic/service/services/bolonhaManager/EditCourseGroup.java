@@ -31,9 +31,18 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EditCourseGroup {
 
+    @Deprecated
     @Atomic
     public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
             final String beginExecutionPeriodID, final String endExecutionPeriodID) throws FenixServiceException {
+        CourseGroup domainObject = FenixFramework.getDomainObject(courseGroupID);
+        run(courseGroupID, contextID, name, nameEn, beginExecutionPeriodID, endExecutionPeriodID, domainObject.getIsOptional());
+    }
+
+    @Atomic
+    public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
+            final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isOptional)
+            throws FenixServiceException {
 
         final CourseGroup courseGroup = (CourseGroup) FenixFramework.getDomainObject(courseGroupID);
         if (courseGroup == null) {
@@ -45,7 +54,7 @@ public class EditCourseGroup {
         }
 
         courseGroup.edit(name, nameEn, context, getBeginExecutionPeriod(beginExecutionPeriodID),
-                getEndExecutionPeriod(endExecutionPeriodID));
+                getEndExecutionPeriod(endExecutionPeriodID), isOptional);
     }
 
     private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
