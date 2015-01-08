@@ -149,10 +149,10 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
     protected static Stream<AcademicAccessRule> filter(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices) {
         Stream<AcademicAccessRule> stream = filter(function);
-        if (programs != null) {
-            stream = stream.filter(r -> r.getProgramSet().containsAll(programs));
+        if (programs != null && !programs.isEmpty()) {
+            stream = stream.filter(r -> r.getFullProgramSet().collect(Collectors.toSet()).containsAll(programs));
         }
-        if (offices != null) {
+        if (offices != null && !offices.isEmpty()) {
             stream = stream.filter(r -> r.getOfficeSet().containsAll(offices));
         }
         return stream;
@@ -161,10 +161,10 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
     protected static Stream<AcademicAccessRule> filter(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices, DateTime when) {
         Stream<AcademicAccessRule> stream = filter(function, when);
-        if (programs != null) {
-            stream = stream.filter(r -> r.getProgramSet().containsAll(programs));
+        if (programs != null && !programs.isEmpty()) {
+            stream = stream.filter(r -> r.getFullProgramSet().collect(Collectors.toSet()).containsAll(programs));
         }
-        if (offices != null) {
+        if (offices != null && !offices.isEmpty()) {
             stream = stream.filter(r -> r.getOfficeSet().containsAll(offices));
         }
         return stream;
