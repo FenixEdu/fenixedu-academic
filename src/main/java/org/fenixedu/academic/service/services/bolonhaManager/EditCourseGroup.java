@@ -33,7 +33,8 @@ public class EditCourseGroup {
 
     @Atomic
     public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
-            final String beginExecutionPeriodID, final String endExecutionPeriodID) throws FenixServiceException {
+            final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isBranch,
+            final Boolean isOptional) throws FenixServiceException {
 
         final CourseGroup courseGroup = (CourseGroup) FenixFramework.getDomainObject(courseGroupID);
         if (courseGroup == null) {
@@ -45,7 +46,7 @@ public class EditCourseGroup {
         }
 
         courseGroup.edit(name, nameEn, context, getBeginExecutionPeriod(beginExecutionPeriodID),
-                getEndExecutionPeriod(endExecutionPeriodID));
+                getEndExecutionPeriod(endExecutionPeriodID), isBranch, isOptional);
     }
 
     private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {

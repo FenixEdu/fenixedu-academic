@@ -103,7 +103,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
-            ExecutionSemester endExecutionPeriod) {
+            ExecutionSemester endExecutionPeriod, Boolean isBranch, Boolean isOptional) {
         // override, assure that root's name equals degree curricular plan name
         if (this.isRoot()) {
             setName(getParentDegreeCurricularPlan().getName());
@@ -118,11 +118,7 @@ public class CourseGroup extends CourseGroup_Base {
         if (!this.isRoot() && context != null) {
             context.edit(beginExecutionPeriod, endExecutionPeriod);
         }
-    }
 
-    public void edit(final String name, final String nameEn, final Context context, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod, final Boolean isBranch, final Boolean isOptional) {
-        edit(name, nameEn, context, beginExecutionPeriod, endExecutionPeriod);
         setIsBranch(isBranch);
         setIsOptional(isOptional);
     }
@@ -931,5 +927,10 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     public boolean isOptionalCourseGroup() {
         return super.getIsOptional() != null && super.getIsOptional();
+    }
+
+    @Override
+    public boolean isBranchCourseGroup() {
+        return super.getIsBranch() != null && super.getIsBranch();
     }
 }

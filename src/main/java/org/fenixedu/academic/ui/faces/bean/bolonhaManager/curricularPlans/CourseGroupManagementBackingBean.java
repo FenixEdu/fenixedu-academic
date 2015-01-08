@@ -57,6 +57,8 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     private String nameEn = null;
     private String courseGroupID;
     private List<SelectItem> courseGroups = null;
+    private Boolean isBranch;
+    private Boolean isOptional;
 
     public String getParentCourseGroupID() {
         return getAndHoldStringParameter("parentCourseGroupID");
@@ -84,6 +86,22 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String getParentName() {
         return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
+    }
+
+    public Boolean getIsOptional() {
+        return (isOptional == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getIsOptional() : isOptional;
+    }
+
+    public void setIsOptional(Boolean isOptional) {
+        this.isOptional = isOptional;
+    }
+
+    public Boolean getIsBranch() {
+        return (isBranch == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getIsBranch() : isBranch;
+    }
+
+    public void setIsBranch(Boolean isBranch) {
+        this.isBranch = isBranch;
     }
 
     @Override
@@ -143,7 +161,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String editCourseGroup() {
         try {
             EditCourseGroup.run(getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-                    getFinalEndExecutionPeriodID());
+                    getFinalEndExecutionPeriodID(), getIsBranch(), getIsOptional());
             addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (final IllegalDataAccessException e) {

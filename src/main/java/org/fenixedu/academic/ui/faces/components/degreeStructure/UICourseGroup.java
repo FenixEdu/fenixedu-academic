@@ -184,6 +184,7 @@ public class UICourseGroup extends UIDegreeModule {
             } else {
                 encodeCourseGroupOptions();
             }
+
         }
 
         writer.endElement("tr");
@@ -267,9 +268,10 @@ public class UICourseGroup extends UIDegreeModule {
                         "create.branch.group");
             }
 
-            writer.append(" , ");
-            encodeLink(module + "/associateCourseGroup.faces", createAssociateAditionalParameters, false,
-                    "associate.course.group");
+            //Course group sharing is a legacy behavior (unsupported) and should not be used anymore
+//            writer.append(" , ");
+//            encodeLink(module + "/associateCourseGroup.faces", createAssociateAditionalParameters, false,
+//                    "associate.course.group");
 
             if (!this.courseGroup.isRoot()) {
                 writer.append(" , ");
@@ -324,6 +326,30 @@ public class UICourseGroup extends UIDegreeModule {
 
         writer.endElement("table");
         writer.endElement("div");
+    }
+
+    @Override
+    protected void appendCodeAndName() throws IOException {
+        super.appendCodeAndName();
+
+        if (this.toEdit) {
+
+            if (degreeModule.isOptionalCourseGroup()) {
+                writer.startElement("strong", this);
+                writer.append(" (");
+                writer.append(BundleUtil.getString(Bundle.BOLONHA, "optional"));
+                writer.append(")");
+                writer.endElement("strong");
+            }
+
+            if (degreeModule.isBranchCourseGroup()) {
+                writer.startElement("strong", this);
+                writer.append(" (");
+                writer.append(BundleUtil.getString(Bundle.BOLONHA, "branchCourseGroup"));
+                writer.append(")");
+                writer.endElement("strong");
+            }
+        }
     }
 
 }

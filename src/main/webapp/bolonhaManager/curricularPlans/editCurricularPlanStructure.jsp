@@ -71,7 +71,7 @@
 		onlyStructure="true" 
 		toEdit="true"
 		toOrder="<%=request.getParameter("toOrder")%>"
-		module="/bolonhaManager"/>
+		module="/bolonhaManager/curricularPlans"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>
