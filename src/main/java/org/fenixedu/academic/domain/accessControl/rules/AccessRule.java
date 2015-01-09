@@ -68,6 +68,14 @@ public abstract class AccessRule extends AccessRule_Base {
         return super.getPersistentGroup().toGroup();
     }
 
+    protected boolean isMember(User user) {
+        return getWhoCanAccess().isMember(user);
+    }
+
+    protected boolean isMember(User user, DateTime when) {
+        return getWhoCanAccess().isMember(user, when);
+    }
+
     public <R extends AccessRule, T extends AccessTarget> Optional<R> changeWhoCanAccess(Group whoCanAccess) {
         return change((AccessOperation<R, T>) getOperation(), whoCanAccess, getWhatCanAffect());
     }

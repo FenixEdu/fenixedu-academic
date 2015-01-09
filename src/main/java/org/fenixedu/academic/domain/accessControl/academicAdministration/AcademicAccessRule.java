@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.accessControl.rules.AccessRule;
 import org.fenixedu.academic.domain.accessControl.rules.AccessRuleSystem;
 import org.fenixedu.academic.domain.accessControl.rules.AccessTarget;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
@@ -34,7 +35,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.joda.time.DateTime;
 
 public class AcademicAccessRule extends AcademicAccessRule_Base implements Comparable<AcademicAccessRule> {
@@ -171,47 +171,43 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
     }
 
     public static Set<User> getMembers(Predicate<? super AcademicAccessRule> filter) {
-        return AcademicAccessRule.accessRules().filter(filter).map(r -> r.getWhoCanAccess())
-                .reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get).getMembers();
+        return AcademicAccessRule.accessRules().filter(filter).map(AccessRule::getWhoCanAccess)
+                .flatMap(group -> group.getMembers().stream()).collect(Collectors.toSet());
     }
 
     public static Set<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices) {
-        return filter(function, programs, offices).map(r -> r.getWhoCanAccess()).reduce((result, group) -> result.or(group))
-                .orElseGet(NobodyGroup::get).getMembers();
+        return filter(function, programs, offices).map(AccessRule::getWhoCanAccess).flatMap(group -> group.getMembers().stream())
+                .collect(Collectors.toSet());
     }
 
     public static Set<User> getMembers(Predicate<? super AcademicAccessRule> filter, DateTime when) {
-        return AcademicAccessRule.accessRules(when).filter(filter).map(r -> r.getWhoCanAccess())
-                .reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get).getMembers(when);
+        return AcademicAccessRule.accessRules(when).filter(filter).map(AccessRule::getWhoCanAccess)
+                .flatMap(group -> group.getMembers(when).stream()).collect(Collectors.toSet());
     }
 
     public static Set<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices, DateTime when) {
-        return filter(function, programs, offices, when).map(r -> r.getWhoCanAccess())
-                .reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get).getMembers(when);
+        return filter(function, programs, offices, when).map(AccessRule::getWhoCanAccess)
+                .flatMap(group -> group.getMembers(when).stream()).collect(Collectors.toSet());
     }
 
     public static boolean isMember(User user, Predicate<? super AcademicAccessRule> filter) {
-        return AcademicAccessRule.accessRules().filter(filter).map(r -> r.getWhoCanAccess())
-                .reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get).isMember(user);
+        return AcademicAccessRule.accessRules().filter(filter).anyMatch(rule -> rule.isMember(user));
     }
 
     public static boolean isMember(User user, AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices) {
-        return filter(function, programs, offices).map(r -> r.getWhoCanAccess()).reduce((result, group) -> result.or(group))
-                .orElseGet(NobodyGroup::get).isMember(user);
+        return filter(function, programs, offices).anyMatch(rule -> rule.isMember(user));
     }
 
     public static boolean isMember(User user, Predicate<? super AcademicAccessRule> filter, DateTime when) {
-        return AcademicAccessRule.accessRules(when).filter(filter).map(r -> r.getWhoCanAccess())
-                .reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get).isMember(user);
+        return AcademicAccessRule.accessRules(when).filter(filter).anyMatch(rule -> rule.isMember(user, when));
     }
 
     public static boolean isMember(User user, AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices, DateTime when) {
-        return filter(function, programs, offices, when).map(r -> r.getWhoCanAccess())
-                .reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get).isMember(user, when);
+        return filter(function, programs, offices, when).anyMatch(rule -> rule.isMember(user, when));
     }
 
     public static Stream<AcademicProgram> getProgramsAccessibleToFunction(AcademicOperationType function, User user) {
