@@ -98,10 +98,6 @@
 	<slot name="body" layout="html" key="label.org.fenixedu.academic.domain.messaging.ConversationMessage.body"/>	
 </schema>
 
-<schema name="researchUnitGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
-	<slot name="presentationName"/>
-</schema>
-
 <schema name="delegatesGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
 	<slot name="presentationName"/>
 </schema>
