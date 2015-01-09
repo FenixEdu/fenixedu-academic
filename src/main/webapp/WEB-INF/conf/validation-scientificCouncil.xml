@@ -40,12 +40,6 @@
 			<constant-name>maxMinutes</constant-name>
 			<constant-value>59</constant-value>
         </constant>
-       <!-- ================================================================ -->    	
-  	    <form name="testForm">
-		   	<field property="title" depends="required" page="1">
-		    	<arg0 key="message.title" resource="true"/>
-		    </field>
-	  	</form>		
 	    <!-- ================================================================ -->    	
     	<form name="supportLessonForm">			
 			<field property="startTimeHour" depends="required,integer,intRange" page="1">

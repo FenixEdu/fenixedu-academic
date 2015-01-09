@@ -29,6 +29,7 @@ public class EvaluationType extends FenixUtil {
 
     public static final int FINAL = 2;
 
+    @Deprecated
     public static final int ONLINE_TEST = 3;
 
     public static final int TEST = 4;
@@ -41,6 +42,7 @@ public class EvaluationType extends FenixUtil {
 
     public static final EvaluationType FINAL_TYPE = new EvaluationType(FINAL);
 
+    @Deprecated
     public static final EvaluationType ONLINE_TEST_TYPE = new EvaluationType(ONLINE_TEST);
 
     public static final EvaluationType TEST_TYPE = new EvaluationType(TEST);
@@ -53,6 +55,7 @@ public class EvaluationType extends FenixUtil {
 
     public static final String FINAL_STRING = "Final";
 
+    @Deprecated
     public static final String ONLINE_TEST_STRING = "Ficha de Trabalho";
 
     public static final String TEST_STRING = "Teste";

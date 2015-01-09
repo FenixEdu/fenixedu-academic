@@ -44,7 +44,6 @@
 		<slot name="students" key="link.students"/>
 		<slot name="planning" key="link.lessonPlannings"/>
 		<slot name="evaluationSpecific" key="link.adHocEvaluations"/>
-		<slot name="evaluationWorksheets" key="link.onlineTests.evaluation"/>
 		<slot name="evaluationProject" key="link.projects.evaluation"/>
 		<slot name="evaluationTests" key="link.writtenTests.evaluation"/>
 		<slot name="evaluationExams" key="link.exams.evaluation"/>

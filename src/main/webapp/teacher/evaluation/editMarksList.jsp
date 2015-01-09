@@ -41,19 +41,6 @@
 
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
-			
-			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.onlineTests.OnlineTest'}">
-				<h:outputText value="<b>#{bundle['lable.test']}:</b> " escape="false"/>
-				<h:outputText value="#{evaluationManagementBackingBean.evaluation.distributedTest.evaluationTitle}, "/>
-				<h:outputText value="#{bundle['label.day']}" />
-				<h:outputFormat value="{0, date, dd/MM/yyyy}">
-					<f:param value="#{evaluationManagementBackingBean.evaluation.distributedTest.beginDateDate}"/>
-				</h:outputFormat>
-				<h:outputText value=" #{bundle['label.at']}" />
-				<h:outputFormat value="{0, date, HH:mm}">
-					<f:param value="#{evaluationManagementBackingBean.evaluation.distributedTest.beginHourDate}"/>
-				</h:outputFormat>
-			</h:panelGroup>
 
 			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'org.fenixedu.academic.domain.WrittenTest'}">
 				<h:outputText value="<b>#{bundle['label.written.test']}:</b> " escape="false"/>
