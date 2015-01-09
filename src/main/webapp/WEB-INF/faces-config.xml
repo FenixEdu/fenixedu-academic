@@ -160,29 +160,6 @@
 	<!-- END: TEACHER Managed Beans -->
 	
 
-	<!-- BEGIN: FunctionsManagement Managed Beans (Modularized) -->
-
-	<managed-bean>
-		<description>FunctionsManagementBackingBean</description>
-		<managed-bean-name>functionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>pt.ist.fenixedu.contracts.ui.faces.bean.departmentAdmOffice.FunctionsManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>ManagerFunctionsManagementBackingBean</description>
-		<managed-bean-name>managerFunctionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>pt.ist.fenixedu.contracts.ui.faces.bean.manager.personManagement.ManagerFunctionsManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>ScientificCouncilFunctionsManagementBackingBean</description>
-		<managed-bean-name>scientificCouncilFunctionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>pt.ist.fenixedu.contracts.ui.faces.bean.scientificCouncil.ScientificCouncilFunctionsManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<!-- END: FunctionsManagement Managed Beans -->
-
 	<!-- BEGIN: AdvisoriesManagement Managed Beans -->
 	
 	<!-- END: AdvisoriesManagement Managed Beans -->
@@ -356,7 +333,7 @@
 	<!-- BEGIN: OrganizationalStructure Managed Beans (Modularized) -->
 	<managed-bean>
 		<managed-bean-name>organizationalStructure</managed-bean-name>
-		<managed-bean-class>pt.ist.fenixedu.contracts.ui.faces.bean.person.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-class>pt.ist.fenix.ui.faces.bean.person.OrganizationalStructureBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<!-- END: OrganizationalStructure Managed Beans -->
@@ -369,7 +346,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>organizationalStructureBackingBean</managed-bean-name>
-		<managed-bean-class>pt.ist.fenixedu.contracts.ui.faces.bean.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-class>pt.ist.fenix.ui.faces.bean.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	

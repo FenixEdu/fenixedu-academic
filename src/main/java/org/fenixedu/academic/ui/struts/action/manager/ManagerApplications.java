@@ -43,11 +43,6 @@ public class ManagerApplications extends ForwardAction {
     public static class ManagerBolonhaTransitionApp {
     }
 
-    @StrutsApplication(path = "organizational-structure", titleKey = "title.manager.organizationalStructureManagement",
-            bundle = BUNDLE, accessGroup = ACCESS_GROUP, hint = HINT)
-    public static class ManagerOrganizationalStructureApp {
-    }
-
     @StrutsApplication(path = "executions", titleKey = "title.executions", bundle = BUNDLE, accessGroup = ACCESS_GROUP,
             hint = HINT)
     public static class ManagerExecutionsApp {
@@ -73,12 +68,6 @@ public class ManagerApplications extends ForwardAction {
             titleKey = "title.gratuity.situations")
     @Mapping(path = "/gratuity/updateGratuitySituations", module = "manager")
     public static class UpdateGratuitySituations extends FacesEntryPoint {
-    }
-
-    @StrutsFunctionality(app = ManagerOrganizationalStructureApp.class, path = "manage",
-            titleKey = "link.manager.organizationalStructureManagement")
-    @Mapping(path = "/organizationalStructureManagament/listAllUnits", module = "manager")
-    public static class OrganizationalStructurePage extends FacesEntryPoint {
     }
 
     @StrutsFunctionality(app = ManagerExecutionsApp.class, path = "create-execution-degree",
