@@ -6096,15 +6096,6 @@ relation AffinityCycleCourseGroup {
     }
 }
 
-relation AllowedToUploadInUnit {
-    organizationalStructure.Unit playsRole unitsWithUploadPermission {
-        multiplicity *;
-    }
-    Person playsRole allowedPeopleToUploadFiles {
-        multiplicity *;
-    }
-}
-
 relation ExternalCourseLoadRequestUnit {
     organizationalStructure.Unit playsRole institution;
     serviceRequests.documentRequests.ExternalCourseLoadRequest playsRole externalCourseLoadRequests {

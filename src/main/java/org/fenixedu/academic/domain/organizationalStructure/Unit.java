@@ -37,11 +37,9 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.NonAffiliatedTeacher;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -169,7 +167,6 @@ public class Unit extends Unit_Base {
         }
 
         getUnitName().delete();
-        getAllowedPeopleToUploadFilesSet().clear();
 
         setRootDomainObjectForEarthUnit(null);
         setRootDomainObjectForExternalInstitutionUnit(null);
@@ -831,19 +828,6 @@ public class Unit extends Unit_Base {
 
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
         return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
-    }
-
-    public boolean isUserAllowedToUploadFiles(Person person) {
-        return getAllowedPeopleToUploadFilesSet().contains(person);
-    }
-
-    public boolean isCurrentUserAllowedToUploadFiles() {
-        return isUserAllowedToUploadFiles(AccessControl.getPerson());
-    }
-
-    public void setAllowedPeopleToUploadFiles(List<Person> allowedPeople) {
-        getAllowedPeopleToUploadFilesSet().clear();
-        getAllowedPeopleToUploadFilesSet().addAll(allowedPeople);
     }
 
     public MultiLanguageString getNameI18n() {
