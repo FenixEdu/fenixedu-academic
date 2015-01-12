@@ -28,7 +28,7 @@
 <html:xhtml/>
 
 
-<%@page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.phd.PhdBundleUtil"%>
 <%@page import="pt.ist.fenixframework.DomainObject"%>
 <%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" %>
 
@@ -73,7 +73,7 @@
 	<phd:filterProcessesForEmail id="processList" predicateContainer="containerEnum" bean="phdEmailBean"/>
 	<bean:size id="size" name="processList" />		
 	<p class="mbottom05">
-		<strong><%= BundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong>
+		<strong><%= PhdBundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong>
 		
 		<logic:notEqual name="size" value="0">
 			 |	
@@ -119,7 +119,7 @@
 	<phd:filterProcessesForEmail id="processList" predicateContainer="containerEnum" bean="phdEmailBean" />
 	<bean:size id="size" name="processList" />
 	<p class="mbottom05">
-		<strong><%= BundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong>
+		<strong><%= PhdBundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong>
 		
 		<logic:notEqual name="size" value="0">
 			 |	
@@ -164,7 +164,7 @@
 	<phd:filterProcessesForEmail id="processList" predicateContainer="containerEnum" bean="phdEmailBean" />
 	<bean:size id="size" name="processList" />
 	<p class="mbottom05">
-		<strong><%= BundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong>
+		<strong><%= PhdBundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong>
 		
 		<logic:notEqual name="size" value="0">
 			 |	
@@ -211,7 +211,7 @@
 	<bean:size id="size" name="processList" />
 	
 	<p class="mbottom05">
-		<strong><%= BundleUtil.getEnumName((Enum<?>) concludedThisYearContainer, "Phd") %> (<%= size %>)</strong>
+		<strong><%= PhdBundleUtil.getEnumName((Enum<?>) concludedThisYearContainer, "Phd") %> (<%= size %>)</strong>
 		
 		<logic:notEqual name="size" value="0">
 			 |	

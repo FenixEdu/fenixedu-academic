@@ -26,7 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.phd.PhdBundleUtil"%>
 <%@page import="pt.ist.fenixframework.DomainObject"%>
 
 
@@ -61,7 +61,7 @@
 <bean:define id="suspendedContainer" name="suspendedContainer"/>
 <phd:filterProcesses id="processList" predicateContainer="suspendedContainer" bean="searchProcessBean" />
 <bean:size id="size" name="processList" />
-<h3 class="mbottom0"><strong><%= BundleUtil.getEnumName((Enum<?>) suspendedContainer, "Phd") %> (<%= size %>)</strong></h3>
+<h3 class="mbottom0"><strong><%= PhdBundleUtil.getEnumName((Enum<?>) suspendedContainer, "Phd") %> (<%= size %>)</strong></h3>
 	
 <logic:equal name="size" value="0">
 	<p class="mbottom2"><em><bean:message key="message.no.processes.in.state" bundle="PHD_RESOURCES"/></em></p>
@@ -118,7 +118,7 @@
 <bean:define id="concludedContainer" name="concludedContainer"/>
 <phd:filterProcesses id="processList" predicateContainer="concludedContainer" bean="searchProcessBean" />
 <bean:size id="size" name="processList" />
-<h3 class="mbottom0"><strong><%= BundleUtil.getEnumName((Enum<?>) concludedContainer, "Phd") %> (<%= size %>)</strong></h3>
+<h3 class="mbottom0"><strong><%= PhdBundleUtil.getEnumName((Enum<?>) concludedContainer, "Phd") %> (<%= size %>)</strong></h3>
 	
 <logic:equal name="size" value="0">
 	<p class="mbottom2"><em><bean:message key="message.no.processes.in.state" bundle="PHD_RESOURCES"/></em></p>
@@ -175,7 +175,7 @@
 <bean:define id="abolishedContainer" name="abolishedContainer"/>
 <phd:filterProcesses id="processList" predicateContainer="abolishedContainer" bean="searchProcessBean" />
 <bean:size id="size" name="processList" />
-<h3 class="mbottom0"><strong><%= BundleUtil.getEnumName((Enum<?>) abolishedContainer, "Phd") %> (<%= size %>)</strong></h3>
+<h3 class="mbottom0"><strong><%= PhdBundleUtil.getEnumName((Enum<?>) abolishedContainer, "Phd") %> (<%= size %>)</strong></h3>
 	
 <logic:equal name="size" value="0">
 	<p class="mbottom2"><em><bean:message key="message.no.processes.in.state" bundle="PHD_RESOURCES"/></em></p>

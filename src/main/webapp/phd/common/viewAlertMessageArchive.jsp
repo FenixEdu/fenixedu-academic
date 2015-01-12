@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@page import="org.fenixedu.academic.util.phd.PhdBundleUtil"%>
 <%@page import="org.fenixedu.academic.dto.phd.YearMonth"%>
 
 <style>
@@ -67,7 +67,7 @@
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CivilYearsProvider$CivilYearsProviderDescendingOrder" />
 			</fr:slot>
 			<fr:slot name="month" key="label.month" layout="menu-postback">
-				<fr:property name="defaultText" value="<%="-- " + BundleUtil.getMessageFromModuleOrApplication("Phd", "label.all") + " --" %>" />
+				<fr:property name="defaultText" value="<%="-- " + PhdBundleUtil.getMessageFromModuleOrApplication("Phd", "label.all") + " --" %>" />
 			</fr:slot>
 		</fr:schema>
 		<fr:destination name="postBack" path="/phdIndividualProgramProcess.do?method=viewAlertMessageArchive"/>
