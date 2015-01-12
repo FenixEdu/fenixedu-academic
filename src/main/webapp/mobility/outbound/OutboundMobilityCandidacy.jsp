@@ -29,7 +29,7 @@
 <%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
 <%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
 <%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
-<%@page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@page import="org.fenixedu.bennu.core.i18n.BundleUtil"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -131,7 +131,7 @@
 						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>
 				</fr:edit>
-		<html:submit value="<%= BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.submit") %>"/>
+		<html:submit value="<%= BundleUtil.getString("resources.AcademicAdminOffice", "label.submit") %>"/>
 		<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 		<% if (outboundMobilityContextBean.getCandidacyPeriods().size() == 0) { %>
 			&nbsp;&nbsp;|&nbsp;&nbsp;

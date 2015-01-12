@@ -26,7 +26,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 
 <%@ page import="org.fenixedu.academic.util.FenixDigestUtils"%>
-<%@ page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@ page import="org.fenixedu.bennu.core.i18n.BundleUtil"%>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.remove.grades"/></h2>
 <logic:messagesPresent message="true">
@@ -85,9 +85,9 @@
 		</html:cancel>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"
 			onclick="<%= "askForConfirmation('" +
-				BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.remove.grades.confirmationMessage")
+				BundleUtil.getString("resources.AcademicAdminOffice", "label.remove.grades.confirmationMessage")
 				+ "', '" +
-				BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.remove.grades.confirmationTitle")
+				BundleUtil.getString("resources.AcademicAdminOffice", "label.remove.grades.confirmationTitle")
 				+ "'); return false;" %>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.remove.grades"/>
 		</html:submit>

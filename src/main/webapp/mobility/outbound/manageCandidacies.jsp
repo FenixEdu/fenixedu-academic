@@ -22,7 +22,7 @@
 <%@page import="org.fenixedu.academic.domain.mobility.outbound.CandidacyGroupContestState.CandidacyGroupContestStateStage"%>
 <%@page import="org.fenixedu.academic.domain.mobility.outbound.CandidacyGroupContestState"%>
 <%@page import="java.math.BigDecimal"%>
-<%@page import="org.fenixedu.academic.util.BundleUtil"%>
+<%@page import="org.fenixedu.bennu.core.i18n.BundleUtil"%>
 <%@page import="org.fenixedu.academic.domain.Grade"%>
 <%@page import="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement"%>
 <%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
@@ -225,7 +225,7 @@
 	        && mobilityGroup.areAllStudentsGraded(outboundMobilityContextBean.getCandidacyPeriods().first())) { %>
 		<li>
 			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=selectCandidates&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>"
-					onclick="<%= "return confirm('" + BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+					onclick="<%= "return confirm('" + BundleUtil.getString("resources.AcademicAdminOffice",
 	                        "label.mobility.candidates.select.candidates.warning") + "')" %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.select.candidates"/>
 			</html:link>
