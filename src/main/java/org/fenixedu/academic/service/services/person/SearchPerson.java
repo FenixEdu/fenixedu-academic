@@ -279,14 +279,14 @@ public class SearchPerson implements Serializable {
                         peopleIterator.remove();
                     }
                 }
-                final Department department = searchParameters.getDepartment();
-                if (department != null) {
-                    for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
-                        final Person person = peopleIterator.next();
-                        final Teacher teacher = person.getTeacher();
-                        if (teacher == null || teacher.getDepartment() != department) {
-                            peopleIterator.remove();
-                        }
+            }
+            final Department department = searchParameters.getDepartment();
+            if (department != null) {
+                for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
+                    final Person person = peopleIterator.next();
+                    final Teacher teacher = person.getTeacher();
+                    if (teacher == null || teacher.getDepartment() != department) {
+                        peopleIterator.remove();
                     }
                 }
             }
