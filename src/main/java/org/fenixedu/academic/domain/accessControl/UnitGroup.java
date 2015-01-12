@@ -32,6 +32,7 @@ import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import com.google.common.base.Objects;
 
@@ -130,11 +131,12 @@ public class UnitGroup extends FenixGroup {
         if (user == null) {
             return false;
         }
-        for (Accountability accountability : user.getPerson().getParentAccountabilities(relationType)) {
-            if (accountability.isActive(when.toYearMonthDay())) {
-                if (includeSubUnits && isAncestor(unit, accountability.getParentParty(), relationType, when)) {
+        YearMonthDay whenYMD = when.toYearMonthDay();
+        for (Accountability accountability : user.getPerson().getParentsSet()) {
+            if (accountability.getAccountabilityType().getType() == relationType && accountability.isActive(whenYMD)) {
+                if (accountability.getParentParty().equals(unit)) {
                     return true;
-                } else if (accountability.getParentParty().equals(unit)) {
+                } else if (includeSubUnits && isAncestor(unit, accountability.getParentParty(), relationType, whenYMD)) {
                     return true;
                 }
             }
@@ -143,15 +145,16 @@ public class UnitGroup extends FenixGroup {
     }
 
     private boolean isAncestor(Party possibleAncestor, Party possibleChild, AccountabilityTypeEnum subUnitRecursionType,
-            DateTime when) {
+            YearMonthDay when) {
         if (possibleChild == null) {
             return false;
         }
         if (possibleChild.equals(possibleAncestor)) {
             return true;
         }
-        for (Party parent : possibleChild.getParentPartiesByDates(subUnitRecursionType, Unit.class, when)) {
-            if (isAncestor(possibleAncestor, parent, subUnitRecursionType, when)) {
+        for (Accountability acc : possibleChild.getParentsSet()) {
+            if (acc.getParentParty() instanceof Unit && acc.isActive(when)
+                    && isAncestor(possibleAncestor, acc.getParentParty(), subUnitRecursionType, when)) {
                 return true;
             }
         }
