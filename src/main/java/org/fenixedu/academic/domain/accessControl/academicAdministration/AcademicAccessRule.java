@@ -193,21 +193,25 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
     }
 
     public static boolean isMember(User user, Predicate<? super AcademicAccessRule> filter) {
-        return AcademicAccessRule.accessRules().filter(filter).anyMatch(rule -> rule.isMember(user));
+        return AcademicAccessRule.accessRules().filter(filter).map(AccessRule::getWhoCanAccess).distinct()
+                .anyMatch(group -> group.isMember(user));
     }
 
     public static boolean isMember(User user, AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices) {
-        return filter(function, programs, offices).anyMatch(rule -> rule.isMember(user));
+        return filter(function, programs, offices).map(AccessRule::getWhoCanAccess).distinct()
+                .anyMatch(group -> group.isMember(user));
     }
 
     public static boolean isMember(User user, Predicate<? super AcademicAccessRule> filter, DateTime when) {
-        return AcademicAccessRule.accessRules(when).filter(filter).anyMatch(rule -> rule.isMember(user, when));
+        return AcademicAccessRule.accessRules(when).filter(filter).map(AccessRule::getWhoCanAccess).distinct()
+                .anyMatch(group -> group.isMember(user, when));
     }
 
     public static boolean isMember(User user, AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices, DateTime when) {
-        return filter(function, programs, offices, when).anyMatch(rule -> rule.isMember(user, when));
+        return filter(function, programs, offices, when).map(AccessRule::getWhoCanAccess).distinct()
+                .anyMatch(group -> group.isMember(user, when));
     }
 
     public static Stream<AcademicProgram> getProgramsAccessibleToFunction(AcademicOperationType function, User user) {
