@@ -44,7 +44,6 @@ import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnr
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -1082,7 +1081,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final ExecutionInterval begin,
-            final ExecutionInterval end, final MultiLanguageString name, final Boolean isBranch, final Boolean isOptional) {
+            final ExecutionInterval end, final MultiLanguageString name, final Boolean isOptional, final BranchType branchType) {
         if (parentCourseGroup == null) {
             throw new DomainException("error.CourseGroup.required.CourseGroup.parent");
         }
@@ -1094,14 +1093,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         parentCourseGroup.createContext(begin, end, result, null);
         result.setName(name.getContent(Locale.getDefault()));
         result.setNameEn(name.getContent(Locale.ENGLISH));
-        result.setIsBranch(isBranch);
         result.setIsOptional(isOptional);
-        return result;
-    }
+        result.setBranchType(branchType);
 
-    public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final BranchType branchType, final ExecutionSemester begin, final ExecutionSemester end) {
-        return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
+        return result;
     }
 
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
@@ -1716,11 +1711,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return (Set) courseGroups;
     }
 
-    public Set<BranchCourseGroup> getAllBranches() {
+    public Set<CourseGroup> getAllBranches() {
         final Set<DegreeModule> branches = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
             @Override
             public boolean add(DegreeModule degreeModule) {
-                return degreeModule instanceof BranchCourseGroup && super.add(degreeModule);
+                return degreeModule.isBranchCourseGroup() && super.add(degreeModule);
             }
         };
         if (getRoot() != null) {
@@ -1730,13 +1725,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return (Set) branches;
     }
 
-    public Set<BranchCourseGroup> getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
-        final Set<BranchCourseGroup> branchesByType = new TreeSet<BranchCourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
-        final Set<BranchCourseGroup> branches = getAllBranches();
+    public Set<CourseGroup> getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
+        final Set<CourseGroup> branchesByType = new TreeSet<CourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
+        final Set<CourseGroup> branches = getAllBranches();
         if (branches == null) {
             return null;
         }
-        for (BranchCourseGroup branch : branches) {
+        for (CourseGroup branch : branches) {
             if (branch.getBranchType() == branchType) {
                 branchesByType.add(branch);
             }
@@ -1744,11 +1739,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return branchesByType;
     }
 
-    public Set<BranchCourseGroup> getMajorBranches() {
+    public Set<CourseGroup> getMajorBranches() {
         return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MAJOR);
     }
 
-    public Set<BranchCourseGroup> getMinorBranches() {
+    public Set<CourseGroup> getMinorBranches() {
         return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MINOR);
     }
 

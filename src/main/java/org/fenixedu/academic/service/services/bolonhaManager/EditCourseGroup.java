@@ -22,6 +22,7 @@
 package org.fenixedu.academic.service.services.bolonhaManager;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -33,8 +34,8 @@ public class EditCourseGroup {
 
     @Atomic
     public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
-            final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isBranch,
-            final Boolean isOptional) throws FenixServiceException {
+            final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isOptional,
+            final BranchType branchType) throws FenixServiceException {
 
         final CourseGroup courseGroup = (CourseGroup) FenixFramework.getDomainObject(courseGroupID);
         if (courseGroup == null) {
@@ -46,7 +47,7 @@ public class EditCourseGroup {
         }
 
         courseGroup.edit(name, nameEn, context, getBeginExecutionPeriod(beginExecutionPeriodID),
-                getEndExecutionPeriod(endExecutionPeriodID), isBranch, isOptional);
+                getEndExecutionPeriod(endExecutionPeriodID), isOptional, branchType);
     }
 
     private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {

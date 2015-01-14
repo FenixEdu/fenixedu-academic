@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.candidacy.Ingression;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
@@ -356,35 +355,43 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         return this;
     }
 
-    /**
-     * 
-     * Cycle can have only one branch by type
-     * 
-     * @param branchType
-     */
-    public BranchCurriculumGroup getBranchCurriculumGroup(final BranchType branchType) {
-        final Set<BranchCurriculumGroup> groups = getBranchCurriculumGroups(branchType);
-        return groups.isEmpty() ? null : groups.iterator().next();
+    //removed single branch type by cycle restriction (check explanation on CurriculumGroup.checkInitConstraints)
+    public CurriculumGroup getBranchCurriculumGroup(final BranchType branchType) {
+        final Set<CurriculumGroup> groups = getBranchCurriculumGroups(branchType);
+
+        if (groups.isEmpty()) {
+            return null;
+        }
+
+        if (groups.size() > 1) {
+            throw new DomainException("error.CycleCurriculumGroup.multiple.branches.for.the.same.type.were.found");
+        }
+
+        return groups.iterator().next();
+
     }
 
-    public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
+    public CurriculumGroup getMajorBranchCurriculumGroup() {
         return getBranchCurriculumGroup(BranchType.MAJOR);
     }
 
-    public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
+    public CurriculumGroup getMinorBranchCurriculumGroup() {
         return getBranchCurriculumGroup(BranchType.MINOR);
     }
 
-    public BranchCourseGroup getBranchCourseGroup(final BranchType branchType) {
-        final Set<BranchCourseGroup> groups = getBranchCourseGroups(branchType);
-        return groups.isEmpty() ? null : groups.iterator().next();
+    public CourseGroup getBranchCourseGroup(final BranchType branchType) {
+        //Bug fix: Previous implementation calls getBranchCourseGroups that could return multiple branch course groups 
+        //due to inconsistent / migrated data (check explanation in CurriculumGroup.checkInitConstraints) and the result could be random
+        //depending on collection order instead of reporting error
+        final CurriculumGroup branchCurriculumGroup = getBranchCurriculumGroup(branchType);
+        return branchCurriculumGroup != null ? branchCurriculumGroup.getDegreeModule() : null;
     }
 
-    public BranchCourseGroup getMajorBranchCourseGroup() {
+    public CourseGroup getMajorBranchCourseGroup() {
         return getBranchCourseGroup(BranchType.MAJOR);
     }
 
-    public BranchCourseGroup getMinorBranchCourseGroup() {
+    public CourseGroup getMinorBranchCourseGroup() {
         return getBranchCourseGroup(BranchType.MINOR);
     }
 

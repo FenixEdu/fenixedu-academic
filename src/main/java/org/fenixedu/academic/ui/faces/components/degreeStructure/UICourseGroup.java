@@ -262,12 +262,6 @@ public class UICourseGroup extends UIDegreeModule {
 
             encodeLink(module + "/createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
 
-            if (!this.courseGroup.isRoot() && !this.courseGroup.isBranchCourseGroup()) {
-                writer.append(" , ");
-                encodeLink(module + "/createBranchCourseGroup.faces", createAssociateAditionalParameters, false,
-                        "create.branch.group");
-            }
-
             //Course group sharing is a legacy behavior (unsupported) and should not be used anymore
 //            writer.append(" , ");
 //            encodeLink(module + "/associateCourseGroup.faces", createAssociateAditionalParameters, false,
@@ -343,9 +337,10 @@ public class UICourseGroup extends UIDegreeModule {
             }
 
             if (degreeModule.isBranchCourseGroup()) {
+                final CourseGroup courseGroup = (CourseGroup) degreeModule;
                 writer.startElement("strong", this);
                 writer.append(" (");
-                writer.append(BundleUtil.getString(Bundle.BOLONHA, "branchCourseGroup"));
+                writer.append(courseGroup.getBranchType().getDescription());
                 writer.append(")");
                 writer.endElement("strong");
             }

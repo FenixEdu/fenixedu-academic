@@ -63,7 +63,12 @@
 		<h:message for="isOptional" styleClass="error0"/>
 		<h:outputText value="</p>" escape="false"/>
 			
-		<h:outputText value="#{CourseGroupManagement.ifBranchShowType}" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['branchCourseGroup']}:</label> " escape="false"/>
+		<h:selectOneMenu id="branchTypeName" value="#{CourseGroupManagement.branchTypeName}" styleClass="nospace" required="true">
+			<f:selectItems value="#{CourseGroupManagement.branchTypes}"/>
+		</h:selectOneMenu>
+		<h:message for="branchTypeName" styleClass="error0"/>
+		<h:outputText value="</p>" escape="false"/>
 		
 		<h:outputText value="</fieldset></div>" escape="false"/>
 		

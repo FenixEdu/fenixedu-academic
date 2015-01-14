@@ -71,6 +71,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public CourseGroup() {
         super();
+        setIsOptional(false);
     }
 
     protected CourseGroup(final String name, final String nameEn) {
@@ -85,6 +86,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final ExecutionSemester begin, final ExecutionSemester end) {
+        this();
         init(parentCourseGroup, name, nameEn, begin, end);
     }
 
@@ -103,7 +105,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
-            ExecutionSemester endExecutionPeriod, Boolean isBranch, Boolean isOptional) {
+            ExecutionSemester endExecutionPeriod, Boolean isOptional, BranchType branchType) {
         // override, assure that root's name equals degree curricular plan name
         if (this.isRoot()) {
             setName(getParentDegreeCurricularPlan().getName());
@@ -119,8 +121,8 @@ public class CourseGroup extends CourseGroup_Base {
             context.edit(beginExecutionPeriod, endExecutionPeriod);
         }
 
-        setIsBranch(isBranch);
         setIsOptional(isOptional);
+        setBranchType(branchType);
     }
 
     @Override
@@ -931,6 +933,35 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public boolean isBranchCourseGroup() {
-        return super.getIsBranch() != null && super.getIsBranch();
+        return super.getBranchType() != null;
+    }
+
+    public boolean isMajor() {
+        return super.getBranchType() == BranchType.MAJOR;
+    }
+
+    public boolean isMinor() {
+        return super.getBranchType() == BranchType.MINOR;
+    }
+
+    @Override
+    public void setBranchType(BranchType branchType) {
+        super.setBranchType(branchType);
+
+        checkBranchHierarchyRules();
+    }
+
+    private void checkBranchHierarchyRules() {
+
+        if (!isBranchCourseGroup()) {
+            return;
+        }
+
+        for (final CourseGroup parentGroup : getParentCourseGroups()) {
+            if (parentGroup.hasAnyParentBranchCourseGroup()) {
+                throw new DomainException("error.degreeStructure.BranchCourseGroup.cant.have.branch.parent");
+            }
+        }
+
     }
 }
