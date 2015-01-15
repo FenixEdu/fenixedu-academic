@@ -196,7 +196,7 @@
 								<td class="ppleft2"><bean:message
 										key="label.teacher.category" />:</td>
 								<td class="ppright"><bean:write name="personalInfo"
-										property="teacher.category.name" />
+										property="teacher.category.name.content" />
 								</td>
 							</tr>
 						</logic:notEmpty>
