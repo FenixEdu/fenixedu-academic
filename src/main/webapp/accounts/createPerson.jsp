@@ -68,7 +68,7 @@
 					</fr:slot>
 					<fr:slot name="profile.email" key="label.email" />
 					<fr:slot name="dateOfBirth" />
-					<fr:slot name="nationality.localizedName" key="label.nationality" />
+					<fr:slot name="nationality.localizedName.content" key="label.nationality" />
 				</fr:schema>
 				<fr:layout name="tabular" />
 			</fr:view>

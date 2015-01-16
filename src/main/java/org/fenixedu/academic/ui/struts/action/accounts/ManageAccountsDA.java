@@ -77,10 +77,10 @@ public class ManageAccountsDA extends FenixDispatchAction {
         Collection<Person> results;
         if (!Strings.isNullOrEmpty(bean.getGivenNames()) || !Strings.isNullOrEmpty(bean.getFamilyNames())) {
             String name =
-                    Stream.of(bean.getGivenNames(), bean.getFamilyNames()).filter(Strings::isNullOrEmpty)
+                    Stream.of(bean.getGivenNames(), bean.getFamilyNames()).filter(n -> !Strings.isNullOrEmpty(n))
                             .collect(Collectors.joining(" "));
             Stream<Person> stream = Person.findPersonStream(name, Integer.MAX_VALUE);
-            if (bean.getDocumentIdNumber() != null) {
+            if (!Strings.isNullOrEmpty(bean.getDocumentIdNumber())) {
                 stream = stream.filter(p -> p.getDocumentIdNumber().equals(bean.getDocumentIdNumber()));
             }
             results = stream.collect(Collectors.toSet());
