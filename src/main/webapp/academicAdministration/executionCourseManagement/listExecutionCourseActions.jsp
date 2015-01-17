@@ -130,12 +130,6 @@
 		<fr:property name="key(edit)" value="label.manager.executionCourseManagement.edit" />
 		<fr:property name="bundle(edit)" value="MANAGER_RESOURCES" />
 
-		<fr:property name="linkFormat(swapAnnoun)" value="<%= "/announcementSwap.do?method=prepareSwap&executionCourseId=${externalId}" + linkGetRequestLilMessage.toString() %>" />
-		<fr:property name="order(swapAnnoun)" value="2" />
-		<fr:property name="visibleIf(swapAnnoun)" value="hasAnnouncements" />
-		<fr:property name="key(swapAnnoun)" value="label.manager.executionCourse.announcementMove" />
-		<fr:property name="bundle(swapAnnoun)" value="MANAGER_RESOURCES" />
-
 		<fr:property name="linkFormat(manageCurricularSeparation)"
 					 value="<%="/seperateExecutionCourse.do?method=manageCurricularSeparation"
 					 		+ "&amp;executionCourseId=${externalId}"
