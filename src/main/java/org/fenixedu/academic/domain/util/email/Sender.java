@@ -122,7 +122,8 @@ public class Sender extends Sender_Base {
 
         final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
-            if (sender.getMembers().isMember(userView) || (userView != null && RoleType.MANAGER.isMember(userView.getPerson().getUser()))) {
+            if (sender.getMembers().isMember(userView)
+                    || (userView != null && RoleType.MANAGER.isMember(userView.getPerson().getUser()))) {
                 senders.add(sender);
             }
         }

@@ -76,7 +76,8 @@ public class ThesisPredicates {
                     Person person = AccessControl.getPerson();
                     return (person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation())
                             || (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS,
-                                    thesis.getDegree(), person.getUser())) || RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser());
+                                    thesis.getDegree(), person.getUser()))
+                            || RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser());
                 }
 
             };

@@ -71,7 +71,7 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
         if (Strings.isNullOrEmpty(code)) {
             throw new DomainException("teacher.category.code.empty", code);
         }
-        
+
         Optional<TeacherCategory> category = findByCode(code);
         if (category.isPresent() && !this.equals(category.get())) {
             throw new DomainException("teacher.category.code.already.exists", code);

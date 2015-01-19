@@ -80,8 +80,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
             MultiLanguageString body) {
         String[] args = {};
         if (process == null) {
-            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.process.cannot.be.null",
-                    args);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.process.cannot.be.null", args);
         }
         String[] args1 = {};
         if (persons == null) {

@@ -54,7 +54,8 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         User id = Authenticate.getUser();
 
         try {
-            if ((id == null) || !getRoleType().isMember(id.getPerson().getUser()) || !lecturesExecutionCourse(id, executionCourseID)
+            if ((id == null) || !getRoleType().isMember(id.getPerson().getUser())
+                    || !lecturesExecutionCourse(id, executionCourseID)
                     || !examBelongsExecutionCourse(id, executionCourseID, evaluationID)) {
                 throw new NotAuthorizedException();
             }

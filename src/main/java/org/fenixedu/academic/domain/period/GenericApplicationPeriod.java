@@ -104,7 +104,8 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     public boolean isCurrentUserAllowedToMange() {
         final User userView = Authenticate.getUser();
         return userView != null
-                && (RoleType.MANAGER.isMember(userView.getPerson().getUser()) || getManagerSet().contains(userView.getPerson().getUser()));
+                && (RoleType.MANAGER.isMember(userView.getPerson().getUser()) || getManagerSet().contains(
+                        userView.getPerson().getUser()));
     }
 
 }

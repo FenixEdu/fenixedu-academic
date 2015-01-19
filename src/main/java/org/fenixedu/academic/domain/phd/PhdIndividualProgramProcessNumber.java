@@ -58,14 +58,12 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 
     @Override
     public void setYear(Integer year) {
-        throw new DomainException(
-                "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.year");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.year");
     }
 
     @Override
     public void setNumber(Integer number) {
-        throw new DomainException(
-                "error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.number");
+        throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.number");
     }
 
     @Override

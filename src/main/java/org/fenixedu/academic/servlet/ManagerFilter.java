@@ -47,7 +47,8 @@ public class ManagerFilter implements Filter {
 
         final User userView = Authenticate.getUser();
         if (userView == null
-                || !(RoleType.MANAGER.isMember(userView.getPerson().getUser()) || RoleType.OPERATOR.isMember(userView.getPerson().getUser()))) {
+                || !(RoleType.MANAGER.isMember(userView.getPerson().getUser()) || RoleType.OPERATOR.isMember(userView.getPerson()
+                        .getUser()))) {
             throw new RuntimeException();
         }
 

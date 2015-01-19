@@ -65,14 +65,13 @@ public class PhdNotification extends PhdNotification_Base {
     protected void init(PhdNotificationType type, PhdProgramCandidacyProcess candidacyProcess) {
         String[] args = {};
         if (type == null) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.phd.notification.PhdNotification.type.cannot.be.null", args);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.notification.PhdNotification.type.cannot.be.null",
+                    args);
         }
         String[] args1 = {};
         if (candidacyProcess == null) {
             throw new DomainException(
-                    "error.org.fenixedu.academic.domain.phd.notification.PhdNotification.candidacyProcess.cannot.be.null",
-                    args1);
+                    "error.org.fenixedu.academic.domain.phd.notification.PhdNotification.candidacyProcess.cannot.be.null", args1);
         }
 
         super.setType(type);

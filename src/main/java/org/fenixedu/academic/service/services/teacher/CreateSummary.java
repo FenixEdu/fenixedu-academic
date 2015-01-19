@@ -24,9 +24,9 @@ import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.filter.SummaryManagementToTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
-
 import org.fenixedu.bennu.signals.DomainObjectEvent;
 import org.fenixedu.bennu.signals.Signal;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CreateSummary {
@@ -36,10 +36,11 @@ public class CreateSummary {
         ServiceMonitoring.logService(this.getClass(), bean);
 
         if (bean.isNewSummary()) {
-            Summary summary = new Summary(bean.getTitle(), bean.getSummaryText(), bean.getStudentsNumber(), bean.getSummaryType().equals(
-                    SummariesManagementBean.SummaryType.EXTRA_SUMMARY), bean.getProfessorship(), bean.getTeacherName(),
-                    bean.getTeacher(), bean.getShift(), bean.getLesson(), bean.getSummaryDate(), bean.getSummaryRoom(),
-                    bean.getSummaryTime(), bean.getLessonType(), bean.getTaught());
+            Summary summary =
+                    new Summary(bean.getTitle(), bean.getSummaryText(), bean.getStudentsNumber(), bean.getSummaryType().equals(
+                            SummariesManagementBean.SummaryType.EXTRA_SUMMARY), bean.getProfessorship(), bean.getTeacherName(),
+                            bean.getTeacher(), bean.getShift(), bean.getLesson(), bean.getSummaryDate(), bean.getSummaryRoom(),
+                            bean.getSummaryTime(), bean.getLessonType(), bean.getTaught());
             Signal.emit(Summary.CREATE_SIGNAL, new DomainObjectEvent<Summary>(summary));
         } else {
             bean.getSummary().edit(bean.getTitle(), bean.getSummaryText(), bean.getStudentsNumber(),

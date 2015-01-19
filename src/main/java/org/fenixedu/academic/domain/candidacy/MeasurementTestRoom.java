@@ -74,8 +74,8 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
         }
         String[] args1 = {};
         if (capacity == null) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.candidacy.MeasurementTestRoom.capacity.cannot.be.null", args1);
+            throw new DomainException("error.org.fenixedu.academic.domain.candidacy.MeasurementTestRoom.capacity.cannot.be.null",
+                    args1);
         }
 
         setRoomOrder(shift.getRoomsSet().size() + 1);

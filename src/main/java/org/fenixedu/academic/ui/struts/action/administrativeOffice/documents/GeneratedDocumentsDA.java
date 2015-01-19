@@ -171,7 +171,8 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
         addPayedAmount(person, declarationDTO.getCivilYear(), declarationDTO);
         final IRSCustomDeclaration customDeclaration = new IRSCustomDeclaration(declarationDTO);
 
-        return ReportsUtils.generateReport(customDeclaration.getReportTemplateKey(), customDeclaration.getParameters(), customDeclaration.getDataSource()).getData();
+        return ReportsUtils.generateReport(customDeclaration.getReportTemplateKey(), customDeclaration.getParameters(),
+                customDeclaration.getDataSource()).getData();
     }
 
     private void addPayedAmount(Person person, int civilYear, final IRSDeclarationDTO declarationDTO) throws FenixActionException {

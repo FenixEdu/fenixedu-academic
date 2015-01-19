@@ -436,8 +436,9 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public static ExecutionYear readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() {
         startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments =
-                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments, FenixEduAcademicConfiguration
-                        .getConfiguration().getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
+                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments,
+                        FenixEduAcademicConfiguration.getConfiguration()
+                                .getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
         return startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments;
     }
 

@@ -106,8 +106,7 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
     @Atomic
     public void closePeriod(DateTime endPeriod) {
         if (endPeriod == null) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.endPeriod.cannot.be.null");
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdProgramContextPeriod.endPeriod.cannot.be.null");
         }
 
         setEndDate(endPeriod);

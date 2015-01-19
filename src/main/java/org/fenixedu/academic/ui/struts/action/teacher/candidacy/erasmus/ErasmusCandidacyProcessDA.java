@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicatio
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA.ChooseDegreeBean;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherMobilityApp;
 import org.fenixedu.bennu.core.security.Authenticate;

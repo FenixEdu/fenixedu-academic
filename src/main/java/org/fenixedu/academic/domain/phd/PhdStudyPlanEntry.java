@@ -63,8 +63,7 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
         }
         String[] args1 = {};
         if (studyPlan == null) {
-            throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlanEntry.studyPlan.cannot.be.null",
-                    args1);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.PhdStudyPlanEntry.studyPlan.cannot.be.null", args1);
         }
 
         super.setType(type);

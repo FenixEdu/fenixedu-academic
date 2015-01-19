@@ -67,8 +67,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         }
 
         if (!name.hasContent(MultiLanguageString.en)) {
-            throw new PhdDomainOperationException(
-                    "error.org.fenixedu.academic.domain.phd.ThesisSubject.name.in.english.required");
+            throw new PhdDomainOperationException("error.org.fenixedu.academic.domain.phd.ThesisSubject.name.in.english.required");
         }
 
         if (teacher == null) {

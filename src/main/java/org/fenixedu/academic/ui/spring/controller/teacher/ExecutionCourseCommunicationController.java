@@ -1,9 +1,12 @@
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
+import static org.fenixedu.academic.predicate.AccessControl.check;
+import static org.fenixedu.academic.predicate.AccessControl.getPerson;
+import static pt.ist.fenixframework.FenixFramework.getDomainObject;
+
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.ui.spring.StrutsFunctionalityController;
-import org.fenixedu.academic.ui.spring.controller.teacher.TeacherView;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
-import pt.ist.fenixframework.Atomic;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-import static org.fenixedu.academic.predicate.AccessControl.getPerson;
-import static pt.ist.fenixframework.FenixFramework.getDomainObject;
+import pt.ist.fenixframework.Atomic;
 
 @Controller
 @RequestMapping("/teacher/{executionCourseId}/communication")
@@ -49,7 +49,7 @@ public class ExecutionCourseCommunicationController extends StrutsFunctionalityC
     }
 
     private boolean hasPermissions(Person person, ExecutionCourse executionCourse) {
-        return person !=null && executionCourse.getProfessorship(person)!=null
+        return person != null && executionCourse.getProfessorship(person) != null
                 && executionCourse.getProfessorship(person).getPermissions().getPersonalization();
     }
 }

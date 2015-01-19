@@ -267,7 +267,6 @@ public class AuthorizationService {
         builder.build(WorkbookExportFormat.CSV, out);
     }
 
-  
     public String getCsvFilename(SearchBean search) {
         return getSheetName(search);
     };

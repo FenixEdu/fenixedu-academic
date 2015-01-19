@@ -160,7 +160,7 @@ public class SeperateExecutionCourse {
         final ExecutionCourse destinationExecutionCourse =
                 new ExecutionCourse(originExecutionCourse.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
         Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(destinationExecutionCourse));
-        
+
         for (CourseLoad courseLoad : originExecutionCourse.getCourseLoadsSet()) {
             new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
                     courseLoad.getTotalQuantity());

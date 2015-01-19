@@ -77,13 +77,12 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         }
         String[] args3 = {};
         if (userDefined == null) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.phd.alert.PhdCustomAlert.userDefined.cannot.be.null", args3);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdCustomAlert.userDefined.cannot.be.null",
+                    args3);
         }
         String[] args4 = {};
         if (shared == null) {
-            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdCustomAlert.shared.cannot.be.null",
-                    args4);
+            throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdCustomAlert.shared.cannot.be.null", args4);
         }
 
         super.setWhenToFire(whenToFire);

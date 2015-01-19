@@ -303,8 +303,7 @@ public class GratuitySituation extends GratuitySituation_Base {
         }
 
         if (getGratuityValues().getEndPaymentYearMonthDay() == null) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.GratuitySituation.paymentMode.is.not.correctly.defined");
+            throw new DomainException("error.org.fenixedu.academic.domain.GratuitySituation.paymentMode.is.not.correctly.defined");
         }
 
         return getGratuityValues().getEndPaymentYearMonthDay();

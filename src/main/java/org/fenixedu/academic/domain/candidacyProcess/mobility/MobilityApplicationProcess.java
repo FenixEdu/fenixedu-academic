@@ -273,7 +273,8 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     @Override
     public boolean canExecuteActivity(User userView) {
-        return isAllowedToManageProcess(userView) || RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(userView.getPerson().getUser())
+        return isAllowedToManageProcess(userView)
+                || RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(userView.getPerson().getUser())
                 || RoleType.COORDINATOR.isMember(userView.getPerson().getUser());
     }
 
