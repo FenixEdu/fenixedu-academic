@@ -47,6 +47,10 @@ public class EnrolStudentInWrittenEvaluation {
             throw new InvalidArgumentsServiceException();
         }
 
+        if (!writtenEvaluation.isInEnrolmentPeriod()) {
+            throw new FenixServiceException("Enrolment period is not opened");
+        }
+
         enrolmentAction(writtenEvaluation, registration);
     }
 

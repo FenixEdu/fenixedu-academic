@@ -763,7 +763,7 @@ public class FenixAPIv1 {
             return evaluations(response, request, context);
 
         } catch (Exception e) {
-            throw newApplicationError(Status.BAD_REQUEST, "problem found", "problem found");
+            throw newApplicationError(Status.PRECONDITION_FAILED, e.getMessage(), e.getMessage());
         }
     }
 
