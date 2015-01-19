@@ -83,7 +83,7 @@ import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @StrutsFunctionality(app = AcademicAdministrationApplication.class, path = "summaries-control",
-        titleKey = "link.summaries.control", bundle = "ApplicationResources")
+        titleKey = "link.summaries.control", bundle = "ApplicationResources", accessGroup = "academic(SUMMARIES_CONTROL)")
 @Mapping(path = "/summariesControl")
 @Forward(name = "success", path = "/departmentAdmOffice/summariesControl/listTeacherSummariesControl.jsp")
 public final class SummariesControlAction extends FenixDispatchAction {
