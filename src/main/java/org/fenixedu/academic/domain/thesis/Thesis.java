@@ -70,6 +70,8 @@ import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -78,6 +80,8 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Thesis extends Thesis_Base {
+
+    public static final String PROPOSAL_APPROVED_SIGNAL = "academic.Thesis.proposal.approved";
 
     static {
         getRelationThesisEnrolment().addListener(new RelationAdapter<Thesis, Enrolment>() {
@@ -648,6 +652,8 @@ public class Thesis extends Thesis_Base {
             setProposalApprover(AccessControl.getPerson());
 
             setState(ThesisState.APPROVED);
+
+            Signal.emit(PROPOSAL_APPROVED_SIGNAL, new DomainObjectEvent<Thesis>(this));
         }
     }
 

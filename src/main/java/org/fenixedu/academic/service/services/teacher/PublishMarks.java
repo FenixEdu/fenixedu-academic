@@ -19,12 +19,13 @@
 package org.fenixedu.academic.service.services.teacher;
 
 import org.fenixedu.academic.domain.Evaluation;
-import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.ExcepcaoInexistente;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -34,18 +35,11 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class PublishMarks {
 
-    private final static int MOBILE_NUMBER_LENGHT = 9;
+    public static final String MARKS_PUBLISHED_SIGNAL = "academic.PublishMarks.marks.published";
 
-    private final static String VODAFONE_NETWORK_PREFIX = "91";
+    protected Object run(String evaluationCode, String publishmentMessage, String announcementTitle) throws ExcepcaoInexistente,
+            FenixServiceException {
 
-    private final static String TMN_NETWORK_PREFIX = "96";
-
-    private final static String OPTIMUS_NETWORK_PREFIX = "93";
-
-    protected Object run(String executionCourseCode, String evaluationCode, String publishmentMessage, Boolean sendSMS,
-            String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
-
-        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         final Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
@@ -54,31 +48,12 @@ public class PublishMarks {
             evaluation.setPublishmentMessage(publishmentMessage);
         }
 
+        Signal.emit(MARKS_PUBLISHED_SIGNAL, new DomainObjectEvent<Evaluation>(evaluation));
+
         for (Mark mark : evaluation.getMarksSet()) {
             if (!mark.getMark().equals(mark.getPublishedMark())) {
                 // update published mark
                 mark.setPublishedMark(mark.getMark());
-                if (sendSMS != null && sendSMS) {
-                    if (mark.getAttend().getRegistration().getPerson().getDefaultMobilePhoneNumber() != null
-                            || mark.getAttend().getRegistration().getPerson().getDefaultMobilePhoneNumber().length() == MOBILE_NUMBER_LENGHT) {
-                        String StringDestinationNumber =
-                                mark.getAttend().getRegistration().getPerson().getDefaultMobilePhoneNumber();
-
-                        if (StringDestinationNumber.startsWith(TMN_NETWORK_PREFIX)
-                                || StringDestinationNumber.startsWith(VODAFONE_NETWORK_PREFIX)
-                                || StringDestinationNumber.startsWith(OPTIMUS_NETWORK_PREFIX)) {
-
-//                            try {
-//                                SmsUtil.getInstance().sendSmsWithoutDeliveryReports(
-//                                        Integer.valueOf(StringDestinationNumber),
-//                                        evaluation.getPublishmentMessage() + " "
-//                                                + mark.getAttend().getExecutionCourse().getSigla() + " - " + mark.getMark());
-//                            } catch (FenixUtilException e1) {
-//                                throw new SmsNotSentServiceException("error.person.sendSms");
-//                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -93,7 +68,7 @@ public class PublishMarks {
     public static Object runPublishMarks(String executionCourseCode, String evaluationCode, String publishmentMessage,
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
-        return serviceInstance.run(executionCourseCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle);
+        return serviceInstance.run(evaluationCode, publishmentMessage, announcementTitle);
     }
 
 }
