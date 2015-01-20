@@ -57,7 +57,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
- * 
+ *
  * @author tfc130
  */
 public class Attends extends Attends_Base {
@@ -526,6 +526,9 @@ public class Attends extends Attends_Base {
         return enrolment == null ? getRegistration().getLastStudentCurricularPlan() : enrolment.getStudentCurricularPlan();
     }
 
+    //This makes Attends dependent on a Bean, thus domain dependent on dto's
+    //Change this on the next major.
+    @Deprecated
     public StudentAttendsStateType getAttendsStateType() {
         if (getEnrolment() == null) {
             return StudentAttendsStateType.NOT_ENROLED;

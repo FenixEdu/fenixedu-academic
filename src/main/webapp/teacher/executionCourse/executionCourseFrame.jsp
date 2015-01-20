@@ -104,7 +104,7 @@
 			</li>
 			<c:if test="${professorship.permissions.summaries}">
 				<li>
-				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/searchECAttends.do?method=prepare&executionCourseID='.concat(executionCourse.externalId))}">
+                <a href="${base}/${executionCourse.externalId}/attends/show">
 						${fr:message('resources.ApplicationResources', 'link.students')}
 					</a>
 				</li>

@@ -125,7 +125,7 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 									</html:link>
 								</logic:equal>
 								<logic:equal name="evaluationAnnouncement" property="groupEnrolment" value="true">
-									<html:link page="/viewEnroledExecutionCourses.do?method=prepare">
+									<html:link page="/enroll/student-groups">
 										<bean:write name="evaluationAnnouncement" property="register"/>
 									</html:link>
 								</logic:equal>
