@@ -383,7 +383,7 @@
 				<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesis" property="creator.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
-			<td><bean:write name="thesis" property="creator.personName" /> </td>
+			<td><bean:write name="thesis" property="creator.person.name" /> </td>
 			<td><bean:write name="thesis" property="creator.person.username" /></td>
 			<td><%=((org.joda.time.DateTime)dateCreator).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>

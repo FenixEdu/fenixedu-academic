@@ -43,7 +43,7 @@
 		<img src="<%= request.getContextPath() + url %>"/>
 	</td>	
 	<td>
-		<%= participant.getPersonNameWithLogin() %>
+		<%= participant.getPerson().getName() %> ( <%= participant.getPerson().getUsername() %> )
 	</td>
 	<td>
 		<%= participant.getCategory() %>

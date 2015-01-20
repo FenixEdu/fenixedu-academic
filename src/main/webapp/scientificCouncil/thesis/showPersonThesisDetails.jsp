@@ -24,13 +24,9 @@
 <%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 <%@page import="org.fenixedu.academic.domain.Enrolment"%>
 <%@page import="java.util.Set"%>
-<%@page import="org.fenixedu.academic.domain.finalDegreeWork.GroupProposal"%>
 <%@page import="java.util.TreeSet"%>
-<%@page import="org.fenixedu.academic.domain.finalDegreeWork.GroupStudent"%>
 <%@page import="java.util.SortedSet"%>
-<%@page import="org.fenixedu.academic.domain.finalDegreeWork.Proposal"%>
 <%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
-<%@page import="org.fenixedu.academic.domain.finalDegreeWork.FinalDegreeWorkGroup"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -170,7 +166,7 @@
 					</tr>
 	<%
 					}
-					if (enrolment.getThesesCount() == 0) {
+					if (enrolment.getThesesSet().size() == 0) {
 	%>
 						<tr>
 							<td>
@@ -208,88 +204,4 @@
 
 	<br/>
 
-	<h3 class="separator2">
-		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.proposal.candidacies"/>
-	</h3>
-	<logic:iterate id="registration" name="student" property="registrations" type="org.fenixedu.academic.domain.student.Registration">
-		<%
-			final SortedSet<GroupStudent> groupStudents = new TreeSet<GroupStudent>(GroupStudent.COMPARATOR_BY_YEAR_REVERSE);
-			groupStudents.addAll(registration.getAssociatedGroupStudentsSet());
-			for (final GroupStudent groupStudent : groupStudents) {
-		%>
-			<%
-				final FinalDegreeWorkGroup finalDegreeWorkGroup = groupStudent.getFinalDegreeDegreeWorkGroup();
-				if (!finalDegreeWorkGroup.getGroupProposalsSet().isEmpty()) {
-					final ExecutionDegree executionDegree = finalDegreeWorkGroup.getExecutionDegree();
-					final Proposal attributedProposal = finalDegreeWorkGroup.getProposalAttributed();
-					final Proposal attributedProposalByTeacher = finalDegreeWorkGroup.getProposalAttributedByTeacher();
-					final Proposal confirmedProposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
-			%>
-
-			<div style="font-weight: bold; display: block; margin-left: 35px; width: 90%;">
-				<%= executionDegree.getExecutionYear().getYear() %>
-				<%= executionDegree.getDegree().getPresentationName() %>
-			</div>
-			<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
-				<tr>
-					<th style="width: 8%;">
-						<bean:message bundle="STUDENT_RESOURCES" key="label.finalDegreeWork.proposal.orderOfPreference"/>
-					</th>
-					<th style="width: 5%;">
-						<bean:message bundle="STUDENT_RESOURCES" key="finalDegreeWorkProposalHeader.number"/>
-					</th>
-					<th>
-						<bean:message bundle="STUDENT_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
-					</th>
-					<th style="width: 25%;">
-						<bean:message bundle="STUDENT_RESOURCES" key="finalDegreeWorkProposalHeader.orientatorName"/>
-					</th>
-					<th style="width: 17%;">
-						<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.attribution.state"/>
-					</th>
-				</tr>
-				<%
-					for (final GroupProposal groupProposal : finalDegreeWorkGroup.getGroupProposalsSet()) {
-					    final Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
-				%>
-						<tr>
-							<td>
-								<%= groupProposal.getOrderOfPreference() %>
-							</td>
-							<td>
-								<%= proposal.getProposalNumber() %>
-							</td>
-							<td>
-								<%= proposal.getTitle() %>
-							</td>
-							<td>
-								<%= proposal.getOrientatorsAsString() %>
-							</td>
-							<td>
-								<%
-									if (proposal == attributedProposal) {
-								%>
-										<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.attributed.by.coordinator"/>
-								<%
-									} else if (proposal == confirmedProposal && proposal == attributedProposalByTeacher) {
-								%>
-										<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.attributed.by.teacher.and.confirmed.by.student"/>
-								<%
-									} else if (proposal == attributedProposalByTeacher) {
-								%>
-										<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.attributed.by.teacher"/>
-								<%
-									}
-								%>									
-							</td>
-						</tr>
-				<%
-						}
-					}
-				%>
-			</table>
-		<%
-			}
-		%>
-	</logic:iterate>
 </logic:present>
