@@ -165,7 +165,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     @Override
     public Group getAccessGroup() {
-        return null;
+        return getSpace().getOccupationsGroupWithChainOfResponsability();
     }
 
     @Override
