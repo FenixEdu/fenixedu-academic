@@ -390,6 +390,24 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
 
+    public static Degree find(final String code) {
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        Degree degreeFound = null;
+        for (Degree degree : Degree.readNotEmptyDegrees()) {
+            if (StringUtils.equalsIgnoreCase(degree.getCode(), code)) {
+                if (degreeFound != null) {
+                    throw new DomainException("error.Degree.found.duplicate", code, degreeFound.toString(), degree.toString());
+                }
+                degreeFound = degree;
+            }
+        }
+
+        return degreeFound;
+    }
+
     public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         if (!isBolonhaDegree()) {
