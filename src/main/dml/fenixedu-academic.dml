@@ -575,6 +575,7 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         String ministryCode;
         String idCardName;
         String siteUrl;
+        String code;
     }
     
         class EmptyDegree extends Degree;

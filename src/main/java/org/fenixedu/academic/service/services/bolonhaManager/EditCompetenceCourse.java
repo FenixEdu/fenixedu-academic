@@ -44,12 +44,21 @@ public class EditCompetenceCourse {
         competenceCourse.edit(objectives, program, evaluationMethod, objectivesEn, programEn, evaluationMethodEn);
     }
 
+    @Deprecated
     protected void run(String competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage)
+            throws FenixServiceException {
+        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
+        run(competenceCourseID, name, nameEn, basic, competenceCourseLevel, type, curricularStage, competenceCourse.getCode());
+    }
+
+    protected void run(String competenceCourseID, String name, String nameEn, Boolean basic,
+            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, String code)
             throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim());
         competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, type, curricularStage);
+        competenceCourse.setCode(code);
     }
 
     protected void run(String competenceCourseID, String acronym) throws FenixServiceException {
@@ -245,19 +254,29 @@ public class EditCompetenceCourse {
     @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel enumCompetenceCourseLevel, CompetenceCourseType enumCompetenceCourseType,
-            CurricularStage valueOf) throws FenixServiceException {
+            CurricularStage valueOf, String code) throws FenixServiceException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(competenceCourseID, name, nameEn, basic, enumCompetenceCourseLevel, enumCompetenceCourseType,
-                    valueOf);
+                    valueOf, code);
         } catch (NotAuthorizedException ex1) {
             try {
                 ScientificCouncilAuthorizationFilter.instance.execute();
                 serviceInstance.run(competenceCourseID, name, nameEn, basic, enumCompetenceCourseLevel, enumCompetenceCourseType,
-                        valueOf);
+                        valueOf, code);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }
         }
+    }
+
+    @Deprecated
+    @Atomic
+    public static void runEditCompetenceCourse(String competenceCourseID, String name, String nameEn, Boolean basic,
+            CompetenceCourseLevel enumCompetenceCourseLevel, CompetenceCourseType enumCompetenceCourseType,
+            CurricularStage valueOf) throws FenixServiceException {
+        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
+        runEditCompetenceCourse(competenceCourseID, name, nameEn, basic, enumCompetenceCourseLevel, enumCompetenceCourseType,
+                valueOf, competenceCourse.getCode());
     }
 }

@@ -23,6 +23,7 @@
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp" %>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 
+
 <fp:select
         actionClass="org.fenixedu.academic.ui.struts.action.BolonhaManager.BolonhaManagerApplication$CompetenceCoursesManagement"/>
 
@@ -93,7 +94,7 @@
                                              columnClasses=",aright nowrap"
                                              rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
                                     <h:column>
-                                        <h:outputText value="#{competenceCourse.name} "/>
+                                        <h:outputText value="#{competenceCourse.code} - " rendered="#{!empty competenceCourse.code}"/><h:outputText value="#{competenceCourse.name} "/>
                                         <h:outputText rendered="#{!empty competenceCourse.acronym}"
                                                       value="(#{competenceCourse.acronym}) "/>
                                         <h:outputText value="<span style='color: #aaa;'>" escape="false"/>

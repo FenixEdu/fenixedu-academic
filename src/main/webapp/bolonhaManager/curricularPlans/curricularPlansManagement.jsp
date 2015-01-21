@@ -26,6 +26,7 @@
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.BolonhaManager.BolonhaManagerApplication$CurricularPlansManagement"/>
 
+
 <f:view>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -42,7 +43,10 @@
 			<h:outputText value="<table style='width: 100%;' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
-			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
+			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})" escape="false"/>
+				<h:outputText value=" [#{degree.code}]" rendered="#{!empty degree.code}" escape="false"/>
+			<h:outputText value="</td>" escape="false"/>
+			
 			<h:outputText value="<td style='width: 110px'>" escape="false"/>
 			<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
