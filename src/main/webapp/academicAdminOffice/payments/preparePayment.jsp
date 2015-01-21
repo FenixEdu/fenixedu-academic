@@ -59,20 +59,6 @@
 
 	<fr:edit id="paymentsManagementDTO-edit" name="paymentsManagementDTO" visible="false" />
 	
-	<logic:equal name="paymentsManagementDTO" property="usingContributorParty" value="true">
-		<fr:edit id="paymentsManagementDTO.edit.with.contributorParty" 
-				name="paymentsManagementDTO" 
-				schema="paymentsManagementDTO.edit.with.contributorParty">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thright" />
-				<fr:property name="columnClasses" value=",,tdclear" />
-			</fr:layout>
-			<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid"/>
-			<fr:destination name="usingContributorPartyPostback" path="/payments.do?method=preparePaymentUsingContributorPartyPostback" />
-			
-		</fr:edit>
-	</logic:equal>
-	<logic:notEqual name="paymentsManagementDTO" property="usingContributorParty" value="true">
 		<fr:edit 	id="paymentsManagementDTO.edit.with.contributorName"
 					name="paymentsManagementDTO"
 					schema="paymentsManagementDTO.edit.with.contributorName">
@@ -80,10 +66,9 @@
 				<fr:property name="classes" value="tstyle4 thlight thright" />
 				<fr:property name="columnClasses" value=",,tdclear" />
 				<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid" />
-				<fr:destination name="usingContributorPartyPostback" path="/payments.do?method=preparePaymentUsingContributorPartyPostback" />
 			</fr:layout>
 		</fr:edit>
-	</logic:notEqual>
+	
 	
 	<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view">
 		<fr:layout name="tabular" >

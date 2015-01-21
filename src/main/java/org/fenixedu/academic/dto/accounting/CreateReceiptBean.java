@@ -55,8 +55,6 @@ public class CreateReceiptBean implements Serializable {
 
     public CreateReceiptBean() {
         setYear(new YearMonthDay().getYear());
-        setUsingContributorParty(true);
-
     }
 
     public Party getContributorParty() {
@@ -94,6 +92,7 @@ public class CreateReceiptBean implements Serializable {
 
     public void setPerson(Person person) {
         this.person = person;
+        setContributorParty(this.person);
     }
 
     public Person getPerson() {

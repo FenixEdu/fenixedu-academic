@@ -59,7 +59,7 @@ public class PaymentsManagementDTO implements Serializable {
 
     public PaymentsManagementDTO(Person person) {
         setPerson(person);
-        setContributorPartySocialSecurityNumber(person.getPartySocialSecurityNumber());
+        setContributorParty(person);
         setEntryDTOs(new ArrayList<EntryDTO>());
         setUsingContributorParty(true);
     }

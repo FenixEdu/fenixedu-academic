@@ -81,19 +81,19 @@
 </schema>
 
 <schema name="contributor.view" type="org.fenixedu.academic.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
-	<slot name="contributorName"/>
-	<slot name="contributorNumber"/>
-	<slot name="contributorAddress"/>
+    <slot name="contributorName" key="label.contributorName"/>
+    <slot name="contributorNumber" key="label.contributorNumber" />
+    <slot name="contributorAddress" key="label.contributorAddress"/>
 </schema>
 
 <schema name="contributorBean.view" type="org.fenixedu.academic.dto.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
-    <slot name="contributorName"/>
-    <slot name="contributorNumber"/>
-    <slot name="contributorAddress"/>
+    <slot name="contributorName" key="label.contributorName"/>
+    <slot name="contributorNumber" key="label.contributorNumber" />
+    <slot name="contributorAddress" key="label.contributorAddress"/>
 </schema>
 
 <schema name="receipt.view.contributorName" type="org.fenixedu.academic.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
-	<slot name="contributorName" />
+    <slot name="contributorName" key="label.contributorName"/>
 </schema>
 
 <schema name="selectableEntryBean.view" type="org.fenixedu.academic.dto.accounting.SelectableEntryBean" bundle="APPLICATION_RESOURCES">
@@ -136,12 +136,7 @@
 		<property name="size" value="4"/>
 		<property name="maxLength" value="4"/>
 	</slot>
-	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
-		<property name="bundle" value="APPLICATION_RESOURCES"/>
-		<property name="destination" value="usingContributorPartyPostback"/>
-		<property name="classes" value="nobullet liinline"/>
-	</slot>
-	<slot name="contributorName" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="contributorName" key="label.contributorName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 		<property name="maxLength" value="255"/>
 	</slot>
@@ -192,11 +187,6 @@
 <schema name="paymentsManagementDTO.edit.with.contributorName" type="org.fenixedu.academic.dto.accounting.PaymentsManagementDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="differedPayment" />
 	<slot name="paymentDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
-		<property name="bundle" value="APPLICATION_RESOURCES"/>
-		<property name="destination" value="usingContributorPartyPostback"/>
-		<property name="classes" value="nobullet liinline"/>
-	</slot>
 	<slot name="contributorName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 		<property name="maxLength" value="255"/>
@@ -513,13 +503,8 @@
 	</slot>
 </schema>
 
-<schema name="editReceiptBean.edit.contributorName" type="org.fenixedu.academic.ui.struts.action.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
-	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
-		<property name="bundle" value="APPLICATION_RESOURCES"/>
-		<property name="destination" value="usingContributorPartyPostback"/>
-		<property name="classes" value="nobullet liinline"/>
-	</slot>
-	<slot name="contributorName" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+<schema name="editReceiptBean.edit.contributorName" type="org.fenixedu.academic.ui.struts.action.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="contributorName" key="label.contributorName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 		<property name="maxLength" value="255"/>
 	</slot>

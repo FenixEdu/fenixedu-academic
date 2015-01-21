@@ -94,7 +94,9 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
         public EditReceiptBean(final Receipt receipt, final Person responsible) {
             setReceipt(receipt);
             setResponsible(responsible);
-            setUsingContributorParty(true);
+            setContributorAddress(receipt.getContributorAddress());
+            setContributorName(receipt.getContributorName());
+            setContributorNumber(receipt.getContributorNumber());
         }
 
         public Receipt getReceipt() {

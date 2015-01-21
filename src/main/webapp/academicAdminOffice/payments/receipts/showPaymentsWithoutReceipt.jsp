@@ -58,39 +58,19 @@
 	</fr:view>
 
 	<logic:notEmpty name="createReceiptBean" property="entries">
-
+	
 		<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.contributor" /></strong></p>
-		
 		<fr:edit id="createReceiptBean" name="createReceiptBean" visible="false" />
 		
-		<logic:equal name="createReceiptBean" property="usingContributorParty" value="true">
-			
-			<fr:edit id="createReceiptBean.edit.with.contributorParty" 
-					name="createReceiptBean" 
-					schema="createReceiptBean.edit.with.contributorParty">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-					<fr:property name="columnClasses" value=",,tdclear" />
-					<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=createUsingContributorPartyPostback" />
-					<fr:destination name="invalid" path="/receipts.do?method=prepareShowPaymentsWithoutReceiptInvalid"/>
-				</fr:layout>
-			</fr:edit>
-		
-		</logic:equal>
-		
-		<logic:notEqual name="createReceiptBean"  property="usingContributorParty" value="true">
 			<fr:edit 	id="createReceiptBean.edit.with.contributorName" 
 						name="createReceiptBean" 
 						schema="createReceiptBean.edit.with.contributorName">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
 					<fr:property name="columnClasses" value=",,tdclear" />
-					<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=createUsingContributorPartyPostback" />
 					<fr:destination name="invalid" path="/receipts.do?method=prepareShowPaymentsWithoutReceiptInvalid"/>
 				</fr:layout>
 			</fr:edit>
-		</logic:notEqual>
-		
 
 		<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></strong></p>
 		<fr:edit id="createReceiptBean-entries-part" name="createReceiptBean"

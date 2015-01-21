@@ -79,31 +79,16 @@
 	
 	<fr:edit id="editReceiptBean" name="editReceiptBean" visible="false" />
 		
-	<logic:equal name="editReceiptBean" property="usingContributorParty" value="true">
-		<fr:edit id="editReceiptBean.edit.contributorParty"
-			name="editReceiptBean"
-			schema="editReceiptBean.edit.contributorParty">
-		
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight" />
-				<fr:property name="columnClasses" value="nowrap," />
-				<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=editUsingContributorPartyPostback" />
-				<fr:destination name="invalid" path="/receipts.do?method=prepareEditReceiptInvalid"/>
-			</fr:layout>
-		</fr:edit>
-	</logic:equal>
-	<logic:notEqual name="editReceiptBean" property="usingContributorParty" value="true">
+	
 		<fr:edit 	id="editReceiptBean.edit.contributorName"
 					name="editReceiptBean"
 					schema="editReceiptBean.edit.contributorName">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight" />
 				<fr:property name="columnClasses" value="nowrap," />
-				<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=editUsingContributorPartyPostback" />
 				<fr:destination name="invalid" path="/receipts.do?method=prepareEditReceiptInvalid" />
 			</fr:layout>
 		</fr:edit>	
-	</logic:notEqual>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='editReceipt';"><bean:message bundle="APPLICATION_RESOURCES" key="label.edit"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='showReceipts';"><bean:message bundle="APPLICATION_RESOURCES" key="label.cancel"/></html:cancel>

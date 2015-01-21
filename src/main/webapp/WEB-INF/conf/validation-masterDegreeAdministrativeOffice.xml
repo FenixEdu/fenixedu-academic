@@ -959,7 +959,7 @@
 	
 	<form name="payGratuityForm">
 		<field property="contributorNumber" depends="required,integer" page="1">
-	        <arg0 key="label.contributor.number" />
+	        <arg0 key="label.contributorNumber" />
 		</field>
 		<field property="adHocValue" depends="double" page="1">
 	        <arg0 key="label.masterDegree.gratuity.adHocValue" />
