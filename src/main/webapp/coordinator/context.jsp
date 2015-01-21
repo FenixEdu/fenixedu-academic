@@ -163,11 +163,6 @@
                     <bean:message key="link.coordinator.thesis.list"/>
                   </a>
                 </li>
-                <li>
-                  <a href="${pageContext.request.contextPath}/publico/viewFinalDegreeWorkProposals.do" target="_blank">
-                    <bean:message key="link.finalDegreeWork.proposal.listings" bundle="STUDENT_RESOURCES"/>
-                  </a>
-                </li>
               </ul>
             </li>
           </c:if>
