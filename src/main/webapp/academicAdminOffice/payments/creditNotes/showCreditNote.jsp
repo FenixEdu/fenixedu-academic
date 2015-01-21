@@ -72,7 +72,6 @@
 
 <logic:equal name="creditNote" property="allowedToChangeState" value="true">
 	<html:form action="/creditNotes.do?method=changeCreditNoteState">
-		<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
 		<fr:edit id="creditNote" name="creditNote" visible="false" />
 		<table class="tstyle5">
 			<tr>
@@ -95,7 +94,6 @@
 	<tr>
 		<td>
 			<html:form action="/creditNotes.do?method=printCreditNote" target="_blank">
-				<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
 				<fr:edit id="creditNote" name="creditNote" visible="false" /><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.print" />
 				</html:submit>
