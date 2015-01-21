@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.ExclusivenessVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
@@ -55,6 +56,25 @@ public class Exclusiveness extends Exclusiveness_Base {
         } else if (exclusiveDegreeModule.isLeaf()) {
             throw new DomainException("curricular.rule.invalid.parameters.degreeModules.must.have.same.type");
         }
+    }
+
+    public static Exclusiveness create(final DegreeModule degreeModule, final CourseGroup courseGroup,
+            final ExecutionInterval beginInterval, final ExecutionInterval endInterval, final DegreeModule exclusiveDegreeModule) {
+
+        final ExecutionSemester begin = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, beginInterval);
+        final ExecutionSemester end = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, endInterval);
+
+        new Exclusiveness(exclusiveDegreeModule, degreeModule, courseGroup, begin, end);
+
+        return new Exclusiveness(degreeModule, exclusiveDegreeModule, courseGroup, begin, end);
+    }
+
+    public void edit(final CourseGroup courseGroup, final ExecutionInterval begin, final ExecutionInterval end,
+            final DegreeModule exclusiveDegreeModule) {
+
+        edit(begin, end);
+        edit(exclusiveDegreeModule, courseGroup);
+
     }
 
     protected void edit(final DegreeModule exclusiveDegreeModule, final CourseGroup contextCourseGroup) {

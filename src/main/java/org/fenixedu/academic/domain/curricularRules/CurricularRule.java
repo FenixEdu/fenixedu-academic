@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.curricularRules;
 
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -220,6 +221,15 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     @Override
     public boolean hasContextCourseGroup() {
         return getContextCourseGroup() != null;
+    }
+
+    protected void edit(ExecutionInterval begin, ExecutionInterval end) {
+        final ExecutionSemester beginSemester = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, begin);
+        final ExecutionSemester endSemester = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end);
+
+        checkExecutionPeriods(beginSemester, endSemester);
+        setBegin(beginSemester);
+        setEnd(endSemester);
     }
 
 }

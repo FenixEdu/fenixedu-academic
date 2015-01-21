@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -51,6 +52,18 @@ public class CreditsLimit extends CreditsLimit_Base {
             throw new DomainException(
                     "error.curricularRules.CreditsLimit.invalid.degreeModule.must.be.group.or.optional.curricularCourse");
         }
+    }
+
+    public static CreditsLimit create(final DegreeModule degreeModule, final CourseGroup courseGroup,
+            final ExecutionInterval begin, final ExecutionInterval end, final Double minimum, final Double maximum) {
+        return new CreditsLimit(degreeModule, courseGroup, ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class,
+                begin), ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end), minimum, maximum);
+    }
+
+    public void edit(CourseGroup courseGroup, final ExecutionInterval begin, final ExecutionInterval end,
+            final Double minCredits, final Double maxCredits) {
+        edit(begin, end);
+        edit(courseGroup, minCredits, maxCredits);
     }
 
     protected void edit(CourseGroup contextCourseGroup, Double minimumCredits, Double maximumCredits) {

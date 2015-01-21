@@ -21,12 +21,14 @@ package org.fenixedu.academic.domain.degreeStructure;
 import java.util.Comparator;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Strings;
 
@@ -86,4 +88,17 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
     public String getGraduateTitleSuffixEn() {
         return getGraduateTitleSuffix() != null ? getGraduateTitleSuffix().getContent(Locale.ENGLISH) : "";
     }
+
+    public boolean isFor(ExecutionInterval executionInterval) {
+        return getExecutionYear() == executionInterval;
+    }
+
+    public void delete() {
+        super.setExecutionYear(null);
+        super.setCycleCourseGroup(null);
+        setRootDomainObject(null);
+
+        super.deleteDomainObject();
+    }
+
 }

@@ -655,4 +655,17 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         return getRevokedTeacherAuthorizationSet().stream();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public <E extends ExecutionInterval> E convert(final Class<E> input) {
+        E result = null;
+
+        if (ExecutionYear.class.equals(input)) {
+            result = (E) getExecutionYear();
+        } else if (ExecutionSemester.class.equals(input)) {
+            result = (E) this;
+        }
+
+        return result;
+    }
 }
