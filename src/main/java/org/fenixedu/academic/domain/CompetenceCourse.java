@@ -35,6 +35,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -397,6 +398,21 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
 
         return minCompetenceCourseInformation;
+    }
+
+    public static CompetenceCourse find(final String code) {
+        CompetenceCourse result = null;
+        if (StringUtils.isNotBlank(code)) {
+            for (final CompetenceCourse iter : Bennu.getInstance().getCompetenceCoursesSet()) {
+                if (StringUtils.equals(code, iter.getCode())) {
+                    if (result != null) {
+                        throw new DomainException("error.CompetenceCourse.found.duplicate", result.toString(), iter.toString());
+                    }
+                    result = iter;
+                }
+            }
+        }
+        return result;
     }
 
     public CompetenceCourseInformation findCompetenceCourseInformationForExecutionYear(final ExecutionYear executionYear) {
@@ -999,6 +1015,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Override
     public void setCode(String code) {
         check(this, CompetenceCoursePredicates.writePredicate);
+        final CompetenceCourse existing = CompetenceCourse.find(code);
+
+        if (existing != null && existing != this) {
+            throw new DomainException("error.CompetenceCourse.found.duplicate");
+        }
+
         super.setCode(code);
     }
 
