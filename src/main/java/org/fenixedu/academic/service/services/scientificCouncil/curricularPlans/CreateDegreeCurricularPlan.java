@@ -51,7 +51,7 @@ public class CreateDegreeCurricularPlan {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }
 
-        degree.createBolonhaDegreeCurricularPlan(name, gradeScale, creator);
+        degree.createDegreeCurricularPlan(name, gradeScale, creator);
     }
 
 }

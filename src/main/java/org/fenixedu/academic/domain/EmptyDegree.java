@@ -101,6 +101,7 @@ public class EmptyDegree extends EmptyDegree_Base {
         blockers.add(BundleUtil.getString(Bundle.APPLICATION, "EmptyDegree.not.available"));
     }
 
+    @Deprecated
     @Override
     public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name, DegreeCurricularPlanState state,
             Date initialDate, Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
@@ -108,8 +109,14 @@ public class EmptyDegree extends EmptyDegree_Base {
         throw new DomainException("EmptyDegree.not.available");
     }
 
+    @Deprecated
     @Override
     public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+        throw new DomainException("EmptyDegree.not.available");
+    }
+
+    @Override
+    public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
         throw new DomainException("EmptyDegree.not.available");
     }
 
