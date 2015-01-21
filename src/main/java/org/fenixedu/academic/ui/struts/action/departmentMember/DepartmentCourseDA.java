@@ -36,7 +36,7 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -180,10 +180,10 @@ public class DepartmentCourseDA extends FenixDispatchAction {
 
             final CycleCurriculumGroup cycle = enrolment.getParentCycleCurriculumGroup();
 
-            final BranchCurriculumGroup major = cycle == null ? null : cycle.getMajorBranchCurriculumGroup();
+            final CurriculumGroup major = cycle == null ? null : cycle.getMajorBranchCurriculumGroup();
             row.setCell(major != null ? major.getName().getContent() : "");
 
-            final BranchCurriculumGroup minor = cycle == null ? null : cycle.getMinorBranchCurriculumGroup();
+            final CurriculumGroup minor = cycle == null ? null : cycle.getMinorBranchCurriculumGroup();
             row.setCell(minor != null ? minor.getName().getContent() : "");
 
             row.setCell(getNumberOfEnrolments(enrolment));

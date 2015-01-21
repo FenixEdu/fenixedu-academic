@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.degreeStructure;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -42,23 +43,11 @@ public class RootCourseGroup extends RootCourseGroup_Base {
         createCycleCourseGroups(degreeCurricularPlan.getDegreeType());
     }
 
-    private void createCycleCourseGroups(DegreeType courseGroupType) {
-        if (courseGroupType.isBolonhaType()) {
-            ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-            if (courseGroupType.isFirstCycle()) {
-                new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE, executionSemester, null);
-            }
-            if (courseGroupType.isSecondCycle()) {
-                new CycleCourseGroup(this, "2º Ciclo", "Second Cycle", CycleType.SECOND_CYCLE, executionSemester, null);
-            }
-            if (courseGroupType.isThirdCycle()) {
-                new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE, executionSemester, null);
-            }
-
-            if (courseGroupType.isSpecializationCycle()) {
-                new CycleCourseGroup(this, "Especialização", "Specialization", CycleType.SPECIALIZATION_CYCLE, executionSemester,
-                        null);
-            }
+    private void createCycleCourseGroups(DegreeType degreeType) {
+        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+        for (final CycleType cycleType : degreeType.getCycleTypes()) {
+            new CycleCourseGroup(this, cycleType.getDescription(Locale.getDefault()), cycleType.getDescription(Locale.ENGLISH),
+                    cycleType, executionSemester, null);
         }
     }
 

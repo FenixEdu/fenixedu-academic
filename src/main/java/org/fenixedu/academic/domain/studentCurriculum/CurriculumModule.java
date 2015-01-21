@@ -113,7 +113,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         return false;
     }
 
-    public BranchCurriculumGroup getParentBranchCurriculumGroup() {
+    public CurriculumGroup getParentBranchCurriculumGroup() {
         return getCurriculumGroup() != null ? getCurriculumGroup().getParentBranchCurriculumGroup() : null;
     }
 

@@ -59,7 +59,7 @@ import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.academicAdministration.SearchStudentsByDegreeParametersBean;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
@@ -536,7 +536,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         final StringBuilder majorBranches = new StringBuilder();
         final StringBuilder minorBranches = new StringBuilder();
 
-        for (final BranchCurriculumGroup group : studentCurricularPlan.getBranchCurriculumGroups()) {
+        for (final CurriculumGroup group : studentCurricularPlan.getBranchCurriculumGroups()) {
             if (group.isMajor()) {
                 majorBranches.append(group.getName().toString()).append(",");
             } else if (group.isMinor()) {

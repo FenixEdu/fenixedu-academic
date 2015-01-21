@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.studentCurriculum;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -70,14 +69,6 @@ public class CurriculumGroupFactory {
             new CycleCurriculumGroup((RootCurriculumGroup) parentGroup, (CycleCourseGroup) courseGroup, executionSemester) :
 
             new CycleCurriculumGroup((RootCurriculumGroup) parentGroup, (CycleCourseGroup) courseGroup);
-
-        } else if (courseGroup.isBranchCourseGroup()) {
-
-            return (executionSemester != null) ?
-
-            new BranchCurriculumGroup(parentGroup, (BranchCourseGroup) courseGroup, executionSemester) :
-
-            new BranchCurriculumGroup(parentGroup, (BranchCourseGroup) courseGroup);
 
         } else if (courseGroup.isRoot()) {
 

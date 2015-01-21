@@ -71,7 +71,6 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
 import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
-import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsManager;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -2841,16 +2840,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         this.setEndStageDate(date);
     }
 
-    public Set<BranchCurriculumGroup> getBranchCurriculumGroups() {
-        return getRoot() != null ? getRoot().getBranchCurriculumGroups() : Collections.<BranchCurriculumGroup> emptySet();
+    public Set<CurriculumGroup> getBranchCurriculumGroups() {
+        return getRoot() != null ? getRoot().getBranchCurriculumGroups() : Collections.<CurriculumGroup> emptySet();
     }
 
-    public Set<BranchCurriculumGroup> getMajorBranchCurriculumGroups() {
-        return getRoot() != null ? getRoot().getMajorBranchCurriculumGroups() : Collections.<BranchCurriculumGroup> emptySet();
+    public Set<CurriculumGroup> getMajorBranchCurriculumGroups() {
+        return getRoot() != null ? getRoot().getMajorBranchCurriculumGroups() : Collections.<CurriculumGroup> emptySet();
     }
 
-    public Set<BranchCurriculumGroup> getMinorBranchCurriculumGroups() {
-        return getRoot() != null ? getRoot().getMinorBranchCurriculumGroups() : Collections.<BranchCurriculumGroup> emptySet();
+    public Set<CurriculumGroup> getMinorBranchCurriculumGroups() {
+        return getRoot() != null ? getRoot().getMinorBranchCurriculumGroups() : Collections.<CurriculumGroup> emptySet();
     }
 
     public Double getApprovedEctsCredits() {

@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -55,7 +54,6 @@ import org.fenixedu.academic.domain.thesis.ThesisState;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
@@ -299,47 +297,26 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return super.getGradeScale() != null ? super.getGradeScale() : getDegreeType().getGradeScale();
     }
 
-    public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name, DegreeCurricularPlanState state,
-            Date initialDate, Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
-            MarkType markType, Integer numerusClausus, String anotation, GradeScale gradeScale) {
-        if (!this.isBolonhaDegree()) {
-            for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
-                if (dcp.getName().equalsIgnoreCase(name)) {
-                    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
-                }
-            }
-
-            return new DegreeCurricularPlan(this, name, state, initialDate, endDate, degreeDuration,
-                    minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, anotation, gradeScale);
-        } else {
-            throw new DomainException("DEGREE.calling.pre.bolonha.method.to.bolonha.degree");
+    public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+        if (name == null) {
+            throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
         }
-    }
-
-    public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
-        if (this.isBolonhaDegree()) {
-            if (name == null) {
-                throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
+        for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
+            if (dcp.getName().equalsIgnoreCase(name)) {
+                throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
             }
-            for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
-                if (dcp.getName().equalsIgnoreCase(name)) {
-                    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
-                }
-            }
-
-            if (creator == null) {
-                throw new DomainException("DEGREE.degree.curricular.plan.creator.cannot.be.null");
-            }
-            if (!RoleType.BOLONHA_MANAGER.isMember(creator.getUser())) {
-                RoleType.grant(RoleType.BOLONHA_MANAGER, creator.getUser());
-            }
-
-            CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getAcademicPeriod());
-
-            return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
-        } else {
-            throw new DomainException("DEGREE.calling.bolonha.method.to.non.bolonha.degree");
         }
+
+        if (creator == null) {
+            throw new DomainException("DEGREE.degree.curricular.plan.creator.cannot.be.null");
+        }
+        if (!RoleType.BOLONHA_MANAGER.isMember(creator.getUser())) {
+            RoleType.grant(RoleType.BOLONHA_MANAGER, creator.getUser());
+        }
+
+        CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getAcademicPeriod());
+
+        return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
     }
 
     @Override
@@ -388,6 +365,25 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
         return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
+    }
+
+    public static Degree find(final String code) {
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        Degree degreeFound = null;
+        for (Degree degree : Degree.readNotEmptyDegrees()) {
+            if (StringUtils.equalsIgnoreCase(degree.getCode(), code)) {
+                if (degreeFound != null) {
+                    throw new DomainException("error.degree.already.exists.degree.with.same.code", code, degreeFound.toString(),
+                            degree.toString());
+                }
+                degreeFound = degree;
+            }
+        }
+
+        return degreeFound;
     }
 
     public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
@@ -925,6 +921,29 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public DegreeInfo getDegreeInfoFor(ExecutionYear executionYear) {
         return executionYear.getDegreeInfo(this);
+    }
+
+    public DegreeInfo createInformation(final ExecutionInterval executionInterval, final MultiLanguageString name) {
+        if (findInformation(executionInterval) != null) {
+            throw new DomainException(
+                    "error.net.sourceforge.fenixdu.domain.cannot.create.degreeInfo.already.exists.one.for.that.degree.and.executionYear");
+        }
+        final DegreeInfo result = new DegreeInfo();
+        result.setDegree(this);
+        result.setExecutionInterval(executionInterval);
+        result.setName(name);
+        new DegreeInfoCandidacy(result);
+        new DegreeInfoFuture(result);
+        return result;
+    }
+
+    public DegreeInfo findInformation(final ExecutionInterval executionInterval) {
+        final AcademicInterval academicInterval = executionInterval.getAcademicInterval();
+        DegreeInfo result = getMostRecentDegreeInfo(academicInterval);
+        if (result != null && !result.getExecutionInterval().equals(executionInterval)) {
+            result = null;
+        }
+        return result;
     }
 
     @Deprecated
@@ -1474,6 +1493,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public String getDegreeTypeName() {
         return getDegreeType().getName();
+    }
+
+    @Override
+    public void setCode(String code) {
+        final Degree existingDegree = Degree.find(code);
+        if (existingDegree != null && existingDegree != this) {
+            throw new DomainException("error.degree.already.exists.degree.with.same.code");
+        }
+
+        super.setCode(code);
     }
 
 }

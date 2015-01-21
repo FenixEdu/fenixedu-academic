@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.EvenOddRuleVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -106,6 +108,25 @@ public class EvenOddRule extends EvenOddRule_Base {
     public String getEvenOddString() {
         return new MultiLanguageString(MultiLanguageString.pt, BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"),
                 "label." + (getEven() ? "even" : "odd"))).toString();
+    }
+
+    public static EvenOddRule create(final DegreeModule degreeModule, final CourseGroup courseGroup,
+            final ExecutionInterval begin, final ExecutionInterval end, final Boolean even,
+            final CurricularPeriod curricularPeriod) {
+
+        final Integer curricularPeriodOrder = curricularPeriod != null ? curricularPeriod.getChildOrder() : null;
+        final AcademicPeriod academicPeriod = curricularPeriod != null ? curricularPeriod.getAcademicPeriod() : null;
+
+        return new EvenOddRule(degreeModule, courseGroup, curricularPeriodOrder, academicPeriod, even,
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, begin),
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end));
+    }
+
+    public void edit(final CourseGroup courseGroup, final ExecutionInterval begin, final ExecutionInterval end, final Boolean even) {
+        checkParameters(getDegreeModuleToApplyRule(), getCurricularPeriodOrder(), getAcademicPeriod(), even);
+        edit(begin, end);
+        setContextCourseGroup(courseGroup);
+        setEven(even);
     }
 
 }

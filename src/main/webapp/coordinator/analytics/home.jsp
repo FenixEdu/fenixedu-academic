@@ -30,10 +30,9 @@
 <%@page
 	import="org.fenixedu.academic.ui.struts.action.coordinator.xviews.YearViewBean"%>
 <%@page
-	import="org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup"%>
-<%@page
 	import="org.fenixedu.academic.domain.degreeStructure.DegreeModule"%>
 <%@page import="java.util.Set"%>
+
 
 
 <html:xhtml/>

@@ -177,6 +177,15 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
+    public void edit(final CurricularPeriod curricularPeriod, final ExecutionInterval begin, final ExecutionInterval end) {
+        edit(getParentCourseGroup(), curricularPeriod,
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, begin),
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end));
+
+        getChildDegreeModule().deleteOrphanCurricularRules();
+
+    }
+
     public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionSemester begin,
             final ExecutionSemester end) {
         setParentCourseGroup(parent);
@@ -328,6 +337,24 @@ public class Context extends Context_Base implements Comparable<Context> {
             return getEndExecutionPeriod() == null || begin.isBeforeOrEquals(getEndExecutionPeriod());
         } else {
             return end == null || end.isAfterOrEquals(getBeginExecutionPeriod());
+        }
+    }
+
+    /**
+     * 
+     * Beware of {@link #contains(ExecutionSemester, ExecutionSemester)} method because it only checks for intersection, not a
+     * full
+     * contains.
+     * 
+     * This method ensures that begin and end are contained within context interval
+     * 
+     * @return
+     */
+    public boolean containsInterval(ExecutionInterval begin, ExecutionInterval end) {
+        if (begin.isAfterOrEquals(getBeginExecutionPeriod())) {
+            return (getEndExecutionPeriod() == null) || (end != null && !end.isAfter(getEndExecutionPeriod()));
+        } else {
+            return false;
         }
     }
 
@@ -486,4 +513,23 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
+    public void copyToSameGroup(final CurricularPeriod curricularPeriod) {
+        new Context(getParentCourseGroup(), getChildDegreeModule(), curricularPeriod, getBeginExecutionPeriod(),
+                getEndExecutionPeriod());
+    }
+
+    public void copyTo(final CourseGroup courseGroup) {
+        new Context(courseGroup, getChildDegreeModule(), getCurricularPeriod(), getBeginExecutionPeriod(),
+                getEndExecutionPeriod());
+
+        getChildDegreeModule().deleteOrphanCurricularRules();
+    }
+
+    public void moveTo(final CourseGroup courseGroup) {
+        checkExistingCourseGroupContexts(courseGroup, getChildDegreeModule(), getCurricularPeriod(), getBeginExecutionPeriod(),
+                getEndExecutionPeriod());
+        setParentCourseGroup(courseGroup);
+
+        getChildDegreeModule().deleteOrphanCurricularRules();
+    }
 }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -29,6 +30,7 @@ import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.Ve
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.GenericPair;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
@@ -104,5 +106,30 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
             final ExecutionYear executionYear) {
         final Registration registration = studentCurricularPlan.getRegistration();
         return registration.isPartialRegime(executionYear) ? MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME : MAXIMUM_NUMBER_OF_CREDITS;
+    }
+
+    public static MaximumNumberOfCreditsForEnrolmentPeriod create(final DegreeModule degreeModule,
+            final ExecutionInterval beginInterval, final ExecutionInterval endInterval, final Double maxCredits,
+            final Double maxCreditsForPartialRegime, final AcademicPeriod periodForPartialTimeLimit) {
+
+        final ExecutionSemester begin = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, beginInterval);
+        final ExecutionSemester end = ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, endInterval);
+
+        final MaximumNumberOfCreditsForEnrolmentPeriod result =
+                new MaximumNumberOfCreditsForEnrolmentPeriod(degreeModule, begin, end);
+
+        result.setMaximumCredits(maxCredits);
+        result.setMaximumCreditsForPartialTime(maxCreditsForPartialRegime);
+        result.setPeriodForPartialTimeLimit(periodForPartialTimeLimit);
+
+        return result;
+    }
+
+    public void edit(ExecutionInterval begin, ExecutionInterval end, Double maxCredits, Double maxCreditsForPartialRegime,
+            AcademicPeriod periodForPartialTimeLimit) {
+        edit(begin, end);
+        setMaximumCredits(maxCredits);
+        setMaximumCreditsForPartialTime(maxCreditsForPartialRegime);
+        setPeriodForPartialTimeLimit(periodForPartialTimeLimit);
     }
 }

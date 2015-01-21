@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -42,6 +43,18 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
 
         this(minimum, maximum);
         init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
+    }
+
+    public static DegreeModulesSelectionLimit create(CourseGroup degreeModule, CourseGroup courseGroup, ExecutionInterval begin,
+            ExecutionInterval end, Integer minLimit, Integer maxLimit) {
+        return new DegreeModulesSelectionLimit(degreeModule, courseGroup, ExecutionInterval.assertExecutionIntervalType(
+                ExecutionSemester.class, begin), ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end),
+                minLimit, maxLimit);
+    }
+
+    public void edit(CourseGroup courseGroup, ExecutionInterval begin, ExecutionInterval end, Integer minLimit, Integer maxLimit) {
+        edit(begin, end);
+        edit(courseGroup, minLimit, maxLimit);
     }
 
     protected void edit(CourseGroup contextCourseGroup, Integer minimumLimit, Integer maximumLimit) {

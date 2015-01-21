@@ -35,6 +35,8 @@ import java.util.TreeSet;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -999,6 +1001,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Override
     public void setCode(String code) {
         check(this, CompetenceCoursePredicates.writePredicate);
+        final CompetenceCourse existing = CompetenceCourse.find(code);
+
+        if (existing != null && existing != this) {
+            throw new DomainException("error.CompetenceCourse.found.duplicate");
+        }
+
         super.setCode(code);
     }
 
@@ -1297,6 +1305,87 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         } else {
             setCreationDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    /**
+     * Find the most recent <b>until</b> given {@link ExecutionInterval}:
+     * usefull for getting current info
+     * 
+     */
+    public CompetenceCourseInformation findInformationMostRecentUntil(final ExecutionInterval input) {
+        CompetenceCourseInformation result = null;
+
+        if (!getCompetenceCourseInformationsSet().isEmpty()) {
+            final TreeSet<CompetenceCourseInformation> sorted = getOrderedCompetenceCourseInformations();
+            final ExecutionInterval until = input == null ? ExecutionSemester.readActualExecutionSemester() : input;
+
+            result = getOrderedCompetenceCourseInformations().first();
+            for (final CompetenceCourseInformation iter : sorted) {
+                if (!iter.getExecutionInterval().isAfter(until)
+                        && iter.getExecutionInterval().isAfter(result.getExecutionInterval())) {
+                    result = iter;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static CompetenceCourse find(final String code) {
+        CompetenceCourse result = null;
+        if (StringUtils.isNotBlank(code)) {
+            for (final CompetenceCourse iter : Bennu.getInstance().getCompetenceCoursesSet()) {
+                if (StringUtils.equals(code, iter.getCode())) {
+                    if (result != null) {
+                        throw new DomainException("error.CompetenceCourse.found.duplicate", result.toString(), iter.toString());
+                    }
+                    result = iter;
+                }
+            }
+        }
+        return result;
+    }
+
+    public void checkCompatibility(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionInterval begin,
+            final CurricularPeriod curricularPeriod) {
+
+        if (isAnual(begin)) {
+
+            if ((curricularPeriod != null && !curricularPeriod.hasChildOrderValue(1))
+                    || (begin != null && ((ExecutionSemester) begin).getSemester().intValue() != 1)) {
+                throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
+            }
+        }
+
+        if (degreeCurricularPlan != null) {
+            final CompetenceCourseLevel level = getCompetenceCourseLevel(begin);
+            if (!degreeCurricularPlan.isCompatible(level)) {
+                throw new DomainException("error.CompetenceCourse.incompatible.DegreeCurricularPlan", level.getLocalizedName(),
+                        degreeCurricularPlan.getDegreeType().getLocalizedName());
+            }
+
+            if (degreeCurricularPlan.findCurricularCourse(this) != null) {
+                throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
+            }
+        }
+    }
+
+    public boolean isAnual(final ExecutionInterval input) {
+        return getAcademicPeriod(input) == AcademicPeriod.YEAR;
+    }
+
+    public CompetenceCourseLevel getCompetenceCourseLevel(final ExecutionInterval interval) {
+        final CompetenceCourseInformation information = findInformationMostRecentUntil(interval);
+        return information != null ? information.getCompetenceCourseLevel() : null;
+    }
+
+    public AcademicPeriod getAcademicPeriod(final ExecutionInterval input) {
+        final CompetenceCourseInformation information = findInformationMostRecentUntil(input);
+        return information != null ? information.getAcademicPeriod() : null;
+    }
+
+    public AcademicPeriod getAcademicPeriod() {
+        return getAcademicPeriod(null);
     }
 
 }

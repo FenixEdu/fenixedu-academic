@@ -2231,4 +2231,22 @@ public class CurricularCourse extends CurricularCourse_Base {
         super.addAssociatedExecutionCourses(associatedExecutionCourses);
     }
 
+    public String getCodeAndName(final ExecutionInterval executionInterval) {
+        final String code = getCode();
+        final String name = getNameI18N(executionInterval).getContent();
+
+        return (StringUtils.isEmpty(code) ? "" : code + " - ") + name;
+    }
+
+    @Override
+    public String getCode() {
+        if (getCompetenceCourse() != null) {
+            return getCompetenceCourse().getCode();
+        }
+        return super.getCode();
+    }
+
+    public void setWeight(final BigDecimal input) {
+        super.setWeigth(input == null ? null : input.doubleValue());
+    }
 }

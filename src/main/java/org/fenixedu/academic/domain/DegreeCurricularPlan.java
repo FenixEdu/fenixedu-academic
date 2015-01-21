@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,10 +41,11 @@ import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeC
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
+import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
@@ -226,7 +228,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
         } else if (!getExecutionDegreesSet().isEmpty() && curricularStage == CurricularStage.DRAFT) {
             throw new DomainException("degreeCurricularPlan.has.already.been.executed");
-        } else if (isBolonhaDegree() && curricularStage == CurricularStage.APPROVED) {
+        } else if (curricularStage == CurricularStage.APPROVED) {
             approve(beginExecutionYear);
         } else {
             setCurricularStage(curricularStage);
@@ -1078,9 +1080,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new CourseGroup(parentCourseGroup, name, nameEn, begin, end);
     }
 
-    public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final BranchType branchType, final ExecutionSemester begin, final ExecutionSemester end) {
-        return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
+    public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final ExecutionInterval begin,
+            final ExecutionInterval end, final MultiLanguageString name, final Boolean isOptional, final BranchType branchType) {
+        if (parentCourseGroup == null) {
+            throw new DomainException("error.CourseGroup.required.CourseGroup.parent");
+        }
+        if (parentCourseGroup.findChild(name) != null) {
+            throw new DomainException("error.CourseGroup.found.existing");
+        }
+        final CourseGroup result = new CourseGroup();
+
+        parentCourseGroup.createContext(begin, end, result, null);
+        result.setName(name.getContent(Locale.getDefault()));
+        result.setNameEn(name.getContent(Locale.ENGLISH));
+        result.setIsOptional(isOptional);
+        result.setBranchType(branchType);
+
+        return result;
     }
 
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
@@ -1094,6 +1110,30 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse, parentCourseGroup,
                 curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+    }
+
+    public CurricularCourse createCurricularCourse(final CourseGroup parentCourseGroup, final ExecutionInterval begin,
+            final ExecutionInterval end, final CompetenceCourse competenceCourse, final CurricularPeriod curricularPeriod,
+            final CurricularStage curricularStage, final BigDecimal weight) {
+
+        checkisNull(parentCourseGroup, "error.CurricularCourse.required.CourseGroup.parent");
+        checkisNull(curricularPeriod, "error.CurricularCourse.required.CurricularPeriod");
+        checkisNull(competenceCourse, "error.CurricularCourse.required.CompetenceCourse");
+        competenceCourse.checkCompatibility(this, begin, curricularPeriod);
+        final CurricularCourse result = new CurricularCourse();
+        result.setCompetenceCourse(competenceCourse);
+        result.setCurricularStage(curricularStage);
+        result.setType(CurricularCourseType.NORMAL_COURSE);
+        parentCourseGroup.createContext(begin, end, result, curricularPeriod);
+        result.setWeight(weight);
+        return result;
+    }
+
+    private void checkisNull(Object object, String string) {
+        if (object == null) {
+            throw new DomainException(string);
+        }
+
     }
 
     public CurricularCourse createOptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
@@ -1671,11 +1711,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return (Set) courseGroups;
     }
 
-    public Set<BranchCourseGroup> getAllBranches() {
+    public Set<CourseGroup> getAllBranches() {
         final Set<DegreeModule> branches = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
             @Override
             public boolean add(DegreeModule degreeModule) {
-                return degreeModule instanceof BranchCourseGroup && super.add(degreeModule);
+                return degreeModule.isBranchCourseGroup() && super.add(degreeModule);
             }
         };
         if (getRoot() != null) {
@@ -1685,13 +1725,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return (Set) branches;
     }
 
-    public Set<BranchCourseGroup> getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
-        final Set<BranchCourseGroup> branchesByType = new TreeSet<BranchCourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
-        final Set<BranchCourseGroup> branches = getAllBranches();
+    public Set<CourseGroup> getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
+        final Set<CourseGroup> branchesByType = new TreeSet<CourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
+        final Set<CourseGroup> branches = getAllBranches();
         if (branches == null) {
             return null;
         }
-        for (BranchCourseGroup branch : branches) {
+        for (CourseGroup branch : branches) {
             if (branch.getBranchType() == branchType) {
                 branchesByType.add(branch);
             }
@@ -1699,11 +1739,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return branchesByType;
     }
 
-    public Set<BranchCourseGroup> getMajorBranches() {
+    public Set<CourseGroup> getMajorBranches() {
         return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MAJOR);
     }
 
-    public Set<BranchCourseGroup> getMinorBranches() {
+    public Set<CourseGroup> getMinorBranches() {
         return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MINOR);
     }
 
@@ -1864,6 +1904,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return sortedExecutionDegrees.last().getExecutionYear().equals(executionYear.getPreviousExecutionYear());
     }
 
+    public ExecutionInterval getBegin() {
+        final List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>(getBeginContextExecutionYears());
+        Collections.sort(executionYears, ExecutionYear.COMPARATOR_BY_YEAR);
+        return executionYears.isEmpty() ? null : executionYears.iterator().next();
+    }
+
     public Set<ExecutionYear> getBeginContextExecutionYears() {
         return isBoxStructure() ? getRoot().getBeginContextExecutionYears() : Collections.EMPTY_SET;
     }
@@ -2000,4 +2046,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getTargetEquivalencePlansSet();
     }
 
+    protected boolean isCompatible(final CompetenceCourseLevel level) {
+        return level == null || !(level.equals(CompetenceCourseLevel.UNKNOWN) && isBolonhaDegree());
+    }
+
+    public CurricularCourse findCurricularCourse(final CompetenceCourse input) {
+        return input == null ? null : input.getCurricularCourse(this);
+    }
 }

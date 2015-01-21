@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -620,6 +621,10 @@ public class CompetenceCourseVersionList extends OutputRenderer {
         private HtmlComponent getCurrentOrFutureCoursePresentation(CompetenceCourse course, CompetenceCourseGroupUnit group,
                 DepartmentUnit department) {
             HtmlInlineContainer container = new HtmlInlineContainer();
+            if (!StringUtils.isEmpty(course.getCode())) {
+                container.addChild(new HtmlText(course.getCode()));
+                container.addChild(new HtmlText(" - "));
+            }
             container.addChild(new HtmlText(course.getName()));
             container.addChild(new HtmlText(" ("));
             container.addChild(new HtmlText(course.getAcronym()));
@@ -669,6 +674,10 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
         private HtmlComponent getOldCoursePresentation(CompetenceCourse course) {
             HtmlInlineContainer container = new HtmlInlineContainer();
+            if (!StringUtils.isEmpty(course.getCode())) {
+                container.addChild(new HtmlText(course.getCode()));
+                container.addChild(new HtmlText(" - "));
+            }
             container.addChild(new HtmlText(course.getName()));
             container.addChild(new HtmlText(" ("));
             container.addChild(new HtmlText(course.getAcronym()));

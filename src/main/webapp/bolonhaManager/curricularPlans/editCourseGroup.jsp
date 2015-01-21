@@ -25,6 +25,7 @@
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.BolonhaManager.BolonhaManagerApplication$CurricularPlansManagement"/>
 
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
@@ -41,22 +42,35 @@
 		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.toOrder' id='toOrder' name='toOrder' type='hidden' value='#{CurricularCourseManagement.toOrder}'/>"/>
 
-			<h:outputText value="<p>#{bolonhaBundle['name']} (pt):" escape="false"/>
-			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.name}"/>
-				<h:message for="name" styleClass="error0"/>
-			</h:panelGroup>
-			<h:outputText value="</p>" escape="false"/>
-			<h:outputText value="#{bolonhaBundle['name']} (en):" escape="false"/>
-			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.nameEn}"/>
-				<h:message for="nameEn" styleClass="error0"/>
-			</h:panelGroup>			
-			<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.name}"/>
+		<h:message for="name" styleClass="error0"/>
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{bolonhaBundle['name']} (en):</label>" escape="false"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.nameEn}"/>
+		<h:message for="nameEn" styleClass="error0"/>
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{bolonhaBundle['optional']}:</label> " escape="false"/>
+		<h:selectOneRadio id="isOptional" value="#{CourseGroupManagement.isOptional}" styleClass="nospace" required="true">
+			<f:selectItem itemLabel="#{bolonhaBundle['yes']}" itemValue="#{true}"/>
+			<f:selectItem itemLabel="#{bolonhaBundle['no']}" itemValue="#{false}"/>
+		</h:selectOneRadio>
+		<h:message for="isOptional" styleClass="error0"/>
+		<h:outputText value="</p>" escape="false"/>
 			
-			<h:outputText value="#{CourseGroupManagement.ifBranchShowType}" escape="false"/>
-			
-			
+		<h:outputText value="<p><label>#{bolonhaBundle['branchCourseGroup']}:</label> " escape="false"/>
+		<h:selectOneMenu id="branchTypeName" value="#{CourseGroupManagement.branchTypeName}" styleClass="nospace" required="true">
+			<f:selectItems value="#{CourseGroupManagement.branchTypes}"/>
+		</h:selectOneMenu>
+		<h:message for="branchTypeName" styleClass="error0"/>
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="</fieldset></div>" escape="false"/>
 		
 		<h:outputText value="<br/><p>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{bolonhaBundle['save']}"

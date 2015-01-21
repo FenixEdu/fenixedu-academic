@@ -114,8 +114,14 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
         return Collections.min(getCandidacySituationsSet(), CandidacySituation.DATE_COMPARATOR).getSituationDate();
     }
 
-    public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson) {
+    public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson,
+            Ingression ingression) {
+        StudentCandidacy candidacy = createStudentCandidacy(executionDegree, studentPerson);
+        candidacy.setIngression(ingression);
+        return candidacy;
+    }
 
+    public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson) {
         switch (executionDegree.getDegree().getDegreeType()) {
 
         case BOLONHA_DEGREE:

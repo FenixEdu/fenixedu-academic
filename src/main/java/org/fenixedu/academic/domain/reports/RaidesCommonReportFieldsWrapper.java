@@ -39,8 +39,8 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.StudentStatute;
 import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.ExtraCurriculumGroup;
@@ -212,7 +212,7 @@ public class RaidesCommonReportFieldsWrapper {
         // Ramos do currículo do aluno
         final StringBuilder majorBranches = new StringBuilder();
         final StringBuilder minorBranches = new StringBuilder();
-        for (final BranchCurriculumGroup group : lastStudentCurricularPlan.getBranchCurriculumGroups()) {
+        for (final CurriculumGroup group : lastStudentCurricularPlan.getBranchCurriculumGroups()) {
             if (group.isMajor()) {
                 majorBranches.append(group.getName().toString()).append(",");
             } else if (group.isMinor()) {

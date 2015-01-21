@@ -22,6 +22,7 @@
 package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +32,7 @@ import javax.faces.model.SelectItem;
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
@@ -57,6 +58,42 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     private String nameEn = null;
     private String courseGroupID;
     private List<SelectItem> courseGroups = null;
+    private Boolean isOptional;
+    private String branchTypeName;
+    private List<SelectItem> branchTypes = null;
+
+    public String getBranchTypeName() {
+        if (branchTypeName == null && getCourseGroupID() != null) {
+            final BranchType branchType = getCourseGroup(getCourseGroupID()).getBranchType();
+            return branchType != null ? branchType.name() : null;
+        }
+
+        return branchTypeName;
+    }
+
+    public void setBranchTypeName(String branchTypeName) {
+        this.branchTypeName = branchTypeName;
+    }
+
+    public BranchType getBranchType() {
+        return getBranchTypeName().equals(NO_SELECTION_STRING) ? null : BranchType.valueOf(getBranchTypeName());
+    }
+
+    public List<SelectItem> getBranchTypes() {
+        return (branchTypes == null) ? (branchTypes = readBranchTypes()) : branchTypes;
+    }
+
+    private List<SelectItem> readBranchTypes() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        final List<BranchType> entries = new ArrayList<BranchType>(Arrays.asList(BranchType.values()));
+        for (BranchType entry : entries) {
+            result.add(new SelectItem(entry.name(), entry.getDescription(I18N.getLocale())));
+        }
+
+        result.add(0, new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
+
+        return result;
+    }
 
     public String getParentCourseGroupID() {
         return getAndHoldStringParameter("parentCourseGroupID");
@@ -84,6 +121,14 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String getParentName() {
         return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
+    }
+
+    public Boolean getIsOptional() {
+        return (isOptional == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getIsOptional() : isOptional;
+    }
+
+    public void setIsOptional(Boolean isOptional) {
+        this.isOptional = isOptional;
     }
 
     @Override
@@ -143,7 +188,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String editCourseGroup() {
         try {
             EditCourseGroup.run(getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-                    getFinalEndExecutionPeriodID());
+                    getFinalEndExecutionPeriodID(), getIsOptional(), getBranchType());
             addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (final IllegalDataAccessException e) {
@@ -190,19 +235,6 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         } catch (Exception e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
             return "editCurricularPlanStructure";
-        }
-        return "";
-    }
-
-    private boolean isBranch() {
-        return (this.getCourseGroup() instanceof BranchCourseGroup);
-    }
-
-    public String getIfBranchShowType() {
-        if (isBranch()) {
-            return "<p class=\"mtop25\">" + BundleUtil.getString(Bundle.BOLONHA, "branchType") + ": " + "<em><strong>"
-                    + ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(I18N.getLocale()) + "</strong></em>"
-                    + "</p>";
         }
         return "";
     }

@@ -27,8 +27,8 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.interfaces.HasDegreeCurricularPlan;
 import org.fenixedu.academic.domain.interfaces.HasExecutionYear;
 
@@ -39,14 +39,14 @@ public class YearViewBean implements Serializable, HasExecutionYear, HasDegreeCu
     private Set<Enrolment> enrolments;
 
     private boolean hasMajorBranches;
-    private Set<BranchCourseGroup> majorBranches;
-    private Map<BranchCourseGroup, Inar> inarByMajorBranches;
-    private Map<BranchCourseGroup, String> averageByMajorBranches;
+    private Set<CourseGroup> majorBranches;
+    private Map<CourseGroup, Inar> inarByMajorBranches;
+    private Map<CourseGroup, String> averageByMajorBranches;
 
     private boolean hasMinorBranches;
-    private Set<BranchCourseGroup> minorBranches;
-    private Map<BranchCourseGroup, Inar> inarByMinorBranches;
-    private Map<BranchCourseGroup, String> averageByMinorBranches;
+    private Set<CourseGroup> minorBranches;
+    private Map<CourseGroup, Inar> inarByMinorBranches;
+    private Map<CourseGroup, String> averageByMinorBranches;
 
     private String resumedQUC;
 
@@ -88,27 +88,27 @@ public class YearViewBean implements Serializable, HasExecutionYear, HasDegreeCu
         this.hasMajorBranches = hasMajorBranches;
     }
 
-    public Set<BranchCourseGroup> getMajorBranches() {
+    public Set<CourseGroup> getMajorBranches() {
         return majorBranches;
     }
 
-    public void setMajorBranches(Set<BranchCourseGroup> majorBranches) {
+    public void setMajorBranches(Set<CourseGroup> majorBranches) {
         this.majorBranches = majorBranches;
     }
 
-    public Map<BranchCourseGroup, Inar> getInarByMajorBranches() {
+    public Map<CourseGroup, Inar> getInarByMajorBranches() {
         return inarByMajorBranches;
     }
 
-    public void setInarByMajorBranches(Map<BranchCourseGroup, Inar> inarByMajorBranches) {
+    public void setInarByMajorBranches(Map<CourseGroup, Inar> inarByMajorBranches) {
         this.inarByMajorBranches = inarByMajorBranches;
     }
 
-    public Map<BranchCourseGroup, String> getAverageByMajorBranches() {
+    public Map<CourseGroup, String> getAverageByMajorBranches() {
         return averageByMajorBranches;
     }
 
-    public void setAverageByMajorBranches(Map<BranchCourseGroup, String> averageByMajorBranches) {
+    public void setAverageByMajorBranches(Map<CourseGroup, String> averageByMajorBranches) {
         this.averageByMajorBranches = averageByMajorBranches;
     }
 
@@ -120,27 +120,27 @@ public class YearViewBean implements Serializable, HasExecutionYear, HasDegreeCu
         this.hasMinorBranches = hasMinorBranches;
     }
 
-    public Set<BranchCourseGroup> getMinorBranches() {
+    public Set<CourseGroup> getMinorBranches() {
         return minorBranches;
     }
 
-    public void setMinorBranches(Set<BranchCourseGroup> minorBranches) {
+    public void setMinorBranches(Set<CourseGroup> minorBranches) {
         this.minorBranches = minorBranches;
     }
 
-    public Map<BranchCourseGroup, Inar> getInarByMinorBranches() {
+    public Map<CourseGroup, Inar> getInarByMinorBranches() {
         return inarByMinorBranches;
     }
 
-    public void setInarByMinorBranches(Map<BranchCourseGroup, Inar> inarByMinorBranches) {
+    public void setInarByMinorBranches(Map<CourseGroup, Inar> inarByMinorBranches) {
         this.inarByMinorBranches = inarByMinorBranches;
     }
 
-    public Map<BranchCourseGroup, String> getAverageByMinorBranches() {
+    public Map<CourseGroup, String> getAverageByMinorBranches() {
         return averageByMinorBranches;
     }
 
-    public void setAverageByMinorBranches(Map<BranchCourseGroup, String> averageByMinorBranches) {
+    public void setAverageByMinorBranches(Map<CourseGroup, String> averageByMinorBranches) {
         this.averageByMinorBranches = averageByMinorBranches;
     }
 

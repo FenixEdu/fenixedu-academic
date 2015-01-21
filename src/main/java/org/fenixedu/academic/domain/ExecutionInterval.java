@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.accounting.PaymentCode;
@@ -35,8 +36,18 @@ import org.fenixedu.academic.domain.period.StandaloneCandidacyPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 abstract public class ExecutionInterval extends ExecutionInterval_Base {
+
+    public static final Comparator<ExecutionInterval> COMPARATOR_BY_BEGIN_DATE = new Comparator<ExecutionInterval>() {
+
+        @Override
+        public int compare(final ExecutionInterval o1, final ExecutionInterval o2) {
+            return AcademicInterval.COMPARATOR_BY_BEGIN_DATE.compare(o1.getAcademicInterval(), o2.getAcademicInterval());
+        }
+    };
 
     protected ExecutionInterval() {
         super();
@@ -193,10 +204,51 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         return null;
     }
 
+    public boolean isAfter(final ExecutionInterval input) {
+        return this.compareExecutionInterval(input) > 0;
+    }
+
+    public boolean isAfterOrEquals(final ExecutionInterval input) {
+        return this.compareExecutionInterval(input) >= 0;
+    }
+
+    public int compareExecutionInterval(final ExecutionInterval input) {
+        int result = 0;
+        if (input == null) {
+            result = -1;
+        }
+        if (result == 0) {
+            assertExecutionIntervalType(this.getClass(), input);
+            result = COMPARATOR_BY_BEGIN_DATE.compare(this, input);
+        }
+        return result;
+    }
+
+    /**
+     * Asserts that the objects being manipulated belong to the same type.
+     * E.g: Avoids comparison of ExecutionYears with ExecutionSemesters
+     */
+    public static <T extends ExecutionInterval> T assertExecutionIntervalType(final Class<T> clazz, final ExecutionInterval input) {
+        T result = null;
+        if (input != null) {
+            if (!clazz.isAssignableFrom(input.getClass())) {
+                throw new DomainException("error.ExecutionInterval.unexpected", clazz.getSimpleName(), input.getClass()
+                        .getSimpleName());
+            }
+            result = (T) input;
+        }
+        return result;
+    }
+
     @Deprecated
     public java.util.Date getBeginDate() {
         org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
         return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
+
+    public LocalDate getBeginLocalDate() {
+        final YearMonthDay result = getBeginDateYearMonthDay();
+        return result == null ? null : result.toLocalDate();
     }
 
     @Deprecated
@@ -214,6 +266,11 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
     }
 
+    public LocalDate getEndLocalDate() {
+        final YearMonthDay result = getEndDateYearMonthDay();
+        return result == null ? null : result.toLocalDate();
+    }
+
     @Deprecated
     public void setEndDate(java.util.Date date) {
         if (date == null) {
@@ -223,4 +280,5 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         }
     }
 
+    public abstract <E extends ExecutionInterval> E convert(final Class<E> concreteExecution);
 }

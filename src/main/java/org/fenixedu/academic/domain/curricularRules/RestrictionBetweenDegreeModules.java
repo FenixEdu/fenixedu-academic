@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -52,6 +53,21 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
 
         this(precedenceDegreeModule, minimumCredits);
         init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
+    }
+
+    public static RestrictionBetweenDegreeModules create(final DegreeModule degreeModule, final CourseGroup courseGroup,
+            final ExecutionInterval begin, final ExecutionInterval end, final DegreeModule precedenceDegreeModule,
+            final Double minimumCredits) {
+
+        return new RestrictionBetweenDegreeModules(degreeModule, precedenceDegreeModule, minimumCredits, courseGroup,
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, begin),
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end));
+    }
+
+    public void edit(final CourseGroup courseGroup, final ExecutionInterval begin, final ExecutionInterval end,
+            final DegreeModule precedenceDegreeModule, final Double minCredits) {
+        edit(begin, end);
+        edit(precedenceDegreeModule, minCredits, courseGroup);
     }
 
     protected void edit(final DegreeModule precedenceDegreeModule, final Double minimumCredits,

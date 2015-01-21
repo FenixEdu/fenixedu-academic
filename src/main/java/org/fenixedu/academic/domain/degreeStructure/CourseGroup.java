@@ -27,14 +27,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
@@ -46,6 +51,9 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.CourseGroupPredicates;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Strings;
 
@@ -63,6 +71,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public CourseGroup() {
         super();
+        setIsOptional(false);
     }
 
     protected CourseGroup(final String name, final String nameEn) {
@@ -77,6 +86,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final ExecutionSemester begin, final ExecutionSemester end) {
+        this();
         init(parentCourseGroup, name, nameEn, begin, end);
     }
 
@@ -95,7 +105,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
-            ExecutionSemester endExecutionPeriod) {
+            ExecutionSemester endExecutionPeriod, Boolean isOptional, BranchType branchType) {
         // override, assure that root's name equals degree curricular plan name
         if (this.isRoot()) {
             setName(getParentDegreeCurricularPlan().getName());
@@ -110,6 +120,9 @@ public class CourseGroup extends CourseGroup_Base {
         if (!this.isRoot() && context != null) {
             context.edit(beginExecutionPeriod, endExecutionPeriod);
         }
+
+        setIsOptional(isOptional);
+        setBranchType(branchType);
     }
 
     @Override
@@ -842,4 +855,113 @@ public class CourseGroup extends CourseGroup_Base {
         }
     }
 
+    public Context findChild(final MultiLanguageString name) {
+        Context result = null;
+
+        final Locale locale = Locale.getDefault();
+        if (name != null && name.hasContent(locale)) {
+
+            for (final Context context : getChildContextsSet()) {
+
+                final DegreeModule degreeModule = context.getChildDegreeModule();
+                if (mlsEquals(degreeModule.getNameI18N(), name, locale)) {
+                    if (result != null) {
+                        throw new DomainException("error.CourseGroup.duplicate.DegreeModule.child");
+                    }
+                    result = context;
+                }
+            }
+
+        }
+
+        return result;
+    }
+
+    public Context createContext(final ExecutionInterval begin, final ExecutionInterval end, final DegreeModule degreeModule,
+            final CurricularPeriod curricularPeriod) {
+
+        final Context context =
+                new Context(this, degreeModule, curricularPeriod, ExecutionInterval.assertExecutionIntervalType(
+                        ExecutionSemester.class, begin), ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class,
+                        end));
+
+        /**
+         * Degree module requires a context first to answer about
+         */
+        if (degreeModule != null) {
+            for (final Context parentContext : degreeModule.getParentContextsSet()) {
+                if (parentContext.getParentCourseGroup().getParentDegreeCurricularPlan() != getParentDegreeCurricularPlan()) {
+                    throw new DomainException("error.CourseGroup.mismatch.ParentDegreeCurricularPlan");
+                }
+            }
+        }
+
+        return context;
+    }
+
+    private boolean mlsEquals(final MultiLanguageString o1, final MultiLanguageString o2, final Locale locale) {
+        boolean result = o1 != null && o2 != null;
+
+        if (result) {
+            result = StringUtils.equals(normalize(o1.getContent(locale)), normalize(o2.getContent(locale)));
+        }
+
+        return result;
+    }
+
+    private String normalize(String string) {
+        String result = null;
+
+        if (StringUtils.isNotBlank(string)) {
+            String spacesReplacedString = removeDuplicateSpaces(string.trim());
+            result = StringNormalizer.normalize(spacesReplacedString).toLowerCase();
+        }
+
+        return result;
+    }
+
+    private String removeDuplicateSpaces(String string) {
+        Pattern pattern = Pattern.compile("\\s+");
+        Matcher matcher = pattern.matcher(string);
+        return matcher.replaceAll(" ");
+    }
+
+    @Override
+    public boolean isOptionalCourseGroup() {
+        return super.getIsOptional() != null && super.getIsOptional();
+    }
+
+    @Override
+    public boolean isBranchCourseGroup() {
+        return super.getBranchType() != null;
+    }
+
+    public boolean isMajor() {
+        return super.getBranchType() == BranchType.MAJOR;
+    }
+
+    public boolean isMinor() {
+        return super.getBranchType() == BranchType.MINOR;
+    }
+
+    @Override
+    public void setBranchType(BranchType branchType) {
+        super.setBranchType(branchType);
+
+        checkBranchHierarchyRules();
+    }
+
+    private void checkBranchHierarchyRules() {
+
+        if (!isBranchCourseGroup()) {
+            return;
+        }
+
+        for (final CourseGroup parentGroup : getParentCourseGroups()) {
+            if (parentGroup.hasAnyParentBranchCourseGroup()) {
+                throw new DomainException("error.degreeStructure.BranchCourseGroup.cant.have.branch.parent");
+            }
+        }
+
+    }
 }

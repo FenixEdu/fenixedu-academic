@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
+import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
@@ -240,5 +241,24 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     public boolean isVisible() {
         return true;
+    }
+
+    @Override
+    public boolean isBranchCurriculumGroup() {
+        return false;
+    }
+
+    @Override
+    public BranchType getBranchType() {
+        return null;
+    }
+
+    @Override
+    public boolean isMajor() {
+        return false;
+    }
+
+    public boolean isMinor() {
+        return false;
     }
 }
