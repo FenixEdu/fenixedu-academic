@@ -29,7 +29,7 @@
 <p><html:link page="/visualizePersonalInfo.do"><bean:message bundle="APPLICATION_RESOURCES" key="label.return"/></html:link></p>
  <h2><bean:message bundle="APPLICATION_RESOURCES" key="label.contact.validation.title"/></h2>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+<html:messages id="message" message="true" bundle="ACADEMIC_ADMIN_OFFICE">
     <p><span class="infoop2"><!-- Error messages go here --><bean:write name="message" /></span>
     </p>
 </html:messages>
@@ -39,16 +39,16 @@
 <logic:present name="valid">
 	<logic:equal name="valid" value="true">
 		<bean:define id="profileLink">
-			<html:link page="/visualizePersonalInfo.do"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.success.profile"/></html:link>
+			<html:link page="/visualizePersonalInfo.do"><bean:message bundle="ACADEMIC_ADMIN_OFFICE" key="label.contact.validation.success.profile"/></html:link>
 		</bean:define>
-		<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.success" arg0="<%=profileLink%>"/></span>
+		<span class="success0"><bean:message bundle="ACADEMIC_ADMIN_OFFICE" key="label.contact.validation.success" arg0="<%=profileLink%>"/></span>
 	</logic:equal>
 	<logic:equal name="valid" value="false">
 		<logic:notEqual name="tries" value="3">
 			<bean:define id="availableTries">
 				<bean:write name="tries"/>
 			</bean:define>
-			<p><span class="error0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.invalid" arg0="<%=availableTries%>"/></span></p>
+			<p><span class="error0"><bean:message bundle="ACADEMIC_ADMIN_OFFICE" key="label.contact.validation.invalid" arg0="<%=availableTries%>"/></span></p>
 		</logic:notEqual>
 	</logic:equal>
 </logic:present>
@@ -57,18 +57,18 @@
 		<form action="<%= request.getContextPath() + "/person/partyContacts.do"%>" method="post">
 			<input type="hidden" name="method" value="inputValidationCode"/>
 			<input type="hidden" name="partyContactValidation" value="<%= request.getAttribute("partyContactValidation") %>"/>
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.token"/><input name="validationCode" type="text"/>
+			<bean:message bundle="ACADEMIC_ADMIN_OFFICE" key="label.contact.validation.token"/><input name="validationCode" type="text"/>
 			<input type="submit" value="Validar">
 		</form>
 		<p class="mbottom2">
 		<logic:equal name="canValidateRequests" value="true">
 			<bean:define id="tokenRequestURL">
 			<html:link page="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="partyContactValidation">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token.submit"/>
+				<bean:message bundle="ACADEMIC_ADMIN_OFFICE" key="label.contact.validation.request.token.submit"/>
 			</html:link>
 			</bean:define>
 			<p>
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token" arg0="<%= tokenRequestURL %>"/>
+			<bean:message bundle="ACADEMIC_ADMIN_OFFICE" key="label.contact.validation.request.token" arg0="<%= tokenRequestURL %>"/>
 			</p>
 		</logic:equal>
 		</p>
@@ -79,12 +79,12 @@
 <logic:present name="isPhysicalAddress">
 	<bean:define id="changeAddressIRSFormURL">
 		<a href="<%= request.getContextPath() %>/templates/Decl_CIRS_ART99.pdf">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.ADIST.form"/>
+				<bean:message bundle="ACADEMIC_ADMIN_OFFICE" key="label.contact.validation.message.ADIST.form"/>
 		</a>
 	</bean:define>
 	<p>
 		<span class="infoop2">
-			<bean:message key="label.contact.validation.message.ADIST" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= changeAddressIRSFormURL %>" />
+			<bean:message key="label.contact.validation.message.ADIST" bundle="ACADEMIC_ADMIN_OFFICE" arg0="<%= changeAddressIRSFormURL %>" />
 		</span>
     </p>
 	<div class="mtop2">

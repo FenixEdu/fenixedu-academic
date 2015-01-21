@@ -20,7 +20,7 @@
 -->
 <schema name="contacts.PartyContact.manage"
 	type="org.fenixedu.academic.dto.contacts.PartyContactBean"
-	bundle="ACADEMIC_OFFICE_RESOURCES">
+	bundle="ACADEMIC_ADMIN_OFFICE">
 	<slot name="party" hidden="true" />
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -38,10 +38,10 @@
 		<property name="bodyText" value="label.contact.visible.to.students.description" />
 	</slot>
 	<slot name="visibleToStaff" layout="option-select-postback"
-		key="label.contact.visible.to.teachers" default="false">
+		key="label.contact.visible.to.staff" default="false">
 		<property name="destination" value="postback-set-elements" />
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
-		<property name="bodyText" value="label.contact.visible.to.teachers.description" />
+		<property name="bodyText" value="label.contact.visible.to.staff.description" />
 	</slot>
 	<slot name="visibleToManagement" key="label.contact.visible.to.management" default="true">
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
@@ -144,7 +144,7 @@
 </schema>
 
 <schema name="contacts.PartyContact.view"
-	type="org.fenixedu.academic.domain.contacts.PartyContact" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="org.fenixedu.academic.domain.contacts.PartyContact" bundle="ACADEMIC_ADMIN_OFFICE">
 	<slot name="defaultContact" key="label.partyContacts.defaultContact">
 		<property name="trueLabel" value="label.partyContacts.view.trueLabel" />
 		<property name="falseLabel" value="label.partyContacts.view.falseLabel" />
