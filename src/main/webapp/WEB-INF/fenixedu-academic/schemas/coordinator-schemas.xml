@@ -136,7 +136,7 @@
     <slot name="currentDiscussedDate" key="label.coordinator.thesis.discussed" layout="null-as-label">
         <property name="label" value="-"/>
         <property name="subLayout" value="dataDependent"/>
-    </slot>    
+    </slot>
 </schema>
 
 <schema name="thesis.jury.proposal.discussion.edit" type="org.fenixedu.academic.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
@@ -151,7 +151,7 @@
     <slot name="finalTitle" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
         <property name="size" value="60"/>
     </slot>
-<!-- 
+<!--
     <slot name="finalSubtitle">
         <property name="size" value="60"/>
     </slot>
@@ -255,7 +255,6 @@
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state"/>
-    <slot name="proposalYear" key="label.proposalYear" />
 </schema>
 
 <schema name="coordinator.commissionTeam.manage.contacts" type="org.fenixedu.academic.domain.ScientificCommission">
@@ -263,11 +262,11 @@
         <property name="format" value="${name} (${user.username})"/>
     </slot>
     <slot name="contact" key="label.scientificCommission.contact"/>
-    <slot name="person.email" key="email" read-only="true"/> 
-    <slot name="hasCoordinator" key="label.coordinator" read-only="true" bundle="APPLICATION_RESOURCES" /> 
+    <slot name="person.email" key="email" read-only="true"/>
+    <slot name="hasCoordinator" key="label.coordinator" read-only="true" bundle="APPLICATION_RESOURCES" />
 	<slot name="coordinator" key="label.responsible.coordinator" layout="null-as-label" read-only="true" bundle="APPLICATION_RESOURCES" >
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="coordinator.responsible"/> 
+		<property name="subSchema" value="coordinator.responsible"/>
 	</slot>
 	<setter signature="changeContactStatus(contact)"/>
 </schema>
