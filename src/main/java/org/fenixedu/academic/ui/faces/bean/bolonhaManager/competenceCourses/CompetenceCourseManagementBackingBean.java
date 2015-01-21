@@ -89,6 +89,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private CompetenceCourse competenceCourse = null;
 
     // Competence-Course-Information
+    private String code;
     private String name;
     private String nameEn;
     private String acronym;
@@ -325,6 +326,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        if (code == null && getCompetenceCourse() != null) {
+            code = getCompetenceCourse().getCode();
+        }
+
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getNameEn() {
@@ -795,7 +808,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
                 final CompetenceCourse competenceCourse =
                         CreateCompetenceCourse.run(getName(), getNameEn(), null, getBasic(), RegimeType.SEMESTRIAL,
                                 getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(), getCompetenceCourseGroupUnitID(),
-                                getExecutionSemester());
+                                getExecutionSemester(), getCode());
                 setCompetenceCourse(competenceCourse);
                 return "setCompetenceCourseLoad";
             }
@@ -837,7 +850,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             if (isCompetenceCourseLevelValid()) {
                 EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getName(), getNameEn(), getBasic(),
-                        getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(), CurricularStage.valueOf(getStage()));
+                        getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(), CurricularStage.valueOf(getStage()),
+                        getCode());
                 return "editCompetenceCourseMainPage";
 
             } else {

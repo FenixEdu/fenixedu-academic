@@ -24,6 +24,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
+
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication$ScientificCompetenceCoursesManagement" />
 ${portal.toolkit()}
 <f:view>
@@ -148,7 +149,7 @@ ${portal.toolkit()}
 										styleClass="showinfo1 smallmargin mtop05" style="width: 100%;" rowClasses="color2" columnClasses=",aright nowrap" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 										
 										<h:column>
-											<h:outputText value="#{competenceCourse.name} "/>
+											<h:outputText value="#{competenceCourse.code} - " rendered="#{!empty competenceCourse.code}"/><h:outputText value="#{competenceCourse.name} "/>
 											<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym}) "/>
 											<h:outputText value="<span style='color: #aaa;'>" escape="false"/>
 											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'DRAFT'}" value="<em style='color: #bb5;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>

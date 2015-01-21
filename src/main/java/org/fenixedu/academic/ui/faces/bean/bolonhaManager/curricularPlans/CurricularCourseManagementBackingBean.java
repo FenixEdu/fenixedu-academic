@@ -751,9 +751,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                         .getCompetenceCourseGroupUnits()) {
                     for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
                         if (competenceCourse.getCurricularStage() != CurricularStage.DRAFT) {
+                            final String code =
+                                    !StringUtils.isEmpty(competenceCourse.getCode()) ? " [" + competenceCourse.getCode() + "]" : "";
                             result.add(new SelectItem(competenceCourse.getExternalId(), competenceCourse.getName() + " ("
                                     + BundleUtil.getString(Bundle.ENUMERATION, competenceCourse.getCurricularStage().getName())
-                                    + ")"));
+                                    + ")" + code));
                         }
                     }
                 }
