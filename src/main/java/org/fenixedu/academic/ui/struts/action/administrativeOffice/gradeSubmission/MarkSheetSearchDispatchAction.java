@@ -21,53 +21,69 @@ package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmiss
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.MarkSheet;
 import org.fenixedu.academic.domain.MarkSheetState;
 import org.fenixedu.academic.domain.MarkSheetType;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
+import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.administrativeOffice.gradeSubmission.SearchMarkSheets;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.service.services.manager.RemoveGradesFromConfirmedMarkSheet;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminMarksheetApp;
+import org.fenixedu.academic.util.report.ReportsUtils;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
-import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @StrutsFunctionality(app = AcademicAdminMarksheetApp.class, path = "search", titleKey = "link.markSheet.management")
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
         input = "/gradeSubmission/markSheetManagement.jsp")
-@Forwards({
-        @Forward(name = "searchMarkSheet", path = "/academicAdministration/gradeSubmission/markSheetManagement.jsp"),
-        @Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/viewMarkSheet.jsp"),
-        @Forward(name = "removeMarkSheet", path = "/academicAdministration/gradeSubmission/removeMarkSheet.jsp"),
-        @Forward(name = "searchMarkSheetFilled",
-                path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "confirmMarkSheet", path = "/academicAdministration/gradeSubmission/confirmMarkSheet.jsp"),
-        @Forward(name = "choosePrinter", path = "/academicAdministration/printMarkSheet.do?method=choosePrinterMarkSheet"),
-        @Forward(name = "listMarkSheet", path = "/manager/markSheet/viewMarkSheet.jsp"),
-        @Forward(name = "searchMarkSheet", path = "/manager/markSheet/markSheetManagement.jsp") })
+@Forward(name = "searchMarkSheet", path = "/academicAdministration/gradeSubmission/markSheetManagement.jsp")
+@Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/viewMarkSheet.jsp")
+@Forward(name = "removeMarkSheet", path = "/academicAdministration/gradeSubmission/removeMarkSheet.jsp")
+@Forward(name = "searchMarkSheetFilled",
+        path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled")
+@Forward(name = "confirmMarkSheet", path = "/academicAdministration/gradeSubmission/confirmMarkSheet.jsp")
+@Forward(name = "listMarkSheet", path = "/manager/markSheet/viewMarkSheet.jsp")
+@Forward(name = "choosePrinterMarkSheetsWeb", path = "/academicAdministration/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp")
 public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     @EntryPoint
@@ -177,14 +193,6 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         return mapping.findForward("viewMarkSheet");
     }
 
-    public ActionForward choosePrinter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        DynaActionForm form = (DynaActionForm) actionForm;
-        String markSheetID = (String) form.get("msID");
-        request.setAttribute("markSheet", markSheetID.toString());
-        return mapping.findForward("choosePrinter");
-    }
-
     public ActionForward searchConfirmedMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         MarkSheetManagementSearchBean searchBean = getRenderedObject();
@@ -261,4 +269,173 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         return res;
     }
 
+    public ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response,
+                ExecutionSemester.readActualExecutionSemester(), null);
+    }
+
+    public ActionForward choosePrinterMarkSheetsWebPostBack(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        final DynaActionForm form = (DynaActionForm) actionForm;
+
+        final ExecutionSemester executionSemester = getExecutionSemester(form);
+        final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(form);
+
+        return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response, executionSemester, degreeCurricularPlan);
+    }
+
+    private ExecutionSemester getExecutionSemester(DynaActionForm form) {
+        return getDomainObject(form, "ecID");
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlan(DynaActionForm form) {
+        return getDomainObject(form, "dcpID");
+    }
+
+    private ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response, ExecutionSemester executionSemester, DegreeCurricularPlan degreeCurricularPlan) {
+
+        DynaActionForm form = (DynaActionForm) actionForm;
+
+        final Collection<MarkSheet> webMarkSheetsNotPrinted =
+                executionSemester.getWebMarkSheetsNotPrinted(AccessControl.getPerson(), degreeCurricularPlan);
+
+        request.setAttribute("executionPeriod", executionSemester);
+        request.setAttribute("curricularCourseMap", buildMapWithCurricularCoursesAndNumberOfMarkSheets(webMarkSheetsNotPrinted));
+        request.setAttribute("totalMarkSheetsCount", webMarkSheetsNotPrinted.size());
+
+        buildPeriods(request);
+        buildDegreeCurricularPlans(request, executionSemester);
+
+        form.set("ecID", executionSemester.getExternalId().toString());
+        if (degreeCurricularPlan != null) {
+            form.set("dcpID", degreeCurricularPlan.getExternalId().toString());
+        }
+
+        return mapping.findForward("choosePrinterMarkSheetsWeb");
+    }
+
+    private void buildDegreeCurricularPlans(HttpServletRequest request, ExecutionSemester semester) {
+
+        final List<DegreeCurricularPlan> dcps =
+                new ArrayList<DegreeCurricularPlan>(semester.getExecutionYear().getDegreeCurricularPlans());
+        Collections.sort(dcps, DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
+
+        final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+        Set<Degree> degreesForMarksheets =
+                AcademicAccessRule
+                        .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, Authenticate.getUser()).collect(
+                                Collectors.toSet());
+
+        for (final DegreeCurricularPlan dcp : dcps) {
+            if (degreesForMarksheets.contains(dcp.getDegree())) {
+                result.add(new LabelValueBean(dcp.getPresentationName(semester.getExecutionYear()), dcp.getExternalId()
+                        .toString()));
+            }
+        }
+
+        request.setAttribute("degreeCurricularPlans", result);
+    }
+
+    private void buildPeriods(HttpServletRequest request) {
+        final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
+        Collections.sort(notClosedExecutionPeriods, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+
+        final List<LabelValueBean> periods = new ArrayList<LabelValueBean>();
+        for (final ExecutionSemester period : notClosedExecutionPeriods) {
+            periods.add(new LabelValueBean(period.getExecutionYear().getYear() + " - " + period.getName(), period.getExternalId()
+                    .toString()));
+        }
+
+        request.setAttribute("periods", periods);
+    }
+
+    private Map<CurricularCourse, Integer> buildMapWithCurricularCoursesAndNumberOfMarkSheets(
+            Collection<MarkSheet> webMarkSheetsNotPrinted) {
+        final Map<CurricularCourse, Integer> result = new TreeMap<CurricularCourse, Integer>(new Comparator<CurricularCourse>() {
+            @Override
+            public int compare(CurricularCourse o1, CurricularCourse o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        for (final MarkSheet markSheet : webMarkSheetsNotPrinted) {
+            Integer markSheetNumber = result.get(markSheet.getCurricularCourse());
+            result.put(markSheet.getCurricularCourse(),
+                    (markSheetNumber == null) ? Integer.valueOf(1) : Integer.valueOf(markSheetNumber.intValue() + 1));
+        }
+        return result;
+    }
+
+    public ActionForward printMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        if (form.get("msID") != null) {
+            form.set("markSheet", form.get("msID"));
+        }
+        if (form.get("markSheet") == null || form.getString("markSheet").length() == 0) {
+            form.set("markSheet", request.getParameter("markSheet"));
+        }
+        String markSheet = form.getString("markSheet");
+        if (markSheet.equals("all")) {
+            return printWebMarkSheets(mapping, actionForm, request, response);
+        } else {
+            return printMarkSheet(mapping, actionForm, request, response);
+        }
+    }
+
+    private ActionForward printMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        String markSheetString = form.getString("markSheet");
+        MarkSheet markSheet = getDomainObject(form, "markSheet");
+        ActionMessages actionMessages = new ActionMessages();
+
+        try (ServletOutputStream writer = response.getOutputStream()) {
+            markAsPrinted(markSheet);
+            MarkSheetDocument document = new MarkSheetDocument(markSheet);
+            byte[] data = ReportsUtils.generateReport(document).getData();
+            response.setContentLength(data.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+            writer.write(data);
+            return null;
+        } catch (Exception e) {
+            request.setAttribute("markSheet", markSheetString);
+            addMessage(request, actionMessages, e.getMessage());
+            return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response);
+        }
+    }
+
+    private ActionForward printWebMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+
+        final DynaActionForm form = (DynaActionForm) actionForm;
+
+        final ActionMessages actionMessages = new ActionMessages();
+
+        try (ServletOutputStream writer = response.getOutputStream()) {
+            Collection<MarkSheet> markSheets =
+                    getExecutionSemester(form).getWebMarkSheetsNotPrinted(AccessControl.getPerson(),
+                            getDegreeCurricularPlan(form));
+            List<MarkSheetDocument> reports = markSheets.stream().map(MarkSheetDocument::new).collect(Collectors.toList());
+            byte[] data = ReportsUtils.generateReport(reports.toArray(new MarkSheetDocument[0])).getData();
+            response.setContentLength(data.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition",
+                    String.format("attachment; filename=%s.pdf", "marksheets-" + new DateTime().toString()));
+            writer.write(data);
+            return null;
+        } catch (Exception e) {
+            addMessage(request, actionMessages, e.getMessage());
+            return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response);
+        }
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void markAsPrinted(MarkSheet markSheet) {
+        if (!markSheet.getPrinted()) {
+            markSheet.setPrinted(Boolean.TRUE);
+        }
+    }
 }

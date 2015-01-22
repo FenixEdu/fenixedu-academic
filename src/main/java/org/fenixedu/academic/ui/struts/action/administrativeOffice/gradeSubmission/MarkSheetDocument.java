@@ -35,6 +35,7 @@ public class MarkSheetDocument extends FenixReport {
     public MarkSheetDocument(MarkSheet markSheet) {
         super();
         this.markSheet = markSheet;
+        fillReport();
     }
 
     @Override

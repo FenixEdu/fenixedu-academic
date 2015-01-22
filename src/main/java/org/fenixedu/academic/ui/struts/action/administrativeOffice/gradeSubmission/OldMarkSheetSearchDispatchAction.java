@@ -27,7 +27,6 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminMarksheetApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
-import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
@@ -35,14 +34,12 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 @StrutsFunctionality(app = AcademicAdminMarksheetApp.class, path = "old-marksheets", titleKey = "link.old.markSheet.management")
 @Mapping(path = "/oldMarkSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
         input = "/gradeSubmission/oldMarkSheets/markSheetManagement.jsp")
-@Forwards({
-        @Forward(name = "searchMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/markSheetManagement.jsp"),
-        @Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp"),
-        @Forward(name = "removeMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/removeMarkSheet.jsp"),
-        @Forward(name = "searchMarkSheetFilled",
-                path = "/academicAdministration/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "confirmMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/confirmMarkSheet.jsp"),
-        @Forward(name = "choosePrinter", path = "/academicAdministration/printMarkSheet.do?method=choosePrinterMarkSheet") })
+@Forward(name = "searchMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/markSheetManagement.jsp")
+@Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp")
+@Forward(name = "removeMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/removeMarkSheet.jsp")
+@Forward(name = "searchMarkSheetFilled",
+        path = "/academicAdministration/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled")
+@Forward(name = "confirmMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/confirmMarkSheet.jsp")
 public class OldMarkSheetSearchDispatchAction extends MarkSheetSearchDispatchAction {
 
     @Override
