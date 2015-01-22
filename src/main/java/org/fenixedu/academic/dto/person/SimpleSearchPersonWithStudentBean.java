@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.service.services.person.PersonSearcher;
 
 import com.google.common.base.Strings;
@@ -95,17 +96,22 @@ public class SimpleSearchPersonWithStudentBean implements Serializable {
     }
 
     public Collection<Person> search() {
+
+        if (studentNumber != null) {
+            Student student = Student.readStudentByNumber(studentNumber);
+            if (student != null) {
+                return Stream.of(student.getPerson()).collect(Collectors.toSet());
+            }
+        }
+
         Stream<Person> stream =
                 new PersonSearcher().name(name).username(username).documentIdNumber(documentIdNumber)
                         .documentIdType(idDocumentType).search();
-        if (studentNumber != null) {
-            stream =
-                    stream.filter(p -> p.getStudent() != null && p.getStudent().getStudentNumber() != null
-                            && p.getStudent().getStudentNumber().getNumber().equals(studentNumber));
-        }
+
         if (!Strings.isNullOrEmpty(paymentCode)) {
             stream = stream.filter(p -> p.getPaymentCodeBy(paymentCode) != null);
         }
+
         return stream.collect(Collectors.toSet());
     }
 }

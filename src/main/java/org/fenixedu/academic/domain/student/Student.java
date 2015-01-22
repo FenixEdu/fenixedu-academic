@@ -133,12 +133,8 @@ public class Student extends Student_Base {
     }
 
     public static Student readStudentByNumber(final Integer number) {
-        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
-            if (studentNumber.getNumber().equals(number)) {
-                return studentNumber.getStudent();
-            }
-        }
-        return null;
+        return Bennu.getInstance().getStudentNumbersSet().stream().filter(sn -> sn.getNumber().equals(number))
+                .map(StudentNumber::getStudent).findAny().orElse(null);
     }
 
     public String getName() {
