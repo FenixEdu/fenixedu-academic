@@ -118,20 +118,23 @@ $(document).ready(function() {
 	});
 	
 	$(".delete-professorship").click(function(el) {
-		var target = $(el.target);
-		var professorship = target.closest('tr');
-		var id = professorship.data('professorship');
-		var url = "${baseUrl}" + id;
-		$.ajax({
-			url : url,
-			type: "DELETE",
-			success : function(res) {
-					professorship.remove();
-			},
-			error : function(res) {
-				alert(res.responseText);
-			}
-		});
+		var result = confirm('<spring:message code="label.are.you.sure"/>');
+		if (result) {
+			var target = $(el.target);
+			var professorship = target.closest('tr');
+			var id = professorship.data('professorship');
+			var url = "${baseUrl}" + id;
+			$.ajax({
+				url : url,
+				type: "DELETE",
+				success : function(res) {
+						professorship.remove();
+				},
+				error : function(res) {
+					alert(res.responseText);
+				}
+			});	
+		}
 	});
 	
 });

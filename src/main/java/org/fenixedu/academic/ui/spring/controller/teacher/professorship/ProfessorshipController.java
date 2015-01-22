@@ -108,6 +108,8 @@ public class ProfessorshipController {
             bean.setDegree(degrees.get(0));
         }
 
+        bean.setCourse(null);
+
         model.addAttribute("bean", bean);
         model.addAttribute("authorization", authorization);
         model.addAttribute("degrees", degrees);
@@ -129,7 +131,8 @@ public class ProfessorshipController {
             @ModelAttribute CreateProfessorshipBean bean, RedirectAttributes attrs) {
         try {
             professorshipService.create(bean);
-            attrs.addAttribute("authorization", authorization.getExternalId());
+            attrs.addAttribute("period", bean.getPeriod().getExternalId());
+            attrs.addAttribute("degree", bean.getDegree().getExternalId());
             return "redirect:/teacher/professorships/" + authorization.getExternalId();
         } catch (DomainException e) {
             model.addAttribute("error", e.getLocalizedMessage());

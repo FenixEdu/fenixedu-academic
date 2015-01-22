@@ -38,7 +38,11 @@
 
 <script type='text/javascript'>
 	$(document).ready(function() {
+		
+// 		$('body').animate({scrollTop: $('#chooseCourses').offset().top});
+		
 		$("#selectPeriod,#selectDegree").change(function() {
+			$("#selectCourse").remove();
 			$("form#search").submit();
 		});
 		
@@ -69,25 +73,24 @@
 		});
 		
 		$(".delete-professorship").click(function(el) {
-			var target = $(el.target);
-			var professorship = target.closest('tr');
-			var id = professorship.data('professorship');
-			var url = "${baseUrl}/" + id;
-			$.ajax({
-				url : url,
-				type: "DELETE",
-				success : function(res) {
-						professorship.remove();
-				},
-				error : function(res) {
-					alert(res.responseText);
-//	 				var alertContent = $("#delete-professorship-error").html();
-//	 				alertContent = alertContent.trim().replace("$msg", res.responseText);
-//	 				$(alertContent).insertBefore(professorship);
-				}
-			});
+			var result = confirm('<spring:message code="label.are.you.sure"/>');
+			if (result) {
+				var target = $(el.target);
+				var professorship = target.closest('tr');
+				var id = professorship.data('professorship');
+				var url = "${baseUrl}/" + id;
+				$.ajax({
+					url : url,
+					type: "DELETE",
+					success : function(res) {
+							professorship.remove();
+					},
+					error : function(res) {
+						console.log(res.responseText);
+					}
+				});	
+			}
 		});
-		
 	});
 	
 	
@@ -173,7 +176,7 @@
 		</div>
 	</div>
 	
-	<h3><spring:message code="teacher.professorship.choose.course"/></h3>
+	<h3 id="chooseCourses"><spring:message code="teacher.professorship.choose.course"/></h3>
 	<hr />
 	
 	<c:if test="${not empty error}">
@@ -183,7 +186,7 @@
 		<hr />
 	</c:if>
 	
-	<form:form id="search" role="form" modelAttribute="bean" method="GET" class="form-horizontal">
+	<form:form id="search" role="form" modelAttribute="bean" action="${baseUrl}/${authorization.externalId}" method="GET" class="form-horizontal">
 		<div class="form-group">
 			<label for="selectPeriod" class="col-sm-1 control-label"><spring:message code="label.period" /></label>
 			<div class="col-sm-11">
@@ -212,7 +215,6 @@
 			<button type="button" class="btn btn-primary" id="add-course"><spring:message code="teacher.professorship.create"/></button>
 		</div>
 		
-		<input type="hidden" name="period" value="${authorization.executionSemester.externalId}"/>
 		<input type="hidden" name="teacher" value="${authorization.teacher.person.externalId}"/>
 	</form:form>
 </section>
