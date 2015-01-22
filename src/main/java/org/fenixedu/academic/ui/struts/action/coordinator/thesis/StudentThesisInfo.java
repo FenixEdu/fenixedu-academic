@@ -73,7 +73,7 @@ public class StudentThesisInfo implements Serializable {
     }
 
     public MultiLanguageString getTitle() {
-        return thesis.getTitle();
+        return thesis != null ? thesis.getTitle() : new MultiLanguageString();
     }
 
     public ThesisPresentationState getState() {
