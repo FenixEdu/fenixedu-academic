@@ -170,7 +170,7 @@
 	request.setAttribute("creditsDescription", registration.getDegreeType().getCreditsDescription());
 	
 	AdministrativeOffice office = registration.getDegree().getAdministrativeOffice();
-	final Person administrativeOfficeCoordinator = office.getUnit().getActiveUnitCoordinator();
+	final Person administrativeOfficeCoordinator = office.getCoordinator().getPerson();
 	request.setAttribute("administrativeOfficeCoordinator", administrativeOfficeCoordinator);
 	request.setAttribute("administrativeOfficeCoordinatorGender", administrativeOfficeCoordinator.isMale() ? "" : "a");
 	request.setAttribute("administrativeOfficeName", office.getUnit().getName());
