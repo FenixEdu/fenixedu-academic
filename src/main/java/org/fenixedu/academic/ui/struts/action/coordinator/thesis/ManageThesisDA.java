@@ -258,22 +258,19 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses(bean.getExecutionYear())) {
             for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(bean.getExecutionYear())) {
-                if (enrolment.getThesis() != null) {
+                StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
 
-                    StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
-
-                    if (studentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+                if (studentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+                    continue;
+                }
+                final Thesis thesis = enrolment.getThesis();
+                if (filter != null) {
+                    final ThesisPresentationState state = ThesisPresentationState.getThesisPresentationState(thesis);
+                    if (!state.equals(filter)) {
                         continue;
                     }
-                    final Thesis thesis = enrolment.getThesis();
-                    if (filter != null) {
-                        final ThesisPresentationState state = ThesisPresentationState.getThesisPresentationState(thesis);
-                        if (!state.equals(filter)) {
-                            continue;
-                        }
-                    }
-                    result.add(new StudentThesisInfo(enrolment));
                 }
+                result.add(new StudentThesisInfo(enrolment));
             }
         }
 

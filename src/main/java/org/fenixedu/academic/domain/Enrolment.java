@@ -66,6 +66,8 @@ import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -74,7 +76,7 @@ import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 
 /**
  * @author dcs-rjao
- * 
+ *
  *         24/Mar/2003
  */
 
@@ -115,10 +117,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     };
 
+    public static final String SIGNAL_CREATED = "fenixedu.academic.enrolment.created";
+
     public Enrolment() {
         super();
         setRootDomainObject(Bennu.getInstance());
         super.setIsExtraCurricular(Boolean.FALSE);
+        Signal.emit(Enrolment.SIGNAL_CREATED, new DomainObjectEvent<Enrolment>(this));
     }
 
     public Enrolment(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
@@ -1307,7 +1312,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     /**
      * Just for Master Degrees legacy code
-     * 
+     *
      * @return
      */
     @Deprecated
@@ -1436,7 +1441,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * This method assumes that each Student has at most one non evaluated Thesis and no more that two Thesis.
      */
@@ -1559,11 +1564,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-     * 
+     *
      * After create new Enrolment, must delete OptionalEnrolment (to delete
      * OptionalEnrolment disconnect at least: ProgramCertificateRequests,
      * CourseLoadRequests, ExamDateCertificateRequests)
-     * 
+     *
      * @param optionalEnrolment
      * @param curriculumGroup
      *            : new CurriculumGroup for Enrolment

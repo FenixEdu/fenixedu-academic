@@ -162,25 +162,6 @@ public class Thesis extends Thesis_Base {
         setEnrolment(enrolment);
         setTitle(title);
 
-        checkIsScientificCommissionMember();
-    }
-
-    private void checkIsScientificCommissionMember() {
-        final Enrolment enrolment = getEnrolment();
-        final ExecutionYear executionYear = enrolment.getExecutionYear();
-        final DegreeCurricularPlan degreeCurricularPlan = enrolment.getDegreeCurricularPlanOfStudent();
-        final Person person = AccessControl.getPerson();
-
-        if (person != null) {
-            for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
-                final ExecutionDegree executionDegree = scientificCommission.getExecutionDegree();
-                if (executionDegree.getExecutionYear() == executionYear
-                        && executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
-                    return;
-                }
-            }
-        }
-        throw new DomainException("degree.scientificCommission.notMember");
     }
 
     public boolean isDeclarationAccepted() {
