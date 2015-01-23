@@ -18,7 +18,7 @@
  */
 /*
  * Department.java
- * 
+ *
  * Created on 6 de Novembro de 2002, 15:57
  */
 
@@ -120,10 +120,10 @@ public class Department extends Department_Base {
 
     @Deprecated
     /**
-     * 
+     *
      * This direct association between CompetenceCourses and Departments should no longer be used.
      * Instead, use the DepartmentUnit to get the CompetenceCourses.
-     * 
+     *
      */
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
         Collection<CompetenceCourse> competenceCourses = this.getCompetenceCoursesSet();
@@ -139,10 +139,10 @@ public class Department extends Department_Base {
 
     @Deprecated
     /**
-     * 
+     *
      * This direct association between CompetenceCourses and Departments should no longer be used.
      * Instead, use addAllBolonhaCompetenceCourses()
-     * 
+     *
      */
     public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses,
             final ExecutionSemester executionSemester) {
@@ -155,10 +155,10 @@ public class Department extends Department_Base {
 
     @Deprecated
     /**
-     * 
+     *
      * This direct association between CompetenceCourses and Departments should no longer be used.
      * Instead, use the DepartmentUnit to get the CompetenceCourses.
-     * 
+     *
      */
     public Set<ExecutionCourse> getAllExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
 
@@ -213,6 +213,7 @@ public class Department extends Department_Base {
         if (!getTeacherGroupSet().isEmpty()) {
             throw new DomainException("error.department.cannotDeleteDepartmentUsedInAccessControl");
         }
+        setMembersGroup(null);
         setDepartmentUnit(null);
         setRootDomainObject(null);
         deleteDomainObject();
@@ -222,7 +223,7 @@ public class Department extends Department_Base {
      * Joins the portuguese and english version of the department's name in a
      * MultiLanguageString for an easier handling of the name in a
      * internacionalized context.
-     * 
+     *
      * @return a MultiLanguageString with the portuguese and english versions of
      *         the department's name
      */
