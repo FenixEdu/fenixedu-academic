@@ -316,27 +316,32 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
     }
 
+    public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+        if (name == null) {
+            throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
+        }
+        for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
+            if (dcp.getName().equalsIgnoreCase(name)) {
+                throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
+            }
+        }
+
+        if (creator == null) {
+            throw new DomainException("DEGREE.degree.curricular.plan.creator.cannot.be.null");
+        }
+        if (!RoleType.BOLONHA_MANAGER.isMember(creator.getUser())) {
+            RoleType.grant(RoleType.BOLONHA_MANAGER, creator.getUser());
+        }
+
+        CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getAcademicPeriod());
+
+        return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
+    }
+
+    @Deprecated
     public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
         if (this.isBolonhaDegree()) {
-            if (name == null) {
-                throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
-            }
-            for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
-                if (dcp.getName().equalsIgnoreCase(name)) {
-                    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
-                }
-            }
-
-            if (creator == null) {
-                throw new DomainException("DEGREE.degree.curricular.plan.creator.cannot.be.null");
-            }
-            if (!RoleType.BOLONHA_MANAGER.isMember(creator.getUser())) {
-                RoleType.grant(RoleType.BOLONHA_MANAGER, creator.getUser());
-            }
-
-            CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getAcademicPeriod());
-
-            return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
+            return createDegreeCurricularPlan(name, gradeScale, creator);
         } else {
             throw new DomainException("DEGREE.calling.bolonha.method.to.non.bolonha.degree");
         }
