@@ -84,7 +84,7 @@ public class UpdateEmergencyContactDA extends FenixDispatchAction {
             request.setAttribute("emergencyContactBean", new EmergencyContactBean(person));
         }
 
-        request.setAttribute("personBean", person);
+        request.setAttribute("personBean", new PersonBean(person));
         request.setAttribute("emergencyContactBean", emergencyContactBean);
         return mapping.findForward("visualizePersonalInformation");
     }
