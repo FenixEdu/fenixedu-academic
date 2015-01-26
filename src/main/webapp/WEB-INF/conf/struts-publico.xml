@@ -163,16 +163,6 @@
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
       </global-exceptions>
-      <!-- ========== Global Forward Definitions =============================== -->
-      <global-forwards type="org.apache.struts.action.ActionForward">
-            <!-- global forwards indicating the site url for each unit site, may use arguments %1$s and %2$s for unitId and siteId respectivly -->
-            <forward path="/units/viewSite.do?method=presentation&amp;unitID=%s" name="viewUnitSite"></forward>
-            <forward path="/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=%2$s" name="viewResearchUnitSite"></forward>
-            <forward path="/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=%s" name="viewDepartmentUnitSite"></forward>
-            <forward path="/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=%s" name="viewPedagogicalCouncilUnitSite"></forward>
-            <forward path="/scientificCouncil/viewSite.do?method=presentation&amp;unitID=%s" name="viewScientificCouncilUnitSite"></forward>
-            <forward path="/scientificArea/viewSite.do?method=presentation&amp;unitID=%s" name="viewScientificAreaUnitSite"></forward>
-      </global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <action forward="/consultExams.jsp" path="/consultExams"></action>
@@ -183,28 +173,12 @@
                   <forward path="/viewClassesNew.do" name="classSearch"></forward>
                   <forward path="/prepareSelectExecutionCourseAction.do" name="executionCourseSearch"></forward>
             </action>
-            <!-- Turmas -->
-            <!-- Turnos -->
             <action type="org.fenixedu.academic.ui.struts.action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseAction">
                   <forward path="/prepareSelectExecutionCourse.jsp" name="sucess"></forward>
             </action>
             <!-- SALAS -->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.RoomSiteViewerDispatchAction" validate="true" scope="request" path="/viewRoom" name="indexForm" parameter="method" input="/chooseRoomsForm.do">
-                  <forward path="viewRoom" name="roomViewer"></forward>
-            </action>
             <action type="org.fenixedu.academic.ui.struts.action.publico.RoomSiteViewerDispatchAction" validate="true" scope="request" path="/viewRoomNew" name="indexForm" parameter="method" input="/chooseRoomsFormNew.do">
                   <forward path="/siteViewerRoomNew.do?method=roomViewer" name="roomViewer"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.ViewClassTimeTableAction" path="/viewClassTimeTable" input="/viewClassTimeTable.jsp">
-                  <forward path="/viewClassTimeTable.jsp" name="Sucess"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.ViewShiftTimeTableAction" path="/viewShiftTimeTable" input="/viewShifts.jsp">
-                  <forward path="/viewShiftTimeTable.jsp" name="Sucess"></forward>
-            </action>
-            <!-- EXAMS -->
-            <action validate="true" scope="request" parameter="method" type="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.ChooseExamDayAndShiftDispatchAction" name="chooseDayAndShiftForm" input="/chooseDayAndShift.jsp" path="/chooseDayAndShiftForm">
-                  <forward path="/chooseDayAndShift.jsp" name="Show Choose Form"></forward>
-                  <forward path="/viewExamsDayAndShiftForm.do?method=view" name="view Exams"></forward>
             </action>
             <action type="org.fenixedu.academic.ui.struts.action.commons.ChooseContextDispatchAction" validate="true" scope="request" path="/chooseExamsContextDA" parameter="method" name="chooseContextForm" input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext">
                   <forward path="/chooseExamsContext.jsp" name="chooseExamsContext"></forward>
@@ -212,88 +186,16 @@
                   <forward path="/viewExamsByDegreeAndCurricularYear.do" name="listByDegreeAndAcademicYear"></forward>
                   <forward path="/chooseExecutionCourseToAddToExam.do" name="addExecutionCourseToExam"></forward>
             </action>
-            <action type="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.ViewExamsByDegreeAndCurricularYearAction" path="/viewExamsByDegreeAndCurricularYear">
-                  <forward path="/viewExamsByDegreeAndCurricularYear.jsp" name="Sucess"></forward>
-            </action>
             <action type="org.fenixedu.academic.ui.struts.action.publico.ChooseExamsMapContextDANew" validate="true" scope="request" path="/chooseExamsMapContextDANew" parameter="method" name="chooseExamsMapContextForm" input="/chooseExamsMapContextDANew.do?method=prepare&amp;page=0">
                   <forward path="/chooseExamsMapContextDANew.do?method=choose&amp;page=0" name="prepare"></forward>
                   <forward path="/chooseExamsMapContext.jsp" name="chooseExamsMapContext"></forward>
                   <forward path="/viewExamsMapNew.do?method=view" name="showExamsMap"></forward>
-                  <forward path="viewExamsMap" name="viewExamsMap"></forward>
             </action>
             <!-- END OF EXAMS -->
             <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.RoomSiteViewerDispatchAction" parameter="method" validate="false" scope="request" name="indexForm" input="/siteViewerError.jsp" path="/siteViewer">
-                  <forward path="viewRoom" name="roomViewer"></forward>
-                  <forward path="viewExecutionCourse" name="executionCourseViewer"></forward>
-            </action>
-            <!-- by gedl September the 11th, 2003 -->
-            <!-- For degrees Site-->
-            <action parameter="method" type="org.fenixedu.academic.ui.struts.action.publico.ShowDegreesAction" path="/showDegrees">
-                  <forward path="showDegrees" name="showDegrees"></forward>
-            </action>
-            <action scope="request" input="/showDegreeSite.do?method=showCurricularPlan" name="chooseContextDegreeForm" parameter="method" type="org.fenixedu.academic.ui.struts.action.publico.ShowDegreeCurricularPlanAction" path="/showDegreeCurricularPlan">
-                  <forward path="showDegreeCurricularPlan" name="showDegreeCurricularPlan"></forward>
-                  <forward path="showDegreeCurricularPlanEnglish" name="showDegreeCurricularPlanEnglish"></forward>
-            </action>
-            <action scope="request" input="showDegreeCurricularPlanNew" name="chooseContextDegreeForm" parameter="method" type="org.fenixedu.academic.ui.struts.action.publico.ShowDegreeCurricularPlanAction" path="/showDegreeCurricularPlanNew">
-                  <forward path="showDegreeCurricularPlanNew" name="showDegreeCurricularPlan"></forward>
-            </action>
-            <!--   "/showDegreeSite.do?method=showCurricularPlan"  -->
-            <action forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0" path="/viewFinalDegreeWorkProposals"></action>
             <action type="org.fenixedu.academic.ui.struts.action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseActionNew">
                   <forward path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0" name="sucess"></forward>
             </action>
-            <!-- =========== RSS ======================== -->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.rss.GenerateSummariesRSS" path="/summariesRSS"></action>
-            <!--============ Basic Uni site ============-->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.AnnouncementsBoardDA" parameter="method" path="/units/announcements">
-                  <forward path="public-basicUnit-list-announcements" name="listAnnouncements"></forward>
-                  <forward path="basicUnit-view-announcement" name="viewAnnouncement"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.EventsBoardDA" parameter="method" path="/units/events">
-                  <forward path="public-basicUnit-list-events" name="listAnnouncements"></forward>
-                  <forward path="basicUnit-view-event" name="viewAnnouncement"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.UnitAnnouncementsRSS" parameter="method" path="/units/announcementsRSS"></action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.UnitEventsRSS" parameter="method" path="/units/eventsRSS"></action>
-            <!-- Department site -->
-            <action forward="/department/departmentSite.do?method=employees" path="/department/departmentEmployees"></action>
-            <action forward="/department/departmentSite.do?method=degrees" path="/department/degrees"></action>
-            <action forward="/department/departmentSite.do?method=teachers" path="/department/teachers"></action>
-            <!--============ Pedagogical Council site ============-->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.AnnouncementsBoardDA" parameter="method" path="/pedagogicalCouncil/announcements">
-                  <forward path="public-pedagogicalCouncil-list-announcements" name="listAnnouncements"></forward>
-                  <forward path="pedagogicalCouncil-view-announcement" name="viewAnnouncement"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.EventsBoardDA" parameter="method" path="/pedagogicalCouncil/events">
-                  <forward path="public-pedagogicalCouncil-list-events" name="listAnnouncements"></forward>
-                  <forward path="pedagogicalCouncil-view-event" name="viewAnnouncement"></forward>
-            </action>
-            <!--============ Scientific Council site ============-->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.scientificCouncil.ScientificCouncilAnnouncementsDA" parameter="method" path="/scientificCouncil/announcements">
-                  <forward path="public-scientificCouncil-list-announcements" name="listAnnouncements"></forward>
-                  <forward path="scientificCouncil-view-announcement" name="viewAnnouncement"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.scientificCouncil.ScientificCouncilEventsDA" parameter="method" path="/scientificCouncil/events">
-                  <forward path="public-scientificCouncil-list-events" name="listAnnouncements"></forward>
-                  <forward path="scientificCouncil-view-event" name="viewAnnouncement"></forward>
-            </action>
-            <!-- ===== Scientific Area Visualization ======= -->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.AnnouncementsBoardDA" parameter="method" path="/scientificArea/announcements">
-                  <forward path="public-basicUnit-list-announcements" name="listAnnouncements"></forward>
-                  <forward path="basicUnit-view-announcement" name="viewAnnouncement"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.EventsBoardDA" parameter="method" path="/scientificArea/events">
-                  <forward path="public-basicUnit-list-events" name="listAnnouncements"></forward>
-                  <forward path="basicUnit-view-event" name="viewAnnouncement"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.UnitAnnouncementsRSS" parameter="method" path="/scientificArea/announcementsRSS"></action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.UnitEventsRSS" parameter="method" path="/scientificArea/eventsRSS"></action>
-            <!--===== Content Actions ======-->
-            <!-- =================== Find Spaces Interface  =================== -->
-            <!-- =================== Alumni Registration  =================== -->
-            <!-- =================== Alumni Registration  =================== -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>

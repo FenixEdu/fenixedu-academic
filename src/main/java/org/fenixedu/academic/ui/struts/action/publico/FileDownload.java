@@ -18,22 +18,17 @@
  */
 package org.fenixedu.academic.ui.struts.action.publico;
 
-import java.io.DataOutputStream;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.File;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.base.FenixAction;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixframework.FenixFramework;
+import com.google.common.base.Strings;
 
 @Mapping(module = "publico", path = "/files")
 public class FileDownload extends FenixAction {
@@ -42,29 +37,11 @@ public class FileDownload extends FenixAction {
     public ActionForward execute(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
         final String oid = request.getParameter("oid");
-        final File file = FenixFramework.getDomainObject(oid);
-        if (file == null) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));
-            response.getWriter().close();
+        if (Strings.isNullOrEmpty(oid)) {
+            response.sendError(404);
         } else {
-            final Person person = AccessControl.getPerson();
-            if (!file.isPrivate() || file.isPersonAllowedToAccess(person)) {
-                response.setContentType(file.getContentType());
-                response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
-                response.setContentLength(file.getSize().intValue());
-                final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-                dos.write(file.getContents());
-                dos.close();
-            } else if (file.isPrivate() && person == null) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_UNAUTHORIZED));
-                response.getWriter().close();
-            } else {
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_FORBIDDEN));
-                response.getWriter().close();
-            }
+            response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+            response.setHeader("Location", CoreConfiguration.getConfiguration().applicationUrl() + "/downloadFile/" + oid);
         }
         return null;
     }
