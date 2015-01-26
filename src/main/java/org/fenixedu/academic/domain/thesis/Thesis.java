@@ -622,6 +622,7 @@ public class Thesis extends Thesis_Base {
     // }
 
     // SUBMITTED -> APPROVED
+    @Atomic
     public void approveProposal() {
         check(this, ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator);
         if (getState() != ThesisState.APPROVED) {
