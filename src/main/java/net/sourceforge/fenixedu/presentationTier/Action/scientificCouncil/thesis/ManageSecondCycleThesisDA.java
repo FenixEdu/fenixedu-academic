@@ -139,6 +139,18 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         }
     }
 
+    public static class RejectionCommentBean implements Serializable {
+        String comment;
+
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
+        }
+    }
+
     @EntryPoint
     public ActionForward firstPage(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
@@ -186,6 +198,20 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         return mapping.findForward("showPersonThesisDetails");
     }
 
+    public ActionForward rejectThesis(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
+        final Thesis thesis = getDomainObject(request, "thesisOid");
+        final RejectionCommentBean rejectionCommentBean = getRenderedObject();
+        try {
+            thesis.rejectProposal(rejectionCommentBean.getComment());
+            addActionMessage("success", request, "message.thesis.reject.success");
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
+        RenderUtils.invalidateViewState();
+        return showThesisDetails(mapping, request, thesis);
+    }
+
     public ActionForward showThesisDetails(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
@@ -208,6 +234,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             }
         }
         request.setAttribute("thesis", thesis);
+        request.setAttribute("rejectionCommentBean", new RejectionCommentBean());
         return mapping.findForward("showThesisDetails");
     }
 
