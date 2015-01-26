@@ -27,6 +27,8 @@ import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
 
     protected OptionalCurricularCourse() {
@@ -84,6 +86,21 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
                 (List<AnyCurricularCourse>) getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionSemester);
         // must have only one
         return result.isEmpty() ? null : (AnyCurricularCourse) result.iterator().next();
+    }
+
+    @Override
+    public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
+        return new MultiLanguageString();
+    }
+
+    @Override
+    public MultiLanguageString getProgramI18N(ExecutionSemester period) {
+        return new MultiLanguageString();
+    }
+
+    @Override
+    public MultiLanguageString getEvaluationMethodI18N(ExecutionSemester period) {
+        return new MultiLanguageString();
     }
 
 }
