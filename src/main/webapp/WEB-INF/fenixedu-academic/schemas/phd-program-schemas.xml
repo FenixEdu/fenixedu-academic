@@ -146,10 +146,12 @@
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified" type="org.fenixedu.academic.dto.person.PersonBean" bundle="PHD_RESOURCES">
-	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="75"/>
-		<property name="maxLength" value="255"/>
+	<slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="size" value="50" />
 	</slot>
+	<slot name="familyNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="size" value="50" />
+	</slot>	
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="dateOfBirth">
 		<property name="size" value="12"/>
@@ -194,10 +196,6 @@
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editPersonalInformation" type="org.fenixedu.academic.dto.person.PersonBean" bundle="PHD_RESOURCES">
-	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="75"/>
-		<property name="maxLength" value="255"/>
-	</slot>
 	<slot name="givenNames">
 		<property name="size" value="50" />
 	</slot>
