@@ -68,10 +68,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
             HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-        if (ae.getScope() != "request") {
-            ae.setScope("session");
-        }
-
         // Figure out the error
         ActionMessage error;
         String property;
