@@ -364,7 +364,6 @@ public class Thesis extends Thesis_Base {
     }
 
     public void delete() {
-        check(this, ThesisPredicates.isScientificCommission);
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         setRootDomainObject(null);
