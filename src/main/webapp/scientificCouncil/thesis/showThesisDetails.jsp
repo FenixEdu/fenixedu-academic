@@ -95,7 +95,7 @@
 	    <fr:form action="<%= "/manageSecondCycleThesis.do?method=rejectThesis&amp;thesisOid=" + thesis.getExternalId() %>">
 			<fr:edit id="thesisRejection" name="rejectionCommentBean">
 				<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-					type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisDA$RejectionCommentBean">
+					type="org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis.ManageSecondCycleThesisDA$RejectionCommentBean">
 					<fr:slot name="comment" layout="longText"
 						validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="columns" value="60" />
