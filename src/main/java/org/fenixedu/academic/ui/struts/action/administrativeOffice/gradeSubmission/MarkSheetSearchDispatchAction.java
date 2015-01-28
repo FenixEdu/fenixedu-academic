@@ -392,13 +392,13 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = new ActionMessages();
 
         try (ServletOutputStream writer = response.getOutputStream()) {
-            markAsPrinted(markSheet);
             MarkSheetDocument document = new MarkSheetDocument(markSheet);
             byte[] data = ReportsUtils.generateReport(document).getData();
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
             writer.write(data);
+            markAsPrinted(markSheet);
             return null;
         } catch (Exception e) {
             request.setAttribute("markSheet", markSheetString);
@@ -425,11 +425,21 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             response.addHeader("Content-Disposition",
                     String.format("attachment; filename=%s.pdf", "marksheets-" + new DateTime().toString()));
             writer.write(data);
+            markAsPrinted(markSheets);
             return null;
         } catch (Exception e) {
             addMessage(request, actionMessages, e.getMessage());
             return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response);
         }
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void markAsPrinted(Collection<MarkSheet> markSheets) {
+        markSheets.forEach(markSheet -> {
+            if (!markSheet.getPrinted()) {
+                markSheet.setPrinted(Boolean.TRUE);
+            }
+        });
     }
 
     @Atomic(mode = TxMode.WRITE)
