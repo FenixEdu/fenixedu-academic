@@ -29,7 +29,9 @@
 	
 ${portal.angularToolkit()}
 <script	src="${pageContext.request.contextPath}/bennu-portal/js/angular-route.min.js"></script>
-<script src="${pageContext.request.contextPath}/manager/departments/app.js"></script>
+<script src="${pageContext.request.contextPath}/manager/departments/departmentsManagementApp.js"></script>
+
+
 
 <div ng-app="manageDepartmentsApp">
 	<div ng-controller="DepartmentsCtrl">

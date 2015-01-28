@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.academic.ui.spring.controller.manager;
+package org.fenixedu.academic.json.adapters;
 
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.bennu.core.annotation.DefaultJsonAdapter;

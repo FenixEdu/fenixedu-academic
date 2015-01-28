@@ -65,17 +65,17 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "manage-associated-objects",
-        titleKey = "title.manage.associated.objects")
+titleKey = "title.manage.associated.objects")
 @Mapping(path = "/manageAssociatedObjects", module = "manager")
 @Forwards({ @Forward(name = "show", path = "/manager/listAssociatedObjects.jsp"),
-        @Forward(name = "list", path = "/manager/listAssociatedObjects.jsp"),
-        @Forward(name = "createDepartment", path = "/manager/createDepartment.jsp"),
-        @Forward(name = "createEmptyDegree", path = "/manager/createEmptyDegree.jsp"),
-        @Forward(name = "createScientificArea", path = "/manager/createScientificArea.jsp"),
-        @Forward(name = "editDepartment", path = "/manager/editDepartment.jsp"),
-        @Forward(name = "createCompetenceCourseGroup", path = "/manager/createCompetenceCourseGroup.jsp"),
-        @Forward(name = "associatePersonUnit", path = "/manager/associatePersonUnit.jsp"),
-        @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp") })
+    @Forward(name = "list", path = "/manager/listAssociatedObjects.jsp"),
+    @Forward(name = "createDepartment", path = "/manager/createDepartment.jsp"),
+    @Forward(name = "createEmptyDegree", path = "/manager/createEmptyDegree.jsp"),
+    @Forward(name = "createScientificArea", path = "/manager/createScientificArea.jsp"),
+    @Forward(name = "editDepartment", path = "/manager/editDepartment.jsp"),
+    @Forward(name = "createCompetenceCourseGroup", path = "/manager/createCompetenceCourseGroup.jsp"),
+    @Forward(name = "associatePersonUnit", path = "/manager/associatePersonUnit.jsp"),
+    @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp") })
 public class ManageAssociatedObjects extends FenixDispatchAction {
     public static class AssociatedObjectsBean implements Serializable {
         private boolean active;
@@ -94,7 +94,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         private boolean teacher;
 
         private Space building;
-        private List<Space> buildings;
+        private Set<Space> buildings;
 
         public Department getDepartment() {
             return department;
@@ -246,11 +246,11 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             this.building = building;
         }
 
-        public List<Space> getBuildings() {
+        public Set<Space> getBuildings() {
             return buildings;
         }
 
-        public void setBuildings(List<Space> buildings) {
+        public void setBuildings(Set<Space> buildings) {
             this.buildings = buildings;
         }
 
@@ -304,8 +304,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         department.setRootDomainObject(Bennu.getInstance());
         Unit departmentParent =
                 Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
-                        .filter(x -> ((AggregateUnit) x).getName().equals("Departments")).findAny()
-                        .orElse(Bennu.getInstance().getInstitutionUnit());
+                .filter(x -> ((AggregateUnit) x).getName().equals("Departments")).findAny()
+                .orElse(Bennu.getInstance().getInstitutionUnit());
         DepartmentUnit.createNewInternalDepartmentUnit(department.getNameI18n(), null, null, department.getCode(),
                 new YearMonthDay(), null, departmentParent,
                 AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null, false, null);
@@ -315,7 +315,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     public ActionForward prepareAcademicOffice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = new AssociatedObjectsBean();
-        bean.setBuildings(Bennu.getInstance().getSpaceSet().stream().collect(Collectors.toList()));
+        bean.setBuildings(Space.getTopLevelSpaces());
 
         request.setAttribute("bean", bean);
         return mapping.findForward("createAcademicOffice");
@@ -341,8 +341,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         office.setRootDomainObject(Bennu.getInstance());
         Unit servicesParent =
                 Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
-                        .filter(x -> ((AggregateUnit) x).getName().equals("Services")).findAny()
-                        .orElse(Bennu.getInstance().getInstitutionUnit());
+                .filter(x -> ((AggregateUnit) x).getName().equals("Services")).findAny()
+                .orElse(Bennu.getInstance().getInstitutionUnit());
         Unit.createNewUnit(MultiLanguageString.fromLocalizedString(office.getName()), null, null, null, new YearMonthDay(), null,
                 servicesParent, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
                 UnitClassification.CENTRAL_ORG, office, false, bean.getBuilding());
