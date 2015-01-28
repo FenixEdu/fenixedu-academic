@@ -447,8 +447,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         personalIngressionData.addPrecedentDegreesInformations(precedentDegreeInformation);
         precedentDegreeInformation.setPhdIndividualProgramProcess(getIndividualProgramProcess());
 
-        RoleType.grant(RoleType.PERSON, person.getUser());
-        RoleType.grant(RoleType.STUDENT, person.getUser());
+        if (person.getUser() == null) {
+            person.setUser(new User(person.getProfile()));
+        }
+
         RoleType.grant(RoleType.RESEARCHER, person.getUser());
 
         if (person.getPersonalPhoto() == null) {
