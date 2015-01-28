@@ -37,7 +37,6 @@ public class CreateThesisProposal {
         final Enrolment enrolment = student.getDissertationEnrolment(degreeCurricularPlan);
 
         final Thesis thesis = new Thesis(degree, enrolment, title);
-        thesis.checkIsScientificCommission();
         thesis.setComment(comment);
         return thesis;
     }

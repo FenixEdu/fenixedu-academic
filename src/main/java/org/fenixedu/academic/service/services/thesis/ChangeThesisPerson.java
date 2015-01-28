@@ -20,11 +20,9 @@ package org.fenixedu.academic.service.services.thesis;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -53,10 +51,6 @@ public class ChangeThesisPerson {
     public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, PersonChange change)
             throws FenixServiceException {
         Person person = change.person;
-
-        if (!RoleType.SCIENTIFIC_COUNCIL.isMember(AccessControl.getPerson().getUser())) {
-            thesis.checkIsScientificCommission();
-        }
 
         switch (change.type) {
         case orientator:
@@ -87,9 +81,6 @@ public class ChangeThesisPerson {
     @Atomic
     public static void remove(final ThesisEvaluationParticipant thesisEvaluationParticipant) {
         final Thesis thesis = thesisEvaluationParticipant.getThesis();
-        if (!RoleType.SCIENTIFIC_COUNCIL.isMember(AccessControl.getPerson().getUser())) {
-            thesis.checkIsScientificCommission();
-        }
         thesisEvaluationParticipant.delete();
 
         if (!thesis.isCreditsDistributionNeeded()) {
@@ -100,10 +91,6 @@ public class ChangeThesisPerson {
     @Atomic
     public static void add(final Thesis thesis, final ThesisParticipationType thesisParticipationType, final Person person) {
         if (person != null) {
-            if (!RoleType.SCIENTIFIC_COUNCIL.isMember(AccessControl.getPerson().getUser())) {
-                thesis.checkIsScientificCommission();
-            }
-
             new ThesisEvaluationParticipant(thesis, person, thesisParticipationType);
 
             if (!thesis.isCreditsDistributionNeeded()) {

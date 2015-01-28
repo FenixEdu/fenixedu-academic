@@ -562,7 +562,6 @@ public class Thesis extends Thesis_Base {
 
     // / DRAFT -> SUBMITTED
     public void submit() {
-        check(this, ThesisPredicates.isScientificCommission);
         if (getState() != ThesisState.DRAFT) {
             throw new DomainException("thesis.submit.notDraft");
         }
@@ -586,7 +585,6 @@ public class Thesis extends Thesis_Base {
 
     // / SUBMITTED -> DRAFT
     public void cancelSubmit() {
-        check(this, ThesisPredicates.isScientificCommission);
         switch (getState()) {
         case SUBMITTED:
             break;
@@ -1499,7 +1497,6 @@ public class Thesis extends Thesis_Base {
     }
 
     public void setOrientator(Person person) {
-        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.ORIENTATOR);
 
         if (!isCreditsDistributionNeeded()) {
@@ -1508,7 +1505,6 @@ public class Thesis extends Thesis_Base {
     }
 
     public void setCoorientator(Person person) {
-        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.COORIENTATOR);
 
         if (!isCreditsDistributionNeeded()) {
@@ -1517,7 +1513,6 @@ public class Thesis extends Thesis_Base {
     }
 
     public void setPresident(Person person) {
-        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.PRESIDENT);
     }
 
@@ -1550,7 +1545,6 @@ public class Thesis extends Thesis_Base {
     }
 
     public void addVowel(Person person) {
-        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         if (person != null) {
             new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
         }
