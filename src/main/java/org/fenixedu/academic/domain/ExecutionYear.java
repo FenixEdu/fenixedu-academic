@@ -633,4 +633,17 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return null;
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public <E extends ExecutionInterval> E convert(final Class<E> input) {
+        E result = null;
+
+        if (ExecutionYear.class.equals(input)) {
+            result = (E) this;
+        } else if (ExecutionSemester.class.equals(input)) {
+            result = (E) getFirstExecutionPeriod();
+        }
+
+        return result;
+    }
 }
