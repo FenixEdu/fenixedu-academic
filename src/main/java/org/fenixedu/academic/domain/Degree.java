@@ -395,6 +395,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
 
+    public static Degree find(final String code) {
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        for (Degree degree : Degree.readNotEmptyDegrees()) {
+            if (StringUtils.equalsIgnoreCase(degree.getCode(), code)) {
+                return degree;
+            }
+        }
+
+        return null;
+    }
+
     public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         if (!isBolonhaDegree()) {
@@ -1479,6 +1493,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public String getDegreeTypeName() {
         return getDegreeType().getName();
+    }
+
+    @Override
+    public void setCode(String code) {
+        final Degree existingDegree = Degree.find(code);
+        if (existingDegree != null && existingDegree != this) {
+            throw new DomainException("error.degree.already.exists.degree.with.same.code");
+        }
+
+        super.setCode(code);
     }
 
 }

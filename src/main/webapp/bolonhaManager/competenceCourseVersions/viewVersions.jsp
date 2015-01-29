@@ -29,6 +29,7 @@
 <em><bean:message key="bolonhaManager" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
 <h2><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h2>
 
+
 <html:messages id="message" message="true" bundle="BOLONHA_MANAGER_RESOURCES">
 	<p>
 		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
@@ -47,7 +48,7 @@
 </ul>
 
 
-<h3 class="mvert15"><span><fr:view name="competenceCourse" property="name"/></span></h3>
+<h3 class="mvert15"><span><logic:notEmpty name="competenceCourse" property="code"><fr:view name="competenceCourse" property="code"/> - </logic:notEmpty><fr:view name="competenceCourse" property="name"/></span></h3>
 
 
 <p class="mbottom05">

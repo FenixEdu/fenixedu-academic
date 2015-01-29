@@ -42,8 +42,8 @@ public class CreateCompetenceCourse {
 
     @Atomic
     public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID, ExecutionSemester startSemester)
-            throws FenixServiceException {
+            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID,
+            ExecutionSemester startSemester, String code) throws FenixServiceException {
         check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
 
         final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) FenixFramework.getDomainObject(unitID);
@@ -51,8 +51,20 @@ public class CreateCompetenceCourse {
             throw new FenixServiceException("error.invalidUnit");
         }
         checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim());
-        return new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel, type, CurricularStage.DRAFT, unit,
-                startSemester);
+        final CompetenceCourse competenceCourse =
+                new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel, type, CurricularStage.DRAFT, unit,
+                        startSemester);
+        competenceCourse.setCode(code);
+
+        return competenceCourse;
+    }
+
+    @Deprecated
+    @Atomic
+    public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
+            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID, ExecutionSemester startSemester)
+            throws FenixServiceException {
+        return run(name, nameEn, acronym, basic, regimeType, competenceCourseLevel, type, unitID, startSemester, null);
     }
 
     private static void checkIfCanCreateCompetenceCourse(final String name, final String nameEn) throws FenixServiceException {

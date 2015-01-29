@@ -25,6 +25,7 @@
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.BolonhaManager.BolonhaManagerApplication$CompetenceCoursesManagement"/>
 
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
@@ -54,6 +55,11 @@
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 
+		<h:outputText value="<p><label>#{bolonhaBundle['code']}: </label>" escape="false"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.code']}" id="code" maxlength="150" size="80" value="#{CompetenceCourseManagement.code}"/>
+		<h:message styleClass="error0" for="code"/>
+		<h:outputText value="</p>" escape="false"/>
+		
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt): </label>" escape="false"/>
 		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="150" size="80" value="#{CompetenceCourseManagement.name}"/>
 		<h:message styleClass="error0" for="name"/>
