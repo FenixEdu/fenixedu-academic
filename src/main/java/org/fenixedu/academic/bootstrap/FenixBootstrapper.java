@@ -89,7 +89,9 @@ public class FenixBootstrapper {
     public static List<BootstrapError> boostrap(SchoolSetupSection schoolSetupSection, PortalSection portalSection,
             AdminUserSection adminSection) {
 
-        if (Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()) == null) {
+        if (Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()) == null
+                || !Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()).alpha3.equals(schoolSetupSection
+                        .getCountryCode())) {
             return singletonList(new BootstrapError(SchoolSetupSection.class, "getCountryCode", "bootstrapper.error.contry",
                     Bundle.APPLICATION));
         }
