@@ -165,36 +165,9 @@
       </global-exceptions>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <action forward="/consultExams.jsp" path="/consultExams"></action>
-            <!-- page fronting actions -->
-            <action type="org.fenixedu.academic.ui.struts.action.commons.ChooseContextDispatchActionNew" validate="false" scope="request" path="/chooseContextDANew" parameter="method" name="chooseSearchContextForm" input="/chooseContextDANew.do?method=prepare&amp;page=0&amp;inputPage=chooseContext">
-                  <forward path="/chooseContextDANew.do?method=nextPagePublic&amp;page=0&amp;nextPage=classSearch&amp;inputPage=chooseContext" name="prepare"></forward>
-                  <forward path="/chooseContext.jsp" name="chooseContext"></forward>
-                  <forward path="/viewClassesNew.do" name="classSearch"></forward>
-                  <forward path="/prepareSelectExecutionCourseAction.do" name="executionCourseSearch"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseAction">
-                  <forward path="/prepareSelectExecutionCourse.jsp" name="sucess"></forward>
-            </action>
             <!-- SALAS -->
             <action type="org.fenixedu.academic.ui.struts.action.publico.RoomSiteViewerDispatchAction" validate="true" scope="request" path="/viewRoomNew" name="indexForm" parameter="method" input="/chooseRoomsFormNew.do">
                   <forward path="/siteViewerRoomNew.do?method=roomViewer" name="roomViewer"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.commons.ChooseContextDispatchAction" validate="true" scope="request" path="/chooseExamsContextDA" parameter="method" name="chooseContextForm" input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext">
-                  <forward path="/chooseExamsContext.jsp" name="chooseExamsContext"></forward>
-                  <forward path="/chooseExecutionCourseForm.do" name="createExam"></forward>
-                  <forward path="/viewExamsByDegreeAndCurricularYear.do" name="listByDegreeAndAcademicYear"></forward>
-                  <forward path="/chooseExecutionCourseToAddToExam.do" name="addExecutionCourseToExam"></forward>
-            </action>
-            <action type="org.fenixedu.academic.ui.struts.action.publico.ChooseExamsMapContextDANew" validate="true" scope="request" path="/chooseExamsMapContextDANew" parameter="method" name="chooseExamsMapContextForm" input="/chooseExamsMapContextDANew.do?method=prepare&amp;page=0">
-                  <forward path="/chooseExamsMapContextDANew.do?method=choose&amp;page=0" name="prepare"></forward>
-                  <forward path="/chooseExamsMapContext.jsp" name="chooseExamsMapContext"></forward>
-                  <forward path="/viewExamsMapNew.do?method=view" name="showExamsMap"></forward>
-            </action>
-            <!-- END OF EXAMS -->
-            <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
-            <action type="org.fenixedu.academic.ui.struts.action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseActionNew">
-                  <forward path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0" name="sucess"></forward>
             </action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
