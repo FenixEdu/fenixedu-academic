@@ -86,7 +86,8 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
         this.viewPhoto = viewPhoto;
     }
 
-    public enum StudentAttendsStateType {
+    @Deprecated
+    public static enum StudentAttendsStateType {
         ENROLED, NOT_ENROLED, IMPROVEMENT, SPECIAL_SEASON;
         public String getQualifiedName() {
             return StudentAttendsStateType.class.getSimpleName() + "." + name();
