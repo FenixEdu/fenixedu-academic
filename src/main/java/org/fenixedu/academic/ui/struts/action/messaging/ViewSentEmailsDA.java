@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.struts.action.messaging;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,7 +104,10 @@ public class ViewSentEmailsDA extends FenixDispatchAction {
     public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final String senderId) {
         final Sender sender = FenixFramework.getDomainObject(senderId);
         final int numberOfMessagesByPage = 40;
-        final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), numberOfMessagesByPage);
+        final CollectionPager<Message> pager =
+                new CollectionPager<Message>(sender.getMessagesSet().stream()
+                        .sorted(Message.COMPARATOR_BY_CREATED_DATE_OLDER_LAST).collect(Collectors.toList()),
+                        numberOfMessagesByPage);
         request.setAttribute("numberOfPages", getNumberOfPages(pager));
         final String pageParameter = request.getParameter("pageNumber");
         final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
