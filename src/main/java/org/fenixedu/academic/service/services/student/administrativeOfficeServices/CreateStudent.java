@@ -36,6 +36,7 @@ import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
 import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -106,6 +107,9 @@ public class CreateStudent {
         } else {
             // create person
             person = new Person(personBean);
+            if (person.getUser() == null) {
+                person.setUser(new User(person.getProfile()));
+            }
         }
         return person;
     }

@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
@@ -116,6 +117,9 @@ public class ManageAccountsDA extends FenixDispatchAction {
     @Atomic(mode = TxMode.WRITE)
     private Person createAccount(final PersonBean bean) {
         final Person person = new Person(bean);
+        if (person.getUser() == null) {
+            person.setUser(new User(person.getProfile()));
+        }
         person.getPhysicalAddresses().forEach(a -> a.setValid());
         return person;
     }
