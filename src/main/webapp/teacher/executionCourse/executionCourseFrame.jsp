@@ -85,6 +85,11 @@
 					</li>
 				</c:if>
 			</c:if>
+			<li>
+			<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, '/teacher/executionCourseForumManagement.do?method=viewForuns&executionCourseID='.concat(executionCourse.externalId))}">
+					${fr:message('resources.ApplicationResources', 'link.teacher.executionCourseManagement.foruns')}
+				</a>
+			</li>
 		</ul>
 		<ul class="nav nav-pills nav-stacked">
 			<li class="navheader">
