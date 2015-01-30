@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.phd.thesis.activities;
 
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess;
@@ -55,8 +54,6 @@ public class ConcludePhdProcess extends PhdThesisActivity {
         if (!PhdIndividualProgramProcessState.CONCLUDED.equals(individualProgramProcess.getActiveState())) {
             individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson(), "");
         }
-
-        RoleType.grant(RoleType.ALUMNI, process.getPerson().getUser());
 
         return process;
     }
