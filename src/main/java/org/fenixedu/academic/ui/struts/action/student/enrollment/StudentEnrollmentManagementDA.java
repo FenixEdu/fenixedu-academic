@@ -114,6 +114,15 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
         final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
+        if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+            request.setAttribute("debtsMessage",
+                    "error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+        }
+
+        if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
+            request.setAttribute("debtsMessage", "error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
+        }
+
         // ----------------------------------------------------------------------
         // ---------------------------------------------
         // TODO: refactor this code, should be more generic
