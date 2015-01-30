@@ -214,7 +214,7 @@
 	        	hasSomeCandidacyPeriod = true;
 %>
 				<h3>
-					<bean:message key="label.execution.year"/>: <%= candidacyPeriod.getExecutionInterval().getName() %>
+					<bean:message key="label.execution.year"/>: <%= ((ExecutionYear)candidacyPeriod.getExecutionInterval()).getNextYearsYearString() %>
 				</h3>
 				<ul>
 					<li><bean:message key="label.candidacy.period"/>: <%= outboundMobilityCandidacyPeriod.getIntervalAsString() %></li>
