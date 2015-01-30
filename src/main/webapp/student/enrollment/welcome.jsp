@@ -22,6 +22,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
 
@@ -36,6 +37,14 @@
 
 <bean:define id="registrationOid" name="registration" property="externalId" />
 
+<c:if test="${not empty debtsMessage}">
+<div class="alert alert-danger">
+    ${fr:message('resources.ApplicationResources', debtsMessage)}
+</div>
+</c:if>
+
+<c:if test="${empty debtsMessage}">
 <a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registrationOid}">
     ${fr:message('resources.ApplicationResources', 'label.continue')}
 </a>
+</c:if>

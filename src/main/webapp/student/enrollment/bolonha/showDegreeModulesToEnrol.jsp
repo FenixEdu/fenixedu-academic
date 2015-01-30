@@ -25,8 +25,6 @@
 <%@ page import="org.apache.struts.action.ActionMessages" %>
 <html:xhtml />
 
-<logic:present role="role(STUDENT)">
-
 	<h2><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses" /></h2>
 
 
@@ -154,6 +152,4 @@
 </tr>
 </table>
 
-
-
-</logic:present>
+<script>$(function(){$('table').removeClass('table')})</script>
