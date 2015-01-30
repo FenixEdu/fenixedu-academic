@@ -58,7 +58,6 @@ import org.fenixedu.academic.domain.exceptions.DomainExceptionWithInvocationResu
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.messaging.Forum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
@@ -1351,18 +1350,9 @@ public class Student extends Student_Base {
         return false;
     }
 
+    @Deprecated
     public void updateStudentRole() {
-        final Person person = getPerson();
-        final RoleType roleType = RoleType.STUDENT;
-        if (shouldHaveStudentRole()) {
-            if (!roleType.isMember(person.getUser())) {
-                RoleType.grant(roleType, person.getUser());
-            }
-        } else {
-            if (roleType.isMember(person.getUser())) {
-                RoleType.revoke(roleType, person.getUser());
-            }
-        }
+        // Nothing to do here, role is fully dynamic now.
     }
 
     public boolean shouldHaveStudentRole() {

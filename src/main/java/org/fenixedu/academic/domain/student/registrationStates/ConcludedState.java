@@ -22,7 +22,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.workflow.IState;
@@ -45,10 +44,6 @@ public class ConcludedState extends ConcludedState_Base {
         }
 
         init(registration, person, dateTime);
-        RoleType.grant(RoleType.ALUMNI, registration.getPerson().getUser());
-        // if (registration.getStudent().getRegistrationsCount() == 1) {
-        // registration.getPerson().removeRoleByType(RoleType.STUDENT);
-        // }
     }
 
     @Override
