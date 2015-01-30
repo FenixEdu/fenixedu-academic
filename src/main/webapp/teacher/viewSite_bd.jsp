@@ -39,7 +39,7 @@
 	<img src="<%= request.getContextPath() %>/images/title_adminDisc.gif" alt="<bean:message key="title_adminDisc" bundle="IMAGE_RESOURCES" />" />
 	<p><bean:message key="label.executionCourse.instructions00.intro" /></p>
 	<ul class="list4">
-		<li><bean:message key="label.executionCourse.instructions01.customization"/></li>
+		<li><bean:message key="label.executionCourse.instructions01.communication"/></li>
 		<li><bean:message key="label.executionCourse.instructions02.announcements"/></li>
 		<li><bean:message key="label.executionCourse.instructions03.sections"/></li>
 		<li><bean:message key="label.executionCourse.instructions04.summaries"/></li>
