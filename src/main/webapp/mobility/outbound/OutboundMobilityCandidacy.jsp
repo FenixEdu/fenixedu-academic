@@ -98,26 +98,26 @@
 	<fr:form id="prepareForm" action="/outboundMobilityCandidacy.do">
 		<html:hidden property="method" value="prepare"/>
 				<fr:edit id="outboundMobilityContextBeanExecutionIntervalSelection" name="outboundMobilityContextBean">
-					<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="MANAGER_RESOURCES">
-						<fr:slot name="executionYear" bundle="MANAGER_RESOURCES" key="label.executionYear"
+					<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+						<fr:slot name="executionYear" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.year"
 								layout="menu-select-postback">
 							<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 							<fr:property name="format" value="${year}" />
 						</fr:slot>
-			    		<fr:slot name="candidacyPeriodsAsList" layout="option-select" key="label.candidacy.periods" bundle="ACADEMIC_OFFICE_RESOURCES">
+			    		<fr:slot name="candidacyPeriodsAsList" layout="option-select" key="label.candidacy.periods">
     			    		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OutboundMobilityCandidacyPeriodProvider" />
         					<fr:property name="eachSchema" value="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval"/>
         					<fr:property name="eachLayout" value="values"/>
         					<fr:property name="classes" value="nobullet noindent"/>
 		    			</fr:slot>
-			    		<fr:slot name="mobilityProgramsAsList" layout="option-select" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES">
+			    		<fr:slot name="mobilityProgramsAsList" layout="option-select" key="label.mobility.program">
     			    		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OutboundMobilityProgramProvider" />
         					<fr:property name="eachSchema" value="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityProgram.description"/>
         					<fr:property name="eachLayout" value="values"/>
         					<fr:property name="classes" value="nobullet noindent degreeSelectors"/>
         					<fr:property name="listItemStyle" value=""/>
 		    			</fr:slot>
-			    		<fr:slot name="mobilityGroupsAsList" layout="option-select" key="label.mobility.group" bundle="ACADEMIC_OFFICE_RESOURCES">
+			    		<fr:slot name="mobilityGroupsAsList" layout="option-select" key="label.mobility.group">
     			    		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OutboundMobilityCandidacyGroupProvider" />
         					<fr:property name="eachSchema" value="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup.description"/>
         					<fr:property name="eachLayout" value="values"/>
