@@ -45,13 +45,11 @@ import org.fenixedu.spaces.domain.occupation.requests.OccupationRequest;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Strings;
 
-@Service
 public class GOPSendMessageService implements NotificationService {
 
     private static final Logger logger = LoggerFactory.getLogger(GOPSendMessageService.class);
