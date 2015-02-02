@@ -49,7 +49,9 @@ import org.fenixedu.academic.dto.spaceManager.FindSpacesBean.SpacesSearchCriteri
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
@@ -150,18 +152,17 @@ public class SpaceUtils {
     }
 
     public static boolean isForEducation(Space space) {
-        return isForEducation(space, null);
+        return isForEducation(space, Authenticate.getUser());
     }
 
-    private static boolean isForEducation(Space space, Person person) {
+    private static boolean isForEducation(Space space, User user) {
 
         if (!space.isActive() || !(isRoom(space) || isRoomSubdivision(space))) {
             return false;
         }
 
         final Group lessonGroup = space.getOccupationsGroupWithChainOfResponsability();
-        if (lessonGroup != null && lessonGroup.getMembers().size() > 0
-                && (person == null || lessonGroup.isMember(person.getUser()))) {
+        if (lessonGroup != null && lessonGroup.getMembers().size() > 0 && (user == null || lessonGroup.isMember(user))) {
             return true;
         }
         return false;
