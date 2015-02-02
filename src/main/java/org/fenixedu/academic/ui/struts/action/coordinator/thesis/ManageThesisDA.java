@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -54,6 +55,7 @@ import org.fenixedu.academic.service.services.thesis.ReviseThesis;
 import org.fenixedu.academic.service.services.thesis.SubmitThesis;
 import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
+import org.fenixedu.academic.ui.struts.action.coordinator.ThesisSummaryBean;
 import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -276,6 +278,13 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         request.setAttribute("theses", result);
         request.setAttribute("contextBean", bean);
+
+        ExecutionDegree executionDegree =
+                degreeCurricularPlan.getExecutionDegreeByYear(bean.getExecutionYear().getPreviousExecutionYear());
+
+        if (executionDegree != null) {
+            request.setAttribute("summary", new ThesisSummaryBean(executionDegree, degreeCurricularPlan));
+        }
 
         return mapping.findForward("list-thesis");
     }
