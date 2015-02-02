@@ -154,11 +154,6 @@
                   </a>
                 </li>
                 <li>
-                  <a href="${base}/manageFinalDegreeWork.do?method=showChooseExecutionDegreeForm&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="label.coordinator.thesis"/>
-                  </a>
-                </li>
-                <li>
                   <a href="${base}/manageThesis.do?method=listThesis&degreeCurricularPlanID=${dcp}">
                     <bean:message key="link.coordinator.thesis.list"/>
                   </a>

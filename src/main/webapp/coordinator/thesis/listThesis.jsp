@@ -87,6 +87,25 @@
 	    <p class="mvert0"><bean:message key="ThesisPresentationState.EVALUATED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.EVALUATED.label"/></p>
     </div>
 
+    <logic:present name="summary">
+    <table class="tstyle1 thlight thleft tdright mtop05">
+      <logic:iterate id="stateCount" name="summary" property="thesisCount">
+        <bean:define id="key" name="stateCount" property="key"/>
+        <tr>
+          <th>
+            <bean:write name="key" property="label"/>
+          </th>
+          <td>
+                <bean:define id="executionYearId" name="executionYearId"/>
+                <bean:write name="stateCount" property="value"/>
+        </td>
+      </tr>
+    </logic:iterate>
+  </table>
+</logic:present>
+
+
+
 	<% if (degreeCurricularPlan.isCurrentUserScientificCommissionMember(executionYear)) { %>
 
     <fr:view name="theses" schema="coordinator.thesis.table">
