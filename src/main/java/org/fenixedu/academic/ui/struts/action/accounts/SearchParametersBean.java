@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.commons.StringNormalizer;
@@ -44,6 +45,8 @@ public class SearchParametersBean implements Serializable {
     private String documentIdNumber;
 
     private String email;
+
+    private String socialSecurityNumber;
 
     public String getUsername() {
         return username;
@@ -77,8 +80,16 @@ public class SearchParametersBean implements Serializable {
         this.email = email;
     }
 
+    public String getSocialSecurityNumber() {
+        return socialSecurityNumber;
+    }
+
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
+        this.socialSecurityNumber = socialSecurityNumber;
+    }
+
     public Collection<Person> search() {
-        Stream<User> matches = filterEmail(filterDocumentIdNumber(filterName(filterUsername(null))));
+        Stream<User> matches = filterSocialSecurityNumber(filterEmail(filterDocumentIdNumber(filterName(filterUsername(null)))));
         return matches == null ? Collections.emptySet() : matches.map(u -> u.getPerson()).filter(Objects::nonNull)
                 .collect(Collectors.toSet());
     }
@@ -124,6 +135,18 @@ public class SearchParametersBean implements Serializable {
             } else {
                 return matches.filter(u -> u.getPerson().getEmailAddresses().stream().filter(a -> a.getValue().equals(email))
                         .findAny().isPresent());
+            }
+        }
+        return matches;
+    }
+
+    private Stream<User> filterSocialSecurityNumber(Stream<User> matches) {
+        if (!Strings.isNullOrEmpty(socialSecurityNumber)) {
+            if (matches == null) {
+                return Stream.of(Party.readByContributorNumber(socialSecurityNumber)).filter(Objects::nonNull)
+                        .filter(p -> p instanceof Person).map(p -> (Person) p).map(Person::getUser).filter(Objects::nonNull);
+            } else {
+                return matches.filter(u -> Objects.equals(u.getPerson().getSocialSecurityNumber(), socialSecurityNumber));
             }
         }
         return matches;

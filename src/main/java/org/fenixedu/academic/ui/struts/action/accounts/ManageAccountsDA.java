@@ -105,8 +105,12 @@ public class ManageAccountsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final PersonBean bean = getRenderedObject();
         try {
-            createAccount(bean);
-            return manageAccounts(mapping, actionForm, request, response);
+            Person person = createAccount(bean);
+            SearchParametersBean searchParametersBean = new SearchParametersBean();
+            searchParametersBean.setUsername(person.getUsername());
+            request.setAttribute("searchParameters", searchParametersBean);
+            request.setAttribute("matches", searchParametersBean.search());
+            return mapping.findForward("manageAccounts");
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             request.setAttribute("personBean", bean);

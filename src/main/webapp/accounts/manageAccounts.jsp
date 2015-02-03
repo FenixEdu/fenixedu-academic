@@ -34,6 +34,7 @@
 			<fr:slot name="name" />
 			<fr:slot name="documentIdNumber" />
 			<fr:slot name="email" />
+			<fr:slot name="socialSecurityNumber" />
 		</fr:schema>
 	</fr:edit>
 	<div class="col-sm-offset-2 col-sm-10">
