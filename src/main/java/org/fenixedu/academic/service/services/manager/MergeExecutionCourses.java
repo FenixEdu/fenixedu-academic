@@ -46,6 +46,9 @@ import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.domain.accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
+import org.fenixedu.academic.domain.accessControl.PersistentStudentGroup;
+import org.fenixedu.academic.domain.accessControl.PersistentTeacherGroup;
 import org.fenixedu.academic.domain.messaging.ConversationMessage;
 import org.fenixedu.academic.domain.messaging.ConversationThread;
 import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
@@ -122,6 +125,7 @@ public class MergeExecutionCourses {
         registerMergeHandler(MergeExecutionCourses::removeEvaluations);
         registerMergeHandler(MergeExecutionCourses::copyForuns);
         registerMergeHandler(MergeExecutionCourses::copyExecutionCourseLogs);
+        registerMergeHandler(MergeExecutionCourses::copyPersistentGroups);
         registerMergeHandler((from, to) -> to.getAssociatedCurricularCoursesSet()
                 .addAll(from.getAssociatedCurricularCoursesSet()));
         registerMergeHandler((from, to) -> to.copyLessonPlanningsFrom(from));
@@ -406,6 +410,19 @@ public class MergeExecutionCourses {
             executionCourseLog.setExecutionCourse(executionCourseTo);
         }
 
+    }
+
+    private static void copyPersistentGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+        for (PersistentStudentGroup group : executionCourseFrom.getStudentGroupSet()) {
+            group.setExecutionCourse(executionCourseTo);
+        }
+        for (PersistentSpecialCriteriaOverExecutionCourseGroup group : executionCourseFrom
+                .getSpecialCriteriaOverExecutionCourseGroupSet()) {
+            group.setExecutionCourse(executionCourseTo);
+        }
+        for (PersistentTeacherGroup group : executionCourseFrom.getTeacherGroupSet()) {
+            group.setExecutionCourse(executionCourseTo);
+        }
     }
 
     private static void dropEvaluationMethods(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {

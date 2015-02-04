@@ -132,7 +132,7 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
             MergeExecutionCourses.merge(destinationExecutionCourse, sourceExecutionCourse);
         } catch (DomainException ex) {
             error = true;
-            addActionMessage("error", request, ex.getMessage());
+            addActionMessage("error", request, ex.getLocalizedMessage());
         }
 
         if (!error) {
