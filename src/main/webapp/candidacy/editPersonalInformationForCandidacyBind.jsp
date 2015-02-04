@@ -62,7 +62,6 @@
 	<logic:notEmpty name="individualCandidacyProcessBean" property="personBean">
 		<p><strong><bean:message key="label.candidate.personal.data" bundle="CANDIDATE_RESOURCES"/></strong></p>
 		
-		<logic:equal name="individualCandidacyProcessBean" property="choosePersonBean.employee" value="false">
 		<fr:edit id="candidacyProcess.personalDataBean"
 			name="individualCandidacyProcessBean" property="personBean"
 			schema="CandidacyProcess.personalDataBean">
@@ -72,21 +71,7 @@
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=executeEditCandidacyPersonalInformationForBindInvalid&amp;processId=" + processId.toString() %>' />
 		</fr:edit>
-		</logic:equal>
 
-		<logic:equal name="individualCandidacyProcessBean" property="choosePersonBean.employee" value="true">
-		
-		<em><bean:message key="message.chosen.person.is.employee" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em> 
-		
-		<fr:view name="individualCandidacyProcessBean" property="personBean"
-			schema="CandidacyProcess.personalDataBean">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-			</fr:layout>
-		</fr:view>
-		</logic:equal>
-		
 		<logic:notEmpty name="individualCandidacyProcessBean" property="choosePersonBean.person">
 			<html:submit><bean:message key="button.join" bundle="APPLICATION_RESOURCES" /></html:submit>
 		</logic:notEmpty>
