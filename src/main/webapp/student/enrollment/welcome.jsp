@@ -31,20 +31,20 @@
 	request.setAttribute("executionSemester", executionSemester);
 %>
 
+<c:if test="${not empty debtsMessage}">
+    <div class="alert alert-danger">
+        ${fr:message('resources.ApplicationResources', debtsMessage)}
+    </div>
+</c:if>
+
 <logic:present name="executionSemester" property="enrolmentInstructions">
-	<bean:write name="executionSemester" property="enrolmentInstructions.tempInstructions.content" filter="false"/>
+    <bean:write name="executionSemester" property="enrolmentInstructions.tempInstructions.content" filter="false"/>
 </logic:present>
 
 <bean:define id="registrationOid" name="registration" property="externalId" />
 
-<c:if test="${not empty debtsMessage}">
-<div class="alert alert-danger">
-    ${fr:message('resources.ApplicationResources', debtsMessage)}
-</div>
-</c:if>
-
 <c:if test="${empty debtsMessage}">
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registrationOid}">
-    ${fr:message('resources.ApplicationResources', 'label.continue')}
-</a>
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registrationOid}">
+        ${fr:message('resources.ApplicationResources', 'label.continue')}
+    </a>
 </c:if>

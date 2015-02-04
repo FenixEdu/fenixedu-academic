@@ -46,13 +46,10 @@
 			<html:link action="/bolonhaStudentEnrollment.do?method=showEnrollmentInstructions" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewInstructions"/></html:link>
 		</li>
 		<li>
-			<bean:define id="studentCurricularPlan" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan" />
-
-			<bean:define id="degreeId" name="studentCurricularPlan" property="degree.externalId" />
-			<bean:define id="degreeCurricularPlanId" name="studentCurricularPlan" property="degreeCurricularPlan.externalId" />
-			<bean:define id="executionPeriodId" name="bolonhaStudentEnrollmentBean" property="executionPeriod.externalId" />
+			<bean:define id="studentCurricularPlan" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan" type="org.fenixedu.academic.domain.StudentCurricularPlan" />
+			<bean:define id="siteUrl" name="studentCurricularPlan" property="degree.siteUrl" type="java.lang.String" />
 			
-			<html:link href="<%=request.getContextPath() + "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?organizeBy=groups&amp;showRules=false&amp;hideCourses=false&amp;degreeID=" + degreeId + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanId + "&amp;executionPeriodOID=" + executionPeriodId %>" styleClass="externallink" target="_blank">
+			<html:link href="<%= siteUrl %>" styleClass="externallink" target="_blank">
 				<bean:message bundle="STUDENT_RESOURCES"  key="label.viewDegreeCurricularPlan"/>
 			</html:link>
 		</li>

@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.ShiftToEnrol;
@@ -52,6 +51,7 @@ import org.fenixedu.academic.ui.struts.action.student.StudentApplication.Student
 import org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler;
 import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 import org.fenixedu.academic.util.ExecutionDegreesFormat;
+import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.struts.annotations.ExceptionHandling;
 import org.fenixedu.bennu.struts.annotations.Exceptions;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -207,6 +207,9 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
             return mapping.getInputForward();
         } catch (FenixServiceException exception) {
             addActionMessage(request, exception.getMessage());
+            return mapping.getInputForward();
+        } catch (DomainException de) {
+            addActionMessage(request, de.getLocalizedMessage(), false);
             return mapping.getInputForward();
         }
 
