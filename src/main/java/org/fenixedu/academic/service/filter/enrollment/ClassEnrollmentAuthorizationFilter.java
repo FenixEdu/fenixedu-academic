@@ -165,7 +165,7 @@ public class ClassEnrollmentAuthorizationFilter {
         }
 
         public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(String message) {
-            super(message);
+            super("error.enrollment.period.closed", new String[] { message });
         }
     }
 

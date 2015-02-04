@@ -314,17 +314,10 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         degreeCurricularPlanLink.setText(studentCurriculumGroupBean.getCurriculumModule().getName().getContent());
         degreeCurricularPlanLink.setModuleRelative(false);
         degreeCurricularPlanLink.setTarget("_blank");
-        degreeCurricularPlanLink.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
+        degreeCurricularPlanLink.setContextRelative(false);
+        degreeCurricularPlanLink.setUrl(studentCurriculumGroupBean.getCurriculumModule().getStudentCurricularPlan().getDegree()
+                .getSiteUrl());
 
-        final StudentCurricularPlan studentCurricularPlan = getBolonhaStudentEnrollmentBean().getStudentCurricularPlan();
-        degreeCurricularPlanLink.setParameter("organizeBy", "groups");
-        degreeCurricularPlanLink.setParameter("showRules", "false");
-        degreeCurricularPlanLink.setParameter("hideCourses", "false");
-        degreeCurricularPlanLink.setParameter("degreeID", studentCurricularPlan.getDegree().getExternalId());
-        degreeCurricularPlanLink.setParameter("degreeCurricularPlanID", studentCurricularPlan.getDegreeCurricularPlan()
-                .getExternalId());
-        degreeCurricularPlanLink.setParameter("executionPeriodOID", getBolonhaStudentEnrollmentBean().getExecutionPeriod()
-                .getExternalId());
         return degreeCurricularPlanLink;
     }
 
