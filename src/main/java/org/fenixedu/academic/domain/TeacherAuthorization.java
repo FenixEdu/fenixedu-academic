@@ -141,6 +141,10 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
 
     @Override
     public int compareTo(TeacherAuthorization o) {
+        int semester = getExecutionSemester().compareTo(o.getExecutionSemester());
+        if (semester != 0) {
+            return semester;
+        }
         int category = getTeacherCategory().compareTo(o.getTeacherCategory());
         if (category != 0) {
             return category;
