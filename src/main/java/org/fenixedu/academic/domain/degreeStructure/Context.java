@@ -319,7 +319,13 @@ public class Context extends Context_Base implements Comparable<Context> {
         return isOpen(ExecutionSemester.readActualExecutionSemester());
     }
 
+    //only checks for intersection, not a full contains
+    @Deprecated
     public boolean contains(final ExecutionSemester begin, final ExecutionSemester end) {
+        return intersects(begin, end);
+    }
+
+    public boolean intersects(final ExecutionSemester begin, final ExecutionSemester end) {
         if (end != null && begin.isAfter(end)) {
             throw new DomainException("context.begin.is.after.end.execution.period");
         }
@@ -328,6 +334,24 @@ public class Context extends Context_Base implements Comparable<Context> {
             return getEndExecutionPeriod() == null || begin.isBeforeOrEquals(getEndExecutionPeriod());
         } else {
             return end == null || end.isAfterOrEquals(getBeginExecutionPeriod());
+        }
+    }
+
+    /**
+     * 
+     * Beware of {@link #contains(ExecutionSemester, ExecutionSemester)} method because it only checks for intersection, not a
+     * full
+     * contains.
+     * 
+     * This method ensures that begin and end are contained within context interval
+     * 
+     * @return
+     */
+    public boolean containsInterval(ExecutionInterval begin, ExecutionInterval end) {
+        if (begin.isAfterOrEquals(getBeginExecutionPeriod())) {
+            return (getEndExecutionPeriod() == null) || (end != null && !end.isAfter(getEndExecutionPeriod()));
+        } else {
+            return false;
         }
     }
 

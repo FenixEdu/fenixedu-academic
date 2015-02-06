@@ -44,6 +44,7 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
@@ -1862,6 +1863,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
         sortedExecutionDegrees.addAll(getExecutionDegreesSet());
         return sortedExecutionDegrees.last().getExecutionYear().equals(executionYear.getPreviousExecutionYear());
+    }
+
+    public ExecutionInterval getBegin() {
+        Set<ExecutionYear> beginContextExecutionYears = getBeginContextExecutionYears();
+        return beginContextExecutionYears.isEmpty() ? null : Collections.min(beginContextExecutionYears,
+                ExecutionYear.COMPARATOR_BY_YEAR);
+
     }
 
     public Set<ExecutionYear> getBeginContextExecutionYears() {

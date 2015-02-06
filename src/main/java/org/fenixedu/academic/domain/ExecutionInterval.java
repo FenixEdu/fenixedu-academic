@@ -36,6 +36,8 @@ import org.fenixedu.academic.domain.period.StandaloneCandidacyPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
@@ -244,6 +246,11 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
     }
 
+    public LocalDate getBeginLocalDate() {
+        final YearMonthDay result = getBeginDateYearMonthDay();
+        return result == null ? null : result.toLocalDate();
+    }
+
     @Deprecated
     public void setBeginDate(java.util.Date date) {
         if (date == null) {
@@ -257,6 +264,11 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public java.util.Date getEndDate() {
         org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
         return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
+
+    public LocalDate getEndLocalDate() {
+        final YearMonthDay result = getEndDateYearMonthDay();
+        return result == null ? null : result.toLocalDate();
     }
 
     @Deprecated
