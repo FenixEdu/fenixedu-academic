@@ -662,4 +662,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate);
 
+    public boolean isOptionalCourseGroup() {
+        return false;
+    }
 }

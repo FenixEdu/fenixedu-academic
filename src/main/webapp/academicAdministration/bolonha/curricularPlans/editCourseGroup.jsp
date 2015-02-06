@@ -59,6 +59,14 @@
 		<h:message for="nameEn" styleClass="error0"/>
 		<h:outputText value="</p>" escape="false"/>
 		
+		<h:outputText value="<p><label>#{bolonhaBundle['optional']}:</label> " escape="false"/>
+		<h:selectOneRadio id="isOptional" value="#{CourseGroupManagement.isOptional}" styleClass="nospace" required="true">
+			<f:selectItem itemLabel="#{bolonhaBundle['yes']}" itemValue="#{true}"/>
+			<f:selectItem itemLabel="#{bolonhaBundle['no']}" itemValue="#{false}"/>
+		</h:selectOneRadio>
+		<h:message for="isOptional" styleClass="error0"/>
+		<h:outputText value="</p>" escape="false"/>
+		
 		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
 		<h:selectOneMenu value="#{CourseGroupManagement.beginExecutionPeriodID}">
 			<f:selectItems value="#{CourseGroupManagement.beginExecutionPeriodItems}" />
@@ -75,7 +83,7 @@
 
 		<h:outputText value="</fieldset></div>" escape="false"/>	
 			
-		<h:outputText value="<p>" escape="false"/>
+		<h:outputText value="<br/><p>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{bolonhaBundle['save']}"
 			action="#{CourseGroupManagement.editCourseGroup}"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
