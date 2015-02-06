@@ -99,7 +99,7 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
             return Integer.valueOf(0);
         }
 
-        return plan.getDegreeType().getYears();
+        return plan.getDegreeCurricularPlan().getDurationInYears();
     }
 
     private AverageType averageType = AverageType.WEIGHTED;

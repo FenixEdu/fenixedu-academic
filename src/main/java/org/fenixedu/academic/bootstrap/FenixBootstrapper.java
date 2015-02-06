@@ -281,6 +281,7 @@ public class FenixBootstrapper {
         new CurricularYear(Integer.valueOf(3), 2);
         new CurricularYear(Integer.valueOf(4), 2);
         new CurricularYear(Integer.valueOf(5), 2);
+        new CurricularYear(Integer.valueOf(6), 2);
     }
 
     private static Country createCountries(SchoolSetupSection schoolSection) {

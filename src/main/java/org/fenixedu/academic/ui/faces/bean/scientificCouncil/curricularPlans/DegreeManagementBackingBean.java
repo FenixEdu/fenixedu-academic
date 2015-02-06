@@ -236,8 +236,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
 
         for (DegreeType degreeType : DegreeType.NOT_EMPTY_BOLONHA_VALUES) {
-            result.add(new SelectItem(degreeType.name(), BundleUtil.getString(Bundle.ENUMERATION, degreeType.getName()) + " ("
-                    + degreeType.getYears() + " ano(s))"));
+            result.add(new SelectItem(degreeType.name(), BundleUtil.getString(Bundle.ENUMERATION, degreeType.getName())));
         }
 
         return result;

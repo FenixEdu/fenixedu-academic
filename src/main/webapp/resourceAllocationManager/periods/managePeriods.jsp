@@ -242,6 +242,10 @@
 					<label for="fifth-year"><bean:message key="label.fiveth.year" bundle="APPLICATION_RESOURCES"/></label>
 				</span>
 				<span>
+					<input type="checkbox" name="sixth-year" value="" id="sixth-year" checked>
+					<label for="sixth-year"><bean:message key="label.sixth.year" bundle="APPLICATION_RESOURCES"/></label>
+				</span>
+				<span>
 					<input type="checkbox" name="all-year" value="" id="all-year" checked>
 					<label for="all-year"><bean:message key="label.all.years" bundle="SOP_RESOURCES"/></label>
 				</span>
@@ -264,7 +268,7 @@
 										<div class="draggable_course">
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-											<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+											<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
 											<div id="name"><bean:write name="degree" property="degreeName"/></div>
 										</div>
 									</logic:equal>
@@ -289,7 +293,7 @@
 										<div class="draggable_course">
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-											<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+											<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
 											<div id="name"><bean:write name="degree" property="degreeName"/></div>
 										</div>
 									</logic:equal>
@@ -314,7 +318,7 @@
 										<div class="draggable_course">
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-											<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+											<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
 											<div id="name"><bean:write name="degree" property="degreeName"/></div>
 										</div>
 									</logic:equal>
@@ -338,7 +342,7 @@
 									<div class="draggable_course">
 										<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 										<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-										<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+										<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
 										<div id="name"><bean:write name="degree" property="degreeName"/></div>
 									</div>							
 								</logic:equal>

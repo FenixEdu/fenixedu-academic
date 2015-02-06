@@ -21,6 +21,8 @@ package org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.faces.event.ActionEvent;
@@ -35,6 +37,8 @@ import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricular
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.InfoExecutionYear;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
@@ -64,6 +68,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     private String gradeScale;
     private String[] selectedGroupMembersToDelete;
     private String newGroupMember;
+    private String durationTypeName;
+    private List<SelectItem> durationTypes = null;
 
     public String getAction() {
         return getAndHoldStringParameter("action");
@@ -311,7 +317,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public String editCurricularPlan() {
         try {
             EditDegreeCurricularPlan.run(getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()),
-                    DegreeCurricularPlanState.valueOf(getState()), null, getExecutionYearID());
+                    DegreeCurricularPlanState.valueOf(getState()), null, getExecutionYearID(), getDuration());
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
@@ -357,6 +363,49 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
     public void setSelectedGroupMembersToDelete(String[] selectedGroupMembersToDelete) {
         this.selectedGroupMembersToDelete = selectedGroupMembersToDelete;
+    }
+
+    public String getDurationTypeName() {
+        if (durationTypeName == null && getDcp() != null) {
+            final AcademicPeriod duration = getDcp().getDegreeStructure().getAcademicPeriod();
+            return duration != null ? (durationTypeName = duration.getRepresentationInStringFormat()) : null;
+        }
+
+        return durationTypeName;
+    }
+
+    public void setDurationTypeName(String durationTypeName) {
+        this.durationTypeName = durationTypeName;
+    }
+
+    private AcademicPeriod getDuration() {
+        return getDurationTypeName().equals(NO_SELECTION) ? null : AcademicPeriod
+                .getAcademicPeriodFromString(getDurationTypeName());
+    }
+
+    public List<SelectItem> getDurationTypes() {
+        return (durationTypes == null) ? (durationTypes = readDurationTypes()) : durationTypes;
+    }
+
+    private List<SelectItem> readDurationTypes() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        final Set<AcademicPeriod> sortedPeriods = new TreeSet<>(Collections.reverseOrder());
+        sortedPeriods.addAll(AcademicPeriod.values());
+
+        for (final AcademicPeriod entry : sortedPeriods) {
+
+            if (!(entry instanceof AcademicYears)) {
+                //only year multiples are supported
+                continue;
+            }
+
+            result.add(new SelectItem(entry.getRepresentationInStringFormat(), BundleUtil.getString(Bundle.ENUMERATION,
+                    entry.getName())));
+        }
+
+        result.add(0, new SelectItem(NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
+
+        return result;
     }
 
 }

@@ -482,7 +482,7 @@ a,input,.symbol {
 
 <script type="text/javascript">
 
-	var selectedYears = new Array(1, 1, 1, 1, 1, 1);
+	var selectedYears = new Array(1, 1, 1, 1, 1, 1, 1);
 	
 	function removeFunction() {
 		if(!confirm("Tem a certeza que pretende remover o curso seleccionado?"))
@@ -541,7 +541,7 @@ a,input,.symbol {
 	function getYears(maxYears) {
 		var years = new Array();
 		
-		if(selectedYears[5]) {
+		if(selectedYears[6]) {
 			years.push(-1);
 		} else {
 			for(i = 0; i < maxYears; i++) {
@@ -759,7 +759,7 @@ a,input,.symbol {
 				$("#first-year").change(function(){
 					if(!$(this).is(":checked")) {
 						$("input[name=all-year]").attr("checked", false);
-						selectedYears[5] = false;
+						selectedYears[6] = false;
 					}
 					selectedYears[0] ^= true;
 				});
@@ -767,7 +767,7 @@ a,input,.symbol {
 				$("#second-year").change(function(){
 					if(!$(this).is(":checked")) {
 						$("input[name=all-year]").attr("checked", false);
-						selectedYears[5] = false;
+						selectedYears[6] = false;
 					}
 					selectedYears[1] ^= true;
 				});
@@ -775,7 +775,7 @@ a,input,.symbol {
 				$("#third-year").change(function(){
 					if(!$(this).is(":checked")) {
 						$("input[name=all-year]").attr("checked", false);
-						selectedYears[5] = false;
+						selectedYears[6] = false;
 					}
 					selectedYears[2] ^= true;
 				});
@@ -783,7 +783,7 @@ a,input,.symbol {
 				$("#fourth-year").change(function(){
 					if(!$(this).is(":checked")) {
 						$("input[name=all-year]").attr("checked", false);
-						selectedYears[5] = false;
+						selectedYears[6] = false;
 					}
 					selectedYears[3] ^= true;
 				});
@@ -791,9 +791,17 @@ a,input,.symbol {
 				$("#fifth-year").change(function(){
 					if(!$(this).is(":checked")) {
 						$("input[name=all-year]").attr("checked", false);
-						selectedYears[5] = false;
+						selectedYears[6] = false;
 					}
 					selectedYears[4] ^= true;
+				});
+				
+				$("#sixth-year").change(function(){
+					if(!$(this).is(":checked")) {
+						$("input[name=all-year]").attr("checked", false);
+						selectedYears[6] = false;
+					}
+					selectedYears[5] ^= true;
 				});
 				
 				$("#all-year").change(function(){
@@ -815,7 +823,10 @@ a,input,.symbol {
 					$("input[name=fifth-year]").attr("checked", checked);
 					selectedYears[4] = checked;
 					
-					selectedYears[5] ^= true;
+					$("input[name=sixth-year]").attr("checked", checked);
+					selectedYears[5] = checked;
+					
+					selectedYears[6] ^= true;
 				});
 				
 				$(".courses-list li img").click(removeFunction);

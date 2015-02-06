@@ -377,7 +377,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                             || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)
                             || degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) || degree
                             .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
-                for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
+                for (int i = 1; i <= degree.getMostRecentDegreeCurricularPlan().getDurationInYears(); i++) {
                     EctsDegreeByCurricularYearConversionTable table =
                             EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval()).getEnrolmentTableBy(degree,
                                     CurricularYear.readByYear(i));

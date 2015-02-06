@@ -124,8 +124,8 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
         row.setCell(normalize(degree.getNameFor(executionYear).getContent(MultiLanguageString.en)));
 
         row.setCell(degree.getDegreeType().getLocalizedName());
-        row.setCell(degree.getDegreeType().getYears());
-        row.setCell(degree.getDegreeType().getYears() * 40);
+        row.setCell(degreeCurricularPlan.getDurationInYears());
+        row.setCell(degreeCurricularPlan.getDurationInYears() * 40);
         row.setCell(degree.getEctsCredits());
 
         final DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(executionYear);

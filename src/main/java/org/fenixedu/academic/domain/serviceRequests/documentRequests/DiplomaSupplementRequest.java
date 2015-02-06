@@ -273,16 +273,13 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public Integer getNumberOfCurricularYears() {
-        Registration registration = getRegistration();
-        DegreeType degreeType = registration.getDegree().getDegreeType();
-        return degreeType.getYears(getRequestedCycle());
+        return getRegistration().getLastStudentCurricularPlan().getDegreeCurricularPlan().getDurationInYears(getRequestedCycle());
     }
 
     @Override
     public Integer getNumberOfCurricularSemesters() {
-        Registration registration = getRegistration();
-        DegreeType degreeType = registration.getDegree().getDegreeType();
-        return degreeType.getSemesters(getRequestedCycle());
+        return getRegistration().getLastStudentCurricularPlan().getDegreeCurricularPlan()
+                .getDurationInSemesters(getRequestedCycle());
     }
 
     @Override

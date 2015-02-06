@@ -512,4 +512,24 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     public boolean hasExecutionDegreeFor(ExecutionYear executionYear) {
         return true;
     }
+
+    @Override
+    public int getDurationInYears() {
+        return 0;
+    }
+
+    @Override
+    public int getDurationInSemesters() {
+        return 0;
+    }
+
+    @Override
+    public int getDurationInYears(CycleType cycleType) {
+        return 0;
+    }
+
+    @Override
+    public int getDurationInSemesters(CycleType cycleType) {
+        return 0;
+    }
 }

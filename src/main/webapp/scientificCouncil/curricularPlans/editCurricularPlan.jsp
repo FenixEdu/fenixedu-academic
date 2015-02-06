@@ -72,6 +72,13 @@
 		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" disabled="#{DegreeCurricularPlanManagement.curricularStage == 'APPROVED'}" value="#{DegreeCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
 		<h:message for="name" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{scouncilBundle['duration']}:</label>" escape="false"/>
+		<h:selectOneMenu id="durationTypeName" value="#{DegreeCurricularPlanManagement.durationTypeName}" required="true">
+			<f:selectItems value="#{DegreeCurricularPlanManagement.durationTypes}" />
+		</h:selectOneMenu>
+		<h:message for="durationTypeName" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
+		<h:outputText value="</p>" escape="false"/>
 			
 		<h:outputText value="</fieldset></div>" escape="false"/>
 

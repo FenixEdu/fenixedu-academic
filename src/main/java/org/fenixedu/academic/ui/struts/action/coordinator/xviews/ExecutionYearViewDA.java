@@ -283,7 +283,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
         JsonArray curricularCoursesJsonArray = new JsonArray();
 
-        int years = degreeCurricularPlan.getDegreeType().getYears();
+        int years = degreeCurricularPlan.getDurationInYears();
         for (int i = 1; i <= years; i++) {
             JsonObject year = new JsonObject();
             year.addProperty("year", i);
