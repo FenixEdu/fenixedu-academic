@@ -18,13 +18,10 @@
  */
 package org.fenixedu.academic.dto.contacts;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.PhoneUtil;
@@ -63,7 +60,6 @@ public class PhoneBean extends PartyContactBean {
 
     @Override
     public PartyContact createNewContact() {
-        check(this, RolePredicates.PARTY_CONTACT_BEAN_PREDICATE);
         return Phone.createPhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
                 getVisibleToStudents(), getVisibleToStaff());
     }

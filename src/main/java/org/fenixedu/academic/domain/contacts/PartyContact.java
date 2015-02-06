@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.contacts;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +28,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonInformationLog;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -225,13 +222,11 @@ public abstract class PartyContact extends PartyContact_Base {
 
     @Atomic
     public void deleteWithoutCheckRules() {
-        check(this, RolePredicates.PARTY_CONTACT_PREDICATE);
         processDelete();
     }
 
     @Atomic
     public void delete() {
-        check(this, RolePredicates.PARTY_CONTACT_PREDICATE);
         if (isActiveAndValid()) {
             checkRulesToDelete();
         }

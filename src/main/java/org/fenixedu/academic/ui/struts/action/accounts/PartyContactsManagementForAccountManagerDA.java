@@ -51,6 +51,13 @@ public class PartyContactsManagementForAccountManagerDA extends PartyContactsMan
     }
 
     @Override
+    public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response, PartyContact partyContact) {
+        request.setAttribute("personID", partyContact.getParty().getExternalId());
+        return backToShowInformation(mapping, actionForm, request, response);
+    }
+
+    @Override
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("person", getParty(request));

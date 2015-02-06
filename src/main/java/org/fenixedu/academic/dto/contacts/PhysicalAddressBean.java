@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.dto.contacts;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactValidation;
@@ -27,7 +25,6 @@ import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressValidation;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -154,7 +151,6 @@ public class PhysicalAddressBean extends PartyContactBean {
 
     @Override
     public PartyContact createNewContact() {
-        check(this, RolePredicates.PARTY_CONTACT_BEAN_PREDICATE);
         return PhysicalAddress.createPhysicalAddress(getParty(), new PhysicalAddressData(getAddress(), getAreaCode(),
                 getAreaOfAreaCode(), getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(),
                 getDistrictOfResidence(), getCountryOfResidence()), getType(), getDefaultContact());

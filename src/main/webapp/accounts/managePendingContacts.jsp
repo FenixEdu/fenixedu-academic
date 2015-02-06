@@ -76,9 +76,11 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
-						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
-					</html:link>
+					<logic:present role="role(MANAGER)">
+						<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
+						</html:link>
+					</logic:present>
 				</logic:equal>
 			</td>
 		</tr>
@@ -123,15 +125,17 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<html:link action="/accounts/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
-						<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
-					</html:link>,
-					<html:link action="/accounts/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
-						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
-					</html:link>,
-					<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
-						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
-					</html:link>
+					<logic:present role="role(MANAGER)">
+						<html:link action="/accounts/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+							<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
+						</html:link>,
+						<html:link action="/accounts/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+							<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
+						</html:link>,
+						<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
+						</html:link>
+					</logic:present>
 				</logic:equal>
 			</td>
 		</tr>
@@ -176,15 +180,17 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<html:link action="/accounts/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
-						<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
-					</html:link>,
-					<html:link action="/accounts/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
-						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
-					</html:link>,
-					<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
-						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
-					</html:link>
+					<logic:present role="role(MANAGER)">
+						<html:link action="/accounts/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+							<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
+						</html:link>,
+						<html:link action="/accounts/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+							<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
+						</html:link>,
+						<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
+						</html:link>
+					</logic:present>
 				</logic:equal>
 			</td>
 		</tr>
@@ -232,9 +238,11 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
-						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
-					</html:link>
+					<logic:present role="role(MANAGER)">
+						<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
+						</html:link>
+					</logic:present>
 				</logic:equal>
 			</td>
 		</tr>

@@ -32,6 +32,7 @@ import org.fenixedu.bennu.core.security.Authenticate;
 
 public class RolePredicates {
 
+    @Deprecated
     public static class PartyContactPredicate implements AccessControlPredicate<PartyContact> {
 
         private static boolean isSelfPerson(Party person) {
@@ -59,8 +60,10 @@ public class RolePredicates {
         };
     }
 
+    @Deprecated
     public static final PartyContactPredicate PARTY_CONTACT_PREDICATE = new PartyContactPredicate();
 
+    @Deprecated
     public static final AccessControlPredicate<PartyContactBean> PARTY_CONTACT_BEAN_PREDICATE =
             new AccessControlPredicate<PartyContactBean>() {
 
