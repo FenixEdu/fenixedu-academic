@@ -315,8 +315,7 @@ public class MergeExecutionCourses {
     }
 
     private static void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        for (; !executionCourseFrom.getProfessorshipsSet().isEmpty();) {
-            final Professorship professorship = executionCourseFrom.getProfessorshipsSet().iterator().next();
+        for (Professorship professorship : executionCourseFrom.getProfessorshipsSet()) {
             Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
             if (otherProfessorship == null) {
                 otherProfessorship =
