@@ -48,7 +48,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
     protected void fillReport() {
         final AdministrativeOffice administrativeOffice = process.getPhdProgram().getAdministrativeOffice();
 
-        addParameter("administrativeOfficeName", administrativeOffice.getName());
+        addParameter("administrativeOfficeName", administrativeOffice.getName().getContent());
         addParameter("administrativeOfficeCoordinator", administrativeOffice.getCoordinator().getProfile().getDisplayName());
 
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
