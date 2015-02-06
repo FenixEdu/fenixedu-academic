@@ -30,14 +30,16 @@ import org.fenixedu.academic.domain.PublicCandidacyHashCode;
 import org.fenixedu.academic.service.services.exceptions.PasswordInitializationException;
 import org.fenixedu.academic.service.services.person.InitializePassword;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.publico.candidacies.erasmus.ErasmusIndividualCandidacyProcessPublicDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/internationalRegistration", scope = "request", parameter = "method", validate = true,
-        formBean = "internationalRegistrationForm", formBeanClass = InternationalRegistrationForm.class)
-@Forwards({ @Forward(name = "international-registration", path = "/publico/candidacy/internationalRegistration.jsp"),
-        @Forward(name = "success", path = "/publico/candidacy/internationalRegistrationSuccess.jsp") })
+        formBean = "internationalRegistrationForm", formBeanClass = InternationalRegistrationForm.class,
+        functionality = ErasmusIndividualCandidacyProcessPublicDA.class)
+@Forwards({ @Forward(name = "international-registration", path = "/publico/candidacy/internationalRegistration_bd.jsp"),
+        @Forward(name = "success", path = "/publico/candidacy/internationalRegistrationSuccess_bd.jsp") })
 public class InternationalRegistrationDA extends FenixDispatchAction {
 
     public ActionForward showInternationalRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
