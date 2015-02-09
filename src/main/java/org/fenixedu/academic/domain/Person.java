@@ -1579,8 +1579,8 @@ public class Person extends Person_Base {
     }
 
     public boolean isOptOutAvailable() {
-        // TODO Properly implement this
-        return false;
+        Group optOutGroup = Bennu.getInstance().getSystemSender().getOptOutGroup();
+        return optOutGroup.isMember(this.getUser());
     }
 
     @Deprecated
