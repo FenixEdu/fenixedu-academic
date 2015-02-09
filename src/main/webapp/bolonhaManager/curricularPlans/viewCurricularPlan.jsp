@@ -149,7 +149,7 @@
 		organizeBy="<%=request.getParameter("organizeBy")%>"
 		showRules="<%=request.getParameter("showRules")%>"
 		hideCourses="<%=request.getParameter("hideCourses")%>"
-		module="/bolonhaManager"/>
+		module="/bolonhaManager/curricularPlans"/>
 
 	<h:outputText value="<p>" escape="false"/>
 	<h:form>

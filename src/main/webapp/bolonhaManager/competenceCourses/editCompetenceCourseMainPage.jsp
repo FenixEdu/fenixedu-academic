@@ -52,15 +52,16 @@
 		<h:outputText value="<ul class='mtop0 mbottom3'>" escape="false"/>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">			
 			<h:outputText value="<li>" escape="false"/>
-			<h:outputLink value="../curricularPlans/viewCurricularPlan.faces" target="_blank">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/curricularPlans/viewCurricularPlan.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 				<f:param name="action" value="close"/>
 			</h:outputLink>
 			<h:outputText value=" > "/>
-			<h:outputLink value="../curricularPlans/viewCurricularCourse.faces" target="_blank">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/curricularPlans/viewCurricularCourse.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.name}" escape="false"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 				<f:param name="action" value="close"/>
 			</h:outputLink>
 			<h:outputText value="</li>" escape="false"/>
