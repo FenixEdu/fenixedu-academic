@@ -10433,6 +10433,11 @@ relation RootDomainObjectSystemSender {
     util.email.SystemSender playsRole systemSender;
 }
 
+relation SystemSenderOptOutGroup {
+    protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole optOutPersistentGroup;
+    util.email.SystemSender playsRole systemSender;
+}
+
 relation UtilEmailSenderUtilEmailMessage {
     util.email.Sender playsRole sender;
     util.email.Message playsRole messages {
