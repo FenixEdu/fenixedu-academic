@@ -11828,7 +11828,7 @@ relation PersistentTeachersWithIncompleteEvaluationWorkGroupDegreeCurricularPlan
         multiplicity *;
     }
     public DegreeCurricularPlan playsRole degreeCurricularPlan {
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
 }
 

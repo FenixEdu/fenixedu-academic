@@ -32,6 +32,11 @@ import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
 
+/**
+ * @deprecated pointless group used via programmatic API to send email, never seen by a user its main purpose is to create
+ *             hundreds of objects in the database just to send a notification to delayed teachers.
+ */
+@Deprecated
 @GroupOperator("teachersWithMarkSheetsToConfirm")
 public class TeachersWithMarkSheetsToConfirmGroup extends FenixGroup {
     private static final long serialVersionUID = -6490147275585620321L;
@@ -57,7 +62,18 @@ public class TeachersWithMarkSheetsToConfirmGroup extends FenixGroup {
     }
 
     @Override
+    public String getPresentationNameKey() {
+        if (degreeCurricularPlan == null) {
+            return super.getPresentationNameKey() + ".allDegrees";
+        }
+        return super.getPresentationNameKey();
+    }
+
+    @Override
     public String[] getPresentationNameKeyArgs() {
+        if (degreeCurricularPlan == null) {
+            return new String[] { period.getName() };
+        }
         return new String[] { degreeCurricularPlan.getPresentationName(), period.getName() };
     }
 
