@@ -147,7 +147,7 @@
 		organizeBy="<%=request.getParameter("organizeBy")%>"
 		showRules="<%=request.getParameter("showRules")%>"
 		hideCourses="<%=request.getParameter("hideCourses")%>"
-		module="/pedagogicalCouncil"/>
+		module="/pedagogicalCouncil/curricularPlans"/>
 
 	<h:outputText value="<p>" escape="false"/>
 	<h:form>

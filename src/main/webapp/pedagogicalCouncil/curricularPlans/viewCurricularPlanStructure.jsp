@@ -39,7 +39,7 @@
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		onlyStructure="true"
-		module="/pedagogicalCouncil"/>
+		module="/pedagogicalCouncil/curricularPlans"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>

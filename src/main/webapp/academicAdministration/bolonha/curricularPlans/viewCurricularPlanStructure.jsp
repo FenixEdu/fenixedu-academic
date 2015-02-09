@@ -52,8 +52,8 @@
 			dcp="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan}" 
 			onlyStructure="true"
 			executionYear="#{AcademicAdministrationCurricularCourseManagement.executionYear}"
-			module="/academicAdministration/bolonha"/>
-		
+			module="/academicAdministration/bolonha/curricularPlans"/>
+
 		<h:outputText value="<br/><p>" escape="false"/>
 
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}'/>"/>
