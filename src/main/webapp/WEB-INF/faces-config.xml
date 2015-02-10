@@ -1959,10 +1959,10 @@
 	<!-- End Custom Components -->
 	
 	<!-- Backing bean for evaluations consulting by delegates -->
-	<managed-bean>
-		<managed-bean-name>evaluationsForDelegates</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.delegate.EvaluationsForDelegatesConsultingBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
+      <managed-bean>
+                <managed-bean-name>evaluationsForDelegates</managed-bean-name>
+                <managed-bean-class>pt.ist.fenixedu.delegates.ui.struts.EvaluationsForDelegatesConsultingBackingBean</managed-bean-class>
+                <managed-bean-scope>request</managed-bean-scope>
+        </managed-bean>
 			
 </faces-config>
