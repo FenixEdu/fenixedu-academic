@@ -27,6 +27,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -84,10 +85,11 @@ public class TeachersManagerDA extends ExecutionCourseBaseAction {
         }
 
         Person person = Person.readPersonByUsername(request.getParameter("teacherId"));
+        final ExecutionCourse executionCourse = getExecutionCourse(request);
 
         if (person != null) {
-            if (person.getTeacher().hasTeacherAuthorization()) {
-                Professorship professorship = Professorship.create(false, getExecutionCourse(request), person);
+            if (person.getTeacher() != null && person.getTeacher().hasTeacherAuthorization(executionCourse.getAcademicInterval())) {
+                Professorship professorship = Professorship.create(false, executionCourse, person);
                 request.setAttribute("teacherOID", professorship.getExternalId());
             } else {
                 final ActionMessages actionErrors = new ActionErrors();
