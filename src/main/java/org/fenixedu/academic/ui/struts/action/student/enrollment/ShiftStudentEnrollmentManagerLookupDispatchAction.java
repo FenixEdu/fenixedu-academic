@@ -119,6 +119,10 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDisp
             addActionMessage(request, e.getMessage(), e.getArgs());
             return mapping.findForward("prepareShiftEnrollment");
 
+        } catch (org.fenixedu.bennu.core.domain.exceptions.DomainException de) {
+            addActionMessage(request, de.getLocalizedMessage(), false);
+            return mapping.findForward("prepareShiftEnrollment");
+
         } catch (FenixServiceException ex) {
             addActionMessage(request, ex.getMessage(), ex.getArgs());
             return mapping.findForward("prepareShiftEnrollment");
