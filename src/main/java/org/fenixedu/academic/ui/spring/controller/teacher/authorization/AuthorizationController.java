@@ -90,7 +90,7 @@ public class AuthorizationController {
     @RequestMapping(method = GET)
     public String home(Model model, @ModelAttribute FormBean search) {
         if (search.getPeriod() == null) {
-            search.setPeriod(service.getExecutionPeriods().isEmpty() ? null : service.getExecutionPeriods().get(0));
+            search.setPeriod(service.getCurrentPeriod());
         }
         model.addAttribute("search", search);
         model.addAttribute("departments", service.getDepartments());
