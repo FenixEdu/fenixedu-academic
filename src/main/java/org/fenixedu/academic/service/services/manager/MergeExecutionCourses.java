@@ -213,7 +213,7 @@ public class MergeExecutionCourses {
             if (evaluation instanceof FinalEvaluation) {
                 final FinalEvaluation finalEvaluationFrom = (FinalEvaluation) evaluation;
                 if (!finalEvaluationFrom.getMarksSet().isEmpty()) {
-                    throw new FenixServiceException("Cannot merge execution courses: marks exist for final evaluation.");
+                    throw new FenixServiceException("error.merge.execution.course.final.evaluation.exists");
                 } else {
                     finalEvaluationFrom.delete();
                 }

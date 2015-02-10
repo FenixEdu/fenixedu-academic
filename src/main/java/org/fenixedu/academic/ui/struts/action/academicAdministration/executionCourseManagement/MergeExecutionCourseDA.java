@@ -133,6 +133,9 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
         } catch (DomainException ex) {
             error = true;
             addActionMessage("error", request, ex.getLocalizedMessage());
+        } catch (FenixServiceException ex) {
+            error = true;
+            addActionMessage("error", request, ex.getLocalizedMessage());
         }
 
         if (!error) {
