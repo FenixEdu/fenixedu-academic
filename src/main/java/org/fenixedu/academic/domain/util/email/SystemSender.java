@@ -67,4 +67,7 @@ public class SystemSender extends SystemSender_Base {
         return optOutGroup.toGroup();
     }
 
+    public void setOptOutGroup(Group optOutGroup) {
+        setOptOutPersistentGroup(optOutGroup.toPersistentGroup());
+    }
 }
