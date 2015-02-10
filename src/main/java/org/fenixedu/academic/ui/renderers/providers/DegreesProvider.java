@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA.DegreesMergeBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -33,8 +32,6 @@ public class DegreesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-
-        final DegreesMergeBean degreesMergeBean = (DegreesMergeBean) source;
 
         final List<Degree> degrees = new ArrayList<Degree>(Degree.readNotEmptyDegrees());
 
