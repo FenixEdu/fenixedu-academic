@@ -27,9 +27,10 @@
 
 <fr:form action="/dfaCandidacy.do#precedentDegree">	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="alterCandidacyData"/>
+	<fr:edit id="personBean" name="personBean" visible="false"/>
 
 	<h2><strong><bean:message key="label.person.title.personal.info" /></strong></h2>
-	<fr:edit id="personData" name="candidacy" property="person" schema="candidate.personalData-freeEdit" >
+	<fr:edit id="personData" name="personBean" schema="candidate.personalData-freeEdit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -37,7 +38,7 @@
 	</fr:edit>
 	
 	<h2><strong><bean:message key="label.person.title.filiation" /></strong></h2>
-	<fr:edit id="personFiliation" name="candidacy" property="person" schema="candidate.filiation-freeEdit" >
+	<fr:edit id="personFiliation" name="personBean" schema="candidate.filiation-freeEdit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -45,7 +46,7 @@
 	</fr:edit>
 	
 	<h2><strong><bean:message key="label.person.title.addressInfo" /></strong></h2>
-	<fr:edit id="personAddress" name="candidacy" property="person" schema="candidate.address-freeEdit" >
+	<fr:edit id="personAddress" name="personBean" schema="candidate.address-freeEdit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -53,7 +54,7 @@
 	</fr:edit>
 	
 	<h2><strong><bean:message key="label.person.title.contactInfo" /></strong></h2>
-	<fr:edit id="personContacts" name="candidacy" property="person" schema="candidate.contacts-freeEdit" >
+	<fr:edit id="personContacts" name="personBean" schema="candidate.contacts-freeEdit" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

@@ -356,17 +356,22 @@
 	</slot>	
 </schema>
 
-<schema name="candidate.personalData-freeEdit" type="org.fenixedu.academic.domain.Person" bundle="CANDIDATE_RESOURCES" > 
-	<slot name="name" >
-		<property name="size" value="70"/>
+<schema name="candidate.personalData-freeEdit" type="org.fenixedu.academic.dto.person.PersonBean" bundle="CANDIDATE_RESOURCES" > 
+	<slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="52" />
+		<property name="maxLength" value="50" />
 	</slot>
+	<slot name="familyNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="52" />
+		<property name="maxLength" value="50" />
+	</slot>	
 	<slot name="gender" />
-	<slot name="emissionLocationOfDocumentId" />
-	<slot name="emissionDateOfDocumentIdYearMonthDay" >
+	<slot name="documentIdEmissionLocation" key="label.emissionLocationOfDocumentId"/>
+	<slot name="documentIdEmissionDate" key="label.emissionDateOfDocumentIdYearMonthDay" >
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="expirationDateOfDocumentId" >
+	<slot name="documentIdExpirationDate" key="label.expirationDateOfDocumentId" >
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -375,7 +380,7 @@
 	<slot name="maritalStatus" />  
 </schema>
 
-<schema name="candidate.filiation-freeEdit" type="org.fenixedu.academic.domain.Person"  bundle="CANDIDATE_RESOURCES" >
+<schema name="candidate.filiation-freeEdit" type="org.fenixedu.academic.dto.person.PersonBean"  bundle="CANDIDATE_RESOURCES" >
 	<slot name="dateOfBirth" >
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
@@ -393,11 +398,11 @@
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name"/>
 	</slot>
-	<slot name="nameOfFather" />
-	<slot name="nameOfMother" />	
+	<slot name="fatherName" key="label.nameOfFather"/>
+	<slot name="motherName" key="label.nameOfMother"/>	
 </schema>
 
-<schema name="candidate.address-freeEdit" type="org.fenixedu.academic.domain.Person" bundle="CANDIDATE_RESOURCES" >
+<schema name="candidate.address-freeEdit" type="org.fenixedu.academic.dto.person.PersonBean" bundle="CANDIDATE_RESOURCES" >
 	<slot name="address" />
 	<slot name="area" />
 	<slot name="areaCode" />
@@ -412,7 +417,7 @@
 	</slot>	
 </schema>
 
-<schema name="candidate.contacts-freeEdit" type="org.fenixedu.academic.domain.Person" bundle="CANDIDATE_RESOURCES" >
+<schema name="candidate.contacts-freeEdit" type="org.fenixedu.academic.dto.person.PersonBean" bundle="CANDIDATE_RESOURCES" >
 	<slot name="phone"/>
 	<slot name="mobile"/>
 	<slot name="email" />
