@@ -16,13 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.academic.ui.spring.controller;
+package org.fenixedu.academic.ui.spring.controller.manager;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.ui.spring.controller.manager.DepartmentBean;
-import org.fenixedu.academic.ui.spring.controller.manager.DepartmentService;
 import org.fenixedu.bennu.core.rest.JsonAwareResource;
-import org.fenixedu.bennu.spring.portal.SpringApplication;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +35,7 @@ import pt.ist.fenixframework.Atomic;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-@SpringApplication(path = "departments", hint = "Manager", group = "#managers", title = "label.manageDepartments")
-@SpringFunctionality(app = ManageDepartmentsController.class, title = "title.departments")
+@SpringFunctionality(app = SchoolManagementController.class, title = "title.departments")
 @RequestMapping("/department-management")
 public class ManageDepartmentsController extends JsonAwareResource {
 
