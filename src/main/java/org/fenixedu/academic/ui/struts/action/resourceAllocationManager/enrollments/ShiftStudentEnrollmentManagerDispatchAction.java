@@ -222,6 +222,9 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage());
             return mapping.findForward("chooseStudent");
+        } catch (org.fenixedu.bennu.core.domain.exceptions.DomainException de) {
+            addActionMessage(request, de.getLocalizedMessage(), false);
+            return mapping.findForward("chooseStudent");
         }
     }
 
