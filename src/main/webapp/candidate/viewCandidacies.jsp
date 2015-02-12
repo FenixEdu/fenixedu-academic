@@ -43,12 +43,18 @@
 		<td class="acenter">
 			<bean:write name="candidacy" property="number" />
 		</td>
-		<td>
-			<bean:write name="candidacy" property="executionDegree.degreeCurricularPlan.degree.name" /> - <bean:write name="candidacy" property="executionDegree.degreeCurricularPlan.name" />
-		</td>
-		<td>
-			<bean:write name="candidacy" property="executionDegree.executionYear.year" />
-		</td>
+		<logic:notEmpty name="candidacy" property="executionDegree">
+			<td>			
+				<bean:write name="candidacy" property="executionDegree.degreeCurricularPlan.degree.name" /> - <bean:write name="candidacy" property="executionDegree.degreeCurricularPlan.name" />
+			</td>
+			<td>
+				<bean:write name="candidacy" property="executionDegree.executionYear.year" />			
+			</td>
+		</logic:notEmpty>
+		<logic:empty name="candidacy" property="executionDegree">
+			<td></td>
+			<td></td>
+		</logic:empty>
 		<td>
 			<bean:message name="candidacy" property="activeCandidacySituation.candidacySituationType.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
 		</td>
