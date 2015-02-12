@@ -132,11 +132,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         }
 
         if (getDegreeType().hasExactlyOneCycleType()) {
-            if (getDegree().hasEctsCredits()) {
-                return getDegree().getEctsCredits();
-            }
-
-            return getDegreeType().getDefaultEctsCredits();
+            return getDegree().getEctsCredits();
         }
 
         throw new DomainException("error.CycleCourseGroup.cannot.calculate.default.ects.credits");

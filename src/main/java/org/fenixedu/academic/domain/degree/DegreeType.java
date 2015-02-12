@@ -361,6 +361,11 @@ public enum DegreeType {
             return true;
         }
 
+        /**
+         * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
+         * 
+         */
+        @Deprecated
         @Override
         public Integer getYears(final CycleType cycleType) {
             if (cycleType == null) {
@@ -779,19 +784,38 @@ public enum DegreeType {
         return academicPeriod != null;
     }
 
+    /**
+     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
+     * 
+     */
     final public boolean hasExactlyOneCurricularYear() {
         return getYears() == 1;
     }
 
+    /**
+     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
+     * 
+     */
+    @Deprecated
     public int getYears() {
         return hasAcademicPeriod() ? Float.valueOf(academicPeriod.getWeight()).intValue() : Integer.valueOf(0);
     }
 
+    /**
+     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInSemesters()}
+     * 
+     */
+    @Deprecated
     public int getSemesters() {
         return hasAcademicPeriod() ? Float.valueOf(academicPeriod.getWeight() / AcademicPeriod.SEMESTER.getWeight()).intValue() : Integer
                 .valueOf(0);
     }
 
+    /**
+     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears(CycleType)}
+     * 
+     */
+    @Deprecated
     public Integer getYears(final CycleType cycleType) {
         if (cycleType == null) {
             return getYears();
@@ -800,6 +824,10 @@ public enum DegreeType {
         return hasCycleTypes(cycleType) ? Float.valueOf(getAcademicPeriod().getWeight()).intValue() : Integer.valueOf(0);
     }
 
+    /**
+     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInSemesters(CycleType)}
+     * 
+     */
     public Integer getSemesters(final CycleType cycleType) {
         if (cycleType == null) {
             return getSemesters();
@@ -819,8 +847,12 @@ public enum DegreeType {
             return 120d;
         } else if (getAcademicPeriod().equals(AcademicPeriod.THREE_YEAR)) {
             return 180d;
+        } else if (getAcademicPeriod().equals(AcademicPeriod.FOUR_YEAR)) {
+            return 240d;
         } else if (getAcademicPeriod().equals(AcademicPeriod.FIVE_YEAR)) {
             return 300d;
+        } else if (getAcademicPeriod().equals(AcademicPeriod.SIX_YEAR)) {
+            return 360d;
         } else {
             return 0d;
         }

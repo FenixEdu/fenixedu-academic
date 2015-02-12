@@ -1012,9 +1012,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return createCurrentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
     }
 
+    /**
+     * @deprecated Degree should not answer duration questions.
+     * 
+     *             For more accurate results use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
+     * 
+     */
+    @Deprecated
     public List<Integer> buildFullCurricularYearList() {
+
+        final DegreeCurricularPlan degreeCurricularPlan = getMostRecentDegreeCurricularPlan();
+        if (degreeCurricularPlan == null) {
+            throw new DomainException("error.degree.unable.to.find.degree.curricular.plan.to.calculate.duration");
+        }
+
         final List<Integer> result = new ArrayList<Integer>();
-        for (int i = 1; i <= this.getDegreeType().getYears(); i++) {
+        for (int i = 1; i <= degreeCurricularPlan.getDurationInYears(); i++) {
             result.add(i);
         }
         return result;

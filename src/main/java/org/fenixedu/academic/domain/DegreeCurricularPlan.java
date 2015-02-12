@@ -32,6 +32,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -44,7 +46,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
@@ -64,6 +65,7 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootE
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.academic.dto.ExecutionCourseView;
 import org.fenixedu.academic.predicate.AcademicPredicates;
@@ -82,6 +84,7 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
@@ -1198,6 +1201,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Override
     public void setDegreeStructure(CurricularPeriod degreeStructure) {
         check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
+
+        if (degreeStructure == null || !(degreeStructure.getAcademicPeriod() instanceof AcademicYears)) {
+            throw new DomainException("error.degreeCurricularPlan.degreeStructure.must.be.specified.in.years");
+        }
+
+        final CurricularPeriod currentDegreeStructure = super.getDegreeStructure();
+        if (currentDegreeStructure != degreeStructure) {
+
+            if (!getAllCurricularCourses().isEmpty()) {
+                throw new DomainException(
+                        "error.degreeCurricularPlan.degreeStructure.cannot.be.changed.when.already.has.curricular.courses");
+            }
+
+            //not the most elegant solution but avoids breaking API
+            if (currentDegreeStructure != null) {
+                currentDegreeStructure.delete();
+            }
+
+        }
+
         super.setDegreeStructure(degreeStructure);
     }
 
@@ -1340,7 +1363,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private CurricularPeriodInfoDTO[] buildCurricularPeriodInfoDTOsFor(int year, int semester) {
         final CurricularPeriodInfoDTO[] curricularPeriodInfos;
-        if (getDegreeType().getYears() > 1) {
+        if (getDurationInYears() > 1) {
 
             curricularPeriodInfos =
                     new CurricularPeriodInfoDTO[] { new CurricularPeriodInfoDTO(year, AcademicPeriod.YEAR),
@@ -1519,7 +1542,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Override
     public Integer getDegreeDuration() {
         final Integer degreeDuration = super.getDegreeDuration();
-        return degreeDuration == null ? Integer.valueOf(getDegree().getDegreeType().getYears()) : degreeDuration;
+        return degreeDuration == null ? getDurationInYears() : degreeDuration;
     }
 
     public DegreeType getDegreeType() {
@@ -2006,6 +2029,68 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Deprecated
     public java.util.Set<org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
         return getTargetEquivalencePlansSet();
+    }
+
+    public int getDurationInYears() {
+        final AcademicPeriod academicPeriod =
+                getDegreeStructure() != null ? getDegreeStructure().getAcademicPeriod() : getDegreeType().getAcademicPeriod();
+
+        return Float.valueOf(academicPeriod.getWeight()).intValue();
+    }
+
+    public int getDurationInSemesters() {
+        return Float.valueOf(getDurationInYears() / AcademicPeriod.SEMESTER.getWeight()).intValue();
+    }
+
+    public int getDurationInYears(final CycleType cycleType) {
+
+        if (cycleType == null || getDegreeType().hasExactlyOneCycleType()) {
+            return getDurationInYears();
+        }
+
+        if (!getDegreeType().hasAnyCycleTypes()) {
+            return 0;
+        }
+
+        return calculateCycleDuration(cycleType, ctx -> ctx.getCurricularPeriod().getParent(), cp -> cp.getAcademicPeriod()
+                .equals(AcademicPeriod.YEAR));
+
+    }
+
+    public int getDurationInSemesters(final CycleType cycleType) {
+        return Float.valueOf(getDurationInYears(cycleType) / AcademicPeriod.SEMESTER.getWeight()).intValue();
+    }
+
+    private int calculateCycleDuration(CycleType cycleType, Function<Context, CurricularPeriod> curricularPeriodCollector,
+            java.util.function.Predicate<CurricularPeriod> curricularPeriodFilter) {
+
+        final CycleCourseGroup cycleCourseGroup = getRoot().getCycleCourseGroup(cycleType);
+        if (cycleCourseGroup == null) {
+            //structure is not correct
+            throw new DomainException("error.degreeCurricularPlan.unable.to.find.cycle.in.structure.to.calculate.duration",
+                    cycleType.getDescription());
+        }
+
+        return getAllCoursesGroups().stream().filter(cg -> cg.getParentCycleCourseGroups().contains(cycleCourseGroup))
+                .flatMap(cg -> cg.getChildContextsSet().stream()).filter(ctx -> ctx.getChildDegreeModule().isLeaf())
+                .map(curricularPeriodCollector).filter(curricularPeriodFilter).collect(Collectors.toSet()).size();
+
+    }
+
+    @Atomic
+    public void editDuration(AcademicPeriod duration) {
+
+        if (!isBoxStructure()) {
+            throw new DomainException("error.degreeCurricularPlan.duration.can.only.be.modified.in.box.structured.plans");
+        }
+
+        if (duration == null) {
+            throw new DomainException("error.degreeCurricularPlan.duration.cannot.be.null");
+        }
+
+        if (!getDegreeStructure().getAcademicPeriod().equals(duration)) {
+            setDegreeStructure(new CurricularPeriod(duration));
+        }
     }
 
 }

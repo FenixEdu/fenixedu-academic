@@ -392,7 +392,7 @@ public class Curriculum implements Serializable, ICurriculum {
             return Integer.valueOf(0);
         }
 
-        return plan.getDegreeType().getYears(getCycleType());
+        return plan.getDegreeCurricularPlan().getDurationInYears(getCycleType());
     }
 
     private CycleType getCycleType() {

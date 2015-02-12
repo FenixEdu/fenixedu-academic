@@ -45,7 +45,7 @@ public class EditContextFromCurricularCourse {
          */
         CurricularPeriod curricularPeriod = null;
         CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
-        if (courseGroup.getParentDegreeCurricularPlan().getDegree().getDegreeType().getYears() > 1) {
+        if (courseGroup.getParentDegreeCurricularPlan().getDurationInYears() > 1) {
             curricularPeriodInfoYear = new CurricularPeriodInfoDTO(year, AcademicPeriod.YEAR);
         }
         final CurricularPeriodInfoDTO curricularPeriodInfoSemester =

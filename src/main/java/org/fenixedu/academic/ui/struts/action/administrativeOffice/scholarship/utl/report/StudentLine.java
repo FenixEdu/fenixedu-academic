@@ -408,7 +408,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             return null;
         }
 
-        return getRegistration().getDegree().getDegreeType().getYears();
+        return getStudentCurricularPlan().getDegreeCurricularPlan().getDurationInYears();
     }
 
     public Integer getNumberOfEnrolmentYearsOnIST() {

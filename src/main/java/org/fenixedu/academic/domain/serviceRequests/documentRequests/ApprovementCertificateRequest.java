@@ -107,7 +107,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
             // FIXME For now, the following conditions are only valid for 5year
             // degrees
-            if (getRegistration().getDegreeType().getYears() == 5 && getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
+            if (getRegistration().getLastStudentCurricularPlan().getDegreeCurricularPlan().getDurationInYears() == 5
+                    && getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
 
                 int curricularYear = getRegistration().getCurricularYear();
 

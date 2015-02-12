@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.TreeSet;
 
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.PostingRule;
@@ -177,7 +178,10 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     final private String getCurricularYear() {
         final StringBuilder result = new StringBuilder();
 
-        if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
+        final DegreeCurricularPlan degreeCurricularPlan =
+                getRegistration().getStudentCurricularPlan(getExecutionYear()).getDegreeCurricularPlan();
+
+        if (degreeCurricularPlan.getDurationInYears() != 1) {
             final Integer curricularYear =
                     Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(getExecutionYear()));
 

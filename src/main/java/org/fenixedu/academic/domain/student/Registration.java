@@ -705,7 +705,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isInFinalDegreeYear() {
-        return getCurricularYear() == getDegreeType().getYears();
+        return getCurricularYear() == getLastStudentCurricularPlan().getDegreeCurricularPlan().getDurationInYears();
     }
 
     final public boolean isQualifiedForSeniority() {
@@ -718,7 +718,7 @@ public class Registration extends Registration_Base {
         final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlan();
         for (final CycleType type : getDegreeType().getCycleTypes()) {
             if (studentCurricularPlan.hasCycleCurriculumGroup(type)) {
-                years += getDegreeType().getYears(type);
+                years += studentCurricularPlan.getDegreeCurricularPlan().getDurationInYears(type);
             }
         }
         return getCurricularYear() == years;

@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
@@ -34,10 +35,22 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EditDegreeCurricularPlan {
 
+    @Deprecated
     @Atomic
     public static void run(String dcpId, String name, CurricularStage curricularStage,
             DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, String executionYearID)
             throws FenixServiceException {
+
+        final DegreeCurricularPlan dcpToEdit = FenixFramework.getDomainObject(dcpId);
+        run(dcpId, name, curricularStage, degreeCurricularPlanState, gradeScale, executionYearID, dcpToEdit.getDegreeStructure()
+                .getAcademicPeriod());
+
+    }
+
+    @Atomic
+    public static void run(String dcpId, String name, CurricularStage curricularStage,
+            DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, String executionYearID,
+            AcademicPeriod duration) throws FenixServiceException {
         check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (dcpId == null || name == null || curricularStage == null) {
@@ -53,6 +66,7 @@ public class EditDegreeCurricularPlan {
                 (executionYearID == null) ? null : FenixFramework.<ExecutionYear> getDomainObject(executionYearID);
 
         dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
+        dcpToEdit.editDuration(duration);
     }
 
 }

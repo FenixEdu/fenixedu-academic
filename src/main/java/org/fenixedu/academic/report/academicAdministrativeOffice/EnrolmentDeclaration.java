@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -142,7 +143,10 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     final private String getCurricularYear() {
         final StringBuilder result = new StringBuilder();
 
-        if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
+        final DegreeCurricularPlan degreeCurricularPlan =
+                getDocumentRequest().getRegistration().getStudentCurricularPlan(getExecutionYear()).getDegreeCurricularPlan();
+
+        if (degreeCurricularPlan.getDurationInYears() != 1) {
             final Integer curricularYear =
                     Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(getExecutionYear()));
 

@@ -199,7 +199,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public Integer getNumberOfCurricularYearsOnCurrentDegreeCurricularPlan() {
-        return registration.getDegree().getDegreeType().getYears();
+        return registration.getLastStudentCurricularPlan().getDegreeCurricularPlan().getDurationInYears();
     }
 
     @Override
