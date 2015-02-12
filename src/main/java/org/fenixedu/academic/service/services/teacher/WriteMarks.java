@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.teacher;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,6 @@ import org.fenixedu.academic.domain.exceptions.InvalidMarkDomainException;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceMultipleException;
 import org.fenixedu.academic.util.Bundle;
@@ -47,7 +44,6 @@ public class WriteMarks {
     @Atomic
     public static void writeByStudent(final String executioCourseOID, final String evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
-        check(RolePredicates.TEACHER_PREDICATE);
 
         final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);
@@ -58,7 +54,6 @@ public class WriteMarks {
     @Atomic
     public static void writeByAttend(final String executioCourseOID, final String evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {
-        check(RolePredicates.TEACHER_PREDICATE);
 
         final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);
