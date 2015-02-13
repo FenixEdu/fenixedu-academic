@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Academic.
+ *
+ * FenixEdu Academic is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Academic is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.fenixedu.academic.ui.spring.controller.student;
 
 import java.util.ArrayList;
@@ -35,7 +53,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @SpringApplication(description = "link.student.group", path = "enroll-spring", group = "anyone", hint = "Student",
-title = "label.enroll")
+        title = "label.enroll")
 @SpringFunctionality(app = StudentGroupingController.class, title = "label.groupEnrolment")
 @RequestMapping("/student/groups")
 public class StudentGroupingController extends JsonAwareResource {
@@ -58,11 +76,11 @@ public class StudentGroupingController extends JsonAwareResource {
                 .flatMap(registration -> registration.getAssociatedAttendsSet().stream())
                 .map(Attends::getExecutionCourse)
                 .filter(executionCourse -> executionCourse.getExecutionPeriod() == ExecutionSemester
-                .readActualExecutionSemester())
+                        .readActualExecutionSemester())
                 .flatMap(executionCourse -> executionCourse.getGroupings().stream())
                 .filter(grouping -> grouping.getAttendsSet().stream()
                         .anyMatch(attends -> attends.getRegistration().getPerson() == AccessControl.getPerson()))
-                        .filter(grouping -> checkEnrolmentDate(grouping)).collect(Collectors.toList())), HttpStatus.OK);
+                .filter(grouping -> checkEnrolmentDate(grouping)).collect(Collectors.toList())), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/grouping/{grouping}", method = RequestMethod.GET)
@@ -185,7 +203,7 @@ public class StudentGroupingController extends JsonAwareResource {
                 .stream()
                 .filter(attends -> grouping.getStudentGroupsSet().stream()
                         .noneMatch(sg -> sg.getAttendsSet().stream().anyMatch(at -> at.equals(attends))))
-                        .map(Attends::getRegistration).map(Registration::getPerson).collect(Collectors.toList())), HttpStatus.OK);
+                .map(Attends::getRegistration).map(Registration::getPerson).collect(Collectors.toList())), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/studentGroup/{studentGroup}/enrolled")

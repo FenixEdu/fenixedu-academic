@@ -62,13 +62,13 @@ public class StudentApplication extends ForwardAction {
 
     @StrutsFunctionality(app = StudentEnrollApp.class, path = "exams", titleKey = "link.exams.enrolment")
     @Mapping(path = "/enrollment/evaluations/showStudentExams", module = "student",
-    parameter = "/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1")
+            parameter = "/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1")
     public static class ShowStudentExams extends ForwardAction {
     }
 
     @StrutsFunctionality(app = StudentEnrollApp.class, path = "written-tests", titleKey = "link.writtenTests.enrolment")
     @Mapping(path = "/enrollment/evaluations/showStudentWrittenTests", module = "student",
-    parameter = "/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2")
+            parameter = "/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2")
     public static class ShowStudentWrittenTests extends ForwardAction {
     }
 }
