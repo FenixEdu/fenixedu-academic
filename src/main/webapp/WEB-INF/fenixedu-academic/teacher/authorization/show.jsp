@@ -24,7 +24,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-
 <spring:url var="createUrl" value="/teacher/authorizations/create"></spring:url>
 <spring:url var="searchUrl" value="/teacher/authorizations"></spring:url>
 <spring:url var="downloadUrl" value="/teacher/authorizations/download"></spring:url>
@@ -35,6 +34,15 @@
 <spring:url var="showCategoriesUrl" value="/teacher/authorizations/categories"></spring:url>
 <spring:url var="uploadUrl" value="/teacher/authorizations/upload"></spring:url>
 
+<spring:url var="datatablesUrl" value="/javaScript/dataTables/media/js/jquery.dataTables.latest.min.js"/>
+<spring:url var="datatablesBootstrapJsUrl" value="/javaScript/dataTables/media/js/jquery.dataTables.bootstrap.min.js"></spring:url>
+
+<spring:url var="datatablesCssUrl" value="/CSS/dataTables/dataTables.bootstrap.min.css"/>
+<spring:url var="datatablesI18NUrl" value="/javaScript/dataTables/media/i18n/${portal.locale.language}.json"/>
+
+<script type="text/javascript" src="${datatablesUrl}"></script>
+<script type="text/javascript" src="${datatablesBootstrapJsUrl}"></script>
+		
 <style>
 	.table th {
 		text-align: center;
@@ -44,6 +52,8 @@
 		text-align: center;
 	}
 </style>
+
+<link rel="stylesheet" href="${datatablesCssUrl}">
 
 <script type='text/javascript'>
 
@@ -61,8 +71,22 @@ $(document).ready(function() {
 		e.stopPropagation();
 		var params = $.param({department : $("#selectDepartment").val(), period: $("#selectPeriod").val()}); 
 		window.open("${downloadUrl}?" + params, "_blank");
-// 		$("form#search").attr('action', "${downloadUrl}");
 	});
+	
+	$('.table').dataTable( {
+		"aoColumnDefs": [
+		                 { 'bSortable': false, 'aTargets': [ -1 ] } // don't sort last column
+		              ],
+		"iDisplayLength": 50,
+		language : {
+			url : "${datatablesI18NUrl}"
+		},
+		"aaSorting": []
+		}
+ 	);
+	
+	
+	
 	
 });
 
@@ -118,17 +142,20 @@ $(document).ready(function() {
 			<spring:message code="teacher.authorizations.empty" ></spring:message>
 		</c:when>
 		<c:otherwise>
-			<table class="table table-condensed">
+			<table class="table dataTable table-condensed">
 				<thead>
-					<th><spring:message code="teacher.authorizations.username" ></spring:message></th>
-					<th><spring:message code="teacher.authorizations.displayname" ></spring:message></th>
-					<th><spring:message code="teacher.authorizations.contracted" ></spring:message></th>
-					<c:if test="${empty search.department}">
-						<th><spring:message code="teacher.authorizations.department" ></spring:message></th>
-					</c:if>
-					<th><spring:message code="teacher.authorizations.category" ></spring:message></th>
-					<th><spring:message code="teacher.authorizations.lessonHours" ></spring:message></th>
-					<th><spring:message code="teacher.authorizations.authorized" ></spring:message></th>
+					<tr>
+						<th><spring:message code="teacher.authorizations.username" ></spring:message></th>
+						<th><spring:message code="teacher.authorizations.displayname" ></spring:message></th>
+						<th><spring:message code="teacher.authorizations.contracted" ></spring:message></th>
+						<c:if test="${empty search.department}">
+							<th><spring:message code="teacher.authorizations.department" ></spring:message></th>
+						</c:if>
+						<th><spring:message code="teacher.authorizations.category" ></spring:message></th>
+						<th><spring:message code="teacher.authorizations.lessonHours" ></spring:message></th>
+						<th><spring:message code="teacher.authorizations.authorized" ></spring:message></th>
+						<th></th>
+					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="auth" items="${authorizations}">
