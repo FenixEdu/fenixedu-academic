@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -42,8 +41,7 @@ public class SpecificSpaceOccupationManagersGroup extends FenixGroupStrategy {
 
     @Override
     public boolean isMember(User user) {
-        Person person = user.getPerson();
-        if (person != null && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser())) {
+        if (user != null && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(user)) {
             return true;
         }
         for (Space space : SpaceUtils.allocatableSpaces().collect(Collectors.toSet())) {
