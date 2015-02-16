@@ -1975,11 +1975,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public ExecutionYear getInauguralExecutionYear() {
-        return Collections.min(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
+        return getExecutionDegreesSet().stream().min(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR)
+                .map(ExecutionDegree::getExecutionYear).orElse(null);
     }
 
     public ExecutionYear getLastExecutionYear() {
-        return Collections.max(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
+        return getExecutionDegreesSet().stream().max(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR)
+                .map(ExecutionDegree::getExecutionYear).orElse(null);
     }
 
     @Deprecated
