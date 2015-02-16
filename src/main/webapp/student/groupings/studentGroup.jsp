@@ -57,7 +57,7 @@
 				{{grouping.maximumGroupCapacity}}</div>
 		</div>
 	</div>
-	<div ng-if="studentsEnrolled" class="form-group">
+	<div ng-if="studentsEnrolled != 'undefined'" class="form-group">
 		<button class="btn btn-primary"
 			ng-show="studentGroup && !isEnrolledInStudentGroup()"
 			ng-disabled="studentGroupSize + 1 > grouping.maximumGroupCapacity"
