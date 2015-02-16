@@ -20,9 +20,12 @@ package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.Response.Status;
+
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.spring.StrutsFunctionalityController;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,13 +48,13 @@ public abstract class ExecutionCourseController extends StrutsFunctionalityContr
             if (professorshipOpt.isPresent()) {
                 Professorship prof = professorshipOpt.get();
                 if (!prof.getPermissions().getGroups()) {
-                    throw new RuntimeException("Professor is not authorized to manage the student groups");
+                    throw new DomainException(Status.FORBIDDEN, "message.error.notAuthorized");
                 } else {
                     return prof;
                 }
             }
         }
-        throw new RuntimeException("User is not authorized to manage the selected course!");
+        throw new DomainException(Status.FORBIDDEN, "message.error.notAuthorized");
     }
 
     @ModelAttribute("projectGroup")
