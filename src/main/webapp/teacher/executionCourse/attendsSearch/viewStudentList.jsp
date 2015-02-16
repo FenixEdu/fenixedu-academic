@@ -32,7 +32,7 @@
 	form{
 		display:inline-block;
 	}
-	
+
 </style>
 <spring:url var="studentsAndGroupsByShiftLink"
 	value="/teacher/${executionCourse.externalId}/student-groups/viewStudentsAndGroupsByShift/${grouping.externalId}/" />
@@ -67,6 +67,11 @@
 						<form class="form" role="form">
 							<div class="col-sm-3">
 								<h3>${fr:message('resources.ApplicationResources', 'label.selectStudents')}</h3>
+								<div class="checkbox">
+									<label> <input type="checkbox" ng-model="allCheck.attendsStates" ng-change="changeAllAttendsStates()">
+										${fr:message('resources.ApplicationResources', 'label.all')}
+									</label>
+								</div>
 								<div class="checkbox" ng-repeat="state in filters.attendsStates">
 									<label> <input type="checkbox" ng-model="state.value" ng-change="genFilteredAttends()">
 										{{state.type }}
@@ -75,6 +80,11 @@
 							</div>
 							<div class="col-sm-3">
 								<h3>${fr:message('resources.ApplicationResources', 'label.attends.courses')}</h3>
+								<div class="checkbox">
+									<label> <input type="checkbox" ng-model="allCheck.curricularPlans" ng-change="changeAllCurricularPlans()">
+										${fr:message('resources.ApplicationResources', 'label.all')}
+									</label>
+								</div>
 								<div class="checkbox" ng-repeat="plan in filters.curricularPlans">
 									<label> <input type="checkbox" ng-model="plan.value" ng-change="genFilteredAttends()">
 										{{plan.name }}
@@ -82,25 +92,32 @@
 								</div>
 							</div>
 							<div class="col-sm-3">
-
 								<h3>${fr:message('resources.ApplicationResources', 'label.selectShift')}</h3>
+								<div class="checkbox">
+									<label> <input type="checkbox" ng-model="allCheck.shifts" ng-change="changeAllShifts()">
+										${fr:message('resources.ApplicationResources', 'label.all')}
+									</label>
+								</div>
 								<div class="checkbox">
 									<label> <input type="checkbox"
 										ng-model="filters.noShift.value" ng-change="genFilteredAttends()">
 										{{filters.noShift.shortName }}
 									</label>
 								</div>
-	
 								<div class="checkbox" ng-repeat="shift in filters.shifts">
-	
 									<label> <input type="checkbox" ng-model="shift.value" ng-change="genFilteredAttends()">
 										{{shift.shortName }}
 									</label>
 								</div>
 							</div>
 							<div class="col-sm-3">
-	
+
 								<h3>${fr:message('resources.ApplicationResources', 'label.workingStudents')}</h3>
+								<div class="checkbox">
+									<label> <input type="checkbox" ng-model="allCheck.workingStTypes" ng-change="changeAllWorkingStudentTypes()">
+										${fr:message('resources.ApplicationResources', 'label.all')}
+									</label>
+								</div>
 								<div class="checkbox"
 									ng-repeat="state in filters.workingStudentTypes">
 									<label> <input type="checkbox" ng-model="state.value" ng-change="genFilteredAttends()">
@@ -121,7 +138,7 @@
 				<div class="form-group">
 					<input type='hidden' name="filteredAttendsJson" value="{{ attendsList }}" />
 					<input type='hidden' name="filtersJson" value="{{ filters }}" />
-					
+
 					<input type='submit' class=" btn btn-default" ng-click="genFilteredIdsList()"
 						value="${fr:message('resources.ApplicationResources','link.sendEmailToAllStudents')}" />
 				</div>
@@ -145,14 +162,14 @@
 			</form>
 			<button class="btn btn-default" ng-class="{active: showPhotos}" ng-click="showPhotos = !showPhotos">${fr:message('resources.ApplicationResources', 'label.viewPhoto')}</button>
 			<div class="form-group">
-				<h4 style="display:inline">{{filteredAttends.length}} ${fr:message('resources.ApplicationResources','message.attendingStudents')}</h4> 
+				<h4 style="display:inline">{{filteredAttends.length}} ${fr:message('resources.ApplicationResources','message.attendingStudents')}</h4>
 				<form><input ng-model="attendsQuery" ng-change="genFilteredAttends()" placeholder="${fr:message('resources.ApplicationResources','button.filter') }"></form>
 			</div>
 		</div>
 
         <pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage"
                max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-        
+
 		<table class="table table-bordered table-responsive table-striped table-hover">
 			<thead>
 				<tr>
@@ -193,7 +210,7 @@
 						{{attendee.shifts[shiftType.name].shortName}}
 						<span ng-if="isEmpty(attendee.shifts[shiftType.name])">-</span>
 					</td>
-					<td>{{ attendee.enrolments}}</td>
+					<td>{{ attendee.enrolmentsInThisCourse}}</td>
 					<td>{{ attendee.enrolmentType}}</td>
 					<td>{{ attendee.registrationState}}</td>
 					<td>{{ attendee.curricularPlan.name}}</td>
@@ -208,12 +225,10 @@
 						class="center">${fr:message('resources.ApplicationResources', 'label.table.empty')}</td>
 				</tr>
 			</tbody>
-		</table>	
+		</table>
 
         <pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage"
                max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-        
-        
 	</div>
 </div>
 
@@ -229,7 +244,7 @@ ${portal.bennuPortal()}
 	var groupings = ${	groupings }
 	var workingStudentTypes = ${ workingStudentTypes}
 	var executionCourseId = ${executionCourse.externalId}
-	
+
 	var strings = {
 		noShiftShortName : "${fr:message('resources.ApplicationResources', 'message.NoShift')}",
 		firstText : "${fr:message('resources.ApplicationResources', 'label.pagination.first')}",
@@ -245,4 +260,4 @@ ${portal.bennuPortal()}
 	src="${pageContext.request.contextPath}/teacher/executionCourse/attendsSearch/attendsSearchApp.js"></script>
 <script
 	src="${pageContext.request.contextPath}/teacher/executionCourse/attendsSearch/ui-bootstrap-pagination-0.12.0.js"></script>
-		
+

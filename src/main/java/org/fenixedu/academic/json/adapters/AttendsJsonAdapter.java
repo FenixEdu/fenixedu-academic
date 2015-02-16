@@ -39,10 +39,14 @@ public class AttendsJsonAdapter implements JsonViewer<Attends> {
         object.addProperty("externalId", attends.getExternalId());
         object.add("person", ctx.view(attends.getRegistration().getPerson()));
         object.addProperty("number", attends.getRegistration().getNumber());
-
         object.add("studentGroups", ctx.view(attends.getStudentGroupsSet()));
         object.add("curricularPlan", ctx.view(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()));
-        object.addProperty("enrolments", attends.getRegistration().getEnrolments(attends.getExecutionYear()).size());
+        if (attends.getEnrolment() != null) {
+            object.addProperty("enrolmentsInThisCourse",
+                    attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()));
+        } else {
+            object.addProperty("enrolmentsInThisCourse", "--");
+        }
         RegistrationState registrationState = attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
         object.addProperty("registrationState", registrationState == null ? "" : registrationState.getStateType()
                 .getDescription());
