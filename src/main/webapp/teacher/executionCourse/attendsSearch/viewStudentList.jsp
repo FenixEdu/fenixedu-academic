@@ -166,21 +166,20 @@
 				<form><input ng-model="attendsQuery" ng-change="genFilteredAttends()" placeholder="${fr:message('resources.ApplicationResources','button.filter') }"></form>
 			</div>
 		</div>
-
         <pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage"
                max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 
 		<table class="table table-bordered table-responsive table-striped table-hover">
 			<thead>
 				<tr>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.username')}</th>
+					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.username')}<span class="pull-right glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.username')"></span><span class="pull-right glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.username',true)"></span></th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.number')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.name')}</th>
+					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.name')}<span class="pull-right glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.firstAndLastNames')"></span><span class="pull-right glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.firstAndLastNames',true)"></span></th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.email')}</th>
 					<th ng-if="showPhotos" rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.photo')}</th>
 					<th ng-if="groupings" colspan="{{groupings.length}}">${fr:message('resources.ApplicationResources', 'label.projectGroup')}</th>
 					<th ng-if="shiftTypes" colspan="{{shiftTypes.length}}">${fr:message('resources.ApplicationResources', 'label.attends.shifts')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.numberOfEnrollments')}</th>
+					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.numberOfEnrollments')}<span class="pull-right glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('enrolmentsInThisCourse')"></span><span class="pull-right glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('enrolmentsInThisCourse',true)"></span></th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.attends.enrollmentState')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.registration.state')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.Degree')}</th>
@@ -188,8 +187,7 @@
 				</tr>
 				<tr>
 					<th ng-repeat="grouping in groupings">{{grouping.name}}</th>
-					<th ng-repeat="shiftType in shiftTypes">{{shiftType.fullName}}
-					</th>
+					<th ng-repeat="shiftType in shiftTypes">{{shiftType.fullName}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -220,15 +218,46 @@
 					<td colspan="{{9 + groupings.length + shiftTypes.length}}"
 						class="center"><h4>${fr:message('resources.ApplicationResources', 'label.loading')}</h4></td>
 				</tr>
-				<tr ng-if="attends == {} || attends == []">
+				<tr ng-show="paginatedAttends.length == 0 || attends == {} || attends == []">
 					<td colspan="{{9 + groupings.length + shiftTypes.length}}"
 						class="center">${fr:message('resources.ApplicationResources', 'label.table.empty')}</td>
 				</tr>
 			</tbody>
 		</table>
 
-        <pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage"
-               max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+        <pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+        <div class="row">
+        <div class="col-sm-12">
+                <hr/>
+
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-8 col-md-6 col-lg-4">
+        <table class="table table-bordered table-hover">
+        	<thread>
+        		<tr>
+	        		<th>
+	        			${fr:message('resources.ApplicationResources', 'label.attends.summary.enrollmentsNumber')}
+	        		</th>
+	        		<th>
+	        			${fr:message('resources.ApplicationResources', 'label.attends.summary.studentsNumber')}
+	        		</th>
+        		</tr>
+        	</thread>
+        	<tbody>
+	        	<tr ng-repeat="numberOfAttends in attends | numberOfEnrolments">
+	        		<td>
+	        			{{$index}}
+	        		</td>
+	        		<td>
+						{{numberOfAttends}}
+					</td>
+				</tr>
+        	</tbody>
+        </table>
+        </div>
+        </div>
 	</div>
 </div>
 

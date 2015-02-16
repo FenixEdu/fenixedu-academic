@@ -2,6 +2,20 @@
 
 var app = angular.module("AttendsSearchApp",  [ 'ui.bootstrap']);
 
+app.filter('numberOfEnrolments', function(){
+    return function(attends) {
+        var numberOfEnrolments = {}
+        var attendsSet = [];
+        for (var j = 0; j < attends.length; j++) {
+            if(numberOfEnrolments[attends[j].enrolmentsInThisCourse]){
+                numberOfEnrolments[attends[j].enrolmentsInThisCourse]++;
+            } else {
+                numberOfEnrolments[attends[j].enrolmentsInThisCourse] =1;
+            }
+        }
+        return numberOfEnrolments;
+    }
+});
 
 app.filter('attendsFilter', function() {
     return function(attends, filters) {
@@ -71,6 +85,19 @@ app.filter('attendsFilter', function() {
 
 app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
     function($scope, $http,$filter) {
+
+        $http({
+            method: 'GET',
+            url: window.contextPath + '/teacher/' + executionCourseId + '/attends/list'
+        }).success(function(attends) {
+            $scope.attends = attends
+            $scope.genFilteredAttends();
+        }).error(function(data) {
+            $scope.attends = [];
+            $scope.error = data.message;
+        });
+
+        $scope.orderTableParam = {order: 'person.username', reverse: false};
         $scope.groupings = groupings;
         $scope.shiftTypes = shiftTypes;
         $scope.allCheck = {}
@@ -119,7 +146,12 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
 
         $scope.genFilteredAttends  = function() {
             $scope.filteredAttends =new Array();
-            $filter('filter')($filter('attendsFilter')($scope.attends,$scope.filters),$scope.attendsQuery).forEach(function(elem){
+            $filter('filter')(
+                $filter('attendsFilter')(
+                    $filter('orderBy')($scope.attends,$scope.orderTableParam.order, $scope.orderTableParam.reverse)
+                    ,$scope.filters)
+                ,$scope.attendsQuery)
+            .forEach(function(elem){
                 $scope.filteredAttends.push(elem);
         	});
 
@@ -138,16 +170,11 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
 
         }
 
-        $http({
-            method: 'GET',
-            url: window.contextPath + '/teacher/' + executionCourseId + '/attends/list'
-        }).success(function(attends) {
-            $scope.attends = attends
+        $scope.setTableOrdering = function(orderParam, reverse = false){
+            $scope.orderTableParam.order = orderParam;
+            $scope.orderTableParam.reverse = reverse;
             $scope.genFilteredAttends();
-        }).error(function(data) {
-            $scope.attends = [];
-            $scope.error = data.message;
-        });
+        }
 
         $scope.genFilteredIdsList  = function() {
         	var attendsList = new Array();
