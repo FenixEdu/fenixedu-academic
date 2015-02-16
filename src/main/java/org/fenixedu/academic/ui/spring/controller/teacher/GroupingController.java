@@ -248,9 +248,8 @@ public class GroupingController extends ExecutionCourseController {
     }
 
     @RequestMapping(value = "/deleteGrouping/{grouping}", method = RequestMethod.POST)
-    public TeacherView deleteGrouping(Model model, @PathVariable Grouping grouping) {
+    public RedirectView deleteGrouping(Model model, @PathVariable Grouping grouping) {
         studentGroupService.deleteGrouping(grouping);
-        return new TeacherView("executionCourse/groupings/viewProjectsAndLink");
-
+        return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/show", true);
     }
 }
