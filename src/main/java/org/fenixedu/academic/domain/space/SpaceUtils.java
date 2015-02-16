@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -56,6 +57,7 @@ import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
 import org.fenixedu.spaces.domain.occupation.Occupation;
+import org.fenixedu.spaces.domain.occupation.SharedOccupation;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -513,12 +515,12 @@ public class SpaceUtils {
         return executionCoursesToTest;
     }
 
-//    private static Collection<Person> searchPersonsByName(SpacesSearchCriteriaType searchType, String labelToSearch) {
-//        if (labelToSearch != null && !Strings.isNullOrEmpty(labelToSearch) && searchType.equals(SpacesSearchCriteriaType.PERSON)) {
-//            return Person.findPerson(labelToSearch);
-//        }
-//        return Collections.EMPTY_LIST;
-//    }
+    private static Collection<Person> searchPersonsByName(SpacesSearchCriteriaType searchType, String labelToSearch) {
+        if (labelToSearch != null && !Strings.isNullOrEmpty(labelToSearch) && searchType.equals(SpacesSearchCriteriaType.PERSON)) {
+            return Person.findPerson(labelToSearch);
+        }
+        return Collections.EMPTY_LIST;
+    }
 
     private static boolean verifyNameEquality(Space space, String[] nameWords) {
         if (nameWords != null) {
@@ -566,7 +568,7 @@ public class SpaceUtils {
 
             String[] labelWords = getIdentificationWords(labelToSearch);
             Set<ExecutionCourse> executionCoursesToTest = searchExecutionCoursesByName(searchType, labelWords);
-            //Collection<Person> personsToTest = searchPersonsByName(searchType, labelToSearch);
+            Collection<Person> personsToTest = searchPersonsByName(searchType, labelToSearch);
 
             for (Space space : Space.getSpaces().collect(Collectors.toList())) {
 
@@ -582,14 +584,17 @@ public class SpaceUtils {
                             toAdd = verifyNameEquality(space, labelWords);
                             break;
 
-//                        case PERSON:
-//                            for (Person person : personsToTest) {
-//                                if (person.getActivePersonSpaces().contains(resource)) {
-//                                    toAdd = true;
-//                                    break;
-//                                }
-//                            }
-//                            break;
+                        case PERSON:
+                            for (Person person : personsToTest) {
+                                Optional<SharedOccupation> personSpace =
+                                        person.getUser().getSharedOccupationSet().stream()
+                                                .filter(so -> so.isActive() && so.getSpaces().contains(space)).findAny();
+                                if (personSpace.isPresent()) {
+                                    toAdd = true;
+                                    break;
+                                }
+                            }
+                            break;
 
                         case EXECUTION_COURSE:
                             for (ExecutionCourse executionCourse : executionCoursesToTest) {

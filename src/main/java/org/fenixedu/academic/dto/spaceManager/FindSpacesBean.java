@@ -22,13 +22,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.LinkObject;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.occupation.Occupation;
+import org.fenixedu.spaces.domain.occupation.SharedOccupation;
 
 public class FindSpacesBean implements Serializable {
 
@@ -92,7 +95,7 @@ public class FindSpacesBean implements Serializable {
 
     public static enum SpacesSearchCriteriaType {
 
-        SPACE, /*PERSON,*/EXECUTION_COURSE, WRITTEN_EVALUATION;
+        SPACE, PERSON, EXECUTION_COURSE, WRITTEN_EVALUATION;
 
         public String getName() {
             return name();
@@ -192,5 +195,10 @@ public class FindSpacesBean implements Serializable {
     public Integer getExamCapacity() {
         Optional<Integer> metadata = getSpace().getMetadata("examCapacity");
         return metadata.isPresent() ? metadata.get() : 0;
+    }
+
+    public List<User> getOccupants() {
+        return getSpace().getOccupationSet().stream().filter(occ -> occ instanceof SharedOccupation && occ.isActive())
+                .map(occ -> (SharedOccupation) occ).map(so -> so.getUser()).distinct().collect(Collectors.toList());
     }
 }

@@ -54,14 +54,27 @@
 .form1 table ul li * {
 display: inline !important;
 }
+
+.form1 li {
+	display: inline;
+	min-width: 6em;
+	float: left;
+	white-space:nowrap;
+}
+
+.form1 input[type="radio"] {
+	float: left;
+	margin: 0.65em 0.2em 0.4em 0em;
+}
+
 </style>
 
 
 	<fr:form id="searchform" action="/findSpaces.do">
+		<h3><bean:message key="label.find" bundle="DEFAULT"/></h3>
 		<div class="form1">
 			<html:hidden name="findSpacesForm" property="method" value="search"/>				
 			<fieldset>
-				<legend><bean:message key="label.find" bundle="DEFAULT"/></legend>
 				
 				<fr:edit id="beanWithLabelToSearchID" name="bean" schema="<%= schemaName %>">
 					<fr:destination name="postBack" path="/findSpaces.do?method=prepareSearchSpacesPostBack"/>	
@@ -111,7 +124,7 @@ display: inline !important;
 				<fr:property name="rowClasses" value=",bluecell" />
 				
 				<fr:property name="link(viewSchedule)" value="/viewRoom.do?method=roomViewer" />
-				<fr:property name="param(viewSchedule)" value="space.name/roomName" />
+				<fr:property name="param(viewSchedule)" value="space.externalId/roomId,space.name/roomName" />
 				<fr:property name="key(viewSchedule)" value="link.view.schedule" />
 				<fr:property name="bundle(viewSchedule)" value="DEFAULT" />
 				<fr:property name="order(viewSchedule)" value="0" />
@@ -126,7 +139,6 @@ display: inline !important;
 											
 			</fr:layout>
 		</fr:view>
-		
 	</logic:notEmpty>
 
 </logic:notEmpty>

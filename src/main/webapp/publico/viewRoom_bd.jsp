@@ -33,8 +33,11 @@
 
 <html:form action="/viewRoom">
 	<bean:define id="room" name="infoRoom" property="nome"/>
+	<bean:define id="roomId" name="infoRoom" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="roomViewer"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roomName" property="roomName" value="<%=room.toString()%>"/>
+	<html:hidden property="roomId" value="<%=roomId.toString()%>"/>
+	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<table>
