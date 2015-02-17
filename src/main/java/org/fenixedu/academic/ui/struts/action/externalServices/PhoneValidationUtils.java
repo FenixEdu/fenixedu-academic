@@ -111,7 +111,7 @@ public class PhoneValidationUtils {
             logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);
             logger.info("DSI SMS Gateway Initialized: {}\n", CIIST_SMS_GATEWAY_URL);
         } else {
-            logger.info("Twilio/DSI SMS Gateway not initialized");
+            logger.debug("Twilio/DSI SMS Gateway not initialized");
         }
     }
 

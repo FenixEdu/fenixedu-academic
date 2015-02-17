@@ -415,7 +415,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
                         element[1] != null ? CurriculumValidationEvaluationPhase.valueOf(element[1]) : null;
                 EnrolmentEvaluation evaluation = enrolment.getLatestEnrolmentEvaluationByTypeAndPhase(type, phase);
                 if (evaluation != null) {
-                    logger.info(String.format("%s[%s][%s] State: %s", evaluation.getEnrolment().getName().getContent(), type,
+                    logger.debug(String.format("%s[%s][%s] State: %s", evaluation.getEnrolment().getName().getContent(), type,
                             phase, evaluation.getEnrolmentEvaluationState().toString()));
                 }
             }

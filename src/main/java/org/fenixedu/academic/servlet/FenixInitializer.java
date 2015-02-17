@@ -57,7 +57,7 @@ public class FenixInitializer implements ServletContextListener {
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
 
-        logger.info("Initializing Fenix");
+        logger.debug("Initializing Fenix");
 
         try {
             InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
@@ -77,7 +77,7 @@ public class FenixInitializer implements ServletContextListener {
 
         registerHealthchecks();
 
-        logger.info("Fenix initialized successfully");
+        logger.debug("Fenix initialized successfully");
     }
 
     private void registerHealthchecks() {
@@ -135,7 +135,7 @@ public class FenixInitializer implements ServletContextListener {
         long start = System.currentTimeMillis();
         UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
         long end = System.currentTimeMillis();
-        logger.info("Load of all unit names took: " + (end - start) + "ms.");
+        logger.debug("Load of all unit names took: " + (end - start) + "ms.");
     }
 
     private void registerChecksumFilterRules() {
