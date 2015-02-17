@@ -75,7 +75,7 @@
 				${fr:message('resources.ApplicationResources', 'message.groupPropertiesName')}
 			</form:label>
 			<div class="col-sm-4">
-				<form:input class="form-control" path="name" />
+				<form:input class="form-control" path="name"  required="required"/>
 			</div>
 
 		</div>
@@ -99,7 +99,7 @@
 				title="yyyy-MM-dd hh:mm">
 				<form:input type="datetime" class="form-control"
 					path="enrolmentBeginDay" placeholder="yyyy-MM-dd hh:mm"
-					pattern="([0-2][0-9]{3})\-([0-1][0-9])\-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3])\:([0-5][0-9])" />
+					pattern="([0-2][0-9]{3})\-([0-1][0-9])\-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3])\:([0-5][0-9])"  required="required"/>
 			</div>
 
 			<form:label path="enrolmentEndDay" class="col-sm-2 control-label">
@@ -109,7 +109,7 @@
 				title="yyyy-MM-dd hh:mm">
 				<form:input type="datetime" class="form-control"
 					path="enrolmentEndDay" placeholder="yyyy-MM-dd hh:mm"
-					pattern="([0-2][0-9]{3})\-([0-1][0-9])\-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3])\:([0-5][0-9])" />
+					pattern="([0-2][0-9]{3})\-([0-1][0-9])\-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3])\:([0-5][0-9])"  required="required"/>
 			</div>
 
 		</div>
@@ -184,7 +184,7 @@
 			</form:label>
 			<div class="col-sm-2">
 				<form:input type="number" id="minimumGroupCapacity"
-					class="form-control" path="minimumGroupCapacity" />
+					class="form-control" path="minimumGroupCapacity"  required="required"/>
 			</div>
 			<form:label path="maximumGroupCapacity"
 				class="col-sm-2 control-label">
@@ -192,7 +192,7 @@
 			</form:label>
 			<div class="col-sm-2">
 				<form:input type="number" id="maximumGroupCapacity"
-					class="form-control" path="maximumGroupCapacity" />
+					class="form-control" path="maximumGroupCapacity"  required="required"/>
 			</div>
 		</div>
 
@@ -209,7 +209,7 @@
 			</form:label>
 			<div class="col-sm-2">
 				<form:input type="number" id="maxGroupNumber" class="form-control"
-					path="maxGroupNumber" />
+					path="maxGroupNumber"  required="required"/>
 			</div>
 		</div>
 
