@@ -162,7 +162,7 @@
 			</form>
 			<button class="btn btn-default" ng-class="{active: showPhotos}" ng-click="showPhotos = !showPhotos">${fr:message('resources.ApplicationResources', 'label.viewPhoto')}</button>
 			<div class="form-group">
-				<h4 style="display:inline">{{filteredAttends.length}} ${fr:message('resources.ApplicationResources','message.attendingStudents')}</h4>
+				<h4 style="display:inline">{{filteredAttends.length}} ${fr:message('resources.ApplicationResources','message.attendingStudents')}</h4> ${fr:message('resources.ApplicationResources','label.of')} {{attends.length}}
 				<form><input ng-model="attendsQuery" ng-change="genFilteredAttends()" placeholder="${fr:message('resources.ApplicationResources','button.filter') }"></form>
 			</div>
 		</div>
@@ -194,7 +194,7 @@
 				<tr ng-repeat="attendee in paginatedAttends track by attendee.externalId">
 					<td>{{ attendee.person.username }}</td>
 					<td>{{ attendee.number }}</td>
-					<td>{{ attendee.person.firstAndLastNames }}</td>
+					<td><span data-toggle="tooltip" data-placement="top" title="{{ attendee.person.name}}">{{ attendee.person.firstAndLastNames }}</span></td>
 					<td><a href="mailto:{{attendee.person.email}}">{{ attendee.person.email }}</a></td>
 					<td ng-if="showPhotos"><img err-src="${pageContext.request.contextPath}"  ng-src="${pageContext.request.contextPath}/user/photo/{{attendee.person.username}}"></td>
 					<td ng-repeat="grouping in groupings">
@@ -281,7 +281,9 @@ ${portal.bennuPortal()}
 		nextText : "${fr:message('resources.ApplicationResources', 'label.pagination.next')}",
 		lastText : "${fr:message('resources.ApplicationResources', 'label.pagination.last')}"
 	};
+
 </script>
+
 
 <script
 	src="${pageContext.request.contextPath}/bennu-core/js/angular.min.js"></script>
@@ -290,3 +292,8 @@ ${portal.bennuPortal()}
 <script
 	src="${pageContext.request.contextPath}/teacher/executionCourse/attendsSearch/ui-bootstrap-pagination-0.12.0.js"></script>
 
+<script>
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+</script>
