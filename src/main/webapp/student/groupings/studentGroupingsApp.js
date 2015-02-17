@@ -168,13 +168,12 @@ app.controller("ShiftsCtrl", ['$scope', '$rootScope', '$http', '$routeParams', '
     $scope.canEnroll = function(shift) {
       if (typeof($scope.studentGroupsEnrolled) == 'undefined' || $scope.studentGroupsEnrolled.length != 0)
         return false;
-      if (typeof(shift.studentGroups) == 'undefined') {
-        return true;
-      }
-      if ($scope.grouping.atomicEnrolmentPolicy) {
-        return shift.groupCapacity - shift.studentGroups.length > 0;
+
+      var numberOfGroups = typeof(shift.studentGroups) == 'undefined' ? 0 : shift.studentGroups.length;
+      if($scope.grouping.differentiatedCapacity){
+        return shift.groupCapacity - numberOfGroups > 0
       } else {
-        return $scope.grouping.maxGroupNumber - shift.studentGroups.length > 0;
+        return $scope.grouping.maxGroupNumber - numberOfGroups > 0
       }
     }
   }
