@@ -270,9 +270,6 @@ Documentation:
         <property name="defaultLabel" value="label.partyContacts.defaultContact"/>
     </renderer>
 
-	<renderer mode="input" type="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="search-execution-course-attends" class="org.fenixedu.academic.ui.renderers.SearchExecutionCourseAttendsRenderer" />
-	<renderer type="org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="execution-course-attends-spreadsheet" class="org.fenixedu.academic.ui.renderers.ExecutionCourseAttendsSpreadSheetRenderer" />
-	
 	<renderer mode="output" type="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" class="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRenderer"/>
 	
 	<renderer mode="input" type="java.lang.String" layout="captcha" class="org.fenixedu.academic.ui.renderers.CaptchaRenderer">
