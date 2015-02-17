@@ -172,14 +172,14 @@
 		<table class="table table-bordered table-responsive table-striped table-hover">
 			<thead>
 				<tr>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.username')}<span class="pull-right glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.username')"></span><span class="pull-right glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.username',true)"></span></th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.number')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.name')}<span class="pull-right glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.firstAndLastNames')"></span><span class="pull-right glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.firstAndLastNames',true)"></span></th>
+					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.username')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.username',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.username')}</th>
+					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('number')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('number',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.number')}</th>
+					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.firstAndLastNames')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.firstAndLastNames',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.name')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.email')}</th>
 					<th ng-if="showPhotos" rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.photo')}</th>
 					<th ng-if="groupings" colspan="{{groupings.length}}">${fr:message('resources.ApplicationResources', 'label.projectGroup')}</th>
 					<th ng-if="shiftTypes" colspan="{{shiftTypes.length}}">${fr:message('resources.ApplicationResources', 'label.attends.shifts')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.numberOfEnrollments')}<span class="pull-right glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('enrolmentsInThisCourse')"></span><span class="pull-right glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('enrolmentsInThisCourse',true)"></span></th>
+					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('enrolmentsInThisCourse')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('enrolmentsInThisCourse',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.numberOfEnrollments')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.attends.enrollmentState')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.registration.state')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.Degree')}</th>

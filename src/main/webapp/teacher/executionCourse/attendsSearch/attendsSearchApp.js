@@ -170,7 +170,8 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
 
         }
 
-        $scope.setTableOrdering = function(orderParam, reverse = false){
+        $scope.setTableOrdering = function(orderParam, reverse){
+            reverse = typeof reverse !== 'undefined' ?  reverse : false;
             $scope.orderTableParam.order = orderParam;
             $scope.orderTableParam.reverse = reverse;
             $scope.genFilteredAttends();

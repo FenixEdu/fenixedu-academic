@@ -107,7 +107,7 @@
 					${fr:message('resources.ApplicationResources', 'link.teachers')}
 				</a>
 			</li>
-			<c:if test="${professorship.permissions.summaries}">
+			<c:if test="${professorship.permissions.students}">
 				<li>
                 <a href="${base}/${executionCourse.externalId}/attends/show">
 						${fr:message('resources.ApplicationResources', 'link.students')}
