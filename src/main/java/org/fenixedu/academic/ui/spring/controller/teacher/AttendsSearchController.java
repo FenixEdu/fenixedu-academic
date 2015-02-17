@@ -145,8 +145,13 @@ public class AttendsSearchController extends ExecutionCourseController {
                         shiftType -> Optional
                                 .ofNullable(attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
                                 .map(Shift::getPresentationName).orElse(""));
-                addCell(getLabel("label.numberOfEnrollments"), attends.getRegistration()
-                        .getEnrolments(attends.getExecutionYear()).size());
+                if (attends.getEnrolment() != null) {
+                    addCell(getLabel("label.numberOfEnrollments"),
+                            attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
+                                    attends.getEnrolment().getExecutionPeriod()));
+                } else {
+                    addCell(getLabel("label.numberOfEnrollments"), "--");
+                }
 
                 addCell(getLabel("label.attends.enrollmentState"),
                         BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
@@ -203,7 +208,7 @@ public class AttendsSearchController extends ExecutionCourseController {
                         ev -> addCell(
                                 ev.getPresentationName(),
                                 attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
-                                        .map(Mark::getMark).findAny().orElse("")));
+                                .map(Mark::getMark).findAny().orElse("")));
             }
         });
 
@@ -278,11 +283,11 @@ public class AttendsSearchController extends ExecutionCourseController {
         recipients.add(Recipient.newInstance(label, UserGroup.of(users)));
         String sendEmailUrl =
                 UriBuilder
-                        .fromUri("/messaging/emails.do")
-                        .queryParam("method", "newEmail")
-                        .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
-                        .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray())
-                        .build().toString();
+                .fromUri("/messaging/emails.do")
+                .queryParam("method", "newEmail")
+                .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
+                .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray())
+                .build().toString();
         String sendEmailWithChecksumUrl =
                 GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), sendEmailUrl, session);
         return new RedirectView(sendEmailWithChecksumUrl, true);
