@@ -55,8 +55,8 @@ public class PhotographController {
             HttpHeaders headers = new HttpHeaders();
             String etag = "W/\"" + (personalPhoto == null ? "mm-av" : personalPhoto.getExternalId()) + "-" + size + "\"";
             headers.setETag(etag);
-            headers.setExpires(DateTime.now().plusHours(12).getMillis());
-            headers.setCacheControl("max-age=43200");
+            headers.setExpires(DateTime.now().plusWeeks(2).getMillis());
+            headers.setCacheControl("max-age=1209600");
 
             if (etag.equals(ifNoneMatch)) {
                 return new ResponseEntity<>(headers, HttpStatus.NOT_MODIFIED);
@@ -77,4 +77,9 @@ public class PhotographController {
         throw BennuCoreDomainException.resourceNotFound(username);
     }
 
+    @RequestMapping(value = "{size}/{username}")
+    public ResponseEntity<byte[]> getWithSize(@PathVariable String username, @PathVariable Integer size, @RequestHeader(
+            value = "If-None-Match", required = false) String ifNoneMatch) throws IOException {
+        return get(username, size, ifNoneMatch);
+    }
 }
