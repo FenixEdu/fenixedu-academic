@@ -54,11 +54,13 @@ public class StudentGroupService {
     public Grouping createOrEditGrouping(ProjectGroupBean bean, ExecutionCourse executionCourse) {
         EnrolmentGroupPolicyType enrolmentPolicyType =
                 bean.getAtomicEnrolmentPolicy() != null && bean.getAtomicEnrolmentPolicy() ? new EnrolmentGroupPolicyType(1) : new EnrolmentGroupPolicyType(
-                        2);
-        Grouping grouping;
+                2);
         ShiftType shiftType =
                 bean.getShiftType() == null || bean.getShiftType().isEmpty() ? null : ShiftType.valueOf(bean.getShiftType());
-        if (executionCourse.getGroupingByName(bean.getName()) == null) {
+
+        Grouping grouping = bean.getExternalId() == null ? null : FenixFramework.getDomainObject(bean.getExternalId());
+
+        if (grouping == null) {
             grouping =
                     Grouping.create(bean.getName(), bean.getEnrolmentBeginDay().toDate(), bean.getEnrolmentEndDay().toDate(),
                             enrolmentPolicyType, bean.getMaxGroupNumber(), bean.getIdealGroupCapacity(),
@@ -67,7 +69,6 @@ public class StudentGroupService {
                             bean.getDifferentiatedCapacityShifts());
 
         } else {
-            grouping = executionCourse.getGroupingByName(bean.getName());
             grouping.edit(bean.getName(), bean.getEnrolmentBeginDay().toDate(), bean.getEnrolmentEndDay().toDate(),
                     enrolmentPolicyType, bean.getMaxGroupNumber(), bean.getIdealGroupCapacity(), bean.getMaximumGroupCapacity(),
                     bean.getMinimumGroupCapacity(), bean.getProjectDescription(), shiftType, bean.getAutomaticEnrolment(),

@@ -49,9 +49,8 @@
 
 
 
-<h2>${fr:message('resources.ApplicationResources', 'title.ShiftsAndGroups')}
-</h2>
-
+<h2>${fr:message('resources.ApplicationResources', 'title.ShiftsAndGroups')} ${ grouping.name }
+</h2> 
 
 <a href="${viewProjectsLink}"><span
 	class="glyphicon glyphicon-chevron-left"></span>

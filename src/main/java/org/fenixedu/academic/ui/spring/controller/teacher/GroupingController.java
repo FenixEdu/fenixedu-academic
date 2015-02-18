@@ -97,6 +97,12 @@ public class GroupingController extends ExecutionCourseController {
             errors.add("error.groupProperties.missingName");
         }
 
+        Grouping groupingWithSameName = executionCourse.getGroupingByName(projectGroup.getName());
+
+        if (groupingWithSameName != null && !groupingWithSameName.getExternalId().equals(projectGroup.getExternalId())) {
+            errors.add("error.exception.existing.groupProperties");
+        }
+
         ShiftType shiftType =
                 projectGroup.getShiftType() == null || projectGroup.getShiftType().isEmpty() ? null : ShiftType
                         .valueOf(projectGroup.getShiftType());
@@ -162,8 +168,8 @@ public class GroupingController extends ExecutionCourseController {
         if (grouping.getShiftType() != null) {
             shiftList =
                     grouping.getExportGroupingsSet().stream().map(ExportGrouping::getExecutionCourse)
-                    .flatMap(ec -> ec.getAssociatedShifts().stream()).sorted(Shift.SHIFT_COMPARATOR_BY_NAME)
-                    .filter(shift -> shift.containsType(grouping.getShiftType())).collect(Collectors.toList());
+                            .flatMap(ec -> ec.getAssociatedShifts().stream()).sorted(Shift.SHIFT_COMPARATOR_BY_NAME)
+                            .filter(shift -> shift.containsType(grouping.getShiftType())).collect(Collectors.toList());
         }
 
         HashMap<Shift, TreeSet<StudentGroup>> studentGroupsByShift = new HashMap<Shift, TreeSet<StudentGroup>>();
@@ -195,8 +201,8 @@ public class GroupingController extends ExecutionCourseController {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
                 exportGrouping.getExecutionCourse().getAttendsSet().stream()
-                .filter(attend -> !grouping.getAttendsSet().contains(attend))
-                .forEach(attend -> studentsNotAttending.add(attend.getRegistration()));
+                        .filter(attend -> !grouping.getAttendsSet().contains(attend))
+                        .forEach(attend -> studentsNotAttending.add(attend.getRegistration()));
 
             }
         }
