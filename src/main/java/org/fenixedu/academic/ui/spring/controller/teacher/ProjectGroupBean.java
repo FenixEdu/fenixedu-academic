@@ -50,11 +50,13 @@ public class ProjectGroupBean {
         super();
         this.enrolmentBeginDay = new DateTime();
         this.differentiatedCapacityShifts = new HashMap<String, Integer>();
+        this.externalId = null;
     }
 
     public ProjectGroupBean(ExecutionCourse executionCourse) {
         this();
         this.enrolmentBeginDay = new DateTime();
+        this.externalId = null;
 
         executionCourse.getShiftsOrderedByLessons().stream().forEach(shift -> {
             if (shift.getShiftGroupingProperties() != null) {
@@ -79,7 +81,7 @@ public class ProjectGroupBean {
         this.maximumGroupCapacity = grouping.getMaximumCapacity();
         this.idealGroupCapacity = grouping.getIdealCapacity();
         this.maxGroupNumber = grouping.getGroupMaximumNumber();
-        this.setExternalId(grouping.getExternalId());
+        this.externalId = grouping.getExternalId();
 
     }
 

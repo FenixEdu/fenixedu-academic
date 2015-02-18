@@ -39,7 +39,7 @@ public abstract class ExecutionCourseController extends StrutsFunctionalityContr
         super();
     }
 
-    private static Professorship findProfessorship(final ExecutionCourse executionCourse) {
+    private Professorship findProfessorship(final ExecutionCourse executionCourse) {
         final Person person = AccessControl.getPerson();
         if (person != null) {
             Optional<Professorship> professorshipOpt =
@@ -47,7 +47,7 @@ public abstract class ExecutionCourseController extends StrutsFunctionalityContr
                             .filter(professorship -> professorship.getExecutionCourse().equals(executionCourse)).findFirst();
             if (professorshipOpt.isPresent()) {
                 Professorship prof = professorshipOpt.get();
-                if (!prof.getPermissions().getGroups()) {
+                if (!this.getPermission(prof)) {
                     throw new DomainException(Status.FORBIDDEN, "message.error.notAuthorized");
                 } else {
                     return prof;
@@ -66,6 +66,8 @@ public abstract class ExecutionCourseController extends StrutsFunctionalityContr
     public Professorship setProfessorship(@PathVariable ExecutionCourse executionCourse) {
         return findProfessorship(executionCourse);
     }
+
+    abstract Boolean getPermission(Professorship prof);
 
     @ModelAttribute("executionCourse")
     public ExecutionCourse getExecutionCourse(@PathVariable ExecutionCourse executionCourse) {

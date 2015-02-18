@@ -31,6 +31,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Mark;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.student.StudentStatuteType;
@@ -76,6 +77,11 @@ public class AttendsSearchController extends ExecutionCourseController {
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
+    }
+
+    @Override
+    Boolean getPermission(Professorship prof) {
+        return prof.getPermissions().getStudents();
     }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -140,13 +146,18 @@ public class AttendsSearchController extends ExecutionCourseController {
                         gr -> addCell(
                                 getLabel("label.projectGroup") + " " + gr.getName(),
                                 attends.getStudentGroupsSet().stream().filter(sg -> sg.getGrouping().equals(gr))
-                                        .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny().orElse("")));
+                                .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny().orElse("")));
                 executionCourse.getShiftTypes().forEach(
                         shiftType -> Optional
-                                .ofNullable(attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
-                                .map(Shift::getPresentationName).orElse(""));
-                addCell(getLabel("label.numberOfEnrollments"), attends.getRegistration()
-                        .getEnrolments(attends.getExecutionYear()).size());
+                        .ofNullable(attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
+                        .map(Shift::getPresentationName).orElse(""));
+                if (attends.getEnrolment() != null) {
+                    addCell(getLabel("label.numberOfEnrollments"),
+                            attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
+                                    attends.getEnrolment().getExecutionPeriod()));
+                } else {
+                    addCell(getLabel("label.numberOfEnrollments"), "--");
+                }
 
                 addCell(getLabel("label.attends.enrollmentState"),
                         BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));

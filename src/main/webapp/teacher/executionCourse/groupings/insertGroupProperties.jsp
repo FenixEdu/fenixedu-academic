@@ -69,6 +69,7 @@
 	<form:form modelAttribute="projectGroup" role="form" method="post"
 		action="${createGroupUrl }" class="form-horizontal"
 		enctype="multipart/form-data">
+				<form:input type="hidden" class="form-control" path="externalId"  required="required"/>
 
 		<div class="form-group">
 			<form:label path="name" class="col-sm-2 control-label">

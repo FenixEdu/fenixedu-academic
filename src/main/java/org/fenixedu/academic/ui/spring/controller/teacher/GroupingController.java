@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExportGrouping;
 import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.StudentGroup;
@@ -58,6 +59,11 @@ public class GroupingController extends ExecutionCourseController {
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
+    }
+
+    @Override
+    Boolean getPermission(Professorship prof) {
+        return prof.getPermissions().getGroups();
     }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -91,6 +97,12 @@ public class GroupingController extends ExecutionCourseController {
             errors.add("error.groupProperties.missingName");
         }
 
+        Grouping groupingWithSameName = executionCourse.getGroupingByName(projectGroup.getName());
+
+        if (groupingWithSameName != null && !groupingWithSameName.getExternalId().equals(projectGroup.getExternalId())) {
+            errors.add("error.exception.existing.groupProperties");
+        }
+
         ShiftType shiftType =
                 projectGroup.getShiftType() == null || projectGroup.getShiftType().isEmpty() ? null : ShiftType
                         .valueOf(projectGroup.getShiftType());
@@ -98,15 +110,15 @@ public class GroupingController extends ExecutionCourseController {
         if (projectGroup.getDifferentiatedCapacity()
                 && projectGroup.getMaximumGroupCapacity() != null
                 && projectGroup
-                        .getDifferentiatedCapacityShifts()
-                        .entrySet()
-                        .stream()
-                        .anyMatch(
-                                entry -> ((Shift) FenixFramework.getDomainObject(entry.getKey())).getTypes().contains(shiftType)
-                                        && entry.getValue() != null
-                                        && ((Shift) FenixFramework.getDomainObject(entry.getKey())).getLotacao() != 0 /* it means it was locked from students enrolment only*/
-                                        && entry.getValue() * projectGroup.getMaximumGroupCapacity() > ((Shift) FenixFramework
-                                                .getDomainObject(entry.getKey())).getLotacao())) {
+                .getDifferentiatedCapacityShifts()
+                .entrySet()
+                .stream()
+                .anyMatch(
+                        entry -> ((Shift) FenixFramework.getDomainObject(entry.getKey())).getTypes().contains(shiftType)
+                        && entry.getValue() != null
+                        && ((Shift) FenixFramework.getDomainObject(entry.getKey())).getLotacao() != 0 /* it means it was locked from students enrolment only*/
+                        && entry.getValue() * projectGroup.getMaximumGroupCapacity() > ((Shift) FenixFramework
+                                .getDomainObject(entry.getKey())).getLotacao())) {
             errors.add("error.groupProperties.capacityOverflow");
         }
 
@@ -252,4 +264,5 @@ public class GroupingController extends ExecutionCourseController {
         studentGroupService.deleteGrouping(grouping);
         return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/show", true);
     }
+
 }
