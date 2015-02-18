@@ -26,6 +26,7 @@ import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExportGrouping;
 import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
@@ -53,6 +54,11 @@ public class StudentGroupController extends ExecutionCourseController {
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
+    }
+
+    @Override
+    Boolean getPermission(Professorship prof) {
+        return prof.getPermissions().getGroups();
     }
 
     @ModelAttribute("Grouping")
@@ -104,7 +110,7 @@ public class StudentGroupController extends ExecutionCourseController {
                 .stream()
                 .filter(attends -> grouping.getStudentGroupsSet().stream()
                         .noneMatch(sg -> sg.getAttendsSet().stream().anyMatch(at -> at.equals(attends))))
-                .collect(Collectors.toList()));
+                        .collect(Collectors.toList()));
 
         model.addAttribute("newShift", studentGroup.getShift());
         model.addAttribute("shifts", shiftList);

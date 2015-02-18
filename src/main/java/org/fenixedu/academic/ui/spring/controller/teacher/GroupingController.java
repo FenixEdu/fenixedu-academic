@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExportGrouping;
 import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.StudentGroup;
@@ -58,6 +59,11 @@ public class GroupingController extends ExecutionCourseController {
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
+    }
+
+    @Override
+    Boolean getPermission(Professorship prof) {
+        return prof.getPermissions().getGroups();
     }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -98,15 +104,15 @@ public class GroupingController extends ExecutionCourseController {
         if (projectGroup.getDifferentiatedCapacity()
                 && projectGroup.getMaximumGroupCapacity() != null
                 && projectGroup
-                        .getDifferentiatedCapacityShifts()
-                        .entrySet()
-                        .stream()
-                        .anyMatch(
-                                entry -> ((Shift) FenixFramework.getDomainObject(entry.getKey())).getTypes().contains(shiftType)
-                                        && entry.getValue() != null
-                                        && ((Shift) FenixFramework.getDomainObject(entry.getKey())).getLotacao() != 0 /* it means it was locked from students enrolment only*/
-                                        && entry.getValue() * projectGroup.getMaximumGroupCapacity() > ((Shift) FenixFramework
-                                                .getDomainObject(entry.getKey())).getLotacao())) {
+                .getDifferentiatedCapacityShifts()
+                .entrySet()
+                .stream()
+                .anyMatch(
+                        entry -> ((Shift) FenixFramework.getDomainObject(entry.getKey())).getTypes().contains(shiftType)
+                        && entry.getValue() != null
+                        && ((Shift) FenixFramework.getDomainObject(entry.getKey())).getLotacao() != 0 /* it means it was locked from students enrolment only*/
+                        && entry.getValue() * projectGroup.getMaximumGroupCapacity() > ((Shift) FenixFramework
+                                .getDomainObject(entry.getKey())).getLotacao())) {
             errors.add("error.groupProperties.capacityOverflow");
         }
 
@@ -156,8 +162,8 @@ public class GroupingController extends ExecutionCourseController {
         if (grouping.getShiftType() != null) {
             shiftList =
                     grouping.getExportGroupingsSet().stream().map(ExportGrouping::getExecutionCourse)
-                            .flatMap(ec -> ec.getAssociatedShifts().stream()).sorted(Shift.SHIFT_COMPARATOR_BY_NAME)
-                            .filter(shift -> shift.containsType(grouping.getShiftType())).collect(Collectors.toList());
+                    .flatMap(ec -> ec.getAssociatedShifts().stream()).sorted(Shift.SHIFT_COMPARATOR_BY_NAME)
+                    .filter(shift -> shift.containsType(grouping.getShiftType())).collect(Collectors.toList());
         }
 
         HashMap<Shift, TreeSet<StudentGroup>> studentGroupsByShift = new HashMap<Shift, TreeSet<StudentGroup>>();
@@ -189,8 +195,8 @@ public class GroupingController extends ExecutionCourseController {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
                 exportGrouping.getExecutionCourse().getAttendsSet().stream()
-                        .filter(attend -> !grouping.getAttendsSet().contains(attend))
-                        .forEach(attend -> studentsNotAttending.add(attend.getRegistration()));
+                .filter(attend -> !grouping.getAttendsSet().contains(attend))
+                .forEach(attend -> studentsNotAttending.add(attend.getRegistration()));
 
             }
         }
@@ -252,4 +258,5 @@ public class GroupingController extends ExecutionCourseController {
         studentGroupService.deleteGrouping(grouping);
         return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/show", true);
     }
+
 }

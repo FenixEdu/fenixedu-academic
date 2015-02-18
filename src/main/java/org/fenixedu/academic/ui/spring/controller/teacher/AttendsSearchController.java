@@ -31,6 +31,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Mark;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.student.StudentStatuteType;
@@ -76,6 +77,11 @@ public class AttendsSearchController extends ExecutionCourseController {
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
+    }
+
+    @Override
+    Boolean getPermission(Professorship prof) {
+        return prof.getPermissions().getStudents();
     }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -140,11 +146,11 @@ public class AttendsSearchController extends ExecutionCourseController {
                         gr -> addCell(
                                 getLabel("label.projectGroup") + " " + gr.getName(),
                                 attends.getStudentGroupsSet().stream().filter(sg -> sg.getGrouping().equals(gr))
-                                        .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny().orElse("")));
+                                .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny().orElse("")));
                 executionCourse.getShiftTypes().forEach(
                         shiftType -> Optional
-                                .ofNullable(attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
-                                .map(Shift::getPresentationName).orElse(""));
+                        .ofNullable(attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
+                        .map(Shift::getPresentationName).orElse(""));
                 if (attends.getEnrolment() != null) {
                     addCell(getLabel("label.numberOfEnrollments"),
                             attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
@@ -208,7 +214,7 @@ public class AttendsSearchController extends ExecutionCourseController {
                         ev -> addCell(
                                 ev.getPresentationName(),
                                 attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
-                                .map(Mark::getMark).findAny().orElse("")));
+                                        .map(Mark::getMark).findAny().orElse("")));
             }
         });
 
@@ -283,11 +289,11 @@ public class AttendsSearchController extends ExecutionCourseController {
         recipients.add(Recipient.newInstance(label, UserGroup.of(users)));
         String sendEmailUrl =
                 UriBuilder
-                .fromUri("/messaging/emails.do")
-                .queryParam("method", "newEmail")
-                .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
-                .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray())
-                .build().toString();
+                        .fromUri("/messaging/emails.do")
+                        .queryParam("method", "newEmail")
+                        .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
+                        .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray())
+                        .build().toString();
         String sendEmailWithChecksumUrl =
                 GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), sendEmailUrl, session);
         return new RedirectView(sendEmailWithChecksumUrl, true);
