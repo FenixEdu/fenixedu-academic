@@ -179,7 +179,7 @@
 					<th ng-if="showPhotos" rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.photo')}</th>
 					<th ng-if="groupings" colspan="{{groupings.length}}">${fr:message('resources.ApplicationResources', 'label.projectGroup')}</th>
 					<th ng-if="shiftTypes" colspan="{{shiftTypes.length}}">${fr:message('resources.ApplicationResources', 'label.attends.shifts')}</th>
-					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('enrolmentsInThisCourse')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('enrolmentsInThisCourse',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.numberOfEnrollments')}</th>
+					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('enrolmentsInThisCourse')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('enrolmentsInThisCourse',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.enrollments')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.attends.enrollmentState')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.registration.state')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.Degree')}</th>
