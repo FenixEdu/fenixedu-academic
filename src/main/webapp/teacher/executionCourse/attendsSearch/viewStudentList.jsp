@@ -247,11 +247,14 @@
         	</thread>
         	<tbody>
 	        	<tr ng-repeat="numberOfAttends in attends | numberOfEnrolments">
-	        		<td>
-	        			{{$index}}
+	        		<td ng-if="numberOfAttends.number == '--'">
+	        			${fr:message('resources.ApplicationResources','message.notEnroled')}
+	        		</td>
+	        		<td ng-if="numberOfAttends.number != '--'">
+	        			{{numberOfAttends.number}}
 	        		</td>
 	        		<td>
-						{{numberOfAttends}}
+						{{numberOfAttends.value}}
 					</td>
 				</tr>
         	</tbody>

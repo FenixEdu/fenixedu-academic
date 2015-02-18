@@ -8,9 +8,11 @@ app.filter('numberOfEnrolments', function(){
         var attendsSet = [];
         for (var j = 0; j < attends.length; j++) {
             if(numberOfEnrolments[attends[j].enrolmentsInThisCourse]){
-                numberOfEnrolments[attends[j].enrolmentsInThisCourse]++;
+                numberOfEnrolments[attends[j].enrolmentsInThisCourse].value++;
             } else {
-                numberOfEnrolments[attends[j].enrolmentsInThisCourse] =1;
+                numberOfEnrolments[attends[j].enrolmentsInThisCourse] = {};
+                numberOfEnrolments[attends[j].enrolmentsInThisCourse].value = 1;
+                numberOfEnrolments[attends[j].enrolmentsInThisCourse].number = attends[j].enrolmentsInThisCourse;
             }
         }
         return numberOfEnrolments;
