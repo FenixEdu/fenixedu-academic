@@ -51,15 +51,14 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
     @Override
     public void renderReport(Spreadsheet spreadsheet) {
 
-        spreadsheet.setHeader("semestre");
-        spreadsheet.setHeader("id execution course");
-        spreadsheet.setHeader("id turno");
-        spreadsheet.setHeader("nome turno");
-        spreadsheet.setHeader("tipo aula");
-        spreadsheet.setHeader("carga horas aula inseridas");
-        spreadsheet.setHeader("horas aula sistema");
-        spreadsheet.setHeader("total turnos");
-        spreadsheet.setHeader("OID execucao disciplina");
+        spreadsheet.setHeader("Semestre");
+        spreadsheet.setHeader("Código disciplina execução");
+        spreadsheet.setHeader("Código turno");
+        spreadsheet.setHeader("Nome turno");
+        spreadsheet.setHeader("Tipo aula");
+        spreadsheet.setHeader("Carga horas aula inseridas");
+        spreadsheet.setHeader("Horas aula sistema");
+        spreadsheet.setHeader("Total turnos");
 
         for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriodsSet()) {
             for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
@@ -74,21 +73,17 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 
                         Row row = spreadsheet.addRow();
                         row.setCell(executionSemester.getSemester());
-                        row.setCell(executionCourse.getExternalId());
-                        row.setCell(shift.getExternalId());
+                        row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
+                        row.setCell(GepReportFile.getShiftCode(shift));
                         row.setCell(shift.getNome());
                         row.setCell(courseLoad.getType().name());
                         row.setCell(courseLoad.getTotalQuantity() != null ? courseLoad.getTotalQuantity().toPlainString()
                                 .replace('.', ',') : StringUtils.EMPTY);
                         row.setCell(shift.getTotalHours() != null ? shift.getTotalHours().toPlainString().replace('.', ',') : StringUtils.EMPTY);
                         row.setCell(courseLoad.getShiftsSet().size());
-                        row.setCell(String.valueOf(executionCourse.getOid()));
-
                     }
                 }
             }
         }
-
     }
-
 }

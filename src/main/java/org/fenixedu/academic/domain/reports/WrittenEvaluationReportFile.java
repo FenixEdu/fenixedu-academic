@@ -49,9 +49,9 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
     public void renderReport(final Spreadsheet spreadsheet) throws Exception {
         spreadsheet.setHeader("Ano Lectivo");
         spreadsheet.setHeader("Semestre");
-        spreadsheet.setHeader("OID da Execução da Disciplina");
+        spreadsheet.setHeader("Código Execução Disciplina");
         spreadsheet.setHeader("Nome da Disciplina");
-        spreadsheet.setHeader("OID Avaliação");
+        spreadsheet.setHeader("Código Avaliação");
         spreadsheet.setHeader("Tipo de Avaliação");
         spreadsheet.setHeader("Data Avaliação");
         spreadsheet.setHeader("Hora de Início");
@@ -69,9 +69,9 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
                         final Row row = spreadsheet.addRow();
                         row.setCell(getExecutionYear().getYear());
                         row.setCell(executionSemester.getSemester());
-                        row.setCell(executionCourse.getExternalId());
+                        row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
                         row.setCell(executionCourse.getName());
-                        row.setCell(writtenEvaluation.getExternalId());
+                        row.setCell(GepReportFile.getWrittenEvaluationCode(writtenEvaluation));
                         row.setCell(writtenEvaluation instanceof Exam ? "Exame" : "Teste");
                         row.setCell(writtenEvaluation.getDayDateYearMonthDay().toString("yyyy-MM-dd"));
                         row.setCell(writtenEvaluation.getBeginningDateTime().toString("HH:mm"));

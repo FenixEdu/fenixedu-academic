@@ -53,7 +53,7 @@ public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base 
     public void renderReport(final Spreadsheet spreadsheet) throws Exception {
         spreadsheet.setHeader("Ano Lectivo");
         spreadsheet.setHeader("Semestre");
-        spreadsheet.setHeader("OID da Execução da Disciplina");
+        spreadsheet.setHeader("Código Execução Disciplina");
         spreadsheet.setHeader("Nome da Disciplina");
         spreadsheet.setHeader("Tipo do Turno");
         spreadsheet.setHeader("Turno");
@@ -68,7 +68,7 @@ public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base 
                     final Row row = spreadsheet.addRow();
                     row.setCell(getExecutionYear().getYear());
                     row.setCell(executionSemester.getSemester());
-                    row.setCell(executionCourse.getExternalId());
+                    row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
                     row.setCell(executionCourse.getName());
                     final LessonInstance lessonInstance = summary.getLessonInstance();
                     final CourseLoad courseLoad = lessonInstance == null ? null : lessonInstance.getCourseLoad();

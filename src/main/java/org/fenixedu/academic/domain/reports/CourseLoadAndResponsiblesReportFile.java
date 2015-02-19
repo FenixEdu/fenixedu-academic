@@ -91,8 +91,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
         spreadsheet.setHeader("Carga Horaria Trabalho de Campo");
         spreadsheet.setHeader("Carga Horaria Estagio");
         spreadsheet.setHeader("Carga Horaria Orientacao Tutorial");
-        spreadsheet.setHeader("OID execucao disciplina");
-        spreadsheet.setHeader("OID disciplina competencia");
+        spreadsheet.setHeader("Código execucao disciplina");
+        spreadsheet.setHeader("Código disciplina competencia");
 
         spreadsheet.setHeader("Tipo disciplina");
         spreadsheet.setHeader("Valor unitário disciplina (ck)");
@@ -138,8 +138,9 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
         row.setCell(degree.getNome());
         row.setCell(degree.getSigla());
         row.setCell(curricularCourse.getName());
-        row.setCell(curricularCourse.getCompetenceCourse() != null ? curricularCourse.getCompetenceCourse().getExternalId() : null);
-        row.setCell(executionCourse != null ? executionCourse.getExternalId().toString() : "");
+        row.setCell(curricularCourse.getCompetenceCourse() != null ? GepReportFile.getCompetenceCourseCode(curricularCourse
+                .getCompetenceCourse()) : null);
+        row.setCell(executionCourse != null ? GepReportFile.getExecutionCourseCode(executionCourse) : "");
         row.setCell(executionPeriod.getExecutionYear().getName());
         row.setCell(degreeModuleScope != null ? degreeModuleScope.getCurricularYear().toString() : "");
         if (curricularCourse.isAnual()) {
@@ -165,8 +166,9 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
         row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.FIELD_WORK)));
         row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TRAINING_PERIOD)));
         row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TUTORIAL_ORIENTATION)));
-        row.setCell(executionCourse != null ? executionCourse.getExternalId() : "");
-        row.setCell(curricularCourse.getCompetenceCourse() != null ? curricularCourse.getCompetenceCourse().getExternalId() : "");
+        row.setCell(executionCourse != null ? GepReportFile.getExecutionCourseCode(executionCourse) : "");
+        row.setCell(curricularCourse.getCompetenceCourse() != null ? GepReportFile.getCompetenceCourseCode(curricularCourse
+                .getCompetenceCourse()) : "");
 
         row.setCell(executionCourse != null ? executionCourse.isDissertation() ? "DISS" : executionCourse
                 .getProjectTutorialCourse() ? "A" : "B" : "");

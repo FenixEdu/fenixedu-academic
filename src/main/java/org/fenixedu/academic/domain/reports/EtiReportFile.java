@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.EvaluationConfiguration;
 import org.fenixedu.academic.domain.EvaluationSeason;
+import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
@@ -72,7 +73,7 @@ public class EtiReportFile extends EtiReportFile_Base {
         }
         spreadsheet.setHeader("tipo Aluno");
         spreadsheet.setHeader("número inscricoes anteriores");
-        spreadsheet.setHeader("executionCourseId");
+        spreadsheet.setHeader("código disciplina execução");
 
         for (final Degree degree : Degree.readNotEmptyDegrees()) {
             if (checkDegreeType(getDegreeType(), degree)) {
@@ -145,6 +146,12 @@ public class EtiReportFile extends EtiReportFile_Base {
                     attends = a;
                 }
             }
+        }
+        if (attends == null) {
+            row.setCell("");
+        } else {
+            final ExecutionCourse executionCourse = attends.getExecutionCourse();
+            row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
         }
     }
 
