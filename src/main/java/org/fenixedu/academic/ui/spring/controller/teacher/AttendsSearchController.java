@@ -148,9 +148,11 @@ public class AttendsSearchController extends ExecutionCourseController {
                                 attends.getStudentGroupsSet().stream().filter(sg -> sg.getGrouping().equals(gr))
                                 .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny().orElse("")));
                 executionCourse.getShiftTypes().forEach(
-                        shiftType -> Optional
-                        .ofNullable(attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
-                        .map(Shift::getPresentationName).orElse(""));
+                        shiftType -> addCell(
+                                getLabel("label.shift") + " " + shiftType.getName(),
+                                Optional.ofNullable(
+                                        attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
+                                        .map(Shift::getNome).orElse("")));
                 if (attends.getEnrolment() != null) {
                     addCell(getLabel("label.numberOfEnrollments"),
                             attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
