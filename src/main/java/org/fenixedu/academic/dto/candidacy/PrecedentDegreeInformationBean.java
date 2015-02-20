@@ -77,6 +77,8 @@ public class PrecedentDegreeInformationBean implements Serializable {
     public PrecedentDegreeInformationBean(PrecedentDegreeInformation information) {
         setPrecedentDegreeInformation(information);
         setDegreeDesignation(information.getDegreeDesignation());
+        setRaidesDegreeDesignation(DegreeDesignation.readByNameAndSchoolLevel(information.getDegreeDesignation(),
+                information.getSchoolLevel()));
         setInstitution(information.getInstitution());
         setConclusionGrade(information.getConclusionGrade());
         setConclusionYear(information.getConclusionYear());

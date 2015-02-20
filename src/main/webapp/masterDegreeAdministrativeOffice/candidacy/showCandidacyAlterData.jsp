@@ -65,7 +65,7 @@
 	<logic:present name="precedentDegreeInformation">
 		
 		<bean:define id="precedentDegreeInformation" name="precedentDegreeInformation" type="org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean"/>
-		<% if(precedentDegreeInformation.getPrecedentDegreeInformation().getRegistration() != null) { %>
+		<% if(precedentDegreeInformation.getPrecedentDegreeInformation().getRegistration() == null) { %>
 			<h2><strong><bean:message key="label.person.title.previousCompleteDegree" bundle="ADMIN_OFFICE_RESOURCES" /></strong></h2>		
 			<fr:edit id="precedentDegreeInformation" name="precedentDegreeInformation">
 				<fr:schema type="org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES">	
@@ -97,7 +97,7 @@
 							<fr:property name="labelField" value="description"/>
 							<fr:property name="indicatorShown" value="true"/>
 							<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchRaidesDegreeDesignations"/>
-							<fr:property name="args" value="slot=description,size=50"/>
+							<fr:property name="args" value="<%= "slot=description,size=50,filterSchoolLevelName=" + ((precedentDegreeInformation.getSchoolLevel() != null) ? precedentDegreeInformation.getSchoolLevel().getName() : "null") + ",filterUnitOID=" + ((precedentDegreeInformation.getInstitution() != null) ? precedentDegreeInformation.getInstitution().getExternalId() : "null") %>"/>
 							<fr:property name="minChars" value="3"/>
 					    </fr:slot>
 					<% } else { %>
