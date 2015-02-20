@@ -22,6 +22,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.workflow.StateBean;
+import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.joda.time.DateTime;
 
 public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
@@ -29,6 +30,7 @@ public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
     protected StudyPlanConcludedState(Registration registration, Person person, DateTime dateTime) {
         super();
         init(registration, person, dateTime);
+        UserLoginPeriod.createOpenPeriod(person.getUser());
     }
 
     @Override

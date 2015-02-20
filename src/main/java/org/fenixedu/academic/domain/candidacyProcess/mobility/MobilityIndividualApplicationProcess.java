@@ -58,6 +58,7 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -774,6 +775,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 User userView, Object object) {
             if (process.getPersonalDetails().getPerson().getStudent() == null) {
                 new Student(process.getPersonalDetails().getPerson(), null);
+                UserLoginPeriod.createOpenPeriod(process.getPersonalDetails().getPerson().getUser());
 
                 if (StringUtils.isEmpty(process.getPersonalDetails().getPerson().getUsername())) {
                     throw new DomainException("error.erasmus.create.user", new String[] { null, "User not created" });

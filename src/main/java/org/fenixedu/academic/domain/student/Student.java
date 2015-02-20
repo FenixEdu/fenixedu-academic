@@ -71,6 +71,7 @@ import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -1350,9 +1351,10 @@ public class Student extends Student_Base {
         return false;
     }
 
-    @Deprecated
     public void updateStudentRole() {
-        // Nothing to do here, role is fully dynamic now.
+        if (shouldHaveStudentRole()) {
+            UserLoginPeriod.createOpenPeriod(getPerson().getUser());
+        }
     }
 
     public boolean shouldHaveStudentRole() {
