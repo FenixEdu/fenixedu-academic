@@ -103,10 +103,10 @@
 					</p>
 					<p>
 						<span ng-show="grouping.maxGroupNumber"> <abbr
-							title="${fr:message('resources.ApplicationResources', 'label.projectTable.MinimumCapacity.title')}">
+							title="${fr:message('resources.ApplicationResources', 'label.projectTable.GroupMaximumNumber.title')}">
 								${fr:message('resources.ApplicationResources', 'label.student.viewExecutionCourseProjects.GroupMaximumNumber')}
 						</abbr>: {{grouping.maxGroupNumber}}
-							${fr:message('resources.ApplicationResources', 'label.students.lowercase')}
+							${fr:message('resources.ApplicationResources', 'label.groups.lowercase')}
 						</span>
 					</p>
 					<p>
