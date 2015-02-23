@@ -49,8 +49,8 @@
 				<fr:property name="excludedValues" value="CITIZEN_CARD" />
 			</fr:slot>
 			<fr:slot name="documentIdEmissionLocation" />
-			<fr:slot name="documentIdEmissionDate" />
-			<fr:slot name="documentIdExpirationDate" />
+			<fr:slot name="documentIdEmissionDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
+			<fr:slot name="documentIdExpirationDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
@@ -87,7 +87,7 @@
 				<fr:property name="format" value="${nationality}"/>
 				<fr:property name="sortBy" value="nationality=asc" />
 			</fr:slot>
-			<fr:slot name="dateOfBirth" />
+			<fr:slot name="dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 			<fr:slot name="parishOfBirth">
 				<fr:property name="size" value="50"/>
 				<fr:property name="maxLength" value="100"/>
@@ -195,5 +195,5 @@
 		</fr:layout>
 	</fr:edit>
 
-	<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES" /></html:submit>	
+	<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES" /></html:submit>
 </fr:form>
