@@ -65,13 +65,53 @@ $(document).ready(function () {
         $('img.lazy').trigger('visiblePhoto');
     });
 
-    $('#editGroup').click(function () {
+    $('#editGroup').click(function (e) {
+        $('#secondaryEditGroup').toggleClass('active');
         $('.editAttends').toggleClass('hide');
         $("#checkAllAdd").addClass('active');
         $("#checkAllAdd").trigger('click');
-       // $("#tableFilter").focus();
-        checkboxStatusChecker()
+    	if(!$('.editAttends').hasClass("hide")){
+			$('html, body').animate({
+				scrollTop: $("#addStudentTable").offset().top
+			}, 200);
+    	}
+    	if($('.editAttends').hasClass("hide")){
+		    $(".removeCheckbox").each(function () {
+	            if (this.checked) {
+	            	changeRow($(this),"danger");
+	                $(this).prop('checked',false);
+	            }
+		    });
+	    }
+        checkboxStatusChecker();
     });
+    
+    $('#secondaryEditGroup').click(function (e) {
+    	$('#secondaryEditGroup').toggleClass('active');
+        $('#editGroup').toggleClass('active');
+        $('.editAttends').toggleClass('hide');
+        $("#checkAllAdd").addClass('active');
+        $("#checkAllAdd").trigger('click');
+    	if(!$('.editAttends').hasClass("hide")){
+			$('html, body').animate({
+				scrollTop: $("#addStudentTable").offset().top
+			}, 200);
+    	}
+    	if($('.editAttends').hasClass("hide")){
+			$('html, body').animate({
+				scrollTop: $("#editGroup").offset().top
+			}, 200);
+		    $(".removeCheckbox").each(function () {
+	            if (this.checked) {
+	            	changeRow($(this),"danger");
+	                $(this).prop('checked',false);
+	            }
+		    });
+	    }
+        e.preventDefault();
+        checkboxStatusChecker();
+    });
+    
 
     $('#addStudents tr').click(function (event) {
         if (event.target.type !== 'checkbox') {

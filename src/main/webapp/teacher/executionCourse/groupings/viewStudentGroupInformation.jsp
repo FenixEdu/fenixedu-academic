@@ -46,7 +46,8 @@
 
 <spring:url var="editStudentGroupShiftUrl"
 	value="/teacher/${executionCourse.externalId}/student-groups/${grouping.externalId }/editStudentGroupShift/${studentGroup.externalId}" />
-
+<spring:url var="sendEmailLink"
+	value="/teacher/${executionCourse.externalId}/student-groups/${grouping.externalId }/sendEmail/${studentGroup.externalId}" />
 <spring:url var="userPhotoBaseLink" value="/user/photo/" />
 <c:set var="req" value="${pageContext.request}" />
 
@@ -87,6 +88,12 @@
 	</div>
 </div>
 
+<c:if test="${not empty message }">
+	<p class="alert alert-info">
+			${fr:message('resources.ApplicationResources', message)}
+	</p>
+</c:if>
+
 <c:if test="${not empty errors }">
 	<p>
 		<span class="error"> <c:forEach var="error" items="${errors}">
@@ -102,7 +109,6 @@
 			<div class="well">
 				<div class="row">
 					<div class="col-md-2">
-
 						<p>
 							<strong>${fr:message('resources.ApplicationResources', 'label.nrOfElements')}</strong>
 							<c:if test="${not empty grouping.maximumCapacity}">
@@ -184,15 +190,14 @@
 
 		<form:form modelAttribute="attends"  style="display: inline" role="form" method="post"
 			action="${editStudentGroupAttendsUrl }" enctype="multipart/form-data">
-			
-			<a
-				href="${fr:checksumLink(req, 
-				'/teacher/sendMailToWorkGroupStudents.do?method=sendEmail&amp;executionCourseID='.concat(executionCourse.externalId).concat('&amp;groupPropertiesCode')
-				.concat(grouping.externalId).concat('&amp;studentGroupCode=').concat(studentGroup.externalId))}"
-				class="btn btn-default"> <span
-				class="glyphicon glyphicon-envelope"></span>
-				${fr:message('resources.ApplicationResources', 'link.sendEmailToAllStudents')}
-			</a>
+			<c:if test="${not empty studentGroup.attendsSet}">
+				<a
+					href="${sendEmailLink }"
+					class="btn btn-default"> <span
+					class="glyphicon glyphicon-envelope"></span>
+					${fr:message('resources.ApplicationResources', 'link.sendEmailToAllStudents')}
+				</a>
+			</c:if>
 
 			<button type="button" class="btn btn-default" data-toggle="button"
 				id="showPhotos">

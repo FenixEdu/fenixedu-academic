@@ -22,14 +22,25 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.UriBuilder;
+
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExportGrouping;
 import org.fenixedu.academic.domain.Grouping;
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
+import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +52,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.RedirectView;
+
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 @Controller
 @RequestMapping("/teacher/{executionCourse}/student-groups/{grouping}")
@@ -76,7 +89,6 @@ public class StudentGroupController extends ExecutionCourseController {
     @RequestMapping(value = "/shift/{shift}/createStudentGroup", method = RequestMethod.POST)
     public AbstractUrlBasedView createStudentGroup(Model model, @PathVariable Shift shift,
             @ModelAttribute("addStudent") @Validated AttendsBean addStudents, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/view/"
                     + grouping.getExternalId(), true);
@@ -110,7 +122,7 @@ public class StudentGroupController extends ExecutionCourseController {
                 .stream()
                 .filter(attends -> grouping.getStudentGroupsSet().stream()
                         .noneMatch(sg -> sg.getAttendsSet().stream().anyMatch(at -> at.equals(attends))))
-                        .collect(Collectors.toList()));
+                .collect(Collectors.toList()));
 
         model.addAttribute("newShift", studentGroup.getShift());
         model.addAttribute("shifts", shiftList);
@@ -143,6 +155,31 @@ public class StudentGroupController extends ExecutionCourseController {
         studentGroupService.updateStudentGroupShift(studentGroup, newShift);
         return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/" + grouping.getExternalId()
                 + "/viewStudentGroup/" + studentGroup.getExternalId(), true);
+
+    }
+
+    @RequestMapping(value = "/sendEmail/{studentGroup}", method = RequestMethod.GET)
+    public RedirectView sendEmail(Model model, HttpServletRequest request, HttpSession session,
+            @PathVariable StudentGroup studentGroup) {
+        String label =
+                studentGroup.getGrouping().getName() + "-" + BundleUtil.getString(Bundle.APPLICATION, "label.group")
+                        + studentGroup.getGroupNumber();
+
+        ArrayList<Recipient> recipients = new ArrayList<Recipient>();
+        recipients.add(Recipient.newInstance(
+                label,
+                UserGroup.of(studentGroup.getAttendsSet().stream().map(Attends::getRegistration).map(Registration::getPerson)
+                        .map(Person::getUser).collect(Collectors.toSet()))));
+        String sendEmailUrl =
+                UriBuilder
+                        .fromUri("/messaging/emails.do")
+                        .queryParam("method", "newEmail")
+                        .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
+                        .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray())
+                        .build().toString();
+        String sendEmailWithChecksumUrl =
+                GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), sendEmailUrl, session);
+        return new RedirectView(sendEmailWithChecksumUrl, true);
 
     }
 

@@ -144,11 +144,11 @@
 						<c:set var="value" value="${shiftType}" />
 						<c:set var="label" value="${shiftType.name}" />
 						<form:option value="${value }">
-				${label }
+					${fr:message('resources.EnumerationResources', label )}
 				</form:option>
 					</c:forEach>
 					<form:option value="">
-			SEM TURNO
+				${fr:message('resources.ApplicationResources', 'message.NoShift')}
 			</form:option>>
 		</form:select>
 			</div>

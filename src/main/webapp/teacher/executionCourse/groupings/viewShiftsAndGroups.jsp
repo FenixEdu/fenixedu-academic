@@ -101,13 +101,13 @@
 </p>
 
 <c:if test="${grouping.numberOfStudentsNotInGrouping > 0}">
-	<div class="alert alert-warning" role="alert">
+	<p class="alert alert-warning" >
 		${grouping.numberOfStudentsNotInGrouping }
 		${fr:message('resources.ApplicationResources', 'message.numberOfStudentsOutsideAttendsSet')}
-		<a href="${viewAttendsSet }">>
+		<a id="alertLink" href="${viewAttendsSet }"  >
 			${fr:message('resources.ApplicationResources', 'link.insertStudentsInAttendsSet')}
 		</a>
-	</div>
+	</p>
 </c:if>
 
 <div class="row">
@@ -157,11 +157,11 @@
 					method="post"
 					action="${createStudentGroupBaseLink.concat('createStudentGroup') }">
 
-					<span class="btn-group pull-left"> <a type="submit"
+					<span class="btn-group pull-left"> <button type="submit"
 						class="btn btn-default pull-left"> <span
 							class="glyphicon glyphicon-plus"></span>
 							${fr:message('resources.ApplicationResources', 'link.insertGroup')}
-					</a></span>
+					</button></span>
 				</form>
 
 				<c:forEach var="studentGroup" items="${studentGroups}">
@@ -257,12 +257,12 @@
 </c:forEach>
 
 <script>
-	$('#delete')
-			.on('click',
-					function(e) {
-						if (!confirm('${fr:message('resources.ApplicationResources', 'message.confirm.delete.groupProperties')}')) {
-							e.preventDefault();
-						}
-					});
+	$('#delete').on('click',function(e) {
+		if (!confirm('${fr:message('resources.ApplicationResources', 'message.confirm.delete.groupProperties')}')) {
+			e.preventDefault();
+		}
+	});
+	
+	document.getElementById("alertLink").style.color=window.getComputedStyle(document.getElementById("alertLink").parentElement).color
 </script>
 

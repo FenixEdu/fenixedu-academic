@@ -94,8 +94,12 @@
 						<span class="glyphicon glyphicon-camera"></span>
 						${fr:message('resources.ApplicationResources', 'label.viewPhoto')}
 					</button>
-
-
+					<c:if test="${not empty studentsNotAttending}">
+						<button class="btn btn-default" id="editGroup"  data-toggle="button">
+							<span class="glyphicon glyphicon-plus"></span>
+							${fr:message('resources.ApplicationResources', 'button.addStudents')}
+						</button>
+					</c:if>
 					<c:if test="${not empty grouping.attendsSet}">
 
 						<span class="editAttends hide  form-group" class="mbottom05">
@@ -158,11 +162,11 @@
 								${fr:message('resources.ApplicationResources', 'button.submit.changes')}
 							</button>
 						</c:if>
-						<button class="btn  btn-default" data-toggle="button"
-							id="editGroup">
+						<a class="btn btn-default" id="secondaryEditGroup">
 							<span class="glyphicon glyphicon-plus"></span>
 							${fr:message('resources.ApplicationResources', 'button.addStudents')}
-						</button>
+						</a>
+						
 						<span class="editAttends hide mtop15 mbottom05">
 							${fr:message('resources.ApplicationResources', 'message.editAttendsSetMembers.InsertMembers')}
 						</span>
@@ -178,7 +182,7 @@
 
 						</div>
 
-						<table
+						<table id="addStudentTable"
 							class="rowClickable editAttends hide table mtop05 table-hover addStudentTable">
 							<thead>
 								<tr>
