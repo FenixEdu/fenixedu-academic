@@ -1649,6 +1649,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return false;
     }
 
+    @Deprecated
+    //TODO remove in next major
     void changeStateIfAprovedAndEvaluationsIsEmpty() {
         if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
@@ -1660,6 +1662,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Atomic
+    @Deprecated
+    //TODO remove in next major
     public void markAsTemporaryEnrolled() {
         if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");

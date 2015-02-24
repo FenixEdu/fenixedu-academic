@@ -233,13 +233,7 @@
 			<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="contextRelative(enrol)" value="true"/>      
 			<fr:property name="visibleIf(enrol)" value="allowedToManageEnrolments" />
-			<fr:property name="order(enrol)" value="1"/>
-
-			<fr:property name="linkFormat(setEvaluations)" value="/curriculumValidation.do?method=prepareCurriculumValidation&amp;studentCurricularPlanId=${externalId}" />
-			<fr:property name="key(setEvaluations)" value="link.student.setEvaluations" />
-			<fr:property name="bundle(setEvaluations)" value="ACADEMIC_OFFICE_RESOURCES" />
-			<fr:property name="contextRelative(setEvaluations)" value="true" />
-			<fr:property name="visibleIf(setEvaluations)" value="evaluationForCurriculumValidationAllowed"/>      					
+			<fr:property name="order(enrol)" value="1"/>     					
 			
 			<fr:property name="linkFormat(dismissal)" value="/studentDismissals.do?method=manage&amp;scpID=${externalId}" />
 			<fr:property name="key(dismissal)" value="link.student.dismissal.management"/>
@@ -299,12 +293,6 @@
 					<fr:property name="contextRelative(enrol)" value="true"/>      
 					<fr:property name="visibleIf(enrol)" value="allowedToManageEnrolments" />
 					<fr:property name="order(enrol)" value="1"/>
-		
-					<fr:property name="linkFormat(setEvaluations)" value="/curriculumValidation.do?method=prepareCurriculumValidation&amp;studentCurricularPlanId=${externalId}" />
-					<fr:property name="key(setEvaluations)" value="link.student.setEvaluations" />
-					<fr:property name="bundle(setEvaluations)" value="ACADEMIC_OFFICE_RESOURCES" />
-					<fr:property name="contextRelative(setEvaluations)" value="true" />
-					<fr:property name="visibleIf(setEvaluations)" value="evaluationForCurriculumValidationAllowed"/>
 					
 					<fr:property name="linkFormat(createAccountingEvents)" value="/accountingEventsManagement.do?method=prepare&amp;scpID=${externalId}" />
 					<fr:property name="key(createAccountingEvents)" value="label.accountingEvents.management.createEvents"/>
