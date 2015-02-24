@@ -58,7 +58,8 @@ public class StudentGroupingService {
             throw new DomainException("error.studentGroup.alreadyEnroled");
         }
 
-        if (grouping.getMinimumCapacity() != null && studentGroup.getAttendsSet().size() + 1 < grouping.getMinimumCapacity()) {
+        if (grouping.getEnrolmentPolicy().equals(EnrolmentGroupPolicyType.ATOMIC) && grouping.getMinimumCapacity() != null
+                && studentGroup.getAttendsSet().size() + 1 < grouping.getMinimumCapacity()) {
             throw new DomainException("error.invalidNumberOfStudents");
         }
 
@@ -115,10 +116,13 @@ public class StudentGroupingService {
             throw new DomainException("error.grouping.notOpenToEnrollment");
         }
 
-        if (personList.stream().anyMatch(
-                person -> !personInGroupingAttends(grouping, person)
-                        || grouping.getStudentGroupsSet().stream().anyMatch(sg -> personInStudentGroupAttends(sg, person)))) {
+        if (personList.stream().anyMatch(person -> !personInGroupingAttends(grouping, person))) {
             throw new DomainException("error.studentGroup.notEnroled");
+        }
+
+        if (personList.stream().anyMatch(
+                person -> grouping.getStudentGroupsSet().stream().anyMatch(sg -> personInStudentGroupAttends(sg, person)))) {
+            throw new DomainException("error.studentGroup.alreadyEnrolled");
         }
 
         if (grouping.getDifferentiatedCapacity()) {
@@ -137,7 +141,8 @@ public class StudentGroupingService {
             }
         }
 
-        if (grouping.getMinimumCapacity() != null && personList.size() < grouping.getMinimumCapacity()) {
+        if (grouping.getEnrolmentPolicy().equals(EnrolmentGroupPolicyType.ATOMIC) && grouping.getMinimumCapacity() != null
+                && personList.size() < grouping.getMinimumCapacity()) {
             throw new DomainException("error.invalidNumberOfStudents");
         }
 

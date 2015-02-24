@@ -142,7 +142,6 @@
 			</tr>
 		</tbody>
 	</table>
-
 	<div class="modal fade" id="editShift" tabindex="-1" role="dialog"
 		aria-labelledby="editShiftLabel" aria-hidden="true">
 		<div class="modal-dialog modal-sm">
