@@ -131,7 +131,8 @@ public class AttendsSearchController extends ExecutionCourseController {
         }
 
         final SpreadsheetBuilder builder = new SpreadsheetBuilder();
-        builder.addSheet(executionCourse.getPrettyAcronym().concat("Attends"), new SheetData<Attends>(attends) {
+        builder.addSheet(executionCourse.getPrettyAcronym().concat(BundleUtil.getString(Bundle.APPLICATION, "label.students")),
+                new SheetData<Attends>(attends) {
             protected String getLabel(final String key) {
                 return BundleUtil.getString(Bundle.APPLICATION, key);
             }
@@ -143,18 +144,18 @@ public class AttendsSearchController extends ExecutionCourseController {
                 addCell(getLabel("label.name"), attends.getRegistration().getPerson().getName());
                 addCell(getLabel("label.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
                 executionCourse.getGroupings().forEach(
-                        gr -> addCell(
-                                getLabel("label.projectGroup") + " " + gr.getName(),
-                                attends.getStudentGroupsSet().stream().filter(sg -> sg.getGrouping().equals(gr))
-                                .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny().orElse("")));
+                        gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(), attends.getStudentGroupsSet()
+                                .stream().filter(sg -> sg.getGrouping().equals(gr)).map(StudentGroup::getGroupNumber)
+                                .map(gn -> gn.toString()).findAny().orElse("")));
                 executionCourse.getShiftTypes().forEach(
-                        shiftType -> Optional
-                        .ofNullable(attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
-                        .map(Shift::getPresentationName).orElse(""));
+                        shiftType -> addCell(
+                                getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
+                                Optional.ofNullable(
+                                        attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
+                                        .map(Shift::getNome).orElse("")));
                 if (attends.getEnrolment() != null) {
-                    addCell(getLabel("label.numberOfEnrollments"),
-                            attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
-                                    attends.getEnrolment().getExecutionPeriod()));
+                    addCell(getLabel("label.numberOfEnrollments"), attends.getEnrolment()
+                            .getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()));
                 } else {
                     addCell(getLabel("label.numberOfEnrollments"), "--");
                 }
@@ -164,8 +165,8 @@ public class AttendsSearchController extends ExecutionCourseController {
 
                 RegistrationState registrationState =
                         attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
-                addCell(getLabel("label.registration.state"), registrationState == null ? "" : registrationState.getStateType()
-                        .getDescription());
+                addCell(getLabel("label.registration.state"), registrationState == null ? "" : registrationState
+                        .getStateType().getDescription());
 
                 addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
                         .getPresentationName());
@@ -196,7 +197,8 @@ public class AttendsSearchController extends ExecutionCourseController {
         Set<Attends> attends = executionCourse.getAttendsSet();
 
         final SpreadsheetBuilder builder = new SpreadsheetBuilder();
-        builder.addSheet(executionCourse.getPrettyAcronym().concat("Attends"), new SheetData<Attends>(attends) {
+        builder.addSheet(executionCourse.getPrettyAcronym().concat(BundleUtil.getString(Bundle.APPLICATION, "label.grades")),
+                new SheetData<Attends>(attends) {
             protected String getLabel(final String key) {
                 return BundleUtil.getString(Bundle.APPLICATION, key);
             }
@@ -214,7 +216,7 @@ public class AttendsSearchController extends ExecutionCourseController {
                         ev -> addCell(
                                 ev.getPresentationName(),
                                 attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
-                                        .map(Mark::getMark).findAny().orElse("")));
+                                .map(Mark::getMark).findAny().orElse("")));
             }
         });
 
