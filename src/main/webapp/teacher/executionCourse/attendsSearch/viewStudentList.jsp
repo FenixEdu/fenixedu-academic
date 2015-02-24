@@ -144,7 +144,7 @@
 				</div>
 			</form>
 			<form  id="spreadsheetform"
-				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentSpreadsheet/${executionCourse.sigla}.xls"
+				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentSpreadsheet/${executionCourse.sigla} - ${fr:message('resources.ApplicationResources','label.students')}.xls"
 				method="post">
 				<div class="form-group">
 					<input type='hidden' name="filteredAttendsJson" value="{{ attendsList }}" />
@@ -153,7 +153,7 @@
 				</div>
 			</form>
 			<form id="spreadsheetform"
-				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentEvaluationsSpreadsheet/${executionCourse.sigla}.xls"
+				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentEvaluationsSpreadsheet/${executionCourse.sigla} - ${fr:message('resources.ApplicationResources','label.grades')}.xls"
 				method="post">
 				<div class="form-group">
 					<input type='submit' class="btn btn-default" ng-click="genFilteredIdsList()"
@@ -224,8 +224,8 @@
 				</tr>
 			</tbody>
 		</table>
-
-        <pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+		
+		<pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
         <div class="row">
         <div class="col-sm-12">
                 <hr/>
@@ -246,7 +246,7 @@
         		</tr>
         	</thread>
         	<tbody>
-	        	<tr ng-repeat="numberOfAttends in attends | numberOfEnrolments">
+	        	<tr ng-repeat="numberOfAttends in  numberOfEnrolments">
 	        		<td ng-if="numberOfAttends.number == '--'">
 	        			${fr:message('resources.ApplicationResources','message.notEnroled')}
 	        		</td>

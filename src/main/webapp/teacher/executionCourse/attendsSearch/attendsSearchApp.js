@@ -2,22 +2,6 @@
 
 var app = angular.module("AttendsSearchApp",  [ 'ui.bootstrap']);
 
-app.filter('numberOfEnrolments', function(){
-    return function(attends) {
-        var numberOfEnrolments = {}
-        var attendsSet = [];
-        for (var j = 0; j < attends.length; j++) {
-            if(numberOfEnrolments[attends[j].enrolmentsInThisCourse]){
-                numberOfEnrolments[attends[j].enrolmentsInThisCourse].value++;
-            } else {
-                numberOfEnrolments[attends[j].enrolmentsInThisCourse] = {};
-                numberOfEnrolments[attends[j].enrolmentsInThisCourse].value = 1;
-                numberOfEnrolments[attends[j].enrolmentsInThisCourse].number = attends[j].enrolmentsInThisCourse;
-            }
-        }
-        return numberOfEnrolments;
-    }
-});
 
 app.filter('attendsFilter', function() {
     return function(attends, filters) {
@@ -94,6 +78,7 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
         }).success(function(attends) {
             $scope.attends = attends
             $scope.genFilteredAttends();
+            genNumberOfEnrolments();
         }).error(function(data) {
             $scope.attends = [];
             $scope.error = data.message;
@@ -223,7 +208,18 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
         }
 
 
-
+        var genNumberOfEnrolments = function(){
+        	$scope.numberOfEnrolments = {}
+            for (var j = 0; j < $scope.attends.length; j++) {
+                if($scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse]){
+                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse].value++;
+                } else {
+                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse] = {};
+                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse].value = 1;
+                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse].number = $scope.attends[j].enrolmentsInThisCourse;
+                }
+            }
+        }
 
 
     }
