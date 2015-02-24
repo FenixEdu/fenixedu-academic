@@ -76,7 +76,7 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<logic:present role="role(MANAGER)">
+					<logic:present role="role(MANAGER) | role(OPERATOR)">
 						<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
 							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
 						</html:link>
@@ -125,7 +125,7 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<logic:present role="role(MANAGER)">
+					<logic:present role="role(MANAGER) | role(OPERATOR)">
 						<html:link action="/accounts/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
 							<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
 						</html:link>,
@@ -180,7 +180,7 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<logic:present role="role(MANAGER)">
+					<logic:present role="role(MANAGER) | role(OPERATOR)">
 						<html:link action="/accounts/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
 							<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
 						</html:link>,
@@ -238,7 +238,7 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<logic:present role="role(MANAGER)">
+					<logic:present role="role(MANAGER) | role(OPERATOR)">
 						<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
 							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
 						</html:link>
