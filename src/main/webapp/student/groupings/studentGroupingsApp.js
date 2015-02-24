@@ -59,6 +59,8 @@ app.controller("GroupingsCtrl", ['$scope', '$rootScope', '$http',
     };
     $scope.message = $rootScope.message;
     $rootScope.message = "";
+    $scope.error = $rootScope.error;
+    $rootScope.error = "";
     $http({
         method: 'GET',
         url: window.contextPath + '/student/groups/groupings'
@@ -67,7 +69,7 @@ app.controller("GroupingsCtrl", ['$scope', '$rootScope', '$http',
         $scope.groupings = data;
       })
       .error(function(data) {
-        $rootScope.error = data.message
+        $scope.error= data.message;
       });
   }
 ]);
@@ -337,21 +339,22 @@ app.controller("StudentGroupCtrl", ['$scope', '$rootScope', '$http', '$routePara
     }
 
     $scope.addStudent = function(student) {
-      if ($scope.studentGroupSize + 1 <= $scope.grouping.maximumGroupCapacity) {
-        $scope.studentsNotEnrolled[$scope.studentsNotEnrolled
-          .indexOf(student)].toEnroll = !$scope.studentsNotEnrolled[$scope.studentsNotEnrolled
-          .indexOf(student)].toEnroll;
-        $scope.studentGroupSize = $scope.studentsNotEnrolled
-          .filter(function(element) {
-            return element.toEnroll;
-          })
-          .length + $scope.studentsEnrolled.length;
-      }
+        var studentToEnroll= $scope.studentsNotEnrolled[$scope.studentsNotEnrolled.indexOf(student)]
+        if (!studentToEnroll.toEnroll) {
+            if( $scope.studentGroupSize + 1 <= $scope.grouping.maximumGroupCapacity) {
+                studentToEnroll.toEnroll = true
+                $scope.studentGroupSize += 1
+            }
+        }
+        else {
+            delete studentToEnroll.toEnroll
+            $scope.studentGroupSize -=1
+        }
     }
 
     $scope.changeShift = function(shift) {
       $('#editShift')
-        .modal('hide');
+        .modal("hide");
 
       $http({
           method: 'POST',
@@ -369,7 +372,11 @@ app.controller("StudentGroupCtrl", ['$scope', '$rootScope', '$http', '$routePara
           })
         .error(function(data) {
           $rootScope.error = data.message
-          $location.path("/groupings/");;
+          $location.path("/groupings/");
+          $('body').removeClass('modal-open');
+          $('.modal-backdrop').remove();
+          
+          return;
         });
     }
 
@@ -404,11 +411,12 @@ app.controller("StudentGroupCtrl", ['$scope', '$rootScope', '$http', '$routePara
           })
         .error(function(data) {
           $rootScope.error = data.message
-          $location.path("/groupings/");;
+          $location.path("/groupings/");
         });
     }
 
     $scope.clearAllStudentsOnGroup = function() {
+      $scope.studentGroupSize = $scope.studentsEnrolled.length;
       return $scope.studentsNotEnrolled
         .forEach(function(element) {
           delete element.toEnroll;
