@@ -31,6 +31,10 @@ import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.util.DiaSemana;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Strings;
+
 public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLesson> {
 
     private final static Comparator<InfoLesson> INFO_LESSON_COMPARATOR_CHAIN = new Comparator<InfoLesson>() {
@@ -51,14 +55,12 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
 
     };
 
-    private final Lesson lesson;
     private InfoRoom infoSala;
     private InfoShift infoShift;
     private InfoRoomOccupation infoRoomOccupation;
 
     public InfoLesson(Lesson lesson) {
         super.copyFromDomain(lesson);
-        this.lesson = lesson;
     }
 
     @Override
@@ -174,7 +176,13 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
     }
 
     public Lesson getLesson() {
-        return lesson;
+        if (!Strings.isNullOrEmpty(getExternalId())) {
+            Lesson lesson = FenixFramework.getDomainObject(getExternalId());
+            if (FenixFramework.isDomainObjectValid(lesson)) {
+                return lesson;
+            }
+        }
+        return null;
     }
 
     public String getOccurrenceWeeksAsString() {
