@@ -2221,7 +2221,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         boolean unique = true;
-        final String nameEn = getAssociatedCurricularCoursesSet().iterator().next().getNameEn();
+        final String nameEn =
+                getAssociatedCurricularCoursesSet().isEmpty() ? null : getAssociatedCurricularCoursesSet().iterator().next()
+                        .getNameEn();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
@@ -2230,7 +2232,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
 
-        if (unique) {
+        if (unique && nameEn != null) {
             nameI18N = nameI18N.with(MultiLanguageString.en, nameEn);
             return nameI18N;
         } else {
@@ -2350,8 +2352,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
-//  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty) 
-//  will be corrected and should be uncommented   
+//  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty)
+//  will be corrected and should be uncommented
 //  @ConsistencyPredicate
 //  public boolean checkFinalEvaluation() {
 //      for (Evaluation evaluation : getAssociatedEvaluationsSet()) {
