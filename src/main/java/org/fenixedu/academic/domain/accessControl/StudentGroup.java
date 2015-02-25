@@ -262,10 +262,11 @@ public class StudentGroup extends FenixGroup {
     private static FluentIterable<Registration> getRegistrations(DegreeType type) {
         Set<Registration> registrations = new HashSet<>();
         for (User user : RoleType.STUDENT.actualGroup().getMembers()) {
-            Registration registration = user.getPerson().getStudentByType(type);
-            if (registration != null && registration.isActive()) {
-                registrations.add(registration);
-            }
+            user.getPerson().getStudentsSet().forEach(reg -> {
+                if (reg.getDegreeType() == type && reg.isActive()) {
+                    registrations.add(reg);
+                }
+            });
         }
         return FluentIterable.from(registrations);
     }
