@@ -2789,6 +2789,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
+    @Deprecated
+    //TODO remove in next major
     public Boolean getEvaluationForCurriculumValidationAllowed() {
         ExecutionSemester FENIX_START_DATE_SEMESTER = ExecutionSemester.readBySemesterAndExecutionYear(1, "2006/2007");
         return this.getStartExecutionPeriod().isBefore(FENIX_START_DATE_SEMESTER) && !this.isBolonhaDegree();

@@ -654,6 +654,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     @Atomic
+    @Deprecated
+    //TODO remove in next major
     public void deleteEnrolmentEvaluationCurriculumValidationContext() {
         if (!getEnrolment().getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
