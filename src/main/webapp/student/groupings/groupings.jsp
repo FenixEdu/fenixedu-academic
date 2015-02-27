@@ -106,7 +106,7 @@
 							title="${fr:message('resources.ApplicationResources', 'label.projectTable.GroupMaximumNumber.title')}">
 								${fr:message('resources.ApplicationResources', 'label.student.viewExecutionCourseProjects.GroupMaximumNumber')}
 						</abbr>: {{grouping.maxGroupNumber}}
-							${fr:message('resources.ApplicationResources', 'label.groups.lowercase')}
+							${fr:message('resources.StudentResources', 'label.groups.lowercase')}
 						</span>
 					</p>
 					<p>

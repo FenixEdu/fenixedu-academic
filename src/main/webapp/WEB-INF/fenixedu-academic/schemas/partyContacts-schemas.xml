@@ -152,8 +152,8 @@
 	</slot>
 	<slot name="type" />
 	<slot name="activeAndValid" key="label.partyContacts.isActiveAndValid">
-		<property name="trueLabel" value="label.yes.capitalized"/>
-		<property name="falseLabel" value="label.no.capitalized"/>
+		<property name="trueLabel" value="label.yes.capitalized" bundle="APPLICATION_RESOURCES"/>
+		<property name="falseLabel" value="label.no.capitalized" bundle="APPLICATION_RESOURCES"/>
 		<property name="bundle" value="APPLICATION_RESOURCES" />
 	</slot>
 </schema>

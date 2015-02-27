@@ -62,7 +62,7 @@
 		<logic:equal name="isResponsible" value="true">
 		<logic:equal name="professorship" property="responsibleFor" value="false">
 			<td>
-				<bean:message key="label.no.capitalized" />
+				<bean:message key="label.no.capitalized" bundle="APPLICATION_RESOURCES" />
 			</td>
 			<td>
 				<html:link page="/teachersManagerDA.do?method=viewProfessorshipProperties&executionCourseID=${executionCourseID}&teacherOID=${professorship.externalId}">
@@ -72,7 +72,7 @@
 		</logic:equal>
 		<logic:equal name="professorship" property="responsibleFor" value="true">
 			<td>
-				<bean:message key="label.yes.capitalized" />
+				<bean:message key="label.yes.capitalized" bundle="APPLICATION_RESOURCES" />
 			</td>
 			<td>
 				<bean:message key="label.notAvailable" />
