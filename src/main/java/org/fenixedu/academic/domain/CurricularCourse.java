@@ -1531,9 +1531,12 @@ public class CurricularCourse extends CurricularCourse_Base {
             return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getEvaluationMethod(period)).with(
                     MultiLanguageString.en, getCompetenceCourse().getEvaluationMethodEn(period));
         }
-        return new MultiLanguageString(MultiLanguageString.pt, getExecutionCoursesByExecutionPeriod(period).iterator().next()
-                .getEvaluationMethodText()).with(MultiLanguageString.en, getExecutionCoursesByExecutionPeriod(period).iterator()
-                .next().getEvaluationMethodTextEn());
+        List<ExecutionCourse> courses = getExecutionCoursesByExecutionPeriod(period);
+        if (courses.isEmpty()) {
+            return new MultiLanguageString();
+        }
+        return new MultiLanguageString(MultiLanguageString.pt, courses.iterator().next().getEvaluationMethodText()).with(
+                MultiLanguageString.en, courses.iterator().next().getEvaluationMethodTextEn());
     }
 
     public RegimeType getRegime(final ExecutionSemester period) {
