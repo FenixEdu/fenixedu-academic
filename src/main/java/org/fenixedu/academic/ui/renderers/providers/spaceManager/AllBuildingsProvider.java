@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.spaceManager;
 
-import java.text.Collator;
 import java.util.stream.Collectors;
 
 import org.fenixedu.spaces.domain.Space;
@@ -32,8 +31,8 @@ public class AllBuildingsProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Space.getSpaces().filter(s -> s.getClassification().equals(SpaceClassification.getByName("Building")))
-                .sorted((s1, s2) -> Collator.getInstance().compare(s1.getName(), s2.getName())).collect(Collectors.toList());
+        return Space.getSpaces().filter(s -> s.getClassification().equals(SpaceClassification.getByName("Building"))).sorted()
+                .collect(Collectors.toList());
     }
 
     @Override

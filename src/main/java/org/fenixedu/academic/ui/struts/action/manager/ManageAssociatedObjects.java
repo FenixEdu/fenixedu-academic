@@ -315,7 +315,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     public ActionForward prepareAcademicOffice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = new AssociatedObjectsBean();
-        bean.setBuildings(Bennu.getInstance().getSpaceSet().stream().collect(Collectors.toList()));
+        bean.setBuildings(Space.getAllSpaces().sorted().collect(Collectors.toList()));
 
         request.setAttribute("bean", bean);
         return mapping.findForward("createAcademicOffice");
