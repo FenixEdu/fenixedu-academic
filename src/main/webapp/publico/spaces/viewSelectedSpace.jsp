@@ -36,7 +36,7 @@
 	<p class="mtop15 mbottom05">
 		<html:link page="/findSpaces.do?method=prepareSearchSpaces"> &laquo; <bean:message key="link.search.for.spaces.again"/></html:link>		
 	</p>
-
+	
 	<fr:view name="selectedSpace">	
 		<fr:schema type="org.fenixedu.academic.dto.spaceManager.FindSpacesBean" bundle="DEFAULT">
 			<fr:slot name="space.presentationName" key="label.find.spaces.space.name"/>
@@ -62,7 +62,7 @@
 
 	<ul>
 		<logic:equal name="selectedSpace" property="withSchedule" value="true">
-			<bean:define id="viewScheduleLink">/viewRoom.do?method=roomViewer&amp;roomName=<bean:write name="selectedSpace" property="space.name"/></bean:define>				
+			<bean:define id="viewScheduleLink">/viewRoom.do?method=roomViewer&amp;roomName=<bean:write name="selectedSpace" property="space.name"/>&amp;roomId=<bean:write name="selectedSpace" property="space.externalId"/></bean:define>				
 			<li><html:link target="_blank" page="<%= viewScheduleLink %>"><bean:message key="link.view.schedule"/></html:link></li>
 		</logic:equal>
 			
@@ -110,6 +110,41 @@
  			</div>
 		</div>									
 	
+	</logic:notEmpty>	
+	
+	<logic:notEmpty name="selectedSpace" property="occupants">
+		<bean:define id="users" name="selectedSpace" property="occupants"/>
+		<table class="tstyle2 thlight thleft mtop15 table">
+			<tbody>
+				<tr>
+					<th scope="row">
+						<bean:message key="link.view.occupants"/>
+					</th>
+				</tr>
+				<logic:iterate id="user" name="users">
+					<bean:define id="username" name="user" property="name"/>
+					<bean:define id="person" name="user" property="person"/>
+					<bean:define id="justName" value="true"/>
+					<logic:notEmpty name="person">
+						<logic:notEmpty name="person" property="defaultWebAddressUrl">
+							<tr>
+								<td>
+									<a href="<bean:write name="person" property="defaultWebAddressUrl"/>"><bean:write name="username"/></a>
+								</td>
+							</tr>
+							<bean:define id="justName" value="false"/>
+						</logic:notEmpty>
+					</logic:notEmpty>
+					<logic:equal name="justName" value="true">
+						<tr>
+							<td>
+								<bean:write name="username"/>
+							</td>
+						</tr>
+					</logic:equal>
+				</logic:iterate>
+			</tbody>
+		</table>
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="containedSpaces">

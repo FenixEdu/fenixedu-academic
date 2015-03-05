@@ -37,7 +37,8 @@ import com.google.common.collect.FluentIterable;
 @JsonSubTypes({ @JsonSubTypes.Type(value = FenixSpace.Campus.class, name = "CAMPUS"),
         @JsonSubTypes.Type(value = FenixSpace.Building.class, name = "BUILDING"),
         @JsonSubTypes.Type(value = FenixSpace.Floor.class, name = "FLOOR"),
-        @JsonSubTypes.Type(value = FenixSpace.Room.class, name = "ROOM") })
+        @JsonSubTypes.Type(value = FenixSpace.Room.class, name = "ROOM"),
+        @JsonSubTypes.Type(value = FenixSpace.RoomSubdivision.class, name = "ROOM_SUBDIVISION") })
 public class FenixSpace {
 
     public static class Campus extends FenixSpace {
@@ -220,9 +221,11 @@ public class FenixSpace {
         if (SpaceUtils.isFloor(space)) {
             return new FenixSpace.Floor(space, withParentAndContainedSpaces);
         }
-
         if (SpaceUtils.isRoom(space)) {
             return new FenixSpace.Room(space, withParentAndContainedSpaces);
+        }
+        if (SpaceUtils.isRoomSubdivision(space)) {
+            return new FenixSpace.RoomSubdivision(space, withParentAndContainedSpaces);
         }
 
         return null;

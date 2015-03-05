@@ -64,17 +64,29 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward roomViewer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
+        String roomId = request.getParameter("roomId");
         String roomName = request.getParameter("roomName");
+        if (roomId == null) {
+            roomId = (String) request.getAttribute("roomId");
+        }
         if (roomName == null) {
             roomName = (String) request.getAttribute("roomName");
+
         }
         request.setAttribute("roomName", roomName);
+        request.setAttribute("roomId", roomId);
         RoomKey roomKey = null;
-
-        if (roomName != null) {
-            roomKey = new RoomKey(roomName);
-
+        Space room = null;
+        if (roomName != null || roomId != null) {
+            if (roomName != null) {
+                roomKey = new RoomKey(roomName);
+            }
+            if (roomId != null) {
+                room = FenixFramework.getDomainObject(roomId);
+                if (!FenixFramework.isDomainObjectValid(room)) {
+                    room = null;
+                }
+            }
             InfoSiteRoomTimeTable bodyComponent = new InfoSiteRoomTimeTable();
             DynaActionForm indexForm = (DynaActionForm) form;
             Integer indexWeek = (Integer) indexForm.get("indexWeek");
@@ -157,7 +169,14 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             }
 
             try {
-                InfoSiteRoomTimeTable component = run(roomKey, today, executionPeriodID);
+                InfoSiteRoomTimeTable component = null;
+                if (room != null) {
+                    component = run(room, today, executionPeriodID);
+                } else {
+                    if (roomKey != null) {
+                        component = run(roomKey, today, executionPeriodID);
+                    }
+                }
                 request.setAttribute("component", component);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException(e);
@@ -171,9 +190,13 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     private static InfoSiteRoomTimeTable run(RoomKey roomKey, Calendar someDay, String executionPeriodID) throws Exception {
+        Space room = SpaceUtils.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());
+        return run(room, someDay, executionPeriodID);
+    }
+
+    private static InfoSiteRoomTimeTable run(Space room, Calendar someDay, String executionPeriodID) throws Exception {
         final Calendar day = new DateTime(someDay.getTimeInMillis()).withField(DateTimeFieldType.dayOfWeek(), 1).toCalendar(null);
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
-        Space room = SpaceUtils.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());
         return RoomSiteComponentBuilder.getInfoSiteRoomTimeTable(day, room,
                 executionSemester != null ? executionSemester : ExecutionSemester.readActualExecutionSemester());
     }
