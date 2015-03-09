@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.util.Email;
 import org.fenixedu.academic.domain.util.EmailAddressList;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -334,47 +333,22 @@ public class Message extends Message_Base {
     // }
 
     public int getPossibleRecipientsCount() {
-        int count = 0;
-        for (Recipient recipient : getRecipientsSet()) {
-            count += recipient.getMembers().getMembers().size();
-        }
-        return count;
+        return (int) getRecipientsSet().stream().flatMap(r -> r.getMembers().getMembers().stream()).distinct().count();
     }
 
     public int getRecipientsWithEmailCount() {
-        int count = 0;
-        for (Recipient recipient : getRecipientsSet()) {
-            final Set<User> elements = recipient.getMembers().getMembers();
-            for (User user : elements) {
-                if (user.getPerson().getEmailForSendingEmails() != null) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return (int) getRecipientsSet().stream().flatMap(r -> r.getMembers().getMembers().stream()).distinct()
+                .filter(u -> u.getPerson().getEmailAddressForSendingEmails() != null).count();
     }
 
     public int getSentMailsCount() {
-        int count = 0;
-        for (Email email : getEmailsSet()) {
-            final EmailAddressList confirmedAddresses = email.getConfirmedAddresses();
-            if (confirmedAddresses != null && !confirmedAddresses.isEmpty()) {
-                count += confirmedAddresses.toCollection().size();
-            }
-        }
-        return count;
+        return (int) getEmailsSet().stream().filter(e -> e.getConfirmedAddresses() != null)
+                .flatMap(e -> e.getConfirmedAddresses().toCollection().stream()).distinct().count();
     }
 
     public int getFailedMailsCount() {
-        int count = 0;
-        for (Email email : getEmailsSet()) {
-            EmailAddressList failedAddresses = email.getFailedAddresses();
-
-            if (failedAddresses != null && !failedAddresses.isEmpty()) {
-                count += failedAddresses.size();
-            }
-        }
-        return count;
+        return (int) getEmailsSet().stream().filter(e -> e.getFailedAddresses() != null)
+                .flatMap(e -> e.getFailedAddresses().toCollection().stream()).distinct().count();
     }
 
 }
