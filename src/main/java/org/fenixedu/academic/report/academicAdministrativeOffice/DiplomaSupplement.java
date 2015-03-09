@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
@@ -528,9 +529,14 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             this.identifier = entry.getValue();
             Unit unit = entry.getKey();
             String name = getMLSTextContent(unit.getNameI18n());
-            Unit univ = unit.getParentUnits().stream().filter(u -> u.isUniversityUnit()).findAny().orElse(null);
-            if (univ != null) {
-                name = getMLSTextContent(univ.getNameI18n()) + ", " + name;
+            List<Unit> univs = unit.getParentUnits().stream().filter(u -> u.isUniversityUnit()).collect(Collectors.toList());
+            if (!univs.isEmpty()) {
+                final UniversityUnit institutionsUniversityUnit = getUniversity(getDocumentRequest().getRequestDate());
+                if (univs.contains(institutionsUniversityUnit)) {
+                    name = getMLSTextContent(institutionsUniversityUnit.getNameI18n()) + ", " + name;
+                } else {
+                    name = getMLSTextContent(univs.iterator().next().getNameI18n()) + ", " + name;
+                }
             }
             this.name = name;
         }
