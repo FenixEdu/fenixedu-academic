@@ -44,12 +44,7 @@ public class SpecificSpaceOccupationManagersGroup extends FenixGroupStrategy {
         if (user != null && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(user)) {
             return true;
         }
-        for (Space space : SpaceUtils.allocatableSpaces().collect(Collectors.toSet())) {
-            if (space.isOccupationMember(user)) {
-                return true;
-            }
-        }
-        return false;
+        return Space.getSpaces().filter(Space::isActive).anyMatch(space -> space.isOccupationMember(user));
     }
 
     @Override
