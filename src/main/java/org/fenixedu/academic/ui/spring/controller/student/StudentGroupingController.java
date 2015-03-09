@@ -237,7 +237,6 @@ public class StudentGroupingController extends JsonAwareResource {
     @RequestMapping(value = "/studentGroup/{studentGroup}/unenroll", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<String> unenroll(@PathVariable StudentGroup studentGroup) {
         try {
-
             studentGroupingService.unenroll(studentGroup, AccessControl.getPerson());
             return new ResponseEntity<String>(HttpStatus.OK);
         } catch (DomainException dme) {
@@ -261,12 +260,7 @@ public class StudentGroupingController extends JsonAwareResource {
     @RequestMapping(value = "/createStudentGroup/{grouping}/", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<String> createStudentGroup(@PathVariable Grouping grouping,
             @RequestBody String studentsToEnrollJson) {
-        try {
-            createStudentGroup(grouping, null, studentsToEnrollJson);
-            return new ResponseEntity<String>(HttpStatus.OK);
-        } catch (DomainException dme) {
-            return new ResponseEntity<String>(createErrorJson(dme.getLocalizedMessage()), HttpStatus.FORBIDDEN);
-        }
+        return createStudentGroup(grouping, null, studentsToEnrollJson);
     }
 
     @RequestMapping(value = "/createStudentGroup/{grouping}/{shift}", method = RequestMethod.POST)

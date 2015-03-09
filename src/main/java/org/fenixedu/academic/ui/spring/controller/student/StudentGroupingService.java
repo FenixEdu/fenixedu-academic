@@ -110,7 +110,7 @@ public class StudentGroupingService {
 
         List<Registration> registrationsList =
                 grouping.getAttendsSet().stream().map(Attends::getRegistration)
-                        .filter(reg -> personList.contains(reg.getPerson())).collect(Collectors.toList());
+                .filter(reg -> personList.contains(reg.getPerson())).collect(Collectors.toList());
 
         if (!groupingIsOpenForEnrollment(grouping)) {
             throw new DomainException("error.grouping.notOpenToEnrollment");
@@ -123,6 +123,10 @@ public class StudentGroupingService {
         if (personList.stream().anyMatch(
                 person -> grouping.getStudentGroupsSet().stream().anyMatch(sg -> personInStudentGroupAttends(sg, person)))) {
             throw new DomainException("error.studentGroup.alreadyEnrolled");
+        }
+
+        if (shift == null && grouping.getShiftType() != null || !shift.getTypes().contains(grouping.getShiftType())) {
+            throw new DomainException("error.wrongShiftType");
         }
 
         if (grouping.getDifferentiatedCapacity()) {
@@ -161,7 +165,9 @@ public class StudentGroupingService {
         if (!groupingIsOpenForEnrollment(grouping)) {
             throw new DomainException("error.grouping.notOpenToEnrollment");
         }
-
+        if (shift == null && grouping.getShiftType() != null || !shift.getTypes().contains(grouping.getShiftType())) {
+            throw new DomainException("error.wrongShiftType");
+        }
         if (grouping.getDifferentiatedCapacity()) {
             if (shift.getShiftGroupingProperties().getCapacity() < shift.getAssociatedStudentGroups(grouping).size() + 1) {
                 throw new DomainException("error.invalidNumberOfStudentGroups");

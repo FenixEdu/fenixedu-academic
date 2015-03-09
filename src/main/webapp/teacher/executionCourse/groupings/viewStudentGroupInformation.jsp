@@ -105,7 +105,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<c:if test="${not empty studentGroup.shift}">
+		<c:if test="${not empty grouping.shiftType}">
 			<div class="well">
 				<div class="row">
 					<div class="col-md-2">
@@ -150,16 +150,15 @@
 										<span>${lesson.roomOccupation.room.name}</span>
 									</p>
 									<p>
-										<strong>${fr:message('resources.ApplicationResources', 'property.lesson.end')}</strong>
-										<span><fmt:formatDate value="${lesson.end }"
-												type="time" pattern="HH:mm" /></span>
-									</p>
-									<p>
 										<strong>${fr:message('resources.ApplicationResources', 'property.lesson.beginning')}</strong>
 										<span><fmt:formatDate value="${lesson.begin }"
 												type="time" pattern="HH:mm" /></span>
 									</p>
-
+									<p>
+										<strong>${fr:message('resources.ApplicationResources', 'property.lesson.end')}</strong>
+										<span><fmt:formatDate value="${lesson.end }"
+												type="time" pattern="HH:mm" /></span>
+									</p>
 
 								</div>
 							</c:forEach>
