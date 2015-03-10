@@ -144,7 +144,7 @@
 				</div>
 			</form>
 			<form  id="spreadsheetform"
-				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentSpreadsheet/${executionCourse.sigla} - ${fr:message('resources.ApplicationResources','label.students')}.xls"
+				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentSpreadsheet"
 				method="post">
 				<div class="form-group">
 					<input type='hidden' name="filteredAttendsJson" value="{{ attendsList }}" />
@@ -153,7 +153,7 @@
 				</div>
 			</form>
 			<form id="spreadsheetform"
-				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentEvaluationsSpreadsheet/${executionCourse.sigla} - ${fr:message('resources.ApplicationResources','label.grades')}.xls"
+				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentEvaluationsSpreadsheet"
 				method="post">
 				<div class="form-group">
 					<input type='submit' class="btn btn-default" ng-click="genFilteredIdsList()"

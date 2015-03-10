@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
@@ -62,6 +63,7 @@ import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
+import com.google.common.base.Joiner;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -121,9 +123,8 @@ public class AttendsSearchController extends ExecutionCourseController {
                 .filter(attendee -> attendee.getRegistration() != null)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/studentSpreadsheet/{filename}", method = RequestMethod.POST)
-    public void generateSpreadsheet(@RequestParam String filteredAttendsJson, String filename, HttpServletResponse response)
-            throws IOException {
+    @RequestMapping(value = "/studentSpreadsheet", method = RequestMethod.POST)
+    public void generateSpreadsheet(@RequestParam String filteredAttendsJson, HttpServletResponse response) throws IOException {
         Set<Attends> attends = new TreeSet<Attends>(Attends.COMPARATOR_BY_STUDENT_NUMBER);
         for (JsonElement elem : new JsonParser().parse(filteredAttendsJson).getAsJsonArray()) {
             JsonObject object = elem.getAsJsonObject();
@@ -184,15 +185,21 @@ public class AttendsSearchController extends ExecutionCourseController {
             }
         });
 
-        builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
-        response.setHeader("Content-disposition", "attachment; filename=" + filename);
         response.setContentType("application/vnd.ms-excel");
-        response.flushBuffer();
+        response.setHeader(
+                "Content-disposition",
+                String.format(
+                        "attachment; filename=%s.xls",
+                        Joiner.on(" - ").join(executionCourse.getSigla(),
+                                BundleUtil.getString("resources.ApplicationResources", "label.students"))));
+        try (OutputStream outputStream = response.getOutputStream()) {
+            builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
+        }
 
     }
 
-    @RequestMapping(value = "/studentEvaluationsSpreadsheet/{filename}", method = RequestMethod.POST)
-    public void generateSpreadsheet(HttpServletResponse response, String filename) throws IOException {
+    @RequestMapping(value = "/studentEvaluationsSpreadsheet", method = RequestMethod.POST)
+    public void generateSpreadsheet(HttpServletResponse response) throws IOException {
 
         Set<Attends> attends = executionCourse.getAttendsSet();
 
@@ -220,11 +227,16 @@ public class AttendsSearchController extends ExecutionCourseController {
             }
         });
 
-        builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
-        response.setHeader("Content-disposition", "attachment; filename=" + filename);
         response.setContentType("application/vnd.ms-excel");
-        response.flushBuffer();
-
+        response.setHeader(
+                "Content-disposition",
+                String.format(
+                        "attachment; filename=%s.xls",
+                        Joiner.on(" - ").join(executionCourse.getSigla(),
+                                BundleUtil.getString("resources.ApplicationResources", "label.grades"))));
+        try (OutputStream outputStream = response.getOutputStream()) {
+            builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
+        }
     }
 
     @RequestMapping(value = "/sendEmail", method = RequestMethod.POST)
