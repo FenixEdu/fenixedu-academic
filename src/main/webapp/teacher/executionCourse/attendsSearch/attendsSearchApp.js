@@ -209,14 +209,20 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
 
 
         var genNumberOfEnrolments = function(){
-        	$scope.numberOfEnrolments = {}
+        	$scope.numberOfEnrolments = new Array(1);
             for (var j = 0; j < $scope.attends.length; j++) {
-                if($scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse]){
-                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse].value++;
-                } else {
-                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse] = {};
-                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse].value = 1;
-                	$scope.numberOfEnrolments[$scope.attends[j].enrolmentsInThisCourse].number = $scope.attends[j].enrolmentsInThisCourse;
+            	found = $scope.numberOfEnrolments.some(function(elem){
+            		if(elem.number == $scope.attends[j].enrolmentsInThisCourse){
+            			elem.value+=1;
+            			return true;
+            		}
+            		return false;
+            	})
+            	if(!found){
+            		newElem = {}
+            		newElem.number = $scope.attends[j].enrolmentsInThisCourse;
+            		newElem.value = 1;
+                	$scope.numberOfEnrolments.push(newElem);
                 }
             }
         }

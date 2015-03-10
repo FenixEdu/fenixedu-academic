@@ -33,6 +33,9 @@
 <spring:url var="viewShiftsAndGroups"
 	value="/teacher/${executionCourse.externalId}/student-groups/view/${grouping.externalId }" />
 
+<spring:url var="studentGroupBaseLink"
+	value="/teacher/${executionCourse.externalId}/student-groups/${grouping.externalId}/viewStudentGroup/" />
+
 <spring:url var="userPhotoBaseLink" value="/user/photo/" />
 
 
@@ -95,7 +98,7 @@
 					<tr>
 						<td class="acenter">${student.number}</td>
 						<td class="acenter">${student.person.username}</td>
-						<td class="acenter">${studentGroup.groupNumber}</td>
+						<td class="acenter"><a href="${studentGroupBaseLink.concat(studentGroup.externalId)}">${studentGroup.groupNumber}</a></td>
 						<c:if test="${empty showPhotos}">
 							<td class="acenter showPhotos hide"><img class="lazy"
 								data-original="${userPhotoBaseLink.concat(student.person.username)}"

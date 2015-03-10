@@ -246,7 +246,7 @@
         		</tr>
         	</thread>
         	<tbody>
-	        	<tr ng-repeat="numberOfAttends in  numberOfEnrolments">
+	        	<tr ng-repeat="numberOfAttends in numberOfEnrolments | orderBy: 'number'">
 	        		<td ng-if="numberOfAttends.number == '--'">
 	        			${fr:message('resources.ApplicationResources','message.notEnroled')}
 	        		</td>
