@@ -190,8 +190,10 @@ public class AttendsSearchController extends ExecutionCourseController {
                 "Content-disposition",
                 String.format(
                         "attachment; filename=%s.xls",
-                        Joiner.on(" - ").join(executionCourse.getSigla(),
-                                BundleUtil.getString("resources.ApplicationResources", "label.students"))));
+                        Joiner.on(" - ")
+                                .join(executionCourse.getSigla(),
+                                        BundleUtil.getString("resources.ApplicationResources", "label.students"))
+                                .replace(" ", "_")));
         try (OutputStream outputStream = response.getOutputStream()) {
             builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
         }
@@ -228,12 +230,11 @@ public class AttendsSearchController extends ExecutionCourseController {
         });
 
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader(
-                "Content-disposition",
-                String.format(
-                        "attachment; filename=%s.xls",
-                        Joiner.on(" - ").join(executionCourse.getSigla(),
-                                BundleUtil.getString("resources.ApplicationResources", "label.grades"))));
+        response.setHeader("Content-disposition", String.format(
+                "attachment; filename=%s.xls",
+                Joiner.on(" - ")
+                        .join(executionCourse.getSigla(), BundleUtil.getString("resources.ApplicationResources", "label.grades"))
+                        .replace(" ", "_")));
         try (OutputStream outputStream = response.getOutputStream()) {
             builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
         }
