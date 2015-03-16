@@ -392,7 +392,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public Optional<TeacherAuthorization> getTeacherAuthorization(AcademicInterval interval) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().equals(interval))
                 .findFirst();
     }
 
