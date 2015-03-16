@@ -72,10 +72,12 @@
     <strong><%= name %></strong>, aluno do <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> nº <strong><%= number %></strong>, autor da
     dissertação para obtenção do <strong>Grau de Mestre em <%= degree %></strong> com o
     título <strong><%= title %></strong>, autorizo o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
-    em formato pdf, a versão final desta dissertação e o seu resumo alargado na sua
-    <strong><fr:view name="bean" property="visibility"/></strong>
-    <%--<fr:edit id="visibility" name="bean" slot="visibility"/> --%>
-    , possibilitando assim o seu conhecimento a todos os que
+    em formato pdf, a versão final desta dissertação e o seu resumo alargado na sua <strong>
+		<%--<fr:view name="bean" property="visibility"/>
+			<fr:edit id="visibility" name="bean" slot="visibility"/> --%>
+		<logic:equal name="bean" property="visibility" value="INTRANET">Intranet</logic:equal>
+		<logic:notEqual name="bean" property="visibility" value="INTRANET">Área Pública</logic:notEqual></strong>,
+    possibilitando assim o seu conhecimento a todos os que
     possam aceder àquele meio, com a ressalva de que estes não possam, sem a minha
     expressa autorização, reproduzir, por qualquer meio, o texto daquela minha
     dissertação para além dos limites fixados no Código do Direito de Autor e dos

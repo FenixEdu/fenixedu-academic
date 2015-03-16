@@ -81,7 +81,7 @@
     		<li>
 				<bean:define id="url">/scientificCouncilManageThesis.do?method=showSubstituteDocumentsPage&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
 				<html:link page="<%= url %>">
-					<bean:message key="link.thesis.substitute.documents"/>
+					<bean:message key="link.thesis.substitute.dissertation"/>
 				</html:link>
     		</li>
     		<li>
