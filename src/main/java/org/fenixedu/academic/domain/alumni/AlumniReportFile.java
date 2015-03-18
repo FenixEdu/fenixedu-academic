@@ -98,8 +98,8 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     @Override
     public String getFilename() {
-        return getFullReport() ? BundleUtil.getString(Bundle.GEP, "alumni.full.reports.name") : BundleUtil.getString(Bundle.GEP,
-                "alumni.partial.reports.name", getRequestDate().toString());
+        return getFullReport() ? BundleUtil.getString(Bundle.GEP, "alumni.full.reports.name", getRequestDate().toString()) : BundleUtil
+                .getString(Bundle.GEP, "alumni.partial.reports.name", getRequestDate().toString());
     }
 
     private List<Spreadsheet> buildReport() {
