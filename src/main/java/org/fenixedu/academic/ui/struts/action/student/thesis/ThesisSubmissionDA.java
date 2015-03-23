@@ -182,9 +182,9 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
     public ActionForward viewDeclaration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         Thesis thesis = getThesis(request);
-        request.setAttribute("bean", new DeclarationBean(thesis));
 
         if (thesis.isWaitingConfirmation()) {
+            request.setAttribute("bean", new DeclarationBean(thesis));
             return mapping.findForward("thesis-declaration");
         } else {
             return mapping.findForward("thesis-declaration-view");
@@ -206,15 +206,15 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
                 if (bean.getVisibility() != null) {
                     AcceptThesisDeclaration.runAcceptThesisDeclaration(thesis, bean.getVisibility(), bean.getAvailableAfter());
                 } else {
-                    if (bean.getVisibility() == null) {
-                        addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
-                    }
-
+                    //should not happen since bean.visibility is never null
+                    addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
+                    request.setAttribute("bean", new DeclarationBean(thesis));
                     return mapping.findForward("thesis-declaration");
                 }
             } else {
                 if (thesis.getDissertation() != null || thesis.getExtendedAbstract() != null) {
                     request.setAttribute("confirmRejectWithFiles", true);
+                    request.setAttribute("bean", bean);
                     return mapping.findForward("thesis-declaration");
                 } else {
                     RejectThesisDeclaration.runRejectThesisDeclaration(thesis);

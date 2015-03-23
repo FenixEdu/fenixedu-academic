@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.domain.thesis.ThesisFile;
 import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
+import org.fenixedu.academic.domain.thesis.ThesisVisibilityType;
 import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
 import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisDiscussion;
@@ -220,16 +221,16 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             throws Exception {
         if (!thesis.areThesisFilesReadable()) {
             final ThesisFile thesisFile = thesis.getDissertation();
+            final ThesisFileBean thesisDissertationFileBean = new ThesisFileBean(thesis);
             if (thesisFile != null) {
-                final ThesisFileBean thesisDissertationFileBean = new ThesisFileBean();
                 thesisDissertationFileBean.setTitle(thesisFile.getTitle());
                 thesisDissertationFileBean.setSubTitle(thesisFile.getSubTitle());
                 thesisDissertationFileBean.setLanguage(thesisFile.getLanguage());
-                request.setAttribute("thesisDissertationFileBean", thesisDissertationFileBean);
-
-                final ThesisFileBean thesisExtendendAbstractFileBean = new ThesisFileBean();
-                request.setAttribute("thesisExtendendAbstractFileBean", thesisExtendendAbstractFileBean);
             }
+            request.setAttribute("thesisDissertationFileBean", thesisDissertationFileBean);
+
+            final ThesisFileBean thesisExtendendAbstractFileBean = new ThesisFileBean(thesis);
+            request.setAttribute("thesisExtendendAbstractFileBean", thesisExtendendAbstractFileBean);
         }
         request.setAttribute("rejectionCommentBean", new RejectionCommentBean());
         request.setAttribute("thesis", thesis);
@@ -329,9 +330,14 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
     public ActionForward substituteDocument(final ActionMapping mapping, final HttpServletRequest request,
             final boolean dissertationFile) throws Exception {
+
         final Thesis thesis = getDomainObject(request, "thesisOid");
         ThesisFileBean bean = getRenderedObject();
         RenderUtils.invalidateViewState();
+
+        if (thesis.getVisibility() == null) {
+            thesis.setVisibility(ThesisVisibilityType.INTRANET);
+        }
 
         if (bean != null && bean.getFile() != null) {
             if (thesis.getTitle() != null) {

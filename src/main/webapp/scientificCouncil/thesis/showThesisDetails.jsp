@@ -154,9 +154,10 @@
 		</th>
 		<%
 			for (final Locale language : languages) {
+			    String name = language.getDisplayLanguage();
 		%>
 				<th>
-					<bean:message bundle="LANGUAGE_RESOURCES" key="<%= "language." + language %>"/>
+					<%= name.replaceFirst("^.", "" + Character.toUpperCase(name.charAt(0)))  %>
 				</th>
 		<%
 			}
@@ -211,7 +212,6 @@
 		%>
 	</tr>
 </table>
-
 <%
 	if (thesis.getDissertation() != null) {
 %>
@@ -256,12 +256,16 @@
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.extendedAbstract"/>
 			<%
-				if (thesis.getDissertation() != null && !thesis.areThesisFilesReadable()) {
+				if (!thesis.isDraft() && !thesis.isSubmitted() && !thesis.areThesisFilesReadable()) {
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>
 						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="#thesisDissertationFileBeanDivA" onclick="document.getElementById('thesisDissertationFileBeanDiv').style.display='block'">
+						<%if(thesis.getExtendedAbstract() == null) {%>
+							<bean:message key="link.thesis.insert.extended.abstract"/>
+						<% } else { %>
 							<bean:message key="link.thesis.substitute.extended.abstract"/>
+						<% } %>
 						</html:link>
 					</em>
 			<%
@@ -271,12 +275,16 @@
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.dissertation"/>
 			<%
-				if (thesis.getDissertation() != null && !thesis.areThesisFilesReadable()) {
+				if (!thesis.isDraft() && !thesis.isSubmitted() && !thesis.areThesisFilesReadable()) {
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>
 						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="#thesisExtendendAbstractFileBeanDivA" onclick="document.getElementById('thesisExtendendAbstractFileBeanDiv').style.display='block'">
-							<bean:message key="link.thesis.substitute.extended.abstract"/>
+						<%if(thesis.getDissertation() == null) {%>
+							<bean:message key="link.thesis.insert.dissertation"/>
+						<% } else { %>
+							<bean:message key="link.thesis.substitute.dissertation"/>
+						<% } %>
 						</html:link>
 					</em>
 			<%
@@ -310,58 +318,63 @@
 
 <logic:present name="thesisDissertationFileBean">
 	<div id="thesisDissertationFileBeanDiv" style="margin-left: 35px; width: 90%; display: none;">
-		
 		<div class="infoop2 mvert15">
-    		<p>
-    			<bean:message key="label.student.thesis.upload.extended.abstract.message"/>
-    		</p>
+			<p>
+				<bean:message key="label.student.thesis.upload.dissertation.message"/>
+			</p>
+			<%
+			if (!thesis.isDeclarationAccepted()) {
+			%>
+				<p><bean:message key="thesis.declaration.unaccepted"/></p>
+			<%
+			}
+			%>
 		</div>
 
 		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteExtendedAbstract&amp;thesisOid=" + thesis.getExternalId() %>">
-    		<fr:edit id="thesisDissertationFileBean" name="thesisDissertationFileBean" schema="student.thesisBean.upload.dissertation">
-        		<fr:layout name="tabular">
-            		<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
-            		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-        		</fr:layout>
-        
-    	    	<fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
-    		</fr:edit>
-    
-	    	<html:submit>
-    	    	<bean:message key="button.submit"/>
-    		</html:submit>
-    		<html:cancel>
-	        	<bean:message key="button.cancel"/>
-	    	</html:cancel>
+			<fr:edit id="thesisDissertationFileBean" name="thesisDissertationFileBean" schema="student.thesisBean.upload.dissertation">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+
+				<fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
+			</fr:edit>
+
+			<html:submit>
+				<bean:message key="button.submit"/>
+			</html:submit>
+			<html:cancel>
+				<bean:message key="button.cancel"/>
+			</html:cancel>
 		</fr:form>
 	</div>
 </logic:present>
 
 <logic:present name="thesisExtendendAbstractFileBean">
 	<div id="thesisExtendendAbstractFileBeanDiv" style="margin-left: 35px; width: 90%; display: none;">
-		
 		<div class="infoop2 mvert15">
-    		<p>
-    			<bean:message key="label.student.thesis.upload.dissertation.message"/>
-    		</p>
+			<p>
+				<bean:message key="label.student.thesis.upload.extended.abstract.message"/>
+			</p>
 		</div>
 
 		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteDissertation&amp;thesisOid=" + thesis.getExternalId() %>">
-    		<fr:edit id="thesisExtendendAbstractFileBean" name="thesisExtendendAbstractFileBean" schema="student.thesisBean.upload">
-        		<fr:layout name="tabular">
-            		<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
-            		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-        		</fr:layout>
-        
-    	    	<fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
-    		</fr:edit>
-    
-	    	<html:submit>
-    	    	<bean:message key="button.submit"/>
-    		</html:submit>
-    		<html:cancel>
-		        <bean:message key="button.cancel"/>
-	    	</html:cancel>
+			<fr:edit id="thesisExtendendAbstractFileBean" name="thesisExtendendAbstractFileBean" schema="student.thesisBean.upload">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+
+				<fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
+			</fr:edit>
+
+			<html:submit>
+				<bean:message key="button.submit"/>
+			</html:submit>
+			<html:cancel>
+				<bean:message key="button.cancel"/>
+			</html:cancel>
 		</fr:form>
 	</div>
 </logic:present>

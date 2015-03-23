@@ -47,8 +47,11 @@
     dissertação para obtenção do <strong>Grau de Mestre em <%= degree %></strong> com o
     título <strong><%= title %></strong>, autorizo o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
     em formato pdf, a versão final desta dissertação e o seu resumo alargado na sua
-    <strong><fr:view name="thesis" property="visibility"/></strong>
-    , possibilitando assim o seu conhecimento a todos os que
+    <strong>
+		<!--<fr:view name="thesis" property="visibility"/>-->
+		<logic:equal name="thesis" property="visibility" value="INTRANET">Intranet</logic:equal>
+		<logic:notEqual name="thesis" property="visibility" value="INTRANET">�rea P�blica</logic:notEqual></strong>,
+    possibilitando assim o seu conhecimento a todos os que
     possam aceder àquele meio, com a ressalva de que estes não possam, sem a minha
     expressa autorização, reproduzir, por qualquer meio, o texto daquela minha
     dissertação para além dos limites fixados no Código do Direito de Autor e dos
