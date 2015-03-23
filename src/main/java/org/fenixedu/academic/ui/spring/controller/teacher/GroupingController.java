@@ -122,6 +122,22 @@ public class GroupingController extends ExecutionCourseController {
             errors.add("error.groupProperties.capacityOverflow");
         }
 
+        if (projectGroup.getMaximumGroupCapacity() == null || projectGroup.getMaximumGroupCapacity() < 0) {
+            errors.add("error.groupProperties.capacity.negative");
+        }
+
+        if (projectGroup.getMinimumGroupCapacity() == null || projectGroup.getMinimumGroupCapacity() < 0) {
+            errors.add("error.groupProperties.capacity.negative");
+        }
+
+        if (projectGroup.getMaxGroupNumber() == null || projectGroup.getMaxGroupNumber() < 0) {
+            errors.add("error.groupProperties.capacity.negative");
+        }
+
+        if (projectGroup.getIdealGroupCapacity() != null && projectGroup.getIdealGroupCapacity() < 0) {
+            errors.add("error.groupProperties.capacity.negative");
+        }
+
         if (smallerThan(projectGroup.getMaximumGroupCapacity(), projectGroup.getMinimumGroupCapacity())) {
             errors.add("error.groupProperties.minimum");
         }
@@ -168,8 +184,8 @@ public class GroupingController extends ExecutionCourseController {
         if (grouping.getShiftType() != null) {
             shiftList =
                     grouping.getExportGroupingsSet().stream().map(ExportGrouping::getExecutionCourse)
-                            .flatMap(ec -> ec.getAssociatedShifts().stream()).sorted(Shift.SHIFT_COMPARATOR_BY_NAME)
-                            .filter(shift -> shift.containsType(grouping.getShiftType())).collect(Collectors.toList());
+                    .flatMap(ec -> ec.getAssociatedShifts().stream()).sorted(Shift.SHIFT_COMPARATOR_BY_NAME)
+                    .filter(shift -> shift.containsType(grouping.getShiftType())).collect(Collectors.toList());
         }
 
         HashMap<Shift, TreeSet<StudentGroup>> studentGroupsByShift = new HashMap<Shift, TreeSet<StudentGroup>>();
@@ -201,8 +217,8 @@ public class GroupingController extends ExecutionCourseController {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
                 exportGrouping.getExecutionCourse().getAttendsSet().stream()
-                        .filter(attend -> !grouping.getAttendsSet().contains(attend))
-                        .forEach(attend -> studentsNotAttending.add(attend.getRegistration()));
+                .filter(attend -> !grouping.getAttendsSet().contains(attend))
+                .forEach(attend -> studentsNotAttending.add(attend.getRegistration()));
 
             }
         }
