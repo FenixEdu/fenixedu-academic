@@ -110,7 +110,7 @@ public class StudentGroupingService {
 
         List<Registration> registrationsList =
                 grouping.getAttendsSet().stream().map(Attends::getRegistration)
-                .filter(reg -> personList.contains(reg.getPerson())).collect(Collectors.toList());
+                        .filter(reg -> personList.contains(reg.getPerson())).collect(Collectors.toList());
 
         if (!groupingIsOpenForEnrollment(grouping)) {
             throw new DomainException("error.grouping.notOpenToEnrollment");
@@ -125,7 +125,11 @@ public class StudentGroupingService {
             throw new DomainException("error.studentGroup.alreadyEnrolled");
         }
 
-        if (shift == null && grouping.getShiftType() != null || !shift.getTypes().contains(grouping.getShiftType())) {
+        if (grouping.getShiftType() != null && !shift.getTypes().contains(grouping.getShiftType())) {
+            throw new DomainException("error.wrongShiftType");
+        }
+
+        if (shift != null && !grouping.getExecutionCourses().contains(shift.getExecutionCourse())) {
             throw new DomainException("error.wrongShiftType");
         }
 
@@ -191,7 +195,8 @@ public class StudentGroupingService {
     }
 
     public Boolean personInGroupingAttends(Grouping grouping, Person person) {
-        return grouping.getAttendsSet().stream().map(Attends::getRegistration).map(Registration::getPerson)
-                .anyMatch(p -> p.equals(AccessControl.getPerson()));
+        return grouping.getAttendsSet().stream()
+                .filter(attends -> grouping.getExecutionCourses().contains(attends.getExecutionCourse()))
+                .map(Attends::getRegistration).map(Registration::getPerson).anyMatch(p -> p.equals(AccessControl.getPerson()));
     }
 }
