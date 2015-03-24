@@ -41,6 +41,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.report.thesis.ApproveJuryDocument;
 import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
 import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
@@ -374,14 +375,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         request.setAttribute("conditions", thesis.getConditions());
 
-        if (thesis.isOrientatorCreditsDistributionNeeded()) {
-            request.setAttribute("orientatorCreditsDistribution", true);
-        }
-
-        if (thesis.isCoorientatorCreditsDistributionNeeded()) {
-            request.setAttribute("coorientatorCreditsDistribution", true);
-        }
-
         return mapping.findForward("edit-thesis");
     }
 
@@ -420,15 +413,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             return editProposal(mapping, actionForm, request, response);
         }
 
-        switch (PersonTarget.valueOf(target)) {
-        case orientator:
-            request.setAttribute("editOrientatorCreditsDistribution", true);
-            break;
-        case coorientator:
-            request.setAttribute("editCoorientatorCreditsDistribution", true);
-            break;
-        default:
-        }
+        request.setAttribute("editOrientatorCreditsDistribution", target);
 
         return editProposal(mapping, actionForm, request, response);
     }
@@ -442,30 +427,9 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         }
 
         Thesis thesis = getThesis(request);
-        ThesisEvaluationParticipant participant;
+        ThesisEvaluationParticipant participant = FenixFramework.getDomainObject(target);
 
-        PersonTarget targetType = PersonTarget.valueOf(target);
-        switch (targetType) {
-        case orientator:
-            participant = thesis.getOrientator();
-            break;
-        case coorientator:
-            participant = thesis.getCoorientator();
-
-            // HACK: ouch! type is used for a lable in the destination page, and
-            // we don't
-            // want to make a distinction between orientator and coorientator
-            targetType = PersonTarget.orientator;
-            break;
-        case president:
-            participant = thesis.getPresident();
-            break;
-        case vowel:
-            participant = getVowel(request);
-            break;
-        default:
-            participant = null;
-        }
+        PersonTarget targetType = getPersonTarget(participant.getType());
 
         if (participant == null) {
             return editProposal(mapping, actionForm, request, response);
@@ -474,6 +438,26 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             request.setAttribute("participant", participant);
             return mapping.findForward("editParticipant");
         }
+    }
+
+    private PersonTarget getPersonTarget(ThesisParticipationType type) {
+        if (type.equals(ThesisParticipationType.ORIENTATOR)) {
+            return PersonTarget.orientator;
+        }
+
+        if (type.equals(ThesisParticipationType.COORIENTATOR)) {
+            return PersonTarget.coorientator;
+        }
+
+        if (type.equals(ThesisParticipationType.PRESIDENT)) {
+            return PersonTarget.president;
+        }
+
+        if (type.equals(ThesisParticipationType.VOWEL)) {
+            return PersonTarget.vowel;
+        }
+
+        return null;
     }
 
     public ActionForward changePerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -513,6 +497,17 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             request.setAttribute("bean", bean);
             return mapping.findForward("select-person");
         }
+    }
+
+    public ActionForward deleteParticipant(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String target = request.getParameter("target");
+
+        ThesisEvaluationParticipant participant = FenixFramework.getDomainObject(target);
+
+        ChangeThesisPerson.remove(participant);
+
+        return editProposal(mapping, actionForm, request, response);
     }
 
     private ThesisEvaluationParticipant getVowel(HttpServletRequest request) {
@@ -725,6 +720,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             return null;
         } catch (Exception e) {
             addActionMessage("error", request, "student.thesis.generate.identification.failed");
+            e.printStackTrace();//FIXME remove
             return listThesis(mapping, actionForm, request, response);
         }
     }

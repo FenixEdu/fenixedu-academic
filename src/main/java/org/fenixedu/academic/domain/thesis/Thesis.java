@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
@@ -78,6 +79,8 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.Lists;
 
 public class Thesis extends Thesis_Base {
 
@@ -289,20 +292,11 @@ public class Thesis extends Thesis_Base {
     }
 
     public List<ThesisEvaluationParticipant> getOrientation() {
-        ThesisEvaluationParticipant orientator = getOrientator();
-        ThesisEvaluationParticipant coorientator = getCoorientator();
 
-        List<ThesisEvaluationParticipant> result = new ArrayList<ThesisEvaluationParticipant>();
-
-        if (orientator != null) {
-            result.add(orientator);
-        }
-
-        if (coorientator != null) {
-            result.add(coorientator);
-        }
-
-        return result;
+        return getParticipationsSet()
+                .stream()
+                .filter(p -> p.getType() == ThesisParticipationType.ORIENTATOR
+                        || p.getType() == ThesisParticipationType.COORIENTATOR).collect(Collectors.toList());
     }
 
     public ThesisEvaluationParticipant getOrientator() {
@@ -352,15 +346,12 @@ public class Thesis extends Thesis_Base {
     }
 
     public List<ThesisEvaluationParticipant> getAllParticipants(ThesisParticipationType type) {
-        List<ThesisEvaluationParticipant> result = new ArrayList<ThesisEvaluationParticipant>();
+        return getAllParticipants(type, new ThesisParticipationType[0]);
+    }
 
-        for (ThesisEvaluationParticipant participant : getParticipationsSet()) {
-            if (participant.getType() == type) {
-                result.add(participant);
-            }
-        }
-
-        return result;
+    public List<ThesisEvaluationParticipant> getAllParticipants(ThesisParticipationType type, ThesisParticipationType... types) {
+        List<ThesisParticipationType> values = Lists.asList(type, types);
+        return getParticipationsSet().stream().filter(p -> values.contains(p.getType())).collect(Collectors.toList());
     }
 
     public void delete() {
@@ -1253,25 +1244,20 @@ public class Thesis extends Thesis_Base {
     public List<ThesisCondition> getOrientationConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
 
-        Person orientator = getParticipationPerson(getOrientator());
-        Person coorientator = getParticipationPerson(getCoorientator());
-
-        Integer orientatorCreditsDistribution = getOrientatorCreditsDistribution();
-
-        if (orientator == null) {
+        List<ThesisEvaluationParticipant> orientation = getOrientation();
+        if (orientation.isEmpty()) {
             conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
         } else {
+            if (orientation.stream().anyMatch(o -> o.getPercentageDistribution() < 20)) {
+                conditions.add(new ThesisCondition("thesis.condition.orientation.credits.low"));
+            }
 
-            if (orientatorCreditsDistribution != null) {
-                if ((orientatorCreditsDistribution < 20) || (coorientator != null && getCoorientatorCreditsDistribution() < 20)) {
-                    conditions.add(new ThesisCondition("thesis.condition.orientation.credits.low"));
-                }
-            } else if (isCreditsDistributionNeeded()) {
-                conditions.add(new ThesisCondition("thesis.condition.orientation.credits.notDefined"));
+            if (orientation.stream().mapToInt(o -> o.getPercentageDistribution()).sum() > 100) {
+                conditions.add(new ThesisCondition("thesis.condition.orientation.credits.overflow"));
             }
 
             // check for duplicated persons
-            if (orientator == coorientator) {
+            if (orientation.size() != orientation.stream().map(ThesisEvaluationParticipant::getPerson).distinct().count()) {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.orientation"));
             }
         }
@@ -1330,14 +1316,10 @@ public class Thesis extends Thesis_Base {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.vowels.president"));
             }
 
-            // check that one and only one member of the orientation is in the jury
-            Person orientator = getParticipationPerson(getOrientator());
-            Person coorientator = getParticipationPerson(getCoorientator());
             juryPersons.add(president);  // necessary since there is no express prohibition to the president being an orientation member
-            if (orientator != null) {
-                if (!(juryPersons.contains(orientator) ^ (coorientator != null && juryPersons.contains(coorientator)))) {
-                    conditions.add(new ThesisCondition("thesis.condition.people.jury.orientation.members"));
-                }
+            // check that one and only one member of the orientation is in the jury
+            if (getOrientation().stream().filter(p -> juryPersons.contains(p.getPerson())).count() != 1) {
+                conditions.add(new ThesisCondition("thesis.condition.people.jury.orientation.members"));
             }
         }
 
@@ -1498,18 +1480,10 @@ public class Thesis extends Thesis_Base {
 
     public void setOrientator(Person person) {
         setParticipation(person, ThesisParticipationType.ORIENTATOR);
-
-        if (!isCreditsDistributionNeeded()) {
-            setCoorientatorCreditsDistribution(null);
-        }
     }
 
     public void setCoorientator(Person person) {
         setParticipation(person, ThesisParticipationType.COORIENTATOR);
-
-        if (!isCreditsDistributionNeeded()) {
-            setCoorientatorCreditsDistribution(null);
-        }
     }
 
     public void setPresident(Person person) {
@@ -1550,6 +1524,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
+    //Remove in the next major
+    @Deprecated
     public boolean isCreditsDistributionNeeded() {
         return isOrientatorCreditsDistributionNeeded() || isCoorientatorCreditsDistributionNeeded();
     }
@@ -1566,6 +1542,8 @@ public class Thesis extends Thesis_Base {
         return person != null && person.getTeacher() != null && person.getTeacher().isActiveContractedTeacher();
     }
 
+    //Remove in the next major
+    @Deprecated
     @Override
     public void setOrientatorCreditsDistribution(Integer percent) {
         if (percent != null && (percent < 0 || percent > 100)) {
@@ -1581,6 +1559,8 @@ public class Thesis extends Thesis_Base {
         return distribution != null ? 100 - distribution : null;
     }
 
+    //Remove in the next major
+    @Deprecated
     public void setCoorientatorCreditsDistribution(Integer percent) {
         if (percent != null && (percent < 0 || percent > 100)) {
             throw new DomainException("thesis.orietation.credits.notValid");

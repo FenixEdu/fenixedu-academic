@@ -24,12 +24,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.ScientificCommission;
 import org.fenixedu.academic.domain.thesis.Thesis;
-import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.filter.ScientificCouncilAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
@@ -60,20 +61,11 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
     @Override
     protected Collection<Person> getReceivers(Thesis thesis) {
-        Person student = thesis.getStudent().getPerson();
-        Person orientator = thesis.getOrientator().getPerson();
-        Person president = getPerson(thesis.getPresident());
-
-        Set<Person> persons = personSet(student, president, orientator);
-
-        Person coorientator = thesis.getCoorientator() != null ? thesis.getCoorientator().getPerson() : null;
-        if (coorientator != null) {
-            persons.add(coorientator);
-        }
-
-        for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
-            persons.add(participant.getPerson());
-        }
+        Set<Person> persons =
+                thesis.getAllParticipants(ThesisParticipationType.ORIENTATOR, ThesisParticipationType.COORIENTATOR,
+                        ThesisParticipationType.PRESIDENT, ThesisParticipationType.VOWEL).stream().map(p -> p.getPerson())
+                        .collect(Collectors.toSet());
+        persons.add(thesis.getStudent().getPerson());
 
         // also send proposal approval to the contact team
         ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();

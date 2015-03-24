@@ -32,7 +32,6 @@ public class ThesisOrientationTypeProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         final List<ThesisParticipationType> thesisParticipationTypes = new ArrayList<ThesisParticipationType>();
         thesisParticipationTypes.add(ThesisParticipationType.ORIENTATOR);
-        thesisParticipationTypes.add(ThesisParticipationType.COORIENTATOR);
 
         return thesisParticipationTypes;
     }

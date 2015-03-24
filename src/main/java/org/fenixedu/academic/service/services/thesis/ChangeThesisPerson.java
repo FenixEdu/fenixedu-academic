@@ -78,24 +78,34 @@ public class ChangeThesisPerson {
         }
     }
 
+    private static ThesisParticipationType getThesisEvaluationParticipantType(PersonTarget type) {
+        if (type.equals(PersonTarget.orientator)) {
+            return ThesisParticipationType.ORIENTATOR;
+        }
+
+        if (type.equals(PersonTarget.coorientator)) {
+            return ThesisParticipationType.COORIENTATOR;
+        }
+
+        if (type.equals(PersonTarget.president)) {
+            return ThesisParticipationType.PRESIDENT;
+        }
+
+        if (type.equals(PersonTarget.vowel)) {
+            return ThesisParticipationType.VOWEL;
+        }
+        return null;
+    }
+
     @Atomic
     public static void remove(final ThesisEvaluationParticipant thesisEvaluationParticipant) {
-        final Thesis thesis = thesisEvaluationParticipant.getThesis();
         thesisEvaluationParticipant.delete();
-
-        if (!thesis.isCreditsDistributionNeeded()) {
-            thesis.setCoorientatorCreditsDistribution(null);
-        }
     }
 
     @Atomic
     public static void add(final Thesis thesis, final ThesisParticipationType thesisParticipationType, final Person person) {
         if (person != null) {
             new ThesisEvaluationParticipant(thesis, person, thesisParticipationType);
-
-            if (!thesis.isCreditsDistributionNeeded()) {
-                thesis.setCoorientatorCreditsDistribution(null);
-            }
         }
     }
 }

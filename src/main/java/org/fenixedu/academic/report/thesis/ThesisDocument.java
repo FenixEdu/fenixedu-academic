@@ -19,8 +19,10 @@
 package org.fenixedu.academic.report.thesis;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
@@ -40,7 +42,32 @@ import org.fenixedu.bennu.core.domain.Bennu;
  */
 public abstract class ThesisDocument extends FenixReport {
 
-    private Thesis thesis;
+    public class OrientationInfo {
+
+        public OrientationInfo(String advisorName, String advisorCategory, String advisorAffiliation) {
+            this.advisorName = advisorName;
+            this.advisorCategory = advisorCategory;
+            this.advisorAffiliation = advisorAffiliation;
+        }
+
+        public String getAdvisorCategory() {
+            return advisorCategory;
+        }
+
+        public String getAdvisorAffiliation() {
+            return advisorAffiliation;
+        }
+
+        public String getAdvisorName() {
+            return advisorName;
+        }
+
+        private final String advisorName;
+        private final String advisorCategory;
+        private final String advisorAffiliation;
+    }
+
+    private final Thesis thesis;
 
     public ThesisDocument(Thesis thesis) {
         super();
@@ -88,21 +115,15 @@ public abstract class ThesisDocument extends FenixReport {
     }
 
     protected void fillOrientation() {
-        final ThesisEvaluationParticipant orientator = thesis.getOrientator();
-        addParameter("orientatorName", orientator.getPerson().getName());
-        addParameter("orientatorCategory", participantCategoryName(orientator));
-        addParameter("orientatorAffiliation", neverNull(orientator.getAffiliation()));
 
-        final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
-        if (coorientator != null) {
-            addParameter("coorientatorName", coorientator.getPerson().getName());
-            addParameter("coorientatorCategory", participantCategoryName(coorientator));
-            addParameter("coorientatorAffiliation", neverNull(coorientator.getAffiliation()));
-        } else {
-            addParameter("coorientatorName", EMPTY_STR);
-            addParameter("coorientatorCategory", EMPTY_STR);
-            addParameter("coorientatorAffiliation", EMPTY_STR);
-        }
+        List<OrientationInfo> advisors =
+                thesis.getOrientation()
+                        .stream()
+                        .map(orientator -> new OrientationInfo(orientator.getPerson().getName(),
+                                participantCategoryName(orientator), neverNull(orientator.getAffiliation())))
+                        .collect(Collectors.toList());
+
+        addParameter("advisors", advisors);
     }
 
     protected void fillJury() {
@@ -142,10 +163,8 @@ public abstract class ThesisDocument extends FenixReport {
     }
 
     private boolean isGuidanceVowel(ThesisEvaluationParticipant vowel) {
-        Person vowelPerson = vowel.getPerson();
-        Person orientatorPerson = (thesis.getOrientator() != null) ? thesis.getOrientator().getPerson() : null;
-        Person coorientatorPerson = (thesis.getCoorientator() != null) ? thesis.getCoorientator().getPerson() : null;
-        return vowelPerson.equals(orientatorPerson) || vowelPerson.equals(coorientatorPerson);
+        return thesis.getOrientation().stream().map(ThesisEvaluationParticipant::getPerson)
+                .anyMatch(p -> p.equals(vowel.getPerson()));
     }
 
     private String participantCategoryName(ThesisEvaluationParticipant participant) {

@@ -40,12 +40,10 @@
 <html:xhtml/>
 
 <%-- Orientation --%>
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.orientation"/></h3>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.orientation"/> (${thesis.orientation.size()})</h3>
 
 <%
 	final Thesis thesis = (Thesis) request.getAttribute("thesis");
-	final ThesisEvaluationParticipant orientator = thesis.getOrientator();
-	final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
 %>
 
 <div style="margin-left: 35px; width: 90%;">
@@ -75,20 +73,10 @@
 		<th>
 		</th>
 	</tr>
-	<%
-		if (orientator != null) {
-		    request.setAttribute("thesisEvaluationParticipant", orientator);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%
-		}
-	%>
-	<%
-		if (coorientator != null) {
-		    request.setAttribute("thesisEvaluationParticipant", coorientator);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%
-		}
-	%>
+	<logic:iterate name="thesis" property="orientation" id="advisor">
+		<%
+			request.setAttribute("thesisEvaluationParticipant", advisor);
+		%>
+		<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
+	</logic:iterate>
 </table>

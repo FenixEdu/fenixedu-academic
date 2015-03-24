@@ -49,7 +49,7 @@
     	     action="<%= "/manageSecondCycleThesis.do?method=addEvaluationMember&amp;thesisOid=" + thesis.getExternalId() %>"
         	 schema="thesis.jury.proposal.information.edit">
 		<fr:schema type="org.fenixedu.academic.domain.thesis.Thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-			<fr:slot name="thesisParticipationType" key="label.orientation.member.type" layout="menu-select">
+			<fr:slot name="thesisParticipationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.orientation.member.type" layout="menu-select">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ThesisOrientationTypeProvider"/>
 			</fr:slot>
 			<fr:slot name="person" layout="autoComplete" key="label.orientation.member.person" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
