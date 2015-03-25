@@ -333,7 +333,7 @@
 	<!-- BEGIN: OrganizationalStructure Managed Beans (Modularized) -->
 	<managed-bean>
 		<managed-bean-name>organizationalStructure</managed-bean-name>
-		<managed-bean-class>pt.ist.fenix.ui.faces.bean.person.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-class>pt.ist.fenixedu.integration.ui.faces.bean.person.OrganizationalStructureBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<!-- END: OrganizationalStructure Managed Beans -->
@@ -346,7 +346,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>organizationalStructureBackingBean</managed-bean-name>
-		<managed-bean-class>pt.ist.fenix.ui.faces.bean.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-class>pt.ist.fenixedu.integration.ui.faces.bean.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	
