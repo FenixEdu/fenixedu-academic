@@ -47,6 +47,8 @@ public class IRSCustomDeclaration extends FenixReport {
 
         private String personName;
 
+        private String personSocialSecurityNumber;
+
         private String personAddress;
 
         private String personAddressArea;
@@ -78,6 +80,7 @@ public class IRSCustomDeclaration extends FenixReport {
             setDocumentIdNumber(person.getDocumentIdNumber());
             setPersonName(person.getName());
             setIdDocumentType(person.getIdDocumentType());
+            setPersonSocialSecurityNumber(person.getSocialSecurityNumber());
         }
 
         public void addGratuityAmount(final Money amount) {
@@ -184,6 +187,14 @@ public class IRSCustomDeclaration extends FenixReport {
             this.idDocumentType = idDocumentType;
         }
 
+        public String getPersonSocialSecurityNumber() {
+            return personSocialSecurityNumber;
+        }
+
+        public void setPersonSocialSecurityNumber(String personSocialSecurityNumber) {
+            this.personSocialSecurityNumber = personSocialSecurityNumber;
+        }
+
         public Money getTotalAmount() {
             return getGratuityAmount().add(getOtherAmount()).add(getResidenceAmount());
         }
@@ -201,7 +212,7 @@ public class IRSCustomDeclaration extends FenixReport {
 
     static private final long serialVersionUID = 1L;
 
-    private IRSDeclarationDTO declaration;
+    private final IRSDeclarationDTO declaration;
 
     public IRSCustomDeclaration(final IRSDeclarationDTO declarationDTO) {
         this.declaration = declarationDTO;
@@ -216,6 +227,7 @@ public class IRSCustomDeclaration extends FenixReport {
     private void fillParameters() {
 
         addParameter("personName", this.declaration.getPersonName());
+        addParameter("personSocialSecurityNumber", this.declaration.getPersonSocialSecurityNumber());
         addParameter("personAddress", this.declaration.getPersonAddress());
         addParameter("personAddressArea", this.declaration.getPersonAddressArea());
         addParameter("personAddressPostalCode", this.declaration.getPersonAddressPostalCode());
