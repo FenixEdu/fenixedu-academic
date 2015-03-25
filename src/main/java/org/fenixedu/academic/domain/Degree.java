@@ -242,31 +242,37 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!getDegreeCurricularPlansSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.has.degree.curricular.plans"));
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, "error.degree.has.degree.curricular.plans"));
         }
 
         if (!getStudentGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
+                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
 
         if (!getTeacherGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
+                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
 
         if (getScientificCommissionGroup() != null) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
+                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
 
         if (!getCoordinatorGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
+                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
 
         if (!getStudentsConcludedInExecutionYearGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
+                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
 
         if (getAlumniGroup() != null) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
+                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
     }
 

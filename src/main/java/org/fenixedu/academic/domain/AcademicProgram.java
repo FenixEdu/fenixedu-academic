@@ -40,16 +40,16 @@ public abstract class AcademicProgram extends AcademicProgram_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!getAcademicAuthorizationGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.academicProgram.cannotDeleteAcademicProgramUsedInAccessControl"));
+        if (!getAcademicAuthorizationGroupSet().isEmpty() || !getAccessRuleSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
+                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
     }
 
     @Atomic
     public final void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
-        deleteDomainObject();
+        disconnect();
     }
 
     protected void disconnect() {
