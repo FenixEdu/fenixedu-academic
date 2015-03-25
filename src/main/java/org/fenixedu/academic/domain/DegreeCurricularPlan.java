@@ -371,7 +371,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return canDeleteRoot() && getStudentCurricularPlansSet().isEmpty() && getCurricularCourseEquivalencesSet().isEmpty()
                 && getEnrolmentPeriodsSet().isEmpty() && getCurricularCoursesSet().isEmpty()
                 && getExecutionDegreesSet().isEmpty() && getAreasSet().isEmpty() && canDeleteServiceAgreement()
-                && !getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty();
+                && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty() && getEquivalencePlan() == null
+                && getTargetEquivalencePlansSet().isEmpty() && getDegreeContextsSet().isEmpty();
     }
 
     private boolean canDeleteRoot() {
@@ -397,6 +398,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 setServiceAgreementTemplate(null);
                 template.delete();
             }
+            setShift(null);
+            setMembersGroup(null);
             setRootDomainObject(null);
             deleteDomainObject();
         } else {
