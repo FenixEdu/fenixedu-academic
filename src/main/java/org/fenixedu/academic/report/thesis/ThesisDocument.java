@@ -119,16 +119,15 @@ public abstract class ThesisDocument extends FenixReport {
         List<OrientationInfo> advisors =
                 thesis.getOrientation()
                         .stream()
-                        .map(orientator -> new OrientationInfo(orientator.getPerson().getName(),
-                                participantCategoryName(orientator), neverNull(orientator.getAffiliation())))
-                        .collect(Collectors.toList());
+                        .map(orientator -> new OrientationInfo(orientator.getName(), participantCategoryName(orientator),
+                                neverNull(orientator.getAffiliation()))).collect(Collectors.toList());
 
         addParameter("advisors", advisors);
     }
 
     protected void fillJury() {
         final ThesisEvaluationParticipant juryPresident = thesis.getPresident();
-        addParameter("juryPresidentName", juryPresident.getPerson().getName());
+        addParameter("juryPresidentName", juryPresident.getName());
         addParameter("juryPresidentCategory", participantCategoryName(juryPresident));
         addParameter("juryPresidentAffiliation", neverNull(juryPresident.getAffiliation()));
 
@@ -146,7 +145,7 @@ public abstract class ThesisDocument extends FenixReport {
                 if (guidanceVowel == 0 && isGuidanceVowel(vowel)) {
                     guidanceVowel = i;
                 }
-                addParameter(vowelPrefix + "Name", vowel.getPerson().getName());
+                addParameter(vowelPrefix + "Name", vowel.getName());
                 addParameter(vowelPrefix + "Category", participantCategoryName(vowel));
                 addParameter(vowelPrefix + "Affiliation", neverNull(vowel.getAffiliation()));
             } else {
@@ -163,8 +162,11 @@ public abstract class ThesisDocument extends FenixReport {
     }
 
     private boolean isGuidanceVowel(ThesisEvaluationParticipant vowel) {
-        return thesis.getOrientation().stream().map(ThesisEvaluationParticipant::getPerson)
-                .anyMatch(p -> p.equals(vowel.getPerson()));
+        Person vowelPerson = vowel.getPerson();
+
+        Set<Person> orientationPersons = thesis.getOrientationPersons();
+
+        return vowelPerson != null && orientationPersons.contains(vowelPerson);
     }
 
     private String participantCategoryName(ThesisEvaluationParticipant participant) {

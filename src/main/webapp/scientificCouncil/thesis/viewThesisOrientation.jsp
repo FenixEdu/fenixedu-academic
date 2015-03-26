@@ -51,6 +51,11 @@
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.orientation.member"/>
 	</html:link>
 </div>
+<div style="margin-left: 35px; width: 90%;">
+	<html:link action="<%= "/manageSecondCycleThesis.do?method=prepareAddExternalOrientationMember&amp;thesisOid=" + thesis.getExternalId() %>">
+		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.external.orientation.member"/>
+	</html:link>
+</div>
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>
 		<th style="width: 5%;">

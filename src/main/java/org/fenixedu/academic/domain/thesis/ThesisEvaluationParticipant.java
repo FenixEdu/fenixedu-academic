@@ -58,6 +58,17 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         Signal.emit("academic.thesis.participant.created", new DomainObjectEvent<>(this));
     }
 
+    public ThesisEvaluationParticipant(Thesis thesis, String name, String email, ThesisParticipationType type) {
+        super();
+
+        setRootDomainObject(Bennu.getInstance());
+
+        setType(type);
+        setThesis(thesis);
+        setExternalPerson(new ThesisEvaluationExternalParticipant(name, email));
+        Signal.emit("academic.thesis.participant.created", new DomainObjectEvent<>(this));
+    }
+
     @Override
     public Person getPerson() {
         // FIXME remove when framework supports read-only slots
@@ -111,6 +122,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         setRootDomainObject(null);
         setPerson(null);
         setThesis(null);
+        setExternalPerson(null);
 
         deleteDomainObject();
     }
@@ -157,6 +169,18 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
             }
         }
 
+    }
+
+    public boolean isExternal() {
+        return getPerson() == null;
+    }
+
+    public String getName() {
+        if (getPerson() != null) {
+            return getPerson().getName();
+        } else {
+            return getExternalPerson() != null ? getExternalPerson().getName() : null;
+        }
     }
 
 }

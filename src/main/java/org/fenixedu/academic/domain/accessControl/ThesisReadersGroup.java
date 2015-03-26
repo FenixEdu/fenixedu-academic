@@ -135,7 +135,8 @@ public class ThesisReadersGroup extends FenixGroup {
 
     private Set<User> getThesisMembers() {
         Set<User> members =
-                thesis.getParticipationsSet().stream().map((p) -> p.getPerson().getUser()).collect(Collectors.toSet());
+                thesis.getParticipationsSet().stream().filter(p -> p.getPerson() != null).map((p) -> p.getPerson().getUser())
+                        .collect(Collectors.toSet());
         members.add(thesis.getStudent().getPerson().getUser());
         return members;
     }

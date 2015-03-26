@@ -58,6 +58,9 @@ public class ThesisBean implements Serializable {
 
     private Thesis thesis;
 
+    private String externalName;
+    private String externalEmail;
+
     public ThesisBean() {
         super();
 
@@ -71,6 +74,22 @@ public class ThesisBean implements Serializable {
     public ThesisBean(final Thesis thesis) {
         this();
         setThesis(thesis);
+    }
+
+    public String getExternalName() {
+        return externalName;
+    }
+
+    public void setExternalName(String externalName) {
+        this.externalName = externalName;
+    }
+
+    public String getExternalEmail() {
+        return externalEmail;
+    }
+
+    public void setExternalEmail(String externalEmail) {
+        this.externalEmail = externalEmail;
     }
 
     public Degree getDegree() {

@@ -130,7 +130,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.person.loginInfo" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-    <slot name="person" layout="name-with-alias" key="label.person.name" />
+    <slot name="name" key="label.person.name" />
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-" />
     </slot>

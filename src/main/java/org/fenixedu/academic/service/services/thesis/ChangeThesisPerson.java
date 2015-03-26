@@ -108,4 +108,15 @@ public class ChangeThesisPerson {
             new ThesisEvaluationParticipant(thesis, person, thesisParticipationType);
         }
     }
+
+    @Atomic
+    public static void addExternal(Thesis thesis, PersonTarget targetType, String externalName, String externalEmail) {
+        thesis.addExternal(getThesisEvaluationParticipantType(targetType), externalName, externalEmail);
+    }
+
+    @Atomic
+    public static void addExternal(Thesis thesis, ThesisParticipationType thesisParticipationType, String externalName,
+            String externalEmail) {
+        thesis.addExternal(thesisParticipationType, externalName, externalEmail);
+    }
 }

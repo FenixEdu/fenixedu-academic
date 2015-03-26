@@ -3231,6 +3231,11 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         ThesisParticipationType type (REQUIRED);
         Integer percentageDistribution;
     }
+    
+    class thesis.ThesisEvaluationExternalParticipant {
+        String name;
+        String email;
+    }
 
     class time.calendarStructure.AcademicCalendarEntry  {
         MultiLanguageString title;
@@ -7786,7 +7791,16 @@ relation PersonTeacher {
 
 relation PersonThesisEvaluationParticipant {
     protected Person playsRole person {
-        multiplicity 1..1;
+        multiplicity 0..1;
+    }
+    thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
+        multiplicity *;
+    }
+}
+
+relation ThesisEvaluationParticipantExternalPerson {
+    protected thesis.ThesisEvaluationExternalParticipant playsRole externalPerson {
+        multiplicity 0..1;
     }
     thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
         multiplicity *;

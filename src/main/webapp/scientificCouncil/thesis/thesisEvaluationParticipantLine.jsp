@@ -39,11 +39,13 @@
 		</html:link>
 	</td>
 	<td>
-		<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesisEvaluationParticipant" property="person.username"/></bean:define>
-		<img src="<%= request.getContextPath() + url %>"/>
+		<logic:notEmpty name="thesisEvaluationParticipant" property="person">
+			<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesisEvaluationParticipant" property="person.username"/></bean:define>
+			<img src="<%= request.getContextPath() + url %>"/>
+		</logic:notEmpty>
 	</td>	
 	<td>
-		<%= participant.getPerson().getName() %> ( <%= participant.getPerson().getUsername() %> )
+		<%= participant.getName() %> <logic:notEmpty name="thesisEvaluationParticipant" property="person">( <%= participant.getPerson().getUsername() %> )</logic:notEmpty>
 	</td>
 	<td>
 		<%= participant.getCategory() %>

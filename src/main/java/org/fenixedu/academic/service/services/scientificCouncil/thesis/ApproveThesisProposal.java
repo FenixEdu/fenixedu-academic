@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -65,7 +66,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         Set<Person> persons =
                 thesis.getAllParticipants(ThesisParticipationType.ORIENTATOR, ThesisParticipationType.COORIENTATOR,
                         ThesisParticipationType.PRESIDENT, ThesisParticipationType.VOWEL).stream().map(p -> p.getPerson())
-                        .collect(Collectors.toSet());
+                        .filter(Objects::nonNull).collect(Collectors.toSet());
         persons.add(thesis.getStudent().getPerson());
 
         // also send proposal approval to the contact team
@@ -107,7 +108,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         String vowel4Name = name(thesis.getVowels(), 3);
         String vowel4Affiliation = affiliation(thesis.getVowels(), 3);
         String orientationName =
-                thesis.getOrientation().stream().map(p -> p.getPerson().getName() + ", " + p.getAffiliation())
+                thesis.getOrientation().stream().map(p -> p.getName() + ", " + p.getAffiliation())
                         .collect(Collectors.joining("\n"));
 
         String currentPersonName = currentPerson.getNickname();
@@ -142,7 +143,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     }
 
     private String name(ThesisEvaluationParticipant participant) {
-        return participant == null ? null : participant.getPerson().getName();
+        return participant == null ? null : participant.getName();
     }
 
     private String name(List<ThesisEvaluationParticipant> participants, int index) {
