@@ -177,7 +177,6 @@
 			</div>
 
 		</div>
-
 		<div class="form-group">
 			<form:label path="minimumGroupCapacity"
 				class="col-sm-2 control-label">
@@ -314,18 +313,18 @@ document.getElementById("differentiatedCapacityTable").style.display ="none";
 			sel.disabled = false;
 
 			document.getElementById("maximumGroupCapacity").value = "";
-			document.getElementById("maximumGroupCapacity").disabled = false;
+			document.getElementById("maximumGroupCapacity").readOnly = false;
 
 			document.getElementById("minimumGroupCapacity").value = "";
-			document.getElementById("minimumGroupCapacity").disabled = false;
+			document.getElementById("minimumGroupCapacity").readOnly = false;
 
 			document.getElementById("idealGroupCapacity").value = "";
-			document.getElementById("idealGroupCapacity").disabled = false;
+			document.getElementById("idealGroupCapacity").readOnly = false;
 
 			document.getElementById("differentiatedCapacity").disabled = false;
 
 			document.getElementById("maxGroupNumber").value = "";
-			document.getElementById("maxGroupNumber").disabled = false;
+			document.getElementById("maxGroupNumber").readOnly = false;
 		}
 	}
 	
@@ -341,21 +340,21 @@ document.getElementById("differentiatedCapacityTable").style.display ="none";
 		sel.disabled = true;
 
 		document.getElementById("maximumGroupCapacity").value = 1;
-		document.getElementById("maximumGroupCapacity").disabled = true;
+		document.getElementById("maximumGroupCapacity").readOnly = true;
 
 		
 		document.getElementById("minimumGroupCapacity").value = 1;
-		document.getElementById("minimumGroupCapacity").disabled = true;
+		document.getElementById("minimumGroupCapacity").readOnly = true;
 
 		document.getElementById("idealGroupCapacity").value = 1;
-		document.getElementById("idealGroupCapacity").disabled = true;
+		document.getElementById("idealGroupCapacity").readOnly = true;
 
 		document.getElementById("differentiatedCapacity").checked = false;
 		checkDiferentiatedCapacity();
 		document.getElementById("differentiatedCapacity").disabled = true;
 
 		document.getElementById("maxGroupNumber").value = ${fn:length(executionCourse.attendsSet)};
-		document.getElementById("maxGroupNumber").disabled = false;
+		document.getElementById("maxGroupNumber").readOnly = false;
 	}
 
 	
