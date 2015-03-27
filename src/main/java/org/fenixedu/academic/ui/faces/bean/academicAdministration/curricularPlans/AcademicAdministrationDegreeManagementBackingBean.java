@@ -20,26 +20,15 @@ package org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPla
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeManagementBackingBean;
 
 public class AcademicAdministrationDegreeManagementBackingBean extends DegreeManagementBackingBean {
 
     public List<Degree> getFilteredPreBolonhaDegrees() {
         final List<Degree> orderedResult = Degree.readOldDegrees();
-
-        final Iterator<Degree> degrees = orderedResult.iterator();
-        while (degrees.hasNext()) {
-            final Degree degree = degrees.next();
-            if (degree.getDegreeType() != DegreeType.DEGREE) {
-                degrees.remove();
-            }
-        }
-
         Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         return orderedResult;
     }

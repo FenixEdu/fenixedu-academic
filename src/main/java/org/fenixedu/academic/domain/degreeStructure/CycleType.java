@@ -40,7 +40,9 @@ public enum CycleType {
 
     THIRD_CYCLE(3),
 
-    SPECIALIZATION_CYCLE(4);
+    SPECIALIZATION_CYCLE(4),
+
+    SINGLE_CYCLE(5);
 
     static final public Comparator<CycleType> COMPARATOR_BY_LESS_WEIGHT = new Comparator<CycleType>() {
         @Override
