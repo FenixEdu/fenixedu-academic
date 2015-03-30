@@ -32,6 +32,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.academic.domain.ShiftType;
@@ -110,6 +112,11 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
                 }
                 saveErrors(request, actionErrors);
                 return mapping.getInputForward();
+            } catch (DomainException exception) {
+                ActionMessages actionMessages = new ActionMessages();
+                actionMessages.add("errors.deleteshift", new ActionMessage(exception.getLocalizedMessage(), false));
+                saveErrors(request, actionMessages);
+                return mapping.getInputForward();
             }
 
             return redirectToShiftsList(request);
@@ -135,13 +142,13 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
             try {
                 DeleteShifts.run(shiftOIDs);
             } catch (FenixServiceMultipleException e) {
-                final ActionErrors actionErrors = new ActionErrors();
+                final ActionMessages actionMessages = new ActionMessages();
 
                 for (final DomainException domainException : e.getExceptionList()) {
-                    actionErrors.add(domainException.getMessage(),
-                            new ActionError(domainException.getMessage(), domainException.getArgs()));
+                    actionMessages.add(Integer.toString(domainException.hashCode()),
+                            new ActionMessage(domainException.getLocalizedMessage(), false));
                 }
-                saveErrors(request, actionErrors);
+                saveErrors(request, actionMessages);
 
                 return mapping.getInputForward();
             }
