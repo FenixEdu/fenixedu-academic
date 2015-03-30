@@ -70,7 +70,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = TeacherTeachingApp.class, path = "execution-course-management",
-        titleKey = "label.executionCourseManagement.menu.management")
+titleKey = "label.executionCourseManagement.menu.management")
 @Mapping(path = "/manageExecutionCourse", module = "teacher")
 public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 
@@ -445,7 +445,12 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
                 new EnrollStudentInShifts().run(executionCourse.getRegistration(person), request.getParameter("shiftID"));
             } catch (FenixServiceException e) {
                 final ActionErrors actionErrors = new ActionErrors();
-                actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
+                if (e.getMessage() != null) {
+                    actionErrors.add("error", new ActionMessage(e.getMessage()));
+                } else {
+                    actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
+                }
+
                 saveErrors(request, actionErrors);
             }
         } else {

@@ -59,6 +59,9 @@ public class EnrollStudentInShifts {
 
         if (selectedShift != shiftFromStudent) {
             // Registration is not yet enroled, so let's reserve the shift...
+            if (selectedShift.getLotacao().intValue() <= selectedShift.getStudentsSet().size()) {
+                throw new FenixServiceException("error.exception.shift.full");
+            }
             if (selectedShift.reserveForStudent(registration)) {
                 if (shiftFromStudent != null) {
                     shiftFromStudent.removeStudents(registration);
