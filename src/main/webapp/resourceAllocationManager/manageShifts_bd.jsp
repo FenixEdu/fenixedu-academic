@@ -35,7 +35,7 @@
 <jsp:include page="context.jsp"/>
 
 <span class="error"><!-- Error messages go here -->
-	<html:errors/>
+	<html:errors bundle="APPLICATION_RESOURCES"/>
 </span>
 
 <h3 class="mbottom05"><bean:message key="title.create.shift"/></h3>
