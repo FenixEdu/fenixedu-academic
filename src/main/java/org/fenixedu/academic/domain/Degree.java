@@ -69,6 +69,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
+    public static final String CREATED_SIGNAL = "academic.degree.create";
 
     public static final String DEFAULT_MINISTRY_CODE = "9999";
 

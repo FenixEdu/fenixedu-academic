@@ -30,6 +30,8 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -61,7 +63,8 @@ public class CreateDegree {
             }
         }
 
-        new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, administrativeOffice);
+        Degree degree = new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, administrativeOffice);
+        Signal.emit(Degree.CREATED_SIGNAL, new DomainObjectEvent<Degree>(degree));
     }
 
 }
