@@ -468,9 +468,10 @@ public class Person extends Person_Base {
             ;
         }
 
-        setNationality(null);
-        setCountryOfBirth(null);
-
+        super.setCountry(null);
+        super.setCountryOfBirth(null);
+        setProfile(null);
+        super.setUser(null);
         super.delete();
     }
 
