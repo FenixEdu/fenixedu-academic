@@ -375,6 +375,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addCell(registration.getNumber().toString());
 
             final Person person = registration.getPerson();
+            spreadsheet.addCell(person.getUsername());
             spreadsheet.addCell(person.getName());
             spreadsheet.addCell(person.getDocumentIdNumber());
 
@@ -603,6 +604,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         spreadsheet.addHeader(getResourceMessage("label.degree.acronym"));
         spreadsheet.addHeader(getResourceMessage("label.degree.name"));
         spreadsheet.addHeader(getResourceMessage("label.number"));
+        spreadsheet.addHeader(getResourceMessage("label.username"));
         spreadsheet.addHeader(getResourceMessage("label.name"));
         spreadsheet.addHeader(getResourceMessage("label.documentIdNumber"));
         spreadsheet.addHeader(getResourceMessage("label.registration.state"));
