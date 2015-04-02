@@ -118,7 +118,10 @@
 			<h:outputText value="<table style='width: 90%' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
-			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
+			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})" escape="false"/>
+				<h:outputText value=" [#{degree.code}]" rendered="#{!empty degree.code}" escape="false"/>
+			<h:outputText value="</td>" escape="false"/>
+			
 			<h:outputText value="<td style='width: 300px'>" escape="false"/>
 			<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
