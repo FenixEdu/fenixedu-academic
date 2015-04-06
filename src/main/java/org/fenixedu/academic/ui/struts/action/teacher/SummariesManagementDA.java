@@ -19,7 +19,9 @@
 package org.fenixedu.academic.ui.struts.action.teacher;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -57,10 +59,10 @@ import org.fenixedu.academic.service.services.teacher.CreateSummary;
 import org.fenixedu.academic.service.services.teacher.DeleteSummary;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
-import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -126,12 +128,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
         request.setAttribute("executionCourseID", executionCourse.getExternalId());
         request.setAttribute("professorship", loggedProfessorship);
 
-        ActionForward forward = super.execute(mapping, actionForm, request, response);
-        return processForward(request, forward);
-    }
+        Map<String, Object> requestContext = new HashMap<String, Object>();
+        requestContext.put("professorship", loggedProfessorship);
+        requestContext.put("executionCourse", executionCourse);
+        PortalLayoutInjector.addContextExtension(requestContext);
 
-    protected ActionForward processForward(HttpServletRequest request, ActionForward forward) {
-        return ExecutionCourseBaseAction.forward(request, forward.getPath());
+        return super.execute(mapping, actionForm, request, response);
     }
 
     public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,

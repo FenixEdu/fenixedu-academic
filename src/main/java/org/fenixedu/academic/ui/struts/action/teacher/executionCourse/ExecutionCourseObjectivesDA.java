@@ -35,12 +35,17 @@ import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.DateTime;
 
 @Mapping(path = "/manageObjectives", module = "teacher", functionality = ManageExecutionCourseDA.class,
         formBean = "objectivesForm")
+@Forwards({ @Forward(name = "objectives", path = "/teacher/executionCourse/objectives.jsp"),
+        @Forward(name = "createObjectives", path = "/teacher/executionCourse/createObjectives.jsp"),
+        @Forward(name = "editObjectives", path = "/teacher/executionCourse/editObjectives.jsp") })
 public class ExecutionCourseObjectivesDA extends ManageExecutionCourseDA {
 
     // OBJECTIVES
@@ -112,19 +117,19 @@ public class ExecutionCourseObjectivesDA extends ManageExecutionCourseDA {
     @Input
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return forward(request, "/teacher/executionCourse/objectives.jsp");
+        return mapping.findForward("objectives");
     }
 
     public ActionForward prepareCreateObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         prepareCurricularCourse(request);
-        return forward(request, "/teacher/executionCourse/createObjectives.jsp");
+        return mapping.findForward("createObjectives");
     }
 
     public ActionForward createObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, FenixActionException {
         executeFactoryMethod();
-        return forward(request, "/teacher/executionCourse/objectives.jsp");
+        return mapping.findForward("objectives");
     }
 
     public ActionForward prepareEditObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -136,7 +141,7 @@ public class ExecutionCourseObjectivesDA extends ManageExecutionCourseDA {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
             saveErrors(request, messages);
-            return forward(request, "/teacher/executionCourse/objectives.jsp");
+            return mapping.findForward("objectives");
         }
 
         final String curriculumIDString = request.getParameter("curriculumID");
@@ -151,13 +156,13 @@ public class ExecutionCourseObjectivesDA extends ManageExecutionCourseDA {
             }
             request.setAttribute("curriculum", curriculum);
         }
-        return forward(request, "/teacher/executionCourse/editObjectives.jsp");
+        return mapping.findForward("objectives");
     }
 
     public ActionForward editObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         executeFactoryMethod();
-        return forward(request, "/teacher/executionCourse/objectives.jsp");
+        return mapping.findForward("objectives");
     }
 
 }

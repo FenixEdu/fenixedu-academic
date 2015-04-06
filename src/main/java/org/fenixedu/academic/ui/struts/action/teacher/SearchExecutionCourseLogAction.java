@@ -40,12 +40,15 @@ import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseLo
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
 import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.academic.util.Month;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "teacher", path = "/searchECLog", functionality = ManageExecutionCourseDA.class)
+@Forwards({ @Forward(name = "viewLogSearch", path = "/teacher/viewLogSearch.jsp") })
 public class SearchExecutionCourseLogAction extends ExecutionCourseBaseAction {
 
     public ActionForward prepareInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -57,7 +60,7 @@ public class SearchExecutionCourseLogAction extends ExecutionCourseBaseAction {
         request.setAttribute("searchBean", seclb);
         request.setAttribute("executionCourse", seclb.getExecutionCourse());
 
-        return forward(request, "/teacher/viewLogSearch.jsp");
+        return mapping.findForward("viewLogSearch");
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -69,7 +72,7 @@ public class SearchExecutionCourseLogAction extends ExecutionCourseBaseAction {
         request.setAttribute("executionCourse", seclb.getExecutionCourse());
 
         prepareAttendsCollectionPages(request, seclb, seclb.getExecutionCourse());
-        return forward(request, "/teacher/viewLogSearch.jsp");
+        return mapping.findForward("viewLogSearch");
     }
 
     private SearchExecutionCourseLogBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
@@ -163,7 +166,7 @@ public class SearchExecutionCourseLogAction extends ExecutionCourseBaseAction {
 
         prepareAttendsCollectionPages(request, bean, bean.getExecutionCourse());
 
-        return forward(request, "/teacher/viewLogSearch.jsp");
+        return mapping.findForward("viewLogSearch");
     }
 
 }

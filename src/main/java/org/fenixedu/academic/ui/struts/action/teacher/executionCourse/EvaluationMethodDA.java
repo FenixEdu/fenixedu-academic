@@ -28,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.EvaluationMethod;
 import org.fenixedu.academic.domain.ExecutionCourse;
@@ -35,37 +36,41 @@ import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.teacher.EditEvaluation;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 @Mapping(path = "/manageEvaluationMethod", module = "teacher", functionality = ManageExecutionCourseDA.class,
         formBean = "evaluationMethodForm")
+@Forwards({ @Forward(name = "evaluationMethod", path = "/teacher/executionCourse/evaluationMethod.jsp"),
+        @Forward(name = "editEvaluationMethod", path = "/teacher/executionCourse/editEvaluationMethod.jsp"),
+        @Forward(name = "importEvaluationMethod", path = "/teacher/executionCourse/importEvaluationMethod.jsp") })
 public class EvaluationMethodDA extends ManageExecutionCourseDA {
 
     // EVALUATION METHOD
 
     @Input
-    public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward evaluationMethod(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
         final ExecutionCourse executionCourse = getExecutionCourse(request);
         request.setAttribute("evaluationMethods", getEvaluationMethod(executionCourse));
-        return forward(request, "/teacher/executionCourse/evaluationMethod.jsp");
+        return mapping.findForward("evaluationMethod");
     }
 
-    private LocalizedString getEvaluationMethod(ExecutionCourse executionCourse) {
+    private LocalizedString getEvaluationMethod(final ExecutionCourse executionCourse) {
         if (executionCourse.getEvaluationMethod() != null) {
             return executionCourse.getEvaluationMethod().getEvaluationElements();
         } else {
-            String competenceMethod =
-                    !executionCourse.getCompetenceCourses().isEmpty() ? executionCourse.getCompetenceCourses().iterator().next()
-                            .getEvaluationMethod() : "";
+            String competenceMethod = !executionCourse.getCompetenceCourses().isEmpty() ? executionCourse.getCompetenceCourses()
+                    .iterator().next().getEvaluationMethod() : "";
             return new LocalizedString(Locale.getDefault(), competenceMethod);
         }
     }
 
-    public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditEvaluationMethod(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
         LocalizedString evaluationElements = evaluationMethod == null ? null : evaluationMethod.getEvaluationElements();
@@ -77,49 +82,64 @@ public class EvaluationMethodDA extends ManageExecutionCourseDA {
                 final CompetenceCourse competenceCourse = competenceCourses.iterator().next();
                 final String pt = competenceCourse.getEvaluationMethod();
                 final String en = competenceCourse.getEvaluationMethodEn();
-                evaluationMethodMls =
-                        evaluationMethodMls.with(org.fenixedu.academic.util.LocaleUtils.PT, pt == null ? "" : pt).with(org.fenixedu.academic.util.LocaleUtils.EN,
-                                en == null ? "" : en);
+                evaluationMethodMls = evaluationMethodMls.with(org.fenixedu.academic.util.LocaleUtils.PT, pt == null ? "" : pt)
+                        .with(org.fenixedu.academic.util.LocaleUtils.EN, en == null ? "" : en);
             }
             EditEvaluation.runEditEvaluation(executionCourse, evaluationMethodMls);
             evaluationMethod = executionCourse.getEvaluationMethod();
         }
-        return forward(request, "/teacher/executionCourse/editEvaluationMethod.jsp");
+        return mapping.findForward("editEvaluationMethod");
     }
 
-    public ActionForward prepareImportEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ActionForward editEvaluationMethod(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        final DynaActionForm dynaActionForm = (DynaActionForm) form;
+        final String evaluationMethod = request.getParameter("evaluationMethod");
+        final String evaluationMethodEn = dynaActionForm.getString("evaluationMethodEn");
+        LocalizedString localizedString = new LocalizedString();
+        localizedString = localizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, evaluationMethod);
+        localizedString = localizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, evaluationMethodEn);
+
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+
+        EditEvaluation.runEditEvaluation(executionCourse, localizedString);
+
+        return mapping.findForward("evaluationMethod");
+    }
+
+    public ActionForward prepareImportEvaluationMethod(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
 
         request.setAttribute("importContentBean", new ImportContentBean());
-        return forward(request, "/teacher/executionCourse/importEvaluationMethod.jsp");
+        return mapping.findForward("importEvaluationMethod");
     }
 
-    public ActionForward prepareImportEvaluationMethodPostBack(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareImportEvaluationMethodPostBack(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
 
         prepareImportContentPostBack(request);
-        return forward(request, "/teacher/executionCourse/importEvaluationMethod.jsp");
+        return mapping.findForward("importEvaluationMethod");
     }
 
-    public ActionForward prepareImportEvaluationMethodInvalid(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareImportEvaluationMethodInvalid(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
 
         prepareImportContentInvalid(request);
-        return forward(request, "/teacher/executionCourse/importEvaluationMethod.jsp");
+        return mapping.findForward("importEvaluationMethod");
     }
 
-    public ActionForward listExecutionCoursesToImportEvaluationMethod(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward listExecutionCoursesToImportEvaluationMethod(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
 
         listExecutionCoursesToImportContent(request);
-        return forward(request, "/teacher/executionCourse/importEvaluationMethod.jsp");
+        return mapping.findForward("importEvaluationMethod");
     }
 
-    public ActionForward importEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+    public ActionForward importEvaluationMethod(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) throws FenixServiceException {
 
         importContent(request, "ImportEvaluationMethod");
-        return forward(request, "/teacher/executionCourse/evaluationMethod.jsp");
+        return mapping.findForward("evaluationMethod");
     }
 
 }

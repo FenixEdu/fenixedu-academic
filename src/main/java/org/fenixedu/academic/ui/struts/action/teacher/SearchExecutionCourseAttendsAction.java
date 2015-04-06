@@ -51,12 +51,15 @@ import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionC
 import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/searchECAttends", module = "teacher", functionality = ManageExecutionCourseDA.class)
+@Forwards({ @Forward(name = "viewAttendsSearch", path = "/teacher/viewAttendsSearch.jsp") })
 public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseAction {
 
     @Override
@@ -80,7 +83,7 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
         prepareAttendsCollectionPages(request, searchExecutionCourseAttendsBean, executionCourse);
 
-        return forward(request, "/teacher/viewAttendsSearch.jsp");
+        return mapping.findForward("viewAttendsSearch");
     }
 
     private SearchExecutionCourseAttendsBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
@@ -207,7 +210,7 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
         prepareAttendsCollectionPages(request, bean, bean.getExecutionCourse());
 
-        return forward(request, "/teacher/viewAttendsSearch.jsp");
+        return mapping.findForward("viewAttendsSearch");
     }
 
 }

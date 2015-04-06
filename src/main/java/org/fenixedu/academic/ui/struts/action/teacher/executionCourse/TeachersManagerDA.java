@@ -35,23 +35,28 @@ import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.service.services.teacher.DeleteProfessorshipWithPerson;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @Mapping(path = "/teachersManagerDA", module = "teacher", functionality = ManageExecutionCourseDA.class)
+@Forwards({ @Forward(name = "viewTeachers_bd", path = "/teacher/viewTeachers_bd.jsp"),
+        @Forward(name = "viewProfessorshipProperties", path = "/teacher/viewProfessorshipProperties.jsp"),
+        @Forward(name = "associateTeacher_bd", path = "/teacher/associateTeacher_bd.jsp") })
 public class TeachersManagerDA extends ExecutionCourseBaseAction {
 
     public ActionForward viewTeachersByProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        return forward(request, "/teacher/viewTeachers_bd.jsp");
+        return mapping.findForward("viewTeachers_bd");
     }
 
     public ActionForward viewProfessorshipProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("professorship", getDomainObject(request, "teacherOID"));
-        return forward(request, "/teacher/viewProfessorshipProperties.jsp");
+        return mapping.findForward("viewProfessorshipProperties");
     }
 
     public ActionForward removeTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -74,7 +79,7 @@ public class TeachersManagerDA extends ExecutionCourseBaseAction {
     @Input
     public ActionForward prepareAssociateTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        return forward(request, "/teacher/associateTeacher_bd.jsp");
+        return mapping.findForward("associateTeacher_bd");
     }
 
     public ActionForward associateTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,

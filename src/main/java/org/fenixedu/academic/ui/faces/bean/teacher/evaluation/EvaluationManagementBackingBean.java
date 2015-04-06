@@ -64,6 +64,7 @@ import org.fenixedu.academic.domain.FinalEvaluation;
 import org.fenixedu.academic.domain.FinalMark;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.Mark;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.WrittenEvaluationEnrolment;
@@ -96,10 +97,13 @@ import org.fenixedu.academic.util.Season;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Strings;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -200,8 +204,22 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
          * HACK: it's necessary set the executionCourseID for struts menu
          */
         getAndHoldStringParameter("executionCourseID");
+        fillLayoutContext();
 
         initializeEnrolmentFilter();
+    }
+
+    public void fillLayoutContext() {
+        String executionCourseID = getExecutionCourseID();
+        if (!Strings.isNullOrEmpty(executionCourseID)) {
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
+            final Professorship professorship = executionCourse.getProfessorship(AccessControl.getPerson());
+
+            Map<String, Object> requestContext = new HashMap<String, Object>();
+            requestContext.put("professorship", professorship);
+            requestContext.put("executionCourse", executionCourse);
+            PortalLayoutInjector.addContextExtension(requestContext);
+        }
     }
 
     public String getExecutionCourseID() {
@@ -240,6 +258,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
              * HACK: it's necessary set the executionCourseID for struts menu
              */
             setRequestAttribute("executionCourseID", executionCourseIdHidden.getValue());
+            fillLayoutContext();
         }
         this.executionCourseIdHidden = executionCourseIdHidden;
     }

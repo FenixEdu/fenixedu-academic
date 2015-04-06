@@ -114,6 +114,11 @@
             <version>${version.org.fenixedu.fenixedu-spaces}</version>
         </dependency>
         <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>string</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>bennu-core</artifactId>
             <version>${version.org.fenixedu.bennu}</version>
@@ -297,6 +302,10 @@
     </dependencies>
 
     <repositories>
+        <repository>
+            <id>ulisboa-repo</id>
+            <url>http://nexjen.ulisboa.pt/nexus/content/groups/public/</url>
+        </repository>
         <repository>
             <id>fenixedu-maven-repository</id>
             <url>https://repo.fenixedu.org/fenixedu-maven-repository</url>

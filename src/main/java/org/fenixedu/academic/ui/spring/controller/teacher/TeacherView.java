@@ -18,28 +18,44 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
+import static org.fenixedu.academic.predicate.AccessControl.getPerson;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 import org.springframework.web.servlet.view.JstlView;
 
 public class TeacherView extends JstlView {
 
+    private final ExecutionCourse executionCourse;
+
     private final String page;
 
-    public TeacherView(String page) {
+    public TeacherView(String page, ExecutionCourse executionCourse) {
         this.page = page;
+        this.executionCourse = executionCourse;
     }
 
     @Override
     protected void exposeHelpers(HttpServletRequest request) throws Exception {
         setServletContext(request.getServletContext());
         super.exposeHelpers(request);
-        request.setAttribute("teacher$actual$page", "/teacher/" + page + ".jsp");
+
+        final Professorship professorship = executionCourse.getProfessorship(getPerson());
+
+        Map<String, Object> requestContext = new HashMap<String, Object>();
+        requestContext.put("professorship", professorship);
+        requestContext.put("executionCourse", executionCourse);
+        PortalLayoutInjector.addContextExtension(requestContext);
     }
 
     @Override
     public String getUrl() {
-        return "/teacher/executionCourse/executionCourseFrame.jsp";
+        return "/teacher/" + page + ".jsp";
     }
-
 }

@@ -61,6 +61,8 @@ import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherTeachingApp;
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
@@ -73,12 +75,20 @@ import pt.ist.fenixframework.FenixFramework;
 @StrutsFunctionality(app = TeacherTeachingApp.class, path = "execution-course-management",
         titleKey = "label.executionCourseManagement.menu.management")
 @Mapping(path = "/manageExecutionCourse", module = "teacher")
+@Forwards({ @Forward(name = "instructions", path = "/teacher/executionCourse/instructions.jsp"),
+        @Forward(name = "importLessonPlannings", path = "/teacher/executionCourse/importLessonPlannings.jsp"),
+        @Forward(name = "createLessonPlanning", path = "/teacher/executionCourse/createLessonPlanning.jsp"),
+        @Forward(name = "importSections", path = "/teacher/executionCourse/site/importSections.jsp"),
+        @Forward(name = "manageShifts", path = "/teacher/executionCourse/manageShifts.jsp"),
+        @Forward(name = "editShift", path = "/teacher/executionCourse/editShift.jsp"),
+        @Forward(name = "removeAttendsFromShift", path = "/teacher/executionCourse/removeAttendsFromShift.jsp"),
+        @Forward(name = "lessonPlannings", path = "/teacher/executionCourse/lessonPlannings.jsp") })
 public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 
     @EntryPoint
     public ActionForward instructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        return forward(request, "/teacher/executionCourse/instructions.jsp");
+        return mapping.findForward("instructions");
     }
 
     protected void prepareImportContentPostBack(HttpServletRequest request) {
@@ -148,7 +158,8 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         final IViewState viewState = RenderUtils.getViewState();
         final ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();
         request.setAttribute("importLessonPlanningBean", bean);
-        return forward(request, "/teacher/executionCourse/importLessonPlannings.jsp");
+
+        return mapping.findForward("importLessonPlannings");
     }
 
     public ActionForward submitDataToImportLessonPlanningsPostBack(ActionMapping mapping, ActionForm actionForm,
@@ -163,7 +174,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         }
         RenderUtils.invalidateViewState();
         request.setAttribute("importLessonPlanningBean", bean);
-        return forward(request, "/teacher/executionCourse/importLessonPlannings.jsp");
+        return mapping.findForward("importLessonPlannings");
     }
 
     public ActionForward prepareImportLessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -171,7 +182,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 
         final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");
         request.setAttribute("importLessonPlanningBean", new ImportLessonPlanningsBean(executionCourseTo));
-        return forward(request, "/teacher/executionCourse/importLessonPlannings.jsp");
+        return mapping.findForward("importLessonPlannings");
     }
 
     public ActionForward importLessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -194,7 +205,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
             }
 
         } else if (importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.SUMMARIES)) {
-            return forward(request, "/teacher/executionCourse/importLessonPlannings.jsp");
+            return mapping.findForward("importLessonPlannings");
         }
 
         return lessonPlannings(mapping, form, request, response);
@@ -232,7 +243,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
             }
         }
         request.setAttribute("lessonPlanningsMap", lessonPlanningsMap);
-        return forward(request, "/teacher/executionCourse/lessonPlannings.jsp");
+        return mapping.findForward("lessonPlannings");
     }
 
     public ActionForward moveUpLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -268,7 +279,8 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         request.setAttribute("lessonPlanningBean", new CreateLessonPlanningBean(executionCourse));
-        return forward(request, "/teacher/executionCourse/createLessonPlanning.jsp");
+
+        return mapping.findForward("createLessonPlanning");
     }
 
     public ActionForward prepareEditLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -276,7 +288,8 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 
         LessonPlanning lessonPlanning = FenixFramework.getDomainObject(request.getParameter("lessonPlanningID"));
         request.setAttribute("lessonPlanning", lessonPlanning);
-        return forward(request, "/teacher/executionCourse/createLessonPlanning.jsp");
+
+        return mapping.findForward("createLessonPlanning");
     }
 
     public ActionForward createLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -292,7 +305,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute("lessonPlanningBean", lessonPlanningBean);
-            return forward(request, "/teacher/executionCourse/createLessonPlanning.jsp");
+            return mapping.findForward("createLessonPlanning");
         }
         return lessonPlannings(mapping, form, request, response);
     }
@@ -342,19 +355,19 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
     public ActionForward prepareImportSectionsPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         prepareImportContentPostBack(request);
-        return forward(request, "/teacher/executionCourse/site/importSections.jsp");
+        return mapping.findForward("importSections");
     }
 
     public ActionForward prepareImportSectionsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         prepareImportContentInvalid(request);
-        return forward(request, "/teacher/executionCourse/site/importSections.jsp");
+        return mapping.findForward("importSections");
     }
 
     public ActionForward listExecutionCoursesToImportSections(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         listExecutionCoursesToImportContent(request);
-        return forward(request, "/teacher/executionCourse/site/importSections.jsp");
+        return mapping.findForward("importSections");
     }
 
     public ActionForward importSections(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -366,7 +379,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
     public ActionForward prepareImportSections(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("importContentBean", new ImportContentBean());
-        return forward(request, "/teacher/executionCourse/site/importSections.jsp");
+        return mapping.findForward("importSections");
     }
 
     @Override
@@ -385,7 +398,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         request.setAttribute("shifts", shifts);
         request.setAttribute("executionCourseID", executionCourseID);
 
-        return forward(request, "/teacher/executionCourse/manageShifts.jsp");
+        return mapping.findForward("manageShifts");
     }
 
     public ActionForward editShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -418,7 +431,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 
         request.setAttribute("personBean", new PersonBean());
 
-        return forward(request, "/teacher/executionCourse/editShift.jsp");
+        return mapping.findForward("editShift");
     }
 
     @Atomic
@@ -483,7 +496,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         request.setAttribute("shift", shift);
         request.setAttribute("executionCourseID", executionCourseID);
 
-        return forward(request, "/teacher/executionCourse/removeAttendsFromShift.jsp");
+        return mapping.findForward("removeAttendsFromShift");
     }
 
     public ActionForward removeAllAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -504,6 +517,6 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         request.setAttribute("registrations", shift.getStudentsSet());
         request.setAttribute("personBean", new PersonBean());
 
-        return forward(request, "/teacher/executionCourse/editShift.jsp");
+        return mapping.findForward("editShift");
     }
 }

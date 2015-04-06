@@ -33,28 +33,33 @@ import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/manageProgram", module = "teacher", functionality = ManageExecutionCourseDA.class, formBean = "programForm")
+@Forwards({ @Forward(name = "program", path = "/teacher/executionCourse/program.jsp"),
+        @Forward(name = "createProgram", path = "/teacher/executionCourse/createProgram.jsp"),
+        @Forward(name = "editProgram", path = "/teacher/executionCourse/editProgram.jsp") })
 public class ExecutionCourseProgramDA extends ManageExecutionCourseDA {
 
     @Input
     public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        return forward(request, "/teacher/executionCourse/program.jsp");
+        return mapping.findForward("program");
     }
 
     public ActionForward prepareCreateProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         prepareCurricularCourse(request);
-        return forward(request, "/teacher/executionCourse/createProgram.jsp");
+        return mapping.findForward("createProgram");
     }
 
     public ActionForward createProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         executeFactoryMethod();
-        return forward(request, "/teacher/executionCourse/program.jsp");
+        return mapping.findForward("program");
     }
 
     public ActionForward prepareEditProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -66,7 +71,7 @@ public class ExecutionCourseProgramDA extends ManageExecutionCourseDA {
             ActionMessages messages = new ActionMessages();
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
             saveErrors(request, messages);
-            return forward(request, "/teacher/executionCourse/program.jsp");
+            return mapping.findForward("program");
         }
 
         final String curriculumIDString = request.getParameter("curriculumID");
@@ -79,13 +84,13 @@ public class ExecutionCourseProgramDA extends ManageExecutionCourseDA {
             }
             request.setAttribute("curriculum", curriculum);
         }
-        return forward(request, "/teacher/executionCourse/editProgram.jsp");
+        return mapping.findForward("editProgram");
     }
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         executeFactoryMethod();
-        return forward(request, "/teacher/executionCourse/program.jsp");
+        return mapping.findForward("program");
     }
 
 }

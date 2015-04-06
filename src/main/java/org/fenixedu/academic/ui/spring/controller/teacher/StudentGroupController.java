@@ -130,7 +130,7 @@ public class StudentGroupController extends ExecutionCourseController {
         model.addAttribute("newShift", studentGroup.getShift());
         model.addAttribute("shifts", shiftList);
         model.addAttribute("studentsWithoutStudentGroup", studentsWithoutStudentGroup);
-        return new TeacherView("executionCourse/groupings/viewStudentGroupInformation");
+        return new TeacherView("executionCourse/groupings/viewStudentGroupInformation", executionCourse);
     }
 
     @RequestMapping(value = "/editStudentGroupAttends/{studentGroup}", method = RequestMethod.POST)

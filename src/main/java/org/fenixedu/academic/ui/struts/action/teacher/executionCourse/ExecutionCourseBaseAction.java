@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher.executionCourse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,27 +32,24 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
+
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Strings;
 
 public abstract class ExecutionCourseBaseAction extends FenixDispatchAction {
 
-    private static final ActionForward FORWARD = new ActionForward("/executionCourse/executionCourseFrame.jsp");
-
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         propageIds(request);
+        propagateLayoutContextIDs(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
     protected void propageIds(HttpServletRequest request) {
         propageContextIds(request);
-    }
-
-    public static ActionForward forward(HttpServletRequest request, String page) {
-        request.setAttribute("teacher$actual$page", page);
-        return FORWARD;
     }
 
     public static void propageContextIds(final HttpServletRequest request) {
@@ -64,6 +64,23 @@ public abstract class ExecutionCourseBaseAction extends FenixDispatchAction {
             request.setAttribute("professorship", professorship);
             request.setAttribute("executionCourse", professorship.getExecutionCourse());
             request.setAttribute("executionCourseID", executionCourseID);
+        }
+    }
+
+    public static void propagateLayoutContextIDs(final HttpServletRequest request) {
+        String executionCourseID = request.getParameter("executionCourseID");
+
+        if (Strings.isNullOrEmpty(executionCourseID)) {
+            executionCourseID = request.getParameter("objectCode");
+        }
+        if (!Strings.isNullOrEmpty(executionCourseID)) {
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
+            final Professorship professorship = findProfessorship(request, executionCourseID);
+
+            Map<String, Object> requestContext = new HashMap<String, Object>();
+            requestContext.put("professorship", professorship);
+            requestContext.put("executionCourse", executionCourse);
+            PortalLayoutInjector.addContextExtension(requestContext);
         }
     }
 

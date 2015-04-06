@@ -37,11 +37,18 @@ import org.fenixedu.academic.service.services.teacher.DeleteBibliographicReferen
 import org.fenixedu.academic.service.services.teacher.EditBibliographicReference;
 import org.fenixedu.academic.service.services.teacher.OrderBibliographicReferences;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/manageBibliographicReference", module = "teacher", functionality = ManageExecutionCourseDA.class,
         formBean = "bibliographicReferenceForm")
+@Forwards({ @Forward(name = "bibliographicReference", path = "/teacher/executionCourse/bibliographicReference.jsp"),
+        @Forward(name = "createBibliographicReference", path = "/teacher/executionCourse/createBibliographicReference.jsp"),
+        @Forward(name = "importBibliographicReferences", path = "/teacher/executionCourse/importBibliographicReferences.jsp"),
+        @Forward(name = "orderBibliographicReferences", path = "/teacher/executionCourse/orderBibliographicReferences.jsp"),
+        @Forward(name = "editBibliographicReference", path = "/teacher/executionCourse/editBibliographicReference.jsp") })
 public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
 
     // BIBLIOGRAPHIC REFERENCES
@@ -49,12 +56,12 @@ public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
     @Input
     public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        return forward(request, "/teacher/executionCourse/bibliographicReference.jsp");
+        return mapping.findForward("bibliographicReference");
     }
 
     public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        return forward(request, "/teacher/executionCourse/createBibliographicReference.jsp");
+        return mapping.findForward("createBibliographicReference");
     }
 
     public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -71,7 +78,7 @@ public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
         CreateBibliographicReference.runCreateBibliographicReference(executionCourse.getExternalId(), title, authors, reference,
                 year, Boolean.valueOf(optional));
 
-        return forward(request, "/teacher/executionCourse/bibliographicReference.jsp");
+        return mapping.findForward("bibliographicReference");
     }
 
     public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -91,7 +98,7 @@ public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
             }
             request.setAttribute("bibliographicReference", bibliographicReference);
         }
-        return forward(request, "/teacher/executionCourse/editBibliographicReference.jsp");
+        return mapping.findForward("editBibliographicReference");
     }
 
     public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -111,7 +118,7 @@ public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
         EditBibliographicReference.runEditBibliographicReference(bibliographicReference.getExternalId(), title, authors,
                 reference, year, Boolean.valueOf(optional));
 
-        return forward(request, "/teacher/executionCourse/bibliographicReference.jsp");
+        return mapping.findForward("bibliographicReference");
     }
 
     public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -120,42 +127,42 @@ public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
         DeleteBibliographicReference.runDeleteBibliographicReference(bibliographicReferenceIDString);
 
-        return forward(request, "/teacher/executionCourse/bibliographicReference.jsp");
+        return mapping.findForward("bibliographicReference");
     }
 
     public ActionForward prepareImportBibliographicReferences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-
         request.setAttribute("importContentBean", new ImportContentBean());
-        return forward(request, "/teacher/executionCourse/importBibliographicReferences.jsp");
+
+        return mapping.findForward("importBibliographicReferences");
     }
 
     public ActionForward prepareImportBibliographicReferencesPostBack(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
         prepareImportContentPostBack(request);
-        return forward(request, "/teacher/executionCourse/importBibliographicReferences.jsp");
+        return mapping.findForward("importBibliographicReferences");
     }
 
     public ActionForward prepareImportBibliographicReferencesInvalid(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
         prepareImportContentInvalid(request);
-        return forward(request, "/teacher/executionCourse/importBibliographicReferences.jsp");
+        return mapping.findForward("importBibliographicReferences");
     }
 
     public ActionForward listExecutionCoursesToImportBibliographicReferences(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
         listExecutionCoursesToImportContent(request);
-        return forward(request, "/teacher/executionCourse/importBibliographicReferences.jsp");
+        return mapping.findForward("importBibliographicReferences");
     }
 
     public ActionForward importBibliographicReferences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
         importContent(request, "ImportBibliographicReferences");
-        return forward(request, "/teacher/executionCourse/bibliographicReference.jsp");
+        return mapping.findForward("bibliographicReferences");
     }
 
     private BibliographicReference findBibliographicReference(ExecutionCourse executionCourse, String bibliographicReferenceID) {
@@ -182,7 +189,7 @@ public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
         request.setAttribute("references", references);
         request.setAttribute("optional", optional);
 
-        return forward(request, "/teacher/executionCourse/orderBibliographicReferences.jsp");
+        return mapping.findForward("orderBibliographicReferences");
     }
 
     private List<BibliographicReference> getMainBibliographicReferences(ExecutionCourse executionCourse) {
@@ -243,7 +250,7 @@ public class ExecutionCourseBibliographyDA extends ManageExecutionCourseDA {
         }
 
         OrderBibliographicReferences.run(executionCourse, finalOrderedReferences);
-        return forward(request, "/teacher/executionCourse/bibliographicReference.jsp");
+        return mapping.findForward("bibliographicReferences");
     }
 
     private Integer getId(String id) {

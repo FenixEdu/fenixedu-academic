@@ -48,14 +48,14 @@ public class ExecutionCourseForumManagementDispatchAction extends ForunsManageme
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ManageExecutionCourseDA.propageContextIds(request);
+        ManageExecutionCourseDA.propagateLayoutContextIDs(request);
 
         String executionCourseId = (String) request.getAttribute("executionCourseID");
         request.setAttribute("module", "/teacher");
         request.setAttribute("contextPrefix", "/executionCourseForumManagement.do?executionCourseID=" + executionCourseId);
         request.setAttribute("executionCourseId", executionCourseId);
 
-        ActionForward forward = super.execute(mapping, actionForm, request, response);
-        return ManageExecutionCourseDA.forward(request, forward.getPath());
+        return super.execute(mapping, actionForm, request, response);
     }
 
     public ActionForward viewForuns(ActionMapping mapping, ActionForm form, HttpServletRequest request,

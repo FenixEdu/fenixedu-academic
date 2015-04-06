@@ -79,16 +79,16 @@ import pt.ist.fenixframework.FenixFramework;
 @Controller
 @RequestMapping("/teacher/{executionCourse}/attends/")
 public class AttendsSearchController extends ExecutionCourseController {
-    
+
     // hack
     @Autowired
     CSRFTokenBean csrfTokenBean;
-    
+
     @ModelAttribute("csrf")
     public CSRFTokenBean getCSRF(){
         return csrfTokenBean;
     }
-    
+
     @Autowired
     StudentGroupService studentGroupService;
 
@@ -120,7 +120,7 @@ public class AttendsSearchController extends ExecutionCourseController {
 
         model.addAttribute("shiftTypes", view(executionCourse.getShiftTypes()));
 
-        return new TeacherView("executionCourse/attendsSearch/viewStudentList");
+        return new TeacherView("executionCourse/attendsSearch/viewStudentList", executionCourse);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
