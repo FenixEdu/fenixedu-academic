@@ -21,13 +21,13 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.LoggedGroup;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
@@ -64,24 +64,21 @@ public class ThesisReadersGroup extends FenixGroup {
 
     @Override
     public Set<User> getMembers(DateTime when) {
-        if (thesis.getDocumentsAvailableAfter() != null) {
-            DateTime time = thesis.getDocumentsAvailableAfter();
-
-            if (time.isAfter(when)) {
+        if (thesis.isEvaluated()) {
+            if (thesis.getDocumentsAvailableAfter() != null) {
+                if (!when.isAfter(thesis.getDocumentsAvailableAfter())) {
+                    return getThesisMembers();
+                }
+            }
+            switch (thesis.getVisibility()) {
+            case INTRANET:
+                return LoggedGroup.get().getMembers(when);
+            case PUBLIC:
+                return AnyoneGroup.get().getMembers(when);
+            default:
                 return getThesisMembers();
             }
-        }
-
-        if (thesis.getVisibility() == null) {
-            return getThesisMembers();
-        }
-
-        switch (thesis.getVisibility()) {
-        case INTRANET:
-            return RoleType.PERSON.actualGroup().getMembers(when);
-        case PUBLIC:
-            return AnyoneGroup.get().getMembers(when);
-        default:
+        } else {
             return getThesisMembers();
         }
     }
@@ -93,24 +90,21 @@ public class ThesisReadersGroup extends FenixGroup {
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        if (thesis.getDocumentsAvailableAfter() != null) {
-            DateTime time = thesis.getDocumentsAvailableAfter();
-
-            if (time.isAfter(when)) {
+        if (thesis.isEvaluated()) {
+            if (thesis.getDocumentsAvailableAfter() != null) {
+                if (!when.isAfter(thesis.getDocumentsAvailableAfter())) {
+                    return getThesisMembers().contains(user);
+                }
+            }
+            switch (thesis.getVisibility()) {
+            case INTRANET:
+                return LoggedGroup.get().isMember(user, when);
+            case PUBLIC:
+                return AnyoneGroup.get().isMember(user, when);
+            default:
                 return getThesisMembers().contains(user);
             }
-        }
-
-        if (thesis.getVisibility() == null) {
-            return getThesisMembers().contains(user);
-        }
-
-        switch (thesis.getVisibility()) {
-        case INTRANET:
-            return RoleType.PERSON.actualGroup().isMember(user, when);
-        case PUBLIC:
-            return AnyoneGroup.get().isMember(user, when);
-        default:
+        } else {
             return getThesisMembers().contains(user);
         }
     }
