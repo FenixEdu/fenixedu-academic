@@ -149,8 +149,8 @@
 					<f:param name="hideCourses" value="false"/>
 					<f:param name="action" value="view"/>
 				</h:outputLink>
-				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
-				<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
+				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild and degreeCurricularPlan.boxStructure}"/>
+				<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild and degreeCurricularPlan.boxStructure}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
