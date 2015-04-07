@@ -48,6 +48,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         super.setType(PartyTypeEnum.COMPETENCE_COURSE_GROUP);
     }
 
+    /* Shouldn't this be returning CompetenceCourseGroupUnit instead of just Unit? Consider on next major version */
     public static Unit createNewInternalCompetenceCourseGroupUnit(MultiLanguageString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
