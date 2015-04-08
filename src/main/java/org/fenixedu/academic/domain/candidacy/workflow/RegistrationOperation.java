@@ -43,7 +43,7 @@ import org.joda.time.YearMonthDay;
 
 public class RegistrationOperation extends CandidacyOperation {
     public static class RegistrationCreatedByCandidacy extends DomainObjectEvent<Registration> {
-        private StudentCandidacy candidacy;
+        private final StudentCandidacy candidacy;
 
         public RegistrationCreatedByCandidacy(Registration instance, StudentCandidacy candidacy) {
             super(instance);
@@ -116,6 +116,7 @@ public class RegistrationOperation extends CandidacyOperation {
                         new YearMonthDay(), executionSemester);
 
         studentCurricularPlan.createFirstTimeStudentEnrolmentsFor(executionSemester, getCurrentUsername());
+        registration.updateEnrolmentDate(executionSemester.getExecutionYear());
     }
 
     private String getCurrentUsername() {

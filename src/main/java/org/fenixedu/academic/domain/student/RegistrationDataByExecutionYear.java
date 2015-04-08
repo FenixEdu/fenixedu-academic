@@ -18,8 +18,12 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.LocalDate;
 
 /**
  * 
@@ -28,21 +32,23 @@ import org.fenixedu.bennu.core.domain.Bennu;
  */
 public class RegistrationDataByExecutionYear extends RegistrationDataByExecutionYear_Base {
 
-    public RegistrationDataByExecutionYear() {
-        super();
-        setRootDomainObject(Bennu.getInstance());
-    }
-
-    public RegistrationDataByExecutionYear(Registration registration) {
-        this();
-        setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-        setRegistration(registration);
-    }
-
-    public RegistrationDataByExecutionYear(Registration registration, ExecutionYear executionYear) {
-        this();
+    private RegistrationDataByExecutionYear(Registration registration, ExecutionYear executionYear) {
         setExecutionYear(executionYear);
         setRegistration(registration);
+        setRootDomainObject(Bennu.getInstance());
+        checkRules();
+    }
+
+    private void checkRules() {
+        Optional<RegistrationDataByExecutionYear> result =
+                getRegistration()
+                        .getRegistrationDataByExecutionYearSet()
+                        .stream()
+                        .filter(registrationDataByExecutionYear -> registrationDataByExecutionYear.getExecutionYear() == getExecutionYear()
+                                && registrationDataByExecutionYear != this).findAny();
+        if (result.isPresent()) {
+            throw new DomainException("error.RegistrationDatByExecutionYear.executionYearShouldBeUnique");
+        }
     }
 
     public void delete() {
@@ -52,4 +58,37 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
         super.deleteDomainObject();
     }
 
+    public static RegistrationDataByExecutionYear getOrCreateRegistrationDataByYear(final Registration registration,
+            final ExecutionYear executionYear) {
+        final Optional<RegistrationDataByExecutionYear> result =
+                registration
+                        .getRegistrationDataByExecutionYearSet()
+                        .stream()
+                        .filter(registrationDataByExecutionYear -> registrationDataByExecutionYear.getExecutionYear() == executionYear)
+                        .findAny();
+
+        return result.orElse(new RegistrationDataByExecutionYear(registration, executionYear));
+    }
+
+    public void edit(LocalDate enrolmentDate) {
+        setEnrolmentDate(enrolmentDate);
+        checkRules();
+    }
+
+    //methods to provide public visibility over protected slots
+
+    @Override
+    public LocalDate getEnrolmentDate() {
+        return super.getEnrolmentDate();
+    }
+
+    @Override
+    public ExecutionYear getExecutionYear() {
+        return super.getExecutionYear();
+    }
+
+    @Override
+    public Registration getRegistration() {
+        return super.getRegistration();
+    }
 }
