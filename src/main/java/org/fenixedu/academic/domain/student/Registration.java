@@ -3661,6 +3661,28 @@ public class Registration extends Registration_Base {
                 && getIndividualCandidacy().getCandidacyProcess().getCandidacyExecutionInterval().equals(executionYear);
     }
 
+    public void updateEnrolmentDate(final ExecutionYear executionYear) {
+
+        final RegistrationDataByExecutionYear registrationData =
+                RegistrationDataByExecutionYear.getOrCreateRegistrationDataByYear(this, executionYear);
+        final Collection<Enrolment> executionYearEnrolments = getEnrolments(executionYear);
+
+        if (executionYearEnrolments.isEmpty()) {
+            registrationData.setEnrolmentDate(null);
+
+        } else if (registrationData.getEnrolmentDate() == null) {
+
+            final Enrolment firstEnrolment = Collections.min(executionYearEnrolments, new Comparator<Enrolment>() {
+                @Override
+                public int compare(Enrolment left, Enrolment right) {
+                    return left.getCreationDateDateTime().compareTo(right.getCreationDateDateTime());
+                }
+            });
+
+            registrationData.edit(firstEnrolment.getCreationDateDateTime().toLocalDate());
+        }
+    }
+
     public void exportValues(StringBuilder result) {
         Formatter formatter = new Formatter(result);
         final Student student = getStudent();

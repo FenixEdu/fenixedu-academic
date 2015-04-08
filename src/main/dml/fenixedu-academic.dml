@@ -2931,6 +2931,7 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
 
     class student.RegistrationDataByExecutionYear  {
         EnrolmentModel enrolmentModel;
+        protected LocalDate enrolmentDate;
     }
 
     class student.RegistrationNumber  {

@@ -152,6 +152,8 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
                 }
             }
         }
+
+        getRegistration().updateEnrolmentDate(getExecutionYear());
     }
 
     protected EnrollmentCondition getEnrolmentCondition(final Enrolment enrolment, final EnrolmentResultType enrolmentResultType) {
