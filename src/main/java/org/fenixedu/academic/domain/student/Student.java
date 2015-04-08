@@ -466,7 +466,7 @@ public class Student extends Student_Base {
 
     public boolean isWorkingStudent() {
         for (StudentStatute statute : getStudentStatutesSet()) {
-            if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT) {
+            if (statute.getType().isGrantsWorkingStudentStatute()) {
                 return true;
             }
         }
@@ -640,22 +640,22 @@ public class Student extends Student_Base {
         }
 
         if (isHandicapped()) {
-            result.add(new StudentStatuteBean(StudentStatuteType.HANDICAPPED, executionSemester));
+            result.add(new StudentStatuteBean(StatuteType.findHandicappedStatuteType(), executionSemester));
         }
 
         return result;
     }
 
-    public Collection<StudentStatuteType> getStatutesTypesValidOnAnyExecutionSemesterFor(final ExecutionYear executionYear) {
-        final Collection<StudentStatuteType> result = new ArrayList<StudentStatuteType>();
+    public Collection<StatuteType> getStatutesTypesValidOnAnyExecutionSemesterFor(final ExecutionYear executionYear) {
+        final Collection<StatuteType> result = new ArrayList<StatuteType>();
         for (final StudentStatute statute : getStudentStatutesSet()) {
             if (statute.isValidOnAnyExecutionPeriodFor(executionYear)) {
-                result.add(statute.getStatuteType());
+                result.add(statute.getType());
             }
         }
 
         if (isHandicapped()) {
-            result.add(StudentStatuteType.HANDICAPPED);
+            result.add(StatuteType.findHandicappedStatuteType());
         }
 
         return result;
@@ -668,7 +668,7 @@ public class Student extends Student_Base {
         }
 
         if (isHandicapped()) {
-            result.add(new StudentStatuteBean(StudentStatuteType.HANDICAPPED));
+            result.add(new StudentStatuteBean(StatuteType.findHandicappedStatuteType()));
         }
 
         return result;
@@ -684,7 +684,7 @@ public class Student extends Student_Base {
 
     public boolean isSenior(ExecutionYear executionYear) {
         for (StudentStatute statute : getStudentStatutesSet()) {
-            if (statute.isValidOn(executionYear) && statute.getStatuteType() == StudentStatuteType.SENIOR) {
+            if (statute.isValidOn(executionYear) && statute.getType().isSeniorStatute()) {
                 return true;
             }
         }
@@ -1121,9 +1121,18 @@ public class Student extends Student_Base {
         return res;
     }
 
-    public boolean hasActiveStatuteInPeriod(StudentStatuteType studentStatuteType, ExecutionSemester executionSemester) {
+    public boolean hasActiveStatuteInPeriod(StatuteType statuteType, ExecutionSemester executionSemester) {
         for (StudentStatute studentStatute : getStudentStatutesSet()) {
-            if (studentStatute.getStatuteType() == studentStatuteType
+            if (studentStatute.getType() == statuteType && studentStatute.isValidInExecutionPeriod(executionSemester)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasWorkingStudentStatuteInPeriod(ExecutionSemester executionSemester) {
+        for (StudentStatute studentStatute : getStudentStatutesSet()) {
+            if (studentStatute.getType().isGrantsWorkingStudentStatute()
                     && studentStatute.isValidInExecutionPeriod(executionSemester)) {
                 return true;
             }

@@ -3000,6 +3000,21 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
     	class student.StudentDataShareStudentsAssociationAuthorization extends student.StudentDataShareAuthorization {
     	}
 
+	class student.StatuteType {
+		String code;
+		LocalizedString name;
+		Boolean appliedOnRegistration;
+		Boolean grantsWorkingStudentStatute;
+		Boolean associativeLeaderStatute;
+		Boolean specialSeasonGrantedByRequest;
+		Boolean grantOwnerStatute;
+		Boolean seniorStatute;
+		Boolean handicappedStatute;
+		Boolean active;
+		boolean explicitCreation;
+		boolean visible;
+	}
+
     class student.StudentStatute  {
         StudentStatuteType statuteType;
         DateTime creationDate;
@@ -9209,6 +9224,26 @@ relation RootDomainObjectStudentGroup {
     StudentGroup playsRole studentGroups {
         multiplicity *;
     }
+}
+
+relation StatuteTypeRootDomainObject {
+	student.StatuteType playsRole statuteTypes {
+		multiplicity *;
+	}
+	
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+}
+
+relation StatuteTypeStudentStatute {
+	student.StudentStatute playsRole studentStatutes {
+		multiplicity *;
+	}
+	
+	student.StatuteType playsRole type {
+		multiplicity 1..1;
+	}
 }
 
 relation RootDomainObjectStudentStatute {

@@ -22,11 +22,12 @@
 package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.student.SeniorStatute;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.StudentStatute;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -37,18 +38,18 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 @SuppressWarnings("serial")
 public class StudentStatuteBean implements Serializable {
 
-    private StudentStatuteType statuteType;
+    private StatuteType statuteType;
 
     private ExecutionSemester executionSemester;
 
     private StudentStatute studentStatute;
 
-    public StudentStatuteBean(StudentStatuteType statuteType, ExecutionSemester executionSemester) {
+    public StudentStatuteBean(StatuteType statuteType, ExecutionSemester executionSemester) {
         this.statuteType = statuteType;
         this.executionSemester = executionSemester;
     }
 
-    public StudentStatuteBean(StudentStatuteType statuteType) {
+    public StudentStatuteBean(StatuteType statuteType) {
         this.statuteType = statuteType;
     }
 
@@ -65,8 +66,8 @@ public class StudentStatuteBean implements Serializable {
         return executionSemester;
     }
 
-    public StudentStatuteType getStatuteType() {
-        return statuteType != null ? statuteType : getStudentStatute().getStatuteType();
+    public StatuteType getStatuteType() {
+        return statuteType != null ? statuteType : getStudentStatute().getType();
     }
 
     public StudentStatute getStudentStatute() {
@@ -84,10 +85,10 @@ public class StudentStatuteBean implements Serializable {
     }
 
     public String getDescription() {
-        return BundleUtil.getString(Bundle.ENUMERATION, getStatuteType().getDeclaringClass().getSimpleName() + "."
-                + getStatuteType().name())
+        return BundleUtil.getString(Bundle.ENUMERATION, getStatuteType().getClass().getSimpleName()
+                + "."
+                + getStatuteType().getName().getContent(Locale.getDefault())
                 + (studentStatute instanceof SeniorStatute ? (" ("
-                        + ((SeniorStatute) studentStatute).getRegistration().getDegree().getPresentationName() + ") ") : "");
+                        + ((SeniorStatute) studentStatute).getRegistration().getDegree().getPresentationName() + ") ") : ""));
     }
-
 }

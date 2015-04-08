@@ -27,6 +27,7 @@ public class SeniorStatute extends SeniorStatute_Base {
         super();
     }
 
+    @Deprecated
     public SeniorStatute(Student student, Registration registration, StudentStatuteType statuteType,
             ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
         this();
@@ -55,9 +56,39 @@ public class SeniorStatute extends SeniorStatute_Base {
         setRegistration(registration);
     }
 
+    public SeniorStatute(Student student, Registration registration, StatuteType statuteType,
+            ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+        this();
+        setBeginExecutionPeriod(beginExecutionPeriod);
+        setEndExecutionPeriod(endExecutionPeriod);
+        setType(statuteType);
+
+        for (StudentStatute statute : student.getStudentStatutesSet()) {
+            if (!statute.overlapsWith(this)) {
+                continue;
+            }
+            if (!statute.hasSeniorStatuteForRegistration(getRegistration())) {
+                continue;
+            }
+
+            throw new DomainException("error.studentStatute.alreadyExistsOneOverlapingStatute");
+
+        }
+
+        setStudent(student);
+
+        if (registration == null) {
+            throw new DomainException("error.studentStatute.mustDefineValidRegistrationMatchingSeniorStatute");
+        }
+
+        setRegistration(registration);
+
+        checkRules();
+    }
+
     @Override
     public void delete() {
-        checkRules();
+        checkRulesToDelete();
         setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
         setStudent(null);

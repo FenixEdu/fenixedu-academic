@@ -20,7 +20,6 @@ package org.fenixedu.academic.json.adapters;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.DefaultJsonAdapter;
@@ -54,10 +53,8 @@ public class AttendsJsonAdapter implements JsonViewer<Attends> {
         object.addProperty("enrolmentType",
                 BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
 
-        object.addProperty(
-                "workingStudent",
-                attends.getRegistration().getStudent()
-                        .hasActiveStatuteInPeriod(StudentStatuteType.WORKING_STUDENT, attends.getExecutionPeriod()));
+        object.addProperty("workingStudent",
+                attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod()));
 
         JsonObject shiftsByType = new JsonObject();
         attends.getExecutionCourse().getShiftTypes().forEach(shiftType -> {

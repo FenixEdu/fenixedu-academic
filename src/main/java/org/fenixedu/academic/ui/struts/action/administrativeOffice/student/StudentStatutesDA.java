@@ -26,9 +26,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.SeniorStatute;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.StudentStatute;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.dto.student.ManageStudentStatuteBean;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -56,15 +56,11 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
         @Override
         public Object execute() {
-            switch (getStatuteType()) {
-
-            case SENIOR:
+            if (getStatuteType().isSeniorStatute()) {
                 return new SeniorStatute(getStudent(), getRegistration(), getStatuteType(), getBeginExecutionPeriod(),
                         getEndExecutionPeriod());
-
-            default:
+            } else {
                 return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod());
-
             }
         }
     }
@@ -111,7 +107,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
         final CreateStudentStatuteFactory oldManageStatuteBean = getRenderedObject();
         final Student student = oldManageStatuteBean.getStudent();
-        final StudentStatuteType statuteType = oldManageStatuteBean.getStatuteType();
+        final StatuteType statuteType = oldManageStatuteBean.getStatuteType();
         final CreateStudentStatuteFactory manageStatuteBean = new CreateStudentStatuteFactory(student);
         manageStatuteBean.setStatuteType(statuteType);
 
@@ -120,7 +116,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
         request.setAttribute("student", student);
         request.setAttribute("manageStatuteBean", manageStatuteBean);
 
-        if (manageStatuteBean.getStatuteType() == StudentStatuteType.SENIOR) {
+        if (manageStatuteBean.getStatuteType().isSeniorStatute()) {
             request.setAttribute("schemaName", "student.createSeniorStatute");
         } else {
             request.setAttribute("schemaName", "student.createStatutes");

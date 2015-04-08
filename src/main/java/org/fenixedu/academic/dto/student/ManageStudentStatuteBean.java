@@ -25,8 +25,8 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -35,7 +35,7 @@ import org.fenixedu.academic.domain.student.StudentStatuteType;
 @SuppressWarnings("serial")
 public class ManageStudentStatuteBean implements Serializable {
 
-    private StudentStatuteType statuteType;
+    private StatuteType statuteType;
 
     private ExecutionSemester beginExecutionPeriod;
 
@@ -69,7 +69,7 @@ public class ManageStudentStatuteBean implements Serializable {
         return endExecutionPeriod;
     }
 
-    public StudentStatuteType getStatuteType() {
+    public StatuteType getStatuteType() {
         return statuteType;
     }
 
@@ -89,7 +89,7 @@ public class ManageStudentStatuteBean implements Serializable {
         this.endExecutionPeriod = endExecutionPeriod;
     }
 
-    public void setStatuteType(StudentStatuteType statuteType) {
+    public void setStatuteType(StatuteType statuteType) {
         this.statuteType = statuteType;
     }
 

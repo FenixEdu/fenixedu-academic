@@ -56,7 +56,7 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
@@ -75,6 +75,7 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -350,8 +351,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         spreadsheet.newHeaderRow();
         if (searchBean.hasAnyStudentStatuteType()) {
             spreadsheet.addHeader(getResourceMessage("label.statutes") + ":");
-            for (StudentStatuteType statute : searchBean.getStudentStatuteTypes()) {
-                spreadsheet.addHeader(BundleUtil.getString(Bundle.ENUMERATION, statute.name()));
+            for (StatuteType statute : searchBean.getStudentStatuteTypes()) {
+                spreadsheet.addHeader(statute.getName().getContent(I18N.getLocale()));
             }
         }
     }
