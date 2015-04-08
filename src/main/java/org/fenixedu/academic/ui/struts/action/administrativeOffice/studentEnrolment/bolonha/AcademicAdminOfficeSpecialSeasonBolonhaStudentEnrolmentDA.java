@@ -124,7 +124,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
         Collection<StudentStatute> statutes = student.getStudentStatutesSet();
         for (StudentStatute statute : statutes) {
-            if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
+            if (!statute.getType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
                 continue;
             }
             if (!statute.isValidInExecutionPeriod(executionSemester)) {

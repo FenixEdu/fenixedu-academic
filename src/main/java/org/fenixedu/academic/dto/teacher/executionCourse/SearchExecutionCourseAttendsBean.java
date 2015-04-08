@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.academic.util.predicates.AndPredicate;
@@ -182,8 +181,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
                 }
 
                 private WorkingStudentSelectionType getWorkingStudentType(Attends attends) {
-                    if (attends.getRegistration().getStudent()
-                            .hasActiveStatuteInPeriod(StudentStatuteType.WORKING_STUDENT, attends.getExecutionPeriod())) {
+                    if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod())) {
                         return WorkingStudentSelectionType.WORKING_STUDENT;
                     } else {
                         return WorkingStudentSelectionType.NOT_WORKING_STUDENT;

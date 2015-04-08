@@ -167,7 +167,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
                                     if (stringBuilder.length() > 0) {
                                         stringBuilder.append(", ");
                                     }
-                                    stringBuilder.append(studentStatuteBean.getStudentStatute().getStatuteType());
+                                    stringBuilder.append(studentStatuteBean.getStudentStatute().getType().getName().getContent());
                                 }
                                 row.setCell(stringBuilder.toString());
                                 CycleType cycleType = registration.getCycleType(executionSemester.getExecutionYear());

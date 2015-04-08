@@ -25,8 +25,9 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.joda.time.LocalDate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -35,13 +36,17 @@ import org.fenixedu.academic.domain.student.StudentStatuteType;
 @SuppressWarnings("serial")
 public class ManageStudentStatuteBean implements Serializable {
 
-    private StudentStatuteType statuteType;
+    private StatuteType statuteType;
 
     private ExecutionSemester beginExecutionPeriod;
 
     private ExecutionSemester executionPeriod;
 
     private ExecutionSemester endExecutionPeriod;
+
+    private LocalDate beginDate;
+
+    private LocalDate endDate;
 
     private Student student;
 
@@ -69,7 +74,23 @@ public class ManageStudentStatuteBean implements Serializable {
         return endExecutionPeriod;
     }
 
-    public StudentStatuteType getStatuteType() {
+    public LocalDate getBeginDate() {
+        return beginDate;
+    }
+
+    public void setBeginDate(LocalDate beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public StatuteType getStatuteType() {
         return statuteType;
     }
 
@@ -89,7 +110,7 @@ public class ManageStudentStatuteBean implements Serializable {
         this.endExecutionPeriod = endExecutionPeriod;
     }
 
-    public void setStatuteType(StudentStatuteType statuteType) {
+    public void setStatuteType(StatuteType statuteType) {
         this.statuteType = statuteType;
     }
 

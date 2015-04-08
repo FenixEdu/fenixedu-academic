@@ -3324,8 +3324,8 @@ public class Registration extends Registration_Base {
 
     @Atomic
     public StudentStatute grantSeniorStatute(ExecutionYear executionYear) {
-        return StudentStatuteType.SENIOR.createStudentStatute(getStudent(), this, executionYear.getFirstExecutionPeriod(),
-                executionYear.getLastExecutionPeriod());
+        return new SeniorStatute(getStudent(), this, StatuteType.findSeniorStatuteType().orElse(null),
+                executionYear.getFirstExecutionPeriod(), executionYear.getLastExecutionPeriod());
     }
 
     public void setHomologationDate(final LocalDate homologationDate) {

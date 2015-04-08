@@ -18,26 +18,14 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.domain.student.StatuteType;
 
-import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
-
-public class VisibleStudentStatuteTypeProvider implements DataProvider {
+public class VisibleStudentStatuteTypeProvider extends AbstractDomainObjectProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        List<StudentStatuteType> result = new ArrayList<StudentStatuteType>(StudentStatuteType.VISIBLE_STATUTES);
-        return result;
+        return StatuteType.readAll(StatuteType::isVisible, StatuteType::isExplicitCreation).collect(Collectors.toList());
     }
-
-    @Override
-    public Converter getConverter() {
-        return new EnumConverter();
-    }
-
 }
