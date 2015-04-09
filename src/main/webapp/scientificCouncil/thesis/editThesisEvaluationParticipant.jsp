@@ -47,9 +47,7 @@
 
 <%
 	final ThesisParticipationType type = thesisEvaluationParticipant.getType();
-	final String schemaName = type == ThesisParticipationType.ORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits" :
-	    	type == ThesisParticipationType.COORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits.co" :
-	    	    "thesis.jury.proposal.participant.edit";
+	final String schemaName = type == ThesisParticipationType.ORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits" : type == ThesisParticipationType.COORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits" : "thesis.jury.proposal.participant.edit";
 	final String pageTitle = type == ThesisParticipationType.ORIENTATOR ? "title.scientificCouncil.thesis.review.orientator.edit" :
     	type == ThesisParticipationType.COORIENTATOR ? "title.scientificCouncil.thesis.review.coorientator.edit" : 
     	    type == ThesisParticipationType.PRESIDENT ? "title.scientificCouncil.thesis.review.president.edit" : 

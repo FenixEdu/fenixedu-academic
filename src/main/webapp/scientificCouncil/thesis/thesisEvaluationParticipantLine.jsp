@@ -52,24 +52,14 @@
 		<%= participant.getAffiliation() %>
 	</td>
 	<td>
-		<%
-			if (type == ThesisParticipationType.ORIENTATOR) {
-		%>
-				<%= participant.getThesis().getOrientatorCreditsDistribution() %> %
-		<%
-			} else if (type == ThesisParticipationType.COORIENTATOR) {
-		%>
-				<%= participant.getThesis().getCoorientatorCreditsDistribution() %> %
-		<%
-			}
-		%>
+		<%= participant.getPercentageDistribution() %> %
 	</td>
 	<td>
-		<bean:define id="confirm" type="java.lang.String">return confirm('<bean:message key="message.confirm.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>')</bean:define>	
+		<bean:define id="confirm" type="java.lang.String">return confirm('<bean:message key="message.confirm.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>')</bean:define>
 		<html:link page="<%= "/manageSecondCycleThesis.do?method=removeThesisEvaluationParticipant&amp;thesisEvaluationParticipantOid=" + participant.getExternalId() %>"
 				style="border-bottom: none;"
 				onclick="<%= confirm %>">
-			<img src="<%= request.getContextPath() + "/images/transitional/error01.gif" %>"/>
+			<img src="<%=request.getContextPath()%>/images/delete.gif"/>
 		</html:link>
 	</td>
 </tr>

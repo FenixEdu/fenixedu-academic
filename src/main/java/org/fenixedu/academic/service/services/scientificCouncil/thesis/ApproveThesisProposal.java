@@ -23,12 +23,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.ScientificCommission;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.domain.thesis.ThesisState;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -60,20 +62,11 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
     @Override
     protected Collection<Person> getReceivers(Thesis thesis) {
-        Person student = thesis.getStudent().getPerson();
-        Person orientator = thesis.getOrientator().getPerson();
-        Person president = getPerson(thesis.getPresident());
-
-        Set<Person> persons = personSet(student, president, orientator);
-
-        Person coorientator = thesis.getCoorientator() != null ? thesis.getCoorientator().getPerson() : null;
-        if (coorientator != null) {
-            persons.add(coorientator);
-        }
-
-        for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
-            persons.add(participant.getPerson());
-        }
+        Set<Person> persons =
+                thesis.getAllParticipants(ThesisParticipationType.ORIENTATOR, ThesisParticipationType.COORIENTATOR,
+                        ThesisParticipationType.PRESIDENT, ThesisParticipationType.VOWEL).stream().map(p -> p.getPerson())
+                        .collect(Collectors.toSet());
+        persons.add(thesis.getStudent().getPerson());
 
         // also send proposal approval to the contact team
         ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
@@ -113,10 +106,9 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         String vowel3Affiliation = affiliation(thesis.getVowels(), 2);
         String vowel4Name = name(thesis.getVowels(), 3);
         String vowel4Affiliation = affiliation(thesis.getVowels(), 3);
-        String orientatorName = name(thesis.getOrientator());
-        String orientatorAffiliation = affiliation(thesis.getOrientator());
-        String coorientatorName = name(thesis.getCoorientator());
-        String coorientatorAffiliation = affiliation(thesis.getCoorientator());
+        String orientationName =
+                thesis.getOrientation().stream().map(p -> p.getPerson().getName() + ", " + p.getAffiliation())
+                        .collect(Collectors.joining("\n"));
 
         String currentPersonName = currentPerson.getNickname();
 
@@ -140,8 +132,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         return getMessage(locale, BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
                 includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name), vowel2Name, vowel2Affiliation,
                 includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, includeFlag(vowel4Name), vowel4Name, vowel4Affiliation,
-                includeFlag(orientatorName), orientatorName, orientatorAffiliation, includeFlag(coorientatorName),
-                coorientatorName, coorientatorAffiliation, dateMessage, discussedDate, institutionName,
+                includeFlag(orientationName), orientationName, dateMessage, discussedDate, institutionName,
                 "" + today.get(Calendar.DAY_OF_MONTH), today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale),
                 "" + today.get(Calendar.YEAR), sender, currentPersonName, role);
     }

@@ -3229,6 +3229,7 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         String affiliation;
         String category;
         ThesisParticipationType type (REQUIRED);
+        Integer percentageDistribution;
     }
 
     class time.calendarStructure.AcademicCalendarEntry  {

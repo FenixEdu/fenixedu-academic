@@ -28,6 +28,10 @@
 <bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="externalId"/>
 
+<%
+String contextPath = request.getContextPath();
+%>
+
 <html:xhtml/>
 
 <jsp:include page="/coordinator/context.jsp" />
@@ -176,50 +180,71 @@
 </logic:present>
 
 <%-- Orientation --%>
-<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation" bundle="APPLICATION_RESOURCES"/></h3>
+<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation" bundle="APPLICATION_RESOURCES"/> (${thesis.orientation.size()})</h3>
 
-<logic:empty name="thesis" property="orientator">
-    <p>
- 	   <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-	   		<bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
-	   </html:link>
-    </p>
-</logic:empty>
-<logic:notEmpty name="thesis" property="orientator">
-    <logic:empty name="thesis" property="coorientator">
-        <p>
-	        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                <bean:message key="link.coordinator.thesis.edit.addCoorientation" bundle="APPLICATION_RESOURCES"/>
-    	    </html:link>
-        </p>
-    </logic:empty>
-</logic:notEmpty>
-    
-<logic:empty name="thesis" property="orientator">
-    <logic:empty name="thesis" property="coorientator">
+<p>
+  <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+  <bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
+</html:link>
+</p>
+
+<logic:empty name="thesis" property="orientation">
         <p>
             <em><bean:message key="title.coordinator.thesis.edit.orientation.empty" bundle="APPLICATION_RESOURCES"/></em>
         </p>
-    </logic:empty>
 </logic:empty>
 
-<logic:notEmpty name="thesis" property="orientator">
+<logic:notEmpty name="thesis" property="orientation">
 	<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator" bundle="APPLICATION_RESOURCES"/></h4>
-    <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
-        <fr:layout name="tabular">
-           	<fr:property name="classes" value="tstyle2 thlight thright mbottom0"/>
-           	<fr:property name="columnClasses" value="width12em,width35em,"/>
-        </fr:layout>
-    </fr:view>
 
-    <logic:present name="orientatorCreditsDistribution">
-        <logic:present name="editOrientatorCreditsDistribution">
+
+    <logic:iterate name="thesis" property="orientation" id="advisor">
+      <bean:define id="participantId" name="advisor" property="externalId"/>
+      <fr:view name="advisor"  layout="tabular" schema="thesis.jury.proposal.person">
+        <fr:layout name="tabular">
+          <fr:property name="classes" value="tstyle2 thlight thright mbottom0"/>
+          <fr:property name="columnClasses" value="width12em,width35em,"/>
+        </fr:layout>
+      </fr:view>
+
+      <!-- <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+        <tr>
+          <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
+          <td class="width35em">
+
+            <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+            <fr:edit id="editCredits${advisor.externalId}" name="advisor" slot="percentageDistribution">
+              <fr:validator name="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
+                <fr:property name="lowerBound" value="0"/>
+                <fr:property name="upperBound" value="100"/>
+              </fr:validator>
+              <fr:layout>
+                <fr:property name="size" value="10"/>
+              </fr:layout>
+            </fr:edit> %
+
+            <html:submit>
+              <bean:message key="button.submit"/>
+            </html:submit>
+          </fr:form>
+
+        </td>
+        <td class="tdclear">
+          <span class="error0">
+            <fr:message for="editCredits${advisor.externalId}" type="validation" />
+          </span>
+        </td>
+      </tr>
+    </table> -->
+
+    <logic:present name="editOrientatorCreditsDistribution">
+        <logic:equal name="editOrientatorCreditsDistribution" value="${participantId}">
             <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
                 <tr>
                     <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
                     <td class="width35em">
                         <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                            <fr:edit id="editCreditsOrientator" name="thesis" slot="orientatorCreditsDistribution">
+                            <fr:edit id="editCreditsOrientator" name="advisor" slot="percentageDistribution">
                                 <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
                                 <fr:validator name="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
@@ -245,106 +270,59 @@
                     </td>
                 </tr>
             </table>
-        </logic:present>
-        <logic:notPresent name="editOrientatorCreditsDistribution">
+        </logic:equal>
+        <logic:notEqual name="editOrientatorCreditsDistribution" value="${participantId}">
             <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
                 <tr>
                     <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"  bundle="APPLICATION_RESOURCES"/>:</th>
                     <td class="width35em">
-                        <logic:empty name="thesis" property="orientatorCreditsDistribution">-</logic:empty>
-                        <logic:notEmpty name="thesis" property="orientatorCreditsDistribution">
-                            <fr:view name="thesis" property="orientatorCreditsDistribution"/> %
+                        <logic:empty name="advisor" property="percentageDistribution">-</logic:empty>
+                        <logic:notEmpty name="advisor" property="percentageDistribution">
+                            <fr:view name="advisor" property="percentageDistribution"/> %
                         </logic:notEmpty>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=%s&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", participantId, dcpId, executionYearId, thesisId) %>">
                             <bean:message key="label.change"  bundle="APPLICATION_RESOURCES"/>
                         </html:link>)
                     </td>
                 </tr>
             </table>
-        </logic:notPresent>
+        </logic:notEqual>
     </logic:present>
-    
-    <p class="mtop05">
-        <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.changePerson"  bundle="APPLICATION_RESOURCES"/>
-        </html:link>,
-        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.removePerson"  bundle="APPLICATION_RESOURCES"/>
-        </html:link>
-    </p>
-</logic:notEmpty>
-  
-<logic:notEmpty name="thesis" property="coorientator">
-	<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator" bundle="APPLICATION_RESOURCES"/></h4>
-    <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
-        <fr:layout name="tabular">
-        	    	<fr:property name="classes" value="tstyle2 thlight thright mbottom0"/>
-        	    	<fr:property name="columnClasses" value="width12em,width35em,"/>
-        </fr:layout>
-    </fr:view>
-
-    <logic:present name="coorientatorCreditsDistribution">
-        <logic:present name="editCoorientatorCreditsDistribution">
+    <logic:notPresent name="editOrientatorCreditsDistribution">
             <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
                 <tr>
-                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
+                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"  bundle="APPLICATION_RESOURCES"/>:</th>
                     <td class="width35em">
-                        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                            <fr:edit id="editCreditsCoorientator" name="thesis" slot="coorientatorCreditsDistribution">
-                                <fr:validator name="org.fenixedu.academic.ui.renderers.validators.LongRangeValidator">
-                                    <fr:property name="lowerBound" value="0"/>
-                                    <fr:property name="upperBound" value="100"/>
-                                </fr:validator>
-                                <fr:layout>
-                                    <fr:property name="size" value="10"/>
-                                </fr:layout>
-                            </fr:edit> %
-                            
-                            <html:submit>
-                                <bean:message key="button.submit"/>
-                            </html:submit>
-                            <html:cancel>
-                                <bean:message key="button.cancel"/>
-                            </html:cancel>
-                        </fr:form>
-                    </td>
-                    <td class="tdclear">
-                        <span class="error0">
-                            <fr:message for="editCreditsCoorientator" type="validation"/>
-                        </span>
-                    </td>
-                </tr>
-            </table>
-        </logic:present>
-        <logic:notPresent name="editCoorientatorCreditsDistribution">
-            <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
-                <tr>
-                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
-                    <td class="width35em">
-                        <logic:empty name="thesis" property="coorientatorCreditsDistribution">-</logic:empty>
-                        <logic:notEmpty name="thesis" property="coorientatorCreditsDistribution">
-                            <fr:view name="thesis" property="coorientatorCreditsDistribution"/> %
+                        <logic:empty name="advisor" property="percentageDistribution">-</logic:empty>
+                        <logic:notEmpty name="advisor" property="percentageDistribution">
+                            <fr:view name="advisor" property="percentageDistribution"/> %
                         </logic:notEmpty>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                            <bean:message key="label.change" bundle="APPLICATION_RESOURCES"/>
+                        (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=%s&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", participantId, dcpId, executionYearId, thesisId) %>">
+                            <bean:message key="label.change"  bundle="APPLICATION_RESOURCES"/>
                         </html:link>)
                     </td>
                 </tr>
             </table>
-        </logic:notPresent>
-    </logic:present>
+    </logic:notPresent>
 
     <p class="mtop05">
-        <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=coorientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
-        </html:link>,
-        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
-        </html:link>
-    </p>
+      <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=%s&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", participantId, dcpId, thesisId) %>">
+      <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
+    </html:link>,
+    <html:link page="<%= String.format("/manageThesis.do?method=deleteParticipant&amp;target=%s&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s",participantId, dcpId, thesisId) %>">
+    <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
+  </html:link>
+</p>
+
+    </logic:iterate>
+
+
 </logic:notEmpty>
+
+
+
 
 <%-- Jury --%>
 <h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury" bundle="APPLICATION_RESOURCES"/></h3>

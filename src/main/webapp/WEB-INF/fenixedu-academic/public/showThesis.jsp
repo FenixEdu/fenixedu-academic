@@ -91,52 +91,30 @@
 			</div>
 
 			<h4>${fr:message('resources.ApplicationResources', 'title.thesis.details.orientation')}</h4>
-			<c:if test="${not empty thesis.orientator}">
-				<h5>${fr:message('resources.ApplicationResources', 'title.public.thesis.section.orientation.orientator')}</h5>
-				<div class="main-table">
-					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.person.name')}</label>
-						<div class="col-sm-10">
-							${thesis.orientator.person.name}
+			<c:if test="${not empty thesis.orientation}">
+				<c:forEach var="advisor" items="${thesis.orientation}">
+				   	<h5>${fr:message('resources.ApplicationResources', 'title.public.thesis.section.orientation.orientator')}</h5>
+					<div class="main-table">
+						<div class="row">
+							<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.person.name')}</label>
+							<div class="col-sm-10">
+								${advisor.person.name}
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.teacher.category')}</label>
+							<div class="col-sm-10">
+								${advisor.category}
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.department')}</label>
+							<div class="col-sm-10">
+								${advisor.affiliation}
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.teacher.category')}</label>
-						<div class="col-sm-10">
-							${thesis.orientator.category}
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.department')}</label>
-						<div class="col-sm-10">
-							${thesis.orientator.affiliation}
-						</div>
-					</div>
-				</div>
-			</c:if>
-
-			<c:if test="${not empty thesis.coorientator}">
-				<h5>${fr:message('resources.ApplicationResources', 'title.public.thesis.section.orientation.coorientator')}</h5>
-				<div class="main-table">
-					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.person.name')}</label>
-						<div class="col-sm-10">
-							${thesis.coorientator.person.name}
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.teacher.category')}</label>
-						<div class="col-sm-10">
-							${thesis.coorientator.category}
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.department')}</label>
-						<div class="col-sm-10">
-							${thesis.coorientator.affiliation}
-						</div>
-					</div>
-				</div>
+				</c:forEach>
 			</c:if>
 
 			<h4>${fr:message('resources.ApplicationResources', 'title.thesis.details.publication')}</h4>

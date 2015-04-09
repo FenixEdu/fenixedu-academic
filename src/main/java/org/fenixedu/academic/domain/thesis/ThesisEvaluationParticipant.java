@@ -64,32 +64,47 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         return super.getPerson();
     }
 
+    //Remove on the next major
+    @Deprecated
     public double getParticipationCredits() {
         return Thesis.getCredits() * getCreditsDistribution() / 100;
     }
 
+    //Remove on the next major
+    @Deprecated
     public double getCreditsDistribution() {
+
         Thesis thesis = getThesis();
 
         if (!thesis.hasCredits()) {
-            return 0.0;
+            return 0;
         }
+        return getPercentageDistribution();
+    }
 
-        ThesisParticipationType type = this.getType();
+    @Override
+    public Integer getPercentageDistribution() {
 
-        if (type.equals(ThesisParticipationType.ORIENTATOR)) {
-            if (thesis.getOrientatorCreditsDistribution() != null) {
-                return thesis.getOrientatorCreditsDistribution();
+        if (super.getPercentageDistribution() != null) {
+            return super.getPercentageDistribution();
+        } else {
+            ThesisParticipationType type = this.getType();
+            Thesis thesis = getThesis();
+
+            if (type.equals(ThesisParticipationType.ORIENTATOR)) {
+                if (thesis.getOrientatorCreditsDistribution() != null) {
+                    return thesis.getOrientatorCreditsDistribution();
+                }
+            }
+
+            if (type.equals(ThesisParticipationType.COORIENTATOR)) {
+                if (thesis.getCoorientatorCreditsDistribution() != null) {
+                    return thesis.getCoorientatorCreditsDistribution();
+                }
             }
         }
 
-        if (type.equals(ThesisParticipationType.COORIENTATOR)) {
-            if (thesis.getCoorientatorCreditsDistribution() != null) {
-                return thesis.getCoorientatorCreditsDistribution();
-            }
-        }
-
-        return 0.0;
+        return 0;
     }
 
     public void delete() {
