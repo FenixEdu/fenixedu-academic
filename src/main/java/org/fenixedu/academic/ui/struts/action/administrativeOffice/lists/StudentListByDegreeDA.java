@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -238,7 +239,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 continue;
             }
 
-            if ((searchBean.getIngression() != null) && (registration.getIngression() != searchBean.getIngression())) {
+            if ((searchBean.getIngressionType() != null) && (registration.getIngressionType() != searchBean.getIngressionType())) {
                 continue;
             }
 
@@ -329,9 +330,9 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addHeader(getResourceMessage("label.nationality") + ": " + searchBean.getNationality().getName());
         }
         spreadsheet.newHeaderRow();
-        if (searchBean.getIngression() != null) {
+        if (searchBean.getIngressionType() != null) {
             spreadsheet.addHeader(getResourceMessage("label.ingression.short") + ": "
-                    + searchBean.getIngression().getLocalizedName());
+                    + searchBean.getIngressionType().getLocalizedName(Locale.getDefault()));
         }
 
         spreadsheet.newHeaderRow();

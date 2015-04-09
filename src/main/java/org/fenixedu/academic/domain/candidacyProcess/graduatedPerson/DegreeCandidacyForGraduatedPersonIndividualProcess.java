@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -355,7 +356,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
                 DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
-            process.getCandidacy().createRegistration(getDegreeCurricularPlan(process), CycleType.FIRST_CYCLE, Ingression.CEA02);
+            process.getCandidacy().createRegistration(getDegreeCurricularPlan(process), CycleType.FIRST_CYCLE,
+                    IngressionType.findByPredicate(IngressionType::isMiddleAndSuperiorCourses));
             return process;
         }
 

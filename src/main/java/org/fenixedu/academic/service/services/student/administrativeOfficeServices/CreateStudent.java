@@ -61,7 +61,7 @@ public class CreateStudent {
                 StudentCandidacy.createStudentCandidacy(executionDegreeBean.getExecutionDegree(), person);
 
         new RegisteredCandidacySituation(studentCandidacy, ingressionInformationBean.getRegistrationProtocol(),
-                executionDegreeBean.getCycleType(), ingressionInformationBean.getIngression(),
+                executionDegreeBean.getCycleType(), ingressionInformationBean.getIngressionType(),
                 ingressionInformationBean.getEntryPhase(), personBean.getStudentNumber());
 
         // create registration

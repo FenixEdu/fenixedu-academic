@@ -148,7 +148,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
     public String getHasMadeDegreeChangeInThisExecutionYear() {
         boolean hasMade =
                 registration.getStartExecutionYear() == readCurrentExecutionYear()
-                        && Ingression.MCI.equals(registration.getIngression());
+                        && registration.getIngressionType().isInternalCourseChange();
 
         return hasMade ? BundleUtil.getString(Bundle.ACADEMIC, "label.yes") : BundleUtil.getString(Bundle.ACADEMIC, "label.no");
     }

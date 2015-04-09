@@ -76,11 +76,11 @@
 
 
 
-	<logic:present name="registration" property="ingression">
+	<logic:present name="registration" property="ingressionType">
 		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:present>
 	
-	<logic:notPresent name="registration" property="ingression">
+	<logic:notPresent name="registration" property="ingressionType">
 		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:notPresent>
 	<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
@@ -92,7 +92,7 @@
 		<td>
 		
 			<%-- Registration Details --%>
-			<logic:present name="registration" property="ingression">
+			<logic:present name="registration" property="ingressionType">
 			<fr:view name="registration" schema="student.registrationDetail" >
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thright thlight"/>
@@ -100,7 +100,7 @@
 				</fr:layout>
 			</fr:view>
 			</logic:present>
-			<logic:notPresent name="registration" property="ingression">
+			<logic:notPresent name="registration" property="ingressionType">
 			<fr:view name="registration" schema="student.registrationsWithStartData" >
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>

@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.reports;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -30,6 +31,7 @@ import org.fenixedu.academic.domain.GrantOwnerType;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -256,14 +258,14 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(registration.getRegistrationProtocol() != null ? registration.getRegistrationProtocol().getCode() : "");
 
         // Regime de Ingresso no Curso Actual (código)
-        Ingression ingression = sourceRegistration.getIngression();
-        if (ingression == null && sourceRegistration.getStudentCandidacy() != null) {
-            ingression = sourceRegistration.getStudentCandidacy().getIngression();
+        IngressionType ingressionType = sourceRegistration.getIngressionType();
+        if (ingressionType == null && sourceRegistration.getStudentCandidacy() != null) {
+            ingressionType = sourceRegistration.getStudentCandidacy().getIngressionType();
         }
-        row.setCell(ingression != null ? ingression.getName() : "");
+        row.setCell(ingressionType != null ? ingressionType.getCode() : "");
 
         // Regime de Ingresso no Curso Actual (designação)
-        row.setCell(ingression != null ? ingression.getFullDescription() : "");
+        row.setCell(ingressionType != null ? ingressionType.getFullDescription().getContent(Locale.getDefault()) : "");
 
         // estabelecimento do grau preced.: Instituição onde esteve
         // inscrito mas não obteve grau, (e.g: transferencias, mudanças de

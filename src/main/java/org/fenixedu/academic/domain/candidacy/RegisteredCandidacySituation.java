@@ -41,12 +41,12 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     }
 
     public RegisteredCandidacySituation(Candidacy candidacy, RegistrationProtocol registrationProtocol, CycleType cycleType,
-            Ingression ingression, EntryPhase entryPhase, Integer studentNumber) {
+            IngressionType ingressionType, EntryPhase entryPhase, Integer studentNumber) {
         super();
         init(candidacy, AccessControl.getPerson());
         registerCandidacy(registrationProtocol, cycleType, studentNumber);
 
-        ((StudentCandidacy) candidacy).setIngression(ingression);
+        ((StudentCandidacy) candidacy).setIngressionType(ingressionType);
         ((StudentCandidacy) candidacy).setEntryPhase(entryPhase);
     }
 

@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import org.fenixedu.academic.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
@@ -208,7 +209,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 
     @Override
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
-            final Ingression ingression) {
+            final IngressionType ingressionType) {
 
         if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
@@ -230,12 +231,12 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         }
 
         getPersonalDetails().ensurePersonInternalization();
-        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingressionType);
     }
 
     @Override
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final CycleType cycleType, final Ingression ingression) {
+            final CycleType cycleType, final IngressionType ingressionType) {
 
         final Registration registration =
                 new Registration(person, degreeCurricularPlan, getMobilityProgram().getRegistrationProtocol(), cycleType,

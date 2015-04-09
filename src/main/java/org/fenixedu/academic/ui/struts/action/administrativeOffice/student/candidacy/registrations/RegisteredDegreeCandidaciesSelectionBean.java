@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Degree;
@@ -201,7 +202,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
         row.setCell(candidacy.getActiveCandidacySituation().getSituationDate().toString("dd/MM/yyyy HH:mm"));
-        row.setCell(candidacy.getRegistration().getIngression().getName());
+        row.setCell(candidacy.getRegistration().getIngressionType().getCode());
         row.setCell(candidacy.getExecutionDegree().getDegree().getNameFor(executionYear).getContent());
         row.setCell(candidacy.getRegistration().getNumber().toString());
         row.setCell(person.getName());

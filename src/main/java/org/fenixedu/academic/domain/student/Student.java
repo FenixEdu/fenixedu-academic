@@ -729,7 +729,7 @@ public class Student extends Student_Base {
 
     public boolean isHandicapped() {
         for (Registration registration : getRegistrationsSet()) {
-            if (registration.getIngression() != null && registration.getIngression().equals(Ingression.CNA07)) {
+            if (registration.getIngressionType() != null && registration.getIngressionType().isHandicappedContingent()) {
                 return true;
             }
         }

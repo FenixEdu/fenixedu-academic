@@ -146,7 +146,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionDegreeBean", executionDegreeBean);
         request.setAttribute("ingressionInformationBean", ingressionInformationBean);
 
-        if (ingressionInformationBean.getIngression() != null && !ingressionInformationBean.getIngression().hasEntryPhase()) {
+        if (ingressionInformationBean.getIngressionType() != null
+                && !ingressionInformationBean.getIngressionType().hasEntryPhase()) {
             request.setAttribute("choosePersonBean", new ChoosePersonBean());
         }
 
@@ -254,7 +255,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
             IngressionInformationBean ingressionInformationBean, Person person, ChoosePersonBean choosePersonBean) {
 
         try {
-            Registration.checkIngression(ingressionInformationBean.getIngression(), person,
+            Registration.checkIngression(ingressionInformationBean.getIngressionType(), person,
                     executionDegreeBean.getDegreeCurricularPlan());
         } catch (DomainException e) {
             RenderUtils.invalidateViewState();

@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.joda.time.YearMonthDay;
 
@@ -35,7 +36,7 @@ public class IngressionInformationBean implements Serializable {
 
     private String agreementInformation;
 
-    private Ingression ingression;
+    private IngressionType ingressionType;
 
     private EntryPhase entryPhase;
 
@@ -76,12 +77,20 @@ public class IngressionInformationBean implements Serializable {
         return requestAgreementInformation;
     }
 
+    public IngressionType getIngressionType() {
+        return ingressionType;
+    }
+
+    public void setIngressionType(IngressionType ingressionType) {
+        this.ingressionType = ingressionType;
+    }
+
     public Ingression getIngression() {
-        return ingression;
+        return IngressionType.getIngressionForIngressionType(ingressionType);
     }
 
     public void setIngression(Ingression ingression) {
-        this.ingression = ingression;
+        setIngressionType(IngressionType.getIngressionTypeForIngression(ingression));
     }
 
     public EntryPhase getEntryPhase() {
@@ -93,7 +102,7 @@ public class IngressionInformationBean implements Serializable {
     }
 
     public void clearIngressionAndEntryPhase() {
-        this.ingression = null;
+        this.ingressionType = null;
         this.entryPhase = null;
         this.studiesStartDate = null;
         this.homologationDate = null;

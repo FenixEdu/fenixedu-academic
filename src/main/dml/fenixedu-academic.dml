@@ -2003,7 +2003,7 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
             String contigent;
             Double entryGrade;
             EntryPhase entryPhase;
-            Ingression ingression;
+            protected Ingression ingression;
             Boolean applyForResidence;
             String notesAboutResidenceAppliance;
             StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
@@ -2047,6 +2047,28 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
             }
 
 
+	class candidacy.IngressionType{
+		String code;
+		LocalizedString fullDescription;
+		
+		boolean hasEntryPhase;
+		
+		// These predicates correspond to some of the old enumeration values used in the business code
+		// The code must assure that only one IngressionType instance has one of these fields as true
+		boolean isExternalCourseChange;
+		boolean isInternalCourseChange;
+		boolean isTransfer;
+		boolean isMiddleAndSuperiorCourses;
+		boolean isOver23;
+		boolean isInternal2ndCycleAccess;
+		boolean isIsolatedCurricularUnits;
+		boolean isInternal3rdCycleAccess;
+		boolean isDirectAccessFrom1stCycle;
+		boolean isHandicappedContingent;
+		boolean isFirstCycleAttribution;
+		boolean isReIngression;
+	}
+	
     class candidacy.degree.ShiftDistribution  {
     }
 
@@ -2925,7 +2947,7 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         Boolean requestedChangeDegree;
         YearMonthDay startDate;
         YearMonthDay studiesStartDate;
-        Ingression ingression;
+        protected Ingression ingression;
         EntryPhase entryPhase;
     }
 
@@ -11172,6 +11194,35 @@ relation StudentCandidacyCandidacySummaryFile {
 		multiplicity 0..1;
 	}
 }
+
+
+relation IngressionTypeBennu{
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+	
+	candidacy.IngressionType playsRole ingressionTypes{
+		multiplicity *;
+	}
+}
+
+relation StudentCandidacyIngressionType{
+	candidacy.StudentCandidacy playsRole studentCandidacy{
+		multiplicity *;
+	}
+	
+	candidacy.IngressionType playsRole ingressionType{
+		multiplicity 0..1;
+	}
+}
+
+relation RegistrationIngressionType{
+	student.Registration playsRole registration{
+		multiplicity *;
+	}
+	
+	candidacy.IngressionType playsRole ingressionType{
+		multiplicity 0..1;
+	}
+} 
 
 relation StudentCandidacyFirstTimeCandidacyLog { 
 	candidacy.StudentCandidacy playsRole studentCandidacy;

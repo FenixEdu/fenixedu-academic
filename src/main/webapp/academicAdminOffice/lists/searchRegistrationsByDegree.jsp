@@ -67,9 +67,9 @@
 				<fr:property name="format" value="${nationality}" />
 				<fr:property name="sortBy" value="nationality" />
 			</fr:slot>
-			<fr:slot name="ingression" layout="menu-select" key="label.ingression.short">
+			<fr:slot name="ingressionType" layout="menu-select" key="label.ingression.short">
 				<fr:property name="providerClass"
-					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.IngressionProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.IngressionTypeProvider" />
 				<fr:property name="eachLayout" value="" />
 			</fr:slot>
 			<fr:slot name="ingressedInChosenYear" key="label.ingressedInChosenYear" />

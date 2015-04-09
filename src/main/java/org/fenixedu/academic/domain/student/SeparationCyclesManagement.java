@@ -42,7 +42,7 @@ import org.fenixedu.academic.domain.accounting.PaymentPlan;
 import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -253,7 +253,7 @@ public class SeparationCyclesManagement {
                         registration.getStartDate());
 
         // set ingression after create studentcurricularPlan
-        registration.setIngression(Ingression.DA1C);
+        registration.setIngressionType(IngressionType.findByPredicate(IngressionType::isDirectAccessFrom1stCycle));
 
         return result;
     }

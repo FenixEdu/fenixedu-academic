@@ -45,7 +45,7 @@
 
 
 <h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<logic:present name="registrationCurriculumBean" property="registration.ingression">
+<logic:present name="registrationCurriculumBean" property="registration.ingressionType">
 	<fr:view name="registrationCurriculumBean" property="registration" schema="student.registrationDetail" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thright thlight"/>
@@ -53,7 +53,7 @@
 		</fr:layout>
 	</fr:view>
 </logic:present>
-<logic:notPresent name="registrationCurriculumBean" property="registration.ingression">
+<logic:notPresent name="registrationCurriculumBean" property="registration.ingressionType">
 	<fr:view name="registrationCurriculumBean" property="registration" schema="student.registrationsWithStartData" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thright thlight mtop0"/>

@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -466,12 +467,14 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
         protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
                 User userView, Object object) {
             process.getCandidacy().createRegistration(getDegreeCurricularPlan(process), CycleType.FIRST_CYCLE,
-                    getIngression(process));
+                    getIngressionType(process));
             return process;
         }
 
-        private Ingression getIngression(final DegreeChangeIndividualCandidacyProcess process) {
-            return process.getPrecedentDegreeInformation().isCandidacyExternal() ? Ingression.MCE : Ingression.MCI;
+        private IngressionType getIngressionType(final DegreeChangeIndividualCandidacyProcess process) {
+            return process.getPrecedentDegreeInformation().isCandidacyExternal() ? IngressionType
+                    .findByPredicate(IngressionType::isExternalCourseChange) : IngressionType
+                    .findByPredicate(IngressionType::isInternalCourseChange);
         }
 
         private DegreeCurricularPlan getDegreeCurricularPlan(final DegreeChangeIndividualCandidacyProcess process) {
