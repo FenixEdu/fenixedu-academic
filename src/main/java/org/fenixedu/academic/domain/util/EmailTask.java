@@ -34,6 +34,8 @@ public class EmailTask extends CronTask {
                     email.getFailedAddresses() != null ? email.getFailedAddresses().size() : 0);
             sentCounter++;
         }
-        taskLog("Sent %d email batches\n", sentCounter);
+        if (sentCounter > 0) {
+            getLogger().info("Sent {} email batches", sentCounter);
+        }
     }
 }

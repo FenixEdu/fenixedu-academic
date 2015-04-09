@@ -51,7 +51,10 @@ public class MessageTask extends CronTask {
         for (final Sender sender : senders) {
             deletedCounter += sender.deleteOldMessages();
         }
-        taskLog("Deleted %s old messages using a sender threshold of %d\n", deletedCounter, Message.NUMBER_OF_SENT_EMAILS_TO_STAY);
+        if (deletedCounter > 0) {
+            taskLog("Deleted %s old messages using a sender threshold of %d\n", deletedCounter,
+                    Message.NUMBER_OF_SENT_EMAILS_TO_STAY);
+        }
     }
 
     private void dispatchMessages() {
@@ -63,6 +66,8 @@ public class MessageTask extends CronTask {
                     System.currentTimeMillis() - start, emails);
             dispatchCounter++;
         }
-        taskLog("Dispatched %d messages\n", dispatchCounter);
+        if (dispatchCounter > 0) {
+            taskLog("Dispatched %d messages\n", dispatchCounter);
+        }
     }
 }
