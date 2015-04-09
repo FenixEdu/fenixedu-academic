@@ -26,6 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 
 <%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear"%>
 
 <html:xhtml/>
 
@@ -216,7 +217,21 @@
 		</academic:allowed>
 	</logic:notEmpty>
 	
-	
+	<%-- Registration Data by Execution Year --%>
+	<h3 class="mbottom05 mtop25 separator2"><bean:message key="title.registrationDataByExecutionYear" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<fr:view name="registration" property="registrationDataByExecutionYear">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= RegistrationDataByExecutionYear.class.getName() %>">
+			<fr:slot name="executionYear.qualifiedName" key="label.executionYear" />
+			<fr:slot name="enrolmentDate" key="label.enrolmentDate" />
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
+			<fr:property name="columnClasses" value="acenter,acenter,acenter" />
+			<fr:property name="sortBy" value="executionYear=desc" />
+			<fr:link name="edit" label="label.edit,ACADEMIC_OFFICE_RESOURCES" 
+						 link="/manageRegistrationDataByExecutionYear.do?method=prepareEdit&registrationDataByExecutionYearId=${externalId}" order="1" />
+		</fr:layout>
+	</fr:view>
 	
 	<%-- Curricular Plans --%>
 	
