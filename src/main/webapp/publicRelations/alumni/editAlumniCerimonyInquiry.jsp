@@ -41,9 +41,9 @@
 					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="size" value="50"/>
 			</fr:slot>
-			<fr:slot name="begin" layout="picker" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"
+			<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"
 					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-			<fr:slot name="end" layout="picker" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
+			<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright"/>
@@ -60,7 +60,6 @@
 				<fr:property name="safe" value="true" />
 		   		<fr:property name="columns" value="70"/>
 		   		<fr:property name="rows" value="15"/>
-		   		<fr:property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
 			</fr:layout>
 			<fr:destination name="invalid" path="<%= urlEdit %>"/>
 		</fr:edit>
