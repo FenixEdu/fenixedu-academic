@@ -154,4 +154,32 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
         return mapping.findForward("select-person");
     }
 
+    public ActionForward selectExternal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ThesisBean bean = getRenderedObject("bean");
+
+        if (bean == null) {
+            return editProposal(mapping, actionForm, request, response);
+        }
+
+        request.setAttribute("bean", bean);
+
+        Thesis thesis = getThesis(request);
+
+        ChangeThesisPerson.addExternal(thesis, bean.getTargetType(), bean.getExternalName(), bean.getExternalEmail());
+
+        return editProposal(mapping, actionForm, request, response);
+    }
+
+    public ActionForward selectExternalInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ThesisBean bean = getRenderedObject("bean");
+
+        if (bean == null) {
+            return editProposal(mapping, actionForm, request, response);
+        }
+
+        request.setAttribute("bean", bean);
+        return mapping.findForward("select-person");
+    }
 }

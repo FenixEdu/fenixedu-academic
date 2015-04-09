@@ -91,6 +91,7 @@ import com.google.common.io.ByteStreams;
         @Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
         @Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
         @Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp"),
+        @Forward(name = "select-external", path = "/scientificCouncil/thesis/selectExternal.jsp"),
         @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp"),
         @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp") })
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
@@ -911,6 +912,45 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         } else {
             request.setAttribute("bean", bean);
             return mapping.findForward("select-person");
+        }
+    }
+
+    public ActionForward changeExternal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String target = request.getParameter("target");
+        boolean remove = request.getParameter("remove") != null;
+
+        if (target == null) {
+            return editProposal(mapping, actionForm, request, response);
+        }
+
+        Thesis thesis = getThesis(request);
+        ThesisBean bean = new ThesisBean(thesis);
+
+        Degree degree = getDegree(request);
+        bean.setDegree(degree);
+
+        PersonTarget targetType = PersonTarget.valueOf(target);
+        bean.setTargetType(targetType);
+
+        if (targetType.equals(PersonTarget.vowel)) {
+            ThesisEvaluationParticipant targetVowel = getVowel(request);
+
+            if (targetVowel != null) {
+                bean.setTarget(targetVowel);
+            } else {
+                bean.setTarget(null);
+            }
+        }
+
+        if (remove) {
+            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+            ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), null, bean.getTarget()));
+
+            return editProposal(mapping, actionForm, request, response);
+        } else {
+            request.setAttribute("bean", bean);
+            return mapping.findForward("select-external");
         }
     }
 

@@ -33,7 +33,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.person" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant" bundle="APPLICATION_RESOURCES">
-    <slot name="person.name" key="label.person.name"/>
+    <slot name="name" key="label.name"/>
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
@@ -89,6 +89,26 @@
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
         <property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons"/>
+        <property name="args" value="slot=name"/>
+        <property name="minChars" value="3"/>
+    </slot>
+</schema>
+
+<schema name="thesis.bean.selectPerson.external" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean"
+        bundle="APPLICATION_RESOURCES">
+    <slot name="externalName" key="label.coordinator.thesis.edit.personName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="externalName"/>
+        <property name="labelField" value="name"/>
+        <property name="indicatorShown" value="true"/>
+        <property name="args" value="slot=name"/>
+        <property name="minChars" value="3"/>
+    </slot>
+    <slot name="externalEmail" key="label.coordinator.thesis.edit.email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="size" value="70"/>
+        <property name="rawSlotName" value="externalEmail"/>
+        <property name="labelField" value="name"/>
+        <property name="indicatorShown" value="true"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
@@ -286,7 +306,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.participant.edit" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="person.name" read-only="true" key="label.person.name"/>
+    <slot name="name" read-only="true" key="label.person.name"/>
     <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
         <property name="style" value="margin-right: 0.5em;"/>
         <property name="otherSize" value="50"/>
@@ -298,7 +318,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.participant.edit.with.credits" type="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="person.name" read-only="true" key="label.person.name"/>
+    <slot name="name" read-only="true" key="label.person.name"/>
     <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
         <property name="style" value="margin-right: 0.5em;"/>
         <property name="otherSize" value="50"/>

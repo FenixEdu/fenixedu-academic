@@ -68,6 +68,7 @@ import com.google.common.io.ByteStreams;
         @Forward(name = "editThesisEvaluationParticipant", path = "/scientificCouncil/thesis/editThesisEvaluationParticipant.jsp"),
         @Forward(name = "editThesisDetails", path = "/scientificCouncil/thesis/editThesisDetails.jsp"),
         @Forward(name = "addJuryMember", path = "/scientificCouncil/thesis/addJuryMember.jsp"),
+        @Forward(name = "addExternalOrientationMember", path = "/scientificCouncil/thesis/addExternalOrientationMember.jsp"),
         @Forward(name = "addOrientationMember", path = "/scientificCouncil/thesis/addOrientationMember.jsp") })
 public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
@@ -113,7 +114,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
     public static class ExternalEvaluationMemberBean extends EvaluationMemberBean {
         String personName;
-        String unitName;
+        String personEmail;
 
         public String getPersonName() {
             return personName;
@@ -123,18 +124,17 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             this.personName = personName;
         }
 
-        public String getUnitName() {
-            return unitName;
+        public String getPersonEmail() {
+            return personEmail;
         }
 
-        public void setUnitName(String unitName) {
-            this.unitName = unitName;
+        public void setPersonEmail(String personEmail) {
+            this.personEmail = personEmail;
         }
 
         @Override
         public void addMember(final Thesis thesis) {
-            // TODO Auto-generated method stub
-
+            ChangeThesisPerson.addExternal(thesis, thesisParticipationType, getPersonName(), getPersonEmail());
         }
     }
 
@@ -294,6 +294,18 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         }
         request.setAttribute("evaluationMemberBean", evaluationMemberBean);
         return mapping.findForward("addOrientationMember");
+    }
+
+    public ActionForward prepareAddExternalOrientationMember(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        final Thesis thesis = getDomainObject(request, "thesisOid");
+        request.setAttribute("thesis", thesis);
+        EvaluationMemberBean evaluationMemberBean = getRenderedObject();
+        if (evaluationMemberBean == null) {
+            evaluationMemberBean = new ExternalEvaluationMemberBean();
+        }
+        request.setAttribute("evaluationMemberBean", evaluationMemberBean);
+        return mapping.findForward("addExternalOrientationMember");
     }
 
     public ActionForward addEvaluationMember(final ActionMapping mapping, final ActionForm actionForm,

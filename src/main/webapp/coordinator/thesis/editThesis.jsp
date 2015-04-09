@@ -153,7 +153,7 @@ String contextPath = request.getContextPath();
 	    	<fr:property name="columnClasses" value="width12em,,"/>
 	    </fr:layout>
 	</fr:view>
-    
+
     <html:link page="<%= String.format("/manageThesis.do?method=editProposalDiscussion&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
         <bean:message key="link.coordinator.thesis.edit.changeInformation" bundle="APPLICATION_RESOURCES"/>
     </html:link>
@@ -166,10 +166,10 @@ String contextPath = request.getContextPath();
             		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
             		<fr:property name="columnClasses" value="width12em,,tderror1"/>
             </fr:layout>
-            
+
             <fr:destination name="invalid" path="<%= String.format("/manageThesis.do?method=editProposalDiscussion&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>"/>
         </fr:edit>
-        
+
         <html:submit>
             <bean:message key="button.submit"/>
         </html:submit>
@@ -185,6 +185,11 @@ String contextPath = request.getContextPath();
 <p>
   <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
   <bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
+</html:link>
+</p>
+<p>
+  <html:link page="<%= String.format("/manageThesis.do?method=addExternal&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+  <bean:message key="link.coordinator.thesis.edit.addExternalOrientation" bundle="APPLICATION_RESOURCES"/>
 </html:link>
 </p>
 
@@ -327,12 +332,6 @@ String contextPath = request.getContextPath();
 <%-- Jury --%>
 <h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury" bundle="APPLICATION_RESOURCES"/></h3>
 
-<div style="padding: 1em;">
-	<p class="mtop0">
-		<bean:message key="label.thesis.external.orientators" bundle="APPLICATION_RESOURCES"/>
-	</p>
-</div>
-
 <%-- problems in the jury --%>
 <logic:notEmpty name="conditions">
 	<div class="warning0" style="padding: 1em;">
@@ -394,6 +393,10 @@ String contextPath = request.getContextPath();
     <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
         <bean:message key="link.coordinator.thesis.edit.addVowel" bundle="APPLICATION_RESOURCES"/>
     </html:link>
+    </br>
+    <html:link page="<%= String.format("/manageThesis.do?method=addExternal&amp;target=vowel&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.addVowel.external" bundle="APPLICATION_RESOURCES"/>
+    </html:link>
 </logic:lessThan>
 
 <logic:empty name="thesis" property="vowels">
@@ -410,10 +413,10 @@ String contextPath = request.getContextPath();
 		    	<fr:property name="columnClasses" value="width12em,width35em,"/>
             </fr:layout>
         </fr:view>
-    
+
         <bean:define id="vowelId" name="vowel" property="externalId"/>
-        
-        <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=vowel&amp;vowelID=%s&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">
+
+        <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=%s&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">
             <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
         </html:link>
         , <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">

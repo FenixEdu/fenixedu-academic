@@ -299,10 +299,12 @@ public class Thesis extends Thesis_Base {
                         || p.getType() == ThesisParticipationType.COORIENTATOR).collect(Collectors.toList());
     }
 
+    @Deprecated
     public ThesisEvaluationParticipant getOrientator() {
         return getParticipant(ThesisParticipationType.ORIENTATOR);
     }
 
+    @Deprecated
     public ThesisEvaluationParticipant getCoorientator() {
         return getParticipant(ThesisParticipationType.COORIENTATOR);
     }
@@ -652,13 +654,10 @@ public class Thesis extends Thesis_Base {
                 persons.add(member.getPerson());
             }
         }
-        for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getParticipationsSet()) {
-            final ThesisParticipationType thesisParticipationType = thesisEvaluationParticipant.getType();
-            if (thesisParticipationType == ThesisParticipationType.ORIENTATOR
-                    || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
-                persons.add(thesisEvaluationParticipant.getPerson());
-            }
-        }
+
+        Set<Person> orientationPersons = getOrientationPersons();
+        persons.addAll(orientationPersons);
+
         final Recipient recipient =
                 new Recipient("Membros da tese " + getTitle().toString(), UserGroup.of(Person.convertToUsers(persons)));
         final String studentNumber = getStudent().getNumber().toString();
@@ -1119,7 +1118,7 @@ public class Thesis extends Thesis_Base {
         for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getParticipationsSet()) {
             final ThesisParticipationType type = thesisEvaluationParticipant.getType();
             if ((type == ThesisParticipationType.ORIENTATOR || type == ThesisParticipationType.COORIENTATOR)
-                    && thesisEvaluationParticipant.getPerson() == person) {
+                    && person == thesisEvaluationParticipant.getPerson()) {
                 return true;
             }
         }
@@ -1228,7 +1227,7 @@ public class Thesis extends Thesis_Base {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
 
         // check too few persons
-        int count = getJuryPersonCount();
+        int count = getJuryParticipantCount();
         if (count < 3) {
             conditions.add(new ThesisCondition("thesis.condition.people.number.few"));
         }
@@ -1305,10 +1304,12 @@ public class Thesis extends Thesis_Base {
             Set<Person> juryPersons = new HashSet<Person>();
             //only vowels to separate the president's case
             for (ThesisEvaluationParticipant vowel : getVowels()) {
-                juryPersons.add(vowel.getPerson());
+                if (vowel.getPerson() != null) {
+                    juryPersons.add(vowel.getPerson());
+                }
             }
 
-            if (getVowels().size() != juryPersons.size()) {
+            if (getVowels().stream().filter(v -> !v.isExternal()).collect(Collectors.toSet()).size() != juryPersons.size()) {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.vowels"));
             }
 
@@ -1321,24 +1322,14 @@ public class Thesis extends Thesis_Base {
             if (getOrientation().stream().filter(p -> juryPersons.contains(p.getPerson())).count() != 1) {
                 conditions.add(new ThesisCondition("thesis.condition.people.jury.orientation.members"));
             }
+
         }
 
         return conditions;
     }
 
-    private int getJuryPersonCount() {
-        Set<Person> persons = new HashSet<Person>();
-
-        ThesisEvaluationParticipant president = getPresident();
-        if (president != null) {
-            persons.add(president.getPerson());
-        }
-
-        for (ThesisEvaluationParticipant vowel : getVowels()) {
-            persons.add(vowel.getPerson());
-        }
-
-        return persons.size();
+    private int getJuryParticipantCount() {
+        return getVowels().size() + (getPresident() != null ? 1 : 0);
     }
 
     public boolean isThesisAbstractInBothLanguages() {
@@ -1681,6 +1672,18 @@ public class Thesis extends Thesis_Base {
     public boolean areThesisFilesReadable() {
         final ThesisFile thesisFile = getDissertation();
         return thesisFile != null && thesisFile.areThesisFilesReadable();
+    }
+
+    public Set<Person> getOrientationPersons() {
+        return getOrientation().stream().filter(p -> p.getPerson() != null).map(p -> p.getPerson()).collect(Collectors.toSet());
+    }
+
+    private List<Person> getOrientationPersonsList() {
+        return getOrientation().stream().filter(p -> p.getPerson() != null).map(p -> p.getPerson()).collect(Collectors.toList());
+    }
+
+    public void addExternal(ThesisParticipationType type, String name, String email) {
+        new ThesisEvaluationParticipant(this, name, email, type);
     }
 
 }

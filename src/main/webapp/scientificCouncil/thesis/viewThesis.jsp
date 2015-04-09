@@ -391,6 +391,13 @@
 </html:link>
 </p>
 
+<p>
+  <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeExternal&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+  <bean:message key="link.coordinator.thesis.edit.addExternalOrientation" bundle="APPLICATION_RESOURCES"/>
+</html:link>
+</p>
+
+
 <logic:notEmpty name="thesis" property="orientation">
   <h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator" bundle="APPLICATION_RESOURCES"/></h4>
 
