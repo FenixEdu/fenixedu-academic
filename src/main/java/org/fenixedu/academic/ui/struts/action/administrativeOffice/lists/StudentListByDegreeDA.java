@@ -579,14 +579,14 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     private void fillSpreadSheetRegistrationInfo(StyledExcelSpreadsheet spreadsheet,
             RegistrationConclusionBean registrationConclusionBean, boolean isConcluded) {
-        spreadsheet.addCell(getResourceMessage("label." + (isConcluded ? "yes" : "no") + ".capitalized"));
+        spreadsheet.addCell(BundleUtil.getString(Bundle.APPLICATION, "label." + (isConcluded ? "yes" : "no") + ".capitalized"));
 
         spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : EMPTY);
 
         spreadsheet.addCell(registrationConclusionBean.getAverage().toString());
 
-        spreadsheet.addCell(getResourceMessage("label." + (registrationConclusionBean.isConclusionProcessed() ? "yes" : "no")
-                + ".capitalized"));
+        spreadsheet.addCell(BundleUtil.getString(Bundle.APPLICATION,
+                "label." + (registrationConclusionBean.isConclusionProcessed() ? "yes" : "no") + ".capitalized"));
 
         spreadsheet.addCell(registrationConclusionBean.getCalculatedEctsCredits());
     }

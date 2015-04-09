@@ -170,7 +170,7 @@
 				<fr:slot name="registration.person.name" key="label.name" />
 				<fr:slot name="registration.degree.sigla" key="label.degree" />
 				<fr:slot name="activeStateType" key="label.registration.state" />
-				<fr:slot name="registration.registrationProtocol" key="label.registrationAgreement" />
+				<fr:slot name="registration.registrationProtocol.description.content" key="label.registrationAgreement" />
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter" />
