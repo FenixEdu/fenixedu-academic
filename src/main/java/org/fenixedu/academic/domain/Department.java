@@ -274,6 +274,12 @@ public class Department extends Department_Base {
         return getForum();
     }
 
+    @Override
+    public void setName(String name) {
+        checkIfDepartmentWithNameAlreadyExists(name);
+        super.setName(name);
+    }
+
     public static Department find(final String departmentCode) {
         for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getAcronym().equals(departmentCode)) {
@@ -303,6 +309,14 @@ public class Department extends Department_Base {
 //        }
 //        Collections.sort(departments, Department.COMPARATOR_BY_NAME);
 //        return departments;
+    }
+
+    private void checkIfDepartmentWithNameAlreadyExists(String name) {
+        if (!(this.getName() != null && this.getName().equals(name))
+                && Bennu.getInstance().getDepartmentsSet().stream()
+                        .anyMatch(department -> department.getName() != null && department.getName().equals(name))) {
+            throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
+        }
     }
 
 }
