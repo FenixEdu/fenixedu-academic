@@ -69,6 +69,12 @@ public class UIDegreeCurricularPlan extends UIInput {
 
     private static final String YEARS = "years";
 
+    private static final String CURRENT_PAGE = "currentPage";
+
+    private static final String GROUP_EXPAND_ENABLED = "groupExpandEnabled";
+
+    private static final int MAX_CONTEXTS_TO_RENDER = 1000;
+
     private boolean toEdit;
     private boolean showRules;
     private ExecutionYear executionYear;
@@ -103,12 +109,10 @@ public class UIDegreeCurricularPlan extends UIInput {
                     (this.getBooleanAttribute(SHOW_RULES) != null) ? (Boolean) this.getBooleanAttribute(SHOW_RULES) : Boolean.FALSE;
             final String organizeBy =
                     (this.getAttributes().get(ORGANIZE_BY) != null) ? (String) this.getAttributes().get(ORGANIZE_BY) : "groups";
-            final Boolean onlyStructure =
-                    (this.getBooleanAttribute(ONLY_STRUCTURE) != null) ? (Boolean) this.getBooleanAttribute(ONLY_STRUCTURE) : Boolean.FALSE;
+            final Boolean onlyStructure = getOnlyStructureAttribute();
             final Boolean toOrder =
                     (this.getBooleanAttribute(TO_ORDER) != null) ? (Boolean) this.getBooleanAttribute(TO_ORDER) : Boolean.FALSE;
-            final Boolean hideCourses =
-                    (this.getBooleanAttribute(HIDE_COURSES) != null) ? (Boolean) this.getBooleanAttribute(HIDE_COURSES) : Boolean.FALSE;
+            final Boolean hideCourses = getHideCourseAttribute();
             final Boolean reportsAvailable =
                     (this.getBooleanAttribute(REPORTS_AVAILABLE) != null) ? (Boolean) this.getBooleanAttribute(REPORTS_AVAILABLE) : Boolean.FALSE;
             if (this.getAttributes().get(EXECUTION_YEAR) != null) {
@@ -123,13 +127,35 @@ public class UIDegreeCurricularPlan extends UIInput {
                 encodeByYears(facesContext, dcp);
             } else {
                 new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder,
-                        hideCourses, reportsAvailable, executionYear, module).encodeBegin(facesContext);
+                        hideCourses, reportsAvailable, executionYear, module, getCurrentPageAttribute(),
+                        isToEnableGroupExpandOption()).encodeBegin(facesContext);
             }
 
             if (dcp.getDegreeStructure() != null && !dcp.getDegreeStructure().getChildsSet().isEmpty() && !onlyStructure) {
                 encodeSubtitles(facesContext);
             }
         }
+    }
+
+    protected Boolean getGroupExpandEnabledAttribute() {
+        return (this.getBooleanAttribute(GROUP_EXPAND_ENABLED) != null) ? (Boolean) this
+                .getBooleanAttribute(GROUP_EXPAND_ENABLED) : Boolean.FALSE;
+    }
+
+    protected String getCurrentPageAttribute() {
+        return (String) getAttributes().get(CURRENT_PAGE);
+    }
+
+    protected Boolean getHideCourseAttribute() {
+        final Boolean hideCourses =
+                (this.getBooleanAttribute(HIDE_COURSES) != null) ? (Boolean) this.getBooleanAttribute(HIDE_COURSES) : Boolean.FALSE;
+        return hideCourses;
+    }
+
+    protected Boolean getOnlyStructureAttribute() {
+        final Boolean onlyStructure =
+                (this.getBooleanAttribute(ONLY_STRUCTURE) != null) ? (Boolean) this.getBooleanAttribute(ONLY_STRUCTURE) : Boolean.FALSE;
+        return onlyStructure;
     }
 
     private boolean incorrectUseOfComponent(String organizeBy, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses) {
@@ -147,6 +173,11 @@ public class UIDegreeCurricularPlan extends UIInput {
     private void encodeByYears(FacesContext facesContext, DegreeCurricularPlan dcp) throws IOException {
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
+
+        if (isLargeDegreeCurricularPlan()) {
+            encodeLargeDegreeCurricularPlanByYearsInfo();
+            return;
+        }
 
         if (dcp.getRoot().getChildContextsSet().isEmpty()) {
             encodeEmptyCurricularPlanInfo();
@@ -168,6 +199,10 @@ public class UIDegreeCurricularPlan extends UIInput {
 
     private void encodeEmptyDegreeStructureInfo() throws IOException {
         encodeInfoTable("empty.degreeStructure");
+    }
+
+    private void encodeLargeDegreeCurricularPlanByYearsInfo() throws IOException {
+        encodeInfoTable("large.degree.curricular.plans.cannot.be.viewed.by.years");
     }
 
     private void encodeInfoTable(String info) throws IOException {
@@ -250,8 +285,8 @@ public class UIDegreeCurricularPlan extends UIInput {
                 curricularCourse.getAutonomousWorkHours(curricularPeriod, executionYear);
                 curricularCourse.getTotalLoad(curricularPeriod, executionYear);
                 curricularCourse.getEctsCredits(curricularPeriod, executionYear);
-                new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.executionYear, this.module)
-                        .encodeBegin(facesContext);
+                new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.executionYear, this.module,
+                        null, false).encodeBegin(facesContext);
 
                 if (curricularCourse.isAnual()) {
                     remindToEncodeInNextPeriod(curricularPeriod, context);
@@ -264,7 +299,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
             for (Context check : toRepeat.get(curricularPeriod)) {
                 new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules, this.executionYear,
-                        this.module).encodeInNextPeriod(facesContext);
+                        this.module, null, false).encodeInNextPeriod(facesContext);
             }
         }
 
@@ -393,6 +428,20 @@ public class UIDegreeCurricularPlan extends UIInput {
 
     private DegreeCurricularPlan getDegreeCurricularPlanAttribute() {
         return (DegreeCurricularPlan) this.getAttributes().get(DCP);
+    }
+
+    private boolean isToEnableGroupExpandOption() {
+        return getGroupExpandEnabledAttribute() && !getOnlyStructureAttribute() && !getHideCourseAttribute()
+                && isLargeDegreeCurricularPlan();
+    }
+
+    protected boolean isLargeDegreeCurricularPlan() {
+        int totalContexts = 0;
+        for (final CurricularCourse curricularCourse : getDegreeCurricularPlanAttribute().getCurricularCoursesSet()) {
+            totalContexts += curricularCourse.getParentContextsByExecutionYear(executionYear).size();
+        }
+
+        return totalContexts > MAX_CONTEXTS_TO_RENDER;
     }
 
 }
