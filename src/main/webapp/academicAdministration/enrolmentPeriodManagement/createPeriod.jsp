@@ -33,8 +33,10 @@
 <fr:edit id="configuration" name="configuration" action="/manageEnrolementPeriods.do?method=createPeriods">
 	<fr:schema bundle="MANAGER_RESOURCES"
 		type="org.fenixedu.academic.ui.struts.action.academicAdministration.ManageEnrolementPeriodsDA$EnrolmentPeriodConfigurationForCreation">
-		<fr:slot name="degreeType" layout="menu-postback" key="label.manager.degree.tipoCurso" required="true">
+		<fr:slot name="degreeType" layout="menu-select-postback" key="label.manager.degree.tipoCurso" required="true">
 			<fr:property name="destination" value="typePostback" />
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreeTypeProvider" />
+			<fr:property name="format" value="\${name.content}" />
 		</fr:slot>
 		<fr:slot name="type" layout="menu-postback" key="label.enrolment.period.type" required="true">
 			<fr:property name="destination" value="typePostback" />
@@ -46,6 +48,7 @@
 			<fr:property name="eachSchema" value="alumni.gep.degree" />
 			<fr:property name="eachLayout" value="values" />
 			<fr:property name="selectAllShown" value="true" />
+			<fr:property name="classes" value="list-unstyled" />
 		</fr:slot>
 	</fr:schema>
 	<fr:layout name="tabular">

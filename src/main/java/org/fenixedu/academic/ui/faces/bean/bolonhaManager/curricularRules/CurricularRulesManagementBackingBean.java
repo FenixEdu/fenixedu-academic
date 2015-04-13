@@ -471,7 +471,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
                 AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
                 if (anyCurricularCourse.getBolonhaDegreeType() != null) {
-                    setSelectedDegreeType(anyCurricularCourse.getBolonhaDegreeType().name());
+                    setSelectedDegreeType(anyCurricularCourse.getBolonhaDegreeType().getExternalId());
                 }
             }
         }
@@ -535,12 +535,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
             final List<Degree> allDegrees = Degree.readNotEmptyDegrees();
             final DegreeType bolonhaDegreeType =
-                    (selectedDegreeType == null || selectedDegreeType.equals(NO_SELECTION_STRING)) ? null : DegreeType
-                            .valueOf(selectedDegreeType);
+                    (selectedDegreeType == null || selectedDegreeType.equals(NO_SELECTION_STRING)) ? null : FenixFramework
+                            .getDomainObject(selectedDegreeType);
             for (final Degree degree : allDegrees) {
                 if (degree.isBolonhaDegree() && (bolonhaDegreeType == null || degree.getDegreeType() == bolonhaDegreeType)) {
-                    result.add(new SelectItem(degree.getExternalId(), "["
-                            + BundleUtil.getString(Bundle.ENUMERATION, degree.getDegreeType().name()) + "] " + degree.getNome()));
+                    result.add(new SelectItem(degree.getExternalId(), "[" + degree.getDegreeType().getName().getContent() + "] "
+                            + degree.getNome()));
                 }
             }
             Collections.sort(result, new BeanComparator("label"));
@@ -781,8 +781,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setSelectedDepartmentUnitID((getSelectedDepartmentUnitID() == null || getSelectedDepartmentUnitID().equals(
                 NO_SELECTION_STRING)) ? null : getSelectedDepartmentUnitID());
         parametersDTO
-                .setDegreeType((getSelectedDegreeType() == null || getSelectedDegreeType().equals(NO_SELECTION_STRING)) ? null : DegreeType
-                        .valueOf(getSelectedDegreeType()));
+                .setDegreeType((getSelectedDegreeType() == null || getSelectedDegreeType().equals(NO_SELECTION_STRING)) ? null : FenixFramework
+                        .getDomainObject(getSelectedDegreeType()));
         // must get these values like this to prevent override values
         parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));

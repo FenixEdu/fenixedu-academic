@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.academicAdministration.executionC
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoDegreeCurricularPlan;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
@@ -42,6 +42,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -66,7 +67,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
     @EntryPoint
     public ActionForward chooseDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-
+        request.setAttribute("degreeTypes", Bennu.getInstance().getDegreeTypeSet());
         return mapping.findForward("chooseDegreeType");
 
     }
@@ -88,7 +89,8 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
             }
 
             Collection<InfoDegreeCurricularPlan> degreeCurricularPlans =
-                    ReadActiveDegreeCurricularPlansByDegreeType.runForAcademicAdmin(DegreeType.valueOf(degreeType));
+                    ReadActiveDegreeCurricularPlansByDegreeType.runForAcademicAdmin(Predicate.isEqual(FenixFramework
+                            .getDomainObject(degreeType)));
             List<InfoExecutionPeriod> executionPeriods = ReadNotClosedExecutionPeriods.run();
 
             request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);

@@ -388,10 +388,10 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public OccupationPeriod getLessonsPeriod() {
         OccupationPeriod lessonsPeriod = null;
 
-        Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
-        degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
-        degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-        degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
+        Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesMatching(DegreeType::isPreBolonhaDegree);
+        degrees.addAll(getExecutionYear().getExecutionDegreesMatching(DegreeType::isBolonhaDegree));
+        degrees.addAll(getExecutionYear().getExecutionDegreesMatching(DegreeType::isIntegratedMasterDegree));
+        degrees.addAll(getExecutionYear().getExecutionDegreesMatching(DegreeType::isBolonhaMasterDegree));
 
         for (ExecutionDegree executionDegree : degrees) {
             if (getSemester() == 1) {

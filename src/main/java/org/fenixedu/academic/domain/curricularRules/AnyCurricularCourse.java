@@ -210,7 +210,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             } else {
                 labelList.add(new GenericPair<Object, Boolean>("label.of1", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>(getBolonhaDegreeType().name(), true));
+                labelList.add(new GenericPair<Object, Boolean>(getBolonhaDegreeType().getName().getContent(), false));
             }
         } else {
             labelList.add(new GenericPair<Object, Boolean>("label.of", true));

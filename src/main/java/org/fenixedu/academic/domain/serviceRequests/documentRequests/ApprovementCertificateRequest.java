@@ -24,7 +24,6 @@ import java.util.HashSet;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
@@ -73,7 +72,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     // TODO: remove this after DEA diplomas and certificates
     private boolean isDEARegistration() {
-        return getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return getRegistration().getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     @Override

@@ -67,25 +67,23 @@ public enum GratuityExemptionJustificationType {
     }
 
     public static List<GratuityExemptionJustificationType> getTypesFor(final DegreeType degreeType) {
-        switch (degreeType) {
-        case BOLONHA_MASTER_DEGREE:
-        case BOLONHA_INTEGRATED_MASTER_DEGREE:
-        case BOLONHA_DEGREE:
-        case DEGREE:
-            return Arrays.asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER,
-                    DIRECTIVE_COUNCIL_AUTHORIZATION, SEPARATION_CYCLES_AUTHORIZATION });
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, INSTITUTION_GRANT_OWNER,
-                    OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH, DIRECTIVE_COUNCIL_AUTHORIZATION });
-        case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
-            return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, OTHER_INSTITUTION, PALOP_TEACHER });
-        case EMPTY:
+        if (degreeType.isEmpty()) {
             return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, SON_OF_DECORATED_MILITARY,
                     SOCIAL_SHARE_GRANT_OWNER, DIRECTIVE_COUNCIL_AUTHORIZATION });
-        default:
-            throw new RuntimeException("Unknown degree type");
         }
-
+        if (degreeType.isAdvancedSpecializationDiploma()) {
+            return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, OTHER_INSTITUTION, PALOP_TEACHER });
+        }
+        if (degreeType.isAdvancedFormationDiploma()) {
+            return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, INSTITUTION_GRANT_OWNER,
+                    OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH, DIRECTIVE_COUNCIL_AUTHORIZATION });
+        }
+        if (degreeType.isPreBolonhaDegree() || degreeType.isBolonhaMasterDegree() || degreeType.isBolonhaDegree()
+                || degreeType.isIntegratedMasterDegree()) {
+            return Arrays.asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER,
+                    DIRECTIVE_COUNCIL_AUTHORIZATION, SEPARATION_CYCLES_AUTHORIZATION });
+        }
+        throw new RuntimeException("Unknown degree type");
     }
 
     public String localizedName(Locale locale) {

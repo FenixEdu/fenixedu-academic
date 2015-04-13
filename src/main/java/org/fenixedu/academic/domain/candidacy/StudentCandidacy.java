@@ -115,35 +115,34 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson) {
-
-        switch (executionDegree.getDegree().getDegreeType()) {
-
-        case BOLONHA_DEGREE:
-        case DEGREE:
-        case EMPTY:
+        if (executionDegree.getDegree().getDegreeType().isEmpty()) {
             return new DegreeCandidacy(studentPerson, executionDegree);
-
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            return new DFACandidacy(studentPerson, executionDegree);
-
-        case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
+        }
+        if (executionDegree.getDegree().getDegreeType().isSpecializationDegree()) {
+            return new SDCandidacy(studentPerson, executionDegree);
+        }
+        if (executionDegree.getDegree().getDegreeType().isAdvancedSpecializationDiploma()) {
             // TODO: remove this after PHD Program candidacy is completed and
             // data migrated
             return new PHDProgramCandidacy(studentPerson, executionDegree);
-
-        case BOLONHA_INTEGRATED_MASTER_DEGREE:
-            return new IMDCandidacy(studentPerson, executionDegree);
-
-        case BOLONHA_MASTER_DEGREE:
-            return new MDCandidacy(studentPerson, executionDegree);
-
-        case BOLONHA_SPECIALIZATION_DEGREE:
-            return new SDCandidacy(studentPerson, executionDegree);
-
-        default:
-            return null;
+        }
+        if (executionDegree.getDegree().getDegreeType().isAdvancedFormationDiploma()) {
+            return new DFACandidacy(studentPerson, executionDegree);
         }
 
+        if (executionDegree.getDegree().getDegreeType().isDegree()) {
+            return new DegreeCandidacy(studentPerson, executionDegree);
+        }
+
+        if (executionDegree.getDegree().getDegreeType().isBolonhaMasterDegree()) {
+            return new MDCandidacy(studentPerson, executionDegree);
+        }
+
+        if (executionDegree.getDegree().getDegreeType().isIntegratedMasterDegree()) {
+            return new IMDCandidacy(studentPerson, executionDegree);
+        }
+
+        return null;
     }
 
     public static Set<StudentCandidacy> readByIds(final List<String> studentCandidacyIds) {

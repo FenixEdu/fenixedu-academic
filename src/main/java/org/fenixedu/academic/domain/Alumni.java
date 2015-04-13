@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -243,7 +244,7 @@ public class Alumni extends Alumni_Base {
 
                 if (bean.getStudentNumber() == null || person.getStudent().getNumber().equals(bean.getStudentNumber())) {
                     for (Registration registration : (bean.getDegreeType() == null ? person.getStudent().getRegistrationsSet() : person
-                            .getStudent().getRegistrationsByDegreeType(bean.getDegreeType()))) {
+                            .getStudent().getRegistrationsMatchingDegreeType(Predicate.isEqual(bean.getDegreeType())))) {
 
                         if (registration.isConcluded()) {
                             if (bean.getDegree() != null) {

@@ -53,12 +53,13 @@ public class CandidacyProcessSelectDegreesBean implements Serializable {
     }
 
     public Collection<Degree> getFirstCycleDegrees() {
-        return filterDegrees(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+        return filterDegrees(Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree,
+                DegreeType::isIntegratedMasterDegree)));
     }
 
     public Collection<Degree> getSecondCycleDegrees() {
-        return filterDegrees(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
-                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+        return filterDegrees(Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaMasterDegree,
+                DegreeType::isIntegratedMasterDegree)));
     }
 
     protected Collection<Degree> filterDegrees(Collection<Degree> degrees) {

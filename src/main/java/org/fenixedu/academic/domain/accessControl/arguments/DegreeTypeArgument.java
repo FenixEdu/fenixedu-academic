@@ -22,7 +22,7 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.bennu.core.annotation.GroupArgumentParser;
 
 @GroupArgumentParser
-public class DegreeTypeArgument extends EnumArgument<DegreeType> {
+public class DegreeTypeArgument extends DomainObjectArgumentParser<DegreeType> {
     @Override
     public Class<DegreeType> type() {
         return DegreeType.class;

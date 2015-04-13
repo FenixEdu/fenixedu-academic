@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
@@ -48,8 +49,6 @@ import org.fenixedu.academic.domain.period.SecondCycleCandidacyPeriod;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-
-import com.google.common.collect.Sets;
 
 public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Base {
 
@@ -164,13 +163,13 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
         return result;
     }
 
-    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_MASTER_DEGREE,
-            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    private static final Predicate<DegreeType> ALLOWED_DEGREE_TYPES = DegreeType.oneOf(DegreeType::isBolonhaMasterDegree,
+            DegreeType::isIntegratedMasterDegree);
 
     static private boolean isAllowedToManageProcess(User userView) {
         for (AcademicProgram program : AcademicAccessRule.getProgramsAccessibleToFunction(
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, userView.getPerson().getUser()).collect(Collectors.toSet())) {
-            if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+            if (ALLOWED_DEGREE_TYPES.test(program.getDegreeType())) {
                 return true;
             }
         }
@@ -354,8 +353,8 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
     public List<Degree> getAvailableDegrees() {
         final Set<Degree> degrees = getDegreeSet();
-        return degrees.isEmpty() ? Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
-                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) : new ArrayList<Degree>(degrees);
+        return degrees.isEmpty() ? Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaMasterDegree,
+                DegreeType::isIntegratedMasterDegree)) : new ArrayList<Degree>(degrees);
     }
 
     public List<SecondCycleCandidacyProcess> getNextSecondCyleCandidacyProcesses() {

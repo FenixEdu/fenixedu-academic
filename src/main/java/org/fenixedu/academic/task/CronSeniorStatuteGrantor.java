@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
@@ -77,9 +76,9 @@ public class CronSeniorStatuteGrantor extends CronTask {
 
     protected ExecutionYear specialSeasonEnrolmentPeriodOpeningSoonForThisYear(Integer howSoon) {
         Set<EnrolmentPeriod> enrolmentPeriods = Bennu.getInstance().getEnrolmentPeriodsSet();
-        Map<DegreeType, ExecutionSemester> fallTermEnrolmentPeriods = new HashMap<DegreeType, ExecutionSemester>();
-        Map<DegreeType, ExecutionSemester> springTermEnrolmentPeriods = new HashMap<DegreeType, ExecutionSemester>();
-        Map<DegreeType, ExecutionSemester> switcherTermEnrolmentPeriods = null;
+        Map<String, ExecutionSemester> fallTermEnrolmentPeriods = new HashMap<String, ExecutionSemester>();
+        Map<String, ExecutionSemester> springTermEnrolmentPeriods = new HashMap<String, ExecutionSemester>();
+        Map<String, ExecutionSemester> switcherTermEnrolmentPeriods = null;
 
         for (EnrolmentPeriod enrolmentPeriod : enrolmentPeriods) {
             if (!(enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations)) {
@@ -98,73 +97,71 @@ public class CronSeniorStatuteGrantor extends CronTask {
                     switcherTermEnrolmentPeriods = springTermEnrolmentPeriods;
                 }
 
-                if (enrolmentPeriod.getDegree().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-                    if (switcherTermEnrolmentPeriods.get(DegreeType.BOLONHA_DEGREE) == null) {
-                        switcherTermEnrolmentPeriods.put(DegreeType.BOLONHA_DEGREE, enrolmentPeriod.getExecutionPeriod());
+                if (enrolmentPeriod.getDegree().getDegreeType().isBolonhaDegree()) {
+                    if (switcherTermEnrolmentPeriods.get("BOLONHA_DEGREE") == null) {
+                        switcherTermEnrolmentPeriods.put("BOLONHA_DEGREE", enrolmentPeriod.getExecutionPeriod());
                     }
                 }
 
-                if (enrolmentPeriod.getDegree().getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE) {
-                    if (switcherTermEnrolmentPeriods.get(DegreeType.BOLONHA_MASTER_DEGREE) == null) {
-                        switcherTermEnrolmentPeriods.put(DegreeType.BOLONHA_MASTER_DEGREE, enrolmentPeriod.getExecutionPeriod());
+                if (enrolmentPeriod.getDegree().getDegreeType().isBolonhaMasterDegree()) {
+                    if (switcherTermEnrolmentPeriods.get("BOLONHA_MASTER_DEGREE") == null) {
+                        switcherTermEnrolmentPeriods.put("BOLONHA_MASTER_DEGREE", enrolmentPeriod.getExecutionPeriod());
                     }
                 }
 
-                if (enrolmentPeriod.getDegree().getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-                    if (switcherTermEnrolmentPeriods.get(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) == null) {
-                        switcherTermEnrolmentPeriods.put(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-                                enrolmentPeriod.getExecutionPeriod());
+                if (enrolmentPeriod.getDegree().getDegreeType().isIntegratedMasterDegree()) {
+                    if (switcherTermEnrolmentPeriods.get("BOLONHA_INTEGRATED_MASTER_DEGREE") == null) {
+                        switcherTermEnrolmentPeriods
+                                .put("BOLONHA_INTEGRATED_MASTER_DEGREE", enrolmentPeriod.getExecutionPeriod());
                     }
                 }
             }
         }
 
-        if (fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_DEGREE) == null) {
+        if (fallTermEnrolmentPeriods.get("BOLONHA_DEGREE") == null) {
             return null;
         }
-        if (fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_MASTER_DEGREE) == null) {
+        if (fallTermEnrolmentPeriods.get("BOLONHA_MASTER_DEGREE") == null) {
             return null;
         }
-        if (fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) == null) {
-            return null;
-        }
-
-        if (springTermEnrolmentPeriods.get(DegreeType.BOLONHA_DEGREE) == null) {
-            return null;
-        }
-        if (springTermEnrolmentPeriods.get(DegreeType.BOLONHA_MASTER_DEGREE) == null) {
-            return null;
-        }
-        if (springTermEnrolmentPeriods.get(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) == null) {
+        if (fallTermEnrolmentPeriods.get("BOLONHA_INTEGRATED_MASTER_DEGREE") == null) {
             return null;
         }
 
-        if (!(fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_DEGREE).getExecutionYear() == springTermEnrolmentPeriods.get(
-                DegreeType.BOLONHA_DEGREE).getExecutionYear())) {
+        if (springTermEnrolmentPeriods.get("BOLONHA_DEGREE") == null) {
+            return null;
+        }
+        if (springTermEnrolmentPeriods.get("BOLONHA_MASTER_DEGREE") == null) {
+            return null;
+        }
+        if (springTermEnrolmentPeriods.get("BOLONHA_INTEGRATED_MASTER_DEGREE") == null) {
             return null;
         }
 
-        if (!(fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_MASTER_DEGREE).getExecutionYear() == springTermEnrolmentPeriods
-                .get(DegreeType.BOLONHA_MASTER_DEGREE).getExecutionYear())) {
+        if (!(fallTermEnrolmentPeriods.get("BOLONHA_DEGREE").getExecutionYear() == springTermEnrolmentPeriods.get(
+                "BOLONHA_DEGREE").getExecutionYear())) {
             return null;
         }
 
-        if (!(fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE).getExecutionYear() == springTermEnrolmentPeriods
-                .get(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE).getExecutionYear())) {
+        if (!(fallTermEnrolmentPeriods.get("BOLONHA_MASTER_DEGREE").getExecutionYear() == springTermEnrolmentPeriods.get(
+                "BOLONHA_MASTER_DEGREE").getExecutionYear())) {
             return null;
         }
 
-        if (!(fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_DEGREE) == fallTermEnrolmentPeriods
-                .get(DegreeType.BOLONHA_MASTER_DEGREE))) {
+        if (!(fallTermEnrolmentPeriods.get("BOLONHA_INTEGRATED_MASTER_DEGREE").getExecutionYear() == springTermEnrolmentPeriods
+                .get("BOLONHA_INTEGRATED_MASTER_DEGREE").getExecutionYear())) {
             return null;
         }
 
-        if (!(fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_DEGREE) == fallTermEnrolmentPeriods
-                .get(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))) {
+        if (!(fallTermEnrolmentPeriods.get("BOLONHA_DEGREE") == fallTermEnrolmentPeriods.get("BOLONHA_MASTER_DEGREE"))) {
             return null;
         }
 
-        return fallTermEnrolmentPeriods.get(DegreeType.BOLONHA_DEGREE).getExecutionYear();
+        if (!(fallTermEnrolmentPeriods.get("BOLONHA_DEGREE") == fallTermEnrolmentPeriods.get("BOLONHA_INTEGRATED_MASTER_DEGREE"))) {
+            return null;
+        }
+
+        return fallTermEnrolmentPeriods.get("BOLONHA_DEGREE").getExecutionYear();
     }
 
     protected void massivelyGrantTheFingSeniorStatute(ExecutionYear executionYear) throws InterruptedException {
@@ -180,11 +177,11 @@ public class CronSeniorStatuteGrantor extends CronTask {
                     throw new Error(e);
                 }
 
-                if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+                if (registration.getDegreeType().isBolonhaDegree()) {
                     cntBSc++;
-                } else if (registration.getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE) {
+                } else if (registration.getDegreeType().isBolonhaMasterDegree()) {
                     cntMSc++;
-                } else if (registration.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+                } else if (registration.getDegreeType().isIntegratedMasterDegree()) {
                     cntIM++;
                 }
                 cntTotal++;

@@ -59,7 +59,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 
     @Override
     public DegreeType getDegreeType() {
-        return DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
+        return DegreeType.matching(DegreeType::isAdvancedFormationDiploma).get();
     }
 
     @Override
@@ -68,7 +68,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
         ExecutionYear executionYear = getExecutionYear();
         createHeaders(spreadsheet);
 
-        logger.info("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().getName().getContent());
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
             final Registration registration = studentCurricularPlan.getRegistration();
 

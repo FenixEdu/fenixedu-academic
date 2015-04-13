@@ -289,7 +289,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         final Row row = spreadsheet.addRow();
         row.setCell(student.getNumber());
         row.setCell(student.getPerson().getName());
-        row.setCell(studentCurricularPlan.getDegreeType().getFilteredName());
+        row.setCell(studentCurricularPlan.getDegreeType().getName().getContent());
         row.setCell(studentCurricularPlan.getName());
         row.setCell(studentCurricularPlan.getRegistration().getCycleType(getExecutionSemester().getExecutionYear())
                 .getDescription());

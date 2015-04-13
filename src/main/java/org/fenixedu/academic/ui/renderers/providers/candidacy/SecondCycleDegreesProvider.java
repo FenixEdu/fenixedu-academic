@@ -28,7 +28,8 @@ public class SecondCycleDegreesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        return Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaMasterDegree,
+                DegreeType::isIntegratedMasterDegree));
     }
 
     @Override

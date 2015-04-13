@@ -175,7 +175,12 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getBolonhaDegreeType() {
-        return (bolonhaDegreeType == null && getDegree() != null) ? (bolonhaDegreeType = getDegree().getDegreeType().getName()) : bolonhaDegreeType;
+        return (bolonhaDegreeType == null && getDegree() != null) ? (bolonhaDegreeType =
+                getDegree().getDegreeType().getExternalId()) : bolonhaDegreeType;
+    }
+
+    public DegreeType getDegreeType() {
+        return FenixFramework.getDomainObject(getBolonhaDegreeType());
     }
 
     public void setBolonhaDegreeType(String bolonhaDegreeType) {
@@ -183,7 +188,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getGradeScale() {
-        return (gradeScale == null && getDegree() != null) ? (gradeScale = getDegree().getGradeScale().getName()) : gradeScale;
+        return (gradeScale == null && getDegree() != null) ? (gradeScale =
+                (getDegree().getGradeScale() != null ? getDegree().getGradeScale().getName() : null)) : gradeScale;
     }
 
     public void setGradeScale(String gradeScale) {
@@ -211,7 +217,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             if (getDegree() != null) {
                 ectsCredits = getDegree().getEctsCredits();
             } else if (getBolonhaDegreeType() != null && !getBolonhaDegreeType().equals(NO_SELECTION)) {
-                ectsCredits = DegreeType.valueOf(getBolonhaDegreeType()).getDefaultEctsCredits();
+                ectsCredits = 0.0;
             }
         }
         return ectsCredits;
@@ -235,9 +241,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
 
-        for (DegreeType degreeType : DegreeType.NOT_EMPTY_BOLONHA_VALUES) {
-            result.add(new SelectItem(degreeType.name(), BundleUtil.getString(Bundle.ENUMERATION, degreeType.getName())));
-        }
+        DegreeType.all().filter(type -> !type.isEmpty()).filter(DegreeType::isBolonhaType).forEach(type -> {
+            result.add(new SelectItem(type.getExternalId(), type.getName().getContent()));
+        });
 
         return result;
     }
@@ -275,15 +281,15 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         if (this.name == null || this.name.length() == 0 || this.nameEn == null || this.nameEn.length() == 0
-                || this.acronym == null || this.acronym.length() == 0) {
+                || this.acronym == null || this.acronym.length() == 0 || this.gradeScale.equals(this.NO_SELECTION)) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "please.fill.mandatory.fields"));
             return "";
         }
 
         try {
             AdministrativeOffice administrativeOffice = FenixFramework.getDomainObject(getAcademicAdminOfficeId());
-            CreateDegree.run(this.name, this.nameEn, this.acronym, DegreeType.valueOf(this.bolonhaDegreeType),
-                    this.getEctsCredits(), null, this.prevailingScientificArea, administrativeOffice);
+            CreateDegree.run(this.name, this.nameEn, this.acronym, FenixFramework.getDomainObject(this.bolonhaDegreeType),
+                    this.getEctsCredits(), GradeScale.valueOf(gradeScale), this.prevailingScientificArea, administrativeOffice);
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
@@ -300,9 +306,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String editDegree() {
-        if (this.bolonhaDegreeType != null && this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// ||
-            // this.gradeScale.equals(this.NO_SELECTION))
-            // {
+        if (this.bolonhaDegreeType != null && this.bolonhaDegreeType.equals(this.NO_SELECTION)
+                || this.gradeScale.equals(this.NO_SELECTION)) {
             this.setErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "choose.request"));
             return "";
         }
@@ -316,8 +321,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         try {
-            EditDegree.run(this.getDegreeId(), name, nameEn, this.acronym, DegreeType.valueOf(getBolonhaDegreeType()),
-                    this.getEctsCredits(), null, this.prevailingScientificArea, getSelectedExecutionYear(), getCode(),
+            EditDegree.run(this.getDegreeId(), name, nameEn, this.acronym,
+                    FenixFramework.getDomainObject(getBolonhaDegreeType()), this.getEctsCredits(),
+                    GradeScale.valueOf(gradeScale), this.prevailingScientificArea, getSelectedExecutionYear(), getCode(),
                     getMinistryCode());
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));

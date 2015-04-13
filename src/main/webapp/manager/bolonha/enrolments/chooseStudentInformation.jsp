@@ -93,7 +93,7 @@
 						
 						<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= StudentCurricularPlan.class.getName() %>">
 							<fr:slot name="startDateYearMonthDay" key="label.startDate" />
-							<fr:slot name="degreeCurricularPlan.degree.tipoCurso.localizedName" key="label.degreeType" />
+							<fr:slot name="degreeCurricularPlan.degree.degreeType.name.content" key="label.degreeType" />
 							<fr:slot name="degreeCurricularPlan.name" key="label.curricularPlan" />
 						</fr:schema>
 						

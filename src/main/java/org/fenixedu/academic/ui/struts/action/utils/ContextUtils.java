@@ -275,7 +275,7 @@ public class ContextUtils {
 
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final Degree degree = degreeCurricularPlan.getDegree();
-            final String degreeTypeString = BundleUtil.getString(Bundle.ENUMERATION, degree.getDegreeType().toString());
+            final String degreeTypeString = degree.getDegreeType().getName().getContent();
             final StringBuilder name = new StringBuilder();
             name.append(degreeTypeString);
             name.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, "label.in")).append(" ");

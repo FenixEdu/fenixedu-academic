@@ -20,6 +20,8 @@ package org.fenixedu.academic.ui.struts.action.manager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,6 +38,8 @@ import org.fenixedu.academic.domain.EmptyDegreeCurricularPlan;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
@@ -75,7 +79,8 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
         @Forward(name = "editDepartment", path = "/manager/editDepartment.jsp"),
         @Forward(name = "createCompetenceCourseGroup", path = "/manager/createCompetenceCourseGroup.jsp"),
         @Forward(name = "associatePersonUnit", path = "/manager/associatePersonUnit.jsp"),
-        @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp") })
+        @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp"),
+        @Forward(name = "createDegreeType", path = "/manager/createDegreeType.jsp") })
 public class ManageAssociatedObjects extends FenixDispatchAction {
     public static class AssociatedObjectsBean implements Serializable {
         private boolean active;
@@ -265,6 +270,123 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         public ScientificAreaUnit scientificAreaUnit;
     }
 
+    public static class DegreeTypeBean implements Serializable {
+
+        private static final long serialVersionUID = 387599179531038042L;
+
+        private LocalizedString name;
+        private DegreeType selected;
+        private boolean empty;
+        private boolean bolonha = true;
+        private boolean degree;
+        private boolean masterDegree;
+        private boolean dea;
+        private boolean dfa;
+        private List<CycleType> cycleTypes;
+        private List<CycleType> cyclesToEnrol;
+
+        public DegreeTypeBean() {
+        }
+
+        public DegreeTypeBean(DegreeType type) {
+            this.selected = type;
+            this.name = type.getName();
+            this.empty = type.getEmpty();
+            this.bolonha = type.getBolonha();
+            this.degree = type.getDegreeType();
+            this.masterDegree = type.getMasterDegree();
+            this.dea = type.getDea();
+            this.dfa = type.getDfa();
+            this.cycleTypes = new ArrayList<>(type.getCycleTypes());
+            this.cyclesToEnrol = new ArrayList<>(type.getSupportedCyclesToEnrol());
+        }
+
+        public LocalizedString getName() {
+            return name;
+        }
+
+        public void setName(LocalizedString name) {
+            this.name = name;
+        }
+
+        public DegreeType getSelected() {
+            return selected;
+        }
+
+        public void setSelected(DegreeType selected) {
+            this.selected = selected;
+        }
+
+        public boolean isEmpty() {
+            return empty;
+        }
+
+        public void setEmpty(boolean empty) {
+            this.empty = empty;
+        }
+
+        public boolean isBolonha() {
+            return bolonha;
+        }
+
+        public void setBolonha(boolean bolonha) {
+            this.bolonha = bolonha;
+        }
+
+        public boolean isDegree() {
+            return degree;
+        }
+
+        public void setDegree(boolean degree) {
+            this.degree = degree;
+        }
+
+        public boolean isMasterDegree() {
+            return masterDegree;
+        }
+
+        public void setMasterDegree(boolean masterDegree) {
+            this.masterDegree = masterDegree;
+        }
+
+        public boolean isDea() {
+            return dea;
+        }
+
+        public void setDea(boolean dea) {
+            this.dea = dea;
+        }
+
+        public boolean isDfa() {
+            return dfa;
+        }
+
+        public void setDfa(boolean dfa) {
+            this.dfa = dfa;
+        }
+
+        public List<CycleType> getCycleTypes() {
+            return cycleTypes;
+        }
+
+        public void setCycleTypes(List<CycleType> cycleTypes) {
+            this.cycleTypes = cycleTypes;
+        }
+
+        public List<CycleType> getCyclesToEnrol() {
+            return cyclesToEnrol;
+        }
+
+        public void setCyclesToEnrol(List<CycleType> cyclesToEnrol) {
+            this.cyclesToEnrol = cyclesToEnrol;
+        }
+
+        public Collection<CycleType> getPossibleCycleTypes() {
+            return Arrays.asList(CycleType.values());
+        }
+
+    }
+
     @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -274,8 +396,36 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         request.setAttribute("departments", departments);
         request.setAttribute("offices", offices);
         request.setAttribute("emptyDegree", EmptyDegree.getInstance());
+        request.setAttribute("degreeTypes", Bennu.getInstance().getDegreeTypeSet());
 
         return mapping.findForward("list");
+    }
+
+    public ActionForward prepareCreateDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DegreeType currentType = getDomainObject(request, "degreeTypeId");
+        request.setAttribute("bean", currentType == null ? new DegreeTypeBean() : new DegreeTypeBean(currentType));
+        return mapping.findForward("createDegreeType");
+    }
+
+    public ActionForward createDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DegreeTypeBean bean = getRenderedObject("bean");
+        if (bean != null) {
+            atomic(() -> {
+                DegreeType type = bean.getSelected() == null ? new DegreeType(bean.getName()) : bean.getSelected();
+                type.setName(bean.getName());
+                type.setEmpty(bean.isEmpty());
+                type.setBolonha(bean.isBolonha());
+                type.setDegreeType(bean.isDegree());
+                type.setMasterDegree(bean.isMasterDegree());
+                type.setDea(bean.isDea());
+                type.setDfa(bean.isDfa());
+                type.setCycleTypes(bean.getCycleTypes());
+                type.setCycleTypesToEnrol(bean.getCyclesToEnrol());
+            });
+        }
+        return list(mapping, form, request, response);
     }
 
     public ActionForward prepareCreateDepartment(ActionMapping mapping, ActionForm form, HttpServletRequest request,

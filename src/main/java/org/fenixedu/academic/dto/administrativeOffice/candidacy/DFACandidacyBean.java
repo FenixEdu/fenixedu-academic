@@ -39,7 +39,7 @@ public class DFACandidacyBean implements Serializable {
     private ExecutionYear executionYear;
 
     public DFACandidacyBean() {
-        degreeType = DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
+        degreeType = DegreeType.matching(DegreeType::isAdvancedFormationDiploma).orElse(null);
     }
 
     public Degree getDegree() {

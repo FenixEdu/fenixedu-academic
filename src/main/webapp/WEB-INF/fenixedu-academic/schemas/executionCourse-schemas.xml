@@ -503,6 +503,7 @@
 	<slot name="degreeTypes" key="label.degreeType" layout="option-select">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreeTypesProvider" />
 		<property name="eachSchema" value="degree.type"/>
+        <property name="eachLayout" value="values-dash"/>
 	</slot>
 </schema>
 
@@ -511,7 +512,7 @@
 </schema>
 
 <schema name="degree.type" type="org.fenixedu.academic.domain.degree.DegreeType">
-	<slot name="name" key="label.degreeType"/>
+	<slot name="name.content" key="label.degreeType"/>
 </schema>
 
 <schema name="CompetenceCourse.view.name" type="org.fenixedu.academic.domain.CompetenceCourse">

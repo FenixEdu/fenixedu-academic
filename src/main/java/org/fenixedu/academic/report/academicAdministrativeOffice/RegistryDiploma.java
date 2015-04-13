@@ -260,7 +260,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.both")).append(" ");
         }
         if (!degree.isEmpty()) {
-            res.append(degreeType.getFilteredName(getLocale()));
+            res.append(degreeType.getName().getContent(getLocale()));
         }
         return res.toString();
     }
@@ -280,7 +280,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             }
 
             if (!degree.isEmpty()) {
-                res.append(degreeType.getFilteredName(getLocale()));
+                res.append(degreeType.getName().getContent(getLocale()));
                 res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in")).append(" ");
             }
 

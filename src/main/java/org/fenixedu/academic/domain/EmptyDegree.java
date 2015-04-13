@@ -29,7 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -44,7 +44,13 @@ public class EmptyDegree extends EmptyDegree_Base {
     private EmptyDegree() {
         super();
         setRootDomainObject(Bennu.getInstance());
-        super.setDegreeType(DegreeType.EMPTY);
+        super.setDegreeType(DegreeType.matching(DegreeType::isEmpty).orElseGet(
+                () -> {
+                    DegreeType type =
+                            new DegreeType(BundleUtil.getLocalizedString("resources.EnumerationResources", "DegreeType.EMPTY"));
+                    type.setEmpty(true);
+                    return type;
+                }));
     }
 
     @Override
@@ -109,14 +115,9 @@ public class EmptyDegree extends EmptyDegree_Base {
         throw new DomainException("EmptyDegree.not.available");
     }
 
-    @Deprecated
     @Override
-    public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
-        throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+    public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator,
+            AcademicPeriod duration) {
         throw new DomainException("EmptyDegree.not.available");
     }
 
@@ -343,16 +344,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     @Override
     public boolean isAnyThesisAvailable() {
         return false;
-    }
-
-    @Override
-    public List<Student> getSecondCycleStudents(ExecutionYear executionYear) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Student> getFirstCycleStudents(ExecutionYear executionYear) {
-        return Collections.emptyList();
     }
 
     @Override

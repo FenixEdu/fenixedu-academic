@@ -233,7 +233,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         }
 
         public String getDegreeTypeName() {
-            return event.getDegree().getDegreeType().getLocalizedName();
+            return event.getDegree().getDegreeType().getName().getContent();
         }
 
         public String getWhenOccured() {

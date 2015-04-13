@@ -237,8 +237,8 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 
     private Collection<Degree> readFirstYearFirstTimeValidDegrees() {
         final Collection<Degree> result = new ArrayList<Degree>();
-        result.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
-        result.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+        result.addAll(Degree.readAllMatching(DegreeType::isBolonhaDegree));
+        result.addAll(Degree.readAllMatching(DegreeType::isIntegratedMasterDegree));
         return removeDegreesWithNoVacancy(result);
     }
 

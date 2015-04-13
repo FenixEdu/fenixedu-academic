@@ -78,7 +78,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
-                .appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ")
+                .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
                 .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
@@ -154,7 +154,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = super.getDescription();
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
+        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
         labelFormatter.appendLabel(getExecutionYear().getYear());
         return labelFormatter;

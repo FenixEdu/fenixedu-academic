@@ -75,7 +75,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
     @Override
     public DegreeType getDegreeType() {
-        return DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return DegreeType.matching(DegreeType::isAdvancedSpecializationDiploma).get();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         int civilYear = executionYear.getBeginCivilYear();
         fillSpreadsheet(spreadsheet);
 
-        logger.info("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().getName().getContent());
 
         List<PhdIndividualProgramProcess> retrieveProcesses = retrieveProcesses(executionYear);
 
@@ -305,7 +305,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         row.setCell(process.getPhdProgram().getName().getContent());
 
         // Tipo Curso
-        row.setCell(registration != null ? registration.getDegreeType().getLocalizedName() : "n/a");
+        row.setCell(registration != null ? registration.getDegreeType().getName().getContent() : "n/a");
 
         // Nome Curso
         row.setCell(registration != null ? registration.getDegree().getNameI18N().getContent() : "n/a");

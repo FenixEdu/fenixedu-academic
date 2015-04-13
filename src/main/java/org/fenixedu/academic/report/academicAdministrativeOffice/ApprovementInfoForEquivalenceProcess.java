@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.OptionalEnrolment;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
@@ -194,7 +193,7 @@ public class ApprovementInfoForEquivalenceProcess {
     }
 
     private static boolean isDEARegistration(Registration registration) {
-        return registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return registration.getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     static private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,

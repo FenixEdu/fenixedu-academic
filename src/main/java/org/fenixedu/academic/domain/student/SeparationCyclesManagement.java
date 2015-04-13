@@ -19,10 +19,9 @@
 package org.fenixedu.academic.domain.student;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
@@ -78,8 +77,8 @@ import org.joda.time.YearMonthDay;
 
 public class SeparationCyclesManagement {
 
-    private static final List<DegreeType> ACCEPTED_DEGREE_TYPES = Arrays.asList(DegreeType.BOLONHA_DEGREE,
-            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    private static final Predicate<DegreeType> ACCEPTED_DEGREE_TYPES = DegreeType.oneOf(DegreeType::isBolonhaDegree,
+            DegreeType::isIntegratedMasterDegree);
 
     public SeparationCyclesManagement() {
     }
@@ -103,7 +102,7 @@ public class SeparationCyclesManagement {
             throw new DomainException("error.SeparationCyclesManagement.conclusion.processed");
         }
 
-        if (!ACCEPTED_DEGREE_TYPES.contains(studentCurricularPlan.getDegreeType())) {
+        if (!ACCEPTED_DEGREE_TYPES.test(studentCurricularPlan.getDegreeType())) {
             throw new DomainException("error.SeparationCyclesManagement.invalid.degreeType");
         }
 

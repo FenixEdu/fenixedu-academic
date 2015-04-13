@@ -53,7 +53,7 @@ public class DegreeCandidacyForGraduatedPersonDegreesProvider implements DataPro
     }
 
     private Collection<Degree> getDegrees(Object source) {
-        return Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        return Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree));
     }
 
     @Override

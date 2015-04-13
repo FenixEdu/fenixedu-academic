@@ -942,7 +942,7 @@ public class FenixAPIv1 {
         String name = degree.getNameI18N(executionYear).getContent(I18N.getLocale());
 
         String type = degree.getDegreeTypeName();
-        String typeName = degree.getDegreeType().getFilteredName();
+        String typeName = degree.getDegreeType().getName().getContent();
         String degreeUrl = degree.getSiteUrl();
 
         for (Space campus : degree.getCampus(executionYear)) {

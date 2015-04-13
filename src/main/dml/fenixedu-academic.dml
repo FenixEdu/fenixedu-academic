@@ -78,7 +78,6 @@ enum org.fenixedu.academic.domain.curriculum.CurricularCourseType               
 enum org.fenixedu.academic.domain.curriculum.EnrollmentCondition                                                       as EnrollmentCondition;
 enum org.fenixedu.academic.domain.curriculum.EnrollmentState                                                           as EnrollmentState;
 enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType                                                   as EnrolmentEvaluationType;
-enum org.fenixedu.academic.domain.degree.DegreeType                                                                    as DegreeType;
 enum org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState                                as DegreeCurricularPlanState;
 enum org.fenixedu.academic.domain.degreeStructure.BranchType                                                           as BranchType;
 enum org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel                                                as CompetenceCourseLevel;
@@ -434,6 +433,12 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
     internalizeWith importFromString();
 }
 
+valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes {
+    externalizeWith {
+        JsonElement toJson();
+    }
+}
+
 /*
 *
 * Class definitions
@@ -564,14 +569,25 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
 	class AcademicProgram  {
 	}
 
+	public class degree.DegreeType {
+	    public LocalizedString name (REQUIRED);
+	    public boolean empty;
+	    public boolean bolonha;
+	    public boolean degreeType;
+	    public boolean masterDegree;
+	    public boolean dea;
+	    public boolean dfa;
+	    protected CycleTypes cycles (REQUIRED);
+	    protected CycleTypes cyclesToEnrol (REQUIRED);
+	}
+
     class Degree extends AcademicProgram {
         Double ectsCredits;
-        GradeScale gradeScale;
+        GradeScale gradeScale (REQUIRED);
         String nameEn;
         String nome;
         String prevailingScientificArea;
         String sigla;
-        DegreeType tipoCurso;
         String ministryCode;
         String idCardName;
         String siteUrl;
@@ -2153,7 +2169,6 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
         }
 
             class curricularRules.AnyCurricularCourse extends curricularRules.Rule {
-                DegreeType bolonhaDegreeType;
                 Double credits;
                 Integer curricularPeriodOrder;
                 Integer maximumYear;
@@ -3843,7 +3858,6 @@ class QueueJobResultFile extends documents.GeneratedDocument{}
 
 class reports.GepReportFile extends QueueJobWithFile {
     String type;
-    DegreeType degreeType;
 }
 
 
@@ -4526,7 +4540,6 @@ class accessControl.PersistentRoleGroup extends .org.fenixedu.bennu.core.domain.
 class accessControl.FenixPredicateGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentStudentGroup extends accessControl.FenixPredicateGroup {
-    public DegreeType degreeType;
     public CycleType cycle;
 }
 
@@ -4543,7 +4556,6 @@ class accessControl.PersistentTeacherGroup extends .org.fenixedu.bennu.core.doma
 class accessControl.PersistentScientificCommissionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentCoordinatorGroup extends accessControl.FenixPredicateGroup {
-    public DegreeType degreeType;
 }
 
 class accessControl.PersistentAcademicOperationGroup extends accessControl.FenixPredicateGroup {
@@ -4870,6 +4882,24 @@ relation DegreeDegreeLog {
 	DegreeLog playsRole degreeLogs {
 		multiplicity*;
 	}
+}
+
+relation DegreeTypeDegree {
+    public degree.DegreeType playsRole degreeType {
+        multiplicity 1..1;
+    }
+    public Degree playsRole degree {
+        multiplicity *;
+    }
+}
+
+relation BennuDegreeType {
+    public degree.DegreeType playsRole degreeType {
+        multiplicity *;
+    }
+    protected .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
 }
 
 relation PersonViewedPersonInformationLog {
@@ -6150,6 +6180,13 @@ relation AnyCurricularCourseDegree {
         multiplicity *;
     }
     Degree playsRole degree;
+}
+
+relation AnyCurricularCourseDegreeType {
+    curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
+        multiplicity *;
+    }
+    degree.DegreeType playsRole bolonhaDegreeType;
 }
 
 relation AnyCurricularCourseDepartmentUnit {
@@ -10602,6 +10639,13 @@ relation ExecutionYearGepReportFile {
     }
 }
 
+relation GepReportFileDegreeType {
+    degree.DegreeType playsRole degreeType;
+    reports.GepReportFile playsRole gepReportFile{
+            multiplicity *;
+    }
+}
+
 relation QueueJobWithFileResult{
     QueueJobWithFile playsRole job;
     QueueJobResultFile playsRole file;
@@ -11721,6 +11765,15 @@ relation PersistentStudentGroupDegree {
     }
 }
 
+relation PersistentStudentGroupDegreeType {
+    public accessControl.PersistentStudentGroup playsRole studentGroup {
+        multiplicity *;
+    }
+    public degree.DegreeType playsRole degreeType {
+        multiplicity 0..1;
+    }
+}
+
 relation PersistentStudentGroupExecutionCourse {
     public accessControl.PersistentStudentGroup playsRole studentGroup {
         multiplicity *;
@@ -11819,6 +11872,16 @@ relation PersistentCoordinatorGroupDegree {
         multiplicity 0..1;
     }
 }
+
+relation PersistentCoordinatorGroupDegreeType {
+    public accessControl.PersistentCoordinatorGroup playsRole coordinatorGroup {
+        multiplicity *;
+    }
+    public degree.DegreeType playsRole degreeType {
+        multiplicity 0..1;
+    }
+}
+
 
 relation PersistentUnitGroupUnit {
     public accessControl.PersistentUnitGroup playsRole unitGroup {

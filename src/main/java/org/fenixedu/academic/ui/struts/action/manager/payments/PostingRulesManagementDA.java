@@ -21,11 +21,10 @@ package org.fenixedu.academic.ui.struts.action.manager.payments;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +46,6 @@ import org.fenixedu.academic.domain.accounting.postingRules.gratuity.Specializat
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -146,13 +144,9 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward managePostGraduationRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Set<DegreeType> degreeTypes = new HashSet<DegreeType>(3);
-        degreeTypes.add(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
-        degreeTypes.add(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
-        degreeTypes.add(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
-
-        request.setAttribute("degreeCurricularPlans",
-                DegreeCurricularPlan.readByDegreeTypesAndState(degreeTypes, DegreeCurricularPlanState.ACTIVE));
+        request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.readByDegreeTypesAndState(DegreeType.oneOf(
+                DegreeType::isAdvancedFormationDiploma, DegreeType::isAdvancedSpecializationDiploma,
+                DegreeType::isSpecializationDegree), DegreeCurricularPlanState.ACTIVE));
 
         request.setAttribute("phdPrograms", Bennu.getInstance().getPhdProgramsSet());
 
@@ -342,8 +336,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final List<DegreeCurricularPlan> degreeCurricularPlans =
-                DegreeCurricularPlan.readByDegreeTypesAndState(DegreeType.getDegreeTypesFor(AdministrativeOfficeType.DEGREE),
-                        null);
+                DegreeCurricularPlan.readByDegreeTypesAndState(type -> true, null);
         DegreeCurricularPlan empty = DegreeCurricularPlan.readEmptyDegreeCurricularPlan();
 
         if (empty != null) {
@@ -564,12 +557,12 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return mapping.findForward("showPostGraduationDegreeCurricularPlanPostingRules");
     }
 
-    private static final List<DegreeType> CREATE_GRATUITIES_DEGREE_TYPES = Arrays.asList(new DegreeType[] {
-            DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE,
-            DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA });
+    private static final Predicate<DegreeType> CREATE_GRATUITIES_DEGREE_TYPES = DegreeType.oneOf(
+            DegreeType::isAdvancedFormationDiploma, DegreeType::isSpecializationDegree,
+            DegreeType::isAdvancedSpecializationDiploma);
 
     private boolean allowCreateGratuityPR(final DegreeCurricularPlan degreeCurricularPlan) {
-        if (!CREATE_GRATUITIES_DEGREE_TYPES.contains(degreeCurricularPlan.getDegreeType())) {
+        if (!CREATE_GRATUITIES_DEGREE_TYPES.test(degreeCurricularPlan.getDegreeType())) {
             return false;
         }
 
@@ -577,7 +570,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     private boolean allowCreateStandaloneGratuityPR(final DegreeCurricularPlan degreeCurricularPlan) {
-        if (!CREATE_GRATUITIES_DEGREE_TYPES.contains(degreeCurricularPlan.getDegreeType())) {
+        if (!CREATE_GRATUITIES_DEGREE_TYPES.test(degreeCurricularPlan.getDegreeType())) {
             return false;
         }
 

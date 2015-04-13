@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.contacts.PartyContactValidationState;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
@@ -261,11 +260,6 @@ public class FenixBootstrapper {
             return "DEP" + i;
         }
 
-        private void createDegreeUnits(final AggregateUnit degreeUnits) {
-            for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
-                createAggregateUnit(degreeUnits, degreeType.getName());
-            }
-        }
     }
 
     private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {

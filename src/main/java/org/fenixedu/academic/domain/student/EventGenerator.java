@@ -32,9 +32,7 @@ public class EventGenerator {
 
         final AdministrativeOffice administrativeOffice = studentCurricularPlan.getDegree().getAdministrativeOffice();
 
-        switch (studentCurricularPlan.getDegree().getDegreeType()) {
-
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+        if (studentCurricularPlan.getDegree().getDegreeType().isAdvancedFormationDiploma()) {
 
             final AccountingEventsManager accountingEventsManager = new AccountingEventsManager();
             final ExecutionYear executionYearToCreateEvents =
@@ -45,10 +43,6 @@ public class EventGenerator {
             new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
 
             accountingEventsManager.createInsuranceEvent(studentCurricularPlan, executionYearToCreateEvents, false);
-
-            break;
-        default:
-            break;
 
         }
 

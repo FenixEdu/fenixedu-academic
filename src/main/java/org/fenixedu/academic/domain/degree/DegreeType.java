@@ -24,1158 +24,128 @@
 
 package org.fenixedu.academic.domain.degree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
+import java.util.Optional;
 import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.CycleTypes;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 /**
  * 
  * @author Nuno Nunes & Joana Mota
  */
-public enum DegreeType {
-
-    BACHELOR(GradeScale.TYPE20, AcademicPeriod.THREE_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return localizedName(locale);
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return Collections.emptySet();
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return Collections.emptySet();
-        }
-    },
-
-    DEGREE(GradeScale.TYPE20, AcademicPeriod.FIVE_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            final StringBuilder result = new StringBuilder(localizedName(locale));
-
-            final String remove =
-                    " (" + Integer.toString(getYears()) + " " + BundleUtil.getString(Bundle.APPLICATION, locale, "years") + ")";
-
-            if (result.toString().contains(remove)) {
-                result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
-            }
-
-            return result.toString();
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return Collections.emptySet();
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return Collections.emptySet();
-        }
-
-    },
-
-    MASTER_DEGREE(GradeScale.TYPE5, AcademicPeriod.TWO_YEAR, false, // canCreateStudent
-            true, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return localizedName(locale);
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return Collections.emptySet();
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return Collections.emptySet();
-        }
-
-    },
-
-    PHD(GradeScale.TYPE20, AcademicPeriod.FIVE_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return localizedName(locale);
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return Collections.emptySet();
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return Collections.emptySet();
-        }
-
-    },
-
-    SPECIALIZATION_DEGREE(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            false // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return localizedName(locale);
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return Collections.emptySet();
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return Collections.emptySet();
-        }
-
-    },
-
-    BOLONHA_DEGREE(GradeScale.TYPE20, AcademicPeriod.THREE_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            final StringBuilder result = new StringBuilder(localizedName(locale));
-
-            final String remove = " Bolonha";
-            if (result.toString().contains(remove)) {
-                result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
-            }
-
-            return result.toString();
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return FIRST_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return FIRST_AND_SECOND_CYCLE_TYPE;
-        }
-
-        @Override
-        public boolean canRemoveEnrolmentIn(CycleType cycleType) {
-            return cycleType == CycleType.SECOND_CYCLE;
-        }
-
-        @Override
-        public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
-            return hasConditionsToFinishBachelorDegree(registration, executionYear);
-        }
-
-    },
-
-    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, AcademicPeriod.TWO_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            final StringBuilder result = new StringBuilder(localizedName(locale));
-
-            final String remove = " Bolonha";
-            if (result.toString().contains(remove)) {
-                result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
-            }
-
-            return result.toString();
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return SECOND_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return SECOND_CYCLE_TYPE;
-        }
-
-        @Override
-        public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
-            return hasConditionsToFinishMasterDegree(registration, executionYear);
-        }
-
-    },
-
-    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, AcademicPeriod.FIVE_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            final StringBuilder result = new StringBuilder(localizedName(locale));
-
-            final String remove = " Bolonha";
-            if (result.toString().contains(remove)) {
-                result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
-            }
-
-            return result.toString();
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return FIRST_AND_SECOND_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return FIRST_AND_SECOND_CYCLE_TYPE;
-        }
-
-        @Override
-        public boolean canRemoveEnrolmentIn(CycleType cycleType) {
-            return true;
-        }
-
-        /**
-         * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
-         * 
-         */
-        @Deprecated
-        @Override
-        public Integer getYears(final CycleType cycleType) {
-            if (cycleType == null) {
-                return getYears();
-            }
-
-            switch (cycleType) {
-            case FIRST_CYCLE:
-                return BOLONHA_DEGREE.getYears(cycleType);
-            case SECOND_CYCLE:
-                return BOLONHA_MASTER_DEGREE.getYears(cycleType);
-            }
-
-            return null;
-        }
-
-        @Override
-        public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
-            if (!isNotEnrolledInFirstCycleOrIsConcluded(registration, executionYear)) {
-                return false;
-            }
-
-            return hasConditionsToFinishMasterDegree(registration, executionYear);
-        }
-
-    },
-
-    BOLONHA_PHD(GradeScale.TYPE20, AcademicPeriod.FIVE_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return localizedName(locale);
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return THIRD_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return THIRD_CYCLE_TYPE;
-        }
-
-    },
-
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
-            true, // canCreateStudentOnlyWithCandidacy
-            false // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            final StringBuilder result = new StringBuilder(localizedName(locale));
-
-            final String remove = " Bolonha";
-            if (result.toString().contains(remove)) {
-                result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
-            }
-
-            return result.toString();
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return THIRD_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return THIRD_CYCLE_TYPE;
-        }
-
-    },
-
-    BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA(GradeScale.TYPE20, AcademicPeriod.TWO_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            false // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            final StringBuilder result = new StringBuilder(localizedName(locale));
-
-            final String remove = " Bolonha";
-            if (result.toString().contains(remove)) {
-                result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
-            }
-
-            return result.toString();
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return THIRD_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return THIRD_CYCLE_TYPE;
-        }
-
-    },
-
-    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            false // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            final StringBuilder result = new StringBuilder(localizedName(locale));
-
-            final String remove = " Bolonha";
-            if (result.toString().contains(remove)) {
-                result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
-            }
-
-            return result.toString();
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return SPECIALIZATION_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return SPECIALIZATION_CYCLE_TYPE;
-        }
-
-    },
-
-    FREE_DEGREE(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            false // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return localizedName(locale);
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return SINGLE_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return SINGLE_CYCLE_TYPE;
-        }
-
-    },
-
-    BOLONHA_POST_DOCTORAL_DEGREE(GradeScale.TYPE20, AcademicPeriod.THREE_YEAR, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            true // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return name();
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return DegreeType.class.getSimpleName() + "." + name();
-        }
-
-        @Override
-        protected String localizedName() {
-            return localizedName(I18N.getLocale());
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
-        }
-
-        @Override
-        protected String filteredName() {
-            return filteredName(I18N.getLocale());
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return localizedName(locale);
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.MASTER_DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return SPECIALIZATION_CYCLE_TYPE;
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return SPECIALIZATION_CYCLE_TYPE;
-        }
-
-    },
-
-    EMPTY(null, null, true, // canCreateStudent
-            false, // canCreateStudentOnlyWithCandidacy
-            false // qualifiesForGraduateTitle
-    ) {
-
-        @Override
-        protected String concreteName() {
-            return StringUtils.EMPTY;
-        }
-
-        @Override
-        protected String qualifiedName() {
-            return StringUtils.EMPTY;
-        }
-
-        @Override
-        protected String localizedName() {
-            return StringUtils.EMPTY;
-        }
-
-        @Override
-        protected String localizedName(Locale locale) {
-            return StringUtils.EMPTY;
-        }
-
-        @Override
-        protected String filteredName() {
-            return StringUtils.EMPTY;
-        }
-
-        @Override
-        protected String filteredName(Locale locale) {
-            return StringUtils.EMPTY;
-        }
-
-        @Override
-        protected AdministrativeOfficeType administrativeOfficeType() {
-            return AdministrativeOfficeType.DEGREE;
-        }
-
-        @Override
-        protected Collection<CycleType> cycleTypes() {
-            return Collections.emptySet();
-        }
-
-        @Override
-        protected Collection<CycleType> supportedCyclesToEnrol() {
-            return Collections.emptySet();
-        }
-
-    };
-
-    private static final String GRADUATE_TITLE_SUFFIX = ".graduate.title";
-
-    public static final Set<DegreeType> NOT_EMPTY_VALUES;
-    static {
-        final Set<DegreeType> result = new HashSet<DegreeType>();
-        for (final DegreeType degreeType : values()) {
-            if (!degreeType.isEmpty()) {
-                result.add(degreeType);
-            }
-        }
-        NOT_EMPTY_VALUES = Collections.unmodifiableSet(result);
+public class DegreeType extends DegreeType_Base implements Comparable<DegreeType> {
+
+    public DegreeType(LocalizedString name) {
+        setBennu(Bennu.getInstance());
+        setName(name);
+        setCycles(new CycleTypes());
+        setCyclesToEnrol(new CycleTypes());
     }
 
-    public static final List<DegreeType> NOT_EMPTY_BOLONHA_VALUES;
-    static {
-        final List<DegreeType> result = new ArrayList<DegreeType>();
-        for (final DegreeType degreeType : NOT_EMPTY_VALUES) {
-            if (degreeType.isBolonhaType()) {
-                result.add(degreeType);
-            }
-        }
-        NOT_EMPTY_BOLONHA_VALUES = Collections.unmodifiableList(result);
+    // TODO Provide a proper implementation for this
+    public final boolean qualifiesForGraduateTitle() {
+        throw new UnsupportedOperationException("NYI");
     }
 
-    private static final Set<CycleType> FIRST_CYCLE_TYPE = Collections.singleton(CycleType.FIRST_CYCLE);
-
-    private static final Set<CycleType> SECOND_CYCLE_TYPE = Collections.singleton(CycleType.SECOND_CYCLE);
-
-    private static final Set<CycleType> THIRD_CYCLE_TYPE = Collections.singleton(CycleType.THIRD_CYCLE);
-
-    private static final Set<CycleType> SPECIALIZATION_CYCLE_TYPE = Collections.singleton(CycleType.SPECIALIZATION_CYCLE);
-
-    private static final Set<CycleType> SINGLE_CYCLE_TYPE = Collections.singleton(CycleType.SINGLE_CYCLE);
-
-    private static final List<CycleType> FIRST_AND_SECOND_CYCLE_TYPE = Collections.unmodifiableList(Arrays
-            .asList(new CycleType[] { CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE }));
-
-    private GradeScale gradeScale;
-
-    private AcademicPeriod academicPeriod;
-
-    private boolean canCreateStudent;
-
-    private boolean canCreateStudentOnlyWithCandidacy;
-
-    private boolean qualifiesForGraduateTitle;
-
-    private DegreeType(GradeScale gradeScale, AcademicPeriod academicPeriod, boolean canCreateStudent,
-            boolean canCreateStudentOnlyWithCandidacy, boolean qualifiesForGraduateTitle) {
-        this.gradeScale = gradeScale;
-        this.academicPeriod = academicPeriod;
-        this.canCreateStudent = canCreateStudent;
-        this.canCreateStudentOnlyWithCandidacy = canCreateStudentOnlyWithCandidacy;
-        this.qualifiesForGraduateTitle = qualifiesForGraduateTitle;
+    // TODO Provide a proper implementation for this
+    public final boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
+        throw new UnsupportedOperationException("NYI");
     }
 
-    public String getName() {
-        return concreteName();
+    // TODO Provide a proper implementation for this
+    final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
+        throw new UnsupportedOperationException("NYI");
     }
 
-    abstract protected String concreteName();
-
-    public String getQualifiedName() {
-        return qualifiedName();
+    // TODO Provide a proper implementation for this
+    public boolean canRemoveEnrolmentIn(final CycleType cycleType) {
+        throw new UnsupportedOperationException("NYI");
     }
 
-    abstract protected String qualifiedName();
-
-    public String getLocalizedName() {
-        return localizedName();
+    public final Collection<CycleType> getCycleTypes() {
+        return getCycles().getTypes();
     }
 
-    abstract protected String localizedName();
-
-    public String getLocalizedName(final Locale locale) {
-        return localizedName(locale);
+    public final void setCycleTypes(Collection<CycleType> types) {
+        setCycles(new CycleTypes(types));
     }
-
-    abstract protected String localizedName(final Locale locale);
-
-    public String getFilteredName() {
-        return filteredName();
-    }
-
-    abstract protected String filteredName();
-
-    public String getFilteredName(final Locale locale) {
-        return filteredName(locale);
-    }
-
-    abstract protected String filteredName(final Locale locale);
-
-    @Deprecated
-    public AdministrativeOfficeType getAdministrativeOfficeType() {
-        return administrativeOfficeType();
-    }
-
-    @Deprecated
-    abstract protected AdministrativeOfficeType administrativeOfficeType();
-
-    public Collection<CycleType> getCycleTypes() {
-        return cycleTypes();
-    }
-
-    abstract protected Collection<CycleType> cycleTypes();
 
     public Collection<CycleType> getSupportedCyclesToEnrol() {
-        return supportedCyclesToEnrol();
+        return getCyclesToEnrol().getTypes();
     }
 
-    abstract protected Collection<CycleType> supportedCyclesToEnrol();
-
-    public GradeScale getGradeScale() {
-        return this.gradeScale;
-    }
-
-    public AcademicPeriod getAcademicPeriod() {
-        return academicPeriod;
-    }
-
-    public boolean canCreateStudent() {
-        return canCreateStudent;
-    }
-
-    public boolean canCreateStudentOnlyWithCandidacy() {
-        return canCreateStudentOnlyWithCandidacy;
-    }
-
-    public boolean canRemoveEnrolmentIn(@SuppressWarnings("unused") final CycleType cycleType) {
-        return false;
-    }
-
-    final public boolean getQualifiesForGraduateTitle() {
-        return qualifiesForGraduateTitle;
+    public final void setCycleTypesToEnrol(Collection<CycleType> types) {
+        setCyclesToEnrol(new CycleTypes(types));
     }
 
     public boolean isEmpty() {
-        return this == DegreeType.EMPTY;
+        return getEmpty();
+    }
+
+    public boolean isSpecializationDegree() {
+        return getCycleTypes().contains(CycleType.SPECIALIZATION_CYCLE);
+    }
+
+    public boolean isAdvancedSpecializationDiploma() {
+        return getDea();
+    }
+
+    public boolean isAdvancedFormationDiploma() {
+        return getDfa();
+    }
+
+    public boolean isPreBolonhaDegree() {
+        return !this.isBolonhaType() && this.isDegree();
+    }
+
+    public boolean isBolonhaDegree() {
+        return this.isBolonhaType() && this.isDegree();
+    }
+
+    public boolean isPreBolonhaMasterDegree() {
+        return !this.isBolonhaType() && this.isMasterDegree();
+    }
+
+    public boolean isBolonhaMasterDegree() {
+        return this.isBolonhaType() && this.isMasterDegree();
     }
 
     public boolean isBolonhaType() {
-        return this != DegreeType.DEGREE && this != DegreeType.MASTER_DEGREE && this != DegreeType.BACHELOR
-                && this != DegreeType.PHD;
+        return getBolonha();
     }
 
     public boolean isDegree() {
-        return this == DegreeType.DEGREE || this == DegreeType.BOLONHA_DEGREE;
+        return getDegreeType();
     }
 
     public boolean isMasterDegree() {
-        return this == DegreeType.MASTER_DEGREE || this == DegreeType.BOLONHA_MASTER_DEGREE;
+        return getMasterDegree();
     }
 
     public boolean isIntegratedMasterDegree() {
-        return this == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+        return getCycleTypes().contains(CycleType.FIRST_CYCLE) && getCycleTypes().contains(CycleType.SECOND_CYCLE);
     }
 
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
         return this.isDegree() || isIntegratedMasterDegree();
     }
 
-    final public boolean hasAcademicPeriod() {
-        return academicPeriod != null;
-    }
-
-    /**
-     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
-     * 
-     */
-    @Deprecated
-    final public boolean hasExactlyOneCurricularYear() {
-        return getYears() == 1;
-    }
-
-    /**
-     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
-     * 
-     */
-    @Deprecated
-    public int getYears() {
-        return hasAcademicPeriod() ? Float.valueOf(academicPeriod.getWeight()).intValue() : Integer.valueOf(0);
-    }
-
-    /**
-     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInSemesters()}
-     * 
-     */
-    @Deprecated
-    public int getSemesters() {
-        return hasAcademicPeriod() ? Float.valueOf(academicPeriod.getWeight() / AcademicPeriod.SEMESTER.getWeight()).intValue() : Integer
-                .valueOf(0);
-    }
-
-    /**
-     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears(CycleType)}
-     * 
-     */
-    @Deprecated
-    public Integer getYears(final CycleType cycleType) {
-        if (cycleType == null) {
-            return getYears();
-        }
-
-        return hasCycleTypes(cycleType) ? Float.valueOf(getAcademicPeriod().getWeight()).intValue() : Integer.valueOf(0);
-    }
-
-    /**
-     * @deprecated use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInSemesters(CycleType)}
-     * 
-     */
-
-    @Deprecated
-    public Integer getSemesters(final CycleType cycleType) {
-        if (cycleType == null) {
-            return getSemesters();
-        }
-
-        return hasCycleTypes(cycleType) ? Float.valueOf(getYears(cycleType) / AcademicPeriod.SEMESTER.getWeight()).intValue() : null;
-    }
-
-    public double getDefaultEctsCredits() {
-        if (!hasAcademicPeriod()) {
-            return 0d;
-        }
-
-        if (getAcademicPeriod().equals(AcademicPeriod.YEAR)) {
-            return 30d;
-        } else if (getAcademicPeriod().equals(AcademicPeriod.TWO_YEAR)) {
-            return 120d;
-        } else if (getAcademicPeriod().equals(AcademicPeriod.THREE_YEAR)) {
-            return 180d;
-        } else if (getAcademicPeriod().equals(AcademicPeriod.FOUR_YEAR)) {
-            return 240d;
-        } else if (getAcademicPeriod().equals(AcademicPeriod.FIVE_YEAR)) {
-            return 300d;
-        } else if (getAcademicPeriod().equals(AcademicPeriod.SIX_YEAR)) {
-            return 360d;
-        } else {
-            return 0d;
-        }
-    }
-
     final public String getCreditsDescription() {
-        return this == DegreeType.MASTER_DEGREE ? " Créd." : " ECTS";
+        return this.isPreBolonhaMasterDegree() ? " Créd." : " ECTS";
     }
 
     public String getPrefix() {
@@ -1184,18 +154,16 @@ public enum DegreeType {
 
     public String getPrefix(final Locale locale) {
         final StringBuilder result = new StringBuilder();
-
-        switch (this) {
-        case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
-            return result.toString();
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            result.append(BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.one")).append(" ");
-            return result.toString();
-        default:
-            final String string = BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.two");
-            result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : " ");
+        if (this.isAdvancedSpecializationDiploma()) {
             return result.toString();
         }
+        if (this.isAdvancedFormationDiploma()) {
+            result.append(BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.one")).append(" ");
+            return result.toString();
+        }
+        final String string = BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.two");
+        result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : " ");
+        return result.toString();
     }
 
     @Deprecated
@@ -1211,69 +179,48 @@ public enum DegreeType {
         return getGraduateTitle((CycleType) null, locale);
     }
 
-    final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
-        if (getQualifiesForGraduateTitle()) {
-            if (cycleType == null) {
-                return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName() + GRADUATE_TITLE_SUFFIX);
-            }
-
-            if (cycleTypes().isEmpty()) {
-                throw new DomainException("DegreeType.has.no.cycle.type");
-            }
-
-            if (!hasCycleTypes(cycleType)) {
-                throw new DomainException("DegreeType.doesnt.have.such.cycle.type");
-            }
-
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName()
-                    + (isComposite() ? "." + cycleType.name() : StringUtils.EMPTY) + GRADUATE_TITLE_SUFFIX);
-        }
-
-        return StringUtils.EMPTY;
-    }
-
     public boolean isFirstCycle() {
-        return cycleTypes().contains(CycleType.FIRST_CYCLE);
+        return getCycleTypes().contains(CycleType.FIRST_CYCLE);
     }
 
     public boolean isSecondCycle() {
-        return cycleTypes().contains(CycleType.SECOND_CYCLE);
+        return getCycleTypes().contains(CycleType.SECOND_CYCLE);
     }
 
     public boolean isThirdCycle() {
-        return cycleTypes().contains(CycleType.THIRD_CYCLE);
+        return getCycleTypes().contains(CycleType.THIRD_CYCLE);
     }
 
     public boolean isSpecializationCycle() {
-        return cycleTypes().contains(CycleType.SPECIALIZATION_CYCLE);
+        return getCycleTypes().contains(CycleType.SPECIALIZATION_CYCLE);
     }
 
     final public boolean hasAnyCycleTypes() {
-        return !cycleTypes().isEmpty();
+        return !getCycleTypes().isEmpty();
     }
 
     final public boolean hasCycleTypes(final CycleType cycleType) {
-        return cycleTypes().contains(cycleType);
+        return getCycleTypes().contains(cycleType);
     }
 
     final public boolean isComposite() {
-        return cycleTypes().size() > 1;
+        return getCycleTypes().size() > 1;
     }
 
     final public boolean hasExactlyOneCycleType() {
-        return cycleTypes().size() == 1;
+        return getCycleTypes().size() == 1;
     }
 
     final public CycleType getCycleType() {
         if (hasExactlyOneCycleType()) {
-            return cycleTypes().iterator().next();
+            return getCycleTypes().iterator().next();
         }
 
         throw new DomainException("DegreeType.has.more.than.one.cycle.type");
     }
 
     final public boolean isStrictlyFirstCycle() {
-        return hasExactlyOneCycleType() && cycleTypes().contains(CycleType.FIRST_CYCLE);
+        return hasExactlyOneCycleType() && getCycleTypes().contains(CycleType.FIRST_CYCLE);
     }
 
     public CycleType getFirstOrderedCycleType() {
@@ -1288,54 +235,31 @@ public enum DegreeType {
 
     public TreeSet<CycleType> getOrderedCycleTypes() {
         TreeSet<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
-        result.addAll(cycleTypes());
+        result.addAll(getCycleTypes());
         return result;
     }
 
-    public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
-        return false;
+    public static Stream<DegreeType> all() {
+        return Bennu.getInstance().getDegreeTypeSet().stream();
     }
 
-    protected boolean hasConditionsToFinishBachelorDegree(final Registration registration, final ExecutionYear executionYear) {
-        Double floor = new Double(165.00);
-        Double ceiling = new Double(180.00);
-        return registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.FIRST_CYCLE)
-                .compareTo(floor) >= 0
-                && registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.FIRST_CYCLE)
-                        .compareTo(ceiling) < 0;
+    public static Optional<DegreeType> matching(Predicate<DegreeType> predicate) {
+        return all().filter(predicate).findAny();
     }
 
-    protected boolean hasConditionsToFinishMasterDegree(final Registration registration, final ExecutionYear executionYear) {
-        Enrolment dissertationEnrolment = registration.getStudentCurricularPlan(executionYear).getLatestDissertationEnrolment();
+    @Override
+    public int compareTo(DegreeType o) {
+        return getName().compareTo(o.getName());
+    }
 
-        if (dissertationEnrolment == null) {
-            return false;
+    private static final Predicate<DegreeType> nonNull = type -> type != null;
+
+    @SafeVarargs
+    public static Predicate<DegreeType> oneOf(Predicate<DegreeType> one, Predicate<DegreeType>... others) {
+        for (Predicate<DegreeType> pred : others) {
+            one = one.or(pred);
         }
-
-        if (dissertationEnrolment.getExecutionYear() != executionYear && !dissertationEnrolment.isApproved()) {
-            return false;
-        }
-
-        Double dissContrib = dissertationEnrolment.isApproved() ? 0.0 : dissertationEnrolment.getEctsCredits();
-        Double threshold = 120.00 - (15.00 + dissContrib);
-        return registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.SECOND_CYCLE) >= threshold;
-    }
-
-    protected boolean isNotEnrolledInFirstCycleOrIsConcluded(final Registration registration, final ExecutionYear executionYear) {
-        return registration.getStudentCurricularPlan(executionYear).getFirstCycle() == null
-                || registration.getStudentCurricularPlan(executionYear).getFirstCycle().isConcluded();
-    }
-
-    static public Set<DegreeType> getDegreeTypesFor(AdministrativeOfficeType administrativeOfficeType) {
-        final Set<DegreeType> result = new HashSet<DegreeType>();
-
-        for (final DegreeType degreeType : values()) {
-            if (degreeType.getAdministrativeOfficeType() == administrativeOfficeType) {
-                result.add(degreeType);
-            }
-        }
-
-        return result;
+        return nonNull.and(one);
     }
 
 }

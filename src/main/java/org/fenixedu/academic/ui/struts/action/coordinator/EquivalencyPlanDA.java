@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.coordinator;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,11 +52,8 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         if (degreeCurricularPlan == null) {
-            final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
-            degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-            degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-            degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-            request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
+            request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.getDegreeCurricularPlans(DegreeType.oneOf(
+                    DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree)));
         } else {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
             final DegreeCurricularPlanBean degreeCurricularPlanBean = new DegreeCurricularPlanBean(degreeCurricularPlan);

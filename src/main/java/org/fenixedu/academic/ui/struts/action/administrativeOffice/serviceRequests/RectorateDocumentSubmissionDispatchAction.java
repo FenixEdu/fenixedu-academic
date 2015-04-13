@@ -225,8 +225,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
                 }
 
                 if (document.isRequestForRegistration()) {
-                    addCell("Tipo de Curso",
-                            BundleUtil.getString(Bundle.ENUMERATION, ((DocumentRequest) document).getDegreeType().name()));
+                    addCell("Tipo de Curso", ((DocumentRequest) document).getDegreeType().getName().getContent());
                 } else if (document.isRequestForPhd()) {
                     addCell("Tipo de Curso", BundleUtil.getString(Bundle.PHD, "label.php.program"));
                 }

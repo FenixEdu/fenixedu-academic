@@ -58,7 +58,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
 
     public List getDegreeCurricularPlans() throws FenixServiceException {
 
-        List degreeCurricularPlans = (List) ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType.DEGREE);
+        List degreeCurricularPlans = (List) ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType::isPreBolonhaDegree);
 
         List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
         for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {

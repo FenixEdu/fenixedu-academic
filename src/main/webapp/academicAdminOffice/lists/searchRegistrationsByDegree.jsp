@@ -50,10 +50,10 @@
 				<fr:property name="format" value="${year}" />
 				<fr:property name="destination" value="postBack" />
 			</fr:slot>
-			<fr:slot name="degreeType" key="label.degreeType" layout="menu-select-postback" bundle="APPLICATION_RESOURCES">
+			<fr:slot name="degreeType" key="label.degreeType" layout="menu-select-postback">
 				<fr:property name="from" value="administratedDegreeTypes" />
 				<fr:property name="destination" value="postBack" />
-				<fr:property name="eachLayout" value="this-does-not-exist" />
+				<fr:property name="format" value="${name.content}" />
 			</fr:slot>
 			<fr:slot name="degree" key="label.degree" layout="menu-select-postback">
 				<fr:property name="from" value="administratedDegrees" />

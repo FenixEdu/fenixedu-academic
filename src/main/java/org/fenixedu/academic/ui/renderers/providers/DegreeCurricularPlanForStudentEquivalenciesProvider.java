@@ -19,9 +19,7 @@
 package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan;
@@ -53,11 +51,8 @@ public class DegreeCurricularPlanForStudentEquivalenciesProvider implements Data
     }
 
     private List<DegreeCurricularPlan> getAllDegreeCurricularPlans() {
-        final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
-        degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-        degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-        degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-        return new ArrayList<DegreeCurricularPlan>(DegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
+        return new ArrayList<DegreeCurricularPlan>(DegreeCurricularPlan.getDegreeCurricularPlans(DegreeType.oneOf(
+                DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree)));
     }
 
     @Override

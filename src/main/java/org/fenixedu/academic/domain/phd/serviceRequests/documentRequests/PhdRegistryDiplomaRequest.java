@@ -24,7 +24,6 @@ import java.util.Locale;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -242,8 +241,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     @Override
     public String getDescription() {
-        return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-                + DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name());
+        return getDescription(getAcademicServiceRequestType(), "DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.THIRD_CYCLE");
     }
 
     public static PhdRegistryDiplomaRequest create(final PhdDocumentRequestCreateBean bean) {

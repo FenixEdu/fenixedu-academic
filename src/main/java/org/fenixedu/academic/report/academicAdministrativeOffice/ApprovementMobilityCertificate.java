@@ -179,7 +179,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 
     // TODO: remove this after DEA diplomas and certificates
     private boolean isDEARegistration() {
-        return getDocumentRequest().getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return getDocumentRequest().getRegistration().getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     private String getEctsGradeDescription() {

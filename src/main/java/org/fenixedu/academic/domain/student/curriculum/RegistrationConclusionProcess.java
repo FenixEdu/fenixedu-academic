@@ -19,12 +19,9 @@
 package org.fenixedu.academic.domain.student.curriculum;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
@@ -96,14 +93,8 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
         }
     }
 
-    private static List<DegreeType> SCHOOLPART_DEGREE_TYPES = Arrays.asList(
-
-    DegreeType.MASTER_DEGREE,
-
-    DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
-
     private static boolean isSchoolPartConcludedDegreeType(final Registration reg) {
-        return SCHOOLPART_DEGREE_TYPES.contains(reg.getDegreeType());
+        return reg.getDegreeType().isAdvancedSpecializationDiploma() || reg.getDegreeType().isPreBolonhaMasterDegree();
     }
 
     @Override

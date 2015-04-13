@@ -81,7 +81,7 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
                 final Row row = spreadsheet.addRow();
                 row.setCell(thesis.getStudent().getNumber().toString());
                 row.setCell(thesis.getStudent().getPerson().getName());
-                row.setCell(degreeType.getLocalizedName());
+                row.setCell(degreeType.getName().getContent());
                 row.setCell(degree.getPresentationName());
                 row.setCell(degree.getSigla());
                 row.setCell(thesis.getTitle().getContent());

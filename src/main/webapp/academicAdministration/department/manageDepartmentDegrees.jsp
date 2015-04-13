@@ -53,7 +53,7 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1"/>
 	        <fr:property name="columnClasses" value=",,,"/>
-	        <fr:property name="sortBy" value="tipoCurso=asc,name=asc"/>
+	        <fr:property name="sortBy" value="degreeType=asc,name=asc"/>
 
 			<fr:property name="linkFormat(remove)" value="<%= url + "&degreeID=${externalId}" %>"/>
 			<fr:property name="key(remove)" value="label.remove"/>

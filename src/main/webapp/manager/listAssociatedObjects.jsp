@@ -32,6 +32,16 @@
 
 <h2>Associated Objects</h2>
 
+<h3>Degree Types</h3>
+<ul>
+    <logic:iterate id="type" name="degreeTypes">
+        <li>${type.name.content} - <html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType&degreeTypeId=${type.externalId}">Edit</html:link><br/>
+</li>
+    </logic:iterate>
+</ul>
+<html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType">Create</html:link><br/>
+
+
 <h3>Departments</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareCreateDepartment">Create</html:link><br/>
 <logic:present name="departments">

@@ -246,7 +246,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         final StringBuilder res = new StringBuilder();
 
         final DegreeType degreeType = getDocumentRequest().getDegreeType();
-        if (degreeType.getQualifiesForGraduateTitle()) {
+        if (degreeType.qualifiesForGraduateTitle()) {
             res.append(", ").append(
                     BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                             "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
@@ -261,7 +261,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         final Degree degree = getDocumentRequest().getDegree();
         final DegreeType degreeType = degree.getDegreeType();
-        if (degreeType.getQualifiesForGraduateTitle()) {
+        if (degreeType.qualifiesForGraduateTitle()) {
             res.append(", ");
             if (getDocumentRequest().getRegistryCode() != null) {
                 res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
@@ -271,19 +271,16 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
             } else {
                 res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                         "documents.DegreeFinalizationCertificate.diplomaDescription.one"));
-                switch (degreeType) {
-                case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-                    break;
-                case BOLONHA_SPECIALIZATION_DEGREE:
+                if (degreeType.isAdvancedFormationDiploma()) {
+                    // Do Nothing
+                } else if (degreeType.isSpecializationDegree()) {
                     res.append(SINGLE_SPACE);
                     res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                             "documents.DegreeFinalizationCertificate.diplomaDescription.diploma"));
-                    break;
-                default:
+                } else {
                     res.append(SINGLE_SPACE);
                     res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                             "documents.DegreeFinalizationCertificate.diplomaDescription.letter"));
-                    break;
                 }
             }
         }

@@ -349,22 +349,23 @@ public class SibsPaymentFileProcessReportDTO {
 
     private void addAmountForGratuityEvent(final SibsIncommingPaymentFileDetailLine detailLine,
             final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
-        switch (gratuityEventWithPaymentPlan.getDegree().getDegreeType()) {
-        case DEGREE:
+        if (gratuityEventWithPaymentPlan.getDegree().getDegreeType().isPreBolonhaDegree()) {
             addDegreeGratuityAmount(detailLine.getAmount());
-            break;
-        case BOLONHA_DEGREE:
-            addBolonhaDegreeGratuityAmount(detailLine.getAmount());
-            break;
-        case BOLONHA_INTEGRATED_MASTER_DEGREE:
-            addIntegratedBolonhaMasterDegreeGratuityAmount(detailLine.getAmount());
-            break;
-        case BOLONHA_MASTER_DEGREE:
-            addBolonhaMasterDegreGratuityTotalAmount(detailLine.getAmount());
-            break;
-        default:
-            throw new IllegalArgumentException("unknown degree type for gratuity event");
+            return;
         }
+        if (gratuityEventWithPaymentPlan.getDegree().getDegreeType().isBolonhaMasterDegree()) {
+            addBolonhaMasterDegreGratuityTotalAmount(detailLine.getAmount());
+            return;
+        }
+        if (gratuityEventWithPaymentPlan.getDegree().getDegreeType().isBolonhaDegree()) {
+            addBolonhaDegreeGratuityAmount(detailLine.getAmount());
+            return;
+        }
+        if (gratuityEventWithPaymentPlan.getDegree().getDegreeType().isIntegratedMasterDegree()) {
+            addIntegratedBolonhaMasterDegreeGratuityAmount(detailLine.getAmount());
+            return;
+        }
+        throw new IllegalArgumentException("unknown degree type for gratuity event");
     }
 
     private void addAmountForAdministrativeOfficeAndInsuranceEvent(final SibsIncommingPaymentFileDetailLine detailLine,

@@ -39,7 +39,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.OccupationPeriod;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -150,7 +149,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
         for (final ExecutionDegree executionDegree : selectedExecutionPeriod.getExecutionYear()
                 .getExecutionDegreesSortedByDegreeName()) {
-            if (executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType() == DegreeType.DEGREE) {
+            if (executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType().isPreBolonhaDegree()) {
                 executionDegrees.add(executionDegree);
             }
         }

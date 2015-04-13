@@ -19,20 +19,24 @@
 package org.fenixedu.academic.ui.renderers.providers.accounting.report;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DegreeTypeForGratuityReportProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays.asList(DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-                DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+        return DegreeType
+                .all()
+                .filter(DegreeType.oneOf(DegreeType::isPreBolonhaDegree, DegreeType::isBolonhaDegree,
+                        DegreeType::isIntegratedMasterDegree, DegreeType::isBolonhaMasterDegree,
+                        DegreeType::isAdvancedFormationDiploma)).collect(Collectors.toList());
     }
 
     @Override
@@ -47,7 +51,7 @@ public class DegreeTypeForGratuityReportProvider implements DataProvider {
             public Object convert(Class type, Object value) {
                 final List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
                 for (final String o : (String[]) value) {
-                    degreeTypes.add(DegreeType.valueOf(o));
+                    degreeTypes.add(FenixFramework.getDomainObject(o));
                 }
                 return degreeTypes;
             }

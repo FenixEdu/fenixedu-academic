@@ -46,7 +46,7 @@ public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizatio
     protected void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
         addCycleDescriptionIfRequired(labelFormatter);
-        labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
         labelFormatter.appendLabel(" ");

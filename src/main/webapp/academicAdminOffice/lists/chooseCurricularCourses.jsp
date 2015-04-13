@@ -50,7 +50,7 @@
 			</fr:slot>
 			<fr:slot name="degreeCurricularPlan" key="label.degreeCurricularPlan" layout="menu-select" required="true">
 				<fr:property name="from" value="availableDegreeCurricularPlans" />
-				<fr:property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />
+				<fr:property name="format" value="${degree.degreeType.name.content} - ${degree.name} - ${name}" />
 			</fr:slot>
 		</fr:schema>
 		<fr:destination name="executionYearPostBack"

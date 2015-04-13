@@ -57,7 +57,7 @@ public class PhdDegreeCurricularPlansProvider implements DataProvider {
         final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 
         for (final ExecutionDegree executionDegree : bean.getSemester().getExecutionYear()
-                .getExecutionDegreesByType(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
+                .getExecutionDegreesMatching(DegreeType::isAdvancedSpecializationDiploma)) {
 
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 

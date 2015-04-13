@@ -49,7 +49,7 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getEventType().getQualifiedName(), "enum");
         labelFormatter.appendLabel(" (");
-        labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
         labelFormatter.appendLabel(" ");

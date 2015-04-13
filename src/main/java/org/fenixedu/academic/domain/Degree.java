@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.lang.ref.SoftReference;
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -53,6 +53,7 @@ import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisState;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MarkType;
@@ -103,7 +104,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_NAME = new Comparator<Degree>() {
         @Override
         public int compare(final Degree o1, final Degree o2) {
-            return collator.compare(o1.getDegreeType().getLocalizedName(), o2.getDegreeType().getLocalizedName());
+            return collator.compare(o1.getDegreeType().getName().getContent(), o2.getDegreeType().getName().getContent());
         }
     };
 
@@ -303,7 +304,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public GradeScale getGradeScaleChain() {
-        return super.getGradeScale() != null ? super.getGradeScale() : getDegreeType().getGradeScale();
+        return super.getGradeScale();
     }
 
     public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name, DegreeCurricularPlanState state,
@@ -323,7 +324,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
     }
 
-    public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+    public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator,
+            AcademicPeriod duration) {
         if (name == null) {
             throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
         }
@@ -340,39 +342,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             RoleType.grant(RoleType.BOLONHA_MANAGER, creator.getUser());
         }
 
-        CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getAcademicPeriod());
+        CurricularPeriod curricularPeriod = new CurricularPeriod(duration);
 
         return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
-    }
-
-    @Deprecated
-    public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
-        if (this.isBolonhaDegree()) {
-            return createDegreeCurricularPlan(name, gradeScale, creator);
-        } else {
-            throw new DomainException("DEGREE.calling.bolonha.method.to.non.bolonha.degree");
-        }
-    }
-
-    @Override
-    @Deprecated
-    public DegreeType getTipoCurso() {
-        return getDegreeType();
-    }
-
-    @Override
-    @Deprecated
-    public void setTipoCurso(final DegreeType degreeType) {
-        setDegreeType(degreeType);
-    }
-
-    @Override
-    public DegreeType getDegreeType() {
-        return super.getTipoCurso();
-    }
-
-    public void setDegreeType(final DegreeType degreeType) {
-        super.setTipoCurso(degreeType);
     }
 
     @Override
@@ -387,11 +359,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public boolean isBolonhaDegree() {
         return getDegreeType().isBolonhaType();
-    }
-
-    public boolean isBolonhaMasterOrDegree() {
-        return getDegreeType().equals(DegreeType.BOLONHA_DEGREE) || getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)
-                || getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
     }
 
     public boolean isEmpty() {
@@ -703,7 +670,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     protected String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
         final StringBuilder res = new StringBuilder();
 
-        final String degreeType = getDegreeType().getLocalizedName(locale);
+        final String degreeType = getDegreeType().getName().getContent(locale);
         if (!StringUtils.isEmpty(degreeType)) {
             res.append(degreeType).append(" ");
             res.append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
@@ -907,19 +874,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    public static List<Degree> readAllByDegreeType(final DegreeType... degreeTypes) {
-        final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
-        final List<Degree> result = new ArrayList<Degree>();
-        for (final Degree degree : Degree.readNotEmptyDegrees()) {
-            if (degree.getDegreeType() != null && degreeTypesList.contains(degree.getDegreeType())) {
-                result.add(degree);
-            }
-        }
-        return result;
-    }
-
-    public static List<Degree> readAllByDegreeTypes(final Set<DegreeType> degreeTypes) {
-        return readAllByDegreeType(degreeTypes.toArray(new DegreeType[degreeTypes.size()]));
+    public static List<Degree> readAllMatching(java.util.function.Predicate<DegreeType> predicate) {
+        return DegreeType.all().filter(predicate).flatMap(type -> type.getDegreeSet().stream()).collect(Collectors.toList());
     }
 
     public static List<Degree> readAllByDegreeCode(final String degreeCode) {
@@ -1339,42 +1295,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     /*
-     * This method is directed to Bolonha Integrated Master Degrees
-     */
-    public List<Student> getSecondCycleStudents(ExecutionYear executionYear) {
-        List<Student> result = new ArrayList<Student>();
-        if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-            for (Registration registration : getActiveRegistrations()) {
-                final int studentCurricularYear = registration.getCurricularYear(executionYear);
-
-                // TODO how to make this not hardcoded?
-                if (studentCurricularYear >= 4 && studentCurricularYear <= 5) {
-                    result.add(registration.getStudent());
-                }
-            }
-        }
-        return result;
-    }
-
-    /*
-     * This method is directed to Bolonha Integrated Master Degrees
-     */
-    public List<Student> getFirstCycleStudents(ExecutionYear executionYear) {
-        List<Student> result = new ArrayList<Student>();
-        if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-            for (Registration registration : getActiveRegistrations()) {
-                final int studentCurricularYear = registration.getCurricularYear(executionYear);
-
-                // TODO how to make this not hardcoded?
-                if (studentCurricularYear >= 1 && studentCurricularYear <= 3) {
-                    result.add(registration.getStudent());
-                }
-            }
-        }
-        return result;
-    }
-
-    /*
      * CURRICULAR COURSES FROM DEGREE
      */
     public Set<CurricularCourse> getAllCurricularCourses(ExecutionYear executionYear) {
@@ -1438,7 +1358,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Override
     public Double getEctsCredits() {
         final Double ectsCredits = super.getEctsCredits();
-        return ectsCredits != null ? ectsCredits : getDegreeType().getDefaultEctsCredits();
+        return ectsCredits != null ? ectsCredits : 0.0;
     }
 
     public boolean hasEctsCredits() {
@@ -1486,7 +1406,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public boolean isDEA() {
-        return getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     public DegreeOfficialPublication getOfficialPublication(DateTime when) {
@@ -1512,7 +1432,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public String getDegreeTypeName() {
-        return getDegreeType().getName();
+        return getDegreeType().getName().getContent();
     }
 
     @Override

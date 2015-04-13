@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
@@ -152,7 +151,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
 
     @Override
     final public boolean isToShowCredits() {
-        return getDegreeType() != DegreeType.DEGREE;
+        return !getDegreeType().isPreBolonhaDegree();
     }
 
     public boolean hasNumberOfPages() {

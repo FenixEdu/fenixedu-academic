@@ -18,33 +18,26 @@
  */
 /*
  * Created on 10/Fev/2004
- *  
+ * 
  */
 package org.fenixedu.academic.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;
-import org.apache.struts.util.MessageResources;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.dto.InfoDegree;
 import org.fenixedu.academic.dto.InfoExecutionDegree;
-import org.fenixedu.commons.i18n.I18N;
 
 /**
  * @author Tânia Pousão
  * 
  */
 public class ExecutionDegreesFormat extends FenixUtil {
-    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList, MessageResources messageResources,
-            HttpServletRequest request) {
+    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList) {
         List executionDegreeLabels = new ArrayList();
         Iterator iterator = executionDegreeList.iterator();
         while (iterator.hasNext()) {
@@ -52,18 +45,8 @@ public class ExecutionDegreesFormat extends FenixUtil {
 
             String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            String degreeType = null;
-
-            if (messageResources != null) {
-                final Locale locale = I18N.getLocale();
-                degreeType =
-                        messageResources.getMessage(locale, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                                .getDegreeType().name());
-            }
-
-            if (degreeType == null) {
-                degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString();
-            }
+            String degreeType =
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().getName().getContent();
 
             name = degreeType + " em " + name;
 
@@ -109,19 +92,14 @@ public class ExecutionDegreesFormat extends FenixUtil {
         return false;
     }
 
-    public static List<LabelValueBean> buildLabelValueBeansForExecutionDegree(List<ExecutionDegree> executionDegrees,
-            MessageResources messageResources, HttpServletRequest request) {
-
-        final Locale locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
+    public static List<LabelValueBean> buildLabelValueBeansForExecutionDegree(List<ExecutionDegree> executionDegrees) {
 
         final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         for (final ExecutionDegree executionDegree : executionDegrees) {
 
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
             final String degreeName = executionDegree.getDegree().getNameFor(executionYear).getContent();
-            final String degreeType =
-                    messageResources.getMessage(locale, executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType()
-                            .name());
+            final String degreeType = executionDegree.getDegreeCurricularPlan().getDegreeType().getName().getContent();
 
             String name = degreeType + " em " + degreeName;
             name +=

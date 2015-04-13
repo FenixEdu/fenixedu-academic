@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.candidacyProcess.standalone;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
@@ -40,8 +40,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.period.StandaloneCandidacyPeriod;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-
-import com.google.common.collect.Sets;
 
 public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base {
 
@@ -111,15 +109,14 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
     // static information
 
-    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
-            DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-            DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-            DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+    private static final Predicate<DegreeType> ALLOWED_DEGREE_TYPES = DegreeType.oneOf(DegreeType::isBolonhaDegree,
+            DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree, DegreeType::isAdvancedFormationDiploma,
+            DegreeType::isIntegratedMasterDegree, DegreeType::isSpecializationDegree);
 
     static private boolean isAllowedToManageProcess(User userView) {
         for (AcademicProgram program : AcademicAccessRule.getProgramsAccessibleToFunction(
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, userView.getPerson().getUser()).collect(Collectors.toSet())) {
-            if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+            if (ALLOWED_DEGREE_TYPES.test(program.getDegreeType())) {
                 return true;
             }
         }

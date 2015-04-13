@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -178,7 +177,7 @@ public class EnrolmentContext {
     }
 
     public boolean isPhdDegree() {
-        return studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return studentCurricularPlan.getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     @SuppressWarnings("unchecked")

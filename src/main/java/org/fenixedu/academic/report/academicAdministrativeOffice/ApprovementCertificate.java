@@ -26,7 +26,6 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -158,7 +157,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     // TODO: remove this after DEA diplomas and certificates
     private boolean isDEARegistration() {
-        return getDocumentRequest().getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return getDocumentRequest().getRegistration().getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     final private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,

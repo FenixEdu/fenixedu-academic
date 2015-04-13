@@ -123,8 +123,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
             for (final EnrolmentPeriod enrolmentPeriod : executionSemester.getEnrolmentPeriodSet()) {
                 if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
                     final DegreeType degreeType = enrolmentPeriod.getDegreeCurricularPlan().getDegreeType();
-                    if (degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
-                            || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+                    if (degreeType.isBolonhaDegree() || degreeType.isIntegratedMasterDegree()) {
                         if (start == null || start.isAfter(enrolmentPeriod.getStartDateDateTime())) {
                             start = enrolmentPeriod.getStartDateDateTime();
                         }

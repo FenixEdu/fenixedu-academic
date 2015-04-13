@@ -180,11 +180,11 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     private void setInfoDegreesToAdd(final HttpServletRequest request, final User userView) throws FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
-        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
-        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
-        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+        degrees.addAll(Degree.readAllMatching(DegreeType::isPreBolonhaDegree));
+        degrees.addAll(Degree.readAllMatching(DegreeType::isBolonhaDegree));
+        degrees.addAll(Degree.readAllMatching(DegreeType::isIntegratedMasterDegree));
+        degrees.addAll(Degree.readAllMatching(DegreeType::isBolonhaMasterDegree));
+        degrees.addAll(Degree.readAllMatching(DegreeType::isAdvancedFormationDiploma));
         request.setAttribute("infoDegrees", degrees);
     }
 

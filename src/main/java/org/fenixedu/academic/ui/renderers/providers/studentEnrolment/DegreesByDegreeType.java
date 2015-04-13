@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.studentEnrolment;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class DegreesByDegreeType implements DataProvider {
         StudentOptionalEnrolmentBean optionalEnrolmentBean = (StudentOptionalEnrolmentBean) source;
 
         if (optionalEnrolmentBean.getDegreeType() != null) {
-            List<Degree> result = Degree.readAllByDegreeType(optionalEnrolmentBean.getDegreeType());
+            List<Degree> result = new ArrayList<>(optionalEnrolmentBean.getDegreeType().getDegreeSet());
             Collections.sort(result, Degree.COMPARATOR_BY_NAME);
             return result;
         } else {

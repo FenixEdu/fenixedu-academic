@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoEvaluation;
 import org.fenixedu.academic.dto.InfoFinalEvaluation;
@@ -84,7 +83,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
         List<Attends> result = new ArrayList<Attends>();
 
         for (Attends attends : executionCourse.getAttendsSet()) {
-            if (attends.getEnrolment() != null && attends.getRegistration().getDegreeType().equals(DegreeType.DEGREE)) {
+            if (attends.getEnrolment() != null && attends.getRegistration().getDegreeType().isPreBolonhaDegree()) {
                 FinalMark mark = getFinalMark(attends);
                 if (mark == null || (mark.getGradeListVersion() == 0 && mark.getSubmitedMark() == null)) {
                     result.add(attends);

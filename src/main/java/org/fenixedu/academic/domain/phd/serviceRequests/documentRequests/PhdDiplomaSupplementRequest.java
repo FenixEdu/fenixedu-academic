@@ -23,7 +23,6 @@ import java.util.Locale;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
@@ -173,8 +172,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public String getDescription() {
-        return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-                + DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name());
+        return getDescription(getAcademicServiceRequestType(), "DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST.THIRD_CYCLE");
     }
 
     @Override

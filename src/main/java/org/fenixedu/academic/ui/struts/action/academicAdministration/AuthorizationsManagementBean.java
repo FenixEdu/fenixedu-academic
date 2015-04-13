@@ -103,7 +103,7 @@ public class AuthorizationsManagementBean implements Serializable {
     }
 
     public Set<DegreeType> getDegreeTypes() {
-        return DegreeType.NOT_EMPTY_VALUES;
+        return DegreeType.all().filter(type -> !type.isEmpty()).collect(Collectors.toSet());
     }
 
     public Set<AdministrativeOffice> getAdministrativeOffices() {

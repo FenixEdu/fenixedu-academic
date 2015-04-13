@@ -102,9 +102,12 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
         final DegreeType degreeType = getDegreeType();
         final CycleType requestedCycle = getRequestedCycle();
 
-        return getDescription(getAcademicServiceRequestType(),
-                getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-                        + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+        return getDescription(
+                getAcademicServiceRequestType(),
+                getDocumentRequestType().getQualifiedName()
+                        + "."
+                        + (degreeType.isAdvancedFormationDiploma() ? "DFA" : (degreeType.isComposite() ? requestedCycle.name() : degreeType
+                                .getCycleType().name())));
     }
 
     @Override

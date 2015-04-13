@@ -22,8 +22,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.dto.accounting.PaymentsBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
@@ -42,8 +40,8 @@ public class GraduationDegreeCurricularPlansProvider implements DataProvider {
         final PaymentsBean bean = (PaymentsBean) source;
 
         final Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-        result.addAll(DegreeCurricularPlan.readByDegreeTypesAndStateWithExecutionDegreeForYear(
-                DegreeType.getDegreeTypesFor(AdministrativeOfficeType.DEGREE), null, bean.getExecutionYear()));
+        result.addAll(DegreeCurricularPlan.readByDegreeTypesAndStateWithExecutionDegreeForYear(type -> true, null,
+                bean.getExecutionYear()));
         result.add(DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
 
         return result;

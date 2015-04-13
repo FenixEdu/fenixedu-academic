@@ -132,7 +132,7 @@ public class StudentGroup extends FenixGroup {
     public String[] getPresentationNameKeyArgs() {
         List<String> parts = new ArrayList<>();
         if (degreeType != null) {
-            parts.add(degreeType.getFilteredName());
+            parts.add(degreeType.getName().getContent());
         }
         if (degree != null) {
             parts.add(degree.getNameI18N().getContent());

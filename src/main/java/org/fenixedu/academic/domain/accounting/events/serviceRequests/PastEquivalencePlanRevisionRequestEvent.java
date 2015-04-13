@@ -70,7 +70,7 @@ public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlan
 
     private void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
-        labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
         labelFormatter.appendLabel(" ");

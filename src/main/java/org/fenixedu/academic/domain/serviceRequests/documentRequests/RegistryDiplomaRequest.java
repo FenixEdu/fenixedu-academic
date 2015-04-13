@@ -94,9 +94,19 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
         final DegreeType degreeType = getDegreeType();
         final CycleType requestedCycle = getRequestedCycle();
 
-        return getDescription(getAcademicServiceRequestType(),
-                getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-                        + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+        final String key;
+
+        if (degreeType.isBolonhaType()) {
+            if (degreeType.isAdvancedFormationDiploma()) {
+                key = "DFA";
+            } else {
+                key = degreeType.isComposite() ? requestedCycle.name() : degreeType.getCycleType().name();
+            }
+        } else {
+            key = degreeType.isDegree() ? "DEGREE" : "MASTER_DEGREE";
+        }
+
+        return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "." + key);
     }
 
     @Override
@@ -116,20 +126,21 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public EventType getEventType() {
-        switch (getDegreeType()) {
-        case DEGREE:
-        case BOLONHA_DEGREE:
-            return EventType.BOLONHA_DEGREE_REGISTRY_DIPLOMA_REQUEST;
-        case MASTER_DEGREE:
-        case BOLONHA_MASTER_DEGREE:
-            return EventType.BOLONHA_MASTER_DEGREE_REGISTRY_DIPLOMA_REQUEST;
-        case BOLONHA_INTEGRATED_MASTER_DEGREE:
-            return (getRequestedCycle() == CycleType.FIRST_CYCLE) ? EventType.BOLONHA_DEGREE_REGISTRY_DIPLOMA_REQUEST : EventType.BOLONHA_MASTER_DEGREE_REGISTRY_DIPLOMA_REQUEST;
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+        if (getDegreeType().isAdvancedFormationDiploma()) {
             return EventType.BOLONHA_ADVANCED_FORMATION_REGISTRY_DIPLOMA_REQUEST;
-        default:
-            throw new DomainException("error.registryDiploma.notAvailableForGivenDegreeType");
         }
+
+        if (getDegreeType().isDegree()) {
+            return EventType.BOLONHA_DEGREE_REGISTRY_DIPLOMA_REQUEST;
+        }
+        if (getDegreeType().isPreBolonhaMasterDegree() || getDegreeType().isBolonhaMasterDegree()) {
+            return EventType.BOLONHA_MASTER_DEGREE_REGISTRY_DIPLOMA_REQUEST;
+        }
+        if (getDegreeType().isIntegratedMasterDegree()) {
+            return (getRequestedCycle() == CycleType.FIRST_CYCLE) ? EventType.BOLONHA_DEGREE_REGISTRY_DIPLOMA_REQUEST : EventType.BOLONHA_MASTER_DEGREE_REGISTRY_DIPLOMA_REQUEST;
+        }
+
+        throw new DomainException("error.registryDiploma.notAvailableForGivenDegreeType");
     }
 
     @Override
@@ -285,7 +296,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public String getProgrammeTypeDescription() {
-        return getDegreeType().getLocalizedName();
+        return getDegreeType().getName().getContent();
     }
 
     @Override

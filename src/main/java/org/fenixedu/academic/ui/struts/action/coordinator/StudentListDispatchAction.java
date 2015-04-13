@@ -28,7 +28,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.service.services.commons.student.ReadStudentsFromDegreeCurricularPlan;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
@@ -78,9 +77,7 @@ public class StudentListDispatchAction extends FenixDispatchAction {
         List result = null;
 
         try {
-            result =
-                    ReadStudentsFromDegreeCurricularPlan.runReadStudentsFromDegreeCurricularPlan(degreeCurricularPlanID,
-                            DegreeType.MASTER_DEGREE);
+            result = ReadStudentsFromDegreeCurricularPlan.runReadStudentsFromDegreeCurricularPlan(degreeCurricularPlanID);
 
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");

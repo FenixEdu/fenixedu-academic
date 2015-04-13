@@ -82,8 +82,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                     final Degree degree1 = o1.getDegree();
                     final Degree degree2 = o2.getDegree();
                     final Collator collator = Collator.getInstance();
-                    final int degreeTypeComp =
-                            collator.compare(degree1.getDegreeType().getName(), degree2.getDegreeType().getName());
+                    final int degreeTypeComp = degree1.getDegreeType().compareTo(degree2.getDegreeType());
                     if (degreeTypeComp != 0) {
                         return degreeTypeComp;
                     }

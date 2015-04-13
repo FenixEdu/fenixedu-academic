@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
@@ -50,8 +51,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
-import com.google.common.collect.Sets;
 
 public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProcess_Base {
 
@@ -131,13 +130,13 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 
     // static information
 
-    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
-            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    private static final Predicate<DegreeType> ALLOWED_DEGREE_TYPES = DegreeType.oneOf(DegreeType::isBolonhaDegree,
+            DegreeType::isIntegratedMasterDegree);
 
     static private boolean isAllowedToManageProcess(User userView) {
         for (AcademicProgram program : AcademicAccessRule.getProgramsAccessibleToFunction(
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, userView.getPerson().getUser()).collect(Collectors.toSet())) {
-            if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+            if (ALLOWED_DEGREE_TYPES.test(program.getDegreeType())) {
                 return true;
             }
         }
@@ -377,8 +376,8 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 
     public List<Degree> getAvailableDegrees() {
         final Set<Degree> degrees = getDegreeSet();
-        return degrees.isEmpty() ? Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE,
-                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) : new ArrayList<Degree>(degrees);
+        return degrees.isEmpty() ? Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree,
+                DegreeType::isIntegratedMasterDegree)) : new ArrayList<Degree>(degrees);
     }
 
 }

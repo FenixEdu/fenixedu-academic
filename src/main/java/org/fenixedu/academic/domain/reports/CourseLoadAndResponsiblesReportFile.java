@@ -134,7 +134,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
         final String scientificArea = findScientificAres(curricularCourse);
         final CompetenceCourseLoad competenceCourseLoad = findCompetenceCourseLoad(curricularCourse, executionPeriod);
 
-        row.setCell(degree.getDegreeType().getLocalizedName());
+        row.setCell(degree.getDegreeType().getName().getContent());
         row.setCell(degree.getNome());
         row.setCell(degree.getSigla());
         row.setCell(curricularCourse.getName());

@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.enrollment.bolonha;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class DegreesByDegreeType implements DataProvider {
         final BolonhaStudentOptionalEnrollmentBean optionalEnrollmentBean = (BolonhaStudentOptionalEnrollmentBean) source;
         List<Degree> result = null;
         if (optionalEnrollmentBean.hasDegreeType()) {
-            result = Degree.readAllByDegreeType(optionalEnrollmentBean.getDegreeType());
+            result = new ArrayList<>(optionalEnrollmentBean.getDegreeType().getDegreeSet());
             Collections.sort(result, Degree.COMPARATOR_BY_NAME);
         } else {
             result = Collections.EMPTY_LIST;

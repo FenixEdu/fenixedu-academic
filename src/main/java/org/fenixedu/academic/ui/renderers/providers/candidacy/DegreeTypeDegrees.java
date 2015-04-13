@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.degree.DegreeType;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -38,7 +37,7 @@ public class DegreeTypeDegrees implements DataProvider {
 
         final List<Degree> result = new ArrayList<Degree>();
         for (Degree degree : Degree.readNotEmptyDegrees()) {
-            if (degree.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+            if (degree.getDegreeType().isBolonhaDegree()) {
                 result.add(degree);
             }
         }

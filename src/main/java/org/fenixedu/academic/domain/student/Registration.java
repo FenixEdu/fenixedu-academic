@@ -136,9 +136,9 @@ public class Registration extends Registration_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(Registration.class);
 
-    static private final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
-            DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
-            DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA });
+    static private final java.util.function.Predicate<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = DegreeType.oneOf(
+            DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree, DegreeType::isBolonhaMasterDegree,
+            DegreeType::isAdvancedSpecializationDiploma);
 
     static final public Comparator<Registration> NUMBER_COMPARATOR = new Comparator<Registration>() {
         @Override
@@ -260,7 +260,8 @@ public class Registration extends Registration_Base {
                 final Degree sourceDegree = studentCandidacy.getDegreeCurricularPlan().getEquivalencePlan().getSourceDegree();
                 Registration registration = getStudent().readRegistrationByDegree(sourceDegree);
                 if (registration == null) {
-                    final Collection<Registration> registrations = getStudent().getRegistrationsByDegreeType(DegreeType.DEGREE);
+                    final Collection<Registration> registrations =
+                            getStudent().getRegistrationsMatchingDegreeType(DegreeType::isPreBolonhaDegree);
                     registrations.remove(this);
                     registration = registrations.size() == 1 ? registrations.iterator().next() : null;
                 }
@@ -622,7 +623,7 @@ public class Registration extends Registration_Base {
     }
 
     final public AverageType getAverageType() {
-        if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+        if (getDegreeType().isPreBolonhaMasterDegree()) {
             return getLastStudentCurricularPlan().getAverageType();
         } else {
             return AverageType.WEIGHTED;
@@ -701,7 +702,7 @@ public class Registration extends Registration_Base {
 
     final public String getFinalAverageQualified(final CycleType cycleType) {
         final Integer finalAverage = getFinalAverage(cycleType);
-        return finalAverage == null ? null : getDegreeType().getGradeScale().getQualifiedName(finalAverage.toString());
+        return finalAverage == null ? null : getDegree().getGradeScale().getQualifiedName(finalAverage.toString());
     }
 
     final public boolean isInFinalDegreeYear() {
@@ -1296,20 +1297,6 @@ public class Registration extends Registration_Base {
         return null;
     }
 
-    @Deprecated
-    final public static Registration readRegistrationByNumberAndDegreeTypes(Integer number, DegreeType... degreeTypes) {
-        final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
-        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
-            if (registrationNumber.getNumber().intValue() == number.intValue()) {
-                final Registration registration = registrationNumber.getRegistration();
-                if (degreeTypesList.contains(registration.getDegreeType())) {
-                    return registration;
-                }
-            }
-        }
-        return null;
-    }
-
     final public static Collection<Registration> readRegistrationsByNumberAndDegreeTypes(Integer number,
             DegreeType... degreeTypes) {
         List<Registration> result = new ArrayList<Registration>();
@@ -1470,7 +1457,7 @@ public class Registration extends Registration_Base {
     final public List<Enrolment> getEnroledImprovements() {
         final List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
         for (final StudentCurricularPlan scp : getStudentCurricularPlansSet()) {
-            if (!scp.isBoxStructure() && scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
+            if (!scp.isBoxStructure() && scp.getDegreeCurricularPlan().getDegree().getDegreeType().isPreBolonhaDegree()) {
                 enroledImprovements.addAll(scp.getEnroledImprovements());
             }
         }
@@ -1770,7 +1757,8 @@ public class Registration extends Registration_Base {
 
                 Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
                 if (sourceRegistration == null) {
-                    final Collection<Registration> registrations = student.getRegistrationsByDegreeType(DegreeType.DEGREE);
+                    final Collection<Registration> registrations =
+                            student.getRegistrationsMatchingDegreeType(DegreeType::isPreBolonhaDegree);
                     registrations.removeAll(student.getRegistrationsFor(degreeCurricularPlan));
                     sourceRegistration = registrations.size() == 1 ? registrations.iterator().next() : null;
                 }
@@ -1849,16 +1837,16 @@ public class Registration extends Registration_Base {
 
         final Degree degree = getDegree();
         final DegreeType degreeType = degree.getDegreeType();
-        if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
+        if (!getDegreeType().isAdvancedFormationDiploma() && cycleType != null) {
             res.append(cycleType.getDescription(locale)).append(",");
             res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.the.male")).append(" ");
         }
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
             res.append(degreeType.getPrefix(locale));
-            res.append(degreeType.getFilteredName(locale).toUpperCase());
+            res.append(degreeType.getName().getContent(locale).toUpperCase());
 
-            if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
+            if (getDegreeType().isAdvancedFormationDiploma() && cycleType != null) {
                 res.append(" (").append(cycleType.getDescription(locale)).append(")");
             }
             res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.in")).append(" ");
@@ -1894,7 +1882,7 @@ public class Registration extends Registration_Base {
 
     @Deprecated
     public boolean isDegreeAdministrativeOffice() {
-        return getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE;
+        return getDegree().getAdministrativeOffice().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE;
     }
 
     final public boolean isForOffice(final AdministrativeOffice administrativeOffice) {
@@ -2339,7 +2327,7 @@ public class Registration extends Registration_Base {
     }
 
     private boolean isOldMasterDegree() {
-        return getDegreeType().equals(DegreeType.MASTER_DEGREE);
+        return getDegreeType().isPreBolonhaMasterDegree();
     }
 
     public YearMonthDay getConclusionDate() {
@@ -2397,7 +2385,7 @@ public class Registration extends Registration_Base {
                 }
             }
 
-            if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+            if (getDegreeType().isPreBolonhaMasterDegree()) {
                 final LocalDate date = this.getDissertationThesisDiscussedDate();
                 if (date != null && (result == null || result.isBefore(date))) {
                     result = new YearMonthDay(date);
@@ -2696,11 +2684,11 @@ public class Registration extends Registration_Base {
 
     final public boolean isMasterDegreeOrBolonhaMasterDegree() {
         final DegreeType degreeType = getDegreeType();
-        return (degreeType == DegreeType.MASTER_DEGREE || degreeType == DegreeType.BOLONHA_MASTER_DEGREE);
+        return (degreeType.isPreBolonhaMasterDegree() || degreeType.isBolonhaMasterDegree());
     }
 
     final public boolean isDEA() {
-        return getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+        return getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     final public EnrolmentModel getEnrolmentModelForCurrentExecutionYear() {
@@ -3334,7 +3322,7 @@ public class Registration extends Registration_Base {
         RegistrationState.createRegistrationState(this, person, when, RegistrationStateType.TRANSITED);
 
         for (final Registration registration : getTargetTransitionRegistrations()) {
-            if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+            if (registration.getDegreeType().isBolonhaDegree()) {
                 RegistrationState.createRegistrationState(registration, person, when,
                         registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
             } else {
@@ -3373,11 +3361,11 @@ public class Registration extends Registration_Base {
 
     public boolean isEnrolmentByStudentAllowed() {
         return isActive() && getRegistrationProtocol().isEnrolmentByStudentAllowed()
-                && getDegreeTypesToEnrolByStudent().contains(getDegreeType());
+                && isEnrolmentByStudentAllowed(getDegreeType());
     }
 
-    public List<DegreeType> getDegreeTypesToEnrolByStudent() {
-        return DEGREE_TYPES_TO_ENROL_BY_STUDENT;
+    public boolean isEnrolmentByStudentAllowed(DegreeType type) {
+        return DEGREE_TYPES_TO_ENROL_BY_STUDENT.test(type);
     }
 
     public boolean isEnrolmentByStudentInShiftsAllowed() {

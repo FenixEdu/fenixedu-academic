@@ -151,7 +151,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             if (chosenDegree != null && degreeCurricularPlan.getDegree() != chosenDegree) {
                 continue;
             }
-            if (degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY) {
+            if (!degreeCurricularPlan.getDegreeType().isEmpty()) {
                 if (!searchbean.getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType())) {
                     continue;
                 }
@@ -271,7 +271,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             if (degree != null) {
                 filename += "_" + degree.getNameFor(executionYear).getContent().replace(' ', '_');
             } else if (degreeType != null) {
-                filename += "_" + degreeType.getLocalizedName().replace(' ', '_');
+                filename += "_" + degreeType.getName().getContent().replace(' ', '_');
             }
             filename += "_" + executionYear.getYear();
 

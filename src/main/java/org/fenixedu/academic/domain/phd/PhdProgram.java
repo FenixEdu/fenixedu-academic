@@ -87,7 +87,7 @@ public class PhdProgram extends PhdProgram_Base {
         if (degree == null) {
             throw new DomainException("error.PhdProgram.invalid.degree", args);
         }
-        if (degree.getDegreeType() != DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
+        if (!degree.getDegreeType().isAdvancedSpecializationDiploma()) {
             throw new DomainException("error.PhdProgram.invalid.degree");
         }
     }

@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.task;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -106,12 +105,9 @@ public class SeparateSecondCycle extends CronTask {
     }
 
     private List<DegreeCurricularPlan> getDegreeCurricularPlans() {
-        return DegreeCurricularPlan.readByDegreeTypesAndState(new HashSet<DegreeType>() {
-            {
-                add(DegreeType.BOLONHA_DEGREE);
-                add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-            }
-        }, DegreeCurricularPlanState.ACTIVE);
+        return DegreeCurricularPlan.readByDegreeTypesAndState(
+                DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree),
+                DegreeCurricularPlanState.ACTIVE);
     }
 
     private boolean hasFirstCycleConcluded(final StudentCurricularPlan studentCurricularPlan) {

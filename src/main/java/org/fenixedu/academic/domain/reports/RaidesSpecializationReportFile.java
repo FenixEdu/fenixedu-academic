@@ -57,7 +57,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 
     @Override
     public DegreeType getDegreeType() {
-        return DegreeType.BOLONHA_SPECIALIZATION_DEGREE;
+        return DegreeType.matching(DegreeType::isSpecializationDegree).get();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
         ExecutionYear executionYear = getExecutionYear();
         createHeaders(spreadsheet);
 
-        logger.info("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().getName().getContent());
         int count = 0;
 
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {

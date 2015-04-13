@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -35,13 +34,7 @@ public class DegreesToCreateRegistration implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         return AcademicAccessRule
                 .getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION, Authenticate.getUser())
-                .filter(DegreesToCreateRegistration::canCreateStudent).sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID)
-                .collect(Collectors.toSet());
-    }
-
-    protected static boolean canCreateStudent(Degree degree) {
-        final DegreeType degreeType = degree.getDegreeType();
-        return degreeType.canCreateStudent() && !degreeType.canCreateStudentOnlyWithCandidacy();
+                .sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID).collect(Collectors.toSet());
     }
 
     @Override
