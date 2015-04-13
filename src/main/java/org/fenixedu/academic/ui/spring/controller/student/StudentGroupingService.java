@@ -83,14 +83,12 @@ public class StudentGroupingService {
             throw new DomainException("error.studentGroup.notEnroled");
         }
 
-        if (grouping.getEnrolmentPolicy().getType() != EnrolmentGroupPolicyType.INDIVIDUAL) {
-            if (grouping.getMinimumCapacity() != null && studentGroup.getAttendsSet().size() - 1 < grouping.getMinimumCapacity()) {
-                throw new DomainException("error.invalidNumberOfStudents");
-            }
+        if (grouping.getMinimumCapacity() != null && studentGroup.getAttendsSet().size() - 1 < grouping.getMinimumCapacity()) {
+            throw new DomainException("error.invalidNumberOfStudents");
+        }
 
-            if (grouping.getMaximumCapacity() != null && studentGroup.getAttendsSet().size() - 1 > grouping.getMaximumCapacity()) {
-                throw new DomainException("error.invalidNumberOfStudents");
-            }
+        if (grouping.getMaximumCapacity() != null && studentGroup.getAttendsSet().size() - 1 > grouping.getMaximumCapacity()) {
+            throw new DomainException("error.invalidNumberOfStudents");
         }
 
         studentGroup.removeAttends(grouping.getAttendsSet().stream()

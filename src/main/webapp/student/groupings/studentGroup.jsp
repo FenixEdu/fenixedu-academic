@@ -64,7 +64,7 @@
 			ng-click="enrollStudent()" type="submit">${fr:message('resources.ApplicationResources', 'button.enroll')}</button>
 		<button class="btn btn-primary"
 			ng-show="studentGroup && isEnrolledInStudentGroup()"
-			ng-disabled="grouping.atomicEnrolmentPolicy && studentGroupSize - 1 < grouping.minimumGroupCapacity"
+			ng-disabled="studentGroupSize - 1 < grouping.minimumGroupCapacity"
 			ng-click="unenrollStudent()" type="submit">${fr:message('resources.ApplicationResources', 'button.unenroll')}</button>
 		<button class="btn btn-primary"
 			ng-show="studentGroup && isEnrolledInStudentGroup() && shifts"
