@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -29,14 +26,11 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 
 public class ExtraExamRequest extends ExtraExamRequest_Base {
-
-    private static List<StudentStatuteType> acceptedStatutes = Arrays.asList(StudentStatuteType.ASSOCIATIVE_LEADER);
 
     protected ExtraExamRequest() {
         super();
@@ -87,12 +81,12 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     private boolean studentHasValidStatutes(final Registration registration, final Enrolment enrolment) {
         final Student student = registration.getStudent();
         for (final StudentStatuteBean bean : student.getStatutes(enrolment.getExecutionPeriod())) {
-            if (acceptedStatutes.contains(bean.getStatuteType())) {
+            if (bean.getStatuteType().isAssociativeLeaderStatute()) {
                 return true;
             }
         }
         for (final StudentStatuteBean bean : student.getStatutes(enrolment.getExecutionPeriod().getPreviousExecutionPeriod())) {
-            if (acceptedStatutes.contains(bean.getStatuteType())) {
+            if (bean.getStatuteType().isAssociativeLeaderStatute()) {
                 return true;
             }
         }

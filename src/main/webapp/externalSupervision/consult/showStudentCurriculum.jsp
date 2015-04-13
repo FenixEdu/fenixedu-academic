@@ -62,7 +62,7 @@
 
 
 <%-- Registration Details --%>
-<logic:notPresent name="registration" property="ingression">
+<logic:notPresent name="registration" property="ingressionType">
 	<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="registration" schema="student.registrationsWithStartData" >
 		<fr:layout name="tabular">
@@ -71,7 +71,7 @@
 		</fr:layout>
 	</fr:view>
 </logic:notPresent>
-<logic:present name="registration" property="ingression">
+<logic:present name="registration" property="ingressionType">
 	<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="registration" schema="student.registrationDetail" >
 		<fr:layout name="tabular">

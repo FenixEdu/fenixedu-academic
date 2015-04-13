@@ -36,6 +36,7 @@ import org.fenixedu.academic.domain.accounting.events.candidacy.IndividualCandid
 import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGrade;
@@ -307,7 +308,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
     @Override
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
-            final Ingression ingression) {
+            final IngressionType ingressionType) {
 
         if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
@@ -321,7 +322,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         }
 
         getPersonalDetails().ensurePersonInternalization();
-        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingressionType);
     }
 
     private boolean hasRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -343,8 +344,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
     @Override
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final CycleType cycleType, final Ingression ingression) {
-        final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
+            final CycleType cycleType, final IngressionType ingressionType) {
+        final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingressionType);
         registration.setRegistrationYear(getCandidacyExecutionInterval());
         return registration;
     }

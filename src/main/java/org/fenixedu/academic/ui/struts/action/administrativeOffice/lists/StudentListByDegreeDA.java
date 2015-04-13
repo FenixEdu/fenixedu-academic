@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
@@ -75,6 +76,7 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -237,7 +239,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 continue;
             }
 
-            if ((searchBean.getIngression() != null) && (registration.getIngression() != searchBean.getIngression())) {
+            if ((searchBean.getIngressionType() != null) && (registration.getIngressionType() != searchBean.getIngressionType())) {
                 continue;
             }
 
@@ -328,9 +330,9 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addHeader(getResourceMessage("label.nationality") + ": " + searchBean.getNationality().getName());
         }
         spreadsheet.newHeaderRow();
-        if (searchBean.getIngression() != null) {
+        if (searchBean.getIngressionType() != null) {
             spreadsheet.addHeader(getResourceMessage("label.ingression.short") + ": "
-                    + searchBean.getIngression().getLocalizedName());
+                    + searchBean.getIngressionType().getLocalizedName(Locale.getDefault()));
         }
 
         spreadsheet.newHeaderRow();
@@ -350,8 +352,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         spreadsheet.newHeaderRow();
         if (searchBean.hasAnyStudentStatuteType()) {
             spreadsheet.addHeader(getResourceMessage("label.statutes") + ":");
-            for (StudentStatuteType statute : searchBean.getStudentStatuteTypes()) {
-                spreadsheet.addHeader(BundleUtil.getString(Bundle.ENUMERATION, statute.name()));
+            for (StatuteType statute : searchBean.getStudentStatuteTypes()) {
+                spreadsheet.addHeader(statute.getName().getContent(I18N.getLocale()));
             }
         }
     }

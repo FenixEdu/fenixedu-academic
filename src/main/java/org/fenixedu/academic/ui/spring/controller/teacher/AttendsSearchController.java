@@ -35,7 +35,6 @@ import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Recipient;
@@ -134,56 +133,55 @@ public class AttendsSearchController extends ExecutionCourseController {
         final SpreadsheetBuilder builder = new SpreadsheetBuilder();
         builder.addSheet(executionCourse.getPrettyAcronym().concat(BundleUtil.getString(Bundle.APPLICATION, "label.students")),
                 new SheetData<Attends>(attends) {
-            protected String getLabel(final String key) {
-                return BundleUtil.getString(Bundle.APPLICATION, key);
-            }
+                    protected String getLabel(final String key) {
+                        return BundleUtil.getString(Bundle.APPLICATION, key);
+                    }
 
-            @Override
-            protected void makeLine(final Attends attends) {
-                addCell(getLabel("label.username"), attends.getRegistration().getPerson().getUsername());
-                addCell(getLabel("label.number"), attends.getRegistration().getNumber());
-                addCell(getLabel("label.name"), attends.getRegistration().getPerson().getName());
-                addCell(getLabel("label.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
-                executionCourse.getGroupings().forEach(
-                        gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(), attends.getStudentGroupsSet()
-                                .stream().filter(sg -> sg.getGrouping().equals(gr)).map(StudentGroup::getGroupNumber)
-                                .map(gn -> gn.toString()).findAny().orElse("")));
-                executionCourse.getShiftTypes().forEach(
-                        shiftType -> addCell(
-                                getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
-                                Optional.ofNullable(
-                                        attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
-                                        .map(Shift::getNome).orElse("")));
-                if (attends.getEnrolment() != null) {
-                    addCell(getLabel("label.numberOfEnrollments"), attends.getEnrolment()
-                            .getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()));
-                } else {
-                    addCell(getLabel("label.numberOfEnrollments"), "--");
-                }
+                    @Override
+                    protected void makeLine(final Attends attends) {
+                        addCell(getLabel("label.username"), attends.getRegistration().getPerson().getUsername());
+                        addCell(getLabel("label.number"), attends.getRegistration().getNumber());
+                        addCell(getLabel("label.name"), attends.getRegistration().getPerson().getName());
+                        addCell(getLabel("label.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
+                        executionCourse.getGroupings().forEach(
+                                gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(), attends.getStudentGroupsSet()
+                                        .stream().filter(sg -> sg.getGrouping().equals(gr)).map(StudentGroup::getGroupNumber)
+                                        .map(gn -> gn.toString()).findAny().orElse("")));
+                        executionCourse.getShiftTypes().forEach(
+                                shiftType -> addCell(
+                                        getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
+                                        Optional.ofNullable(
+                                                attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
+                                                .map(Shift::getNome).orElse("")));
+                        if (attends.getEnrolment() != null) {
+                            addCell(getLabel("label.numberOfEnrollments"), attends.getEnrolment()
+                                    .getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()));
+                        } else {
+                            addCell(getLabel("label.numberOfEnrollments"), "--");
+                        }
 
-                addCell(getLabel("label.attends.enrollmentState"),
-                        BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
+                        addCell(getLabel("label.attends.enrollmentState"),
+                                BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
 
-                RegistrationState registrationState =
-                        attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
-                addCell(getLabel("label.registration.state"), registrationState == null ? "" : registrationState
-                        .getStateType().getDescription());
+                        RegistrationState registrationState =
+                                attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
+                        addCell(getLabel("label.registration.state"), registrationState == null ? "" : registrationState
+                                .getStateType().getDescription());
 
-                addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
-                        .getPresentationName());
+                        addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
+                                .getPresentationName());
 
-                if (attends.getRegistration().getStudent()
-                        .hasActiveStatuteInPeriod(StudentStatuteType.WORKING_STUDENT, attends.getExecutionPeriod())) {
-                    addCell(getLabel("label.workingStudents"),
-                            BundleUtil.getString(Bundle.ENUMERATION,
-                                    WorkingStudentSelectionType.WORKING_STUDENT.getQualifiedName()));
-                } else {
-                    addCell(getLabel("label.workingStudents"),
-                            BundleUtil.getString(Bundle.ENUMERATION,
-                                    WorkingStudentSelectionType.NOT_WORKING_STUDENT.getQualifiedName()));
-                }
-            }
-        });
+                        if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod())) {
+                            addCell(getLabel("label.workingStudents"),
+                                    BundleUtil.getString(Bundle.ENUMERATION,
+                                            WorkingStudentSelectionType.WORKING_STUDENT.getQualifiedName()));
+                        } else {
+                            addCell(getLabel("label.workingStudents"),
+                                    BundleUtil.getString(Bundle.ENUMERATION,
+                                            WorkingStudentSelectionType.NOT_WORKING_STUDENT.getQualifiedName()));
+                        }
+                    }
+                });
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader(
@@ -208,26 +206,26 @@ public class AttendsSearchController extends ExecutionCourseController {
         final SpreadsheetBuilder builder = new SpreadsheetBuilder();
         builder.addSheet(executionCourse.getPrettyAcronym().concat(BundleUtil.getString(Bundle.APPLICATION, "label.grades")),
                 new SheetData<Attends>(attends) {
-            protected String getLabel(final String key) {
-                return BundleUtil.getString(Bundle.APPLICATION, key);
-            }
+                    protected String getLabel(final String key) {
+                        return BundleUtil.getString(Bundle.APPLICATION, key);
+                    }
 
-            @Override
-            protected void makeLine(final Attends attends) {
-                addCell(getLabel("label.username"), attends.getRegistration().getPerson().getUsername());
-                addCell(getLabel("label.number"), attends.getRegistration().getNumber());
-                addCell(getLabel("label.name"), attends.getRegistration().getPerson().getPresentationName());
-                addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
-                        .getPresentationName());
-                addCell(getLabel("label.attends.enrollmentState"),
-                        BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
-                executionCourse.getAssociatedEvaluationsSet().forEach(
-                        ev -> addCell(
-                                ev.getPresentationName(),
-                                attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
-                                .map(Mark::getMark).findAny().orElse("")));
-            }
-        });
+                    @Override
+                    protected void makeLine(final Attends attends) {
+                        addCell(getLabel("label.username"), attends.getRegistration().getPerson().getUsername());
+                        addCell(getLabel("label.number"), attends.getRegistration().getNumber());
+                        addCell(getLabel("label.name"), attends.getRegistration().getPerson().getPresentationName());
+                        addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
+                                .getPresentationName());
+                        addCell(getLabel("label.attends.enrollmentState"),
+                                BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
+                        executionCourse.getAssociatedEvaluationsSet().forEach(
+                                ev -> addCell(
+                                        ev.getPresentationName(),
+                                        attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
+                                                .map(Mark::getMark).findAny().orElse("")));
+                    }
+                });
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", String.format(

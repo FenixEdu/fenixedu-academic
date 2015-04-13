@@ -66,7 +66,7 @@
 			<fr:property name="linkFormat(delete)" value="/studentStatutes.do?method=deleteStatute&statuteId=${studentStatute.externalId}" />
 			<fr:property name="key(delete)" value="link.student.statute.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
-			<fr:property name="visibleIf(delete)" value="statuteType.explicitCreation"/>
+			<fr:property name="visibleIf(delete)" value="type.explicitCreation"/>
 			<fr:property name="contextRelative(delete)" value="true"/> 		
 		</fr:layout>
 	</fr:view>

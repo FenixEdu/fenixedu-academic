@@ -33,13 +33,14 @@ public enum GradeScale {
         @Override
         protected boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
-            if (value.equals(NA) || value.equals(RE)) {
+            if (value.equals(NA) || value.equals(RE) || value.equals(ADM) || value.equals(NADM) || value.equals(F)
+                    || value.equals(D)) {
                 return true;
             }
 
             try {
                 final int intValue = Integer.parseInt(value);
-                return intValue >= 10 && intValue <= 20;
+                return intValue >= 0 && intValue <= 20;
             } catch (NumberFormatException e) {
                 return false;
             }
@@ -48,7 +49,8 @@ public enum GradeScale {
         @Override
         protected boolean checkNotFinal(final Grade grade) {
             final String value = grade.getValue();
-            if (value.equals(NA) || value.equals(RE)) {
+            if (value.equals(NA) || value.equals(RE) || value.equals(ADM) || value.equals(NADM) || value.equals(F)
+                    || value.equals(D)) {
                 return true;
             }
 
@@ -88,13 +90,13 @@ public enum GradeScale {
         @Override
         protected boolean isNotEvaluated(final Grade grade) {
             final String value = grade.getValue();
-            return grade.isEmpty() || value.equals(GradeScale.NA);
+            return grade.isEmpty() || value.equals(GradeScale.NA) || value.equals(F);
         }
 
         @Override
         protected boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
-            if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
+            if (value.equals(GradeScale.RE) || value.equals(NADM) || value.equals(D) || isNotEvaluated(grade)) {
                 return true;
             }
 
@@ -108,7 +110,7 @@ public enum GradeScale {
         @Override
         protected boolean isApproved(final Grade grade) {
             final String value = grade.getValue();
-            if (value.equals(GradeScale.AP)) {
+            if (value.equals(GradeScale.AP) || value.equals(ADM)) {
                 return true;
             }
 
@@ -122,7 +124,8 @@ public enum GradeScale {
 
         @Override
         public boolean belongsTo(final String value) {
-            if (value.equals(NA) || value.equals(RE)) {
+            if (value.equals(NA) || value.equals(RE) || value.equals(ADM) || value.equals(NADM) || value.equals(F)
+                    || value.equals(D)) {
                 return true;
             }
 
@@ -393,6 +396,14 @@ public enum GradeScale {
         }
 
     };
+
+    static final public String ADM = "ADM";
+
+    static final public String NADM = "NADM";
+
+    static final public String F = "F";
+
+    static final public String D = "D";
 
     private boolean isPublic;
 

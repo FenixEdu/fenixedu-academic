@@ -34,6 +34,8 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
     private String executionYear;
     private String reportsAvailable;
     private String module;
+    private String currentPage;
+    private String groupExpandEnabled;
 
     public String getDcp() {
         return dcp;
@@ -125,6 +127,22 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         this.module = module;
     }
 
+    public String getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(String currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public String getGroupExpandEnabled() {
+        return groupExpandEnabled;
+    }
+
+    public void setGroupExpandEnabled(String groupExpandEnabled) {
+        this.groupExpandEnabled = groupExpandEnabled;
+    }
+
     @Override
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
@@ -139,6 +157,9 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         JsfTagUtils.setString(component, "executionYear", this.executionYear);
         JsfTagUtils.setString(component, "reportsAvailable", this.reportsAvailable);
         JsfTagUtils.setString(component, "module", this.module);
+        JsfTagUtils.setString(component, "currentPage", this.currentPage);
+        JsfTagUtils.setString(component, "groupExpandEnabled", this.groupExpandEnabled);
+
     }
 
     @Override
@@ -154,6 +175,9 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         this.executionYear = null;
         this.reportsAvailable = null;
         this.module = null;
+        this.currentPage = null;
+        this.groupExpandEnabled = null;
+
     }
 
 }

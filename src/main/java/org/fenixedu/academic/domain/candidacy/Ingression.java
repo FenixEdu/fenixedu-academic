@@ -28,6 +28,8 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
+
+@Deprecated
 public enum Ingression implements IPresentableEnum {
 
     ACO01("Acordo ELF"),

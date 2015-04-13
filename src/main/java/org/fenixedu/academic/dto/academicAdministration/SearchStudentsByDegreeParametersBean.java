@@ -25,10 +25,11 @@ import java.util.Set;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 
 /**
@@ -43,7 +44,7 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
 
-    private List<StudentStatuteType> studentStatuteTypes = new ArrayList<StudentStatuteType>();
+    private List<StatuteType> statuteTypes = new ArrayList<StatuteType>();
 
     private boolean ingressedInChosenYear = false;
 
@@ -57,18 +58,28 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private Country nationality = null;
 
-    private Ingression ingression = null;
+    private IngressionType ingressionType = null;
 
     public SearchStudentsByDegreeParametersBean(Set<DegreeType> administratedDegreeTypes, Set<Degree> administratedDegrees) {
         super(administratedDegreeTypes, administratedDegrees);
     }
 
-    public Ingression getIngression() {
-        return ingression;
+    public IngressionType getIngressionType() {
+        return ingressionType;
     }
 
+    public void setIngressionType(IngressionType ingressionType) {
+        this.ingressionType = ingressionType;
+    }
+
+    @Deprecated
+    public Ingression getIngression() {
+        return IngressionType.getIngressionForIngressionType(getIngressionType());
+    }
+
+    @Deprecated
     public void setIngression(Ingression ingression) {
-        this.ingression = ingression;
+        setIngressionType(IngressionType.getIngressionTypeForIngression(ingression));
     }
 
     public List<RegistrationProtocol> getRegistrationProtocols() {
@@ -87,12 +98,12 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
         this.registrationStateTypes = registrationStateTypes;
     }
 
-    public List<StudentStatuteType> getStudentStatuteTypes() {
-        return studentStatuteTypes;
+    public List<StatuteType> getStudentStatuteTypes() {
+        return statuteTypes;
     }
 
-    public void setStudentStatuteTypes(List<StudentStatuteType> studentStatuteTypes) {
-        this.studentStatuteTypes = studentStatuteTypes;
+    public void setStudentStatuteTypes(List<StatuteType> studentStatuteTypes) {
+        this.statuteTypes = studentStatuteTypes;
     }
 
     public boolean hasAnyRegistrationProtocol() {
@@ -109,7 +120,7 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
     }
 
     public boolean hasAnyStudentStatuteType() {
-        return this.studentStatuteTypes != null && !this.studentStatuteTypes.isEmpty();
+        return this.statuteTypes != null && !this.statuteTypes.isEmpty();
     }
 
     public boolean getActiveEnrolments() {

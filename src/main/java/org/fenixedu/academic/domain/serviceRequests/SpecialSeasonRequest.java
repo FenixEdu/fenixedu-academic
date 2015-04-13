@@ -20,9 +20,9 @@ package org.fenixedu.academic.domain.serviceRequests;
 
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.StudentStatute;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import org.fenixedu.academic.util.Bundle;
@@ -69,8 +69,8 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
             Student student = getRegistration().getStudent();
 
             if (getDeferred() != null && getDeferred() == true) {
-                new StudentStatute(student, StudentStatuteType.SPECIAL_SEASON_GRANTED_BY_REQUEST, getBeginExecutionPeriod(),
-                        getEndExecutionPeriod());
+                new StudentStatute(student, StatuteType.findSpecialSeasonGrantedByRequestStatuteType(),
+                        getBeginExecutionPeriod(), getEndExecutionPeriod());
             }
         }
 

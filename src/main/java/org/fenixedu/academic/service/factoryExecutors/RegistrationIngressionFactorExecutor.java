@@ -42,7 +42,7 @@ public class RegistrationIngressionFactorExecutor {
             if (hasRegistration()) {
                 setRegistrationProtocol(getRegistration().getRegistrationProtocol());
                 setAgreementInformation(getRegistration().getAgreementInformation());
-                setIngression(getRegistration().getIngression());
+                setIngressionType(getRegistration().getIngressionType());
                 setEntryPhase(getRegistration().getEntryPhase());
             }
         }
@@ -51,7 +51,7 @@ public class RegistrationIngressionFactorExecutor {
         public Object execute() {
             getRegistration().setRegistrationProtocol(getRegistrationProtocol());
             getRegistration().setAgreementInformation(getAgreementInformation());
-            getRegistration().setIngression(getIngression());
+            getRegistration().setIngressionType(getIngressionType());
             getRegistration().setEntryPhase(getEntryPhase());
             return getRegistration();
         }

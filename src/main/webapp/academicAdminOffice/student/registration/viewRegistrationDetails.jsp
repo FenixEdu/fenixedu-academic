@@ -26,6 +26,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 
 <%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
+<%@page import="org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear"%>
 
 <html:xhtml/>
 
@@ -76,11 +77,11 @@
 
 
 
-	<logic:present name="registration" property="ingression">
+	<logic:present name="registration" property="ingressionType">
 		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:present>
 	
-	<logic:notPresent name="registration" property="ingression">
+	<logic:notPresent name="registration" property="ingressionType">
 		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:notPresent>
 	<bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
@@ -92,7 +93,7 @@
 		<td>
 		
 			<%-- Registration Details --%>
-			<logic:present name="registration" property="ingression">
+			<logic:present name="registration" property="ingressionType">
 			<fr:view name="registration" schema="student.registrationDetail" >
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thright thlight"/>
@@ -100,7 +101,7 @@
 				</fr:layout>
 			</fr:view>
 			</logic:present>
-			<logic:notPresent name="registration" property="ingression">
+			<logic:notPresent name="registration" property="ingressionType">
 			<fr:view name="registration" schema="student.registrationsWithStartData" >
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
@@ -216,7 +217,21 @@
 		</academic:allowed>
 	</logic:notEmpty>
 	
-	
+	<%-- Registration Data by Execution Year --%>
+	<h3 class="mbottom05 mtop25 separator2"><bean:message key="title.registrationDataByExecutionYear" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<fr:view name="registration" property="registrationDataByExecutionYear">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= RegistrationDataByExecutionYear.class.getName() %>">
+			<fr:slot name="executionYear.qualifiedName" key="label.executionYear" />
+			<fr:slot name="enrolmentDate" key="label.enrolmentDate" />
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
+			<fr:property name="columnClasses" value="acenter,acenter,acenter" />
+			<fr:property name="sortBy" value="executionYear=desc" />
+			<fr:link name="edit" label="label.edit,ACADEMIC_OFFICE_RESOURCES" 
+						 link="/manageRegistrationDataByExecutionYear.do?method=prepareEdit&registrationDataByExecutionYearId=${externalId}" order="1" />
+		</fr:layout>
+	</fr:view>
 	
 	<%-- Curricular Plans --%>
 	

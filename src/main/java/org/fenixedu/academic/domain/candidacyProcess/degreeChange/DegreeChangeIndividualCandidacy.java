@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGrade;
@@ -182,7 +183,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
     @Override
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
-            final Ingression ingression) {
+            final IngressionType ingressionType) {
 
         if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
@@ -204,7 +205,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
         }
 
         getPersonalDetails().ensurePersonInternalization();
-        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingressionType);
     }
 
     private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
@@ -217,8 +218,8 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
     @Override
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
-            Ingression ingression) {
-        final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
+            IngressionType ingressionType) {
+        final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingressionType);
         registration.setRegistrationYear(getCandidacyExecutionInterval());
         createInternalAbandonStateInPreviousRegistration();
         return registration;

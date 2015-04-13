@@ -34,6 +34,7 @@ import pt.ist.fenixframework.Atomic;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Deprecated
 public enum StudentStatuteType {
 
     /**

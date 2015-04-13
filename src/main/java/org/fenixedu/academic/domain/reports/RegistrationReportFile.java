@@ -19,9 +19,11 @@
 package org.fenixedu.academic.domain.reports;
 
 import java.util.Collections;
+import java.util.Locale;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 
@@ -89,10 +91,10 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
     }
 
     private void reportIngression(final Row row, final Registration registration) {
-        final Ingression ingression = registration.getIngression();
-        if (ingression != null) {
-            row.setCell(ingression.getName());
-            row.setCell(ingression.getDescription());
+        final IngressionType ingressionType = registration.getIngressionType();
+        if (ingressionType != null) {
+            row.setCell(ingressionType.getCode());
+            row.setCell(ingressionType.getDescription(Locale.getDefault()));
         } else {
             row.setCell("");
             row.setCell("");

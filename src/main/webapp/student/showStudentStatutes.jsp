@@ -34,7 +34,9 @@
 <logic:notEmpty name="studentStatutes">
 	<fr:view name="studentStatutes" schema="student.studentStatutes.show">
 		<fr:schema type="org.fenixedu.academic.domain.student.StudentStatute" bundle="STUDENT_RESOURCES">
-			<fr:slot name="statuteType" key="label.student.statute.description" />
+			<fr:slot name="type" key="label.student.statute.description">
+				<fr:property name="format" value="${name}" />
+			</fr:slot>
 			<fr:slot name="beginExecutionPeriod.beginDateYearMonthDay" key="label.student.statute.startdate" />
 			<fr:slot name="endExecutionPeriod.endDateYearMonthDay" key="label.student.statute.enddate" />
 		</fr:schema>

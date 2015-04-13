@@ -32,7 +32,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
@@ -301,7 +301,8 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
         }
 
         private void createRegistration(final StandaloneIndividualCandidacyProcess process) {
-            process.getCandidacy().createRegistration(DegreeCurricularPlan.readEmptyDegreeCurricularPlan(), null, Ingression.STC);
+            process.getCandidacy().createRegistration(DegreeCurricularPlan.readEmptyDegreeCurricularPlan(), null,
+                    IngressionType.findByPredicate(IngressionType::isIsolatedCurricularUnits));
         }
     }
 

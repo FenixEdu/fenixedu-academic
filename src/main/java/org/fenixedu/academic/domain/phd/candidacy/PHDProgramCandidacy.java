@@ -90,7 +90,7 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
         setContigent(studentCandidacy.getContigent());
         setEntryGrade(studentCandidacy.getEntryGrade());
         setEntryPhase(studentCandidacy.getEntryPhase());
-        setIngression(studentCandidacy.getIngression());
+        setIngressionType(studentCandidacy.getIngressionType());
         setApplyForResidence(studentCandidacy.getApplyForResidence());
         setNotesAboutResidenceAppliance(studentCandidacy.getNotesAboutResidenceAppliance());
         setStudentPersonalDataAuthorizationChoice(studentCandidacy.getStudentPersonalDataAuthorizationChoice());

@@ -21,21 +21,25 @@ package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.sing
 import java.util.Arrays;
 
 import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
-public class IngressionProvider implements DataProvider {
+public class IngressionTypeProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays.asList(Ingression.values());
+        return Bennu.getInstance().getIngressionTypesSet();
     }
 
     @Override
     public Converter getConverter() {
-        return new EnumConverter();
+        return new DomainObjectKeyConverter();
     }
 
 }
