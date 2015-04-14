@@ -39,7 +39,7 @@
 		<slot name="personalization" key="link.personalizationOptions"/>
 		<slot name="siteArchive"  key="link.executionCourse.archive.generate"/>
 		<slot name="announcements" key="link.announcements"/>
-		<slot name="sections" key="link.teacher.executionCourseManagement.foruns"/>
+		<slot name="sections" key="label.executionCourseManagement.menu.sections"/>
 		<slot name="summaries" key="link.summaries"/>
 		<slot name="students" key="link.students"/>
 		<slot name="planning" key="link.lessonPlannings"/>
