@@ -40,7 +40,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 
     public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name", Collator.getInstance()));
+        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
         ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
