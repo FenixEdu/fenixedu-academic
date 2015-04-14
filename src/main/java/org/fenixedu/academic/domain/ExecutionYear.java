@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,9 +27,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
@@ -109,14 +107,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return getName();
     }
 
-    public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
-        return CollectionUtils.select(getExecutionDegreesSet(), new Predicate() {
-            @Override
-            public boolean evaluate(Object arg0) {
-                ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-                return executionDegree.getDegreeCurricularPlan().getDegreeType() == degreeType;
-            }
-        });
+    public Collection<ExecutionDegree> getExecutionDegreesMatching(java.util.function.Predicate<DegreeType> predicate) {
+        return getExecutionDegreesSet().stream()
+                .filter(degree -> predicate.test(degree.getDegreeCurricularPlan().getDegreeType())).collect(Collectors.toList());
+    }
+
+    public Collection<ExecutionDegree> getExecutionDegreesByType(DegreeType type) {
+        return getExecutionDegreesSet().stream().filter(degree -> degree.getDegreeCurricularPlan().getDegreeType() == type)
+                .collect(Collectors.toList());
     }
 
     public ExecutionYear getNextExecutionYear() {
@@ -251,11 +249,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
     }
 
-    public List<ExecutionDegree> getExecutionDegreesFor(final DegreeType... degreeTypes) {
+    public List<ExecutionDegree> getExecutionDegreesFor(java.util.function.Predicate<DegreeType> predicate) {
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
         for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            if (degreeTypesList.contains(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
+            if (predicate.test(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
                 result.add(executionDegree);
             }
         }
@@ -503,7 +500,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         private Set<ExecutionYear> updateIfNeeded(final Integer year) {
             Set<ExecutionYear> result = map.get(year);
 
-            // for a given civil year, a maximum of two ExecutionYear can be indexed => must update cache if only one ExecutionYear is cached 
+            // for a given civil year, a maximum of two ExecutionYear can be indexed => must update cache if only one ExecutionYear is cached
             if (result == null || result.size() < 2) {
                 for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
                     add(executionYear);

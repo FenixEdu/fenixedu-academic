@@ -32,7 +32,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.dto.InfoStudentCurricularPlan;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
@@ -43,7 +42,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsFromDegreeCurricularPlan {
 
-    protected List run(String degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException {
+    protected List run(String degreeCurricularPlanID) throws FenixServiceException {
         // Read the Students
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
@@ -68,9 +67,9 @@ public class ReadStudentsFromDegreeCurricularPlan {
     private static final ReadStudentsFromDegreeCurricularPlan serviceInstance = new ReadStudentsFromDegreeCurricularPlan();
 
     @Atomic
-    public static List runReadStudentsFromDegreeCurricularPlan(String degreeCurricularPlanID, DegreeType degreeType)
-            throws FenixServiceException, NotAuthorizedException {
-        return serviceInstance.run(degreeCurricularPlanID, degreeType);
+    public static List runReadStudentsFromDegreeCurricularPlan(String degreeCurricularPlanID) throws FenixServiceException,
+            NotAuthorizedException {
+        return serviceInstance.run(degreeCurricularPlanID);
     }
 
 }

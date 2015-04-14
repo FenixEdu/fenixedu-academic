@@ -48,7 +48,7 @@
 		<h:outputText id="acronym" value="#{DegreeManagement.acronym}</p>" escape="false"/>
 		
 		<h:outputText value="<p><b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
-		<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[DegreeManagement.bolonhaDegreeType]}</p>" escape="false"/>
+		<h:outputText id="bolonhaDegreeType" value="#{DegreeManagement.degreeType.name.content}</p>" escape="false"/>
 
 		<h:outputText value="<p><b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
 		<h:outputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}</p>" escape="false"/>

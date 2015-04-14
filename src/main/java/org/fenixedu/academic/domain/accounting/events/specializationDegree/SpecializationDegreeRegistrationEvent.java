@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.joda.time.DateTime;
@@ -62,7 +61,7 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
             throw new DomainException("error.accounting.events.dfa.DfaRegistrationEvent.registration.cannot.be.null");
         }
 
-        if (registration.getDegreeType().equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
+        if (registration.getDegreeType().isSpecializationDegree()) {
             throw new DomainException(
                     "error.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent.registrationType.incorrect");
         }
@@ -72,7 +71,7 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
-                .appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ")
+                .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
                 .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
                 .appendLabel(getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
 
@@ -147,7 +146,7 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = super.getDescription();
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
+        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
         labelFormatter.appendLabel(getExecutionYear().getYear());
         return labelFormatter;

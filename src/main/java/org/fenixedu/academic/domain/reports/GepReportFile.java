@@ -81,7 +81,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
         final StringBuilder result = new StringBuilder();
         result.append(getRequestDate().toString("yyyy_MM_dd_HH_mm")).append("_");
         result.append(getPrefix()).append("_");
-        result.append(getDegreeType() == null ? "Todos_Cursos" : getDegreeType().name()).append("_");
+        result.append(getDegreeType() == null ? "Todos_Cursos" : getDegreeType().getName().getContent()).append("_");
         result.append(getExecutionYear() == null ? "Todos_Anos" : getExecutionYear().getName().replace('/', '_'));
 
         return result.toString();
@@ -100,7 +100,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
     }
 
     protected void setDegreeCells(final Row row, final Degree degree) {
-        row.setCell(degree.getDegreeType().getLocalizedName());
+        row.setCell(degree.getDegreeType().getName().getContent());
         row.setCell(degree.getNameI18N().getContent());
         row.setCell(degree.getSigla());
     }
@@ -177,8 +177,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
     }
 
     protected static List<Registration> getFullRegistrationPath(final Registration current) {
-        if (current.getDegreeType() == DegreeType.BOLONHA_DEGREE
-                || current.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+        if (current.getDegreeType().isBolonhaDegree() || current.getDegreeType().isIntegratedMasterDegree()) {
             List<Registration> path = new ArrayList<Registration>();
             path.add(current);
             Registration source;

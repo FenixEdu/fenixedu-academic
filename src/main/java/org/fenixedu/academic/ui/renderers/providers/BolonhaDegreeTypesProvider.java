@@ -18,9 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 
@@ -32,9 +30,8 @@ public class BolonhaDegreeTypesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        final List<DegreeType> notEmptyBolonhaValues = new ArrayList<DegreeType>(DegreeType.NOT_EMPTY_BOLONHA_VALUES);
-        Collections.sort(notEmptyBolonhaValues);
-        return notEmptyBolonhaValues;
+        return DegreeType.all().filter(type -> !type.isEmpty()).filter(DegreeType::isBolonhaType).sorted()
+                .collect(Collectors.toList());
     }
 
     @Override

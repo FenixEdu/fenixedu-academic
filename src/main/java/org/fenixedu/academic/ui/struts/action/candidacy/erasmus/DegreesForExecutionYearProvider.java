@@ -64,8 +64,8 @@ public class DegreesForExecutionYearProvider implements DataProvider {
         final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
 
-        for (final Degree degree : Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-                DegreeType.BOLONHA_MASTER_DEGREE)) {
+        for (final Degree degree : Degree.readAllMatching(DegreeType.oneOf(DegreeType::isIntegratedMasterDegree,
+                DegreeType::isBolonhaMasterDegree))) {
 
             if (degree.getSigla().equals("MSCIT")) {
                 continue;

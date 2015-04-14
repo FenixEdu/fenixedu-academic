@@ -28,7 +28,6 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.service.services.person.SearchPerson;
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchParameters;
@@ -148,7 +147,7 @@ public class FindPersonAction extends FenixDispatchAction {
                 bean.setDegree(FenixFramework.<Degree> getDomainObject(degreeId));
             }
             if (!StringUtils.isEmpty(degreeType)) {
-                bean.setDegreeType(DegreeType.valueOf(degreeType));
+                bean.setDegreeType(FenixFramework.getDomainObject(degreeType));
             }
             if (!StringUtils.isEmpty(departmentId)) {
                 bean.setDepartment(FenixFramework.<Department> getDomainObject(departmentId));

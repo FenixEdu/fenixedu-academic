@@ -35,7 +35,7 @@ public class PersonSearchDegreeProvider implements DataProvider {
 
         FindPersonBean bean = (FindPersonBean) source;
         final DegreeType degreeType = bean.getDegreeType();
-        return new ArrayList<Degree>(Degree.readAllByDegreeType(degreeType));
+        return new ArrayList<Degree>(degreeType.getDegreeSet());
     }
 
     @Override

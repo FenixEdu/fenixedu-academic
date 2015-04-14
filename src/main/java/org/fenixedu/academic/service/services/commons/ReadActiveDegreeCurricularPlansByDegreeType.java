@@ -21,6 +21,7 @@ package org.fenixedu.academic.service.services.commons;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -41,17 +42,17 @@ import pt.ist.fenixframework.Atomic;
 public class ReadActiveDegreeCurricularPlansByDegreeType {
 
     @Atomic
-    public static Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
+    public static Collection<InfoDegreeCurricularPlan> run(Predicate<DegreeType> degreeType) {
         return getActiveDegreeCurricularPlansByDegreeType(degreeType, null);
     }
 
     @Atomic
-    public static Collection<InfoDegreeCurricularPlan> runForAcademicAdmin(final DegreeType degreeType) {
+    public static Collection<InfoDegreeCurricularPlan> runForAcademicAdmin(Predicate<DegreeType> degreeType) {
         return getActiveDegreeCurricularPlansByDegreeType(degreeType, AcademicPredicates.MANAGE_EXECUTION_COURSES);
     }
 
-    private static Collection<InfoDegreeCurricularPlan> getActiveDegreeCurricularPlansByDegreeType(final DegreeType degreeType,
-            AccessControlPredicate<Object> permission) {
+    private static Collection<InfoDegreeCurricularPlan> getActiveDegreeCurricularPlansByDegreeType(
+            Predicate<DegreeType> degreeType, AccessControlPredicate<Object> permission) {
         List<DegreeCurricularPlan> degreeCurricularPlans = new ArrayList<DegreeCurricularPlan>();
         for (DegreeCurricularPlan dcp : DegreeCurricularPlan.readByDegreeTypeAndState(degreeType,
                 DegreeCurricularPlanState.ACTIVE)) {

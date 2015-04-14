@@ -117,7 +117,7 @@
                 </li>
               </ul>
             </li>
-            <c:if test="${degree.degreeType.name() == 'BOLONHA_DEGREE' || degree.degreeType.name() == 'BOLONHA_INTEGRATED_MASTER_DEGREE' || degree.degreeType.name() == 'BOLONHA_MASTER_DEGREE' }">
+            <c:if test="${degree.degreeType.bolonhaDegree || degree.degreeType.integratedMasterDegree || degree.degreeType.bolonhaMasterDegree }">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.candidacies"/> <b class="caret"></b></a>
                 <ul class="dropdown-menu">

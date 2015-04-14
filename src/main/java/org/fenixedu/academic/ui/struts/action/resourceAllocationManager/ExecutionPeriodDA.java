@@ -230,8 +230,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         final Set<Shift> shifts = new HashSet<Shift>();
         final Map<ExecutionDegree, Integer> modified = new HashMap<ExecutionDegree, Integer>();
 
-        for (final Degree degree : Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE,
-                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+        for (final Degree degree : Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree,
+                DegreeType::isIntegratedMasterDegree))) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
                 final ExecutionDegree executionDegree =
                         degreeCurricularPlan.getExecutionDegreeByAcademicInterval(executionSemester.getExecutionYear()

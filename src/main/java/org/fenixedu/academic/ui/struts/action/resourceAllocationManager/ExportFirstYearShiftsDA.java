@@ -78,7 +78,7 @@ public class ExportFirstYearShiftsDA extends FenixContextDispatchAction {
         final AcademicInterval executionYear = bean.getExecutionYear().getAcademicInterval();
         final EntryPhase phase = bean.getEntryPhase();
         final List<Degree> degrees =
-                Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+                Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree));
 
         if (executionYear == null) {
             return chooseExport(mapping, form, request, response);

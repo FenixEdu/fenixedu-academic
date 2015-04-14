@@ -18,24 +18,24 @@
  */
 package org.fenixedu.academic.ui.struts.action.academicAdministration.degree.execution;
 
-import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class DegreeTypeProvider implements DataProvider {
 
     @Override
     public Converter getConverter() {
-        return new EnumConverter();
+        return new DomainObjectKeyArrayConverter();
     }
 
     @Override
     public Object provide(Object arg0, Object arg1) {
-        return Arrays.asList(DegreeType.values());
+        return DegreeType.all().collect(Collectors.toList());
     }
 
 }

@@ -86,7 +86,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     @Override
     public String getDegreeType() {
         if (request.isRequestForRegistration()) {
-            return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegreeType().getLocalizedName();
+            return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegreeType().getName().getContent();
         }
 
         return "--";

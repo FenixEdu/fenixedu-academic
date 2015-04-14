@@ -20,11 +20,13 @@ package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @deprecated Use {@link #DegreeTypeProvider}
@@ -34,7 +36,7 @@ public class DegreeTypesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return new ArrayList<DegreeType>(DegreeType.NOT_EMPTY_VALUES);
+        return DegreeType.all().filter(type -> !type.isEmpty()).collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +46,7 @@ public class DegreeTypesProvider implements DataProvider {
             public Object convert(Class type, Object value) {
                 final List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
                 for (final String o : (String[]) value) {
-                    degreeTypes.add(DegreeType.valueOf(o));
+                    degreeTypes.add(FenixFramework.getDomainObject(o));
                 }
                 return degreeTypes;
             }

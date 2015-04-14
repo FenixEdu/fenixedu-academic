@@ -106,7 +106,7 @@ public class SearchPerson implements Serializable {
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
-                degreeType = DegreeType.valueOf(degreeTypeString);
+                degreeType = FenixFramework.getDomainObject(degreeTypeString);
             }
 
             if (!StringUtils.isEmpty(departmentId)) {

@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.QualificationType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.candidacy.Ingression;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
@@ -117,14 +116,13 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getDegreeTypeName() {
-        switch (registration.getDegree().getDegreeType()) {
-        case BOLONHA_DEGREE:
+        if (registration.getDegree().getDegreeType().isBolonhaDegree()) {
             return BOLONHA_DEGREE_DESIGNATION;
-        case BOLONHA_INTEGRATED_MASTER_DEGREE:
-            return INTEGRATED_MASTER_DESIGNATION;
-        default:
-            return registration.getDegree().getDegreeType().getLocalizedName();
         }
+        if (registration.getDegree().getDegreeType().isIntegratedMasterDegree()) {
+            return INTEGRATED_MASTER_DESIGNATION;
+        }
+        return registration.getDegree().getDegreeType().getName().getContent();
     }
 
     @Override
@@ -207,15 +205,15 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
         ExecutionYear oneYearAgo = readCurrentExecutionYear().getPreviousExecutionYear();
         Registration lastRegistration = readStudent().getLastActiveRegistration();
 
-        if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)) {
+        if (lastRegistration.getDegreeType().isBolonhaDegree()) {
             return lastRegistration.getCurriculum(new DateTime(), oneYearAgo, CycleType.FIRST_CYCLE).getCurricularYear();
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isIntegratedMasterDegree()) {
             if (lastRegistration.hasConcludedFirstCycle()) {
                 return lastRegistration.getCurricularYear(oneYearAgo);
             } else {
                 return lastRegistration.getCurriculum(new DateTime(), oneYearAgo, CycleType.FIRST_CYCLE).getCurricularYear();
             }
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isBolonhaMasterDegree()) {
             return lastRegistration.getCurricularYear(oneYearAgo);
         }
 
@@ -275,15 +273,15 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
         ExecutionYear currentYear = readCurrentExecutionYear();
         Registration lastRegistration = readStudent().getLastActiveRegistration();
 
-        if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)) {
+        if (lastRegistration.getDegreeType().isBolonhaDegree()) {
             return lastRegistration.getCurriculum(new DateTime(), currentYear, CycleType.FIRST_CYCLE).getCurricularYear();
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isIntegratedMasterDegree()) {
             if (lastRegistration.hasConcludedFirstCycle()) {
                 return lastRegistration.getCurricularYear(currentYear);
             } else {
                 return lastRegistration.getCurriculum(new DateTime(), currentYear, CycleType.FIRST_CYCLE).getCurricularYear();
             }
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isBolonhaMasterDegree()) {
             return lastRegistration.getCurricularYear(currentYear);
         }
 

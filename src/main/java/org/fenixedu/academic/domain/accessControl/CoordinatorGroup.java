@@ -74,7 +74,7 @@ public class CoordinatorGroup extends FenixGroup {
     @Override
     public String[] getPresentationNameKeyArgs() {
         if (degreeType != null) {
-            return new String[] { degreeType.getFilteredName() };
+            return new String[] { degreeType.getName().getContent() };
         } else if (degree != null) {
             return new String[] { degree.getPresentationName() };
         }

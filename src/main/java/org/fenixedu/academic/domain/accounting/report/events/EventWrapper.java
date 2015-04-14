@@ -100,7 +100,7 @@ public class EventWrapper implements Wrapper {
     @Override
     public String getDegreeType() {
         if (hasRegistration()) {
-            return getRegistration().getDegreeType().getLocalizedName();
+            return getRegistration().getDegreeType().getName().getContent();
         }
 
         return "--";

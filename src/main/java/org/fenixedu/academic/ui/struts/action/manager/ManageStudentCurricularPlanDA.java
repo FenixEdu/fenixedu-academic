@@ -61,6 +61,8 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
+import pt.ist.fenixframework.FenixFramework;
+
 /**
  * @author Luis Cruz
  */
@@ -90,7 +92,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String degreeTypeString = (String) dynaActionForm.get("degreeType");
 
         if (isPresent(studentNumberString) && isPresent(degreeTypeString)) {
-            final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
+            final DegreeType degreeType = FenixFramework.getDomainObject(degreeTypeString);
             putStudentCurricularInformationInRequest(request, Integer.valueOf(studentNumberString), degreeType);
         }
 
@@ -114,7 +116,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String studentNumberString = request.getParameter("studentNumber");
         final String degreeTypeString = request.getParameter("degreeType");
         final Integer studentNumber = Integer.valueOf(studentNumberString);
-        final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
+        final DegreeType degreeType = FenixFramework.getDomainObject(degreeTypeString);
 
         final User userView = Authenticate.getUser();
 
@@ -132,7 +134,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         if (isPresent(degreeTypeString)) {
             // putStudentCurricularPlanStateLabelListInRequest(request);
 
-            final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
+            final DegreeType degreeType = FenixFramework.getDomainObject(degreeTypeString);
 
             final List infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegreeType.run(degreeType);
 
@@ -156,7 +158,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
                 && isPresent(degreeCurricularPlanIdString) && isPresent(startDateString)) {
 
             final Integer studentNumber = new Integer(studentNumberString);
-            final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
+            final DegreeType degreeType = FenixFramework.getDomainObject(degreeTypeString);
             final StudentCurricularPlanState studentCurricularPlanState =
                     StudentCurricularPlanState.valueOf(studentCurricularPlanStateString);
             final Date startDate = simpleDateFormat.parse(startDateString);

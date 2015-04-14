@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.ui.struts.action.academicAdministration.degree.execution;
 
+import java.util.ArrayList;
+
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
@@ -27,7 +29,7 @@ public class DegreeProvider extends AbstractDomainObjectProvider {
     public Object provide(Object source, Object value) {
         DegreeFilterBean bean = (DegreeFilterBean) source;
 
-        return Degree.readAllByDegreeType(bean.getDegreeType());
+        return new ArrayList<Degree>(bean.getDegreeType().getDegreeSet());
     }
 
 }

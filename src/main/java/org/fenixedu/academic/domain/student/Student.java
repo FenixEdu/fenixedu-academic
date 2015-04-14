@@ -31,7 +31,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
@@ -141,10 +140,10 @@ public class Student extends Student_Base {
         return getPerson().getName();
     }
 
-    public Collection<Registration> getRegistrationsByDegreeType(DegreeType degreeType) {
+    public Collection<Registration> getRegistrationsMatchingDegreeType(java.util.function.Predicate<DegreeType> predicate) {
         List<Registration> result = new ArrayList<Registration>();
         for (Registration registration : getRegistrationsSet()) {
-            if (registration.getDegreeType().equals(degreeType)) {
+            if (predicate.test(registration.getDegreeType())) {
                 result.add(registration);
             }
         }
@@ -202,16 +201,6 @@ public class Student extends Student_Base {
         return result;
     }
 
-    @Deprecated
-    public Registration getActiveRegistrationByDegreeType(DegreeType degreeType) {
-        for (Registration registration : getRegistrationsSet()) {
-            if (registration.getDegreeType().equals(degreeType) && registration.isActive()) {
-                return registration;
-            }
-        }
-        return null;
-    }
-
     public List<Registration> getActiveRegistrations() {
         final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : getRegistrationsSet()) {
@@ -258,11 +247,6 @@ public class Student extends Student_Base {
         Collection<Registration> activeRegistrations = getRegistrationsSet();
         return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
                 Registration.COMPARATOR_BY_START_DATE);
-    }
-
-    public Registration getLastRegistrationForDegreeType(final DegreeType degreeType) {
-        Collection<Registration> registrations = getRegistrationsByDegreeType(degreeType);
-        return registrations.isEmpty() ? null : (Registration) Collections.max(registrations, new BeanComparator("startDate"));
     }
 
     public boolean hasActiveRegistrationForDegreeType(final DegreeType degreeType, final ExecutionYear executionYear) {
@@ -438,48 +422,10 @@ public class Student extends Student_Base {
         return null;
     }
 
-    public DegreeType getMostSignificantDegreeType() {
-        // if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
-        // return DegreeType.MASTER_DEGREE;
-        // if (isStudentOfDegreeType(DegreeType.DEGREE))
-        // return DegreeType.DEGREE;
-        if (isStudentOfDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
-            return DegreeType.BOLONHA_SPECIALIZATION_DEGREE;
-        }
-        if (isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
-            return DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
-        }
-        if (isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
-            return DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
-        }
-        if (isStudentOfDegreeType(DegreeType.BOLONHA_MASTER_DEGREE)) {
-            return DegreeType.BOLONHA_MASTER_DEGREE;
-        }
-        if (isStudentOfDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
-            return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
-        }
-        if (isStudentOfDegreeType(DegreeType.BOLONHA_DEGREE)) {
-            return DegreeType.BOLONHA_DEGREE;
-        }
-        return null;
-    }
-
     public boolean isWorkingStudent() {
         for (StudentStatute statute : getStudentStatutesSet()) {
             if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT) {
                 return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isStudentOfDegreeType(DegreeType degreeType) {
-        for (Registration registration : getRegistrationsByDegreeType(degreeType)) {
-            if (registration.isActive()) {
-                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-                if (scp != null) {
-                    return true;
-                }
             }
         }
         return false;
@@ -605,7 +551,7 @@ public class Student extends Student_Base {
 
     // TODO: this method should be refactored as soon as possible
     public boolean hasToPayMasterDegreeInsuranceFor(final ExecutionYear executionYear) {
-        for (final Registration registration : getRegistrationsByDegreeType(DegreeType.MASTER_DEGREE)) {
+        for (final Registration registration : getRegistrationsMatchingDegreeType(DegreeType::isPreBolonhaMasterDegree)) {
             if (!registration.isActive() || registration.getActiveStudentCurricularPlan() == null) {
                 continue;
             }
@@ -1305,11 +1251,11 @@ public class Student extends Student_Base {
     }
 
     private boolean isMasterDegreeOnly(Registration registration) {
-        return (registration.getDegree().getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE);
+        return (registration.getDegree().getDegreeType().isBolonhaMasterDegree());
     }
 
     private boolean isIntegratedMasterDegree(Registration registration) {
-        return (registration.getDegree().getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        return (registration.getDegree().getDegreeType().isIntegratedMasterDegree());
     }
 
     private boolean hasConcludedFirstCycle(Registration registration) {
@@ -1320,35 +1266,6 @@ public class Student extends Student_Base {
             return false;
         }
         return true;
-    }
-
-    private boolean hasAnyOtherConcludedFirstCycle(Registration registration) {
-        List<Registration> otherRegistrations = new ArrayList<Registration>(getAllRegistrations());
-        otherRegistrations.remove(registration);
-        // Coming from other school
-        if (otherRegistrations.isEmpty()) {
-            return true;
-        }
-
-        // Has any 1st Cycle (bologna or classic, half IM) concluded Degree
-        for (Registration reg : otherRegistrations) {
-            if (reg.getDegree().getDegreeType() == DegreeType.DEGREE) {
-                if (reg.isConcluded()) {
-                    return true;
-                }
-            }
-            if (reg.getDegree().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-                if (reg.isConcluded()) {
-                    return true;
-                }
-            }
-            if (isIntegratedMasterDegree(reg)) {
-                if (hasConcludedFirstCycle(reg)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public void updateStudentRole() {

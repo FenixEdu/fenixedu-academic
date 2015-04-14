@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.coordinator;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,11 +55,8 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
         final DegreeCurricularPlan selectedDegreeCurricularPlan = getSelectedDegreeCurricularPlan(request);
         if (selectedDegreeCurricularPlan == null) {
-            final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
-            degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-            degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-            degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-            request.setAttribute("degreeCurricularPlans", selectedDegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
+            request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.getDegreeCurricularPlans(DegreeType.oneOf(
+                    DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree)));
         } else {
             request.setAttribute("selectedDegreeCurricularPlan", selectedDegreeCurricularPlan);
         }

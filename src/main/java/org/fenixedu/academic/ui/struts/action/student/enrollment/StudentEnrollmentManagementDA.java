@@ -30,7 +30,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -95,7 +94,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             }
 
             final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-            if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_MASTER_DEGREE) {
+            if (!studentCurricularPlan.getDegreeType().isBolonhaMasterDegree()) {
 
                 final CycleCurriculumGroup firstCycle = studentCurricularPlan.getFirstCycle();
                 if (firstCycle != null && firstCycle.isConcluded()
@@ -135,7 +134,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             return mapping.findForward("chooseRegistration");
         }
 
-        if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE) {
+        if (studentCurricularPlan.getDegreeType().isBolonhaMasterDegree()) {
             request.setAttribute("registration", registration);
             return mapping.findForward("proceedToEnrolment");
 

@@ -24,9 +24,10 @@ package org.fenixedu.academic.dto.student;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationNumber;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -87,8 +88,20 @@ public class ChooseStudentCurricularPlanBean implements Serializable {
     public void setNumber(Integer number) {
         this.number = number;
         if (number != null) {
-            setStudent(Registration.readRegistrationByNumberAndDegreeTypes(getNumber(), DegreeType.DEGREE).getStudent());
+            setStudent(readRegistration().getStudent());
         }
+    }
+
+    private final Registration readRegistration() {
+        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
+            if (registrationNumber.getNumber().intValue() == getNumber().intValue()) {
+                final Registration registration = registrationNumber.getRegistration();
+                if (registration.getDegreeType().isPreBolonhaDegree()) {
+                    return registration;
+                }
+            }
+        }
+        return null;
     }
 
 }

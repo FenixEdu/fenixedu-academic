@@ -29,6 +29,7 @@
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="appBundle"/>
 
 	<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
@@ -112,6 +113,17 @@
 				<f:selectItems value="#{DegreeManagement.bolonhaDegreeTypes}" />
 			</h:selectOneMenu>
 			<h:message for="bolonhaDegreeType" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th><span class='required'>*</span> #{appBundle['label.gradeScale']}:</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:selectOneMenu id="gradeScale" value="#{DegreeManagement.gradeScale}">
+				<f:selectItems value="#{DegreeManagement.gradeScales}" />
+			</h:selectOneMenu>
+			<h:message for="gradeScale" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>

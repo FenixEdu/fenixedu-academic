@@ -19,9 +19,8 @@
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.StringFormatter;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 public class MasterDegreeDiplomaReport extends DiplomaReport {
 
@@ -41,13 +40,12 @@ public class MasterDegreeDiplomaReport extends DiplomaReport {
     protected void fillReportSpecificParameters() {
         addParameter("degreeFilteredName", StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
 
-        addParameter("conclusionStatus",
-                "curso de " + BundleUtil.getString(Bundle.ENUMERATION, DegreeType.MASTER_DEGREE.getQualifiedName()).toLowerCase());
+        addParameter("conclusionStatus", "curso de "
+                + DegreeType.matching(DegreeType::isPreBolonhaMasterDegree).get().getName().getContent().toLowerCase());
 
         addParameter("graduateTitle",
-                BundleUtil.getString(Bundle.ENUMERATION, DegreeType.MASTER_DEGREE.getQualifiedName() + ".graduate.title")
-                        + " em " + StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
+                DegreeType.matching(DegreeType::isPreBolonhaMasterDegree).get().getGraduateTitle(I18N.getLocale()) + " em "
+                        + StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
 
     }
-
 }

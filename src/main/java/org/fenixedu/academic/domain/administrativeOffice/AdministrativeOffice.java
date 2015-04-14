@@ -94,23 +94,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
         return result;
     }
 
-    public Set<Degree> getAdministratedBolonhaDegrees() {
-        Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        for (Degree degree : getAdministratedDegrees()) {
-            if (degree.isBolonhaMasterOrDegree()) {
-                result.add(degree);
-            }
-        }
-        return result;
-    }
-
     public Set<Degree> getAdministratedDegreesForStudentCreationWithoutCandidacy() {
         final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        for (Degree degree : getAdministratedDegrees()) {
-            if (degree.getDegreeType().canCreateStudent() && !degree.getDegreeType().canCreateStudentOnlyWithCandidacy()) {
-                result.add(degree);
-            }
-        }
+        result.addAll(getAdministratedDegrees());
         return result;
     }
 

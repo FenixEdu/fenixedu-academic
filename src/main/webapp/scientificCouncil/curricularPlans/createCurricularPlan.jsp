@@ -51,6 +51,16 @@
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
+
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{scouncilBundle['duration']}:</th>" escape="false"/>
+		<h:outputText value="<td>" escape="false"/>
+		<h:selectOneMenu id="durationTypeName" value="#{DegreeCurricularPlanManagement.durationTypeName}" required="true">
+			<f:selectItems value="#{DegreeCurricularPlanManagement.durationTypes}" />
+		</h:selectOneMenu>
+		<h:message for="durationTypeName" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
 		<h:outputText value="</table>" escape="false"/>
 
 

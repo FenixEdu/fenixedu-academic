@@ -20,6 +20,7 @@ package org.fenixedu.academic.service.services.gep;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -27,7 +28,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
 import org.fenixedu.academic.dto.InfoStudentCurricularPlanWithFirstTimeEnrolment;
@@ -47,8 +47,7 @@ public class ListMasterDegreeStudents {
 
         final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
         final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();
-        final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans =
-                DegreeCurricularPlan.readByDegreeTypeAndState(DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
+        final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = readByDegreeTypeAndState();
         CollectionUtils.filter(masterDegreeCurricularPlans, new Predicate() {
 
             @Override
@@ -115,4 +114,14 @@ public class ListMasterDegreeStudents {
 
     }
 
+    private static List<DegreeCurricularPlan> readByDegreeTypeAndState() {
+        List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        for (DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
+            if (degreeCurricularPlan.getDegree().getDegreeType().isPreBolonhaMasterDegree()
+                    && degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+                result.add(degreeCurricularPlan);
+            }
+        }
+        return result;
+    }
 }

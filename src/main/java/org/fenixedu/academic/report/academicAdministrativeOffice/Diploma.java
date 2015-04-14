@@ -181,8 +181,8 @@ public class Diploma extends AdministrativeOfficeDocument {
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
         final StringBuilder result = new StringBuilder();
 
-        if (registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA
-                || registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
+        if (registration.getDegreeType().isAdvancedFormationDiploma()
+                || registration.getDegreeType().isAdvancedSpecializationDiploma()) {
             forDFA(result, diplomaRequest, registration);
         } else {
             forOthers(result, diplomaRequest, registration);
@@ -201,13 +201,13 @@ public class Diploma extends AdministrativeOfficeDocument {
                     .append(SINGLE_SPACE);
         }
 
-        result.append(degreeType.getPrefix(getLocale())).append(degreeType.getFilteredName(getLocale()));
+        result.append(degreeType.getPrefix(getLocale())).append(degreeType.getName().getContent(getLocale()));
     }
 
     private void forDFA(StringBuilder result, final DiplomaRequest diplomaRequest, final Registration registration) {
         final DegreeType degreeType = registration.getDegreeType();
 
-        result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
+        result.append(degreeType.getPrefix()).append(degreeType.getName().getContent());
         if (degreeType.hasExactlyOneCycleType()) {
             result.append(" (")
                     .append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), degreeType.getCycleType().getQualifiedName()))

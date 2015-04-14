@@ -75,7 +75,7 @@ public class GratuityEventWrapper implements Wrapper {
 
     @Override
     public String getDegreeType() {
-        return event.getRegistration().getDegreeType().getLocalizedName();
+        return event.getRegistration().getDegreeType().getName().getContent();
     }
 
     @Override

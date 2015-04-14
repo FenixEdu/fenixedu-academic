@@ -67,8 +67,8 @@
 			</tr>
 			<logic:iterate id="executionDegree" name="executionDegrees" type="org.fenixedu.academic.domain.ExecutionDegree">
 				<tr>
-					<td><bean:message name="executionDegree"
-						property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES" /></td>
+					<td><bean:write name="executionDegree"
+						property="degreeCurricularPlan.degree.degreeType.name.content" /></td>
 					<td><bean:write name="executionDegree" property="degreeCurricularPlan.degree.nome" /></td>
 					<td>
 						<% if(executionDegree.isPublishedExam(executionSemester)) { %>

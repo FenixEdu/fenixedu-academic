@@ -18,9 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 
@@ -31,9 +29,7 @@ public class DegreeTypeProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        List<DegreeType> result = new ArrayList<DegreeType>(DegreeType.NOT_EMPTY_VALUES);
-        Collections.sort(result);
-        return result;
+        return DegreeType.all().filter(type -> !type.isEmpty()).sorted().collect(Collectors.toList());
     }
 
     @Override

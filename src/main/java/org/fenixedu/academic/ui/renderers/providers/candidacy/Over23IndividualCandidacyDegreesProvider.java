@@ -54,7 +54,7 @@ public class Over23IndividualCandidacyDegreesProvider implements DataProvider {
     }
 
     private Collection<Degree> getDegrees(Object source) {
-        return Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        return Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree));
     }
 
     @Override

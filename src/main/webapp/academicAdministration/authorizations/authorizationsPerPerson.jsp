@@ -209,15 +209,15 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">
-							<a data-toggle="collapse" data-parent="#cursos_acc" data-target="#collapse${degreeType}" href="#">
-								<bean:write name="degreeType" property="localizedName" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+							<a data-toggle="collapse" data-parent="#cursos_acc" data-target="#collapse${degreeType.externalId}" href="#">
+								<bean:write name="degreeType" property="name.content" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 							</a>
 						</h3>
 					</div>
-					<div id="collapse${degreeType}" class="panel-collapse collapse">
+					<div id="collapse${degreeType.externalId}" class="panel-collapse collapse">
 						<div class="panel-body">
 							<logic:iterate id="degree" name="authorizationsBean" property="degrees">
-								<logic:equal value="<%= degreeType.name() %>" name="degree" property="degreeType.name">
+								<logic:equal value="${degreeType}" name="degree" property="degreeType">
 										<div class="draggable_course degree">
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 											<div id="presentationName" style="display:none"><bean:write name="degree" property="presentationName"/></div>

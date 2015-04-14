@@ -66,8 +66,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
-import com.google.common.collect.Sets;
-
 public class MobilityApplicationProcess extends MobilityApplicationProcess_Base {
 
     static final public Comparator<IndividualCandidacyProcess> COMPARATOR_BY_CANDIDACY_PERSON =
@@ -278,13 +276,13 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
                 || RoleType.COORDINATOR.isMember(userView.getPerson().getUser());
     }
 
-    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_MASTER_DEGREE,
-            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    private static final java.util.function.Predicate<DegreeType> ALLOWED_DEGREE_TYPES = DegreeType.oneOf(
+            DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree);
 
     static private boolean isAllowedToManageProcess(User userView) {
         for (AcademicProgram program : AcademicAccessRule.getProgramsAccessibleToFunction(
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, userView.getPerson().getUser()).collect(Collectors.toSet())) {
-            if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+            if (ALLOWED_DEGREE_TYPES.test(program.getDegreeType())) {
                 return true;
             }
         }

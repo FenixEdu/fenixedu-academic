@@ -123,8 +123,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
                 @Override
                 public int compare(DegreeCurricularPlan o1, DegreeCurricularPlan o2) {
-                    final int degreeTypeCompare =
-                            o1.getDegreeType().getLocalizedName().compareTo(o2.getDegreeType().getLocalizedName());
+                    final int degreeTypeCompare = o1.getDegreeType().getName().compareTo(o2.getDegreeType().getName());
                     if (degreeTypeCompare != 0) {
                         return degreeTypeCompare;
                     }
@@ -1299,10 +1298,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     /**
      * If state is null then just degree type is checked
      */
-    public static List<DegreeCurricularPlan> readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state) {
+    public static List<DegreeCurricularPlan> readByDegreeTypeAndState(java.util.function.Predicate<DegreeType> degreeType,
+            DegreeCurricularPlanState state) {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         for (DegreeCurricularPlan degreeCurricularPlan : readNotEmptyDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getDegree().getDegreeType() == degreeType
+            if (degreeType.test(degreeCurricularPlan.getDegree().getDegreeType())
                     && (state == null || degreeCurricularPlan.getState() == state)) {
 
                 result.add(degreeCurricularPlan);
@@ -1314,11 +1314,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     /**
      * If state is null then just degree type is checked
      */
-    public static List<DegreeCurricularPlan> readByDegreeTypesAndState(Set<DegreeType> degreeTypes,
+    public static List<DegreeCurricularPlan> readByDegreeTypesAndState(java.util.function.Predicate<DegreeType> predicate,
             DegreeCurricularPlanState state) {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         for (DegreeCurricularPlan degreeCurricularPlan : readNotEmptyDegreeCurricularPlans()) {
-            if (degreeTypes.contains(degreeCurricularPlan.getDegree().getDegreeType())
+            if (predicate.test(degreeCurricularPlan.getDegree().getDegreeType())
                     && (state == null || degreeCurricularPlan.getState() == state)) {
 
                 result.add(degreeCurricularPlan);
@@ -1752,12 +1752,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return degreeModules;
     }
 
-    public static Set<DegreeCurricularPlan> getDegreeCurricularPlans(final Set<DegreeType> degreeTypes) {
+    public static Set<DegreeCurricularPlan> getDegreeCurricularPlans(java.util.function.Predicate<DegreeType> predicate) {
         final Set<DegreeCurricularPlan> degreeCurricularPlans =
                 new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
 
         for (final Degree degree : Degree.readNotEmptyDegrees()) {
-            if (degreeTypes.contains(degree.getDegreeType())) {
+            if (predicate.test(degree.getDegreeType())) {
                 for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
                     if (degreeCurricularPlan.isActive()) {
                         degreeCurricularPlans.add(degreeCurricularPlan);
@@ -1834,7 +1834,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     };
 
     public AverageType getAverageType() {
-        if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+        if (getDegreeType().isPreBolonhaMasterDegree()) {
             if (bestAverage.contains(getName())) {
                 return AverageType.BEST;
             } else if (weightedAverage.contains(getName())) {
@@ -1953,8 +1953,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    public static List<DegreeCurricularPlan> readByDegreeTypesAndStateWithExecutionDegreeForYear(Set<DegreeType> degreeTypes,
-            DegreeCurricularPlanState state, ExecutionYear executionYear) {
+    public static List<DegreeCurricularPlan> readByDegreeTypesAndStateWithExecutionDegreeForYear(
+            java.util.function.Predicate<DegreeType> degreeTypes, DegreeCurricularPlanState state, ExecutionYear executionYear) {
 
         final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         for (final DegreeCurricularPlan degreeCurricularPlan : readByDegreeTypesAndState(degreeTypes, state)) {
@@ -2037,10 +2037,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public int getDurationInYears() {
-        final AcademicPeriod academicPeriod =
-                getDegreeStructure() != null ? getDegreeStructure().getAcademicPeriod() : getDegreeType().getAcademicPeriod();
-
-        return Float.valueOf(academicPeriod.getWeight()).intValue();
+        if (getDegreeStructure() != null) {
+            return Float.valueOf(getDegreeStructure().getAcademicPeriod().getWeight()).intValue();
+        }
+        return 0;
     }
 
     public int getDurationInSemesters() {

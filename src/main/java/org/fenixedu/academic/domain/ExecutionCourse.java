@@ -248,9 +248,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean isMasterDegreeDFAOrDEAOnly() {
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-            if (!degreeType.equals(DegreeType.MASTER_DEGREE) && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
-                    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
-                    && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
+            if (!degreeType.isPreBolonhaMasterDegree() && !degreeType.isAdvancedFormationDiploma()
+                    && !degreeType.isSpecializationDegree() && !degreeType.isAdvancedSpecializationDiploma()) {
                 return false;
             }
         }

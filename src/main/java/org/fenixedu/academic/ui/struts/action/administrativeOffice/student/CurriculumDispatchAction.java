@@ -39,7 +39,6 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.InfoStudentCurricularPlan;
@@ -239,7 +238,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
         if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
             String organizedBy =
-                    registration.getDegreeType() == DegreeType.MASTER_DEGREE ? OrganizationType.EXECUTION_YEARS.name() : OrganizationType.GROUPS
+                    registration.getDegreeType().isPreBolonhaMasterDegree() ? OrganizationType.EXECUTION_YEARS.name() : OrganizationType.GROUPS
                             .name();
             actionForm.set("organizedBy", organizedBy);
         }

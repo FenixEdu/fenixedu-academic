@@ -27,7 +27,6 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -120,7 +119,7 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
         program.setAdministrativeOffice(office);
         if (program instanceof Degree) {
             Degree degree = (Degree) program;
-            if (degree.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA && degree.getPhdProgram() != null) {
+            if (degree.getPhdProgram() != null) {
                 degree.getPhdProgram().setAdministrativeOffice(office);
             }
         }

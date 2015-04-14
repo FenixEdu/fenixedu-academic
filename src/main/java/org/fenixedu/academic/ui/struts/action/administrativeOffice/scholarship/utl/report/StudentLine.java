@@ -208,9 +208,9 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 
     public DegreeType readDegreeType() {
         if (this.degreeTypeName.equals(INTEGRATED_MASTER_DESIGNATION)) {
-            return DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+            return DegreeType.matching(DegreeType::isIntegratedMasterDegree).get();
         } else if (this.degreeTypeName.equals(BOLONHA_DEGREE_DESIGNATION)) {
-            return DegreeType.BOLONHA_DEGREE;
+            return DegreeType.matching(DegreeType::isBolonhaDegree).get();
         }
 
         throw new RuntimeException("Unknown degree type " + this.degreeTypeName);
@@ -488,14 +488,15 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             return "";
         }
 
-        switch (getRegistration().getDegree().getDegreeType()) {
-        case BOLONHA_DEGREE:
+        if (getRegistration().getDegree().getDegreeType().isBolonhaDegree()) {
             return BOLONHA_DEGREE_DESIGNATION;
-        case BOLONHA_INTEGRATED_MASTER_DEGREE:
-            return INTEGRATED_MASTER_DESIGNATION;
-        default:
-            return getRegistration().getDegree().getDegreeType().getLocalizedName();
         }
+
+        if (getRegistration().getDegree().getDegreeType().isIntegratedMasterDegree()) {
+            return INTEGRATED_MASTER_DESIGNATION;
+        }
+
+        return getRegistration().getDegree().getDegreeType().getName().getContent();
     }
 
     public boolean isStudentNumberDiffer() {
@@ -600,9 +601,9 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             return null;
         }
 
-        if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)) {
+        if (lastRegistration.getDegreeType().isBolonhaDegree()) {
             return lastRegistration.getCurriculum(new DateTime(), oneYearAgo, CycleType.FIRST_CYCLE).getCurricularYear();
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isIntegratedMasterDegree()) {
             if (lastRegistration.hasConcludedFirstCycle()) {
                 return lastRegistration.getCurricularYear(oneYearAgo);
             } else {
@@ -612,7 +613,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
                     return lastRegistration.getCurriculum(new DateTime(), oneYearAgo, CycleType.SECOND_CYCLE).getCurricularYear();
                 }
             }
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isBolonhaMasterDegree()) {
             return lastRegistration.getCurricularYear(oneYearAgo);
         }
 
@@ -632,9 +633,9 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             return null;
         }
 
-        if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)) {
+        if (lastRegistration.getDegreeType().isBolonhaDegree()) {
             return lastRegistration.getCurriculum(new DateTime(), currentYear, CycleType.FIRST_CYCLE).getCurricularYear();
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isIntegratedMasterDegree()) {
             if (lastRegistration.hasConcludedFirstCycle()) {
                 return lastRegistration.getCurricularYear(currentYear);
             } else {
@@ -645,7 +646,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
                             .getCurricularYear();
                 }
             }
-        } else if (lastRegistration.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
+        } else if (lastRegistration.getDegreeType().isBolonhaMasterDegree()) {
             return lastRegistration.getCurricularYear(currentYear);
         }
 

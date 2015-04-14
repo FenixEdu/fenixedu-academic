@@ -725,7 +725,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
                 final Row row = spreadsheet.addRow();
                 row.setCell(thesis.getStudent().getNumber().toString());
                 row.setCell(thesis.getStudent().getPerson().getName());
-                row.setCell(degreeType.getLocalizedName());
+                row.setCell(degreeType.getName().getContent());
                 row.setCell(degree.getPresentationName(executionYear));
                 row.setCell(degree.getSigla());
                 row.setCell(thesis.getTitle().getContent());

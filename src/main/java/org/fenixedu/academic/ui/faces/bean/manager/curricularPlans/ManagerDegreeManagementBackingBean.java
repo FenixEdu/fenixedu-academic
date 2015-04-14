@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeManagementBackingBean;
 
 public class ManagerDegreeManagementBackingBean extends DegreeManagementBackingBean {
@@ -35,7 +34,7 @@ public class ManagerDegreeManagementBackingBean extends DegreeManagementBackingB
         final Iterator<Degree> degrees = orderedResult.iterator();
         while (degrees.hasNext()) {
             final Degree degree = degrees.next();
-            if (degree.getDegreeType() != DegreeType.DEGREE) {
+            if (!degree.getDegreeType().isPreBolonhaDegree()) {
                 degrees.remove();
             }
         }

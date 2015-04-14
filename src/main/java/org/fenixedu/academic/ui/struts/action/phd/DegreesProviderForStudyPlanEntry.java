@@ -32,9 +32,9 @@ public class DegreesProviderForStudyPlanEntry extends AbstractDomainObjectProvid
 
         final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
-        result.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA,
-                DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA, DegreeType.BOLONHA_DEGREE,
-                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE));
+        result.addAll(Degree.readAllMatching(DegreeType.oneOf(DegreeType::isAdvancedFormationDiploma,
+                DegreeType::isAdvancedSpecializationDiploma, DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree,
+                DegreeType::isBolonhaMasterDegree)));
 
         return result;
 

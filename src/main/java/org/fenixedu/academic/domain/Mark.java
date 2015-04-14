@@ -63,7 +63,7 @@ public class Mark extends Mark_Base {
                         registration.getStudentCurricularPlan(getAttend().getExecutionPeriod());
                 final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
                 final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
-                if (degreeType == DegreeType.EMPTY) {
+                if (degreeType.isEmpty()) {
                     gradeScale = GradeScale.TYPE20;
                 } else {
                     gradeScale = degreeCurricularPlan.getGradeScaleChain();

@@ -41,6 +41,6 @@
 
 <schema name="org.fenixedu.academic.domain.Degree.List.For.Department.Association"
 		type="org.fenixedu.academic.domain.Degree" bundle="MANAGER_RESOURCES">
-	<slot name="tipoCurso"/>
+	<slot name="degreeType.name.content" key="message.degreeType" />
 	<slot name="name"/>
 </schema>

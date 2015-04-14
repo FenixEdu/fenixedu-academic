@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -83,9 +82,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             }
         }
 
-        if (getRegistration().isBolonha()
-                && !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
-                && !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
+        if (getRegistration().isBolonha() && !getRegistration().getDegreeType().isAdvancedFormationDiploma()
+                && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
             final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
             if (registryRequest == null) {
                 throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
@@ -115,9 +113,19 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         final DegreeType degreeType = getDegreeType();
         final CycleType requestedCycle = getRequestedCycle();
 
-        return getDescription(getAcademicServiceRequestType(),
-                getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-                        + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+        final String key;
+
+        if (degreeType.isBolonhaType()) {
+            if (degreeType.isAdvancedFormationDiploma()) {
+                key = "DFA";
+            } else {
+                key = degreeType.isComposite() ? requestedCycle.name() : degreeType.getCycleType().name();
+            }
+        } else {
+            key = degreeType.isDegree() ? "DEGREE" : "MASTER_DEGREE";
+        }
+
+        return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "." + key);
     }
 
     @Override
@@ -137,22 +145,22 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     @Override
     final public EventType getEventType() {
-        switch (getDegreeType()) {
-        case DEGREE:
-        case BOLONHA_DEGREE:
-            return EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST;
-        case MASTER_DEGREE:
-        case BOLONHA_MASTER_DEGREE:
-            return EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
-        case BOLONHA_INTEGRATED_MASTER_DEGREE:
-            return (getRequestedCycle() == CycleType.FIRST_CYCLE) ? EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST : EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            return EventType.BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST;
-        case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
+        if (getDegreeType().isAdvancedSpecializationDiploma()) {
             return EventType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA_REQUEST;
-        default:
-            throw new DomainException("DiplomaRequest.not.available.for.given.degree.type");
         }
+        if (getDegreeType().isAdvancedFormationDiploma()) {
+            return EventType.BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST;
+        }
+        if (getDegreeType().isDegree()) {
+            return EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST;
+        }
+        if (getDegreeType().isPreBolonhaMasterDegree() || getDegreeType().isBolonhaMasterDegree()) {
+            return EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
+        }
+        if (getDegreeType().isIntegratedMasterDegree()) {
+            return (getRequestedCycle() == CycleType.FIRST_CYCLE) ? EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST : EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
+        }
+        throw new DomainException("DiplomaRequest.not.available.for.given.degree.type");
     }
 
     @Override
@@ -163,7 +171,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         if (academicServiceRequestBean.isToProcess()) {
-            if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
+            if (getRegistration().getDegreeType().isSpecializationDegree()) {
                 throw new DomainException("DiplomaRequest.diploma.not.available");
             }
 
@@ -189,8 +197,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }
 
-            if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
-                    && !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
+            if (!getRegistration().getDegreeType().isAdvancedFormationDiploma()
+                    && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
                 RegistryCode code = getRegistryCode();
                 if (code != null) {
                     if (!code.getDocumentRequestSet().contains(this)) {
@@ -364,14 +372,12 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         return true;
     }
 
-    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
-
     final public boolean hasFinalAverageDescription() {
         return !hasDissertationTitle();
     }
 
     final public boolean hasDissertationTitle() {
-        return getDegreeType() == DegreeType.MASTER_DEGREE;
+        return getDegreeType().isPreBolonhaMasterDegree();
     }
 
     /* TODO refactor, always set requested cycle type in document creation */
@@ -437,15 +443,13 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         // imply external entity signature. DFAs should therefore be another
         // type of document with a specific workflow, the document is completely
         // different anyway.
-        return getDegree() == null || getDegreeType() == null
-                || !getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+        return getDegree() == null || getDegreeType() == null || !getDegreeType().isAdvancedFormationDiploma();
     }
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
         // FIXME: see isPossibleToSendToOtherEntity()
-        return getDegree() == null || getDegreeType() == null
-                || !getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+        return getDegree() == null || getDegreeType() == null || !getDegreeType().isAdvancedFormationDiploma();
     }
 
     @Override
@@ -455,13 +459,13 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     @Override
     public boolean isPayedUponCreation() {
-        return getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
+        return !getDegreeType().isAdvancedFormationDiploma();
     }
 
     @Override
     public boolean isCanGenerateRegistryCode() {
         return isSendToExternalEntitySituationAccepted() && !hasRegistryCode()
-                && getRegistration().getDegreeType().getQualifiesForGraduateTitle();
+                && getRegistration().getDegreeType().qualifiesForGraduateTitle();
     }
 
     @Override
@@ -503,7 +507,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     @Override
     public String getFinalAverageQualified() {
-        return getRegistration().getDegreeType().getGradeScale().getQualifiedName(getFinalAverage().toString());
+        return getRegistration().getDegree().getGradeScale().getQualifiedName(getFinalAverage().toString());
     }
 
     @Override
@@ -549,7 +553,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     @Override
     public String getProgrammeTypeDescription() {
-        return getDegreeType().getLocalizedName();
+        return getDegreeType().getName().getContent();
     }
 
     @Override

@@ -111,7 +111,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     private void checkSpecificConditions() {
-        if (getRegistration().getDegreeType().getQualifiesForGraduateTitle()) {
+        if (getRegistration().getDegreeType().qualifiesForGraduateTitle()) {
             checkForDiplomaRequest(getRegistration(), getRequestedCycle());
         } else {
             if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
@@ -192,11 +192,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     final public String getDescription() {
         final DegreeType degreeType = getDegreeType();
-        final CycleType requestedCycle = getRequestedCycle();
+        final CycleType requestedCycle = degreeType.isComposite() ? getRequestedCycle() : degreeType.getCycleType();
 
         return getDescription(getAcademicServiceRequestType(),
-                getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-                        + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+                getDocumentRequestType().getQualifiedName() + "." + requestedCycle.name());
     }
 
     @Override

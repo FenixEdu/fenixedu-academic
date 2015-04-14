@@ -169,7 +169,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
                     && (degreeCurricularPlan == null || chosenDegreeType != degreeCurricularPlan.getDegreeType())) {
                 continue;
             }
-            if ((degreeCurricularPlan != null) && (degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY)
+            if ((degreeCurricularPlan != null) && (!degreeCurricularPlan.getDegreeType().isEmpty())
                     && (!accessibleDegreeTypes.contains(degreeCurricularPlan.getDegreeType()))) {
                 continue;
             }
@@ -235,7 +235,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
             if (degree != null) {
                 filename += "_" + degree.getNameFor(executionYear).getContent().replace(' ', '_');
             } else if (degreeType != null) {
-                filename += "_" + degreeType.getLocalizedName().replace(' ', '_');
+                filename += "_" + degreeType.getName().getContent().replace(' ', '_');
             }
             filename += "_" + executionYear.getYear();
 

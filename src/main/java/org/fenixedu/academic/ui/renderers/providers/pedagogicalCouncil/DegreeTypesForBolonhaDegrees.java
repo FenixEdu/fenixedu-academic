@@ -18,25 +18,22 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.pedagogicalCouncil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DegreeTypesForBolonhaDegrees implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
-
-        degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-        degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-        degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-
-        return degreeTypes;
+        return DegreeType
+                .all()
+                .filter(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree,
+                        DegreeType::isIntegratedMasterDegree)).collect(Collectors.toList());
     }
 
     @Override
@@ -45,7 +42,7 @@ public class DegreeTypesForBolonhaDegrees implements DataProvider {
 
             @Override
             public Object convert(Class type, Object value) {
-                return DegreeType.valueOf((String) value);
+                return FenixFramework.getDomainObject((String) value);
             }
 
         };

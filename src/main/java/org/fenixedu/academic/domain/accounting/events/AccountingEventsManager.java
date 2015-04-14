@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -42,16 +41,16 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class AccountingEventsManager {
 
-    private final List<DegreeType> acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent = Arrays
-            .asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
-                    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.EMPTY });
+    private final Predicate<DegreeType> acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent = DegreeType.oneOf(
+            DegreeType::isPreBolonhaDegree, DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree,
+            DegreeType::isIntegratedMasterDegree, DegreeType::isEmpty);
 
-    private final List<DegreeType> acceptedDegreeTypesForGratuityEvent = Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
-            DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-            DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
+    private final Predicate<DegreeType> acceptedDegreeTypesForGratuityEvent = DegreeType.oneOf(DegreeType::isPreBolonhaDegree,
+            DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree,
+            DegreeType::isAdvancedFormationDiploma, DegreeType::isSpecializationDegree);
 
-    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays.asList(new DegreeType[] {
-            DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
+    private final Predicate<DegreeType> acceptedDegreeTypesForInsuranceEvent = DegreeType.oneOf(
+            DegreeType::isAdvancedFormationDiploma, DegreeType::isSpecializationDegree);
 
     public InvocationResult createStandaloneEnrolmentGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
@@ -98,11 +97,11 @@ public class AccountingEventsManager {
             throw new DomainException("error.AccountingEventsManager.invalid.degree.curricular.plan.type");
         }
 
-        if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
+        if (studentCurricularPlan.getDegreeType().isAdvancedFormationDiploma()) {
             return createDfaGratuityEvent(studentCurricularPlan, executionYear, checkConditions);
-        } else if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
+        } else if (studentCurricularPlan.getDegreeType().isSpecializationDegree()) {
             return createSpecializationDegreeGratuityEvent(studentCurricularPlan, executionYear, checkConditions);
-        } else if (studentCurricularPlan.getDegreeType() == DegreeType.EMPTY) {
+        } else if (studentCurricularPlan.getDegreeType().isEmpty()) {
             return createStandaloneEnrolmentGratuityEvent(studentCurricularPlan, executionYear);
         }
 
@@ -201,7 +200,7 @@ public class AccountingEventsManager {
         if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
                 registration) && studentCurricularPlan.getDegree().canCreateGratuityEvent()) {
 
-            if (!acceptedDegreeTypesForGratuityEvent.contains(studentCurricularPlan.getDegreeType())) {
+            if (!acceptedDegreeTypesForGratuityEvent.test(studentCurricularPlan.getDegreeType())) {
                 result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
                         "error.accounting.events.AccountingEventsManager.cannot.create.gratuity.event.for.degree.type",
                         studentCurricularPlan.getDegree().getPresentationName());
@@ -277,7 +276,7 @@ public class AccountingEventsManager {
 
         if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
                 registration)) {
-            if (!acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent.contains(studentCurricularPlan.getDegreeType())) {
+            if (!acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent.test(studentCurricularPlan.getDegreeType())) {
                 result.addMessage(
                         LabelFormatter.APPLICATION_RESOURCES,
                         "error.accounting.events.AccountingEventsManager.cannot.create.administrativeoffice.fee.and.insurance.event.for.degree.type",
@@ -355,7 +354,7 @@ public class AccountingEventsManager {
 
         if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
                 registration)) {
-            if (!acceptedDegreeTypesForInsuranceEvent.contains(studentCurricularPlan.getDegreeType())) {
+            if (!acceptedDegreeTypesForInsuranceEvent.test(studentCurricularPlan.getDegreeType())) {
                 result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
                         "error.accounting.events.AccountingEventsManager.cannot.create.insurance.event.for.degree.type",
                         studentCurricularPlan.getDegree().getPresentationName());

@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
@@ -57,7 +56,7 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     }
 
     private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
-        if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
+        if (!studentCurricularPlan.getDegreeType().isAdvancedFormationDiploma()) {
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.invalid.degreeType");
         }

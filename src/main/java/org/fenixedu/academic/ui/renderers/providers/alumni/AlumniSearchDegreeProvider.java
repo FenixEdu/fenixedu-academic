@@ -35,7 +35,7 @@ public class AlumniSearchDegreeProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         AlumniMailSendToBean bean = (AlumniMailSendToBean) source;
-        final List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(bean.getDegreeType()));
+        final List<Degree> degrees = new ArrayList<Degree>(bean.getDegreeType().getDegreeSet());
         Collections.sort(degrees, new ComparableComparator());
         return degrees;
     }

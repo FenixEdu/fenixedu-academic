@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.curriculum.GradeFactory;
 import org.fenixedu.academic.domain.curriculum.IGrade;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
 import org.fenixedu.academic.domain.log.EnrolmentEvaluationLog;
@@ -197,7 +196,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     @Override
     public int compareTo(Object o) {
         EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
-        if (this.getEnrolment().getStudentCurricularPlan().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+        if (this.getEnrolment().getStudentCurricularPlan().getDegreeType().isPreBolonhaMasterDegree()) {
             return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
         }
 

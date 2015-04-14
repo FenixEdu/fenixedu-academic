@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.degree.DegreeType;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -35,7 +34,7 @@ public class PreBolonhaMasterDegrees implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         final List<Degree> result = new ArrayList<Degree>();
         for (Degree degree : Degree.readNotEmptyDegrees()) {
-            if (degree.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+            if (degree.getDegreeType().isPreBolonhaMasterDegree()) {
                 result.add(degree);
             }
         }

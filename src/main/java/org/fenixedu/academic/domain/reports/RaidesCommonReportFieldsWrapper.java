@@ -201,7 +201,7 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(graduate.getCountry() != null ? graduate.getCountry().getName() : "n/a");
 
         // Tipo Curso
-        row.setCell(registration.getDegreeType().getLocalizedName());
+        row.setCell(registration.getDegreeType().getName().getContent());
 
         // Nome Curso
         row.setCell(registration.getDegree().getNameI18N().getContent());

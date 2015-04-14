@@ -78,12 +78,11 @@ public class RegistryCode extends RegistryCode_Base {
             return CycleType.THIRD_CYCLE;
         } else if (request.isRequestForRegistration()) {
             RegistrationAcademicServiceRequest registrationRequest = (RegistrationAcademicServiceRequest) request;
-            switch (registrationRequest.getDegreeType()) {
-            case DEGREE:
+            if (registrationRequest.getDegreeType().isPreBolonhaDegree()) {
                 return CycleType.FIRST_CYCLE;
-            case MASTER_DEGREE:
+            } else if (registrationRequest.getDegreeType().isPreBolonhaMasterDegree()) {
                 return CycleType.SECOND_CYCLE;
-            default:
+            } else {
                 throw new DomainException("error.registryCode.unableToGuessCycleTypeToGenerateCode");
             }
         }

@@ -225,7 +225,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         // gradeScale)
         // };
         try {
-            CreateDegreeCurricularPlan.run(this.getDegreeId(), this.name, null);
+            CreateDegreeCurricularPlan.run(this.getDegreeId(), this.name, null, getDuration());
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";

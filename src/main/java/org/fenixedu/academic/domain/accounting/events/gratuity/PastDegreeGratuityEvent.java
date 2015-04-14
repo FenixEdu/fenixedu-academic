@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
@@ -56,7 +55,7 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
     }
 
     private void checkParameters(StudentCurricularPlan studentCurricularPlan, Money pastDegreeGratuityAmount) {
-        if (studentCurricularPlan.getDegreeType() != DegreeType.DEGREE) {
+        if (!studentCurricularPlan.getDegreeType().isPreBolonhaDegree()) {
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.accounting.events.gratuity.PastDegreeGratuityEvent.invalid.degree.type.for.student.curricular.plan");
         }

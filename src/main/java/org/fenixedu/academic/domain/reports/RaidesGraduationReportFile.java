@@ -62,7 +62,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
         ExecutionYear executionYear = getExecutionYear();
         createHeaders(spreadsheet);
 
-        logger.info("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().getName().getContent());
 
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
             final Registration registration = studentCurricularPlan.getRegistration();
@@ -107,7 +107,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
             }
         }
 
-        logger.info("END report for " + getDegreeType().name());
+        logger.info("END report for " + getDegreeType().getName().getContent());
     }
 
     private Set<StudentCurricularPlan> getStudentCurricularPlansToProcess(ExecutionYear executionYear) {

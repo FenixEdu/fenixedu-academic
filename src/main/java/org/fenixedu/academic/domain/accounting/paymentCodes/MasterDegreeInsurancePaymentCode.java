@@ -23,7 +23,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonAccount;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -94,7 +93,16 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
     }
 
     private Registration getRegistration() {
-        return getPerson().getStudent().getActiveRegistrationByDegreeType(DegreeType.MASTER_DEGREE);
+        return getActiveRegistrationByDegreeType(getPerson().getStudent());
+    }
+
+    private static Registration getActiveRegistrationByDegreeType(Student student) {
+        for (Registration registration : student.getRegistrationsSet()) {
+            if (registration.getDegreeType().isPreBolonhaMasterDegree() && registration.isActive()) {
+                return registration;
+            }
+        }
+        return null;
     }
 
     @Override

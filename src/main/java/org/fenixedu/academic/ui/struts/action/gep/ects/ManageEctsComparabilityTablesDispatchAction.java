@@ -40,7 +40,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsComparabilityPercentages;
@@ -373,10 +372,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
         Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
         for (Degree degree : rootDomainObject.getDegreesSet()) {
             if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
-                    && (degree.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
-                            || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)
-                            || degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) || degree
-                            .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
+                    && (degree.getDegreeType().isBolonhaDegree() || degree.getDegreeType().isBolonhaMasterDegree()
+                            || degree.getDegreeType().isIntegratedMasterDegree() || degree.getDegreeType()
+                            .isAdvancedSpecializationDiploma())) {
                 for (int i = 1; i <= degree.getMostRecentDegreeCurricularPlan().getDurationInYears(); i++) {
                     EctsDegreeByCurricularYearConversionTable table =
                             EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval()).getEnrolmentTableBy(degree,
@@ -398,7 +396,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             protected void makeLine(IEctsConversionTable table) {
                 Degree degree = (Degree) table.getTargetEntity();
                 addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), degree.getExternalId());
-                addCell(BundleUtil.getString(Bundle.GEP, "label.degreeType"), degree.getDegreeType().getLocalizedName());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.degreeType"), degree.getDegreeType().getName().getContent());
                 addCell(BundleUtil.getString(Bundle.GEP, "label.name"), degree.getName());
                 addCell(BundleUtil.getString(Bundle.GEP, "label.curricularYear"), table.getCurricularYear().getYear());
                 EctsComparabilityTable ects = table.getEctsTable();
@@ -416,9 +414,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             if (!line.startsWith(BundleUtil.getString(Bundle.GEP, "label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 15);
                 Degree degree = FenixFramework.getDomainObject(parts[0]);
-                if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
+                if (!degree.getDegreeType().getName().getContent().equals(parts[1])) {
                     throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], degree
-                            .getDegreeType().getLocalizedName());
+                            .getDegreeType().getName().getContent());
                 }
                 if (!degree.getName().equals(parts[2])) {
                     throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2], degree.getName());
@@ -543,10 +541,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
         Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
         for (Degree degree : rootDomainObject.getDegreesSet()) {
             if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
-                    && (degree.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
-                            || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)
-                            || degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) || degree
-                            .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
+                    && (degree.getDegreeType().isBolonhaDegree() || degree.getDegreeType().isBolonhaMasterDegree()
+                            || degree.getDegreeType().isIntegratedMasterDegree() || degree.getDegreeType()
+                            .isAdvancedSpecializationDiploma())) {
                 for (CycleType cycle : degree.getDegreeType().getCycleTypes()) {
                     EctsDegreeGraduationGradeConversionTable table =
                             EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval()).getGraduationTableBy(degree, cycle);
@@ -571,7 +568,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             protected void makeLine(IEctsConversionTable table) {
                 Degree degree = (Degree) table.getTargetEntity();
                 addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), degree.getExternalId());
-                addCell(BundleUtil.getString(Bundle.GEP, "label.degreeType"), degree.getDegreeType().getLocalizedName());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.degreeType"), degree.getDegreeType().getName().getContent());
                 addCell(BundleUtil.getString(Bundle.GEP, "label.name"), degree.getName());
                 addCell(BundleUtil.getString(Bundle.GEP, "label.cycle"),
                         table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
@@ -594,9 +591,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             if (!line.startsWith(BundleUtil.getString(Bundle.GEP, "label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 26);
                 Degree degree = FenixFramework.getDomainObject(parts[0]);
-                if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
+                if (!degree.getDegreeType().getName().getContent().equals(parts[1])) {
                     throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], degree
-                            .getDegreeType().getLocalizedName());
+                            .getDegreeType().getName().getContent());
                 }
                 if (!degree.getName().equals(parts[2])) {
                     throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2], degree.getName());

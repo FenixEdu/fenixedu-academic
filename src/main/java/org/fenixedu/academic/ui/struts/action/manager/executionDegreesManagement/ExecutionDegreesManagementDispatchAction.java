@@ -299,10 +299,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
     private void readAndSetDegrees(HttpServletRequest request) {
         final List<LabelValueBean> degreeTypes = new ArrayList<LabelValueBean>();
-        for (final DegreeType bolonhaDegreeType : DegreeType.values()) {
-            degreeTypes.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, bolonhaDegreeType.name()),
-                    bolonhaDegreeType.name()));
-        }
+        DegreeType.all().forEach(type -> degreeTypes.add(new LabelValueBean(type.getName().getContent(), type.getExternalId())));
         degreeTypes.add(0, new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "dropDown.Default"), ""));
         request.setAttribute("degreeTypes", degreeTypes);
     }
@@ -311,7 +308,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         final List<DegreeCurricularPlan> toShow = new ArrayList<DegreeCurricularPlan>();
         for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getDegree().getDegreeType().name().equals(degreeTypeName)
+            if (degreeCurricularPlan.getDegree().getDegreeType().getExternalId().equals(degreeTypeName)
                     && !degreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
                 toShow.add(degreeCurricularPlan);
             }

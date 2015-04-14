@@ -159,11 +159,11 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         final DynaActionForm form = (DynaActionForm) actionForm;
 
         final List<ExecutionDegree> executionDegrees =
-                executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType.DEGREE);
-        executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_DEGREE));
-        executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(
-                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-        executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_MASTER_DEGREE));
+                executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType::isPreBolonhaDegree);
+        executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType::isBolonhaDegree));
+        executionDegrees
+                .addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType::isIntegratedMasterDegree));
+        executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType::isBolonhaMasterDegree));
 
         if (executionDegrees.isEmpty()) {
             addActionMessage(request, "errors.impossible.operation");
@@ -181,10 +181,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         form.set("degree", selectedExecutionDegree.getExternalId());
 
         sortExecutionDegreesByDegreeName(executionDegrees);
-        request.setAttribute(
-                "executionDegrees",
-                ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(executionDegrees,
-                        getResources(request, "ENUMERATION_RESOURCES"), request));
+        request.setAttribute("executionDegrees", ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(executionDegrees));
 
         request.setAttribute("attendingExecutionCourses", registration.getAttendingExecutionCoursesFor(executionSemester));
         request.setAttribute("executionCoursesFromExecutionDegree", selectedExecutionDegree.getDegreeCurricularPlan()

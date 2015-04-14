@@ -112,7 +112,7 @@ public class AlumniSearchBean extends AlumniMailSendToBean {
         if (values[0].equals("null")) {
             return new AlumniSearchBean(values[1], first, last);
         } else {
-            return new AlumniSearchBean(DegreeType.valueOf(values[0]), values[1], first, last);
+            return new AlumniSearchBean(FenixFramework.getDomainObject(values[0]), values[1], first, last);
         }
     }
 

@@ -37,13 +37,10 @@ public class DegreesWithDissertationProvider implements DataProvider {
         SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
         for (Degree degree : getDegrees(source)) {
-            switch (degree.getDegreeType()) {
-            case DEGREE:
-            case MASTER_DEGREE:
-            case BOLONHA_INTEGRATED_MASTER_DEGREE:
-            case BOLONHA_MASTER_DEGREE:
-                break;
-            default:
+            if (degree.getDegreeType().isPreBolonhaDegree() || degree.getDegreeType().isPreBolonhaMasterDegree()
+                    || degree.getDegreeType().isBolonhaMasterDegree() || degree.getDegreeType().isIntegratedMasterDegree()) {
+                // Do Nothing
+            } else {
                 continue;
             }
 

@@ -111,7 +111,7 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
         final ExecutionSemester executionSemester = getExecutionSemester(context, executionYear);
         final CurricularCourse curricular = (CurricularCourse) context.getChildDegreeModule();
 
-        row.setCell(curricular.getDegree().getDegreeType().getLocalizedName());
+        row.setCell(curricular.getDegree().getDegreeType().getName().getContent());
         row.setCell(curricular.getDegree().getNameFor(executionSemester).getContent());
         row.setCell(curricular.getDegree().getSigla());
         row.setCell(curricular.getName(executionSemester));
