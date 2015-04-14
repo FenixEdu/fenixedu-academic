@@ -23,12 +23,11 @@ import java.util.Date;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.domain.curriculum.CurriculumValidationEvaluationPhase;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -52,9 +51,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
     private Boolean enrolmentEvaluationSet;
 
-    private EnrolmentEvaluationType enrolmentEvaluationType;
-
-    private CurriculumValidationEvaluationPhase curriculumValidationEvaluationPhase;
+    private EvaluationSeason evaluationSeason;
 
     private GradeScale gradeScale;
 
@@ -70,12 +67,10 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
         setWeight(enrolment.getWeigth());
     }
 
-    public MarkSheetEnrolmentEvaluationBean(Enrolment enrolment, ExecutionSemester executionSemester,
-            EnrolmentEvaluationType evaluationType, CurriculumValidationEvaluationPhase evaluationPhase) {
+    public MarkSheetEnrolmentEvaluationBean(Enrolment enrolment, ExecutionSemester executionSemester, EvaluationSeason season) {
         this.setExecutionSemester(executionSemester);
         this.setEnrolment(enrolment);
-        this.setEnrolmentEvaluationType(evaluationType);
-        this.setCurriculumValidationEvaluationPhase(evaluationPhase);
+        this.setEvaluationSeason(season);
         setWeight(enrolment.getWeigth());
 
         if (this.getHasGrade()) {
@@ -168,20 +163,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     }
 
     public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
-        EnrolmentEvaluation evaluation =
-                getEnrolment().getLatestEnrolmentEvaluationByTypeAndPhase(this.getEnrolmentEvaluationType(),
-                        this.getCurriculumValidationEvaluationPhase());
-
-        if (evaluation == null && EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
-                && CurriculumValidationEvaluationPhase.FIRST_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            if (getEnrolment().getLatestEnrolmentEvaluationByTypeAndPhase(this.getEnrolmentEvaluationType(),
-                    CurriculumValidationEvaluationPhase.SECOND_SEASON) != null) {
-                return null;
-            }
-            return getEnrolment().getLatestEnrolmentEvaluationByTypeAndPhase(this.getEnrolmentEvaluationType(), null);
-        }
-
-        return evaluation;
+        return getEnrolment().getLatestEnrolmentEvaluationBySeason(getEvaluationSeason());
     }
 
     public String getExecutionYearFullLabel() {
@@ -209,20 +191,12 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
         return this.enrolmentEvaluationSet;
     }
 
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        return enrolmentEvaluationType;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
-    public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
-        this.enrolmentEvaluationType = enrolmentEvaluationType;
-    }
-
-    public CurriculumValidationEvaluationPhase getCurriculumValidationEvaluationPhase() {
-        return curriculumValidationEvaluationPhase;
-    }
-
-    public void setCurriculumValidationEvaluationPhase(CurriculumValidationEvaluationPhase curriculumValidationEvaluationPhase) {
-        this.curriculumValidationEvaluationPhase = curriculumValidationEvaluationPhase;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
     public GradeScale getGradeScale() {
@@ -231,23 +205,6 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
     public void setGradeScale(final GradeScale value) {
         this.gradeScale = value;
-    }
-
-    private static final String NORMAL_TYPE_FIRST_SEASON_DESCRIPTION =
-            "label.curriculum.validation.normal.type.first.season.description";
-    private static final String NORMAL_TYPE_SECOND_SEASON_DESCRIPTION =
-            "label.curriculum.validation.normal.type.second.season.description";
-
-    public String getEnrolmentEvaluationTypeDescription() {
-        if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
-                && CurriculumValidationEvaluationPhase.FIRST_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_FIRST_SEASON_DESCRIPTION);
-        } else if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
-                && CurriculumValidationEvaluationPhase.SECOND_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_SECOND_SEASON_DESCRIPTION);
-        }
-
-        return this.getEnrolmentEvaluationType().getDescription();
     }
 
     public boolean isEnrolmentBeMarkedAsEnroled() {

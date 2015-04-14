@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -42,7 +43,6 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -868,17 +868,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             }
 
             if (!isDismissal && isDetailed() && isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)
-                    && (enrolment.isSpecialSeason() || enrolment.hasImprovement()) || enrolment.hasNormalEvaluationSecondSeason()) {
-                generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalImprovementEnrolmentEvaluation(), level + 1);
-                generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalSpecialSeasonEnrolmentEvaluation(), level + 1);
-                generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalNormalEnrolmentEvaluationSecondSeason(),
-                        level + 1);
-
-                EnrolmentEvaluation firstSeasonEvaluation = enrolment.getLatestFinalNormalEnrolmentEvaluationFirstSeason();
-                if (firstSeasonEvaluation == null) {
-                    firstSeasonEvaluation = enrolment.getLatestFinalNormalEnrolmentEvaluation();
-                }
-                generateEnrolmentEvaluationRows(mainTable, firstSeasonEvaluation, level + 1);
+                    && enrolment.getAllFinalEnrolmentEvaluations().size() > 1) {
+                EvaluationSeason.all().sorted()
+                        .forEachOrdered(s -> enrolment.getFinalEnrolmentEvaluationBySeason(s).ifPresent(eval -> {
+                            generateEnrolmentEvaluationRows(mainTable, eval, level + 1);
+                        }));
             }
         }
 
@@ -904,7 +898,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             addTabsToRow(enrolmentRow, level);
             enrolmentRow.setClasses(getEnrolmentRowClass());
 
-            generateCellWithText(enrolmentRow, evaluation.getEnrolmentEvaluationTypeDescription(), getLabelCellClass(),
+            generateCellWithText(enrolmentRow, evaluation.getEvaluationSeason().getName().getContent(), getLabelCellClass(),
                     MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
             generateCellWithText(enrolmentRow, "", getEnrolmentTypeCellClass(), ENROLLMENT_EVALUATION_TYPE_NEXT_COLUMN_SPAN);
 
@@ -967,7 +961,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         private void generateGradeResponsibleIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
             if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)) {
-                final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
+                final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getFinalEnrolmentEvaluation();
                 if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
 
                     final Person person = lastEnrolmentEvaluation.getPersonResponsibleForGrade();
@@ -988,7 +982,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         private void generateLastEnrolmentEvaluationExamDateCellIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
             if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)) {
-                final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
+                final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getFinalEnrolmentEvaluation();
                 if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getExamDateYearMonthDay() != null) {
 
                     generateCellWithSpan(enrolmentRow, lastEnrolmentEvaluation.getExamDateYearMonthDay().toString(DATE_FORMAT),
@@ -1049,10 +1043,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         private void generateEnrolmentLastEnrolmentEvaluationTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-            final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
-            if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getEnrolmentEvaluationType() != null) {
-                generateCellWithSpan(enrolmentRow, BundleUtil.getString(Bundle.ENUMERATION, lastEnrolmentEvaluation
-                        .getEnrolmentEvaluationType().getAcronym()), getLastEnrolmentEvaluationTypeCellClass());
+            final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getFinalEnrolmentEvaluation();
+            if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getEvaluationSeason() != null) {
+                generateCellWithSpan(enrolmentRow, lastEnrolmentEvaluation.getEvaluationSeason().getAcronym().getContent(),
+                        getLastEnrolmentEvaluationTypeCellClass());
             } else {
                 generateCellWithText(enrolmentRow, EMPTY_INFO, getLastEnrolmentEvaluationTypeCellClass());
             }
@@ -1060,11 +1054,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         private void generateEnrolmentEvaluationTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-            final EnrolmentEvaluationType enrolmentEvaluationType = enrolment.getEnrolmentEvaluationType();
-            if (enrolmentEvaluationType != null) {
-                generateCellWithSpan(enrolmentRow,
-                        BundleUtil.getString(Bundle.ENUMERATION, enrolmentEvaluationType.getAcronym()),
-                        getLastEnrolmentEvaluationTypeCellClass());
+            final EvaluationSeason season = enrolment.getEvaluationSeason();
+            if (season != null) {
+                generateCellWithSpan(enrolmentRow, season.getAcronym().getContent(), getLastEnrolmentEvaluationTypeCellClass());
             } else {
                 generateCellWithText(enrolmentRow, EMPTY_INFO, getLastEnrolmentEvaluationTypeCellClass());
             }

@@ -44,10 +44,10 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.MarkSheet;
 import org.fenixedu.academic.domain.MarkSheetState;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -123,7 +123,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
         ActionMessages actionMessages = createActionMessages();
         try {
-            Map<MarkSheetType, MarkSheetSearchResultBean> result = SearchMarkSheets.run(searchBean);
+            Map<EvaluationSeason, MarkSheetSearchResultBean> result = SearchMarkSheets.run(searchBean);
 
             request.setAttribute("edit", searchBean);
             request.setAttribute("searchResult", result);
@@ -152,7 +152,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             markSheetBean.setMarkSheetState(MarkSheetState.valueOf(form.getString("mss")));
         }
         if (form.getString("mst") != null && form.getString("mst").length() != 0) {
-            markSheetBean.setMarkSheetType(MarkSheetType.valueOf(form.getString("mst")));
+            markSheetBean.setEvaluationSeason(FenixFramework.<EvaluationSeason> getDomainObject(form.getString("mst")));
         }
     }
 
@@ -174,8 +174,8 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         if (searchBean.getMarkSheetState() != null) {
             stringBuilder.append("&mss=").append(searchBean.getMarkSheetState().getName());
         }
-        if (searchBean.getMarkSheetType() != null) {
-            stringBuilder.append("&mst=").append(searchBean.getMarkSheetType().getName());
+        if (searchBean.getEvaluationSeason() != null) {
+            stringBuilder.append("&mst=").append(searchBean.getEvaluationSeason().getExternalId());
         }
         return stringBuilder.toString();
     }

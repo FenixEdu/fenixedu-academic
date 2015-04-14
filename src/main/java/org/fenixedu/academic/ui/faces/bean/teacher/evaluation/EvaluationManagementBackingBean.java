@@ -54,6 +54,8 @@ import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.Evaluation;
+import org.fenixedu.academic.domain.EvaluationConfiguration;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -65,7 +67,6 @@ import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.WrittenEvaluationEnrolment;
 import org.fenixedu.academic.domain.WrittenTest;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
 import org.fenixedu.academic.domain.student.Student;
@@ -1035,7 +1036,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                         result.add(attends);
                     }
                 } else if (attends.getEnrolment() != null) {
-                    if (attends.getEnrolment().getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.valueOf(filter))) {
+                    EvaluationSeason season = FenixFramework.getDomainObject(filter);
+                    if (attends.getEnrolment().getEvaluationSeason().equals(season)) {
                         result.add(attends);
                     }
                 }
@@ -1400,8 +1402,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         List<SelectItem> options = new ArrayList<SelectItem>();
 
         options.add(new SelectItem(ENROLMENT_TYPE_FILTER_ALL, BundleUtil.getString(Bundle.ENUMERATION, "filter.all")));
-        for (EnrolmentEvaluationType type : EnrolmentEvaluationType.values()) {
-            options.add(new SelectItem(type.getName(), type.getDescription()));
+        for (EvaluationSeason season : EvaluationConfiguration.getInstance().getEvaluationSeasonSet()) {
+            options.add(new SelectItem(season.getExternalId(), season.getName().getContent()));
         }
         options.add(new SelectItem(ENROLMENT_TYPE_FILTER_NOT_ENROLLED, BundleUtil.getString(Bundle.ENUMERATION,
                 "filter.not.enrolled")));

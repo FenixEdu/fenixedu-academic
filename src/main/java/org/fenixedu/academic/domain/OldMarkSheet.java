@@ -23,12 +23,10 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 import java.util.Collection;
 import java.util.Date;
 
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.predicate.MarkSheetPredicates;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
-import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.joda.time.DateTime;
 
 public class OldMarkSheet extends OldMarkSheet_Base {
@@ -38,13 +36,13 @@ public class OldMarkSheet extends OldMarkSheet_Base {
     }
 
     public OldMarkSheet(CurricularCourse curricularCourse, ExecutionSemester executionSemester, Teacher responsibleTeacher,
-            Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState,
+            Date evaluationDate, EvaluationSeason season, MarkSheetState markSheetState,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person creator) {
         this();
-        checkParameters(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType, markSheetState,
+        checkParameters(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, season, markSheetState,
                 evaluationBeans, creator);
-        init(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType, markSheetState,
-                Boolean.FALSE, creator);
+        init(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, season, markSheetState, Boolean.FALSE,
+                creator);
 
         for (MarkSheetEnrolmentEvaluationBean evaluationBean : evaluationBeans) {
             addEnrolmentEvaluationToMarkSheet(responsibleTeacher, evaluationBean);
@@ -59,25 +57,17 @@ public class OldMarkSheet extends OldMarkSheet_Base {
         check(this, MarkSheetPredicates.editPredicate);
 
         EnrolmentEvaluation enrolmentEvaluation =
-                evaluationBean.getEnrolment().getEnrolmentEvaluation(
-                        new InlinePredicate<EnrolmentEvaluation, EnrolmentEvaluationType>(getMarkSheetType()
-                                .getEnrolmentEvaluationType()) {
-
-                            @Override
-                            public boolean test(EnrolmentEvaluation ee) {
-                                return ee.getEnrolmentEvaluationType() == getValue()
-                                        && (ee.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ) || ee
-                                                .isNotEvaluated());
-                            }
-
-                        });
+                evaluationBean
+                        .getEnrolment()
+                        .getEnrolmentEvaluationBySeason(getEvaluationSeason())
+                        .filter(e -> e.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)
+                                || e.isNotEvaluated()).findAny().orElse(null);
 
         if (enrolmentEvaluation == null) {
             enrolmentEvaluation =
                     evaluationBean.getEnrolment().addNewEnrolmentEvaluation(EnrolmentEvaluationState.TEMPORARY_OBJ,
-                            getMarkSheetType().getEnrolmentEvaluationType(), responsibleTeacher.getPerson(),
-                            evaluationBean.getGradeValue(), getCreationDate(), evaluationBean.getEvaluationDate(),
-                            getExecutionPeriod(), null);
+                            getEvaluationSeason(), responsibleTeacher.getPerson(), evaluationBean.getGradeValue(),
+                            getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod(), null);
         } else {
             enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
             enrolmentEvaluation.edit(responsibleTeacher.getPerson(), evaluationBean.getGradeValue(), getCreationDate(),
@@ -87,11 +77,11 @@ public class OldMarkSheet extends OldMarkSheet_Base {
     }
 
     private void checkParameters(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
-            Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState,
+            Teacher responsibleTeacher, Date evaluationDate, EvaluationSeason season, MarkSheetState markSheetState,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person person) {
 
         if (curricularCourse == null || executionSemester == null || responsibleTeacher == null || evaluationDate == null
-                || markSheetType == null || markSheetState == null || person == null) {
+                || season == null || markSheetState == null || person == null) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
         if (evaluationBeans == null || evaluationBeans.size() == 0) {
@@ -146,12 +136,12 @@ public class OldMarkSheet extends OldMarkSheet_Base {
     }
 
     @Override
-    protected void checkIfEvaluationDateIsInExamsPeriod(CurricularCourse curricularCourse, ExecutionDegree executionDegree,
-            ExecutionSemester executionSemester, Date evaluationDate, MarkSheetType markSheetType) throws DomainException {
+    protected void checkIfEvaluationDateIsInExamsPeriod(DegreeCurricularPlan degreeCurricularPlan,
+            ExecutionSemester executionSemester, Date evaluationDate, EvaluationSeason season) throws DomainException {
     }
 
     @Override
     protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
-            ExecutionSemester executionSemester, Teacher responsibleTeacher, MarkSheetType markSheetType) throws DomainException {
+            ExecutionSemester executionSemester, Teacher responsibleTeacher, EvaluationSeason season) throws DomainException {
     }
 }

@@ -82,13 +82,13 @@
 	<logic:notEmpty name="searchResult">
 
 			<logic:iterate id="entry" name="searchResult" >
-				<bean:define id="markSheetType" name="entry" property="key"/>
+				<bean:define id="evaluationSeason" name="entry" property="key"/>
 				<bean:define id="markSheetResult" name="entry" property="value"/>
 
 				<div style="margin-left: 2em;">
 
 					<p>
-						<strong><bean:message bundle="ENUMERATION_RESOURCES" name="markSheetType" property="name" /></strong>
+						<strong><bean:write name="evaluationSeason" property="name.content" /></strong>
 						<logic:equal name="markSheetResult" property="showStatistics" value="true">
 							(<bean:write name="markSheetResult" property="numberOfEnroledStudents"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.evaluatedStudents"/>)
 						</logic:equal>

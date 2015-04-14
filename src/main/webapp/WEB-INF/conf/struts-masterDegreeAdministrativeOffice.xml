@@ -261,7 +261,7 @@
                   <form-property type="java.lang.Integer" name="studentNumber"></form-property>
                   <form-property type="java.lang.String" name="grade"></form-property>
                   <form-property type="java.lang.String" name="teacherId"></form-property>
-                  <form-property type="java.lang.String" name="enrolmentEvaluationType"></form-property>
+                  <form-property type="java.lang.String" name="evaluationSeason"></form-property>
                   <form-property type="java.lang.String" name="observation"></form-property>
                   <form-property type="java.lang.String" name="examDateDay"></form-property>
                   <form-property type="java.lang.String" name="examDateMonth"></form-property>

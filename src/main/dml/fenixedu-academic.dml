@@ -35,7 +35,6 @@ enum org.fenixedu.academic.domain.GrantOwnerType                                
 enum org.fenixedu.academic.domain.GuideState                                                                           as GuideState;
 enum org.fenixedu.academic.domain.JobApplicationType                                                                   as JobApplicationType;
 enum org.fenixedu.academic.domain.MarkSheetState                                                                       as MarkSheetState;
-enum org.fenixedu.academic.domain.MarkSheetType                                                                        as MarkSheetType;
 enum org.fenixedu.academic.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
 enum org.fenixedu.academic.domain.PhotoState                                                                           as PhotoState;
 enum org.fenixedu.academic.domain.PhotoType                                                                            as PhotoType;
@@ -76,7 +75,6 @@ enum org.fenixedu.academic.domain.curricularRules.CurricularRuleType            
 enum org.fenixedu.academic.domain.curriculum.CurricularCourseType                                                      as CurricularCourseType;
 enum org.fenixedu.academic.domain.curriculum.EnrollmentCondition                                                       as EnrollmentCondition;
 enum org.fenixedu.academic.domain.curriculum.EnrollmentState                                                           as EnrollmentState;
-enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType                                                   as EnrolmentEvaluationType;
 enum org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState                                as DegreeCurricularPlanState;
 enum org.fenixedu.academic.domain.degreeStructure.BranchType                                                           as BranchType;
 enum org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel                                                as CompetenceCourseLevel;
@@ -136,7 +134,6 @@ enum org.fenixedu.academic.domain.accounting.events.DegreeFinalizationCertificat
 enum org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
 enum org.fenixedu.academic.domain.EntryPhase                                                                           as EntryPhase;
 enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
-enum org.fenixedu.academic.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
 enum org.fenixedu.academic.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
 enum org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
 enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
@@ -660,11 +657,22 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 	class EmergencyContact {
 		String contact;
 	}
-		
-    class EnrolmentEvaluation  {
+
+    class EvaluationConfiguration {
+    }
+
+	class EvaluationSeason {
+        LocalizedString acronym (REQUIRED);
+	    LocalizedString name (REQUIRED);
+	    boolean normal;
+	    boolean improvement;
+	    boolean special;
+	    boolean specialAuthorization;
+	}
+	
+	class EnrolmentEvaluation  {
         String checkSum;
         EnrolmentEvaluationState enrolmentEvaluationState;
-        EnrolmentEvaluationType enrolmentEvaluationType;
         YearMonthDay examDateYearMonthDay;
         Grade grade (REQUIRED);
         YearMonthDay gradeAvailableDateYearMonthDay;
@@ -674,7 +682,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String bookReference;
         String page;
         EnrolmentEvaluationContext context;
-        CurriculumValidationEvaluationPhase curriculumValidationEvaluationPhase;
         GradeScale gradeScale;
     }
 
@@ -1035,7 +1042,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         DateTime creationDateDateTime;
         DateTime evaluationDateDateTime;
         MarkSheetState markSheetState;
-        MarkSheetType markSheetType;
         Boolean printed;
         String reason;
         Boolean submittedByTeacher;
@@ -2421,7 +2427,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 		String who;
 		String gradeValue;
 		String gradeScale;
-		String enrolmentEvaluationType;
+		String evaluationSeason;
 		String enrolmentEvaluationState;
 		String executionSemester;
 		String curricularCourse;
@@ -3099,7 +3105,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             class Enrolment extends studentCurriculum.CurriculumLine {
                 EnrollmentState enrollmentState;
                 EnrollmentCondition enrolmentCondition;
-                EnrolmentEvaluationType enrolmentEvaluationType;
                 Boolean isExtraCurricular;
                 Boolean isFirstTime;
                 Double weigth;
@@ -6786,6 +6791,60 @@ relation EnrolmentEnrolmentEvaluation {
     }
 }
 
+relation EvaluationConfigurationRoot {
+    public EvaluationConfiguration playsRole evaluationConfiguration {
+        multiplicity 0..1;
+    }
+    protected .org.fenixedu.bennu.core.domain.Bennu playsRole root {
+        multiplicity 1..1;
+    }
+}
+
+relation EvaluationSeasonRoot {
+    protected EvaluationConfiguration playsRole evaluationConfiguration {
+        multiplicity 1..1;
+    }
+    public EvaluationSeason playsRole evaluationSeason {
+        multiplicity *;
+    }
+}
+
+relation DefaultEvaluationSeason {
+    protected EvaluationConfiguration playsRole evaluationConfigurationAsDefault {
+        multiplicity 1..1;
+    }
+    public EvaluationSeason playsRole defaultEvaluationSeason {
+        multiplicity 0..1;
+    }
+}
+
+relation EvaluationSeasonPeriods {
+    public EvaluationSeason playsRole evaluationSeason {
+        multiplicity *;
+    }
+    protected OccupationPeriodReference playsRole period {
+        multiplicity *;
+    }
+}
+
+relation EnrolmentEvaluationSeason {
+    public Enrolment playsRole enrolment {
+        multiplicity *;
+    }
+    public EvaluationSeason playsRole evaluationSeason {
+        multiplicity 1..1;
+    }
+}
+
+relation EnrolmentEvaluationEvaluationSeason {
+    public EnrolmentEvaluation playsRole evaluation {
+        multiplicity *;
+    }
+    public EvaluationSeason playsRole evaluationSeason {
+        multiplicity 1..1;
+    }
+}
+
 relation EnrolmentEvaluationPerson {
     EnrolmentEvaluation playsRole enrolmentEvaluationsConfirmations {
         multiplicity *;
@@ -7492,6 +7551,15 @@ relation MarkSheetEnrolmentEvaluation {
     MarkSheet playsRole markSheet;
     EnrolmentEvaluation playsRole enrolmentEvaluations {
         multiplicity *;
+    }
+}
+
+relation MarkSheetEvaluationSeason {
+    public MarkSheet playsRole markSheet {
+        multiplicity *;
+    }
+    public EvaluationSeason playsRole evaluationSeason {
+        multiplicity 1..1;
     }
 }
 

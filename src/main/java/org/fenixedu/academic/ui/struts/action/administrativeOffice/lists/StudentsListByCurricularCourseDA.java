@@ -243,7 +243,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
                     .toString());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrollmentState().getDescription());
-            spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrolmentEvaluationType().getDescription());
+            spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEvaluationSeason().getName().getContent());
             if (detailed) {
                 spreadsheet.addCell(registration.getPerson().hasDefaultEmailAddress() ? registration.getPerson()
                         .getDefaultEmailAddressValue() : "-");

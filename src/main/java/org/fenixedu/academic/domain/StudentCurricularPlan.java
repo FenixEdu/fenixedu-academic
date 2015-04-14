@@ -50,7 +50,6 @@ import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.enrollment.CurricularCourse2Enroll;
 import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
@@ -1844,8 +1843,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
 
         for (Enrolment enrolment : getEnrolmentsSet()) {
-            if (enrolment.getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON
-                    && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear) && !enrolment.isApproved()) {
+            if (!enrolment.getEvaluationSeason().isSpecial() && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)
+                    && !enrolment.isApproved()) {
                 if (result.get(enrolment.getCurricularCourse()) != null) {
                     Enrolment enrolmentMap = result.get(enrolment.getCurricularCourse());
                     if (enrolment.getExecutionPeriod().compareTo(enrolmentMap.getExecutionPeriod()) > 0) {
@@ -1866,8 +1865,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         final Set<Enrolment> result = new HashSet<Enrolment>();
         for (Enrolment enrolment : getEnrolmentsSet()) {
-            if (enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
-                    && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+            if (enrolment.getEvaluationSeason().isSpecial() && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
                 result.add(enrolment);
             }
         }
@@ -2816,8 +2814,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
             enrolmentEvaluation =
                     enrolment.addNewEnrolmentEvaluation(EnrolmentEvaluationState.TEMPORARY_OBJ,
-                            enrolmentEvaluationBean.getEnrolmentEvaluationType(),
-                            enrolmentEvaluationBean.getCurriculumValidationEvaluationPhase(), AccessControl.getPerson(),
+                            enrolmentEvaluationBean.getEvaluationSeason(), AccessControl.getPerson(),
                             enrolmentEvaluationBean.getGradeValue(), new java.util.Date(),
                             enrolmentEvaluationBean.getEvaluationDate(), enrolmentEvaluationBean.getExecutionSemester(),
                             enrolmentEvaluationBean.getBookReference(), enrolmentEvaluationBean.getPage(),

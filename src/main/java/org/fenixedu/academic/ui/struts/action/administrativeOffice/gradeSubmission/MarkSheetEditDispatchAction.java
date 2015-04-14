@@ -81,11 +81,11 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = createActionMessages();
 
         checkIfTeacherIsResponsibleOrCoordinator(editBean.getCurricularCourse(), editBean.getExecutionPeriod(),
-                editBean.getTeacherId(), editBean.getTeacher(), request, editBean.getMarkSheet().getMarkSheetType(),
+                editBean.getTeacherId(), editBean.getTeacher(), request, editBean.getMarkSheet().getEvaluationSeason(),
                 actionMessages);
 
         checkIfEvaluationDateIsInExamsPeriod(editBean.getDegreeCurricularPlan(), editBean.getExecutionPeriod(),
-                editBean.getEvaluationDate(), editBean.getMarkSheet().getMarkSheetType(), request, actionMessages);
+                editBean.getEvaluationDate(), editBean.getMarkSheet().getEvaluationSeason(), request, actionMessages);
 
         if (actionMessages.isEmpty()) {
             try {
@@ -146,7 +146,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
     private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToAppend(MarkSheet markSheet) {
         Collection<Enrolment> enrolments =
-                markSheet.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(markSheet.getMarkSheetType(),
+                markSheet.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(markSheet.getEvaluationSeason(),
                         markSheet.getExecutionPeriod());
         Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToAppend =
                 new HashSet<MarkSheetEnrolmentEvaluationBean>();

@@ -168,7 +168,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
         Enrolment enrolment = enrolmentEvaluation.getEnrolment();
 
         List<EnrolmentEvaluation> rectifiedAndRectificationEvaluations =
-                enrolment.getConfirmedEvaluations(enrolmentEvaluation.getMarkSheet().getMarkSheetType());
+                enrolment.getConfirmedEvaluations(enrolmentEvaluation.getMarkSheet().getEvaluationSeason());
         if (!rectifiedAndRectificationEvaluations.isEmpty()) {
             request.setAttribute("enrolmentEvaluation", rectifiedAndRectificationEvaluations.remove(0));
             request.setAttribute("rectificationEvaluations", rectifiedAndRectificationEvaluations);

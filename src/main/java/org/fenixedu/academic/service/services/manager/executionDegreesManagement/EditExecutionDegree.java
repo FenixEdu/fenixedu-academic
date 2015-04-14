@@ -20,15 +20,11 @@ package org.fenixedu.academic.service.services.manager.executionDegreesManagemen
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
-import java.util.Date;
-
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.OccupationPeriod;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -36,12 +32,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditExecutionDegree {
 
     @Atomic
-    public static void run(String executionDegreeID, String executionYearID, String campusID, Boolean publishedExamMap,
-            Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
-            Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
-            Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
-            Date periodExamsSpecialSeasonEnd, Date gradeSubmissionNormalSeason1EndDate, Date gradeSubmissionNormalSeason2EndDate,
-            Date gradeSubmissionSpecialSeasonEndDate) throws FenixServiceException {
+    public static void run(String executionDegreeID, String executionYearID, String campusID, Boolean publishedExamMap)
+            throws FenixServiceException {
         check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
@@ -59,39 +51,7 @@ public class EditExecutionDegree {
             throw new FenixServiceException("error.noCampus");
         }
 
-        final OccupationPeriod periodLessonsFirstSemester =
-                getOccupationPeriod(periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd);
-        final OccupationPeriod periodLessonsSecondSemester =
-                getOccupationPeriod(periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd);
-
-        final OccupationPeriod periodExamsFirstSemester =
-                getOccupationPeriod(periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd);
-        final OccupationPeriod periodExamsSecondSemester =
-                getOccupationPeriod(periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd);
-        final OccupationPeriod periodExamsSpecialSeason =
-                getOccupationPeriod(periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd);
-
-        final OccupationPeriod gradeSubmissionNormalSeason1 =
-                getOccupationPeriod(periodExamsFirstSemesterBegin, gradeSubmissionNormalSeason1EndDate);
-        final OccupationPeriod gradeSubmissionNormalSeason2 =
-                getOccupationPeriod(periodExamsSecondSemesterBegin, gradeSubmissionNormalSeason2EndDate);
-        final OccupationPeriod gradeSubmissionSpecialSeason =
-                getOccupationPeriod(periodExamsSpecialSeasonBegin, gradeSubmissionSpecialSeasonEndDate);
-
-        executionDegree.edit(executionYear, campus, publishedExamMap, periodLessonsFirstSemester, periodExamsFirstSemester,
-                periodLessonsSecondSemester, periodExamsSecondSemester, periodExamsSpecialSeason, gradeSubmissionNormalSeason1,
-                gradeSubmissionNormalSeason2, gradeSubmissionSpecialSeason);
+        executionDegree.edit(executionYear, campus, publishedExamMap);
     }
 
-    private static OccupationPeriod getOccupationPeriod(final Date startDate, final Date endDate) {
-
-        OccupationPeriod occupationPeriod =
-                OccupationPeriod.readOccupationPeriod(YearMonthDay.fromDateFields(startDate),
-                        YearMonthDay.fromDateFields(endDate));
-        if (occupationPeriod == null) {
-            occupationPeriod = new OccupationPeriod(startDate, endDate);
-            occupationPeriod.setNextPeriod(null);
-        }
-        return occupationPeriod;
-    }
 }

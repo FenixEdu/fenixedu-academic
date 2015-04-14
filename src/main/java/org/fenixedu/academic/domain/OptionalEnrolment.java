@@ -172,7 +172,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
         optionalEnrolment.setWeigth(enrolment.getWeigth());
         optionalEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
         optionalEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
-        optionalEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+        optionalEnrolment.setEvaluationSeason(enrolment.getEvaluationSeason());
         optionalEnrolment.setCreatedBy(Authenticate.getUser().getUsername());
         optionalEnrolment.setCreationDateDateTime(enrolment.getCreationDateDateTime());
         optionalEnrolment.setEnrolmentCondition(enrolment.getEnrolmentCondition());

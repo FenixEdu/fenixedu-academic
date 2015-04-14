@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionMessages;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -43,13 +43,13 @@ public class OldMarkSheetEditDispatchAction extends MarkSheetEditDispatchAction 
     @Override
     protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
             ExecutionSemester executionSemester, String teacherId, Teacher teacher, HttpServletRequest request,
-            MarkSheetType markSheetType, ActionMessages actionMessages) {
+            EvaluationSeason season, ActionMessages actionMessages) {
 
     }
 
     @Override
     protected void checkIfEvaluationDateIsInExamsPeriod(DegreeCurricularPlan degreeCurricularPlan,
-            ExecutionSemester executionSemester, Date evaluationDate, MarkSheetType markSheetType, HttpServletRequest request,
+            ExecutionSemester executionSemester, Date evaluationDate, EvaluationSeason season, HttpServletRequest request,
             ActionMessages actionMessages) {
     }
 

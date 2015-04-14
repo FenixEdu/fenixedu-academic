@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.GroupEnrolment;
 import org.fenixedu.academic.domain.student.Registration;
@@ -433,16 +432,6 @@ public class Attends extends Attends_Base {
             return executionDegree.getPeriodExamsSecondSemester().getEnd();
         } else {
             throw new DomainException("unsupported.execution.period.semester");
-        }
-    }
-
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        if (getEnrolment().getExecutionPeriod() != getExecutionCourse().getExecutionPeriod()) {
-            return EnrolmentEvaluationType.IMPROVEMENT;
-        } else if (getEnrolment().hasSpecialSeason()) {
-            return EnrolmentEvaluationType.SPECIAL_SEASON;
-        } else {
-            return EnrolmentEvaluationType.NORMAL;
         }
     }
 

@@ -26,7 +26,9 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 /**
  * @author Joao Carvalho (joao.pedro.carvalho@ist.utl.pt)
  * 
+ * @deprecated The type of occupation should be handled by relations with the domains that use them
  */
+@Deprecated
 public enum OccupationPeriodType implements IPresentableEnum {
 
     LESSONS, EXAMS, GRADE_SUBMISSION, EXAMS_SPECIAL_SEASON, GRADE_SUBMISSION_SPECIAL_SEASON;

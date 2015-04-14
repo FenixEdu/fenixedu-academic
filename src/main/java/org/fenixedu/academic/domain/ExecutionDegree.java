@@ -28,12 +28,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
@@ -56,11 +56,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Iterables;
 
 /**
  * 
@@ -199,11 +194,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         deleteDomainObject();
     }
 
-    public void edit(ExecutionYear executionYear, Space campus, Boolean publishedExamMap,
-            OccupationPeriod periodLessonsFirstSemester, OccupationPeriod periodExamsFirstSemester,
-            OccupationPeriod periodLessonsSecondSemester, OccupationPeriod periodExamsSecondSemester,
-            OccupationPeriod periodExamsSpecialSeason, OccupationPeriod gradeSubmissionNormalSeasonFirstSemester,
-            OccupationPeriod gradeSubmissionNormalSeasonSecondSemester, OccupationPeriod gradeSubmissionSpecialSeason) {
+    public void edit(ExecutionYear executionYear, Space campus, Boolean publishedExamMap) {
 
         setExecutionYear(executionYear);
         setCampus(campus);
@@ -214,38 +205,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             } else {
                 this.getPublishedExamMapsSet().remove(executionSemester);
             }
-        }
-
-        if (periodLessonsFirstSemester != getPeriodLessonsFirstSemester()) {
-            setPeriodLessonsFirstSemester(periodLessonsFirstSemester);
-        }
-
-        if (periodExamsFirstSemester != getPeriodExamsFirstSemester()) {
-            setPeriodExamsFirstSemester(periodExamsFirstSemester);
-        }
-
-        if (periodLessonsSecondSemester != getPeriodLessonsSecondSemester()) {
-            setPeriodLessonsSecondSemester(periodLessonsSecondSemester);
-        }
-
-        if (periodExamsSecondSemester != getPeriodExamsSecondSemester()) {
-            setPeriodExamsSecondSemester(periodExamsSecondSemester);
-        }
-
-        if (periodExamsSpecialSeason != getPeriodExamsSpecialSeason()) {
-            setPeriodExamsSpecialSeason(periodExamsSpecialSeason);
-        }
-
-        if (gradeSubmissionNormalSeasonFirstSemester != getPeriodGradeSubmissionNormalSeasonFirstSemester()) {
-            setPeriodGradeSubmissionNormalSeasonFirstSemester(gradeSubmissionNormalSeasonFirstSemester);
-        }
-
-        if (gradeSubmissionNormalSeasonSecondSemester != getPeriodGradeSubmissionNormalSeasonSecondSemester()) {
-            setPeriodGradeSubmissionNormalSeasonSecondSemester(gradeSubmissionNormalSeasonSecondSemester);
-        }
-
-        if (gradeSubmissionSpecialSeason != getPeriodGradeSubmissionSpecialSeason()) {
-            setPeriodGradeSubmissionSpecialSeason(gradeSubmissionSpecialSeason);
         }
     }
 
@@ -627,43 +586,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return null;
     }
 
-    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionSemester executionSemester,
-            MarkSheetType markSheetType) {
-        return isSpecialAuthorization(markSheetType, executionSemester, evaluationDate)
-                || checkOccupationPeriod(evaluationDate, executionSemester, markSheetType);
-    }
-
-    private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionSemester executionSemester, Date evaluationDate) {
-        return markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION;
-    }
-
-    private boolean checkOccupationPeriod(Date evaluationDate, ExecutionSemester executionSemester, MarkSheetType markSheetType) {
-        OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionSemester, markSheetType);
-        return evaluationDate != null && occupationPeriod != null
-                && occupationPeriod.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate));
-    }
-
-    public OccupationPeriod getOccupationPeriodFor(ExecutionSemester executionSemester, MarkSheetType markSheetType) {
-        Collection<OccupationPeriod> periods = null;
-        switch (markSheetType) {
-        case NORMAL:
-        case IMPROVEMENT:
-            periods = getPeriods(OccupationPeriodType.EXAMS, executionSemester.getSemester());
-            break;
-
-        case SPECIAL_SEASON:
-            periods = getPeriods(OccupationPeriodType.EXAMS_SPECIAL_SEASON);
-            break;
-
-        default:
-        }
-        if (periods.isEmpty()) {
-            return null;
-        } else {
-            return periods.iterator().next();
-        }
-    }
-
     public List<Coordinator> getResponsibleCoordinators() {
         List<Coordinator> result = new ArrayList<Coordinator>();
         for (final Coordinator coordinator : getCoordinatorsListSet()) {
@@ -684,21 +606,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public boolean isCoordinationResponsibleChosen() {
         return hasAnyResponsibleCoordinators();
-    }
-
-    @Deprecated
-    public boolean isDateInFirstSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
-        return isDateInPeriodOfType(date.toDateTimeAtMidnight(), OccupationPeriodType.GRADE_SUBMISSION, 1);
-    }
-
-    @Deprecated
-    public boolean isDateInSecondSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
-        return isDateInPeriodOfType(date.toDateTimeAtMidnight(), OccupationPeriodType.GRADE_SUBMISSION, 2);
-    }
-
-    @Deprecated
-    public boolean isDateInSpecialSeasonOfGradeSubmission(YearMonthDay date) {
-        return isDateInPeriodOfType(date.toDateTimeAtMidnight(), OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
     }
 
     final public String getPresentationName() {
@@ -945,153 +852,56 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return getOnePeriod(OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
     }
 
-    @Deprecated
-    public OccupationPeriod getPeriodGradeSubmissionNormalSeasonFirstSemester() {
-        return getOnePeriod(OccupationPeriodType.GRADE_SUBMISSION, 1);
-    }
-
-    @Deprecated
-    public OccupationPeriod getPeriodGradeSubmissionNormalSeasonSecondSemester() {
-        return getOnePeriod(OccupationPeriodType.GRADE_SUBMISSION, 2);
-    }
-
-    @Deprecated
-    public OccupationPeriod getPeriodGradeSubmissionSpecialSeason() {
-        return getOnePeriod(OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
-    }
-
-    @Deprecated
-    public void setPeriodLessonsFirstSemester(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.LESSONS, 1);
-    }
-
-    @Deprecated
-    public void setPeriodLessonsSecondSemester(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.LESSONS, 2);
-    }
-
-    @Deprecated
-    public void setPeriodExamsFirstSemester(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.EXAMS, 1);
-    }
-
-    @Deprecated
-    public void setPeriodExamsSecondSemester(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.EXAMS, 2);
-    }
-
-    @Deprecated
-    public void setPeriodExamsSpecialSeason(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
-    }
-
-    @Deprecated
-    public void setPeriodGradeSubmissionNormalSeasonFirstSemester(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION, 1);
-    }
-
-    @Deprecated
-    public void setPeriodGradeSubmissionNormalSeasonSecondSemester(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION, 2);
-    }
-
-    @Deprecated
-    public void setPeriodGradeSubmissionSpecialSeason(OccupationPeriod period) {
-        setPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
-    }
-
     /*
      * Temporary method to update the new relation. With some refactoring, might
      * become the actual method on the new API
      */
 
     private OccupationPeriod getOnePeriod(OccupationPeriodType type, Integer semester) {
-        Collection<OccupationPeriod> periods = getPeriods(type, semester);
-        if (periods.isEmpty()) {
-            return null;
-        } else {
-            return periods.iterator().next();
-        }
-    }
-
-    public void setPeriodForType(OccupationPeriod period, OccupationPeriodType type, Integer semester) {
-
-        Collection<OccupationPeriodReference> periods = this.getPeriodReferences(type, semester, null);
-
-        if (periods.size() == 0) {
-            this.addOccupationPeriodReferences(new OccupationPeriodReference(period, this, type, semester, null));
-            return;
-        }
-
-        for (OccupationPeriodReference reference : periods) {
-            reference.setOccupationPeriod(period);
-        }
-
+        return getPeriods(type, semester).findAny().orElse(null);
     }
 
     /*
      * New API
      */
 
-    public Collection<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester, List<Integer> years) {
-        return Collections2.transform(getPeriodReferences(type, semester, years), OccupationPeriodReference.FUNCTION_TO_PERIOD);
+    public Stream<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester, List<Integer> years) {
+        return getPeriodReferences(type, semester, years).map(OccupationPeriodReference::getOccupationPeriod);
     }
 
-    public Collection<OccupationPeriod> getAllPeriods() {
-        return Collections2.transform(getOccupationPeriodReferencesSet(), OccupationPeriodReference.FUNCTION_TO_PERIOD);
-    }
-
-    public Collection<OccupationPeriodReference> getPeriodReferences(final OccupationPeriodType type, final Integer semester,
+    public Stream<OccupationPeriodReference> getPeriodReferences(final OccupationPeriodType type, final Integer semester,
             final List<Integer> years) {
-        return Collections2.filter(getOccupationPeriodReferencesSet(), new Predicate<OccupationPeriodReference>() {
-
-            @Override
-            public boolean apply(OccupationPeriodReference reference) {
-
-                if (type != null && reference.getPeriodType() != type) {
-                    return false;
-                }
-
-                if (semester != null && reference.getSemester() != null && reference.getSemester() != semester) {
-                    return false;
-                }
-
-                if (years != null && !reference.getCurricularYears().getYears().containsAll(years)) {
-                    return false;
-                }
-
-                return true;
-            }
-
-        });
+        Stream<OccupationPeriodReference> stream = getOccupationPeriodReferencesSet().stream();
+        if (type != null) {
+            stream = stream.filter(r -> r.getPeriodType() == type);
+        }
+        if (semester != null) {
+            stream = stream.filter(r -> r.getSemester() == null || r.getSemester() == semester);
+        }
+        if (years != null) {
+            stream = stream.filter(r -> r.getCurricularYears().getYears().containsAll(years));
+        }
+        return stream;
     }
 
-    public Collection<OccupationPeriod> getPeriods(OccupationPeriodType type) {
+    public Stream<OccupationPeriod> getPeriods(OccupationPeriodType type) {
         return getPeriods(type, null, null);
     }
 
-    public Collection<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester) {
+    public Stream<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester) {
         return getPeriods(type, semester, null);
     }
 
-    public Collection<OccupationPeriod> getPeriodsByCurricularYear(Integer year) {
+    public Stream<OccupationPeriod> getPeriodsByCurricularYear(Integer year) {
         return getPeriods(null, null, Collections.singletonList(year));
     }
 
-    public Collection<OccupationPeriod> getPeriodsByCurricularYears(List<Integer> years) {
+    public Stream<OccupationPeriod> getPeriodsByCurricularYears(List<Integer> years) {
         return getPeriods(null, null, years);
     }
 
     public boolean isDateInPeriodOfType(final DateTime date, OccupationPeriodType type, Integer semester) {
-
-        return Iterables.any(getPeriods(type, semester), new Predicate<OccupationPeriod>() {
-
-            @Override
-            public boolean apply(OccupationPeriod period) {
-                return period.getPeriodInterval().contains(date);
-            }
-
-        });
+        return getPeriods(type, semester).anyMatch(o -> o.getPeriodInterval().contains(date));
 
     }
 

@@ -19,7 +19,7 @@
 package org.fenixedu.academic.dto;
 
 import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.EvaluationSeason;
 
 public class InfoFrequenta extends InfoObject {
     protected InfoStudent _aluno;
@@ -92,14 +92,14 @@ public class InfoFrequenta extends InfoObject {
      * Temporary solution to create InfoEnrolment to an Enrolment wrapper -
      * after create InfoFrequenta wrapper this should be delegated to attends
      */
-    private EnrolmentEvaluationType enrolmentEvaluationType;
+    private EvaluationSeason evaluationSeason;
 
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        return enrolmentEvaluationType;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
-    public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
-        this.enrolmentEvaluationType = enrolmentEvaluationType;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
     public void copyFromDomain(Attends frequenta) {

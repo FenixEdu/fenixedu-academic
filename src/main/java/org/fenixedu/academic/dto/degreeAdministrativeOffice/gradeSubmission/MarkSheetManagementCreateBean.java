@@ -25,8 +25,8 @@ import java.util.HashSet;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.MarkSheet;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.Person;
 
 import pt.ist.fenixframework.Atomic;
@@ -35,18 +35,18 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
 
     private String teacherId;
     private Date evaluationDate;
-    private MarkSheetType markSheetType;
+    private EvaluationSeason evaluationSeason;
     private Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans =
             new HashSet<MarkSheetEnrolmentEvaluationBean>();
     private Collection<MarkSheetEnrolmentEvaluationBean> impossibleEnrolmentEvaluationBeans =
             new HashSet<MarkSheetEnrolmentEvaluationBean>();
 
-    public MarkSheetType getMarkSheetType() {
-        return markSheetType;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
-    public void setMarkSheetType(MarkSheetType markSheetType) {
-        this.markSheetType = markSheetType;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
     public Date getEvaluationDate() {
@@ -101,7 +101,7 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
                 });
 
         return getCurricularCourse().createNormalMarkSheet(getExecutionPeriod(), getTeacher(), getEvaluationDate(),
-                getMarkSheetType(), Boolean.FALSE, enrolmentEvaluationBeanList, person);
+                getEvaluationSeason(), Boolean.FALSE, enrolmentEvaluationBeanList, person);
     }
 
     @Atomic
@@ -116,6 +116,6 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
                 });
 
         return getCurricularCourse().createOldNormalMarkSheet(getExecutionPeriod(), getTeacher(), getEvaluationDate(),
-                getMarkSheetType(), enrolmentEvaluationBeanList, person);
+                getEvaluationSeason(), enrolmentEvaluationBeanList, person);
     }
 }

@@ -23,30 +23,7 @@ import java.util.List;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import com.google.common.base.Function;
-
 public class OccupationPeriodReference extends OccupationPeriodReference_Base {
-
-    public static Function<OccupationPeriodReference, OccupationPeriod> FUNCTION_TO_PERIOD =
-            new Function<OccupationPeriodReference, OccupationPeriod>() {
-
-                @Override
-                public OccupationPeriod apply(OccupationPeriodReference reference) {
-                    return reference.getOccupationPeriod();
-                }
-
-            };
-
-    public static Function<OccupationPeriodReference, ExecutionDegree> FUNCTION_TO_DEGREE =
-            new Function<OccupationPeriodReference, ExecutionDegree>() {
-
-                @Override
-                public ExecutionDegree apply(OccupationPeriodReference reference) {
-                    return reference.getExecutionDegree();
-                }
-
-            };
-
     private OccupationPeriodReference() {
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -63,6 +40,61 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
         setPeriodType(type);
         setSemester(semester);
         setCurricularYears(curricularYears);
+    }
+
+    /**
+     * The magic of the following code handles having an interface that assumes specific periods for each season, and a domain
+     * that supports custom configuration of all existing seasons. The interface should be redone to allow the user to link the
+     * OccupationPeriodReferences with the seasons or lessons, or whatever they are used for.
+     */
+    @Deprecated
+    @Override
+    public OccupationPeriodType getPeriodType() {
+        switch (super.getPeriodType()) {
+        case EXAMS:
+            if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isSpecial)) {
+                return OccupationPeriodType.EXAMS_SPECIAL_SEASON;
+            }
+            break;
+        case GRADE_SUBMISSION:
+            if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isSpecial)) {
+                return OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON;
+            }
+        }
+        return super.getPeriodType();
+    }
+
+    /**
+     * The magic of the following code handles having an interface that assumes specific periods for each season, and a domain
+     * that supports custom configuration of all existing seasons. The interface should be redone to allow the user to link the
+     * OccupationPeriodReferences with the seasons or lessons, or whatever they are used for.
+     */
+    @Deprecated
+    @Override
+    public void setPeriodType(OccupationPeriodType periodType) {
+        switch (periodType) {
+        case EXAMS:
+            addEvaluationSeason(EvaluationSeason.readNormalSeason());
+            addEvaluationSeason(EvaluationSeason.readImprovementSeason());
+            super.setPeriodType(periodType);
+            break;
+        case EXAMS_SPECIAL_SEASON:
+            addEvaluationSeason(EvaluationSeason.readSpecialSeason());
+            super.setPeriodType(OccupationPeriodType.EXAMS);
+            break;
+        case GRADE_SUBMISSION:
+            addEvaluationSeason(EvaluationSeason.readNormalSeason());
+            addEvaluationSeason(EvaluationSeason.readImprovementSeason());
+            super.setPeriodType(periodType);
+            break;
+        case GRADE_SUBMISSION_SPECIAL_SEASON:
+            addEvaluationSeason(EvaluationSeason.readSpecialSeason());
+            super.setPeriodType(OccupationPeriodType.GRADE_SUBMISSION);
+            break;
+        default:
+            super.setPeriodType(periodType);
+            break;
+        }
     }
 
     public void delete() {

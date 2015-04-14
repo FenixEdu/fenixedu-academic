@@ -94,7 +94,7 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
             HttpServletRequest request, ActionMessages actionMessages) {
 
         final Collection<Enrolment> enrolments =
-                createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheetForOldMarkSheets(createBean.getMarkSheetType(),
+                createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheetForOldMarkSheets(createBean.getEvaluationSeason(),
                         createBean.getExecutionPeriod());
 
         if (enrolments.isEmpty()) {

@@ -740,7 +740,7 @@ public class Registration extends Registration_Base {
         }
 
         for (final Enrolment enrolment : enrolments) {
-            final EnrolmentEvaluation enrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
+            final EnrolmentEvaluation enrolmentEvaluation = enrolment.getFinalEnrolmentEvaluation();
             if (enrolmentEvaluation != null && enrolmentEvaluation.isApproved()) {
                 return enrolmentEvaluation.getGrade();
             }
@@ -924,33 +924,6 @@ public class Registration extends Registration_Base {
 
         return externalEnrolment.getApprovementDate() != null ? externalEnrolment.getApprovementDate() : externalEnrolment
                 .hasExecutionPeriod() ? externalEnrolment.getExecutionPeriod().getEndDateYearMonthDay() : null;
-    }
-
-    final public YearMonthDay getLastApprovedEnrolmentEvaluationDate() {
-        final SortedSet<Enrolment> enrolments =
-                new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID);
-        enrolments.addAll(getApprovedEnrolments());
-
-        YearMonthDay internalEnrolmentExamDate =
-                enrolments.isEmpty() ? null : enrolments.last().getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
-
-        YearMonthDay externalEnrolmentExamDate =
-                getExternalEnrolmentsSet().isEmpty() ? null : getLastExternalApprovedEnrolmentEvaluationDate();
-
-        if (internalEnrolmentExamDate == null && externalEnrolmentExamDate == null) {
-            return null;
-        }
-
-        if (internalEnrolmentExamDate == null) {
-            return externalEnrolmentExamDate;
-        }
-
-        if (externalEnrolmentExamDate == null) {
-            return internalEnrolmentExamDate;
-        }
-
-        return internalEnrolmentExamDate.compareTo(externalEnrolmentExamDate) > 1 ? internalEnrolmentExamDate : externalEnrolmentExamDate;
-
     }
 
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
