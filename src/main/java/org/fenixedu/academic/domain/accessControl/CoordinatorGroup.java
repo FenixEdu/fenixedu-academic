@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Coordinator;
@@ -27,12 +29,15 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 
 @GroupOperator("coordinator")
@@ -73,12 +78,18 @@ public class CoordinatorGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
+        List<String> parts = new ArrayList<>();
+        String connector = "";
         if (degreeType != null) {
-            return new String[] { degreeType.getName().getContent() };
-        } else if (degree != null) {
-            return new String[] { degree.getPresentationName() };
+            parts.add(degreeType.getName().getContent());
         }
-        return new String[0];
+        if (degree != null) {
+            parts.add(degree.getPresentationName());
+        }
+        if (!parts.isEmpty()) {
+            connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.default");
+        }
+        return new String[] { connector, Joiner.on(", ").join(parts) };
     }
 
     @Override

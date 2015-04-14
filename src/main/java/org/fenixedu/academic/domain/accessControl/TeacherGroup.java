@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
@@ -30,13 +32,16 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 
 @GroupOperator("teacher")
@@ -99,16 +104,32 @@ public class TeacherGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
+        List<String> parts = new ArrayList<>();
+        String connector = "";
         if (degree != null) {
-            return new String[] { degree.getName() };
-        } else if (campus != null) {
-            return new String[] { campus.getName() };
-        } else if (department != null) {
-            return new String[] { department.getName() };
-        } else if (executionCourse != null) {
-            return new String[] { executionCourse.getName() };
+            parts.add(degree.getPresentationName());
         }
-        return new String[0];
+        if (executionCourse != null) {
+            parts.add(executionCourse.getName());
+        }
+        if (department != null) {
+            parts.add(department.getName());
+        }
+        if (campus != null) {
+            parts.add(campus.getName());
+        }
+        if (!parts.isEmpty()) {
+            if (parts.size() == 1 && campus != null) {
+                //campus is first
+                connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.campus");
+            } else if (degree == null && executionCourse == null) {
+                //department is first
+                connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.male");
+            } else {
+                connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.default");
+            }
+        }
+        return new String[] { connector, Joiner.on(", ").join(parts) };
     }
 
     @Override

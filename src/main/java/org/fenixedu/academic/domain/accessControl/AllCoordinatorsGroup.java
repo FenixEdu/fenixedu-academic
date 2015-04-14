@@ -22,10 +22,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.GroupStrategy;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 @GroupOperator("allCoordinators")
@@ -35,7 +37,7 @@ public class AllCoordinatorsGroup extends GroupStrategy {
 
     @Override
     public String getPresentationName() {
-        return "All Coordinators";
+        return BundleUtil.getString(Bundle.GROUP, "label.name.AllCoordinatorsGroup");
     }
 
     @Override

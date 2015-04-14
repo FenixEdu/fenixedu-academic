@@ -54,7 +54,7 @@ public class TeacherResponsibleOfExecutionCourseGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { executionCourse.getNome() };
+        return new String[] { executionCourse.getName() };
     }
 
     @Override

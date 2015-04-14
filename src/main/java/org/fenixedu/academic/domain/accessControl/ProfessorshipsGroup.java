@@ -29,10 +29,12 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
@@ -71,7 +73,7 @@ public class ProfessorshipsGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { period.getName() };
+        return new String[] { BundleUtil.getString(Bundle.ENUMERATION, period.getName()) };
     }
 
     @Override
