@@ -2940,6 +2940,8 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
     class student.RegistrationDataByExecutionYear  {
+		boolean reingression;
+		LocalDate reingressionDate;
         EnrolmentModel enrolmentModel;
         protected LocalDate enrolmentDate;
     }

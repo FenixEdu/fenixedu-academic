@@ -1693,6 +1693,22 @@
 	</slot>
 </schema>
 
+<schema name="RegistrationReingression.view" type="org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear">
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="reingressionDate" key="label.date" bundle="APPLICATION_RESOURCES" />
+</schema>
+
+<schema name="RegistrationReingression.create" type="org.fenixedu.academic.dto.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="menu-select" key="label.executionYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="from" value="executionYearsSinceRegistrationStart" />
+		<property name="format" value="${year}" />
+		<property name="sortBy" value="year=desc" />
+	</slot>
+	<slot name="reingressionDate" required="true" key="label.reingressionDate" bundle="ACADEMIC_OFFICE_RESOURCES" />
+</schema>
+
 <schema name="student.statistics.bean"
 		type="org.fenixedu.academic.ui.struts.action.directiveCouncil.StudentStatisticsDA$ContextBean"
 		bundle="APPLICATION_RESOURCES">

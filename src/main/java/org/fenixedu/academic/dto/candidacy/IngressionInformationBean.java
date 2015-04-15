@@ -19,10 +19,14 @@
 package org.fenixedu.academic.dto.candidacy;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import org.fenixedu.academic.domain.EntryPhase;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
+import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -44,6 +48,44 @@ public class IngressionInformationBean implements Serializable {
     private YearMonthDay homologationDate;
 
     private boolean requestAgreementInformation;
+
+    private ExecutionYear executionYear;
+    private Registration registration;
+    private LocalDate reingressionDate;
+
+    public IngressionInformationBean(Registration registration) {
+        setEntryPhase(registration.getStudentCandidacy().getEntryPhase());
+        setRegistration(registration);
+    }
+
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
+
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
+
+    public Registration getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
+    }
+
+    public Collection<ExecutionYear> getExecutionYearsSinceRegistrationStart() {
+        return ExecutionYear.readExecutionYears(getRegistration().getStartExecutionYear(),
+                ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public LocalDate getReingressionDate() {
+        return reingressionDate;
+    }
+
+    public void setReingressionDate(LocalDate reingressionDate) {
+        this.reingressionDate = reingressionDate;
+    }
 
     public IngressionInformationBean() {
         super();
