@@ -22,9 +22,9 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
+import org.fenixedu.academic.util.PhoneUtil;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneValidation extends PhoneValidation_Base {
 

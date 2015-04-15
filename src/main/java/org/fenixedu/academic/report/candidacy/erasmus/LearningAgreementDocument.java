@@ -28,9 +28,8 @@ import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividual
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.FenixStringTools;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.jsoup.helper.StringUtil;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class LearningAgreementDocument extends FenixReport {
 

@@ -40,6 +40,7 @@ import org.fenixedu.academic.ui.struts.action.phd.PhdInactivePredicateContainer;
 import org.fenixedu.academic.ui.struts.action.phd.PhdSeminarPredicateContainer;
 import org.fenixedu.academic.ui.struts.action.phd.PhdThesisPredicateContainer;
 import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherPhdApp;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -47,7 +48,6 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @StrutsFunctionality(app = TeacherPhdApp.class, path = "processes", titleKey = "label.phd.manageProcesses")
 @Mapping(path = "/phdIndividualProgramProcess", module = "teacher")

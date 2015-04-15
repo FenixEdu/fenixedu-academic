@@ -40,10 +40,9 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentReq
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
-import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
+import org.fenixedu.commons.spreadsheet.SheetData;
+import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
+import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
 
 public class DocumentRequestExcelUtils {
 

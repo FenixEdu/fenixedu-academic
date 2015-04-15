@@ -38,8 +38,8 @@ import org.fenixedu.academic.util.HtmlToTextConverterUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
 public abstract class GepReportFile extends GepReportFile_Base {
 

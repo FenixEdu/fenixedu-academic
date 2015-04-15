@@ -47,10 +47,9 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
-import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
-import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
+import org.fenixedu.commons.spreadsheet.SheetData;
+import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
+import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
 
 @StrutsFunctionality(app = CoordinatorPhdApp.class, path = "enrolments-management",
         titleKey = "label.externalUnits.externalEnrolments", bundle = "AcademicAdminOffice")

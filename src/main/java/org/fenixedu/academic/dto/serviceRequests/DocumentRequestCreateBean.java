@@ -39,13 +39,13 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean implements IDocumentRequestBean {
 

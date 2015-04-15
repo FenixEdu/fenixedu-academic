@@ -59,6 +59,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.service.services.manager.RemoveGradesFromConfirmedMarkSheet;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminMarksheetApp;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -71,7 +72,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @StrutsFunctionality(app = AcademicAdminMarksheetApp.class, path = "search", titleKey = "link.markSheet.management")
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",

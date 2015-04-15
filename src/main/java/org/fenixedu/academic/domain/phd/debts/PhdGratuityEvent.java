@@ -25,13 +25,14 @@ import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     public PhdGratuityEvent(PhdIndividualProgramProcess process, int year, DateTime phdGratuityDate) {
@@ -85,15 +86,16 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
-        return new LabelFormatter().appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel("" + getYear())
-                .appendLabel(" (").appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
+        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
+                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName().getContent())
+                .appendLabel(")");
     }
 
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), "enum").appendLabel(" - ")
-                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName().getContent())
-                .appendLabel(")");
+        return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION)
+                .appendLabel(" - ").appendLabel("" + getYear()).appendLabel(" (")
+                .appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
     }
 
     @Override

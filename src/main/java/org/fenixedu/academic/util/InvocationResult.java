@@ -22,13 +22,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-
 public class InvocationResult {
 
     private boolean success;
 
-    private List<LabelFormatter> messages;
+    private final List<LabelFormatter> messages;
 
     public InvocationResult() {
         this.success = false;

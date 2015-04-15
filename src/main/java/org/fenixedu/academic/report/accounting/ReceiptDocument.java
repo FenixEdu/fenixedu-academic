@@ -29,15 +29,11 @@ import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
-
 import com.google.common.base.Strings;
 
 public class ReceiptDocument extends FenixReport {
 
     private final Receipt receipt;
-
-    private final IMessageResourceProvider messageResourceProvider;
 
     private final boolean original;
 
@@ -74,9 +70,8 @@ public class ReceiptDocument extends FenixReport {
      */
     private static final long serialVersionUID = 1L;
 
-    public ReceiptDocument(final Receipt receipt, final IMessageResourceProvider messageResourceProvider, boolean original) {
+    public ReceiptDocument(final Receipt receipt, boolean original) {
         this.receipt = receipt;
-        this.messageResourceProvider = messageResourceProvider;
         this.original = original;
 
         fillReport();
@@ -121,8 +116,7 @@ public class ReceiptDocument extends FenixReport {
         sortedEntries.addAll(receipt.getEntriesSet());
 
         for (final Entry entry : sortedEntries) {
-            result.add(new ReceiptDocumentEntry(entry.getDescription().toString(this.messageResourceProvider), entry
-                    .getOriginalAmount().toPlainString()));
+            result.add(new ReceiptDocumentEntry(entry.getDescription().toString(), entry.getOriginalAmount().toPlainString()));
         }
 
         return result;

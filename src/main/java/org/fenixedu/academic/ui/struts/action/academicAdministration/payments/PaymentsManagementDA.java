@@ -19,8 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.academicAdministration.payments;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -351,14 +349,6 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
     private Receipt getReceipt(HttpServletRequest request) {
         return getDomainObject(request, "receiptId");
-    }
-
-    @Override
-    protected Map<String, String> getMessageResourceProviderBundleMappings() {
-        final Map<String, String> bundleMappings = new HashMap<String, String>();
-        bundleMappings.put("enum", "ENUMERATION_RESOURCES");
-        bundleMappings.put("application", "DEFAULT");
-        return bundleMappings;
     }
 
     public ActionForward prepareDepositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,

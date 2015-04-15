@@ -37,7 +37,7 @@ import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base {
 

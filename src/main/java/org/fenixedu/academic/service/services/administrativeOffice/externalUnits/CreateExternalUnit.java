@@ -26,10 +26,10 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalUnitBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.CreateUnit;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateExternalUnit {
 

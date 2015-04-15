@@ -57,12 +57,11 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.faces.bean.teacher.evaluation.EvaluationManagementBackingBean;
 import org.fenixedu.academic.ui.faces.components.util.CalendarLink;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
 import org.fenixedu.spaces.domain.occupation.Occupation;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBackingBean {
 

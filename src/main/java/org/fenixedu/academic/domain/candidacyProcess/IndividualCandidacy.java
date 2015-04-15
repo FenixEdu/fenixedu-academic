@@ -54,8 +54,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-
 abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected IndividualCandidacy() {
@@ -130,7 +128,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         }
         if (candidacyDate == null || !process.hasOpenCandidacyPeriod(candidacyDate.toDateTimeAtCurrentTime())) {
             throw new DomainException("error.IndividualCandidacy.invalid.candidacyDate", process.getCandidacyStart().toString(
-                    DateFormatUtil.DEFAULT_DATE_FORMAT), process.getCandidacyEnd().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+                    "dd/MM/yyyy"), process.getCandidacyEnd().toString("dd/MM/yyyy"));
         }
     }
 

@@ -39,11 +39,12 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class GratuityEvent extends GratuityEvent_Base {
 
@@ -114,7 +115,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" (")
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
                 .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
                 .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear()).appendLabel(")");

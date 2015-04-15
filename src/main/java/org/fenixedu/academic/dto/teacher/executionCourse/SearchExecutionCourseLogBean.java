@@ -21,6 +21,7 @@ package org.fenixedu.academic.dto.teacher.executionCourse;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionCourseLog;
@@ -28,11 +29,9 @@ import org.fenixedu.academic.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Month;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class SearchExecutionCourseLogBean implements Serializable {
 
@@ -145,7 +144,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
             filters.add(new InlinePredicate<ExecutionCourseLog, Collection<ExecutionCourseLogTypes>>(getExecutionCourseLogTypes()) {
 
                 @Override
-                public boolean eval(ExecutionCourseLog executionCourseLog) {
+                public boolean test(ExecutionCourseLog executionCourseLog) {
                     return getValue().contains(executionCourseLog.getExecutionCourseLogType());
                 }
 
@@ -156,7 +155,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
             filters.add(new InlinePredicate<ExecutionCourseLog, Collection<Month>>(getMonths()) {
 
                 @Override
-                public boolean eval(ExecutionCourseLog executionCourseLog) {
+                public boolean test(ExecutionCourseLog executionCourseLog) {
                     for (Month month : getValue()) {
                         if (month.getNumberOfMonth() == executionCourseLog.getWhenDateTime().getMonthOfYear()) {
                             return true;
@@ -171,7 +170,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
             filters.add(new InlinePredicate<ExecutionCourseLog, Collection<Professorship>>(getProfessorships()) {
 
                 @Override
-                public boolean eval(ExecutionCourseLog executionCourseLog) {
+                public boolean test(ExecutionCourseLog executionCourseLog) {
                     for (Professorship pf : getValue()) {
                         if (pf.getPerson().getOid() == executionCourseLog.getPerson().getOid()) {
                             return true;

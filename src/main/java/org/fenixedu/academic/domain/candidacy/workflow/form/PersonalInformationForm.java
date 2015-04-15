@@ -33,10 +33,10 @@ import org.fenixedu.academic.domain.person.Gender;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.MaritalStatus;
 import org.fenixedu.academic.domain.util.workflow.Form;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PersonalInformationForm extends Form {
 
@@ -131,7 +131,8 @@ public class PersonalInformationForm extends Form {
         final User user = User.findByUsername(username);
         if (party != null && party != user.getPerson()) {
             result.add(new LabelFormatter().appendLabel(
-                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists", "application"));
+                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists",
+                    Bundle.APPLICATION));
         }
     }
 
@@ -139,7 +140,7 @@ public class PersonalInformationForm extends Form {
         if (getGrantOwnerType().equals(GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER) && getGrantOwnerProvider() == null) {
             result.add(new LabelFormatter().appendLabel(
                     "error.candidacy.workflow.PersonalInformationForm.grant.owner.must.choose.granting.institution",
-                    "application"));
+                    Bundle.APPLICATION));
         }
     }
 

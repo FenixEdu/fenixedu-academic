@@ -22,9 +22,8 @@ import java.util.StringTokenizer;
 
 import org.fenixedu.academic.domain.Branch;
 import org.fenixedu.academic.domain.branch.BranchType;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.commons.i18n.I18N;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author dcs-rjao

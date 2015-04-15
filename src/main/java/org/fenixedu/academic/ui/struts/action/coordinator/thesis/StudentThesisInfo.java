@@ -24,8 +24,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 public class StudentThesisInfo implements Serializable {
 

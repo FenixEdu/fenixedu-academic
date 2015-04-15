@@ -46,6 +46,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.registration.TransitToBolonha;
 import org.fenixedu.academic.ui.struts.action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerStudentsApp;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -55,7 +56,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @StrutsFunctionality(app = ManagerStudentsApp.class, path = "manage", titleKey = "label.manage")
 @Mapping(path = "/bolonhaStudentEnrolment", module = "manager", formBean = "bolonhaStudentEnrolmentForm")

@@ -22,8 +22,7 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 abstract public class PhdAlert extends PhdAlert_Base {
 

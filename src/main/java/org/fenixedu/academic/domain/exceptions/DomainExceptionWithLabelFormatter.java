@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.exceptions;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class DomainExceptionWithLabelFormatter extends DomainException {
 

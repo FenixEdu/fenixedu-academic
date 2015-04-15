@@ -18,25 +18,17 @@
  */
 package org.fenixedu.academic.ui.renderers;
 
-import java.util.Properties;
-
-import org.fenixedu.academic.ui.renderers.util.RendererMessageResourceProvider;
+import org.fenixedu.academic.util.LabelFormatter;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class LabelFormatterRenderer extends OutputRenderer {
 
-    private final Properties bundleMappings;
-
     public LabelFormatterRenderer() {
         super();
-
-        this.bundleMappings = new Properties();
-
     }
 
     @Override
@@ -45,9 +37,7 @@ public class LabelFormatterRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-
-                return new HtmlText(((LabelFormatter) object).toString(new RendererMessageResourceProvider(
-                        LabelFormatterRenderer.this.bundleMappings)));
+                return new HtmlText(((LabelFormatter) object).toString());
             }
 
         };
@@ -59,11 +49,6 @@ public class LabelFormatterRenderer extends OutputRenderer {
      * @property
      */
     public void setBundleName(String bundle, String name) {
-        this.bundleMappings.put(bundle, name);
-    }
-
-    public String getBundleName(String bundle) {
-        return this.bundleMappings.getProperty(bundle);
     }
 
 }

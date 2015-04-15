@@ -31,12 +31,11 @@ import org.fenixedu.academic.domain.util.icalendar.EvaluationEventBean;
 import org.fenixedu.academic.dto.InfoEvaluation;
 import org.fenixedu.academic.dto.InfoExam;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.Season;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class Exam extends Exam_Base {
 

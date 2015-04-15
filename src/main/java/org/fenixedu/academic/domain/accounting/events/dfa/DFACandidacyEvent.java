@@ -37,9 +37,9 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.util.workflow.StateMachine;
 import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
@@ -86,7 +86,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
                 .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
                 .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear()).appendLabel(")");

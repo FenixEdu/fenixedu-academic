@@ -59,10 +59,10 @@ import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.ui.faces.components.util.CalendarLink;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.EvaluationType;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 

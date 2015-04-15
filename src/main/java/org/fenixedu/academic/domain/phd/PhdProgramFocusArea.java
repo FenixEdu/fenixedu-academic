@@ -29,10 +29,9 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
     static public Comparator<PhdProgramFocusArea> COMPARATOR_BY_NAME = new Comparator<PhdProgramFocusArea>() {

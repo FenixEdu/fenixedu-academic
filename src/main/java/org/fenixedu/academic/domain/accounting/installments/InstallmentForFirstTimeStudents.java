@@ -25,15 +25,14 @@ import org.fenixedu.academic.domain.accounting.PaymentPlan;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStudents_Base {
 
@@ -112,10 +111,11 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
 
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel("application", "label.InstallmentForFirstTimeStudents.description",
-                getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
-                        .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getPenaltyPercentage().multiply(BigDecimal.valueOf(100))
-                        .toString(), getNumberOfDaysToStartApplyingPenalty().toString());
+        return new LabelFormatter().appendLabel(Bundle.APPLICATION,
+                "label.InstallmentForFirstTimeStudents.description", getInstallmentOrder().toString(),
+                getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
+                getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(), getNumberOfDaysToStartApplyingPenalty()
+                        .toString());
 
     }
 

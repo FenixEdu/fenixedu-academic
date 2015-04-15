@@ -50,11 +50,11 @@ import org.fenixedu.academic.service.services.messaging.CreateConversationThread
 import org.fenixedu.academic.service.services.messaging.RemoveForumEmailSubscriber;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.utils.RequestUtils;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>

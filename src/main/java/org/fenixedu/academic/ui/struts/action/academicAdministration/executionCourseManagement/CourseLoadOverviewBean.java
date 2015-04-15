@@ -39,9 +39,8 @@ import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
 import org.joda.time.Interval;
-
-import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class CourseLoadOverviewBean implements Serializable {
 

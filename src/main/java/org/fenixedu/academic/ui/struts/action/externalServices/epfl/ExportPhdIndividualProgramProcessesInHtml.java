@@ -55,12 +55,11 @@ import org.fenixedu.academic.domain.phd.ThesisSubjectOrder;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExportPhdIndividualProgramProcessesInHtml {
 

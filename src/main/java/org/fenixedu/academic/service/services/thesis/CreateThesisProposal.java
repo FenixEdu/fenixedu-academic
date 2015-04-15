@@ -24,9 +24,9 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateThesisProposal {
 

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
-import static pt.utl.ist.fenix.tools.util.DateFormatUtil.DEFAULT_DATE_FORMAT;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
@@ -51,8 +49,8 @@ public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDo
         addParameter("personName", person.getName());
         addParameter("documentIdNumber", person.getDocumentIdNumber());
         addParameter("emissionDate", person.getEmissionDateOfDocumentIdYearMonthDay() == null ? "" : person
-                .getEmissionDateOfDocumentIdYearMonthDay().toString(DEFAULT_DATE_FORMAT));
-        addParameter("birthDate", person.getDateOfBirthYearMonthDay().toString(DEFAULT_DATE_FORMAT));
+                .getEmissionDateOfDocumentIdYearMonthDay().toString("dd/MM/yyyy"));
+        addParameter("birthDate", person.getDateOfBirthYearMonthDay().toString("dd/MM/yyyy"));
 
         addParameter("executionYear", getExecutionYear().getQualifiedName());
         addParameter("institutionName", UnitUtils.readInstitutionUnit().getName());

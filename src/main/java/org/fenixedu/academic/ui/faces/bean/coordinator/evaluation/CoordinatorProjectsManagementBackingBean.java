@@ -27,9 +27,9 @@ import org.fenixedu.academic.domain.Project;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.service.services.teacher.DeleteEvaluation;
+import org.fenixedu.academic.util.DateFormatUtil;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class CoordinatorProjectsManagementBackingBean extends CoordinatorProjectsInformationBackingBean {
     protected String name;

@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.messaging.MessagingApplication.MessagingEmailsApp;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -49,7 +50,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @StrutsFunctionality(app = MessagingEmailsApp.class, path = "view-sent-emails", titleKey = "label.email.sent")
 @Mapping(path = "/viewSentEmails", module = "messaging")

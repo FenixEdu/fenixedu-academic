@@ -23,8 +23,8 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class DuplicateRequestEvent extends DuplicateRequestEvent_Base {
 
@@ -42,7 +42,7 @@ public class DuplicateRequestEvent extends DuplicateRequestEvent_Base {
     @Override
     final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
 
         return labelFormatter;
     }

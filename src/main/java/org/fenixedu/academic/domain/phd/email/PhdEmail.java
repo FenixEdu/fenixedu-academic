@@ -25,10 +25,10 @@ import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.ReplyTo;
 import org.fenixedu.academic.domain.util.email.Sender;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class PhdEmail extends PhdEmail_Base {
 

@@ -33,9 +33,8 @@ import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.student.curriculum.CycleConclusionProcess;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest {
 

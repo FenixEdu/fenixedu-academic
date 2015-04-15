@@ -26,8 +26,8 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.PhdProgramUnit;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 abstract public class PhdEvent extends PhdEvent_Base {
 
@@ -51,7 +51,7 @@ abstract public class PhdEvent extends PhdEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
-        return new LabelFormatter().appendLabel(entryType.name(), "enum").appendLabel(" (")
+        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
                 .appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
     }
 

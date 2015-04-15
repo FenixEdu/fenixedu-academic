@@ -405,9 +405,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         });
     }
 
-    public EnrolmentEvaluation getEnrolmentEvaluation(pt.utl.ist.fenix.tools.predicates.Predicate<EnrolmentEvaluation> predicate) {
+    public EnrolmentEvaluation getEnrolmentEvaluation(java.util.function.Predicate<EnrolmentEvaluation> predicate) {
         for (EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
-            if (predicate.eval(enrolmentEvaluation)) {
+            if (predicate.test(enrolmentEvaluation)) {
                 return enrolmentEvaluation;
             }
         }

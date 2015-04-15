@@ -270,8 +270,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
         final Receipt receipt = getRenderedObject("receipt");
         try {
 
-            final ReceiptDocument original = new ReceiptDocument(receipt, getMessageResourceProvider(request), true);
-            final ReceiptDocument duplicate = new ReceiptDocument(receipt, getMessageResourceProvider(request), false);
+            final ReceiptDocument original = new ReceiptDocument(receipt, true);
+            final ReceiptDocument duplicate = new ReceiptDocument(receipt, false);
 
             final byte[] data = ReportsUtils.generateReport(original, duplicate).getData();
 

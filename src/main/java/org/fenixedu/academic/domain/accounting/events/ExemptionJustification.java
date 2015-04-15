@@ -20,9 +20,8 @@ package org.fenixedu.academic.domain.accounting.events;
 
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class ExemptionJustification extends ExemptionJustification_Base {
 

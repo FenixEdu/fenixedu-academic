@@ -23,8 +23,8 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.PhotocopyRequest;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
 
@@ -51,7 +51,7 @@ public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         if (!StringUtils.isEmpty(getAcademicServiceRequest().getPurpose())) {
             labelFormatter.appendLabel(" (").appendLabel(getAcademicServiceRequest().getPurpose()).appendLabel(")");
         }

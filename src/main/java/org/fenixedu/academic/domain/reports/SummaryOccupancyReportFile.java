@@ -30,8 +30,8 @@ import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
 public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base {
 

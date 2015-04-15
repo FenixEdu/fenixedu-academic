@@ -26,8 +26,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.StudentGroup;
-
-import pt.utl.ist.fenix.tools.util.Pair;
+import org.fenixedu.academic.util.Pair;
 
 public class EnrolledGroupBean {
 

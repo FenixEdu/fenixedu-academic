@@ -37,14 +37,13 @@ import org.fenixedu.academic.service.services.person.SearchPerson.SearchParamete
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchPersonPredicate;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.io.domain.GenericFile;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author Pedro Santos (pmrsa)

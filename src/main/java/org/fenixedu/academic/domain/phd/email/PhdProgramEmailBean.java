@@ -27,11 +27,10 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdProgramEmailBean extends PhdEmailBean {
 
@@ -83,7 +82,7 @@ public class PhdProgramEmailBean extends PhdEmailBean {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgram>(getPhdProgram()) {
 
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     if (toEval.getPhdProgram() != null) {
                         return getValue().equals(toEval.getPhdProgram());
                     } else if (toEval.getPhdProgramFocusArea() != null) {

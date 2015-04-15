@@ -34,9 +34,9 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
@@ -77,7 +77,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
                 .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
                 .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear()).appendLabel(")");

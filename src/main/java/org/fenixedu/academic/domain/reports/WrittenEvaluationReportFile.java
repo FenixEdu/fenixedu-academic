@@ -26,8 +26,8 @@ import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
 import org.fenixedu.spaces.domain.Space;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
 public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Base {
 

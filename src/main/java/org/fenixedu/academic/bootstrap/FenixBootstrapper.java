@@ -55,6 +55,7 @@ import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.bootstrap.BootstrapError;
 import org.fenixedu.bennu.core.bootstrap.annotations.Bootstrap;
@@ -73,7 +74,6 @@ import org.fenixedu.spaces.domain.SpaceClassification;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.standards.geographic.Planet;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.Lists;
 

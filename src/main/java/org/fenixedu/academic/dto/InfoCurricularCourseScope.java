@@ -30,9 +30,8 @@ import java.util.Comparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourseScope;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.commons.i18n.I18N;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author tfc130

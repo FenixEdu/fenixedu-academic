@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 public class DissertationsProposalsReportFile extends DissertationsProposalsReportFile_Base {
 

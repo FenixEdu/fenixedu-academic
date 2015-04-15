@@ -22,9 +22,8 @@ import jvstm.cps.ConsistencyPredicate;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ConversationThread extends ConversationThread_Base implements Comparable<ConversationThread> {
 

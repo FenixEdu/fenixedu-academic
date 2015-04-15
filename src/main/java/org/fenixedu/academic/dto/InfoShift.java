@@ -40,9 +40,8 @@ import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftGroupingProperties;
 import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.NumberUtils;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InfoShift extends InfoObject {
 

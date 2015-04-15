@@ -39,8 +39,7 @@ import org.fenixedu.academic.service.services.person.SearchPerson;
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchParameters;
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchPersonPredicate;
 import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState;
-
-import pt.utl.ist.fenix.tools.util.CollectionPager;
+import org.fenixedu.academic.util.CollectionPager;
 
 public class ManageSecondCycleThesisSearchBean implements Serializable {
 

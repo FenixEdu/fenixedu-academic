@@ -23,10 +23,9 @@ import java.math.BigDecimal;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 

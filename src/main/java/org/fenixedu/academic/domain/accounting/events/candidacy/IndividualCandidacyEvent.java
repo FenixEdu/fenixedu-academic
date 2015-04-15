@@ -36,11 +36,11 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_Base {
 
@@ -85,7 +85,7 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        return new LabelFormatter().appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION);
     }
 
     @Override

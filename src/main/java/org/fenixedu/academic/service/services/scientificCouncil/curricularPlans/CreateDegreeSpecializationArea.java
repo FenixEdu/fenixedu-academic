@@ -25,9 +25,9 @@ import org.fenixedu.academic.domain.DegreeSpecializationArea;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateDegreeSpecializationArea {
 

@@ -37,8 +37,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
 import org.fenixedu.academic.util.ContentType;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
+import org.fenixedu.academic.util.FileUtils;
 
 import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;

@@ -24,9 +24,8 @@ package org.fenixedu.academic.domain.phd.thesis.activities;
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
+import org.fenixedu.academic.util.Pair;
 import org.fenixedu.bennu.core.domain.User;
-
-import pt.utl.ist.fenix.tools.util.Pair;
 
 public class SwapJuryElementsOrder extends PhdThesisActivity {
 

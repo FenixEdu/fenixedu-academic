@@ -36,12 +36,11 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.EnrolmentAction;
+import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.predicates.ResultCollection;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class CurriculumLine extends CurriculumLine_Base {
 

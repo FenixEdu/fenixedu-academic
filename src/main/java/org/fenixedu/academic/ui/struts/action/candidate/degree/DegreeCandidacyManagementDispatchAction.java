@@ -22,9 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -63,6 +61,7 @@ import org.fenixedu.academic.service.services.student.ReadStudentTimeTable;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.candidate.ViewCandidaciesDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -73,7 +72,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 @Mapping(path = "/degreeCandidacyManagement", module = "candidate", functionality = ViewCandidaciesDispatchAction.class)
 @Forwards({ @Forward(name = "showWelcome", path = "/candidate/degree/showWelcome.jsp"),
@@ -376,15 +374,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private CandidacyOperationType getOperationType(HttpServletRequest request) {
         return CandidacyOperationType.valueOf(getFromRequest(request, "operationType").toString());
-    }
-
-    @Override
-    protected Map<String, String> getMessageResourceProviderBundleMappings() {
-        final Map<String, String> bundleMappings = new HashMap<String, String>();
-        bundleMappings.put("enum", "ENUMERATION_RESOURCES");
-        bundleMappings.put("application", "");
-
-        return bundleMappings;
     }
 
     private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {

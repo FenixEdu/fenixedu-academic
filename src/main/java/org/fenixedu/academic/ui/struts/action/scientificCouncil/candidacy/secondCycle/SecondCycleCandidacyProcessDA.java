@@ -52,9 +52,9 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+import org.fenixedu.commons.spreadsheet.SpreadsheetXLSExporter;
 
 @StrutsFunctionality(app = ScientificApplicationsApp.class, path = "second-cycle",
         titleKey = "title.application.name.secondCycle")

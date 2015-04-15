@@ -145,10 +145,10 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
         }
 
         if (StringUtils.endsWithIgnoreCase(bean.getFilename(), ZIP_FILE_EXTENSION)) {
-            File zipFile = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream());
+            File zipFile = org.fenixedu.academic.util.FileUtils.copyToTemporaryFile(bean.getInputStream());
             File unzipDir = null;
             try {
-                unzipDir = pt.utl.ist.fenix.tools.util.FileUtils.unzipFile(zipFile);
+                unzipDir = org.fenixedu.academic.util.FileUtils.unzipFile(zipFile);
                 if (!unzipDir.isDirectory()) {
                     addActionMessage("error", request, "error.manager.SIBS.zipException", bean.getFilename());
                     return prepareUploadSIBSPaymentFiles(mapping, form, request, response);

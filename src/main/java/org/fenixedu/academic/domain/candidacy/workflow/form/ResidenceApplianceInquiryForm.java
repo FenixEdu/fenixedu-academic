@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.util.workflow.Form;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class ResidenceApplianceInquiryForm extends Form {
 
@@ -57,7 +57,7 @@ public class ResidenceApplianceInquiryForm extends Form {
         if (!StringUtils.isEmpty(this.notesAboutApplianceForResidence) && !isToApplyForResidence) {
             return Collections.singletonList(new LabelFormatter().appendLabel(
                     "error.candidacy.workflow.ResidenceApplianceInquiryForm.notes.can.only.be.filled.in.case.of.appliance",
-                    "application"));
+                    Bundle.APPLICATION));
         }
 
         return Collections.emptyList();

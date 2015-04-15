@@ -30,12 +30,12 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.residence.ResidenceMonth;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
 
@@ -66,9 +66,9 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         labelFormatter.appendLabel(" - ");
-        labelFormatter.appendLabel(getResidenceMonth().getMonth().getName(), "enum");
+        labelFormatter.appendLabel(getResidenceMonth().getMonth().getName(), Bundle.ENUMERATION);
         labelFormatter.appendLabel("-");
         labelFormatter.appendLabel(getResidenceMonth().getYear().getYear().toString());
         return labelFormatter;

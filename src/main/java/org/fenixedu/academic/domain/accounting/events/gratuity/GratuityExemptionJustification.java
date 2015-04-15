@@ -19,9 +19,9 @@
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class GratuityExemptionJustification extends GratuityExemptionJustification_Base {
 
@@ -60,7 +60,7 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(),
-                LabelFormatter.ENUMERATION_RESOURCES);
+                Bundle.ENUMERATION);
 
         return labelFormatter;
 

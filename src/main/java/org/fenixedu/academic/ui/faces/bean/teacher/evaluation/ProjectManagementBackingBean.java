@@ -41,10 +41,10 @@ import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.service.services.teacher.CreateProject;
 import org.fenixedu.academic.service.services.teacher.DeleteEvaluation;
 import org.fenixedu.academic.service.services.teacher.EditProject;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ProjectManagementBackingBean extends EvaluationManagementBackingBean {
     protected String name;

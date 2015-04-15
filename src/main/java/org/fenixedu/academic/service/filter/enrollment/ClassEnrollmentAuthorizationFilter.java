@@ -38,9 +38,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author Luis Cruz

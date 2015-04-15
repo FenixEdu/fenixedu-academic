@@ -23,9 +23,8 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EntryWithInstallmentDTO extends EntryDTO implements Serializable {
 

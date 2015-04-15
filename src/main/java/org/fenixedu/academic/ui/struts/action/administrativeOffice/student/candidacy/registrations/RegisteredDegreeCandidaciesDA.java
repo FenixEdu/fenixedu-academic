@@ -42,7 +42,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 @StrutsFunctionality(app = AcademicAdminListingsApp.class, path = "registered-degree-candidacies",
         titleKey = "label.registeredDegreeCandidacies.first.time.list",

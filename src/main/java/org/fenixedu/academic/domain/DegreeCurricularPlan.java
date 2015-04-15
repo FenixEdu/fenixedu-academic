@@ -73,6 +73,7 @@ import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.DegreeCurricularPlanPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MarkType;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
@@ -85,7 +86,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 

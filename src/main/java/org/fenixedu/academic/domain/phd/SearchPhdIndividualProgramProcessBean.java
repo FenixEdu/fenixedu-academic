@@ -29,9 +29,8 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType;
-
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 
 public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
@@ -233,7 +232,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         if (getStudentNumber() != null) {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, Integer>(getStudentNumber()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     return toEval.getStudent() != null && toEval.getStudent().getNumber().compareTo(getValue()) == 0;
                 }
             });
@@ -243,7 +242,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         if (!StringUtils.isEmpty(getProcessNumber())) {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(getProcessNumber()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     return toEval.getProcessNumber().equals(getValue());
                 }
             });
@@ -253,7 +252,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         if (getPhdStudentNumber() != null) {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, Integer>(getPhdStudentNumber()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     return toEval.getPhdStudentNumber() != null && toEval.getPhdStudentNumber().compareTo(getValue()) == 0;
                 }
             });
@@ -263,7 +262,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         if (!StringUtils.isEmpty(getName())) {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(getName()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     return Person.findPerson(getValue()).contains(toEval.getPerson());
                 }
             });
@@ -283,7 +282,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         if (getExecutionYear() != null) {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, ExecutionYear>(getExecutionYear()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     return toEval.getExecutionYear() == getValue();
                 }
             });
@@ -293,7 +292,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgram>(getPhdProgram()) {
 
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
+                public boolean test(PhdIndividualProgramProcess process) {
                     return process.getPhdProgram() == getValue();
                 }
 
@@ -303,7 +302,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         if (getProcessState() != null) {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdIndividualProgramProcessState>(getProcessState()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     return toEval.getActiveState() == getValue();
                 }
             });
@@ -313,7 +312,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgramCandidacyProcessState>(
                     getCandidacyProcessState()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
+                public boolean test(PhdIndividualProgramProcess process) {
                     return getValue().equals(process.getCandidacyProcess().getActiveState());
                 }
             });
@@ -322,7 +321,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         if (PhdIndividualProgramProcessState.THESIS_DISCUSSION.equals(getProcessState()) && getThesisProcessState() != null) {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdThesisProcessStateType>(getThesisProcessState()) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
+                public boolean test(PhdIndividualProgramProcess process) {
                     return process.getThesisProcess() != null && getValue().equals(process.getThesisProcess().getActiveState());
                 }
             });
@@ -332,7 +331,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
 
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
+                public boolean test(PhdIndividualProgramProcess process) {
                     return !process.getCandidacyProcess().isPublicCandidacy();
                 }
 
@@ -343,7 +342,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
 
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
+                public boolean test(PhdIndividualProgramProcess process) {
                     return process.getCandidacyProcess().isPublicCandidacy();
                 }
 
@@ -352,7 +351,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             if (getPhdCandidacyPeriod() != null) {
                 result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdCandidacyPeriod>(getPhdCandidacyPeriod()) {
                     @Override
-                    public boolean eval(PhdIndividualProgramProcess process) {
+                    public boolean test(PhdIndividualProgramProcess process) {
                         return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() == getValue();
                     }
                 });
@@ -364,7 +363,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
                     getPhdCollaborationType()) {
 
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
+                public boolean test(PhdIndividualProgramProcess process) {
                     return process.getCollaborationType() == getValue();
                 }
 
@@ -380,7 +379,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, List<PhdProgram>>(getPhdPrograms()) {
 
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     if (toEval.getPhdProgram() != null) {
                         return getValue().contains(toEval.getPhdProgram());
                     } else if (toEval.getPhdProgramFocusArea() != null) {
@@ -397,7 +396,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             result.add(new InlinePredicate<PhdIndividualProgramProcess, List<PhdIndividualProgramProcess>>(getProcesses()) {
 
                 @Override
-                public boolean eval(PhdIndividualProgramProcess toEval) {
+                public boolean test(PhdIndividualProgramProcess toEval) {
                     return getValue().contains(toEval);
                 }
             });

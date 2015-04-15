@@ -59,6 +59,7 @@ import org.fenixedu.academic.ui.struts.action.base.FenixContextDispatchAction;
 import org.fenixedu.academic.ui.struts.action.externalSupervision.consult.ShowStudentTimeTable;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -67,7 +68,6 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author Luis Cruz & Sara Ribeiro

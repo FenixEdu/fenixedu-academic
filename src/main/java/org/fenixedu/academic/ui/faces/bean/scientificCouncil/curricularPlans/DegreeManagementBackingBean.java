@@ -51,13 +51,13 @@ import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.
 import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.EditDegree;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeManagementBackingBean extends FenixBackingBean {
 

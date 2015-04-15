@@ -59,8 +59,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.helper.StringUtil;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.SpreadsheetXLSExporter;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

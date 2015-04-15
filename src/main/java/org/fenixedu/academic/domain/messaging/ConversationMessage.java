@@ -20,9 +20,8 @@ package org.fenixedu.academic.domain.messaging;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ConversationMessage extends ConversationMessage_Base implements Comparable<ConversationMessage> {
 

@@ -21,9 +21,8 @@ package org.fenixedu.academic.util.renderer;
 import java.util.List;
 
 import org.fenixedu.academic.util.DayType;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.Interval;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public interface GanttDiagramEvent {
 

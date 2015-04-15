@@ -57,10 +57,10 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 /**

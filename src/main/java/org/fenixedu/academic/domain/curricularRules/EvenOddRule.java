@@ -32,9 +32,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EvenOddRule extends EvenOddRule_Base {
 

@@ -34,6 +34,7 @@ import org.fenixedu.academic.service.services.person.SearchPerson.SearchParamete
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchPersonPredicate;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.messaging.MessagingApplication.MessagingSearchApp;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -44,7 +45,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @StrutsFunctionality(app = MessagingSearchApp.class, path = "find-person", titleKey = "label.person.findPerson")
 @Forwards(@Forward(name = "findPerson", path = "/messaging/findPerson.jsp"))

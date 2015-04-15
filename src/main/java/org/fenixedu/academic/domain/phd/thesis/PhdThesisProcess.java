@@ -79,13 +79,13 @@ import org.fenixedu.academic.domain.phd.thesis.activities.UploadDocuments;
 import org.fenixedu.academic.domain.phd.thesis.activities.ValidateJury;
 import org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 

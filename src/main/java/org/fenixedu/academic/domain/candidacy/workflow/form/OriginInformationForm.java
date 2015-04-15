@@ -30,9 +30,9 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitName;
 import org.fenixedu.academic.domain.raides.DegreeDesignation;
 import org.fenixedu.academic.domain.util.workflow.Form;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class OriginInformationForm extends Form {
 
@@ -179,18 +179,19 @@ public class OriginInformationForm extends Form {
     public List<LabelFormatter> validate() {
         if (schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(otherSchoolLevel)) {
             return Collections.singletonList(new LabelFormatter().appendLabel(
-                    "error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled", "candidate"));
+                    "error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled",
+                    Bundle.CANDIDATE));
         }
 
         LocalDate now = new LocalDate();
         if (now.getYear() < conclusionYear) {
             return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.after.current",
-                    "candidate"));
+                    Bundle.CANDIDATE));
         }
 
         if (conclusionYear < getBirthYear()) {
             return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.before.birthday",
-                    "candidate"));
+                    Bundle.CANDIDATE));
         }
 
         return Collections.emptyList();

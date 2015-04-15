@@ -25,10 +25,9 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public interface ICurriculumEntry {
 

@@ -53,13 +53,12 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.CompetenceCoursePredicates;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.UniqueAcronymCreator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
 

@@ -23,9 +23,8 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AccountabilityType extends AccountabilityType_Base {
 

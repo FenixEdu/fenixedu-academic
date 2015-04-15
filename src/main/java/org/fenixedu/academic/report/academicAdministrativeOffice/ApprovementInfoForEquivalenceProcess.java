@@ -45,9 +45,8 @@ import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.HtmlToTextConverterUtil;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApprovementInfoForEquivalenceProcess {
 

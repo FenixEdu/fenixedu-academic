@@ -29,9 +29,8 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.candidacy.CandidacyDocument;
 import org.fenixedu.academic.domain.candidacy.CandidacyDocumentFile;
 import org.fenixedu.academic.util.Bundle;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.FileUtils;
+import org.fenixedu.academic.util.FileUtils;
+import org.fenixedu.academic.util.LabelFormatter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -60,8 +59,8 @@ public class CandidacyDocumentUploadBean implements Serializable {
     }
 
     public String getActualFile() {
-        return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet", Bundle.CANDIDATE)
-                .toString() : actualFile;
+        return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet",
+                Bundle.CANDIDATE).toString() : actualFile;
     }
 
     public CandidacyDocument getCandidacyDocument() {

@@ -22,9 +22,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.util.workflow.Form;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class InquiryAboutYieldingPersonalDataForm extends Form {
 

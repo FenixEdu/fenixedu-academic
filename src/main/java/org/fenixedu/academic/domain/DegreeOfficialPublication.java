@@ -19,10 +19,10 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     public DegreeOfficialPublication(Degree degree, LocalDate date) {

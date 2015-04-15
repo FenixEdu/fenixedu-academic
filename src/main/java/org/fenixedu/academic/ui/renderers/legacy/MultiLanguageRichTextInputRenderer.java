@@ -19,11 +19,11 @@
 package org.fenixedu.academic.ui.renderers.legacy;
 
 import org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringInputRenderer.MultiLanguageStringConverter;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixWebFramework.rendererExtensions.LocalizedRichTextInputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class MultiLanguageRichTextInputRenderer extends LocalizedRichTextInputRenderer {
 

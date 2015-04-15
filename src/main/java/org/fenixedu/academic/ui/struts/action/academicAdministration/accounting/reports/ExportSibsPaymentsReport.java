@@ -41,12 +41,11 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.spreadsheet.SheetData;
+import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
+import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
+import org.fenixedu.commons.spreadsheet.converters.CellConverter;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
-import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.utl.ist.fenix.tools.spreadsheet.converters.CellConverter;
 
 @StrutsFunctionality(app = AcademicAdminPaymentsApp.class, path = "sibs-reports", titleKey = "label.payments.sibs.reports",
         accessGroup = "academic(CREATE_SIBS_PAYMENTS_REPORT)")

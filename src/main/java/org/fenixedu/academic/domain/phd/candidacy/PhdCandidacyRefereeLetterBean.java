@@ -26,8 +26,7 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
+import org.fenixedu.academic.util.FileUtils;
 
 public class PhdCandidacyRefereeLetterBean implements Serializable {
 

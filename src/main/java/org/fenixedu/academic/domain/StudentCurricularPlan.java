@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -106,6 +107,8 @@ import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsService
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedBranchChangeException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -115,9 +118,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 
 /**
  * @author David Santos in Jun 24, 2004

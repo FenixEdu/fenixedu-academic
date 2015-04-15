@@ -22,9 +22,9 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.administrativeOffice.externalUnits.EditExternalUnitBean;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditExternalUnit {
 

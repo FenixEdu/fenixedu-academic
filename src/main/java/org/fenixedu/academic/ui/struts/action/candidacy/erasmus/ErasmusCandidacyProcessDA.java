@@ -53,7 +53,7 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

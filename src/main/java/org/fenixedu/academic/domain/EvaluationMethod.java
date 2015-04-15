@@ -24,9 +24,8 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Jo�o Mota

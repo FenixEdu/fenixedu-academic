@@ -29,8 +29,8 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.serviceRequests.PartialRegistrationRegimeRequest;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class PartialRegistrationRegimeRequestEvent extends PartialRegistrationRegimeRequestEvent_Base {
 
@@ -52,7 +52,7 @@ public class PartialRegistrationRegimeRequestEvent extends PartialRegistrationRe
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }

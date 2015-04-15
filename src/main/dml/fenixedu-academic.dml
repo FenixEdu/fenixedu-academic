@@ -172,7 +172,7 @@ valueType java.util.UUID as UUID {
     internalizeWith fromString();
 }
 
-valueType pt.utl.ist.fenix.tools.util.Strings as Strings {
+valueType org.fenixedu.academic.util.Strings as Strings {
     externalizeWith {
         String exportAsString();
     }
@@ -385,7 +385,7 @@ valueType org.joda.time.YearMonthDay as YearMonthDay {
     internalizeWith org.fenixedu.academic.util.date.SerializationTool.yearMonthDayDeserialize();
 }
 
-valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageString {
+valueType org.fenixedu.academic.util.MultiLanguageString as MultiLanguageString {
     externalizeWith {
         String exportAsString();
     }

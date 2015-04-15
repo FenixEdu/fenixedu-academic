@@ -18,17 +18,11 @@
  */
 package org.fenixedu.academic.domain.accounting.report.events;
 
-import java.util.Properties;
-
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption;
 import org.fenixedu.academic.domain.phd.debts.PhdEventExemption;
-import org.fenixedu.academic.util.Bundle;
-
-import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ExemptionWrapper {
     Exemption exemption;
@@ -38,13 +32,7 @@ public class ExemptionWrapper {
     }
 
     public String getExemptionTypeDescription() {
-        Properties formatterProperties = new Properties();
-
-        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, Bundle.ENUMERATION);
-        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, Bundle.APPLICATION);
-
-        return exemption.getExemptionJustification().getDescription()
-                .toString(new DefaultResourceBundleProvider(formatterProperties));
+        return exemption.getExemptionJustification().getDescription().toString();
     }
 
     public String getExemptionValue() {

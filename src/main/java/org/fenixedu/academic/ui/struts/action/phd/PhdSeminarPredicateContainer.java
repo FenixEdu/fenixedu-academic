@@ -18,13 +18,13 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd;
 
+import java.util.function.Predicate;
+
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
-
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.OrPredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
+import org.fenixedu.academic.util.predicates.OrPredicate;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 
 public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndividualProgramProcess> {
 
@@ -57,7 +57,7 @@ public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndivi
 
             return new PhdSeminarPredicate(PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
+                public boolean test(PhdIndividualProgramProcess process) {
                     return process.getThesisProcess() == null && super.checkState(process)
                             && process.getSeminarProcess().hasState(getValue());
                 }
@@ -72,7 +72,7 @@ public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndivi
         }
 
         @Override
-        public boolean eval(PhdIndividualProgramProcess process) {
+        public boolean test(PhdIndividualProgramProcess process) {
             return checkState(process) && checkValue(process);
         }
 

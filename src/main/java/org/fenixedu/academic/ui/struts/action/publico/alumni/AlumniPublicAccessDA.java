@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.Alumni;
 import org.fenixedu.academic.domain.AlumniRequestType;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.alumni.AlumniErrorSendingMailBean;
 import org.fenixedu.academic.dto.alumni.AlumniIdentityCheckRequestBean;
 import org.fenixedu.academic.dto.alumni.publicAccess.AlumniLinkRequestBean;
 import org.fenixedu.academic.dto.alumni.publicAccess.AlumniPasswordBean;
@@ -53,7 +52,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.EMail;
 
 @StrutsFunctionality(app = PublicApplication.class, path = "alumni", titleKey = "label.alumni.main.title",
         bundle = "AlumniResources")
@@ -179,56 +177,6 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             return mapping.findForward("alumniPublicAccess");
         }
         return mapping.findForward("alumniPublicAccessRegistrationEmail");
-    }
-
-    public ActionForward prepareSendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        AlumniErrorSendingMailBean mailSendingBean = new AlumniErrorSendingMailBean();
-        mailSendingBean.setDocumentIdNumber(request.getParameter("documentIdNumber"));
-        mailSendingBean.setStudentNumber(Integer.valueOf(request.getParameter("studentNumber")));
-        mailSendingBean.setContactEmail(request.getParameter("email"));
-        mailSendingBean.setErrorMessage(request.getParameter("errorMessage"));
-
-        request.setAttribute("alumniErrorSendMail", mailSendingBean);
-        return mapping.findForward("alumniErrorSendMail");
-    }
-
-    public ActionForward sendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final AlumniErrorSendingMailBean alumniBean = getRenderedObject();
-        StringBuilder mailBody = new StringBuilder();
-        mailBody.append(BundleUtil.getString(Bundle.ALUMNI, "message.alumni.mail.body.header"));
-        mailBody.append("'").append(BundleUtil.getString(Bundle.ALUMNI, alumniBean.getErrorMessage())).append("'\n\n");
-
-        String[] mailArgs = new String[8];
-        mailArgs[0] = alumniBean.getFullName();
-        mailArgs[1] = alumniBean.getStudentNumber().toString();
-        mailArgs[2] = alumniBean.getContactEmail();
-        mailArgs[3] = alumniBean.getDocumentIdNumber();
-        mailArgs[4] = alumniBean.getDateOfBirthYearMonthDay().toString();
-        mailArgs[5] = alumniBean.getSocialSecurityNumber();
-        mailArgs[6] = alumniBean.getNameOfFather();
-        mailArgs[7] = alumniBean.getNameOfMother();
-
-        String messageBody =
-                RenderUtils.getFormatedResourceString("ALUMNI_RESOURCES", "message.alumni.mail.person.data", mailArgs);
-        mailBody.append(messageBody);
-        mailBody.append("\n\n").append(BundleUtil.getString(Bundle.ALUMNI, "message.alumni.mail.body.footer"));
-        EMail email = null;
-        try {
-            if (!request.getServerName().equals("localhost")) {
-                email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-                String aluminiEmailAddress = Installation.getInstance().getInstituitionalEmailAddress("alumni");
-                email.send(aluminiEmailAddress, "Erro Registo Alumni", mailBody.toString());
-            }
-        } catch (Throwable t) {
-            logger.error(t.getMessage(), t);
-            throw new Error(t);
-        }
-
-        request.setAttribute("alumniPublicAccessTitle", "title.report.error");
-        request.setAttribute("alumniPublicAccessMessage", "message.public.error.mail.success");
-        return mapping.findForward("alumniPublicAccessMessage");
     }
 
     public ActionForward innerFenixPublicAccessValidation(ActionMapping mapping, ActionForm actionForm,

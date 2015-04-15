@@ -33,14 +33,13 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.CalendarUtil;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.date.IntervalTools;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author Ana e Ricardo

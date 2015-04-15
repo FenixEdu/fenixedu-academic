@@ -28,7 +28,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,9 +51,11 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.ConnectionManager;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.spreadsheet.SheetData;
+import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
+import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -63,11 +64,6 @@ import org.slf4j.LoggerFactory;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
-import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
 public class EventReportQueueJob extends EventReportQueueJob_Base {
 
@@ -374,11 +370,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     private EventBean writeEvent(final Event event) {
-        Properties formatterProperties = new Properties();
-
-        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, Bundle.ENUMERATION);
-        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, Bundle.APPLICATION);
-
         Wrapper wrapper = buildWrapper(event);
 
         EventBean bean = new EventBean();
@@ -399,7 +390,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         bean.residenceYear = wrapper.getResidenceYear();
         bean.residenceMonth = wrapper.getResidenceMonth();
 
-        bean.description = event.getDescription().toString(new DefaultResourceBundleProvider(formatterProperties));
+        bean.description = event.getDescription().toString();
         bean.whenOccured = event.getWhenOccured().toString("dd/MM/yyyy");
         bean.totalAmount = event.getTotalAmountToPay() != null ? event.getTotalAmountToPay().toPlainString() : "-";
         bean.payedAmount = event.getPayedAmount().toPlainString();
@@ -518,10 +509,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     private StringBuilder getErrorLine(Event event, Throwable e) {
-        Properties formatterProperties = new Properties();
-        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, Bundle.ENUMERATION);
-        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, Bundle.APPLICATION);
-
         StringBuilder errorLine = new StringBuilder();
         try {
             if (event != null) {
@@ -529,8 +516,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                         .append(FIELD_SEPARATOR);
                 errorLine.append(event.getPerson().getName()).append(FIELD_SEPARATOR).append(event.getWhenOccured())
                         .append(FIELD_SEPARATOR);
-                errorLine.append(event.getDescription().toString(new DefaultResourceBundleProvider(formatterProperties)))
-                        .append(FIELD_SEPARATOR).append(event.getOriginalAmountToPay()).append(FIELD_SEPARATOR);
+                errorLine.append(event.getDescription().toString()).append(FIELD_SEPARATOR)
+                        .append(event.getOriginalAmountToPay()).append(FIELD_SEPARATOR);
             } else {
                 errorLine.append(FIELD_SEPARATOR).append(FIELD_SEPARATOR).append(FIELD_SEPARATOR).append(FIELD_SEPARATOR)
                         .append(FIELD_SEPARATOR);
@@ -563,12 +550,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
             ExemptionWrapper wrapper = new ExemptionWrapper(exemption);
 
-            Properties formatterProperties = new Properties();
-
             ExemptionBean bean = new ExemptionBean();
-
-            formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, Bundle.ENUMERATION);
-            formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, Bundle.APPLICATION);
 
             bean.eventExternalId = event.getExternalId();
             bean.exemptionTypeDescription = wrapper.getExemptionTypeDescription();

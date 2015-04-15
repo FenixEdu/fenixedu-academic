@@ -26,10 +26,9 @@ import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegi
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdRegistryDiploma extends RegistryDiploma {
 

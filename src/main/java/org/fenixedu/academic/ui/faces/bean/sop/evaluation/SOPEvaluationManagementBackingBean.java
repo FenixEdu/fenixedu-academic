@@ -75,6 +75,7 @@ import org.fenixedu.academic.ui.faces.bean.teacher.evaluation.EvaluationManageme
 import org.fenixedu.academic.ui.faces.components.util.CalendarLink;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.academic.util.Season;
@@ -85,7 +86,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 

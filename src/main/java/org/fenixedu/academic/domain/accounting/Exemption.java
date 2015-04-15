@@ -21,11 +21,11 @@ package org.fenixedu.academic.domain.accounting;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Exemption extends Exemption_Base {
 

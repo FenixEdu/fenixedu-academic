@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
@@ -135,8 +136,6 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
@@ -550,7 +549,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     private static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
         final List<T> result = new ArrayList<T>();
         for (final T each : collection) {
-            if (predicate.eval(each)) {
+            if (predicate.test(each)) {
                 result.add(each);
             }
         }

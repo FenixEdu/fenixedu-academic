@@ -27,10 +27,9 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.commons.i18n.I18N;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author David Santos

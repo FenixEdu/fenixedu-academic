@@ -29,13 +29,9 @@ import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
-
 public class CreditNoteDocument extends FenixReport {
 
     private final CreditNote creditNote;
-
-    private final IMessageResourceProvider messageResourceProvider;
 
     private final boolean original;
 
@@ -72,14 +68,11 @@ public class CreditNoteDocument extends FenixReport {
      */
     private static final long serialVersionUID = 1L;
 
-    public CreditNoteDocument(final CreditNote creditNote, final IMessageResourceProvider messageResourceProvider,
-            boolean original) {
+    public CreditNoteDocument(final CreditNote creditNote, boolean original) {
         this.creditNote = creditNote;
-        this.messageResourceProvider = messageResourceProvider;
         this.original = original;
 
         fillReport();
-
     }
 
     @Override
@@ -113,8 +106,8 @@ public class CreditNoteDocument extends FenixReport {
 
         final List<CreditNoteDocumentEntry> result = new ArrayList<CreditNoteDocumentEntry>();
         for (final CreditNoteEntry each : sortedEntries) {
-            result.add(new CreditNoteDocumentEntry(each.getAccountingEntry().getDescription()
-                    .toString(this.messageResourceProvider), each.getAmount().toPlainString()));
+            result.add(new CreditNoteDocumentEntry(each.getAccountingEntry().getDescription().toString(), each.getAmount()
+                    .toPlainString()));
         }
 
         return result;

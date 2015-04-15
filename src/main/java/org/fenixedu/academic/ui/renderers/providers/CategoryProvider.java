@@ -21,9 +21,10 @@ package org.fenixedu.academic.ui.renderers.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.util.MultiLanguageString;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CategoryProvider implements DataProvider {
 

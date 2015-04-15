@@ -22,12 +22,12 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GenericApplicationPeriodBean implements Serializable {
 

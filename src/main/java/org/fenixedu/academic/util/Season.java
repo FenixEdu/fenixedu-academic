@@ -27,7 +27,6 @@
  */
 package org.fenixedu.academic.util;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class Season extends FenixUtil {
 
@@ -104,7 +103,7 @@ public class Season extends FenixUtil {
     }
 
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(SEASON_KEYS[this.season - 1], LabelFormatter.APPLICATION_RESOURCES);
+        return new LabelFormatter().appendLabel(SEASON_KEYS[this.season - 1], Bundle.APPLICATION);
 
     }
 

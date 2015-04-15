@@ -18,14 +18,14 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd;
 
+import java.util.function.Predicate;
+
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
-
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.OrPredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
+import org.fenixedu.academic.util.predicates.OrPredicate;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 
 public enum PhdInactivePredicateContainer implements PredicateContainer<PhdIndividualProgramProcess> {
 
@@ -48,8 +48,8 @@ public enum PhdInactivePredicateContainer implements PredicateContainer<PhdIndiv
         public Predicate<PhdIndividualProgramProcess> getPredicate() {
             return new PhdInactivePredicate(PhdIndividualProgramProcessState.CONCLUDED) {
                 @Override
-                public boolean eval(PhdIndividualProgramProcess process) {
-                    return super.eval(process) && process.getConclusionYear().equals(ExecutionYear.readCurrentExecutionYear());
+                public boolean test(PhdIndividualProgramProcess process) {
+                    return super.test(process) && process.getConclusionYear().equals(ExecutionYear.readCurrentExecutionYear());
                 }
             };
         }
@@ -80,7 +80,7 @@ public enum PhdInactivePredicateContainer implements PredicateContainer<PhdIndiv
         }
 
         @Override
-        public boolean eval(PhdIndividualProgramProcess process) {
+        public boolean test(PhdIndividualProgramProcess process) {
             return checkState(process) && checkValue(process);
         }
 

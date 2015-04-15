@@ -23,9 +23,8 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ErasmusAlert extends ErasmusAlert_Base {
 

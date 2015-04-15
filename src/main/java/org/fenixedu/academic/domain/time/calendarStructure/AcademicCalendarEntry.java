@@ -32,13 +32,12 @@ import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSem
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DayType;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base implements GanttDiagramEvent {
 

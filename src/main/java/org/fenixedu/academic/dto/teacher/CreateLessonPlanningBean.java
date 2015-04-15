@@ -22,8 +22,7 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ShiftType;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 public class CreateLessonPlanningBean implements Serializable {
 

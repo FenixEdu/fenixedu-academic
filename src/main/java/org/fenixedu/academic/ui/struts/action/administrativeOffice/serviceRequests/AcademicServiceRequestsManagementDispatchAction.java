@@ -59,6 +59,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.serviceRequests.SendAcademicServiceRequestToExternalEntity;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -68,7 +69,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @StrutsFunctionality(app = AcademicAdminServicesApp.class, path = "service-requests",
         titleKey = "label.academic.service.requests", accessGroup = "academic(SERVICE_REQUESTS)")

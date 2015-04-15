@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -62,6 +63,8 @@ import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.GroupEnro
 import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DateFormatUtil;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.ProposalState;
 import org.fenixedu.academic.util.domain.OrderedRelationAdapter;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -79,10 +82,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.CollectionUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
     public static final String CREATED_SIGNAL = "academic.executionCourse.create";
@@ -1174,12 +1173,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public void setShiftNames() {
         final SortedSet<Shift> shifts =
-                CollectionUtils.constructSortedSet(getAssociatedShifts(), Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+                constructSortedSet(getAssociatedShifts(), Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
         int counter = 0;
         for (final Shift shift : shifts) {
             final String name = constructShiftName(shift, ++counter);
             shift.setNome(name);
         }
+    }
+
+    private static <T> SortedSet<T> constructSortedSet(Collection<T> collection, Comparator<? super T> c) {
+        final SortedSet<T> sortedSet = new TreeSet<T>(c);
+        sortedSet.addAll(collection);
+        return sortedSet;
     }
 
     public boolean hasProjectsWithOnlineSubmission() {
@@ -2078,7 +2083,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final Collection<Attends> validAttends = new HashSet<Attends>();
         final Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();
         for (final Attends attends : getAttendsSet()) {
-            if (filter.eval(attends)) {
+            if (filter.test(attends)) {
                 validAttends.add(attends);
                 addAttendsToEnrolmentNumberMap(attends, enrolmentNumberMap);
             }

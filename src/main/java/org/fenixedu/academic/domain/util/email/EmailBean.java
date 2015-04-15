@@ -26,11 +26,11 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.EMail;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.EMail;
 
 public class EmailBean implements Serializable {
 

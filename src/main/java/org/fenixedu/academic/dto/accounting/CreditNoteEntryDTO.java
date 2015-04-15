@@ -21,9 +21,8 @@ package org.fenixedu.academic.dto.accounting;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class CreditNoteEntryDTO implements Serializable {
 

@@ -27,11 +27,10 @@ import java.util.Locale;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
-
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 
 public class SearchPhdMigrationProcessBean implements Serializable {
 
@@ -178,7 +177,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
         if (getPhdStudentNumber() != null) {
             result.add(new InlinePredicate<PhdMigrationIndividualProcessData, Integer>(getPhdStudentNumber()) {
                 @Override
-                public boolean eval(PhdMigrationIndividualProcessData toEval) {
+                public boolean test(PhdMigrationIndividualProcessData toEval) {
                     return toEval.getNumber() != null && toEval.getNumber().compareTo(getValue()) == 0;
                 }
             });
@@ -196,7 +195,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
         if (getExecutionYear() != null) {
             result.add(new InlinePredicate<PhdMigrationIndividualProcessData, ExecutionYear>(getExecutionYear()) {
                 @Override
-                public boolean eval(PhdMigrationIndividualProcessData toEval) {
+                public boolean test(PhdMigrationIndividualProcessData toEval) {
                     return toEval.getExecutionYear() == getValue();
                 }
             });
@@ -205,7 +204,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
         if (getProcessState() != null) {
             result.add(new InlinePredicate<PhdMigrationIndividualProcessData, PhdMigrationProcessStateType>(getProcessState()) {
                 @Override
-                public boolean eval(PhdMigrationIndividualProcessData toEval) {
+                public boolean test(PhdMigrationIndividualProcessData toEval) {
                     return toEval.getMigrationStatus() == getValue();
                 }
             });
@@ -220,7 +219,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
             result.add(new InlinePredicate<PhdMigrationIndividualProcessData, List<PhdProgram>>(getPhdPrograms()) {
 
                 @Override
-                public boolean eval(PhdMigrationIndividualProcessData toEval) {
+                public boolean test(PhdMigrationIndividualProcessData toEval) {
                     if (toEval.getProcessBean().hasPhdProgram()) {
                         return getValue().contains(toEval.getProcessBean().getPhdProgram());
                     } else {
@@ -235,7 +234,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
                     getFilterNotMigratedProcesses()) {
 
                 @Override
-                public boolean eval(PhdMigrationIndividualProcessData toEval) {
+                public boolean test(PhdMigrationIndividualProcessData toEval) {
                     if (getValue().equals(FilterMigratedProcesses.FILTER_MIGRATED)) {
                         return toEval.isMigratedToIndividualProgramProcess();
                     } else {
@@ -251,7 +250,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
                     getProcesses()) {
 
                 @Override
-                public boolean eval(PhdMigrationIndividualProcessData toEval) {
+                public boolean test(PhdMigrationIndividualProcessData toEval) {
                     return getValue().contains(toEval);
                 }
             });

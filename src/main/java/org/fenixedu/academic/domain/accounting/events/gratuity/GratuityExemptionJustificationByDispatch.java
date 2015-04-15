@@ -21,10 +21,9 @@ package org.fenixedu.academic.domain.accounting.events.gratuity;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJustificationByDispatch_Base {
 
@@ -50,7 +49,7 @@ public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJ
         if (dispatchDate == null || StringUtils.isEmpty(reason)) {
             throw new DomainExceptionWithLabelFormatter(
                     "error.accounting.events.GratuityExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-                    new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
+                    new LabelFormatter(justificationType.getQualifiedName(), Bundle.ENUMERATION));
         }
 
     }
@@ -65,11 +64,10 @@ public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJ
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(),
-                LabelFormatter.ENUMERATION_RESOURCES);
+                Bundle.ENUMERATION);
         String gratuityExemptionDate =
-                getGratuityExemptionDispatchDate() != null ? getGratuityExemptionDispatchDate().toString(
-                        DateFormatUtil.DEFAULT_DATE_FORMAT) : "-";
-        labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+                getGratuityExemptionDispatchDate() != null ? getGratuityExemptionDispatchDate().toString("dd/MM/yyyy") : "-";
+        labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ")
                 .appendLabel(gratuityExemptionDate).appendLabel(")");
 
         return labelFormatter;

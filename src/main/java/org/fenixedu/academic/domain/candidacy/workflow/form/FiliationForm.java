@@ -25,9 +25,9 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.util.workflow.Form;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class FiliationForm extends Form {
 
@@ -149,7 +149,7 @@ public class FiliationForm extends Form {
                     || StringUtils.isEmpty(getParishOfBirth())) {
                 return Collections.singletonList(new LabelFormatter(
                         "error.candidacy.workflow.FiliationForm.zone.information.is.required.for.national.students",
-                        "application"));
+                        Bundle.APPLICATION));
             }
         }
 

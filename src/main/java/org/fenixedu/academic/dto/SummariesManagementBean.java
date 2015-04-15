@@ -31,11 +31,10 @@ import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SummariesManagementBean implements Serializable {
 

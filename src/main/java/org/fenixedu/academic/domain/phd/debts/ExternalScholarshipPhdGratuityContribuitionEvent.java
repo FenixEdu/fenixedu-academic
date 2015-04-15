@@ -26,11 +26,11 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalScholarshipPhdGratuityContribuitionEvent_Base {
     public ExternalScholarshipPhdGratuityContribuitionEvent(Party party) {
@@ -68,7 +68,7 @@ public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalSc
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         return new LabelFormatter()
-                .appendLabel(entryType.name(), "enum")
+                .appendLabel(entryType.name(), Bundle.ENUMERATION)
                 .appendLabel(" (")
                 .appendLabel(
                         ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getName()

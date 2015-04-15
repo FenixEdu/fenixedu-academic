@@ -19,9 +19,9 @@
 package org.fenixedu.academic.domain.phd.debts;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdEventExemptionJustification extends PhdEventExemptionJustification_Base {
 
@@ -51,7 +51,7 @@ public class PhdEventExemptionJustification extends PhdEventExemptionJustificati
 
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
+        return new LabelFormatter().appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
     }
 
 }

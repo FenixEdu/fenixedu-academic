@@ -34,10 +34,10 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.InvocationResult;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class AccountingEventsManager {
 
@@ -67,7 +67,7 @@ public class AccountingEventsManager {
 
         final InvocationResult result = InvocationResult.createInsuccess();
         result.addMessage(
-                LabelFormatter.APPLICATION_RESOURCES,
+                Bundle.APPLICATION,
                 "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.standalone.gratuity.event");
 
         return result;
@@ -119,7 +119,7 @@ public class AccountingEventsManager {
         if (result.isSuccess()) {
 
             if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, DfaGratuityEvent.class)) {
-                result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+                result.addMessage(Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.student.already.has.gratuity.event.for.execution.year",
                         studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
                                 .getRegistration().getDegree().getPresentationName(), executionYear.getYear());
@@ -147,7 +147,7 @@ public class AccountingEventsManager {
 
         if (result.isSuccess()) {
             if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, SpecializationDegreeGratuityEvent.class)) {
-                result.addMessage(LabelFormatter.APPLICATION_RESOURCES, studentCurricularPlan.getRegistration().getStudent()
+                result.addMessage(Bundle.APPLICATION, studentCurricularPlan.getRegistration().getStudent()
                         .getNumber().toString(), studentCurricularPlan.getRegistration().getDegree().getPresentationName(),
                         executionYear.getYear());
 
@@ -173,7 +173,7 @@ public class AccountingEventsManager {
         if (result.isSuccess()) {
 
             if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, GratuityEventWithPaymentPlan.class)) {
-                result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+                result.addMessage(Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.student.already.has.gratuity.event.for.execution.year",
                         studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
                                 .getRegistration().getDegree().getPresentationName(), executionYear.getYear());
@@ -201,7 +201,7 @@ public class AccountingEventsManager {
                 registration) && studentCurricularPlan.getDegree().canCreateGratuityEvent()) {
 
             if (!acceptedDegreeTypesForGratuityEvent.test(studentCurricularPlan.getDegreeType())) {
-                result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+                result.addMessage(Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.cannot.create.gratuity.event.for.degree.type",
                         studentCurricularPlan.getDegree().getPresentationName());
                 return result;
@@ -211,7 +211,7 @@ public class AccountingEventsManager {
 
         } else {
             result.addMessage(
-                    LabelFormatter.APPLICATION_RESOURCES,
+                    Bundle.APPLICATION,
                     "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.gratuity.event",
                     studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
                             .getDegree().getPresentationName());
@@ -240,7 +240,7 @@ public class AccountingEventsManager {
 
             if (student.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
                 result.addMessage(
-                        LabelFormatter.APPLICATION_RESOURCES,
+                        Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.student.already.has.administrativeoffice.fee.and.insurance.event.for.year",
                         student.getNumber().toString(), executionYear.getYear());
 
@@ -278,7 +278,7 @@ public class AccountingEventsManager {
                 registration)) {
             if (!acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent.test(studentCurricularPlan.getDegreeType())) {
                 result.addMessage(
-                        LabelFormatter.APPLICATION_RESOURCES,
+                        Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.cannot.create.administrativeoffice.fee.and.insurance.event.for.degree.type",
                         studentCurricularPlan.getDegree().getPresentationName());
 
@@ -289,7 +289,7 @@ public class AccountingEventsManager {
 
         } else {
             result.addMessage(
-                    LabelFormatter.APPLICATION_RESOURCES,
+                    Bundle.APPLICATION,
                     "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.administrativeoffice.fee.and.insurance.event",
                     studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
                             .getDegree().getPresentationName());
@@ -330,7 +330,7 @@ public class AccountingEventsManager {
             final Student student = studentCurricularPlan.getRegistration().getStudent();
 
             if (student.getPerson().hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-                result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+                result.addMessage(Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.student.already.has.insurance.event.for.year", student
                                 .getNumber().toString(), executionYear.getYear());
 
@@ -355,7 +355,7 @@ public class AccountingEventsManager {
         if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
                 registration)) {
             if (!acceptedDegreeTypesForInsuranceEvent.test(studentCurricularPlan.getDegreeType())) {
-                result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+                result.addMessage(Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.cannot.create.insurance.event.for.degree.type",
                         studentCurricularPlan.getDegree().getPresentationName());
 
@@ -366,7 +366,7 @@ public class AccountingEventsManager {
 
         } else {
             result.addMessage(
-                    LabelFormatter.APPLICATION_RESOURCES,
+                    Bundle.APPLICATION,
                     "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.insurance.event",
                     studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
                             .getDegree().getPresentationName());
@@ -384,7 +384,7 @@ public class AccountingEventsManager {
         if (result.isSuccess()) {
 
             if (person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-                result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+                result.addMessage(Bundle.APPLICATION,
                         "error.accounting.events.AccountingEventsManager.student.already.has.insurance.event.for.year", person
                                 .getStudent().getNumber().toString(), executionYear.getYear());
 

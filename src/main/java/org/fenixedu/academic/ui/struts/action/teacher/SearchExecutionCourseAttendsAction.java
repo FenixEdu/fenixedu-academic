@@ -48,13 +48,13 @@ import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAt
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/searchECAttends", module = "teacher", functionality = ManageExecutionCourseDA.class)
 public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseAction {

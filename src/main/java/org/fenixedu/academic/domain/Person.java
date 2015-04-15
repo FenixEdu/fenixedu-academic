@@ -92,6 +92,7 @@ import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -112,7 +113,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Strings;
 

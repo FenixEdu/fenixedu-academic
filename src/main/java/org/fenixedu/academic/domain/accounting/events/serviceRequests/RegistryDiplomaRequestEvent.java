@@ -24,8 +24,8 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class RegistryDiplomaRequestEvent extends RegistryDiplomaRequestEvent_Base {
 
@@ -62,7 +62,7 @@ public class RegistryDiplomaRequestEvent extends RegistryDiplomaRequestEvent_Bas
     @Override
     final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         fillDescription(labelFormatter);
 
         return labelFormatter;
@@ -72,13 +72,13 @@ public class RegistryDiplomaRequestEvent extends RegistryDiplomaRequestEvent_Bas
         labelFormatter.appendLabel(" (");
         final RegistryDiplomaRequest request = (RegistryDiplomaRequest) getAcademicServiceRequest();
         if (request.getRequestedCycle() != null) {
-            labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES)
-                    .appendLabel(" ").appendLabel("label.of", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ");
+            labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION)
+                    .appendLabel(" ").appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
         }
 
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");

@@ -38,8 +38,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-
 public enum MobilityEmailTemplateType {
 
     PREREGISTRATION {
@@ -88,7 +86,7 @@ public enum MobilityEmailTemplateType {
             String processCode = individualCandidacyProcess.getProcessCode();
             String endDate =
                     individualCandidacyProcess.getCandidacyProcess().getCandidacyEnd()
-                            .toString(DateFormatUtil.DEFAULT_DATE_FORMAT);
+                            .toString("dd/MM/yyyy");
 
             if (body.contains("[process_number]")) {
                 body = body.replace("[process_number]", processCode);

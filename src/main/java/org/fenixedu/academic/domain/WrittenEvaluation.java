@@ -41,6 +41,7 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.util.icalendar.EvaluationEventBean;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.academic.util.HourMinuteSecond;
@@ -52,8 +53,6 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 

@@ -24,8 +24,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
+import org.fenixedu.academic.util.FileUtils;
 
 public class PhdProgramDocumentUploadBean implements Serializable {
 

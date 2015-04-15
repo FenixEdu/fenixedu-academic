@@ -19,9 +19,9 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
 

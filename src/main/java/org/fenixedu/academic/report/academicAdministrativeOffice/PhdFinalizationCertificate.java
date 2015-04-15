@@ -33,10 +33,9 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRe
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FenixStringTools;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 

@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -31,9 +32,7 @@ import org.fenixedu.academic.domain.person.Gender;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
-
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 public class ExportEPFLPhdProgramCandidacies {
 
@@ -51,7 +50,7 @@ public class ExportEPFLPhdProgramCandidacies {
                             new Predicate<PhdIndividualProgramProcess>() {
 
                                 @Override
-                                public boolean eval(PhdIndividualProgramProcess t) {
+                                public boolean test(PhdIndividualProgramProcess t) {
 
                                     if (t.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
                                         return false;

@@ -21,10 +21,7 @@ package org.fenixedu.academic.ui.struts.action.base;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +43,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.commons.ExecuteFactoryMethod;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.ui.struts.StrutsMessageResourceProvider;
 import org.fenixedu.academic.ui.struts.action.commons.FenixActionForward;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -64,7 +61,6 @@ import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
@@ -305,30 +301,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected String[] solveLabelFormatterArgs(HttpServletRequest request, LabelFormatter[] labelFormatterArgs) {
         final String[] args = new String[labelFormatterArgs.length];
         int i = 0;
-        final StrutsMessageResourceProvider messageResourceProvider = getMessageResourceProvider(request);
         for (final LabelFormatter labelFormatter : labelFormatterArgs) {
-            args[i++] = labelFormatter.toString(messageResourceProvider);
+            args[i++] = labelFormatter.toString();
         }
 
         return args;
-    }
-
-    protected StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
-        final StrutsMessageResourceProvider strutsMessageResourceProvider =
-                new StrutsMessageResourceProvider(getLocale(request), getServlet().getServletContext(), request);
-        for (final Entry<String, String> entry : getMessageResourceProviderBundleMappings().entrySet()) {
-            strutsMessageResourceProvider.addMapping(entry.getKey(), entry.getValue());
-        }
-
-        return strutsMessageResourceProvider;
-    }
-
-    protected Map<String, String> getMessageResourceProviderBundleMappings() {
-        final Map<String, String> bundleMappings = new HashMap<String, String>();
-        bundleMappings.put("enum", "ENUMERATION_RESOURCES");
-        bundleMappings.put("application", "APPLICATION_RESOURCES");
-
-        return bundleMappings;
     }
 
     protected Object getObjectFromViewState(final String viewStateId) {
@@ -356,10 +333,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected void addActionMessages(final String propertyName, final HttpServletRequest request,
             final Collection<LabelFormatter> messages) {
-        final StrutsMessageResourceProvider messageResourceProvider = getMessageResourceProvider(request);
-
         for (final LabelFormatter each : messages) {
-            addActionMessageLiteral(propertyName, request, each.toString(messageResourceProvider));
+            addActionMessageLiteral(propertyName, request, each.toString());
         }
     }
 

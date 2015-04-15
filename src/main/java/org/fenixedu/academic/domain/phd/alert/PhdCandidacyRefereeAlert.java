@@ -27,12 +27,11 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 

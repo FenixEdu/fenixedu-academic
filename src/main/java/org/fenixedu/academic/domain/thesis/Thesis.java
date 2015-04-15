@@ -68,6 +68,7 @@ import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.ThesisPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EvaluationType;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -78,7 +79,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.Lists;
 

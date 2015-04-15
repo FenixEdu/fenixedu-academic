@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.util.workflow;
 import java.io.Serializable;
 import java.util.List;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public abstract class Form implements Serializable {
 

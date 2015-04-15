@@ -26,8 +26,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class PhdFinalizationCertificateRequestEvent extends PhdFinalizationCertificateRequestEvent_Base {
 

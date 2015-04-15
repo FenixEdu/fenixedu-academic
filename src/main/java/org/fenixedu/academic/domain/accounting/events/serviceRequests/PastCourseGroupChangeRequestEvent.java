@@ -24,9 +24,9 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.CourseGroupChangeRequest;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PastCourseGroupChangeRequestEvent extends PastCourseGroupChangeRequestEvent_Base implements IPastRequestEvent {
 
@@ -49,7 +49,7 @@ public class PastCourseGroupChangeRequestEvent extends PastCourseGroupChangeRequ
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }

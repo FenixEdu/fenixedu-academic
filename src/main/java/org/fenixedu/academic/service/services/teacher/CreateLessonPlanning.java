@@ -23,9 +23,9 @@ import org.fenixedu.academic.domain.LessonPlanning;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateLessonPlanning {
 

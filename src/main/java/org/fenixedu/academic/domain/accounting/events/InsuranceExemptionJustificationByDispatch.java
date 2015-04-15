@@ -20,10 +20,9 @@ package org.fenixedu.academic.domain.accounting.events;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InsuranceExemptionJustificationByDispatch extends InsuranceExemptionJustificationByDispatch_Base {
 
@@ -52,16 +51,16 @@ public class InsuranceExemptionJustificationByDispatch extends InsuranceExemptio
         if (dispatchDate == null || StringUtils.isEmpty(reason)) {
             throw new DomainExceptionWithLabelFormatter(
                     "error.accounting.events.InsuranceExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-                    new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
+                    new LabelFormatter(justificationType.getQualifiedName(), Bundle.ENUMERATION));
         }
     }
 
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
-        String formatedDate = getDispatchDate() != null ? getDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT) : "-";
-        labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
+        String formatedDate = getDispatchDate() != null ? getDispatchDate().toString("dd/MM/yyyy") : "-";
+        labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ")
                 .appendLabel(formatedDate).appendLabel(")");
 
         return labelFormatter;

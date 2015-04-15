@@ -24,13 +24,13 @@ package org.fenixedu.academic.ui.renderers.validators;
 import java.text.ParseException;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.validators.DateValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

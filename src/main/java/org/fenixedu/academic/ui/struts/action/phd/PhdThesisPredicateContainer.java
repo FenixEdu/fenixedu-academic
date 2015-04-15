@@ -27,13 +27,13 @@ import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.
 import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING;
 import static org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING;
 
+import java.util.function.Predicate;
+
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType;
-
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.OrPredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
+import org.fenixedu.academic.util.predicates.OrPredicate;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 
 public enum PhdThesisPredicateContainer implements PredicateContainer<PhdIndividualProgramProcess> {
 
@@ -72,7 +72,7 @@ public enum PhdThesisPredicateContainer implements PredicateContainer<PhdIndivid
         }
 
         @Override
-        public boolean eval(PhdIndividualProgramProcess process) {
+        public boolean test(PhdIndividualProgramProcess process) {
             return checkState(process) && checkValue(process);
         }
 

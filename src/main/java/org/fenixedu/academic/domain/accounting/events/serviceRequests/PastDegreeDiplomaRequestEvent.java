@@ -27,9 +27,9 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.PastDiplomaRequest;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent_Base implements IPastRequestEvent {
 
@@ -47,11 +47,11 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getEventType().getQualifiedName(), "enum");
+        labelFormatter.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
         labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");

@@ -59,6 +59,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.candidacy.IndividualCandidacyProcessDA;
 import org.fenixedu.academic.ui.struts.action.publico.KaptchaAction;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Pair;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
@@ -66,8 +67,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.utl.ist.fenix.tools.util.Pair;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;

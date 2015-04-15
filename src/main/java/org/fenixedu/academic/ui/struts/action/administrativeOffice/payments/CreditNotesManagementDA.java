@@ -165,8 +165,8 @@ public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
 
         try {
 
-            final CreditNoteDocument original = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), true);
-            final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), false);
+            final CreditNoteDocument original = new CreditNoteDocument(creditNote, true);
+            final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, false);
 
             final byte[] data = ReportsUtils.generateReport(original, duplicate).getData();
 

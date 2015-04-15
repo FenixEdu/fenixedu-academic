@@ -24,10 +24,9 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdThesisProcessBean implements Serializable {
 

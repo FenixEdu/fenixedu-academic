@@ -36,11 +36,11 @@ import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.alert.AlertService;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
@@ -90,8 +90,9 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getPhdProgram().getPresentationName())
-                .appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
+                .appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
+                .appendLabel(")");
 
         return labelFormatter;
 

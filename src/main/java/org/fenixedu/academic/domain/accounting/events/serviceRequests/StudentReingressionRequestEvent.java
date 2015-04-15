@@ -24,8 +24,8 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.serviceRequests.StudentReingressionRequest;
 import org.fenixedu.academic.domain.student.Registration;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class StudentReingressionRequestEvent extends StudentReingressionRequestEvent_Base {
 
@@ -52,9 +52,9 @@ public class StudentReingressionRequestEvent extends StudentReingressionRequestE
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         labelFormatter.appendLabel(" (");
-        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
         labelFormatter.appendLabel(")");

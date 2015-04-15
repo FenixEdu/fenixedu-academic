@@ -28,9 +28,8 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonTarget;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ThesisBean implements Serializable {
 

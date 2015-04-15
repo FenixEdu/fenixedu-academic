@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.Holiday;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.util.DayType;
 import org.fenixedu.academic.util.Month;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.renderer.GanttDiagram;
 import org.fenixedu.academic.util.renderer.GanttDiagram.ViewType;
 import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
@@ -44,8 +45,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GanttDiagramTagLib extends TagSupport {
 

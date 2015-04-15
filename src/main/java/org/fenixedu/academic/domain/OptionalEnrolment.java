@@ -31,9 +31,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.OptionalEnrolmentLog;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.EnrolmentAction;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.security.Authenticate;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
 

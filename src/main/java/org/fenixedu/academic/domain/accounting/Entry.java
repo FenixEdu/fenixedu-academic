@@ -31,12 +31,11 @@ import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class Entry extends Entry_Base {
 

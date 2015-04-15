@@ -35,13 +35,13 @@ import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPayme
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuityEvent_Base {
 
@@ -83,7 +83,7 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear());
 
         return labelFormatter;
@@ -102,7 +102,7 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter result = new LabelFormatter();
-        result.appendLabel(getEventType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
+        result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear());
 
         return result;

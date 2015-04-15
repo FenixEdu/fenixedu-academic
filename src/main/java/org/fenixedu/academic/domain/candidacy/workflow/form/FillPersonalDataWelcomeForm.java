@@ -22,8 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.util.workflow.Form;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class FillPersonalDataWelcomeForm extends Form {
 

@@ -52,10 +52,10 @@ import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
 import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdRegistrationConclusionBean;
 import org.fenixedu.academic.util.Month;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 

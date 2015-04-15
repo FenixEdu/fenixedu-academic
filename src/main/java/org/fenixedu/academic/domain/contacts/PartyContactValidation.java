@@ -18,16 +18,17 @@
  */
 package org.fenixedu.academic.domain.contacts;
 
+import java.util.function.Predicate;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public abstract class PartyContactValidation extends PartyContactValidation_Base {
     private static final int MAX_TRIES = 3;
 
-    public static class PartyContactValidationPredicate extends Predicate<PartyContactValidation> {
+    public static class PartyContactValidationPredicate implements Predicate<PartyContactValidation> {
 
         private final PartyContactValidationState state;
 
@@ -36,7 +37,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         }
 
         @Override
-        public boolean eval(PartyContactValidation t) {
+        public boolean test(PartyContactValidation t) {
             return t.getState().equals(state);
         }
 

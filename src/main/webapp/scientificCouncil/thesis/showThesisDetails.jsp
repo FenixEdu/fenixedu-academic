@@ -21,7 +21,7 @@
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisParticipationType"%>
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant"%>
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisFile"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"%>
+<%@page import="org.fenixedu.academic.util.MultiLanguageString"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.List"%>

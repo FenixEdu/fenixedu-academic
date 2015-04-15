@@ -69,6 +69,7 @@ import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivit
 import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
 import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import org.fenixedu.academic.ui.struts.action.phd.thesis.CommonPhdThesisProcessDA;
+import org.fenixedu.academic.util.Pair;
 import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -80,7 +81,6 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.Pair;
 
 @Mapping(path = "/phdThesisProcess", module = "academicAdministration", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({

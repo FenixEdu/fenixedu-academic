@@ -50,10 +50,9 @@ import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class DegreeModule extends DegreeModule_Base {
 

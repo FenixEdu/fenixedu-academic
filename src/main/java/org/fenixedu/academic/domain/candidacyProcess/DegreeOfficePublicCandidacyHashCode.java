@@ -36,8 +36,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-
 public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandidacyHashCode_Base {
 
     public DegreeOfficePublicCandidacyHashCode() {
@@ -154,7 +152,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
                                 this.getIndividualCandidacyProcess().getProcessCode(),
                                 link,
                                 this.getIndividualCandidacyProcess().getCandidacyProcess().getCandidacyEnd()
-                                        .toString(DateFormatUtil.DEFAULT_DATE_FORMAT) });
+                                        .toString("dd/MM/yyyy") });
 
         sendEmail(subject, body);
     }

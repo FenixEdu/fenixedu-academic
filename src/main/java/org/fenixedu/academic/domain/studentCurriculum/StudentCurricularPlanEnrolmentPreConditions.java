@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.studentCurriculum;
 
 import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult.createFalse;
 import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult.createTrue;
-import static pt.utl.ist.fenix.tools.util.DateFormatUtil.DEFAULT_DATE_FORMAT;
 
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -84,8 +83,8 @@ public class StudentCurricularPlanEnrolmentPreConditions {
     static private EnrolmentPreConditionResult outOfPeriodResult(final String periodType, final EnrolmentPeriod nextPeriod) {
         if (nextPeriod != null) {
             return createFalse("message.out.curricular.course.enrolment.period." + periodType,
-                    nextPeriod.getStartDateDateTime().toString(DEFAULT_DATE_FORMAT),
-                    nextPeriod.getEndDateDateTime().toString(DEFAULT_DATE_FORMAT)).withPeriod(nextPeriod);
+                    nextPeriod.getStartDateDateTime().toString("dd/MM/yyyy"),
+                    nextPeriod.getEndDateDateTime().toString("dd/MM/yyyy")).withPeriod(nextPeriod);
         } else {
             return createFalse("message.out.curricular.course.enrolment.period." + periodType + ".noDates");
         }

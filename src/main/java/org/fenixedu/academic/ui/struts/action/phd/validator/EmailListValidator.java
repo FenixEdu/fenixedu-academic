@@ -19,9 +19,9 @@
 package org.fenixedu.academic.ui.struts.action.phd.validator;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.util.EMail;
 
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
-import pt.utl.ist.fenix.tools.util.EMail;
 
 public class EmailListValidator extends HtmlValidator {
 

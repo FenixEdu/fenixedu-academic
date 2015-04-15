@@ -21,9 +21,8 @@ package org.fenixedu.academic.domain.time.calendarStructure;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AcademicYearCE extends AcademicYearCE_Base {
 

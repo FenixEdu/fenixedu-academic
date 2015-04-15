@@ -23,12 +23,12 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.util.DateFormatUtil;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ShiftPlainRenderer extends OutputRenderer {
 

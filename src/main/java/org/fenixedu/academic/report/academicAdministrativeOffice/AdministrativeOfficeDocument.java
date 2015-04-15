@@ -65,6 +65,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FenixStringTools;
 import org.fenixedu.academic.util.HtmlToTextConverterUtil;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -72,8 +73,6 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Strings;
 

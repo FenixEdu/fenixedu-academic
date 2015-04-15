@@ -28,8 +28,8 @@ import org.fenixedu.academic.domain.DistrictSubdivision;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.util.workflow.Form;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class ResidenceInformationForm extends Form {
 
@@ -264,7 +264,7 @@ public class ResidenceInformationForm extends Form {
             result.add(new LabelFormatter()
                     .appendLabel(
                             "error.candidacy.workflow.ResidenceInformationForm.non.nacional.students.should.select.dislocated.option.and.fill.address",
-                            "application"));
+                            Bundle.APPLICATION));
         }
     }
 
@@ -273,7 +273,7 @@ public class ResidenceInformationForm extends Form {
             result.add(new LabelFormatter()
                     .appendLabel(
                             "error.candidacy.workflow.ResidenceInformationForm.address.national.students.should.supply.complete.address.information",
-                            "application"));
+                            Bundle.APPLICATION));
         }
     }
 
@@ -289,7 +289,7 @@ public class ResidenceInformationForm extends Form {
             result.add(new LabelFormatter()
                     .appendLabel(
                             "error.candidacy.workflow.ResidenceInformationForm.only.dislocated.students.should.fill.school.time.address.information",
-                            "application"));
+                            Bundle.APPLICATION));
         }
 
         if (this.dislocatedFromPermanentResidence) {
@@ -298,7 +298,7 @@ public class ResidenceInformationForm extends Form {
                 result.add(new LabelFormatter()
                         .appendLabel(
                                 "error.candidacy.workflow.ResidenceInformationForm.address.information.is.required.for.dislocated.students",
-                                "application"));
+                                Bundle.APPLICATION));
             } else {
                 if (isAnyFilled(this.schoolTimeAddress, this.schoolTimeAreaCode, this.schoolTimeAreaOfAreaCode,
                         this.schoolTimeArea, this.schoolTimeParishOfResidence)
@@ -308,7 +308,7 @@ public class ResidenceInformationForm extends Form {
                     result.add(new LabelFormatter()
                             .appendLabel(
                                     "error.candidacy.workflow.ResidenceInformationForm.school.time.address.must.be.filled.completly.otherwise.fill.minimun.required",
-                                    "application"));
+                                    Bundle.APPLICATION));
                 }
             }
 

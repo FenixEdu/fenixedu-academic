@@ -33,8 +33,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.fenixedu.academic.ui.faces.components.util.CalendarLink;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import org.fenixedu.academic.util.DateFormatUtil;
 
 public class UIFenixCalendar extends UIInput {
     public static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.UIFenixCalendar";

@@ -21,13 +21,12 @@ package org.fenixedu.academic.domain;
 import java.util.regex.Pattern;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Deprecated
 public abstract class File extends File_Base {

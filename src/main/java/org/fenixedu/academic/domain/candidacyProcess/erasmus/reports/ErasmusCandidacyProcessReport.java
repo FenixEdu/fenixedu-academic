@@ -31,8 +31,8 @@ import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividual
 import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
 public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport_Base {
 

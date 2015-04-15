@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,13 +38,12 @@ import org.fenixedu.academic.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseLogBean;
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.academic.util.Month;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "teacher", path = "/searchECLog", functionality = ManageExecutionCourseDA.class)
 public class SearchExecutionCourseLogAction extends ExecutionCourseBaseAction {
@@ -146,7 +146,7 @@ public class SearchExecutionCourseLogAction extends ExecutionCourseBaseAction {
         final Predicate<ExecutionCourseLog> filter = bean.getFilters();
         final Collection<ExecutionCourseLog> validLogs = new HashSet<ExecutionCourseLog>();
         for (final ExecutionCourseLog log : bean.getExecutionCourse().getExecutionCourseLogsSet()) {
-            if (filter.eval(log)) {
+            if (filter.test(log)) {
                 validLogs.add(log);
             }
         }

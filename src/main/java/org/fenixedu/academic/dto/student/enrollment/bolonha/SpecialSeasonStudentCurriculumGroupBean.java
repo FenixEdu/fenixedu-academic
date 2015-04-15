@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
@@ -35,10 +36,8 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.fenixedu.bennu.core.security.Authenticate;
-
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
 
@@ -79,7 +78,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
                 new InlinePredicate<Enrolment, Collection<Enrolment>>(specialSeasonEnrolments) {
 
                     @Override
-                    public boolean eval(Enrolment enrolment) {
+                    public boolean test(Enrolment enrolment) {
                         for (final Enrolment specialSeasonEnrolment : getValue()) {
                             if (specialSeasonEnrolment.getDegreeModule().equals(enrolment.getDegreeModule())) {
                                 return true;
@@ -169,7 +168,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 
     private boolean considerThisEnrolmentGeneralRule(Enrolment enrolment, ExecutionSemester executionSemester,
             Predicate<Enrolment> alreadyHasSpecialSeasonEnrolment) {
-        return enrolment.canBeSpecialSeasonEnroled(executionSemester) && !alreadyHasSpecialSeasonEnrolment.eval(enrolment);
+        return enrolment.canBeSpecialSeasonEnroled(executionSemester) && !alreadyHasSpecialSeasonEnrolment.test(enrolment);
     }
 
     private boolean considerThisEnrolmentNormalEnrolments(Enrolment enrolment) {

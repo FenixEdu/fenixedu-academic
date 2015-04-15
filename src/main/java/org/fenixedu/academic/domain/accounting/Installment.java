@@ -23,14 +23,13 @@ import java.util.Comparator;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class Installment extends Installment_Base {
 
@@ -143,9 +142,8 @@ public class Installment extends Installment_Base {
 
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel("application", "label.Installment.description", getInstallmentOrder().toString(),
-                getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT),
-                getEndDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+        labelFormatter.appendLabel(Bundle.APPLICATION, "label.Installment.description", getInstallmentOrder()
+                .toString(), getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"));
 
         return labelFormatter;
 

@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.io.Charsets;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.io.CharStreams;
 

@@ -18,10 +18,11 @@
  */
 package org.fenixedu.academic.ui.renderers.validators;
 
+import org.fenixedu.academic.util.PhoneUtil;
+
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
-import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneValidator extends HtmlValidator {
 

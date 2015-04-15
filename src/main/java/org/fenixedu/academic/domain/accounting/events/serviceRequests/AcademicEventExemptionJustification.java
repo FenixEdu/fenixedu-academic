@@ -20,9 +20,9 @@ package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
 import org.fenixedu.academic.domain.accounting.events.AcademicEventExemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class AcademicEventExemptionJustification extends AcademicEventExemptionJustification_Base {
 
@@ -51,7 +51,7 @@ public class AcademicEventExemptionJustification extends AcademicEventExemptionJ
 
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
+        return new LabelFormatter().appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
     }
 
 }

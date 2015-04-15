@@ -49,6 +49,7 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMFirstYearShiftsApp;
+import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -57,10 +58,8 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
 @StrutsFunctionality(app = RAMFirstYearShiftsApp.class, path = "shift-distribution",
         titleKey = "link.firstTimeStudents.shiftDistribution", accessGroup = "nobody")

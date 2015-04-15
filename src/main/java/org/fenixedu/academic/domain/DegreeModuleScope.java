@@ -26,10 +26,11 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class DegreeModuleScope {
 
@@ -196,9 +197,9 @@ public abstract class DegreeModuleScope {
 
     public LabelFormatter getDescription() {
         return new LabelFormatter(getCurricularYear().toString()).appendLabel("º ")
-                .appendLabel("label.curricular.year", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+                .appendLabel("label.curricular.year", Bundle.APPLICATION).appendLabel(" ")
                 .appendLabel(getCurricularSemester().toString()).appendLabel("º ")
-                .appendLabel("label.semester.short", LabelFormatter.APPLICATION_RESOURCES);
+                .appendLabel("label.semester.short", Bundle.APPLICATION);
 
     }
 }

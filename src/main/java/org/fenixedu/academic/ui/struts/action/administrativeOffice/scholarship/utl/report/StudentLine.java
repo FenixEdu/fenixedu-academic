@@ -57,16 +57,14 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.loaders.IFileLine;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
-public class StudentLine implements IFileLine, java.io.Serializable {
+public class StudentLine implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -97,7 +95,6 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     private boolean multiplePersonsFound = false;
     private String observations;
 
-    @Override
     public boolean fillWithFileLineData(String dataLine) {
         String[] compounds = dataLine.split(";");
 
@@ -198,7 +195,6 @@ public class StudentLine implements IFileLine, java.io.Serializable {
         }
     }
 
-    @Override
     public String getUniqueKey() {
         return this.documentNumber;
     }

@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
+import org.fenixedu.academic.util.Pair;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -42,7 +43,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import pt.utl.ist.fenix.tools.util.Pair;
 
 abstract class DegreeCurricularPlanLayout extends Layout {
 

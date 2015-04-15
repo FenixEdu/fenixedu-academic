@@ -60,7 +60,7 @@ public class DiskZipArchive extends DiskArchive {
 
         zipStream.close();
 
-        pt.utl.ist.fenix.tools.util.FileUtils.deleteDirectory(getRoot());
+        org.fenixedu.academic.util.FileUtils.deleteDirectory(getRoot());
     }
 
     private void writeZipEntries(ZipOutputStream zipStream, String prefix, File dir) throws IOException {

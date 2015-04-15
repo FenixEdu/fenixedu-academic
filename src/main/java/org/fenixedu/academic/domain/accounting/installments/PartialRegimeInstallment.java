@@ -32,12 +32,11 @@ import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentP
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 
@@ -163,15 +162,16 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
         if (isPenaltyAppliable()) {
-            labelFormatter.appendLabel("application", "label.PartialRegimeInstallment.description.with.penalty",
-                    getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
-                            .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), buildExecutionSemesterDescription(),
+            labelFormatter.appendLabel(Bundle.APPLICATION,
+                    "label.PartialRegimeInstallment.description.with.penalty", getInstallmentOrder().toString(), getStartDate()
+                            .toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"), buildExecutionSemesterDescription(),
                     getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
-                    getWhenStartToApplyPenalty().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+                    getWhenStartToApplyPenalty().toString("dd/MM/yyyy"));
         } else {
-            labelFormatter.appendLabel("application", "label.PartialRegimeInstallment.description.without.penalty",
-                    getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
-                            .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), buildExecutionSemesterDescription());
+            labelFormatter.appendLabel(Bundle.APPLICATION,
+                    "label.PartialRegimeInstallment.description.without.penalty", getInstallmentOrder().toString(),
+                    getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
+                    buildExecutionSemesterDescription());
         }
 
         return labelFormatter;

@@ -21,13 +21,13 @@ package org.fenixedu.academic.ui.renderers;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.dto.SummariesManagementBean.SummaryType;
+import org.fenixedu.academic.util.DateFormatUtil;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class SummaryPlainRenderer extends OutputRenderer {
 

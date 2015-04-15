@@ -56,6 +56,7 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerExecutionsApp;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -65,7 +66,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @StrutsFunctionality(app = ManagerExecutionsApp.class, path = "execution-degrees-management",
         titleKey = "label.manager.executionDegreeManagement")

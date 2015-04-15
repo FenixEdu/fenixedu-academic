@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -33,13 +34,11 @@ import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.WorkingStudentSelectionType;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class SearchExecutionCourseAttendsBean implements Serializable {
 
@@ -174,7 +173,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
             filters.add(new InlinePredicate<Attends, Collection<StudentAttendsStateType>>(getAttendsStates()) {
 
                 @Override
-                public boolean eval(Attends attends) {
+                public boolean test(Attends attends) {
                     return getValue().contains(attends.getAttendsStateType());
                 }
 
@@ -185,7 +184,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
             filters.add(new InlinePredicate<Attends, Collection<WorkingStudentSelectionType>>(getWorkingStudentTypes()) {
 
                 @Override
-                public boolean eval(Attends attends) {
+                public boolean test(Attends attends) {
                     return getValue().contains(getWorkingStudentType(attends));
                 }
 
@@ -204,7 +203,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
             filters.add(new InlinePredicate<Attends, Collection<Shift>>(getShifts()) {
 
                 @Override
-                public boolean eval(Attends attends) {
+                public boolean test(Attends attends) {
                     for (Shift shift : getValue()) {
                         if (shift.getStudentsSet().contains(attends.getRegistration())) {
                             return true;
@@ -219,7 +218,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
             filters.add(new InlinePredicate<Attends, Collection<DegreeCurricularPlan>>(getDegreeCurricularPlans()) {
 
                 @Override
-                public boolean eval(Attends attends) {
+                public boolean test(Attends attends) {
                     return getValue().contains(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan());
                 }
 

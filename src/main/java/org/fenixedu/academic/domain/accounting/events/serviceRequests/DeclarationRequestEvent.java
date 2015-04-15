@@ -23,8 +23,8 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DeclarationRequest;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
 
@@ -42,11 +42,11 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
     final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");

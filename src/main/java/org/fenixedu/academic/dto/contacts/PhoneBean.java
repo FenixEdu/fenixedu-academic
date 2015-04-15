@@ -22,9 +22,9 @@ import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.util.PhoneUtil;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneBean extends PartyContactBean {
 

@@ -18,15 +18,16 @@
  */
 package org.fenixedu.academic.domain.contacts;
 
+import java.util.function.Predicate;
+
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
 
     public static final Predicate<PartyContactValidation> PREDICATE = new Predicate<PartyContactValidation>() {
 
         @Override
-        public boolean eval(PartyContactValidation t) {
+        public boolean test(PartyContactValidation t) {
             return t instanceof PhysicalAddressValidation;
         }
 
@@ -35,8 +36,8 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
     public static final Predicate<PartyContactValidation> PREDICATE_FILE = new Predicate<PartyContactValidation>() {
 
         @Override
-        public boolean eval(PartyContactValidation t) {
-            return PREDICATE.eval(t) && ((PhysicalAddressValidation) t).getFile() != null;
+        public boolean test(PartyContactValidation t) {
+            return PREDICATE.test(t) && ((PhysicalAddressValidation) t).getFile() != null;
         }
 
     };

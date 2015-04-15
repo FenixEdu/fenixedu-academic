@@ -33,12 +33,11 @@ import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
 import org.fenixedu.academic.ui.struts.action.phd.CommonPhdIndividualProgramProcessDA;
 import org.fenixedu.academic.ui.struts.action.phd.PhdInactivePredicateContainer;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentViewApp;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @StrutsFunctionality(app = StudentViewApp.class, path = "phds", titleKey = "label.phds", bundle = "PhdResources")
 @Mapping(path = "/phdIndividualProgramProcess", module = "student")

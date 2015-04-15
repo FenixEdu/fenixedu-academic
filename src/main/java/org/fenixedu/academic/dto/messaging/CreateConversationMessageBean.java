@@ -22,8 +22,7 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.messaging.ConversationThread;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 public class CreateConversationMessageBean implements Serializable {
 

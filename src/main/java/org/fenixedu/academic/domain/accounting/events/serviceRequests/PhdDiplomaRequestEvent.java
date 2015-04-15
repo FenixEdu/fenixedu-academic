@@ -25,8 +25,8 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class PhdDiplomaRequestEvent extends PhdDiplomaRequestEvent_Base {
 
@@ -64,7 +64,7 @@ public class PhdDiplomaRequestEvent extends PhdDiplomaRequestEvent_Base {
     @Override
     final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         fillDescription(labelFormatter);
 
         return labelFormatter;

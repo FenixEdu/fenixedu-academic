@@ -31,6 +31,7 @@ import org.fenixedu.academic.service.services.person.SearchPerson;
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchParameters;
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchPersonPredicate;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -42,7 +43,6 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @StrutsFunctionality(app = AccountManagementApp.class, path = "logins", titleKey = "logins.management.title")
 @Mapping(module = "manager", path = "/loginsManagement")

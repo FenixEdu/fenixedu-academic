@@ -22,8 +22,7 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.ExecutionYear;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import org.fenixedu.academic.util.MultiLanguageString;
 
 /**
  * @author T�nia Pous�o Created on 30/Out/2003

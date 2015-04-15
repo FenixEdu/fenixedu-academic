@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -129,6 +130,8 @@ import org.fenixedu.academic.ui.struts.action.phd.CommonPhdIndividualProgramProc
 import org.fenixedu.academic.ui.struts.action.phd.PhdInactivePredicateContainer;
 import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
 import org.fenixedu.academic.util.ContentType;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -139,9 +142,6 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @StrutsFunctionality(app = AcademicAdminPhdApp.class, path = "phd-processes", titleKey = "label.phd.manageProcesses",
         accessGroup = "academic(MANAGE_PHD_PROCESSES)")
@@ -255,7 +255,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
         predicate.add(new Predicate<PhdIndividualProgramProcess>() {
             @Override
-            public boolean eval(PhdIndividualProgramProcess process) {
+            public boolean test(PhdIndividualProgramProcess process) {
                 return process.isAllowedToManageProcess(Authenticate.getUser());
             }
         });
@@ -1389,7 +1389,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
         predicate.add(new Predicate<PhdMigrationIndividualProcessData>() {
             @Override
-            public boolean eval(PhdMigrationIndividualProcessData process) {
+            public boolean test(PhdMigrationIndividualProcessData process) {
                 return AcademicAccessRule
                         .getPhdProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES, Authenticate.getUser())
                         .collect(Collectors.toSet()).contains(process.getProcessBean().getPhdProgram());

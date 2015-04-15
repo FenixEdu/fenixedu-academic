@@ -66,7 +66,7 @@ public class GuidesManagementDA extends PaymentsManagementDispatchAction {
         PaymentsManagementDTO managementDTO =
                 (PaymentsManagementDTO) RenderUtils.getViewState("paymentsManagementDTO").getMetaObject().getObject();
 
-        final GuideDocument document = new GuideDocument(managementDTO, getMessageResourceProvider(request));
+        final GuideDocument document = new GuideDocument(managementDTO);
         final byte[] data = ReportsUtils.generateReport(document).getData();
 
         response.setContentLength(data.length);

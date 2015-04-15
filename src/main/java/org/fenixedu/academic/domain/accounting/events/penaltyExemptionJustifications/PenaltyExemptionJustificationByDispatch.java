@@ -23,10 +23,9 @@ import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJustificationByDispatch_Base {
 
@@ -52,7 +51,7 @@ public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJus
         if (dispatchDate == null || StringUtils.isEmpty(reason)) {
             throw new DomainExceptionWithLabelFormatter(
                     "error.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-                    new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
+                    new LabelFormatter(justificationType.getQualifiedName(), Bundle.ENUMERATION));
         }
 
     }
@@ -67,11 +66,10 @@ public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJus
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(),
-                LabelFormatter.ENUMERATION_RESOURCES);
+                Bundle.ENUMERATION);
         String penaltyExemptionDate =
-                getPenaltyExemptionDispatchDate() != null ? getPenaltyExemptionDispatchDate().toString(
-                        DateFormatUtil.DEFAULT_DATE_FORMAT) : "-";
-        labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+                getPenaltyExemptionDispatchDate() != null ? getPenaltyExemptionDispatchDate().toString("dd/MM/yyyy") : "-";
+        labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ")
                 .appendLabel(penaltyExemptionDate).appendLabel(")");
 
         return labelFormatter;

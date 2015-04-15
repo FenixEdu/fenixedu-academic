@@ -47,17 +47,17 @@ import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.FileUtils;
-import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @StrutsFunctionality(app = PublicRelationsApplication.class, path = "alumni-cerimony",
         titleKey = "label.publicRelationOffice.alumniCerimony.inquiries")

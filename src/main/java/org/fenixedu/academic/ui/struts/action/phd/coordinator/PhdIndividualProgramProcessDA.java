@@ -58,6 +58,7 @@ import org.fenixedu.academic.ui.struts.action.phd.PhdCandidacyPredicateContainer
 import org.fenixedu.academic.ui.struts.action.phd.PhdInactivePredicateContainer;
 import org.fenixedu.academic.ui.struts.action.phd.PhdSeminarPredicateContainer;
 import org.fenixedu.academic.ui.struts.action.phd.PhdThesisPredicateContainer;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -67,7 +68,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @StrutsFunctionality(app = CoordinatorPhdApp.class, path = "phd-processes", titleKey = "label.coordinator.phdProcesses",
         bundle = "ApplicationResources")

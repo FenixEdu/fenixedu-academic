@@ -28,13 +28,11 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
@@ -118,7 +116,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     @Override
     public String getDescription() {
         return MessageFormat.format(BundleUtil.getString(Bundle.PHD, "message.phd.alert.custom.description"),
-                getTargetAccessGroup().getPresentationName(), getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT),
+                getTargetAccessGroup().getPresentationName(), getWhenToFire().toString("dd/MM/yyyy"),
                 getFormattedSubject(), getFormattedBody());
     }
 

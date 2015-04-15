@@ -28,13 +28,9 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
-
 public class GuideDocument extends FenixReport {
 
     private final PaymentsManagementDTO paymentsManagementDTO;
-
-    private final IMessageResourceProvider messageResourceProvider;
 
     public static class GuideDocumentEntry {
         private String description;
@@ -64,9 +60,8 @@ public class GuideDocument extends FenixReport {
 
     }
 
-    public GuideDocument(final PaymentsManagementDTO paymentsManagementDTO, final IMessageResourceProvider messageResourceProvider) {
+    public GuideDocument(final PaymentsManagementDTO paymentsManagementDTO) {
         this.paymentsManagementDTO = paymentsManagementDTO;
-        this.messageResourceProvider = messageResourceProvider;
         fillReport();
     }
 
@@ -90,8 +85,7 @@ public class GuideDocument extends FenixReport {
         final List<GuideDocumentEntry> result = new ArrayList<GuideDocumentEntry>();
 
         for (final EntryDTO entryDTO : this.paymentsManagementDTO.getSelectedEntries()) {
-            result.add(new GuideDocumentEntry(entryDTO.getDescription().toString(this.messageResourceProvider), entryDTO
-                    .getAmountToPay().toPlainString()));
+            result.add(new GuideDocumentEntry(entryDTO.getDescription().toString(), entryDTO.getAmountToPay().toPlainString()));
         }
 
         return result;

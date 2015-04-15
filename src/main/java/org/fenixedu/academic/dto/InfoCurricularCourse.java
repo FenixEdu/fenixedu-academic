@@ -36,9 +36,8 @@ import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.util.CurricularCourseExecutionScope;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.commons.i18n.I18N;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author tfc130

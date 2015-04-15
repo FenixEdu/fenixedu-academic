@@ -28,9 +28,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.struts.taglib.TagUtils;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
-
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.PredicateContainer;
 
 public class FilterProcessesTag extends TagSupport {
 

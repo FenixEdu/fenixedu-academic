@@ -19,8 +19,8 @@
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class SecondCycleIndividualCandidacyExemptionJustification extends
         SecondCycleIndividualCandidacyExemptionJustification_Base {
@@ -46,7 +46,7 @@ public class SecondCycleIndividualCandidacyExemptionJustification extends
     @Override
     public LabelFormatter getDescription() {
         return new LabelFormatter().appendLabel(getCandidacyExemptionJustificationType().getQualifiedName(),
-                LabelFormatter.ENUMERATION_RESOURCES);
+                Bundle.ENUMERATION);
     }
 
 }

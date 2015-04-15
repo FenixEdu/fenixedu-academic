@@ -30,9 +30,10 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 
@@ -108,7 +109,7 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter =
-                new LabelFormatter().appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+                new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION);
         addCommonDescription(labelFormatter);
 
         return labelFormatter;
@@ -129,7 +130,7 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionPeriod().getExecutionYear()).getContent());
         labelFormatter.appendLabel(" - ");
         labelFormatter.appendLabel(getExecutionPeriod().getSemester().toString());
-        labelFormatter.appendLabel("label.semester", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel("label.semester", Bundle.APPLICATION);
         labelFormatter.appendLabel("  " + getExecutionPeriod().getYear());
         labelFormatter.appendLabel(")");
     }

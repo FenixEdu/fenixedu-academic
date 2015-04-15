@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,7 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -48,8 +50,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 @StrutsFunctionality(app = OperatorApplication.class, path = "address-validation", titleKey = "label.contacts.validate.address",
         bundle = "AcademicAdminOffice")
@@ -77,7 +77,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
     private static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
         final List<T> result = new ArrayList<T>();
         for (final T each : collection) {
-            if (predicate.eval(each)) {
+            if (predicate.test(each)) {
                 result.add(each);
             }
         }

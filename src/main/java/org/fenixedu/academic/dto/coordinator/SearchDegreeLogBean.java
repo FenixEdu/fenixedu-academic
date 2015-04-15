@@ -21,16 +21,15 @@ package org.fenixedu.academic.dto.coordinator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeLog;
 import org.fenixedu.academic.domain.DegreeLog.DegreeLogTypes;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.predicates.AndPredicate;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.utl.ist.fenix.tools.predicates.AndPredicate;
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class SearchDegreeLogBean implements Serializable {
 
@@ -109,7 +108,7 @@ public class SearchDegreeLogBean implements Serializable {
             filters.add(new InlinePredicate<DegreeLog, Collection<DegreeLogTypes>>(getDegreeLogTypes()) {
 
                 @Override
-                public boolean eval(DegreeLog degreeLog) {
+                public boolean test(DegreeLog degreeLog) {
                     return getValue().contains(degreeLog.getDegreeLogType());
                 }
 

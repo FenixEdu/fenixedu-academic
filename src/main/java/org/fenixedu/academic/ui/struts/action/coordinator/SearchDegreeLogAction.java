@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,14 +39,13 @@ import org.fenixedu.academic.domain.DegreeLog.DegreeLogTypes;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.dto.coordinator.SearchDegreeLogBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "coordinator", path = "/searchDLog", functionality = DegreeCoordinatorIndex.class)
 @Forwards(value = { @Forward(name = "search", path = "/coordinator/viewLogSearch.jsp") })
@@ -149,7 +149,7 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
         final Predicate<DegreeLog> filter = bean.getFilters();
         final Collection<DegreeLog> validLogs = new HashSet<DegreeLog>();
         for (final DegreeLog log : bean.getDegree().getDegreeLogsSet()) {
-            if (filter.eval(log)) {
+            if (filter.test(log)) {
                 validLogs.add(log);
             }
         }

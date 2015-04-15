@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -149,9 +148,9 @@ import org.fenixedu.academic.service.services.student.EnrolStudentInWrittenEvalu
 import org.fenixedu.academic.service.services.student.UnEnrollStudentInWrittenEvaluation;
 import org.fenixedu.academic.ui.faces.bean.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import org.fenixedu.academic.ui.struts.action.ICalendarSyncPoint;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.academic.util.EvaluationType;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -170,8 +169,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Function;
@@ -645,11 +642,6 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     public FenixPayment personPayments() {
 
-        Properties props = new Properties();
-        props.setProperty("application", Bundle.APPLICATION);
-        props.setProperty("enum", Bundle.ENUMERATION);
-        props.setProperty("default", Bundle.APPLICATION);
-        DefaultResourceBundleProvider provider = new DefaultResourceBundleProvider(props);
         Person person = getPerson();
 
         List<PaymentEvent> payed = new ArrayList<>();
@@ -657,7 +649,7 @@ public class FenixAPIv1 {
         for (Entry entry : person.getPayments()) {
             String amount = entry.getOriginalAmount().getAmountAsString();
             String name = entry.getPaymentMode().getName();
-            String description = entry.getDescription().toString(provider);
+            String description = entry.getDescription().toString();
             String date = formatDay.print(entry.getWhenRegistered());
             payed.add(new PaymentEvent(amount, name, description, date));
         }

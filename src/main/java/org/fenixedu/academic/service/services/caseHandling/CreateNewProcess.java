@@ -21,11 +21,11 @@ package org.fenixedu.academic.service.services.caseHandling;
 import java.util.List;
 
 import org.fenixedu.academic.domain.caseHandling.Process;
+import org.fenixedu.academic.util.Pair;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.Pair;
 
 public class CreateNewProcess {
 

@@ -19,22 +19,15 @@
 package org.fenixedu.academic.servlet.taglib;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Properties;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.apache.struts.taglib.TagUtils;
-import org.fenixedu.academic.ui.struts.StrutsMessageResourceProvider;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class LabelFormatterTagLib extends BodyTagSupport implements PropertyContainerTag {
-
-    private Properties properties;
 
     private String name;
 
@@ -43,13 +36,10 @@ public class LabelFormatterTagLib extends BodyTagSupport implements PropertyCont
     private String scope;
 
     public LabelFormatterTagLib() {
-
-        this.properties = new Properties();
     }
 
     @Override
     public void addProperty(String name, String value) {
-        this.properties.put(name, value);
     }
 
     @Override
@@ -61,8 +51,7 @@ public class LabelFormatterTagLib extends BodyTagSupport implements PropertyCont
         final JspWriter out = this.pageContext.getOut();
 
         try {
-            out.write(labelFormatter.toString(new StrutsMessageResourceProvider(this.properties, getUserLocale(),
-                    this.pageContext.getServletContext(), (HttpServletRequest) this.pageContext.getRequest())));
+            out.write(labelFormatter.toString());
         } catch (IOException e) {
             throw new JspException(e);
         }
@@ -70,15 +59,10 @@ public class LabelFormatterTagLib extends BodyTagSupport implements PropertyCont
         return EVAL_PAGE;
     }
 
-    private Locale getUserLocale() {
-        return TagUtils.getInstance().getUserLocale(this.pageContext, null);
-    }
-
     @Override
     public void release() {
         super.release();
 
-        this.properties = new Properties();
         this.name = null;
         this.property = null;
         this.scope = null;

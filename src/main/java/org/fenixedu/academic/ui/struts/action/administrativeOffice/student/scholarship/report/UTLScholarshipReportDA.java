@@ -32,7 +32,7 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 @Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdministration",
         functionality = SearchForStudentsDA.class)

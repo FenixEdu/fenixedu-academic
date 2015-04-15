@@ -20,8 +20,8 @@ package org.fenixedu.academic.domain.accounting.events;
 
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 
 public class AdministrativeOfficeFeeAndInsuranceExemptionJustification extends
         AdministrativeOfficeFeeAndInsuranceExemptionJustification_Base {
@@ -60,7 +60,7 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionJustification extends
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
 
         return labelFormatter;
     }

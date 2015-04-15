@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -47,14 +48,12 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.predicates.ResultCollection;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class CurriculumModule extends CurriculumModule_Base {
 
@@ -445,7 +444,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     abstract public void getCurriculumModules(final ResultCollection<CurriculumModule> collection);
 
     public boolean hasAnyCurriculumModules(final Predicate<CurriculumModule> predicate) {
-        return predicate.eval(this);
+        return predicate.test(this);
     }
 
     public boolean hasAnyCurriculumLines() {
@@ -456,7 +455,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups();
 
-    static public class CurriculumModulePredicateByType extends Predicate<CurriculumModule> {
+    static public class CurriculumModulePredicateByType implements Predicate<CurriculumModule> {
 
         private final Class<? extends CurriculumModule> clazz;
 
@@ -465,7 +464,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
 
         @Override
-        public boolean eval(final CurriculumModule curriculumModule) {
+        public boolean test(final CurriculumModule curriculumModule) {
             if (clazz.isAssignableFrom(curriculumModule.getClass())) {
                 return true;
             }
@@ -475,7 +474,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     }
 
-    static public class CurriculumModulePredicateByExecutionSemester extends Predicate<CurriculumModule> {
+    static public class CurriculumModulePredicateByExecutionSemester implements Predicate<CurriculumModule> {
 
         private final ExecutionSemester executionSemester;
 
@@ -484,7 +483,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
 
         @Override
-        public boolean eval(final CurriculumModule curriculumModule) {
+        public boolean test(final CurriculumModule curriculumModule) {
             if (curriculumModule.isCurriculumLine()) {
                 final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
                 if (curriculumLine.getExecutionPeriod().equals(executionSemester)) {
@@ -497,7 +496,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     }
 
-    static public class CurriculumModulePredicateByExecutionYear extends Predicate<CurriculumModule> {
+    static public class CurriculumModulePredicateByExecutionYear implements Predicate<CurriculumModule> {
 
         private final ExecutionYear executionYear;
 
@@ -506,7 +505,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
 
         @Override
-        public boolean eval(final CurriculumModule curriculumModule) {
+        public boolean test(final CurriculumModule curriculumModule) {
             if (curriculumModule.isCurriculumLine()) {
                 final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
                 if (curriculumLine.getExecutionYear().equals(executionYear)) {
@@ -519,10 +518,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     }
 
-    static public class CurriculumModulePredicateByApproval extends Predicate<CurriculumModule> {
+    static public class CurriculumModulePredicateByApproval implements Predicate<CurriculumModule> {
 
         @Override
-        public boolean eval(final CurriculumModule curriculumModule) {
+        public boolean test(final CurriculumModule curriculumModule) {
             if (curriculumModule.isCurriculumLine()) {
                 final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
                 if (curriculumLine.isApproved()) {

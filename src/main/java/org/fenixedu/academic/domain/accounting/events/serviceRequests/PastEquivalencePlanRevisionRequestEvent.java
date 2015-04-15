@@ -24,9 +24,9 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.EquivalencePlanRevisionRequest;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlanRevisionRequestEvent_Base implements
         IPastRequestEvent {
@@ -57,7 +57,7 @@ public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlan
     final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
-        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
 
         fillDescription(labelFormatter);
 
@@ -72,7 +72,7 @@ public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlan
         labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");

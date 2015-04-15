@@ -28,9 +28,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.predicate.MarkSheetPredicates;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
+import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 
 public class OldMarkSheet extends OldMarkSheet_Base {
 
@@ -65,7 +64,7 @@ public class OldMarkSheet extends OldMarkSheet_Base {
                                 .getEnrolmentEvaluationType()) {
 
                             @Override
-                            public boolean eval(EnrolmentEvaluation ee) {
+                            public boolean test(EnrolmentEvaluation ee) {
                                 return ee.getEnrolmentEvaluationType() == getValue()
                                         && (ee.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ) || ee
                                                 .isNotEvaluated());

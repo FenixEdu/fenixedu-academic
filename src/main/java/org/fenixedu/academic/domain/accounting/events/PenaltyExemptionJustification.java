@@ -19,9 +19,9 @@
 package org.fenixedu.academic.domain.accounting.events;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PenaltyExemptionJustification extends PenaltyExemptionJustification_Base {
 
@@ -60,7 +60,7 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(),
-                LabelFormatter.ENUMERATION_RESOURCES);
+                Bundle.ENUMERATION);
 
         return labelFormatter;
 

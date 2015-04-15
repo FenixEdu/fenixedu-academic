@@ -66,11 +66,13 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Pair;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -79,8 +81,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.Pair;
-import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @StrutsFunctionality(app = AcademicAdministrationApplication.class, path = "summaries-control",
         titleKey = "link.summaries.control", bundle = "ApplicationResources", accessGroup = "academic(SUMMARIES_CONTROL)")

@@ -33,8 +33,7 @@ import org.fenixedu.academic.domain.Project;
 import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.util.Bundle;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import org.fenixedu.academic.util.DateFormatUtil;
 
 public class CalendarLink {
     private Calendar objectOccurrence;
