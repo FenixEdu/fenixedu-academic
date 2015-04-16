@@ -52,6 +52,8 @@ public class UIDegreeModule extends UIInput {
     protected int depth;
     protected String tabs;
     protected String module;
+    protected String currentPage;
+    protected Boolean expandable;
 
     protected FacesContext facesContext;
     protected ResponseWriter writer;
@@ -64,7 +66,7 @@ public class UIDegreeModule extends UIInput {
     }
 
     public UIDegreeModule(DegreeModule degreeModule, Context previousContext, Boolean toEdit, Boolean showRules, int depth,
-            String tabs, ExecutionYear executionYear, String module) {
+            String tabs, ExecutionYear executionYear, String module, String currentPage, Boolean expandable) {
         this();
         this.degreeModule = degreeModule;
         this.previousContext = previousContext;
@@ -81,6 +83,10 @@ public class UIDegreeModule extends UIInput {
         this.lastExecutionPeriod = this.executionYear.getLastExecutionPeriod();
 
         this.module = module;
+
+        this.currentPage = currentPage;
+        this.expandable = expandable;
+
     }
 
     @Override
@@ -98,10 +104,11 @@ public class UIDegreeModule extends UIInput {
 
         if (this.degreeModule.isLeaf()) {
             new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs,
-                    this.executionYear, this.module).encodeBegin(facesContext);
+                    this.executionYear, this.module, null, false).encodeBegin(facesContext);
         } else if (!this.degreeModule.isLeaf()) {
             new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE,
-                    Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, null, this.module).encodeBegin(facesContext);
+                    Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, null, this.module, this.currentPage, this.expandable)
+                    .encodeBegin(facesContext);
         }
     }
 

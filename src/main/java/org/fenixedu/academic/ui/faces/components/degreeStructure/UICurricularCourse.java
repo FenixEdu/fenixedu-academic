@@ -51,15 +51,15 @@ public class UICurricularCourse extends UIDegreeModule {
     }
 
     public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules,
-            int depth, String tabs, ExecutionYear executionYear, String module) {
-        super(curricularCourse, previousContext, toEdit, showRules, depth, tabs, executionYear, module);
+            int depth, String tabs, ExecutionYear executionYear, String module, String currentPage, Boolean expandable) {
+        super(curricularCourse, previousContext, toEdit, showRules, depth, tabs, executionYear, module, currentPage, expandable);
         this.curricularCourse = (CurricularCourse) super.degreeModule;
         this.byYears = false;
     }
 
     public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules,
-            ExecutionYear executionYear, String module) {
-        super(curricularCourse, previousContext, toEdit, showRules, 0, null, executionYear, module);
+            ExecutionYear executionYear, String module, String currentPage, Boolean expandable) {
+        super(curricularCourse, previousContext, toEdit, showRules, 0, null, executionYear, module, currentPage, expandable);
         this.curricularCourse = (CurricularCourse) super.degreeModule;
         this.byYears = true;
     }

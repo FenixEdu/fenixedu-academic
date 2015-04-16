@@ -99,7 +99,10 @@
 		showRules="true"
 		organizeBy="<%=request.getParameter("organizeBy")%>"
 		hideCourses="<%=request.getParameter("hideCourses")%>"
-		module="/bolonhaManager/curricularPlans"/>
+		module="/bolonhaManager"
+		currentPage="curricularPlans/setCurricularRules.faces"
+		groupExpandEnabled="true"
+		/>
 
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
