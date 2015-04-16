@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.academic.core.json.adapter;
+package org.fenixedu.academic.json.adapters;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.bennu.core.annotation.DefaultJsonAdapter;
