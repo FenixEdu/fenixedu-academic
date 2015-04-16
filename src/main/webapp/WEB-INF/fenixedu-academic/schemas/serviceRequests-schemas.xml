@@ -706,6 +706,17 @@
 	</slot>
 </schema>
 
+<schema name="DocumentRequestCreateBean.programConclusion"
+    type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean"
+    bundle="APPLICATION_RESOURCES">
+    <slot name="programConclusion" layout="menu-select"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass"
+            value="org.fenixedu.academic.ui.renderers.providers.candidacy.ProgramConclusionProvider" />
+        <property name="format" value="${name.content}" />
+    </slot>
+</schema>
+
 <schema name="DocumentRequestCreateBean.language"
 	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean"
 	bundle="ACADEMIC_OFFICE_RESOURCES">

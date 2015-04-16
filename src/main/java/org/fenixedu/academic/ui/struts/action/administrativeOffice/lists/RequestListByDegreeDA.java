@@ -48,7 +48,6 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentReq
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.dto.academicAdministration.DegreeByExecutionYearBean;
 import org.fenixedu.academic.dto.academicAdministration.DocumentRequestSearchBean;
-import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -61,7 +60,6 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -296,7 +294,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
         setHeaders(spreadsheet);
         for (RegistrationAcademicServiceRequest request : requestList) {
-            RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(request.getRegistration());
             spreadsheet.newRow();
             spreadsheet.addCell(request.getServiceRequestNumber());
             spreadsheet.addCell(request.getRequestDate().toString(DATETIME_FORMAT));
@@ -304,13 +301,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addCell(request.getStudent().getNumber());
             spreadsheet.addCell(request.getStudent().getName());
             spreadsheet.addCell(request.getRegistration().getDegree().getPresentationName());
-            //TO DO
-            if (!registrationConclusionBean.isByCycle() && registrationConclusionBean.getRegistration().isBolonha()) {
-                spreadsheet.addCell("-");
-            } else {
-                YearMonthDay conclusionDate = registrationConclusionBean.getConclusionDate();
-                spreadsheet.addCell(conclusionDate != null ? conclusionDate.getYear() : "");
-            }
+            spreadsheet.addCell("-");
         }
     }
 

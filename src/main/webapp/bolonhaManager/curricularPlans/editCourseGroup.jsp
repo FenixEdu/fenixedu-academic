@@ -29,6 +29,8 @@
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="applicationBundle"/>
+	
 	
 	<h:outputText value="#{CourseGroupManagement.degreeCurricularPlan.name}" style="font-style: italic"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']} </h2>" escape="false">
@@ -36,6 +38,19 @@
 	</h:outputFormat>
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
+	
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{applicationBundle['programConclusion']}:</label> " escape="false"/>
+			<h:selectOneMenu value="#{CourseGroupManagement.programConclusionID}">
+			    <f:selectItem itemLabel="-" itemValue=""/>
+			    <f:selectItems value="#{CourseGroupManagement.programConclusionItems}" />
+			</h:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="</fieldset></div>" escape="false"/>
+		
+		
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.courseGroupID' id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{CourseGroupManagement.contextID}'/>"/>

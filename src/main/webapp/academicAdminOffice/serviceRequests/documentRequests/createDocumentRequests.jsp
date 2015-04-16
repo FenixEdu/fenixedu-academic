@@ -126,6 +126,17 @@
 				</fr:edit>
 			</logic:equal>
 			
+			<!-- Program Conclusion -->
+			<logic:equal name="documentRequestCreateBean" property="isForProgramConclusionPurposes" value="true">
+			    <fr:edit id="programConclusionEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.programConclusion"
+			        type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
+		            <fr:layout name="tabular">
+		                <fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+		            </fr:layout>
+			    </fr:edit>
+			</logic:equal>
+			
 			<!-- Internationalization -->
 			<fr:edit id="languageEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.language" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 				<fr:layout name="tabular">

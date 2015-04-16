@@ -59,6 +59,7 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -414,26 +415,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getCycle(cycleType).calculateConclusionDate();
     }
 
-    final public boolean isConclusionProcessed() {
-        if (!isBolonhaDegree()) {
-            return getRegistration().getConclusionProcess() != null;
-        }
+    final public boolean isConcluded() {
 
         if (isEmptyDegree()) {
             return getRegistration().getLastActiveState().getStateType().equals(RegistrationStateType.CONCLUDED);
         }
 
-        for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
-            if (!cycleCurriculumGroup.isConclusionProcessed()) {
-                return false;
-            }
-        }
-        return true;
+        return ProgramConclusion.conclusionsFor(this).filter(ProgramConclusion::isTerminal)
+                .anyMatch(pc -> pc.groupFor(this).map(CurriculumGroup::isConcluded).orElse(false));
     }
 
-    final public boolean isConclusionProcessed(final CycleType cycleType) {
-        final CycleCurriculumGroup cycleCurriculumGroup = getCycle(cycleType);
-        return cycleCurriculumGroup != null && cycleCurriculumGroup.isConclusionProcessed();
+    final public boolean isConclusionProcessed() {
+
+        if (isEmptyDegree()) {
+            return getRegistration().getLastActiveState().getStateType().equals(RegistrationStateType.CONCLUDED);
+        }
+
+        return ProgramConclusion.conclusionsFor(this).filter(ProgramConclusion::isTerminal)
+                .anyMatch(pc -> pc.groupFor(this).map(CurriculumGroup::isConclusionProcessed).orElse(false));
     }
 
     final public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {

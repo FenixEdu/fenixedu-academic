@@ -210,7 +210,7 @@ public class Student extends Student_Base {
     public List<Registration> getConcludedRegistrations() {
         final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : getRegistrationsSet()) {
-            if (registration.isConcluded()) {
+            if (registration.isRegistrationConclusionProcessed()) {
                 result.add(registration);
             }
         }

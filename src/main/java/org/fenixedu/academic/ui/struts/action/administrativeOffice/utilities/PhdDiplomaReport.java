@@ -37,7 +37,7 @@ public class PhdDiplomaReport extends DiplomaReport {
 
     @Override
     public String getReportTemplateKey() {
-        return "org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest.BOLONHA_PHD_PROGRAM";
+        return "org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest";
     }
 
 }

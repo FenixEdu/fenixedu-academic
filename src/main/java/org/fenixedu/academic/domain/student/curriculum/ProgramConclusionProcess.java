@@ -18,27 +18,29 @@
  */
 package org.fenixedu.academic.domain.student.curriculum;
 
+import java.math.BigDecimal;
+
+import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
-public class CycleConclusionProcess extends CycleConclusionProcess_Base {
+public class ProgramConclusionProcess extends ProgramConclusionProcess_Base {
 
-    private CycleConclusionProcess(final RegistrationConclusionBean bean) {
+    public ProgramConclusionProcess(final RegistrationConclusionBean bean) {
         super();
         super.setRootDomainObject(Bennu.getInstance());
 
-        final CycleCurriculumGroup cycle = bean.getCycleCurriculumGroup();
+        final CurriculumGroup group = bean.getCurriculumGroup();
         final ExecutionYear conclusionYear = bean.getConclusionYear();
         String[] args = {};
 
-        if (cycle == null) {
+        if (group == null) {
             throw new DomainException("error.CycleConclusionProcess.argument.must.not.be.null", args);
         }
         String[] args1 = {};
@@ -46,45 +48,28 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
             throw new DomainException("error.CycleConclusionProcess.argument.must.not.be.null", args1);
         }
 
-        super.setCycle(cycle);
+        super.setGroup(group);
         super.setConclusionYear(conclusionYear);
         addVersions(bean);
     }
 
     @Override
-    public boolean isCycleConclusionProcess() {
-        return true;
-    }
-
-    public static void conclude(final RegistrationConclusionBean bean) {
-        if (bean.isConclusionProcessed()) {
-            throw new DomainException("error.ConclusionProcess.already.concluded.must.update");
-        }
-
-        new CycleConclusionProcess(bean);
-    }
-
-    @Override
     public void update(RegistrationConclusionBean bean) {
-        if (!bean.isConclusionProcessed()) {
-            throw new DomainException("error.ConclusionProcess.is.not.concluded");
-        }
-
         addVersions(bean);
-
     }
 
     @Override
-    final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
-            final String notes) {
-        addVersions(new RegistrationConclusionBean(getRegistration(), getCycle()));
-        getLastVersion().update(responsible, finalAverage, conclusionDate, notes);
+    final public void update(final Person responsible, final Integer finalAverage, final BigDecimal average,
+            final LocalDate conclusionDate, final String notes) {
+        addVersions(new RegistrationConclusionBean(getRegistration(), getGroup()));
+        getLastVersion().update(responsible, finalAverage, average, conclusionDate, notes);
     }
 
     @Override
     protected void addSpecificVersionInfo() {
-        if (getCycleType() == CycleType.SECOND_CYCLE) {
-            getLastVersion().setDissertationEnrolment(getRegistration().getDissertationEnrolment());
+        Enrolment dissertationEnrolment = getRegistration().getDissertationEnrolment();
+        if (dissertationEnrolment != null) {
+            getLastVersion().setDissertationEnrolment(dissertationEnrolment);
         }
     }
 
@@ -94,22 +79,13 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
     }
 
     @Override
-    public void setCycle(CycleCurriculumGroup cycle) {
-        throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
-
-    @Override
     public void setConclusionYear(ExecutionYear conclusionYear) {
         throw new DomainException("error.ConclusionProcess.method.not.allowed");
     }
 
-    public CycleType getCycleType() {
-        return getCycle().getCycleType();
-    }
-
     @Override
     public Registration getRegistration() {
-        return getCycle().getRegistration();
+        return getGroup().getRegistration();
     }
 
 }

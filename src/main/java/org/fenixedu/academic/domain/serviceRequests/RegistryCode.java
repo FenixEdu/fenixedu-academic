@@ -19,15 +19,9 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.LocalDate;
 
 public class RegistryCode extends RegistryCode_Base {
     public static Comparator<RegistryCode> COMPARATOR_BY_CODE = new Comparator<RegistryCode>() {
@@ -40,102 +34,13 @@ public class RegistryCode extends RegistryCode_Base {
         }
     };
 
-    private RegistryCode(InstitutionRegistryCodeGenerator generator, AcademicServiceRequest request, CycleType cycle) {
+    protected RegistryCode(InstitutionRegistryCodeGenerator generator, AcademicServiceRequest request) {
         setRegistryCodeGenerator(generator);
         addDocumentRequest(request);
-        String type = null;
-        if (cycle == null) {
-            cycle = getCycle(request);
-        }
-        switch (cycle) {
-        case FIRST_CYCLE:
-            type = "L";
-            break;
-        case SECOND_CYCLE:
-            type = "M";
-            break;
-        case THIRD_CYCLE:
-            type = "D";
-            break;
-        }
-        setCode(generator.getNextNumber(cycle) + "/ISTC" + type + "/" + new LocalDate().toString("yy"));
-    }
-
-    protected RegistryCode(InstitutionRegistryCodeGenerator generator, IRegistryDiplomaRequest request) {
-        this(generator, (AcademicServiceRequest) request, request.getRequestedCycle());
-    }
-
-    protected RegistryCode(InstitutionRegistryCodeGenerator generator, IDiplomaSupplementRequest request) {
-        this(generator, (AcademicServiceRequest) request, request.getRequestedCycle());
-    }
-
-    protected RegistryCode(InstitutionRegistryCodeGenerator generator, IDiplomaRequest request) {
-        this(generator, (AcademicServiceRequest) request, request.getWhatShouldBeRequestedCycle());
-    }
-
-    public CycleType getCycle(AcademicServiceRequest request) {
-        if (request.isRequestForPhd()) {
-            return CycleType.THIRD_CYCLE;
-        } else if (request.isRequestForRegistration()) {
-            RegistrationAcademicServiceRequest registrationRequest = (RegistrationAcademicServiceRequest) request;
-            if (registrationRequest.getDegreeType().isPreBolonhaDegree()) {
-                return CycleType.FIRST_CYCLE;
-            } else if (registrationRequest.getDegreeType().isPreBolonhaMasterDegree()) {
-                return CycleType.SECOND_CYCLE;
-            } else {
-                throw new DomainException("error.registryCode.unableToGuessCycleTypeToGenerateCode");
-            }
-        }
-
-        throw new DomainException("error.registryCode.request.neither.is.phd.nor.registration.request");
-    }
-
-    public Integer getCodeNumber() {
-        return Integer.parseInt(getCode().substring(0, getCode().indexOf('/')));
-    }
-
-    public Integer getYear() {
-        return Integer.parseInt(getCode().substring(getCode().length() - 2, getCode().length()));
+        setCode(generator.getCode(request));
     }
 
     protected Bennu getRootDomainObject() {
         return getRegistryCodeGenerator().getRootDomainObject();
     }
-
-    public Set<CycleType> getAssociatedCycles() {
-        Set<CycleType> cycleTypes = new HashSet<CycleType>();
-
-        for (AcademicServiceRequest request : getDocumentRequestSet()) {
-            IRectorateSubmissionBatchDocumentEntry entry = (IRectorateSubmissionBatchDocumentEntry) request;
-
-            cycleTypes.add(entry.getRequestedCycle());
-        }
-
-        return cycleTypes;
-    }
-
-    public static RegistryCode findRegistryCodeForNumberAndYear(CycleType cycleType, Integer codeNumber, Integer year) {
-        if (year < 0 || year > 99) {
-            throw new DomainException("error.RegistryCode.invalid.year");
-        }
-
-        for (InstitutionRegistryCodeGenerator generator : Bennu.getInstance().getRegistryCodeGeneratorSet()) {
-            if (generator.getInstitution() == null) {
-                continue;
-            }
-
-            for (RegistryCode registryCode : generator.getRegistryCodeSet()) {
-                if (!registryCode.getAssociatedCycles().contains(cycleType)) {
-                    continue;
-                }
-
-                if (year == registryCode.getYear() && codeNumber == registryCode.getCodeNumber()) {
-                    return registryCode;
-                }
-            }
-        }
-
-        return null;
-    }
-
 }

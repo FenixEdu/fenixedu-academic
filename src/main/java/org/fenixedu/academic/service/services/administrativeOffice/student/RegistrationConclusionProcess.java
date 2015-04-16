@@ -18,9 +18,12 @@
  */
 package org.fenixedu.academic.service.services.administrativeOffice.student;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.joda.time.YearMonthDay;
@@ -30,32 +33,47 @@ import pt.ist.fenixframework.Atomic;
 public class RegistrationConclusionProcess {
 
     @Atomic
+    public static void revert(final RegistrationConclusionBean conclusionBean) {
+        conclusionBean.getConclusionProcess().disableLastVersion();
+    }
+
+    @Atomic
     public static void run(final RegistrationConclusionBean conclusionBean) {
         final Registration registration = conclusionBean.getRegistration();
 
-        if (registration.isBolonha()) {
-            final CycleCurriculumGroup cycleCurriculumGroup = conclusionBean.getCycleCurriculumGroup();
+        final CurriculumGroup curriculumGroup = conclusionBean.getCurriculumGroup();
 
-            registration.conclude(cycleCurriculumGroup);
+        registration.conclude(curriculumGroup);
 
-            if (conclusionBean.hasEnteredConclusionDate()) {
-
-                checkEnteredConclusionDate(conclusionBean);
-
-                cycleCurriculumGroup.editConclusionInformation(AccessControl.getPerson(), cycleCurriculumGroup.getFinalAverage(),
-                        new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
-            }
-
-        } else {
-            registration.conclude();
+        if (conclusionBean.hasEnteredConclusionDate() || conclusionBean.hasEnteredFinalAverageGrade()
+                || conclusionBean.hasEnteredAverageGrade()) {
+            YearMonthDay conclusionDate = conclusionBean.getConclusionDate();
+            Integer finalAverage = curriculumGroup.getFinalAverage();
+            BigDecimal average = curriculumGroup.getAverage();
 
             if (conclusionBean.hasEnteredConclusionDate()) {
-
                 checkEnteredConclusionDate(conclusionBean);
-
-                registration.editConclusionInformation(AccessControl.getPerson(), registration.getFinalAverage(),
-                        new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
+                conclusionDate = new YearMonthDay(conclusionBean.getEnteredConclusionDate());
             }
+
+            if (conclusionBean.hasEnteredFinalAverageGrade()) {
+                checkAverage(conclusionBean.getEnteredFinalAverageGrade(), registration);
+                finalAverage = conclusionBean.getEnteredFinalAverageGrade();
+            }
+
+            if (conclusionBean.hasEnteredAverageGrade()) {
+                checkAverage(conclusionBean.getEnteredAverageGrade(), registration);
+                average = new BigDecimal(conclusionBean.getEnteredAverageGrade()).setScale(2, RoundingMode.HALF_UP);
+            }
+
+            curriculumGroup.editConclusionInformation(AccessControl.getPerson(), finalAverage, average, conclusionDate,
+                    conclusionBean.getObservations());
+        }
+    }
+
+    private static void checkAverage(Number average, Registration registration) {
+        if (!registration.getDegree().getGradeScale().belongsTo(average.toString())) {
+            throw new DomainException("error.RegistrationConclusionProcess.final.average.is.invalid");
         }
     }
 

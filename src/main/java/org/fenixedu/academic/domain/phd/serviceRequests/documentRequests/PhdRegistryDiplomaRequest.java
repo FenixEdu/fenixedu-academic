@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -288,4 +289,15 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
         return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
     }
 
+    @Override
+    public ProgramConclusion getProgramConclusion() {
+        //TODO use this after refactoring phd process
+        return null;
+    }
+
+    @Override
+    public String getDegreeName(ExecutionYear year) {
+        //TODO use this after refactoring phd process
+        return null;
+    }
 }

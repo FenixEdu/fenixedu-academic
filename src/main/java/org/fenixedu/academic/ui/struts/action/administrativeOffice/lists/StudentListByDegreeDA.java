@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,7 @@ import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyPersonal
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
@@ -195,28 +197,14 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             }
 
             if (searchBean.isConcludedInChosenYear()) {
-                CycleType cycleType;
-                if (searchBean.getDegreeType() != null) {
-                    final TreeSet<CycleType> orderedCycleTypes = searchBean.getDegreeType().getOrderedCycleTypes();
-                    cycleType = orderedCycleTypes.isEmpty() ? null : orderedCycleTypes.last();
-                } else {
-                    cycleType = registration.getCycleType(executionYear);
-                }
+                Stream<ProgramConclusion> conclusions =
+                        ProgramConclusion.conclusionsFor(registration).filter(ProgramConclusion::isTerminal);
 
-                RegistrationConclusionBean conclusionBean;
-                if (registration.isBolonha()) {
-                    conclusionBean = new RegistrationConclusionBean(registration, cycleType);
-                    if (conclusionBean.getCycleCurriculumGroup() == null || !conclusionBean.isConcluded()) {
-                        continue;
-                    }
-                } else {
-                    conclusionBean = new RegistrationConclusionBean(registration);
-                    if (!conclusionBean.isConclusionProcessed()) {
-                        continue;
-                    }
-                }
-
-                if (conclusionBean.getConclusionYear() != executionYear) {
+                if (conclusions.allMatch(programConclusion -> {
+                    RegistrationConclusionBean conclusionBean = new RegistrationConclusionBean(registration, programConclusion);
+                    return conclusionBean.getCurriculumGroup() == null || !conclusionBean.isConcluded()
+                            || conclusionBean.getConclusionYear() != executionYear;
+                })) {
                     continue;
                 }
             }
@@ -559,12 +547,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {
-        if (!registration.isBolonha()) {
-            RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
-            fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean, registration.hasConcluded());
-        } else {
-            fillSpreadSheetEmptyCells(spreadsheet);
-        }
+        fillSpreadSheetEmptyCells(spreadsheet);
     }
 
     private void fillSpreadSheetBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration,

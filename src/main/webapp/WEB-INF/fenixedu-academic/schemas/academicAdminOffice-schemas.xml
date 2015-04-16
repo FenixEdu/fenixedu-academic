@@ -1406,10 +1406,10 @@
 </schema>
 
 <schema name="IRegistrationBean.edit-cycleCurriculumGroup" type="org.fenixedu.academic.dto.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">
-	<slot name="cycleCurriculumGroup" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.RegistrationInternalCycleCurriculumGroupsProvider" />
-		<property name="format" value="${name}" />
-	</slot>
+    <slot name="cycleCurriculumGroup" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.RegistrationInternalCycleCurriculumGroupsProvider" />
+        <property name="format" value="${name}" />
+    </slot>
 </schema>
 
 <schema name="RegistrationConclusionBean.confirmConclusionForRegistration" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
@@ -1492,7 +1492,7 @@
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="cycleCurriculumGroup.name" />
+	<slot name="curriculumGroup.name" />
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
 	<slot name="ectsCredits"/>
@@ -1522,7 +1522,7 @@
 </schema>
 
 <schema name="RegistrationConclusionBean.viewConclusionPreviewForCycle" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="cycleCurriculumGroup.name" />
+	<slot name="curriculumGroup.name" />
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
 	<slot name="calculatedEctsCredits" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.ectsCredits"/>
@@ -1569,7 +1569,7 @@
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForCycle" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="cycleCurriculumGroup.name" />
+	<slot name="curriculumGroup.name" />
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
 	<slot name="average" />

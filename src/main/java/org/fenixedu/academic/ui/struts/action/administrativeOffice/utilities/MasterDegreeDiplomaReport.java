@@ -20,7 +20,6 @@ package org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.util.StringFormatter;
-import org.fenixedu.commons.i18n.I18N;
 
 public class MasterDegreeDiplomaReport extends DiplomaReport {
 
@@ -42,10 +41,6 @@ public class MasterDegreeDiplomaReport extends DiplomaReport {
 
         addParameter("conclusionStatus", "curso de "
                 + DegreeType.matching(DegreeType::isPreBolonhaMasterDegree).get().getName().getContent().toLowerCase());
-
-        addParameter("graduateTitle",
-                DegreeType.matching(DegreeType::isPreBolonhaMasterDegree).get().getGraduateTitle(I18N.getLocale()) + " em "
-                        + StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
 
     }
 }

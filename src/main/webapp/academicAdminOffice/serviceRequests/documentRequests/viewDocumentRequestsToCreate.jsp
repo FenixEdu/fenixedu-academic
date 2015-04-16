@@ -83,6 +83,16 @@
 	    </fr:view>
 	</logic:equal>
 	
+	<logic:equal name="documentRequestCreateBean" property="isForProgramConclusionPurposes" value="true">
+	    <fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.programConclusion"
+	        type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+                <fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+            </fr:layout>
+	    </fr:view>
+	</logic:equal>
+	
 	<logic:equal name="documentRequestCreateBean" property="hasPurposeNeed" value="true">
 		<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
 			type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">

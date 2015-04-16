@@ -22,29 +22,40 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.Optional;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
+import org.fenixedu.academic.domain.serviceRequests.IProgramConclusionRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
-public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
+import com.google.common.base.Joiner;
+
+public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base implements
+        IProgramConclusionRequest {
 
     protected DegreeFinalizationCertificateRequest() {
         super();
@@ -67,6 +78,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         super.setBranch(bean.getBranchName());
         super.setExceptionalConclusionDate(bean.getExceptionalConclusionDate());
         super.setLanguage(bean.getLanguage());
+        super.setProgramConclusion(bean.getProgramConclusion());
     }
 
     @Override
@@ -93,39 +105,29 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
             throw new DomainException("DegreeFinalizationCertificateRequest.missing.language");
         }
 
-        if (bean.getHasCycleTypeDependency()) {
-            if (bean.getRequestedCycle() == null) {
-                throw new DomainException("DegreeFinalizationCertificateRequest.requested.cycle.must.be.given");
-            } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
-                throw new DomainException(
-                        "DegreeFinalizationCertificateRequest.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
-            }
-            super.setRequestedCycle(bean.getRequestedCycle());
-        } else {
-            if (bean.getRegistration().getDegreeType().hasExactlyOneCycleType()) {
-                super.setRequestedCycle(getRegistration().getDegree().getDegreeType().getCycleType());
-            }
+        if (bean.getProgramConclusion() == null) {
+            throw new DomainException("error.program.conclusion.empty");
         }
 
-        checkSpecificConditions();
+        checkSpecificConditions(bean.getProgramConclusion());
     }
 
-    private void checkSpecificConditions() {
-        if (getRegistration().getDegreeType().qualifiesForGraduateTitle()) {
-            checkForDiplomaRequest(getRegistration(), getRequestedCycle());
+    protected void checkSpecificConditions(ProgramConclusion programConclusion) {
+        if (!programConclusion.getGraduationTitle().isEmpty()) {
+            checkForDiplomaRequest(getRegistration(), programConclusion);
         } else {
-            if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
+            if (!programConclusion.isConclusionProcessed(getRegistration())) {
                 throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
             }
         }
     }
 
-    static public void checkForDiplomaRequest(final Registration registration, final CycleType requestedCycle) {
-        final DiplomaRequest diplomaRequest = registration.getDiplomaRequest(requestedCycle);
+    static public void checkForDiplomaRequest(final Registration registration, final ProgramConclusion programConclusion) {
+        final DiplomaRequest diplomaRequest = registration.getDiplomaRequest(programConclusion);
         final PastDiplomaRequest pastDiplomaRequest = registration.getPastDiplomaRequest();
         if (diplomaRequest == null) {
             if (pastDiplomaRequest == null) {
-                checkForRegistryRequest(registration, requestedCycle);
+                checkForRegistryRequest(registration, programConclusion);
             }
         } else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.getEvent() != null
                 && !diplomaRequest.getEvent().isPayed()) {
@@ -133,8 +135,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         }
     }
 
-    static public void checkForRegistryRequest(final Registration registration, final CycleType requestedCycle) {
-        final RegistryDiplomaRequest registryRequest = registration.getRegistryDiplomaRequest(requestedCycle);
+    static public void checkForRegistryRequest(final Registration registration, final ProgramConclusion programConclusion) {
+        final RegistryDiplomaRequest registryRequest = registration.getRegistryDiplomaRequest(programConclusion);
         if (registryRequest == null) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutRegistryRequest");
         } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null
@@ -146,14 +148,13 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         if (academicServiceRequestBean.isToProcess()) {
-            checkSpecificConditions();
+            checkSpecificConditions(getProgramConclusion());
 
-            if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
+            if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
             }
 
-            final RegistryDiplomaRequest registryRequest =
-                    getRegistration().getRegistryDiplomaRequest(getWhatShouldBeRequestedCycle());
+            final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
             if (registryRequest != null
                     && registryRequest.getAcademicServiceRequestSituationType().compareTo(
                             AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) < 0) {
@@ -162,8 +163,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
             }
 
             if (!getFreeProcessed()) {
-                if (hasCycleCurriculumGroup()) {
-                    assertPayedEvents(getCycleCurriculumGroup().getIEnrolmentsLastExecutionYear());
+                final Optional<CurriculumGroup> curriculumGroup = getProgramConclusion().groupFor(getRegistration());
+                if (curriculumGroup.isPresent()) {
+                    assertPayedEvents(curriculumGroup.get().getIEnrolmentsLastExecutionYear());
                 } else {
                     assertPayedEvents();
                 }
@@ -191,11 +193,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     final public String getDescription() {
-        final DegreeType degreeType = getDegreeType();
-        final CycleType requestedCycle = degreeType.isComposite() ? getRequestedCycle() : degreeType.getCycleType();
-
-        return getDescription(getAcademicServiceRequestType(),
-                getDocumentRequestType().getQualifiedName() + "." + requestedCycle.name());
+        return Joiner.on(" : ").join(BundleUtil.getString(Bundle.ENUMERATION, getDocumentRequestType().name()),
+                getProgramConclusion().getName().getContent());
     }
 
     @Override
@@ -216,11 +215,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     final public void setDetailed(final Boolean detailed) {
         throw new DomainException("DegreeFinalizationCertificateRequest.cannot.modify.detailed");
-    }
-
-    @Override
-    final public void setRequestedCycle(final CycleType requestedCycle) {
-        throw new DomainException("DegreeFinalizationCertificateRequest.cannot.modify.requestedCycle");
     }
 
     @Override
@@ -258,29 +252,15 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
     }
 
-    /* TODO refactor, always set requested cycle type in document creation */
+    @Override
+    public CycleType getRequestedCycle() {
+        Optional<CurriculumGroup> curriculumGroup = getProgramConclusion().groupFor(getRegistration());
 
-    public CycleType getWhatShouldBeRequestedCycle() {
-        return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCycleType() : null;
-    }
-
-    public CycleCurriculumGroup getCycleCurriculumGroup() {
-        final CycleType requestedCycle = getRequestedCycle();
-        final Registration registration = getRegistration();
-
-        if (requestedCycle == null) {
-            if (registration.getDegreeType().hasExactlyOneCycleType()) {
-                return registration.getLastStudentCurricularPlan().getLastOrderedCycleCurriculumGroup();
-            } else {
-                return null;
-            }
-        } else {
-            return registration.getLastStudentCurricularPlan().getCycle(requestedCycle);
+        if (!curriculumGroup.isPresent() || !curriculumGroup.get().isCycleCurriculumGroup()) {
+            throw new DomainException("error.no.cycle.group.present");
         }
-    }
 
-    public boolean hasCycleCurriculumGroup() {
-        return getCycleCurriculumGroup() != null;
+        return ((CycleCurriculumGroup) curriculumGroup.get()).getCycleType();
     }
 
     @Override
@@ -294,7 +274,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     final private RegistrationConclusionBean getBean() {
-        return new RegistrationConclusionBean(getRegistration(), getCycleCurriculumGroup());
+        return new RegistrationConclusionBean(getRegistration(), getProgramConclusion());
     }
 
     final public boolean hasExceptionalConclusionDate() {
@@ -351,7 +331,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     public RegistryCode getRegistryCode() {
-        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getWhatShouldBeRequestedCycle());
+        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
         return registry != null ? registry.getRegistryCode() : null;
     }
 
@@ -365,6 +345,25 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     protected void createCertificateRequestEvent() {
         new DegreeFinalizationCertificateRequestEvent(getAdministrativeOffice(), getRegistration().getPerson(), this);
+    }
+
+    public ExecutionYear getConclusionYear() {
+        return getProgramConclusion().groupFor(getRegistration()).map(CurriculumGroup::getConclusionProcess)
+                .map(ConclusionProcess::getConclusionYear).orElse(null);
+    }
+
+    @Override
+    public String getGraduateTitle(Locale locale) {
+        final StringBuilder res = new StringBuilder();
+
+        if (!getProgramConclusion().getGraduationTitle().isEmpty()) {
+            res.append(", ").append(
+                    BundleUtil.getString(Bundle.ACADEMIC, getLanguage(),
+                            "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
+            res.append(" ").append(getRegistration().getGraduateTitle(getProgramConclusion(), getLanguage()));
+        }
+
+        return res.toString();
     }
 
 }

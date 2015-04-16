@@ -27,12 +27,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -47,6 +50,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.CourseGroupPredicates;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
 import com.google.common.base.Strings;
 
@@ -78,16 +82,27 @@ public class CourseGroup extends CourseGroup_Base {
 
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final ExecutionSemester begin, final ExecutionSemester end) {
-        init(parentCourseGroup, name, nameEn, begin, end);
+        this(parentCourseGroup, name, nameEn, begin, end, null);
+    }
+
+    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+            final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion) {
+        init(parentCourseGroup, name, nameEn, begin, end, programConclusion);
     }
 
     protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin, ExecutionSemester end) {
+        init(parentCourseGroup, name, nameEn, begin, end, null);
+    }
+
+    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin,
+            ExecutionSemester end, final ProgramConclusion programConclusion) {
         init(name, nameEn);
         if (parentCourseGroup == null) {
             throw new DomainException("error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
         }
         parentCourseGroup.checkDuplicateChildNames(name, nameEn);
         new Context(parentCourseGroup, this, null, begin, end);
+        setProgramConclusion(programConclusion);
     }
 
     @Override
@@ -96,7 +111,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
-            ExecutionSemester endExecutionPeriod, Boolean isOptional) {
+            ExecutionSemester endExecutionPeriod, Boolean isOptional, ProgramConclusion programConclusion) {
         // override, assure that root's name equals degree curricular plan name
         if (this.isRoot()) {
             setName(getParentDegreeCurricularPlan().getName());
@@ -112,6 +127,7 @@ public class CourseGroup extends CourseGroup_Base {
             context.edit(beginExecutionPeriod, endExecutionPeriod);
         }
         setIsOptional(isOptional);
+        setProgramConclusion(programConclusion);
     }
 
     @Override
@@ -275,6 +291,19 @@ public class CourseGroup extends CourseGroup_Base {
         result.addAll(super.getParticipatingCurricularRules());
         result.addAll(getParticipatingContextCurricularRulesSet());
         return result;
+    }
+
+    @Override
+    public void setProgramConclusion(ProgramConclusion programConclusion) {
+        checkDuplicateProgramConclusion(programConclusion);
+        super.setProgramConclusion(programConclusion);
+    }
+
+    private void checkDuplicateProgramConclusion(ProgramConclusion programConclusion) {
+        if (getParentDegreeCurricularPlan().getAllCoursesGroups().stream().map(CourseGroup::getProgramConclusion)
+                .filter(Objects::nonNull).anyMatch(pc -> pc.equals(programConclusion))) {
+            throw new DomainException("error.program.conclusion.already.exists", programConclusion.getName().getContent());
+        }
     }
 
     @Override
@@ -868,7 +897,44 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public boolean isOptionalCourseGroup() {
-        return super.getIsOptional() != null && super.getIsOptional();
+        return super.getIsOptional();
     }
 
+    public Double getDefaultEcts(final ExecutionYear executionYear) {
+        final CreditsLimit creditsLimit =
+                (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, null, executionYear);
+        if (creditsLimit != null) {
+            return creditsLimit.getMinimumCredits();
+        }
+
+        if (getDegreeType().hasExactlyOneCycleType()) {
+            return getDegree().getEctsCredits();
+        }
+
+        throw new DomainException("error.CycleCourseGroup.cannot.calculate.default.ects.credits");
+    }
+
+    public String getDegreeNameWithTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
+        String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
+
+        final String suffix = getGraduateTitleSuffix(executionYear, locale);
+        if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
+            degreeFilteredName = suffix + " " + degreeFilteredName;
+        }
+
+        return degreeFilteredName;
+    }
+
+    final public String getGraduateTitle() {
+        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
+    }
+
+    public String getGraduateTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
+        return null;
+    }
+
+    final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
+        return getProgramConclusion() == null ? null : getProgramConclusion().getGraduationTitle(locale,
+                getDegreeNameWithTitleSuffix(executionYear, locale));
+    }
 }

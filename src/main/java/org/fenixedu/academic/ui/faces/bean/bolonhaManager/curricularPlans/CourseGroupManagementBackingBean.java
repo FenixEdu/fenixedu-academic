@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.faces.model.SelectItem;
 
@@ -46,21 +47,36 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Strings;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
 
     private String name = null;
     private String nameEn = null;
     private String courseGroupID;
+    private String programConclusionID = null;
     private List<SelectItem> courseGroups = null;
     private Boolean isOptional;
 
     public String getParentCourseGroupID() {
         return getAndHoldStringParameter("parentCourseGroupID");
+    }
+
+    public String getProgramConclusionID() {
+        if (this.programConclusionID != null) {
+            return this.programConclusionID;
+        } else {
+            if (getCourseGroup() != null && getCourseGroup().getProgramConclusion() != null) {
+                return getCourseGroup().getProgramConclusion().getExternalId();
+            }
+        }
+        return null;
     }
 
     @Override
@@ -71,6 +87,10 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     @Override
     public void setCourseGroupID(String courseGroupID) {
         this.courseGroupID = courseGroupID;
+    }
+
+    public void setProgramConclusionID(String programConclusionID) {
+        this.programConclusionID = programConclusionID;
     }
 
     @Override
@@ -138,7 +158,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String createCourseGroup() {
         try {
             CreateCourseGroup.run(getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(),
-                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
+                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID(), getProgramConclusionID());
             addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
@@ -152,7 +172,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String editCourseGroup() {
         try {
             EditCourseGroup.run(getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-                    getFinalEndExecutionPeriodID(), getIsOptional());
+                    getFinalEndExecutionPeriodID(), getIsOptional(), getProgramConclusionID());
             addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (final IllegalDataAccessException e) {
@@ -161,7 +181,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         } catch (final FenixServiceException e) {
             addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
+            addErrorMessage(e.getLocalizedMessage());
         }
         return "";
     }
@@ -254,4 +274,15 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return "";
     }
 
+    public List<SelectItem> getProgramConclusionItems() {
+        return Bennu.getInstance().getProgramConclusionSet().stream().map(pc -> {
+            String name = pc.getName().getContent();
+            String description = pc.getDescription().getContent();
+            if (!Strings.isNullOrEmpty(description)) {
+                name += " - " + description;
+            }
+            return new SelectItem(pc.getExternalId(), name);
+        }).collect(Collectors.toList());
+
+    }
 }

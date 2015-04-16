@@ -33,8 +33,8 @@ import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ApprovementMobilityCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -76,8 +76,8 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 
     @Override
     protected String getDegreeDescription() {
-        return getDocumentRequest().getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(), null,
-                getLocale());
+        return getDocumentRequest().getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(),
+                (ProgramConclusion) null, getLocale());
     }
 
     /* ###################### */

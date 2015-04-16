@@ -29,7 +29,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -59,6 +58,8 @@ import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.base.Strings;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -713,18 +714,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public boolean hasPersonalInfo();
 
     protected boolean hasMissingPersonalInfo() {
-        final List<String> toTest = new ArrayList<String>();
-
-        toTest.add(getPerson().getParishOfBirth());
-        toTest.add(getPerson().getDistrictOfBirth());
-
-        for (final String testing : toTest) {
-            if (testing == null || StringUtils.isEmpty(testing)) {
-                return true;
-            }
-        }
-
-        return false;
+        return Strings.isNullOrEmpty(getPerson().getParishOfBirth()) || Strings.isNullOrEmpty(getPerson().getDistrictOfBirth());
     }
 
     public void revertToProcessingState() {

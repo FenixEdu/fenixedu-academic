@@ -54,6 +54,7 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.SpaceUtils;
@@ -71,7 +72,6 @@ import org.fenixedu.academic.dto.ExecutionCourseView;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.DegreeCurricularPlanPredicates;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.PeriodState;
@@ -79,7 +79,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -1081,7 +1080,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final ExecutionSemester begin, final ExecutionSemester end) {
-        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end);
+        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, null);
+    }
+
+    public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+            final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion) {
+        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, programConclusion);
     }
 
     public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
@@ -1584,32 +1588,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastOrderedCycleType()) : null;
     }
 
-    public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
-        return getGraduateTitle(executionYear, (CycleType) null, locale);
-    }
-
-    public String getGraduateTitle(final ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
-        if (cycleType == null) {
-            if (isBolonhaDegree()) {
-                return getLastOrderedCycleCourseGroup().getGraduateTitle(executionYear, locale);
-            } else {
-                final StringBuilder res = new StringBuilder(getDegreeType().getGraduateTitle(locale));
-                res.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
-                res.append(" ").append(getDegree().getFilteredName(executionYear, locale));
-
-                return res.toString();
-            }
-        }
-
-        if (getDegreeType().getCycleTypes().isEmpty()) {
-            throw new DomainException("DegreeCurricularPlan.has.no.cycle.type");
-        }
-
-        if (!getDegreeType().hasCycleTypes(cycleType)) {
-            throw new DomainException("DegreeCurricularPlan.doesnt.have.such.cycle.type");
-        }
-
-        return getCycleCourseGroup(cycleType).getGraduateTitle(executionYear, locale);
+    public String getGraduateTitle(final ExecutionYear executionYear, final ProgramConclusion programConclusion,
+            final Locale locale) {
+        return programConclusion.groupFor(this).map(cg -> cg.getGraduateTitle(executionYear, locale)).orElse(null);
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses(ExecutionYear year) {

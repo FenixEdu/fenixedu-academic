@@ -21,17 +21,20 @@ package org.fenixedu.academic.service.services.bolonhaManager;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
+
 public class CreateCourseGroup {
 
     @Atomic
     public static void run(final String degreeCurricularPlanID, final String parentCourseGroupID, final String name,
-            final String nameEn, final String beginExecutionPeriodID, final String endExecutionPeriodID)
-            throws FenixServiceException {
+            final String nameEn, final String beginExecutionPeriodID, final String endExecutionPeriodID,
+            String programConclusionID) throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
@@ -52,6 +55,12 @@ public class CreateCourseGroup {
         final ExecutionSemester endExecutionPeriod =
                 (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
 
-        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod);
+        ProgramConclusion programConclusion = null;
+        if (!Strings.isNullOrEmpty(programConclusionID)) {
+            programConclusion = FenixFramework.getDomainObject(programConclusionID);
+        }
+
+        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod,
+                programConclusion);
     }
 }

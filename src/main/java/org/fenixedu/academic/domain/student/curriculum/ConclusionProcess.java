@@ -19,7 +19,8 @@
 package org.fenixedu.academic.domain.student.curriculum;
 
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -28,18 +29,23 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
-    private ConclusionProcessVersion getFirstVersion() {
-        return Collections.min(getVersionsSet(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID);
+    final protected Stream<ConclusionProcessVersion> versions() {
+        return getVersionsSet().stream().filter(ConclusionProcessVersion::isActive);
+    }
+
+    private Optional<ConclusionProcessVersion> getFirstVersion() {
+        return versions().min(ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID);
     }
 
     public DateTime getCreationDateTime() {
-        return getFirstVersion().getCreationDateTime();
+        return getFirstVersion().map(ConclusionProcessVersion::getCreationDateTime).orElse(null);
     }
 
     public DateTime getLastModificationDateTime() {
@@ -47,7 +53,7 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
     }
 
     public Person getResponsible() {
-        return getFirstVersion().getResponsible();
+        return getFirstVersion().map(ConclusionProcessVersion::getResponsible).orElse(null);
     }
 
     public Person getLastResponsible() {
@@ -83,28 +89,28 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
         return getLastVersion().getCredits();
     }
 
-    abstract public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
-            final String notes);
+    abstract public void update(final Person responsible, final Integer finalAverage, final BigDecimal average,
+            final LocalDate conclusionDate, final String notes);
 
     abstract public void update(final RegistrationConclusionBean bean);
 
     final protected void addVersions(final RegistrationConclusionBean bean) {
         super.addVersions(new ConclusionProcessVersion(bean));
-        super.setLastVersion(Collections.max(getVersionsSet(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID));
-        super.setConclusionYear(getLastVersion().getConclusionYear());
-
+        updateLastVersion();
         addSpecificVersionInfo();
     }
 
+    final public void disableLastVersion() {
+        getLastVersion().setActive(false);
+        updateLastVersion();
+    }
+
+    final private void updateLastVersion() {
+        super.setLastVersion(versions().max(ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID).orElse(null));
+        super.setConclusionYear(getLastVersion() == null ? null : getLastVersion().getConclusionYear());
+    }
+
     abstract protected void addSpecificVersionInfo();
-
-    public boolean isCycleConclusionProcess() {
-        return false;
-    }
-
-    public boolean isRegistrationConclusionProcess() {
-        return false;
-    }
 
     @Override
     final public void addVersions(final ConclusionProcessVersion versions) {
@@ -129,6 +135,14 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
     public DegreeType getDegreeType() {
         return getDegree().getDegreeType();
+    }
+
+    public LocalizedString getName() {
+        return getGroup().getName().toLocalizedString();
+    }
+
+    public boolean isActive() {
+        return getLastVersion() != null && getLastVersion().isActive();
     }
 
 }

@@ -149,7 +149,7 @@ enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									
 enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 enum org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
 enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
-
+enum org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType                                     as RegistrationStateType;
 /*
  * Value types that need special externalization
  */
@@ -395,7 +395,15 @@ valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as Ac
     internalizeWith importFromString();
 }
 
+
 valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes {
+    externalizeWith {
+        JsonElement toJson();
+    }
+}
+
+valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
+
     externalizeWith {
         JsonElement toJson();
     }
@@ -2336,7 +2344,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             }
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
-        	Boolean isOptional;
+        	boolean isOptional;
         }
 
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {
@@ -2349,7 +2357,18 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 
             class degreeStructure.RootCourseGroup extends degreeStructure.CourseGroup {
             }
-	
+
+    public class degreeStructure.ProgramConclusion {
+        public LocalizedString name (REQUIRED);
+        public LocalizedString description (REQUIRED);
+        public LocalizedString graduationTitle (REQUIRED);
+        public LocalizedString graduationLevel (REQUIRED);
+        protected boolean averageEditable;
+        protected boolean alumniProvider;
+        protected boolean skipValidation;
+        public RegistrationStateType targetState;
+        public EventTypes eventTypes;
+    }
 	
 	class degreeStructure.CycleCourseGroupInformation  {
 		LocalizedString graduateTitleSuffix;
@@ -2623,13 +2642,11 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                 class space.WrittenEvaluationSpaceOccupation extends space.EventSpaceOccupation {
                 }
                 
-
-    class serviceRequests.InstitutionRegistryCodeGenerator  {
-        Integer currentFirstCycle;
-        Integer currentSecondCycle;
-        Integer currentThirdCycle;
+                
+    class serviceRequests.InstitutionRegistryCodeGenerator {
+        Integer number;
     }
-
+    
     class serviceRequests.RegistryCode  {
         String code;
     }
@@ -2704,7 +2721,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                         MobilityProgram mobilityProgram;
                         Boolean ignoreExternalEntries;
                         Boolean ignoreCurriculumInAdvance;
-                        CycleType requestedCycle;
                     }
     
                     class serviceRequests.documentRequests.EnrolmentCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
@@ -2758,18 +2774,15 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                     }
     
                 class serviceRequests.documentRequests.DiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
-                    CycleType requestedCycle;
                 }
                 
                 class serviceRequests.documentRequests.PastDiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
                 }
 
                 class serviceRequests.documentRequests.RegistryDiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
-                    CycleType requestedCycle;
                 }
 
                 class serviceRequests.documentRequests.DiplomaSupplementRequest extends serviceRequests.documentRequests.DocumentRequest {
-                    CycleType requestedCycle (REQUIRED);
                 }
             
                 class serviceRequests.documentRequests.PhotocopyRequest extends serviceRequests.documentRequests.DocumentRequest {
@@ -2845,7 +2858,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         class student.curriculum.RegistrationConclusionProcess extends student.curriculum.ConclusionProcess {
         }
     
-        class student.curriculum.CycleConclusionProcess extends student.curriculum.ConclusionProcess {
+        class student.curriculum.ProgramConclusionProcess extends student.curriculum.ConclusionProcess {
         }
     
     class student.curriculum.ConclusionProcessVersion  {
@@ -2856,6 +2869,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         BigDecimal credits (REQUIRED);
         String curriculum (REQUIRED);
         String notes;
+        protected boolean active (REQUIRED);
     }
 
     class student.curriculum.ExtraCurricularActivity  {
@@ -5785,6 +5799,34 @@ relation RegistryDiplomaSupplement {
     serviceRequests.documentRequests.DiplomaSupplementRequest playsRole diplomaSupplement;
 }
 
+relation RegistryDiplomaProgramConclusion {
+    serviceRequests.documentRequests.RegistryDiplomaRequest playsRole registryDiplomaRequest {
+        multiplicity *;
+    }
+    degreeStructure.ProgramConclusion playsRole programConclusion;
+}
+
+relation DiplomaRequestProgramConclusion {
+    serviceRequests.documentRequests.DiplomaRequest playsRole diplomaRequest {
+        multiplicity *;
+    }
+    degreeStructure.ProgramConclusion playsRole programConclusion;
+}
+
+relation DiplomaSupplementRequestProgramConclusion {
+    serviceRequests.documentRequests.DiplomaSupplementRequest playsRole diplomaSupplement {
+        multiplicity *;
+    }
+    degreeStructure.ProgramConclusion playsRole programConclusion;
+}
+
+relation DegreeFinalizationCertificateRequestProgramConclusion {
+    serviceRequests.documentRequests.DegreeFinalizationCertificateRequest playsRole degreeFinalizationCertificateRequest {
+        multiplicity *;
+    }
+    degreeStructure.ProgramConclusion playsRole programConclusion;
+}
+
 relation InstitutionRegistryCodeGeneratorRootDomainObject {
     serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
         multiplicity *;
@@ -5919,6 +5961,24 @@ relation ExamDateCertificateRequestExecutionPeriod {
     }
     
     ExecutionSemester playsRole executionPeriod;
+}
+
+relation ProgramConclusionCourseGroup {
+    public degreeStructure.ProgramConclusion playsRole programConclusion {
+        multiplicity 0..1;
+    }
+    public degreeStructure.CourseGroup playsRole courseGroup {
+        multiplicity 0..*;
+    }
+}
+
+relation ProgramConclusionRoot {
+    protected .org.fenixedu.bennu.core.domain.Bennu playsRole root {
+        multiplicity 1..1;
+    }
+    public degreeStructure.ProgramConclusion playsRole programConclusion {
+        multiplicity *;
+    }
 }
 
 relation CourseGroupChangeRequestOldCourseGroup {
@@ -6616,9 +6676,9 @@ relation CurriculumPerson {
     Person playsRole personWhoAltered;
 }
 
-relation CycleCurriculumGroupCycleConclusionProcess {
-    studentCurriculum.CycleCurriculumGroup playsRole cycle;
-    student.curriculum.CycleConclusionProcess playsRole conclusionProcess;
+relation CurriculumGroupConclusionProcess {
+    studentCurriculum.CurriculumGroup playsRole group;
+    protected student.curriculum.ConclusionProcess playsRole conclusionProcess;
 }
 
 relation DFACandidacyEventCandidacy {
@@ -6768,7 +6828,7 @@ relation SpecializationDegreeRegistrationEventRegistration {
 }
 
 relation DissertationEnrolmentConclusionProcess {
-    Enrolment playsRole dissertationEnrolment;
+    protected Enrolment playsRole dissertationEnrolment;
     student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
         multiplicity *; 
     }

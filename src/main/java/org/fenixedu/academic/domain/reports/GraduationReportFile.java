@@ -28,11 +28,9 @@ import org.fenixedu.academic.domain.SchoolLevelType;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
-import org.fenixedu.academic.domain.student.curriculum.CycleConclusionProcess;
-import org.joda.time.LocalDate;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+import org.joda.time.LocalDate;
 
 public class GraduationReportFile extends GraduationReportFile_Base {
 
@@ -97,11 +95,7 @@ public class GraduationReportFile extends GraduationReportFile_Base {
         row.setCell(registration.getNumber());
         row.setCell(registration.getName());
         setDegreeCells(row, registration.getDegree());
-        if (conclusionProcess.isCycleConclusionProcess()) {
-            row.setCell(((CycleConclusionProcess) conclusionProcess).getCycleType().getDescription());
-        } else {
-            row.setCell(StringUtils.EMPTY);
-        }
+        row.setCell(conclusionProcess.getName().getContent());
         row.setCell(registration.getPrecedentDegreeConclusionGrade(SchoolLevelType.SECOND_CYCLE_BASIC_SCHOOL));
         row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString() : StringUtils.EMPTY);
         row.setCell(ingression.getYear());

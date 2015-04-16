@@ -28,7 +28,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaRequest;
@@ -77,29 +77,6 @@ public class DocumentRequestExcelUtils {
         return codes;
     }
 
-    private Integer calculateMin(Set<RegistryCode> codes) {
-        Integer min = null;
-        for (RegistryCode code : codes) {
-            Integer codeNumber = code.getCodeNumber();
-            if (min == null || codeNumber.intValue() < min.intValue()) {
-                min = codeNumber;
-            }
-        }
-        return min;
-    }
-
-    private Integer calculateMax(Set<RegistryCode> codes) {
-        Integer min = null;
-        Integer max = null;
-        for (RegistryCode code : codes) {
-            Integer codeNumber = code.getCodeNumber();
-            if (max == null || codeNumber.intValue() > max.intValue()) {
-                max = codeNumber;
-            }
-        }
-        return max;
-    }
-
     private void generate(Set<AcademicServiceRequest> documents, Set<RegistryCode> codes, String prefix) {
 
         SheetData<AcademicServiceRequest> data = new SheetData<AcademicServiceRequest>(documents) {
@@ -108,21 +85,22 @@ public class DocumentRequestExcelUtils {
                 IDocumentRequest document = (IDocumentRequest) request;
                 addCell("Código", document.getRegistryCode().getCode());
                 addCell("Tipo de Documento", BundleUtil.getString(Bundle.ENUMERATION, document.getDocumentRequestType().name()));
-                CycleType cycle = null;
+                ProgramConclusion programConclusion = null;
                 switch (document.getDocumentRequestType()) {
                 case REGISTRY_DIPLOMA_REQUEST:
-                    cycle = ((IRegistryDiplomaRequest) document).getRequestedCycle();
+                    programConclusion = ((IRegistryDiplomaRequest) document).getProgramConclusion();
                     break;
                 case DIPLOMA_REQUEST:
-                    cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
+                    programConclusion = ((IDiplomaRequest) document).getProgramConclusion();
                     break;
                 case DIPLOMA_SUPPLEMENT_REQUEST:
-                    cycle = ((IDiplomaSupplementRequest) document).getRequestedCycle();
+                    programConclusion = ((IDiplomaSupplementRequest) document).getProgramConclusion();
                     break;
                 default:
-                    addCell("Ciclo", null);
+                    addCell(BundleUtil.getString(Bundle.APPLICATION, "label.programConclusion"));
                 }
-                addCell("Ciclo", cycle != null ? BundleUtil.getString(Bundle.ENUMERATION, cycle.name()) : null);
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.programConclusion"),
+                        programConclusion != null ? programConclusion.getName().getContent() : null);
 
                 if (document.isRequestForRegistration()) {
                     addCell("Tipo de Curso", ((RegistrationAcademicServiceRequest) document).getDegreeType().getName()
@@ -140,8 +118,7 @@ public class DocumentRequestExcelUtils {
 
         try {
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=" + prefix + calculateMin(codes) + "-"
-                    + calculateMax(codes) + "(" + codes.size() + ")" + ".xls");
+            response.setHeader("Content-disposition", "attachment; filename=" + prefix + "-" + "(" + codes.size() + ")" + ".xls");
             final ServletOutputStream writer = response.getOutputStream();
             new SpreadsheetBuilder().addSheet("lote", data).build(WorkbookExportFormat.EXCEL, writer);
             writer.flush();
@@ -150,5 +127,4 @@ public class DocumentRequestExcelUtils {
             throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata", e);
         }
     }
-
 }

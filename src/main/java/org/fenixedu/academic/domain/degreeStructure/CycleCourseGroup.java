@@ -26,18 +26,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
-import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -66,27 +60,6 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     @Override
     public boolean isCycleCourseGroup() {
         return true;
-    }
-
-    final public String getGraduateTitle() {
-        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
-    }
-
-    final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
-
-        final StringBuilder result = new StringBuilder();
-        result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
-
-        final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
-        result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
-
-        final String suffix = getGraduateTitleSuffix(executionYear, locale);
-        if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-            result.append(" ").append(suffix);
-        }
-
-        result.append(" ").append(degreeFilteredName);
-        return result.toString();
     }
 
     final public String getGraduateTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
@@ -121,20 +94,6 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     public Double getCurrentDefaultEcts() {
         return getDefaultEcts(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public Double getDefaultEcts(final ExecutionYear executionYear) {
-        final CreditsLimit creditsLimit =
-                (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, null, executionYear);
-        if (creditsLimit != null) {
-            return creditsLimit.getMinimumCredits();
-        }
-
-        if (getDegreeType().hasExactlyOneCycleType()) {
-            return getDegree().getEctsCredits();
-        }
-
-        throw new DomainException("error.CycleCourseGroup.cannot.calculate.default.ects.credits");
     }
 
     public List<CycleCourseGroupInformation> getCycleCourseGroupInformationOrderedByExecutionYear() {
