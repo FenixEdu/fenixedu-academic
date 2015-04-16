@@ -2705,10 +2705,8 @@ public class Registration extends Registration_Base {
     }
 
     final public void setEnrolmentModelForExecutionYear(ExecutionYear year, EnrolmentModel model) {
-        RegistrationDataByExecutionYear registrationData = getRegistrationDataByExecutionYear(year);
-        if (registrationData == null) {
-            registrationData = new RegistrationDataByExecutionYear(this, year);
-        }
+        RegistrationDataByExecutionYear registrationData =
+                RegistrationDataByExecutionYear.getOrCreateRegistrationDataByYear(this, year);
         registrationData.setEnrolmentModel(model);
     }
 
@@ -3647,6 +3645,28 @@ public class Registration extends Registration_Base {
     public Boolean hasIndividualCandidacyFor(final ExecutionYear executionYear) {
         return getIndividualCandidacy() != null
                 && getIndividualCandidacy().getCandidacyProcess().getCandidacyExecutionInterval().equals(executionYear);
+    }
+
+    public void updateEnrolmentDate(final ExecutionYear executionYear) {
+
+        final RegistrationDataByExecutionYear registrationData =
+                RegistrationDataByExecutionYear.getOrCreateRegistrationDataByYear(this, executionYear);
+        final Collection<Enrolment> executionYearEnrolments = getEnrolments(executionYear);
+
+        if (executionYearEnrolments.isEmpty()) {
+            registrationData.setEnrolmentDate(null);
+
+        } else if (registrationData.getEnrolmentDate() == null) {
+
+            final Enrolment firstEnrolment = Collections.min(executionYearEnrolments, new Comparator<Enrolment>() {
+                @Override
+                public int compare(Enrolment left, Enrolment right) {
+                    return left.getCreationDateDateTime().compareTo(right.getCreationDateDateTime());
+                }
+            });
+
+            registrationData.edit(firstEnrolment.getCreationDateDateTime().toLocalDate());
+        }
     }
 
     public void exportValues(StringBuilder result) {

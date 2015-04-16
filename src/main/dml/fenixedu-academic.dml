@@ -2946,6 +2946,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 
     class student.RegistrationDataByExecutionYear  {
         EnrolmentModel enrolmentModel;
+        protected LocalDate enrolmentDate;
     }
 
     class student.RegistrationNumber  {
@@ -8076,7 +8077,7 @@ relation RegistrationDataByExecutionYearExecutionYear {
     student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
         multiplicity *;
     }
-    ExecutionYear playsRole executionYear;
+    protected ExecutionYear playsRole executionYear;
 }
 
 relation RegistrationRegimeExecutionYear {
@@ -8090,7 +8091,7 @@ relation RegistrationDataByExecutionYearRegistration {
     student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
         multiplicity *;
     }
-    student.Registration playsRole registration;
+    protected student.Registration playsRole registration;
 }
 
 relation RegistrationRegimeRegistration {
