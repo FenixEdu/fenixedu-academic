@@ -329,32 +329,6 @@ valueType org.fenixedu.academic.util.State as State {
     }
 }
 
-valueType org.fenixedu.academic.util.tests.CorrectionAvailability as CorrectionAvailability {
-    externalizeWith {
-        Integer getAvailability();
-    }
-}
-
-valueType org.fenixedu.academic.util.tests.CorrectionFormula as CorrectionFormula {
-    externalizeWith {
-        Integer getFormula();
-    }
-}
-
-valueType org.fenixedu.academic.util.tests.Response as Response {
-    externalizeWith {
-        String org.fenixedu.academic.util.tests.ResponseExternalization.externalize();
-    }
-
-    internalizeWith org.fenixedu.academic.util.tests.ResponseExternalization.internalize();
-}
-
-valueType org.fenixedu.academic.util.tests.TestType as TestType {
-    externalizeWith {
-        Integer getType();
-    }
-}
-
 valueType org.joda.time.Interval as Interval {
     externalizeWith {
         String org.fenixedu.academic.util.date.SerializationTool.intervalSerialize();
