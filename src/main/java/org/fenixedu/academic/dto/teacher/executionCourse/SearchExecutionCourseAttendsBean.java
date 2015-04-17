@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
@@ -83,14 +84,6 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 
     public void setViewPhoto(Boolean viewPhoto) {
         this.viewPhoto = viewPhoto;
-    }
-
-    @Deprecated
-    public static enum StudentAttendsStateType {
-        ENROLED, NOT_ENROLED, IMPROVEMENT, SPECIAL_SEASON;
-        public String getQualifiedName() {
-            return StudentAttendsStateType.class.getSimpleName() + "." + name();
-        }
     }
 
     public Collection<StudentAttendsStateType> getAttendsStates() {

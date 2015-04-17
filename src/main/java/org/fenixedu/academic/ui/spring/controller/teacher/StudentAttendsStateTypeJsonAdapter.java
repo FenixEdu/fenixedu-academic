@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
-import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
+import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
 import org.fenixedu.bennu.core.annotation.DefaultJsonAdapter;
 import org.fenixedu.bennu.core.json.JsonBuilder;
 import org.fenixedu.bennu.core.json.JsonViewer;

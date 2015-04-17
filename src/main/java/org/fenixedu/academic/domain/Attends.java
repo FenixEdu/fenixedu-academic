@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.student.GroupEnrolment;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.WeeklyWorkLoad;
-import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -61,6 +60,13 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
  * @author tfc130
  */
 public class Attends extends Attends_Base {
+
+    public static enum StudentAttendsStateType {
+        ENROLED, NOT_ENROLED, IMPROVEMENT, SPECIAL_SEASON;
+        public String getQualifiedName() {
+            return StudentAttendsStateType.class.getSimpleName() + "." + name();
+        }
+    }
 
     static {
         getRelationExecutionCourseAttends().addListener(new RelationAdapter<ExecutionCourse, Attends>() {
@@ -526,9 +532,6 @@ public class Attends extends Attends_Base {
         return enrolment == null ? getRegistration().getLastStudentCurricularPlan() : enrolment.getStudentCurricularPlan();
     }
 
-    //This makes Attends dependent on a Bean, thus domain dependent on dto's
-    //Change this on the next major.
-    @Deprecated
     public StudentAttendsStateType getAttendsStateType() {
         if (getEnrolment() == null) {
             return StudentAttendsStateType.NOT_ENROLED;
