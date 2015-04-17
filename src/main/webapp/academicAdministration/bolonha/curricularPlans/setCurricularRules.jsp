@@ -119,7 +119,10 @@
 			organizeBy="#{AcademicAdministrationCurricularCourseManagement.organizeBy}"
 			hideCourses="#{AcademicAdministrationCurricularCourseManagement.hideCourses}"
 			executionYear="#{AcademicAdministrationCurricularCourseManagement.executionYear}"
-			module="/academicAdministration/bolonha"/>
+			module="/academicAdministration/bolonha"
+			currentPage="curricularPlans/setCurricularRules.faces"
+			groupExpandEnabled="true"
+			/>
 
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{AcademicAdministrationCurricularCourseManagement.organizeBy}'/>"/>

@@ -1441,6 +1441,18 @@
 			<rtexprvalue>true</rtexprvalue>
 			<description>Indicates the submodule of the jsp that is using this component.</description>
 		</attribute>
+		<attribute>
+			<name>currentPage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Indicates the page where this component is rendered (required for expand option).</description>
+		</attribute>
+		<attribute>
+			<name>groupExpandEnabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Indicates if group expand option is enabled (for large degree curricular plans).</description>
+		</attribute>
 	</tag>
   <tag>
 		<name>breadCrumbs</name>

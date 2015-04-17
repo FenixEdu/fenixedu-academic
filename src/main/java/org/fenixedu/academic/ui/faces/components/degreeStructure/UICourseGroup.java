@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.faces.components.degreeStructure;
 import java.io.IOException;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -30,6 +31,8 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class UICourseGroup extends UIDegreeModule {
+
+    private static final String EXPAND_GROUP_ID_PARAM = "expandGroupId";
 
     public static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.degreeStructure.UICourseGroup";
 
@@ -48,8 +51,8 @@ public class UICourseGroup extends UIDegreeModule {
 
     public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth,
             String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses, Boolean reportsAvailable,
-            ExecutionYear executionYear, String module) throws IOException {
-        super(courseGroup, previousContext, toEdit, showRules, depth, tabs, executionYear, module);
+            ExecutionYear executionYear, String module, String currentPage, Boolean expandable) throws IOException {
+        super(courseGroup, previousContext, toEdit, showRules, depth, tabs, executionYear, module, currentPage, expandable);
 
         if (toOrder && (!onlyStructure || !toEdit)) {
             throw new IOException("incorrect.component.usage");
@@ -132,7 +135,7 @@ public class UICourseGroup extends UIDegreeModule {
         for (Context context : this.courseGroup.getSortedOpenChildContextsWithCourseGroups(this.executionYear)) {
             new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs
                     + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable, this.executionYear,
-                    this.module).encodeBegin(facesContext);
+                    this.module, this.currentPage, this.expandable).encodeBegin(facesContext);
         }
     }
 
@@ -297,12 +300,29 @@ public class UICourseGroup extends UIDegreeModule {
         writer.startElement("th", this);
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
+
+        boolean expandOptionAvailable = false;
+        if (expandable && !isToRenderExpanded()
+                && !this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear).isEmpty()) {
+            encodeLink(module + "/" + currentPage, "&" + EXPAND_GROUP_ID_PARAM + "=" + this.courseGroup.getExternalId(), false,
+                    "label.expand");
+            expandOptionAvailable = true;
+        }
+
         if (this.showRules) {
             if (!this.courseGroup.isRoot() || loggedPersonCanManageDegreeCurricularPlans()) {
+                if (expandOptionAvailable) {
+                    writer.append(" , ");
+                }
+
                 encodeLink(module + "/curricularRules/createCurricularRule.faces",
                         "&degreeModuleID=" + this.courseGroup.getExternalId(), false, "setCurricularRule");
             }
         } else {
+            if (expandOptionAvailable) {
+                writer.append(" , ");
+            }
+
             encodeLink(module + "/createCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), false,
                     "create.curricular.course");
             writer.append(" , ");
@@ -319,13 +339,25 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "showinfo3 mvert0", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3) + "em;", null);
 
-        for (Context context : this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear)) {
-            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs
-                    + "\t", this.executionYear, this.module).encodeBegin(facesContext);
+        if (!expandable || isToRenderExpanded()) {
+            for (Context context : this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear)) {
+                new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth,
+                        this.tabs + "\t", this.executionYear, this.module, null, false).encodeBegin(facesContext);
+            }
         }
 
         writer.endElement("table");
         writer.endElement("div");
+    }
+
+    private boolean isToRenderExpanded() {
+        final String expandGroupId = getExpandGroupId();
+        return expandGroupId != null && expandGroupId.equals(this.courseGroup.getExternalId());
+    }
+
+    protected String getExpandGroupId() {
+        return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
+                .getParameter(EXPAND_GROUP_ID_PARAM);
     }
 
     @Override

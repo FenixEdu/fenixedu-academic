@@ -96,7 +96,10 @@
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		toEdit="true" 
 		organizeBy="<%=request.getParameter("organizeBy")%>"
-		module="/bolonhaManager/curricularPlans"/>
+		module="/bolonhaManager/curricularPlans"
+		currentPage="buildCurricularPlan.faces"
+		groupExpandEnabled="true"
+		/>
 
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
