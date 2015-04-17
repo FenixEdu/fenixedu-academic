@@ -707,7 +707,6 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     @Override
-    @Deprecated
     public java.util.Set<org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarState> getStates() {
         return getStatesSet();
     }

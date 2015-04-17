@@ -178,11 +178,6 @@ public class Country extends Country_Base {
         return getCountryNationality().getPreferedContent();
     }
 
-    @Deprecated
-    public void setNationality(final String nationality) {
-        setCountryNationality(getCountryNationality().with(Locale.getDefault(), nationality));
-    }
-
     public synchronized static Set<Country> getCPLPCountries() {
         if (CPLP_COUNTRIES == null) {
             CPLP_COUNTRIES = new HashSet<Country>();

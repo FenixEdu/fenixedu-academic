@@ -226,19 +226,6 @@ public class SpaceUtils {
         return Space.getSpaces().filter(space -> name.equals(space.getName())).findAny().get();
     }
 
-    @Deprecated
-    // TODO : remove this stuff in fenix v4 
-    public static Occupation getFirstOccurrenceOfResourceAllocationByClass(Space space, Class<? extends Occupation> clazz) {
-        if (clazz != null) {
-            for (Occupation resourceAllocation : space.getOccupationSet()) {
-                if (resourceAllocation.getClass().equals(clazz)) {
-                    return resourceAllocation;
-                }
-            }
-        }
-        return null;
-    }
-
     // This method is a hack because of a bad refactor. The new Occupation API does not allow sharing of occupation for different events.
     // TODO : remove this stuff in fenix v4 after refactor is complete.
     public static Occupation getFirstOccurrenceOfResourceAllocationByClass(final Space space, final WrittenEvaluation evaluation) {
@@ -460,21 +447,6 @@ public class SpaceUtils {
             }
         }
         return result;
-    }
-
-    @Deprecated
-    public static List<Lesson> getAssociatedLessons(final Space space, final ExecutionSemester executionSemester) {
-        final List<Lesson> lessons = new ArrayList<Lesson>();
-        for (Occupation spaceOccupation : space.getOccupationSet()) {
-            if (spaceOccupation instanceof LessonSpaceOccupation) {
-                LessonSpaceOccupation roomOccupation = (LessonSpaceOccupation) spaceOccupation;
-                final Lesson lesson = roomOccupation.getLesson();
-                if (lesson.getExecutionPeriod() == executionSemester) {
-                    lessons.add(lesson);
-                }
-            }
-        }
-        return lessons;
     }
 
     public static List<Lesson> getAssociatedLessons(Space space, AcademicInterval academicInterval) {

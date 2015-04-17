@@ -432,13 +432,9 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         PersonTarget targetType = getPersonTarget(participant.getType());
 
-        if (participant == null) {
-            return editProposal(mapping, actionForm, request, response);
-        } else {
-            request.setAttribute("targetType", targetType);
-            request.setAttribute("participant", participant);
-            return mapping.findForward("editParticipant");
-        }
+        request.setAttribute("targetType", targetType);
+        request.setAttribute("participant", participant);
+        return mapping.findForward("editParticipant");
     }
 
     private PersonTarget getPersonTarget(ThesisParticipationType type) {

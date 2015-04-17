@@ -57,17 +57,6 @@ public class ThesisPredicates {
 
             };
 
-    public static final AccessControlPredicate<Thesis> student = new AccessControlPredicate<Thesis>() {
-
-        @Override
-        public boolean evaluate(Thesis thesis) {
-            Person person = AccessControl.getPerson();
-
-            return person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation();
-        }
-
-    };
-
     public static final AccessControlPredicate<Thesis> studentOrAcademicAdministrativeOfficeOrScientificCouncil =
             new AccessControlPredicate<Thesis>() {
 
@@ -93,15 +82,5 @@ public class ThesisPredicates {
         }
 
     };
-
-    public static final AccessControlPredicate<Thesis> isScientificCommissionOrScientificCouncil =
-            new AccessControlPredicate<Thesis>() {
-
-                @Override
-                public boolean evaluate(final Thesis thesis) {
-                    return isScientificCommission.evaluate(thesis) || isScientificCouncil.evaluate(thesis);
-                }
-
-            };
 
 }

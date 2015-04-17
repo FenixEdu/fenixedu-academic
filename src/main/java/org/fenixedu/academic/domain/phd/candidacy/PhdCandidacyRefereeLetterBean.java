@@ -28,6 +28,8 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
 import org.fenixedu.academic.util.FileUtils;
 
+import com.google.common.io.ByteStreams;
+
 public class PhdCandidacyRefereeLetterBean implements Serializable {
 
     static private final long serialVersionUID = 6105525451822275989L;
@@ -180,7 +182,7 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
         if (file != null) {
             final ByteArrayOutputStream result = new ByteArrayOutputStream();
             try {
-                FileUtils.copy(this.file, result);
+                ByteStreams.copy(this.file, result);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

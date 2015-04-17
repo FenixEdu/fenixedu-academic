@@ -145,7 +145,6 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
 
     @Override
-    @Deprecated
     public java.util.Set<org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessState> getStates() {
         return getStatesSet();
     }

@@ -171,7 +171,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
         for (final Context context : courseGroup.getChildContextsSet()) {
             if (context != this && context.hasChildDegreeModule(degreeModule) && context.hasCurricularPeriod(curricularPeriod)
-                    && context.contains(begin, end)) {
+                    && context.intersects(begin, end)) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }
@@ -317,12 +317,6 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     public boolean isOpen() {
         return isOpen(ExecutionSemester.readActualExecutionSemester());
-    }
-
-    //only checks for intersection, not a full contains
-    @Deprecated
-    public boolean contains(final ExecutionSemester begin, final ExecutionSemester end) {
-        return intersects(begin, end);
     }
 
     public boolean intersects(final ExecutionSemester begin, final ExecutionSemester end) {

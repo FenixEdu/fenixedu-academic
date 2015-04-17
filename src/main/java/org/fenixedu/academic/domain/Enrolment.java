@@ -71,7 +71,6 @@ import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 
 /**
@@ -471,9 +470,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             final Iterator<ExecutionCourse> iterator = executionCourses.iterator();
             while (iterator.hasNext()) {
                 final ExecutionCourse each = iterator.next();
-                if (each.getExecutionCoursePropertiesSet().isEmpty()) {
-                    executionCourse = each;
-                }
+                executionCourse = each;
             }
         } else if (executionCourses.size() == 1) {
             executionCourse = executionCourses.iterator().next();
@@ -1647,31 +1644,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
 
         return false;
-    }
-
-    @Deprecated
-    //TODO remove in next major
-    void changeStateIfAprovedAndEvaluationsIsEmpty() {
-        if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
-            throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
-        }
-
-        if (getEnrollmentState().equals(EnrollmentState.APROVED) && getEvaluationsSet().isEmpty()) {
-            setEnrollmentState(EnrollmentState.ENROLLED);
-        }
-    }
-
-    @Atomic
-    @Deprecated
-    //TODO remove in next major
-    public void markAsTemporaryEnrolled() {
-        if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
-            throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
-        }
-
-        if (getEvaluationsSet().isEmpty()) {
-            setEnrollmentState(EnrollmentState.ENROLLED);
-        }
     }
 
     public boolean canBeUsedAsCreditsSource() {

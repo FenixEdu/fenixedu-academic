@@ -28,26 +28,6 @@ public class CellInfo {
 
     private LinkedList lessonViewList;
 
-    // cuidado ao modificar os constructores, olhar para o getContent
-    /**
-     * 
-     * @deprecated
-     */
-    @Deprecated
-    public CellInfo(int rowSpan, int colSpan, InfoLesson lessonView) {
-    }
-
-    /**
-     * 
-     * @param rowSpan
-     * @param lessonView
-     * @deprecated
-     */
-    @Deprecated
-    public CellInfo(int rowSpan, InfoLesson lessonView) {
-        this(rowSpan, 0, lessonView);
-    }
-
     public CellInfo() {
         this.lessonViewList = new LinkedList();
     }

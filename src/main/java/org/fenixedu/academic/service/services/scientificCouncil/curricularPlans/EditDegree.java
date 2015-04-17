@@ -41,19 +41,7 @@ public class EditDegree {
     public static void run(String externalId, String name, String nameEn, String acronym, DegreeType degreeType,
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear, String code,
             String ministryCode) throws FenixServiceException {
-        run(externalId, name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, executionYear);
 
-        //We are not required to re-check if degree is null since it was already tested in previous run call
-        final Degree degreeToEdit = FenixFramework.getDomainObject(externalId);
-        degreeToEdit.setCode(code);
-        degreeToEdit.setMinistryCode(ministryCode);
-    }
-
-    @Deprecated
-    @Atomic
-    public static void run(String externalId, String name, String nameEn, String acronym, DegreeType degreeType,
-            Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear)
-            throws FenixServiceException {
         check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (externalId == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
@@ -85,6 +73,8 @@ public class EditDegree {
         }
 
         degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, executionYear);
+        degreeToEdit.setCode(code);
+        degreeToEdit.setMinistryCode(ministryCode);
     }
 
 }

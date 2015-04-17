@@ -55,11 +55,11 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     }
 
     @Override
-    public Set<ReplyTo> getReplyTos() {
+    public Set<ReplyTo> getReplyTosSet() {
         if (getReplyTosSet().isEmpty()) {
             addReplyTos(new CurrentUserReplyTo());
         }
-        return super.getReplyTos();
+        return super.getReplyTosSet();
     }
 
     @Atomic

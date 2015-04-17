@@ -26,6 +26,8 @@ import java.io.Serializable;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.util.FileUtils;
 
+import com.google.common.io.ByteStreams;
+
 public class PhdProgramDocumentUploadBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,7 +76,7 @@ public class PhdProgramDocumentUploadBean implements Serializable {
         if (file != null) {
             final ByteArrayOutputStream result = new ByteArrayOutputStream();
             try {
-                FileUtils.copy(this.file, result);
+                ByteStreams.copy(this.file, result);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -55,11 +55,13 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.fenixedu.commons.spreadsheet.Spreadsheet;
-import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+
+import com.google.common.io.CharStreams;
 
 @StrutsFunctionality(app = RAMFirstYearShiftsApp.class, path = "shift-distribution",
         titleKey = "link.firstTimeStudents.shiftDistribution", accessGroup = "nobody")
@@ -97,8 +99,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ShiftDistributionFileBean fileBean = getRenderedObject();
-        String fileContents =
-                FileUtils.readFile(new InputStreamReader(fileBean.getInputStream(), Charset.defaultCharset().name()));
+        String fileContents = CharStreams.toString(new InputStreamReader(fileBean.getInputStream(), Charset.defaultCharset()));
         final String[] data = fileContents.split("\n");
 
         List<ShiftDistributionDTO> shiftDistributionFromFile = new ArrayList<ShiftDistributionDTO>(data.length);

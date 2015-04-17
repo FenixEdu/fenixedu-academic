@@ -30,12 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
-import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
-import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.fenixedu.bennu.core.rest.SystemResource;
 import org.slf4j.Logger;
@@ -56,16 +52,7 @@ public class FenixInitializer implements ServletContextListener {
     @Override
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
-
-        logger.debug("Initializing Fenix");
-
-        try {
-            InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
-            event.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
-
-        } catch (Throwable e) {
-            throw new Error("Error reading actual execution period!", e);
-        }
+        ReadCurrentExecutionPeriod.run();
 
         Installation.ensureInstallation();
         loadUnitNames();
@@ -73,11 +60,7 @@ public class FenixInitializer implements ServletContextListener {
 
         registerChecksumFilterRules();
 
-        registerPresentationStrategy();
-
         registerHealthchecks();
-
-        logger.debug("Fenix initialized successfully");
     }
 
     private void registerHealthchecks() {
@@ -96,28 +79,6 @@ public class FenixInitializer implements ServletContextListener {
                 String response = ((SMTPTransport) transport).getLastServerResponse();
                 transport.close();
                 return Result.healthy("SMTP server returned response: " + response);
-            }
-        });
-    }
-
-    private void registerPresentationStrategy() {
-        User.registerUserPresentationStrategy(new UserPresentationStrategy() {
-            @Override
-            public String shortPresent(User user) {
-                if (user.getProfile() != null) {
-                    return user.getProfile().getDisplayName();
-                } else {
-                    return user.getUsername();
-                }
-            }
-
-            @Override
-            public String present(User user) {
-                if (user.getProfile() != null) {
-                    return user.getProfile().getDisplayName();
-                } else {
-                    return user.getUsername();
-                }
             }
         });
     }

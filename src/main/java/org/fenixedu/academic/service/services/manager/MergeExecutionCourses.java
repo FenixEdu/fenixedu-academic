@@ -18,11 +18,12 @@
  */
 /*
  * Created on 29/Nov/2003
- *  
+ * 
  */
 package org.fenixedu.academic.service.services.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -61,7 +62,6 @@ import org.fenixedu.academic.util.MultiLanguageString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt"> João Mota </a> 29/Nov/2003

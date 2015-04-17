@@ -603,7 +603,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     @Override
-    @Deprecated
     public java.util.Set<org.fenixedu.academic.domain.phd.PhdCandidacyProcessState> getStates() {
         return getStatesSet();
     }

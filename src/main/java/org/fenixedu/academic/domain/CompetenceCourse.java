@@ -101,8 +101,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         // unique acronym creation
         try {
             final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator =
-                    new UniqueAcronymCreator<CompetenceCourse>("name", "acronym",
-                            (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), true);
+                    new UniqueAcronymCreator<CompetenceCourse>(CompetenceCourse::getName, CompetenceCourse::getAcronym,
+                            (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses());
             competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this).getLeft());
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
@@ -228,8 +228,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         String acronym = null;
         try {
             final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator =
-                    new UniqueAcronymCreator<CompetenceCourse>("name", "acronym",
-                            (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), true);
+                    new UniqueAcronymCreator<CompetenceCourse>(CompetenceCourse::getName, CompetenceCourse::getAcronym,
+                            (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses());
             acronym = uniqueAcronymCreator.create(this).getLeft();
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");

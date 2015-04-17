@@ -159,28 +159,6 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
         return new ArrayList<UniversityUnit>(universityUnits);
     }
 
-    /**
-     * @deprecated Legacy from old ErasmusVacancy entity. Use {@link #getAssociatedOpening(Degree, MobilityAgreement)} instead.
-     */
-    @Deprecated
-    public MobilityQuota getAssociatedOpeningsToDegreeAndUniversity(Degree selectedDegree, UniversityUnit selectedUniversity) {
-        if (selectedDegree == null) {
-            return null;
-        }
-
-        if (selectedUniversity == null) {
-            return null;
-        }
-
-        for (MobilityQuota quota : getOpeningsForCountry(selectedUniversity.getCountry())) {
-            if (quota.getDegree() == selectedDegree && quota.getMobilityAgreement().getUniversityUnit() == selectedUniversity) {
-                return quota;
-            }
-        }
-
-        return null;
-    }
-
     public MobilityQuota getAssociatedOpening(Degree degree, MobilityAgreement agreement) {
         if (degree == null || agreement == null) {
             return null;

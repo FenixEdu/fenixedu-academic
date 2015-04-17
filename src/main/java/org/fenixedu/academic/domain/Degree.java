@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -56,7 +55,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -306,23 +304,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return super.getGradeScale();
     }
 
-    public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name, DegreeCurricularPlanState state,
-            Date initialDate, Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
-            MarkType markType, Integer numerusClausus, String anotation, GradeScale gradeScale) {
-        if (!this.isBolonhaDegree()) {
-            for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlansSet()) {
-                if (dcp.getName().equalsIgnoreCase(name)) {
-                    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
-                }
-            }
-
-            return new DegreeCurricularPlan(this, name, state, initialDate, endDate, degreeDuration,
-                    minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, anotation, gradeScale);
-        } else {
-            throw new DomainException("DEGREE.calling.pre.bolonha.method.to.bolonha.degree");
-        }
-    }
-
     public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator,
             AcademicPeriod duration) {
         if (name == null) {
@@ -534,29 +515,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
                     for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                         if (executionSemester == executionCourse.getExecutionPeriod()) {
                             result.add(executionCourse);
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    //TODO remove on next major release
-    @Deprecated
-    public List<ExecutionCourse> getExecutionCourses(final CurricularYear curricularYear,
-            final ExecutionSemester executionSemester) {
-        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
-                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
-                    if (executionSemester == executionCourse.getExecutionPeriod()) {
-                        for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
-                            if (scope.isActiveForExecutionPeriod(executionSemester)
-                                    && scope.getCurricularYear() == curricularYear.getYear()
-                                    && scope.getCurricularSemester() == executionSemester.getSemester()) {
-                                result.add(executionCourse);
-                            }
                         }
                     }
                 }

@@ -32,7 +32,6 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -115,59 +114,6 @@ public class Department extends Department_Base {
             cycles.addAll(degreeType.getCycleTypes());
         }
         return cycles;
-    }
-
-    @Deprecated
-    /**
-     *
-     * This direct association between CompetenceCourses and Departments should no longer be used.
-     * Instead, use the DepartmentUnit to get the CompetenceCourses.
-     *
-     */
-    public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
-        Collection<CompetenceCourse> competenceCourses = this.getCompetenceCoursesSet();
-        List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
-        for (CompetenceCourse competenceCourse : competenceCourses) {
-            if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
-                competenceCoursesByExecutionYear.add(competenceCourse);
-            }
-
-        }
-        return competenceCoursesByExecutionYear;
-    }
-
-    @Deprecated
-    /**
-     *
-     * This direct association between CompetenceCourses and Departments should no longer be used.
-     * Instead, use addAllBolonhaCompetenceCourses()
-     *
-     */
-    public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses,
-            final ExecutionSemester executionSemester) {
-        for (CompetenceCourse competenceCourse : getCompetenceCoursesSet()) {
-            if (competenceCourse.hasActiveScopesInExecutionPeriod(executionSemester)) {
-                competenceCourses.add(competenceCourse);
-            }
-        }
-    }
-
-    @Deprecated
-    /**
-     *
-     * This direct association between CompetenceCourses and Departments should no longer be used.
-     * Instead, use the DepartmentUnit to get the CompetenceCourses.
-     *
-     */
-    public Set<ExecutionCourse> getAllExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
-
-        Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
-
-        for (CompetenceCourse competenceCourse : getCompetenceCoursesSet()) {
-            competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester, executionCourses);
-        }
-
-        return executionCourses;
     }
 
     public String getAcronym() {

@@ -18,14 +18,14 @@
  */
 package org.fenixedu.academic.util;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.dto.GenericPair;
 import org.slf4j.Logger;
@@ -37,17 +37,17 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 
     private static final Logger logger = LoggerFactory.getLogger(UniqueAcronymCreator.class);
 
-    private final String slotName;
-    private final String acronymSlot;
+    private final Function<T, String> slotAccessor;
+    private final Function<T, String> acronymAccessor;
     private final Set<T> objects;
-    private static boolean toLowerCase;
+    private static boolean toLowerCase = true;
 
-    public UniqueAcronymCreator(String slotName, String acronymSlot, Set<T> objects, boolean toLowerCase) throws Exception {
-        this.slotName = slotName;
-        this.acronymSlot = acronymSlot;
-        this.objects = new TreeSet<T>(new BeanComparator(this.slotName));
+    public UniqueAcronymCreator(Function<T, String> slotAccessor, Function<T, String> acronymAccessor, Set<T> objects)
+            throws Exception {
+        this.slotAccessor = slotAccessor;
+        this.acronymAccessor = acronymAccessor;
+        this.objects = new TreeSet<T>(Comparator.comparing(slotAccessor));
         this.objects.addAll(objects);
-        this.toLowerCase = toLowerCase;
     }
 
     private final Map<String, T> existingAcronyms = new HashMap<String, T>();
@@ -57,7 +57,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         colisions.clear();
 
         for (final T object : objects) {
-            String objectAcronym = (String) PropertyUtils.getProperty(object, acronymSlot);
+            String objectAcronym = acronymAccessor.apply(object);
 
             if (objectAcronym != null) {
                 if (existingAcronyms.containsKey(objectAcronym)) {
@@ -76,7 +76,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
     public GenericPair<String, Set<T>> create(T object) throws Exception {
         initialize();
 
-        final String slotValue = (String) PropertyUtils.getProperty(object, slotName);
+        final String slotValue = slotAccessor.apply(object);
         final String slotValueWithNoAccents = noAccent(slotValue);
 
         if (logger.isDebugEnabled()) {

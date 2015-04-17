@@ -45,6 +45,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -267,7 +268,7 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public boolean canTeacherRemoveRoom(ExecutionSemester executionSemester, Teacher teacher, Space room) {
-        for (Lesson lesson : SpaceUtils.getAssociatedLessons(room, executionSemester)) {
+        for (Lesson lesson : getAssociatedLessons(room, executionSemester)) {
             if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
                 if (lesson.getExecutionCourse().teacherLecturesExecutionCourse(teacher)) {
                     return true;
@@ -275,6 +276,20 @@ public class WrittenTest extends WrittenTest_Base {
             }
         }
         return false;
+    }
+
+    private static List<Lesson> getAssociatedLessons(final Space space, final ExecutionSemester executionSemester) {
+        final List<Lesson> lessons = new ArrayList<Lesson>();
+        for (Occupation spaceOccupation : space.getOccupationSet()) {
+            if (spaceOccupation instanceof LessonSpaceOccupation) {
+                LessonSpaceOccupation roomOccupation = (LessonSpaceOccupation) spaceOccupation;
+                final Lesson lesson = roomOccupation.getLesson();
+                if (lesson.getExecutionPeriod() == executionSemester) {
+                    lessons.add(lesson);
+                }
+            }
+        }
+        return lessons;
     }
 
     @Override

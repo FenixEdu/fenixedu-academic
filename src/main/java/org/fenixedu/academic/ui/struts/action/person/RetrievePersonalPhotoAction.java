@@ -29,7 +29,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -37,7 +36,6 @@ import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.domain.Avatar;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,19 +52,6 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(RetrievePersonalPhotoAction.class);
 
-    /**
-     * @deprecated use /user/photo/{username} instead
-     */
-    @Deprecated
-    public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-        final String uuid = request.getParameter("uuid");
-
-        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-        response.setHeader("Location", CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/" + uuid);
-        return null;
-    }
-
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final User userView = Authenticate.getUser();
@@ -76,21 +61,6 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
             return null;
         }
         writeUnavailablePhoto(response);
-        return null;
-    }
-
-    /**
-     * @deprecated use /user/photo/{username} instead
-     */
-    @Deprecated
-    public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        // DEBUG HERE
-        final String personID = request.getParameter("personCode");
-        final Person person = (Person) FenixFramework.getDomainObject(personID);
-        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-        response.setHeader("Location",
-                CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/" + person.getUsername());
         return null;
     }
 

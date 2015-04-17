@@ -36,11 +36,6 @@ public class InsuranceValue extends InsuranceValue_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    @Deprecated
-    public InsuranceValue(ExecutionYear executionYear, Double annualValue, Date endDate) {
-        this(executionYear, BigDecimal.valueOf(annualValue), endDate);
-    }
-
     public InsuranceValue(ExecutionYear executionYear, BigDecimal annualValue, Date endDate) {
         this();
         this.setExecutionYear(executionYear);

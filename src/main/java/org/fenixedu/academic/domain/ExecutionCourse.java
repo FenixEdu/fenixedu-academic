@@ -66,7 +66,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.ProposalState;
-import org.fenixedu.academic.util.domain.OrderedRelationAdapter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
@@ -131,15 +130,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
             };
 
-    public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
-
     static {
         getRelationCurricularCourseExecutionCourse().addListener(new CurricularCourseExecutionCourseListener());
-
-        BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER =
-                new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>("associatedBibliographicReferences",
-                        "referenceOrder");
-        getRelationExecutionCourseBibliographicReference().addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
 
         getRelationCurricularCourseExecutionCourse().addListener(new RelationAdapter<ExecutionCourse, CurricularCourse>() {
 
@@ -409,9 +401,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (; !getLessonPlanningsSet().isEmpty(); getLessonPlanningsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getExecutionCoursePropertiesSet().isEmpty(); getExecutionCoursePropertiesSet().iterator().next().delete()) {
-            ;
-        }
+
         for (; !getAttendsSet().isEmpty(); getAttendsSet().iterator().next().delete()) {
             ;
         }
@@ -1602,7 +1592,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void setBibliographicReferencesOrder(List<BibliographicReference> references) {
-        BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER.updateOrder(this, references);
     }
 
     public List<BibliographicReference> getMainBibliographicReferences() {

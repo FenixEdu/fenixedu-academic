@@ -53,7 +53,7 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     @Override
     protected Collection<? extends ReplyTo> getReplyTos() {
-        return getPhdProgram().getPhdProgramUnit().getUnitBasedSenderSet().iterator().next().getReplyTos();
+        return getPhdProgram().getPhdProgramUnit().getUnitBasedSenderSet().iterator().next().getReplyTosSet();
     }
 
     @Override

@@ -21,57 +21,9 @@ package org.fenixedu.academic.predicate;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
-import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.contacts.PartyContact;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.dto.contacts.PartyContactBean;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 
 public class RolePredicates {
-
-    @Deprecated
-    public static class PartyContactPredicate implements AccessControlPredicate<PartyContact> {
-
-        private static boolean isSelfPerson(Party person) {
-            final User userView = Authenticate.getUser();
-            return userView.getPerson() != null && userView.getPerson().equals(person);
-        }
-
-        public static boolean eval(Person contactPerson) {
-            if (hasRole(RoleType.OPERATOR) || hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson)) {
-                return true;
-            }
-
-            if (contactPerson.getStudent() != null) {
-                return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(
-                        Authenticate.getUser());
-            }
-
-            return false;
-        }
-
-        @Override
-        public boolean evaluate(PartyContact contact) {
-            final Person contactPerson = (Person) contact.getParty();
-            return eval(contactPerson);
-        };
-    }
-
-    @Deprecated
-    public static final PartyContactPredicate PARTY_CONTACT_PREDICATE = new PartyContactPredicate();
-
-    @Deprecated
-    public static final AccessControlPredicate<PartyContactBean> PARTY_CONTACT_BEAN_PREDICATE =
-            new AccessControlPredicate<PartyContactBean>() {
-
-                @Override
-                public boolean evaluate(PartyContactBean contactBean) {
-                    return PartyContactPredicate.eval((Person) contactBean.getParty());
-                }
-            };
 
     public static final AccessControlPredicate<Object> ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE =
             new AccessControlPredicate<Object>() {
@@ -81,40 +33,12 @@ public class RolePredicates {
                 };
             };
 
-    public static final AccessControlPredicate<Object> ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE_AND_GRI =
-            new AccessControlPredicate<Object>() {
-                @Override
-                public boolean evaluate(Object domainObject) {
-                    return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
-                };
-            };
-
     public static final AccessControlPredicate<Object> BOLONHA_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
             return hasRole(RoleType.BOLONHA_MANAGER);
         };
     };
-
-    public static final AccessControlPredicate<Object> COORDINATOR_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.COORDINATOR);
-        };
-    };
-
-    /**
-     * @deprecated use {@link AcademicAuthorizationGroup#get(AcademicOperationType#MANAGE_DEGREE_CURRICULAR_PLANS)}
-     */
-    @Deprecated
-    public static final AccessControlPredicate<Object> DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_PREDICATE =
-            new AccessControlPredicate<Object>() {
-                @Override
-                public boolean evaluate(Object domainObject) {
-                    return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS).isMember(
-                            Authenticate.getUser());
-                };
-            };
 
     public static final AccessControlPredicate<Object> DIRECTIVE_COUNCIL_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
@@ -128,13 +52,6 @@ public class RolePredicates {
         @Override
         public boolean evaluate(Object domainObject) {
             return hasRole(RoleType.GEP);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> LIBRARY_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.LIBRARY);
         };
     };
 
@@ -176,20 +93,6 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> PEDAGOGICAL_COUNCIL_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.PEDAGOGICAL_COUNCIL);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> PERSON_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.PERSON);
-        };
-    };
-
     public static final AccessControlPredicate<Object> RESOURCE_ALLOCATION_MANAGER_PREDICATE =
             new AccessControlPredicate<Object>() {
                 @Override
@@ -202,13 +105,6 @@ public class RolePredicates {
         @Override
         public boolean evaluate(Object domainObject) {
             return hasRole(RoleType.SCIENTIFIC_COUNCIL);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> SPACE_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.SPACE_MANAGER);
         };
     };
 
@@ -232,17 +128,6 @@ public class RolePredicates {
             return isTeacher() || hasRole(RoleType.STUDENT);
         };
     };
-
-    @Deprecated
-    public static final AccessControlPredicate<Object> BOLOGNA_OR_DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_OR_MANAGER_OR_OPERATOR_PREDICATE =
-            new AccessControlPredicate<Object>() {
-                @Override
-                public boolean evaluate(Object domainObject) {
-                    return BOLONHA_MANAGER_PREDICATE.evaluate(domainObject)
-                            || DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_PREDICATE.evaluate(domainObject)
-                            || MANAGER_PREDICATE.evaluate(domainObject) || OPERATOR_PREDICATE.evaluate(domainObject);
-                };
-            };
 
     private static boolean hasRole(final RoleType roleType) {
         final Person person = AccessControl.getPerson();

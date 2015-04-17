@@ -134,7 +134,7 @@ public class Sender extends Sender_Base {
     @Atomic
     public List<ReplyTo> getConcreteReplyTos() {
         List<ReplyTo> replyTos = new ArrayList<ReplyTo>();
-        for (ReplyTo replyTo : getReplyTos()) {
+        for (ReplyTo replyTo : getReplyTosSet()) {
             if (replyTo instanceof CurrentUserReplyTo) {
                 if (AccessControl.getPerson().getReplyTo() == null) {
                     ReplyTo concreteReplyTo = new PersonReplyTo(AccessControl.getPerson());
@@ -168,11 +168,6 @@ public class Sender extends Sender_Base {
             }
         }
         return deletedCounter;
-    }
-
-    @Deprecated
-    public java.util.Set<org.fenixedu.academic.domain.util.email.ReplyTo> getReplyTos() {
-        return getReplyTosSet();
     }
 
 }

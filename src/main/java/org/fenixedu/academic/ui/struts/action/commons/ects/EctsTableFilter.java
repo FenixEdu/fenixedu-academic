@@ -20,7 +20,9 @@ package org.fenixedu.academic.ui.struts.action.commons.ects;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +32,8 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.ui.renderers.converters.AcademicIntervalConverter;
 import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.commons.StringNormalizer;
+
+import com.google.common.io.CharStreams;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -118,7 +122,7 @@ public class EctsTableFilter implements Serializable {
             if (getInputStream() == null) {
                 throw new IOException();
             }
-            content = FileUtils.readFile(getInputStream());
+            content = CharStreams.toString(new InputStreamReader(getInputStream(), Charset.defaultCharset()));
         }
         return content;
     }

@@ -92,12 +92,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
         request.setAttribute("registrationId", registration.getExternalId());
         request.setAttribute("executionSemesterId", executionSemester.getExternalId());
 
-        skipLayoutInjection(request);
         return mapping.findForward("showTimeTable");
-    }
-
-    @Deprecated
-    protected void skipLayoutInjection(HttpServletRequest request) {
     }
 
     private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {

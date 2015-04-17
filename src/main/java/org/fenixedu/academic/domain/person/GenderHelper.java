@@ -28,10 +28,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class GenderHelper {
 
-    @Deprecated
-    // remove on move to major version 4.0.0
-    public static final String GENDER_RESOURCE_BUNDLE = Bundle.APPLICATION;
-
     private GenderHelper() {
         super();
     }

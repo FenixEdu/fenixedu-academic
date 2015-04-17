@@ -18,14 +18,13 @@
  */
 package org.fenixedu.academic.util.report;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
 import org.fenixedu.academic.util.report.ReportPrinter.ReportDescription;
 import org.fenixedu.academic.util.report.ReportPrinter.ReportResult;
-
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class ReportsUtils {
 

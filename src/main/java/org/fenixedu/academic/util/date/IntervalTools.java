@@ -86,16 +86,6 @@ public class IntervalTools {
         return endTime == Long.MAX_VALUE ? null : new YearMonthDay(endTime);
     }
 
-    public static LocalDate getStartLocalDate(Interval interval) {
-        long startTime = interval.getStartMillis();
-        return startTime == Long.MIN_VALUE ? null : new LocalDate(startTime);
-    }
-
-    public static LocalDate getEndLocalDate(Interval interval) {
-        long endTime = interval.getEndMillis();
-        return endTime == Long.MAX_VALUE ? null : new LocalDate(endTime);
-    }
-
     @Deprecated
     public static Interval intervalWithStart(Interval originalInterval, YearMonthDay day) {
         long millis = day.toDateMidnight().getMillis();
@@ -104,16 +94,6 @@ public class IntervalTools {
 
     @Deprecated
     public static Interval intervalWithEnd(Interval originalInterval, YearMonthDay day) {
-        long millis = day.toDateMidnight().toDateTime().withTime(23, 59, 59, 999).getMillis();
-        return new Interval(originalInterval.getStartMillis(), millis);
-    }
-
-    public static Interval intervalWithStart(Interval originalInterval, LocalDate day) {
-        long millis = day.toDateMidnight().getMillis();
-        return new Interval(millis, originalInterval.getEndMillis());
-    }
-
-    public static Interval intervalWithEnd(Interval originalInterval, LocalDate day) {
         long millis = day.toDateMidnight().toDateTime().withTime(23, 59, 59, 999).getMillis();
         return new Interval(originalInterval.getStartMillis(), millis);
     }

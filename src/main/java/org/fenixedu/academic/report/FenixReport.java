@@ -26,10 +26,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.util.DateI18NUtil;
 import org.fenixedu.academic.util.report.ReportPrinter.ReportDescription;
 import org.fenixedu.commons.i18n.I18N;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,8 +122,4 @@ abstract public class FenixReport implements Serializable, ReportDescription {
 
     }
 
-    protected String verboseDate(LocalDate date) {
-        return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth()) + " do mês de "
-                + date.toString("MMMM", new Locale("pt")) + " de " + DateI18NUtil.verboseNumber(date.getYear());
-    }
 }

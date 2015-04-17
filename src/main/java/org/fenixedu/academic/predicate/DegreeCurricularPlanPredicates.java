@@ -24,46 +24,12 @@ package org.fenixedu.academic.predicate;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 public class DegreeCurricularPlanPredicates {
-
-    public static final AccessControlPredicate<DegreeCurricularPlan> readPredicate =
-            new AccessControlPredicate<DegreeCurricularPlan>() {
-
-                @Override
-                public boolean evaluate(DegreeCurricularPlan dcp) {
-
-                    if (!dcp.isBolonhaDegree()) {
-                        return true;
-                    }
-
-                    Person person = AccessControl.getPerson();
-
-                    if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
-                        return true;
-                    }
-
-                    boolean isCurricularPlanMember = dcp.getCurricularPlanMembersGroup().isMember(person.getUser());
-
-                    switch (dcp.getCurricularStage()) {
-                    case DRAFT:
-                        return isCurricularPlanMember;
-                    case PUBLISHED:
-                        return isCurricularPlanMember || RoleType.BOLONHA_MANAGER.isMember(person.getUser());
-                    case APPROVED:
-                        return true;
-                    default:
-                        return false;
-                    }
-
-                }
-
-            };
 
     public static final AccessControlPredicate<DegreeCurricularPlan> scientificCouncilWritePredicate =
             new AccessControlPredicate<DegreeCurricularPlan>() {
@@ -72,16 +38,6 @@ public class DegreeCurricularPlanPredicates {
                 public boolean evaluate(DegreeCurricularPlan dcp) {
                     final Person person = AccessControl.getPerson();
                     return RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser()) || !dcp.isBolonhaDegree();
-                }
-
-            };
-
-    public static final AccessControlPredicate<DegreeCurricularPlan> curricularPlanMemberWritePredicate =
-            new AccessControlPredicate<DegreeCurricularPlan>() {
-
-                @Override
-                public boolean evaluate(DegreeCurricularPlan dcp) {
-                    return !dcp.isBolonhaDegree() || dcp.getCurricularPlanMembersGroup().isMember(Authenticate.getUser());
                 }
 
             };

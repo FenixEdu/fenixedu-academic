@@ -59,14 +59,6 @@ public class CreateCompetenceCourse {
         return competenceCourse;
     }
 
-    @Deprecated
-    @Atomic
-    public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID, ExecutionSemester startSemester)
-            throws FenixServiceException {
-        return run(name, nameEn, acronym, basic, regimeType, competenceCourseLevel, type, unitID, startSemester, null);
-    }
-
     private static void checkIfCanCreateCompetenceCourse(final String name, final String nameEn) throws FenixServiceException {
 
         final String normalizedName = StringFormatter.normalize(name);

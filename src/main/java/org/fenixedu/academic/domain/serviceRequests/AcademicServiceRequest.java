@@ -312,7 +312,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
         final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
         final Recipient recipient = new Recipient(UserGroup.of(getPerson().getUser()));
-        new Message(sender, sender.getReplyTos(), recipient.asCollection(), getDescription(), body, "");
+        new Message(sender, sender.getReplyTosSet(), recipient.asCollection(), getDescription(), body, "");
     }
 
     @Atomic

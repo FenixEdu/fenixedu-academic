@@ -35,18 +35,6 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EditDegreeCurricularPlan {
 
-    @Deprecated
-    @Atomic
-    public static void run(String dcpId, String name, CurricularStage curricularStage,
-            DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, String executionYearID)
-            throws FenixServiceException {
-
-        final DegreeCurricularPlan dcpToEdit = FenixFramework.getDomainObject(dcpId);
-        run(dcpId, name, curricularStage, degreeCurricularPlanState, gradeScale, executionYearID, dcpToEdit.getDegreeStructure()
-                .getAcademicPeriod());
-
-    }
-
     @Atomic
     public static void run(String dcpId, String name, CurricularStage curricularStage,
             DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, String executionYearID,

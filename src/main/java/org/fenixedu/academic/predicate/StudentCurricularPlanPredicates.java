@@ -75,22 +75,6 @@ public class StudentCurricularPlanPredicates {
                 }
             };
 
-    static public AccessControlPredicate<StudentCurricularPlan> ENROL_WITHOUT_RULES =
-            new AccessControlPredicate<StudentCurricularPlan>() {
-
-                @Override
-                public boolean evaluate(final StudentCurricularPlan studentCurricularPlan) {
-                    final Person person = AccessControl.getPerson();
-
-                    if (RoleType.MANAGER.isMember(person.getUser())) {
-                        return true;
-                    }
-
-                    return hasAuthorization(person, AcademicOperationType.ENROLMENT_WITHOUT_RULES,
-                            studentCurricularPlan.getDegree());
-                }
-            };
-
     static public final AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES =
             new AccessControlPredicate<StudentCurricularPlan>() {
 

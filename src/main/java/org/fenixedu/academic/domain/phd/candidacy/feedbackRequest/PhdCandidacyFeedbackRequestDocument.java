@@ -41,10 +41,6 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
         if (obj == null) {
             throw new DomainException("error.phd.PhdProgramProcessDocument.candidacyProcess.cannot.be.null", args);
         }
-        String[] args1 = {};
-        if (element == null) {
-            throw new DomainException("error.PhdCandidacyFeedbackRequestDocument.invalid.element", args1);
-        }
         setElement(element);
 
         init(element.getProcess(), PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT, remarks, content, filename,

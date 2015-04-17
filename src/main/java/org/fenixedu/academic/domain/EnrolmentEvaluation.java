@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.curriculum.GradeFactory;
 import org.fenixedu.academic.domain.curriculum.IGrade;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
-import org.fenixedu.academic.domain.log.EnrolmentEvaluationLog;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
@@ -42,8 +41,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.Atomic;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
@@ -650,22 +647,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
 
         return this.getEnrolmentEvaluationType().getDescription();
-    }
-
-    @Atomic
-    @Deprecated
-    //TODO remove in next major
-    public void deleteEnrolmentEvaluationCurriculumValidationContext() {
-        if (!getEnrolment().getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
-            throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
-        }
-
-        Enrolment enrolment = getEnrolment();
-
-        EnrolmentEvaluationLog.logEnrolmentEvaluationDeletion(this);
-        delete();
-
-        enrolment.changeStateIfAprovedAndEvaluationsIsEmpty();
     }
 
     @Deprecated

@@ -21,18 +21,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 import org.joda.time.YearMonthDay;
 
 public class StudentDiplomaInformation implements java.io.Serializable {
@@ -41,13 +29,6 @@ public class StudentDiplomaInformation implements java.io.Serializable {
      * 
      */
     private static final long serialVersionUID = -7632049994026398211L;
-
-    static final SimpleDateFormat DATE_FORMAT;
-
-    static {
-        DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
-        DATE_FORMAT.setLenient(false);
-    }
 
     private String graduateTitle;
 
@@ -70,71 +51,6 @@ public class StudentDiplomaInformation implements java.io.Serializable {
     private boolean isMasterDegree;
 
     private String filename;
-
-    @SuppressWarnings("unchecked")
-    public static StudentDiplomaInformation buildFromXmlFile(InputStream stream, String fileName) {
-
-        final StudentDiplomaInformation result = createFrom(parseXml(stream));
-        result.filename = fileName;
-
-        return result;
-    }
-
-    private static StudentDiplomaInformation createFrom(final Map<String, String> parseResult) {
-        final StudentDiplomaInformation result = new StudentDiplomaInformation();
-
-        result.isMasterDegree = Boolean.parseBoolean(parseResult.get("MasterDegree"));
-        result.graduateTitle = parseResult.get("GraduateTitle");
-        result.name = parseResult.get("Name");
-        result.nameOfFather = parseResult.get("NameOfFather");
-        result.nameOfMother = parseResult.get("NameOfMother");
-        result.birthLocale = parseResult.get("BirthLocale");
-        result.degreeName = parseResult.get("DegreeFilteredName");
-        result.dissertationTitle = parseResult.get("DissertationTitle");
-        result.classificationResult = parseResult.get("ClassificationResult");
-        result.conclusionDate = parseDate(parseResult.get("ConclusionDate"));
-
-        return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static Map<String, String> parseXml(InputStream stream) {
-
-        try {
-            final SAXBuilder parser = new SAXBuilder(false);
-            final Document document = parser.build(stream);
-            final Element rootElement = document.getRootElement();
-            final Map<String, String> result = new HashMap<String, String>();
-
-            if (rootElement.getName().equals("Aluno_Mestrado")) {
-                result.put("MasterDegree", Boolean.TRUE.toString());
-            } else if (rootElement.getName().equals("Aluno_Doutoramento")) {
-                result.put("MasterDegree", Boolean.FALSE.toString());
-            } else {
-                throw new RuntimeException("Unexpected diploma type");
-            }
-
-            final Element diplomaElement = rootElement.getChild("Carta_Curso");
-            for (final Element childElement : (List<Element>) diplomaElement.getChildren()) {
-                result.put(childElement.getName(), childElement.getValue());
-            }
-
-            return result;
-
-        } catch (JDOMException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static YearMonthDay parseDate(final String rawDate) {
-        try {
-            return YearMonthDay.fromDateFields(DATE_FORMAT.parse(rawDate));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public String getGraduateTitle() {
         return graduateTitle;

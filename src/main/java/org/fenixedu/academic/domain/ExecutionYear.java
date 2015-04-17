@@ -30,7 +30,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent;
@@ -415,28 +414,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         } else {
             return null;
         }
-    }
-
-    static transient private ExecutionYear startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments = null;
-
-    static private ExecutionYear readFromProperties(ExecutionYear executionYear, String yearString) {
-        if (executionYear == null || executionYear.getRootDomainObject() != Bennu.getInstance()) {
-            if (yearString == null || yearString.length() == 0) {
-                executionYear = null;
-            } else {
-                executionYear = readExecutionYearByName(yearString);
-            }
-        }
-
-        return executionYear;
-    }
-
-    public static ExecutionYear readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() {
-        startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments =
-                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments,
-                        FenixEduAcademicConfiguration.getConfiguration()
-                                .getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
-        return startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments;
     }
 
     static public List<ExecutionYear> readOpenExecutionYears() {

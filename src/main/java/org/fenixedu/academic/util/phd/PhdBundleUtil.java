@@ -23,7 +23,6 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.commons.i18n.I18N;
 
 /**
@@ -36,12 +35,6 @@ public class PhdBundleUtil {
 
     private static final String APPLICATION_MODULE = "Application";
     private static final String ENUMERATION_MODULE = "Enumeration";
-
-    @Deprecated
-    public static final String ENUMERATION_BUNDLE = Bundle.ENUMERATION;
-
-    @Deprecated
-    public static final String APPLICATION_BUNDLE = Bundle.APPLICATION;
 
     @Deprecated
     public static String getMessageFromModuleOrApplication(final String moduleName, final String key, final String... arguments) {

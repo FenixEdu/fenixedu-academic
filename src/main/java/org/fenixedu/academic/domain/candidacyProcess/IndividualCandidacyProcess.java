@@ -26,6 +26,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
@@ -40,7 +41,6 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.person.ChoosePersonBean;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.RandomStringGenerator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -63,7 +63,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     protected IndividualCandidacyProcess() {
         super();
-        setAccessHash(RandomStringGenerator.getRandomStringGenerator(16));
+        setAccessHash(RandomStringUtils.random(16, true, true));
         setProcessChecked(Boolean.FALSE);
     }
 

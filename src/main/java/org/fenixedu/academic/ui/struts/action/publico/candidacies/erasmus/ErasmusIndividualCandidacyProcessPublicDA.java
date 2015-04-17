@@ -209,10 +209,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
         CandidacyProcess candidacyProcess = getCurrentOpenParentProcess();
 
-        if (candidacyHashCode == null) {
-            return mapping.findForward("open-candidacy-processes-not-found");
-        }
-
         MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(candidacyProcess);
         bean.setPersonBean(new PersonBean());
         bean.getPersonBean().setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);

@@ -20,13 +20,9 @@ package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.NoSuchElementException;
-import java.util.TreeSet;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -36,8 +32,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituation;
-import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.student.Registration;
@@ -228,148 +222,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null && getEvent().isOpen()) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
         }
-    }
-
-    /**
-     * The DocumentRequestCreator should never have created Past Diploma
-     * Requests as DiplomaRequests. This method can be used for data migrations,
-     * but should be removed once all past diploma requests are migrated.
-     */
-    @Deprecated
-    private boolean isPastDiplomaRequestHack() {
-        TreeSet<AcademicServiceRequestSituation> sortedSituations =
-                new TreeSet<AcademicServiceRequestSituation>(
-                        AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_SITUATION_DATE_AND_ID);
-        sortedSituations.addAll(getAcademicServiceRequestSituationsSet());
-
-        AcademicServiceRequestSituation deliveredSituation, concludedSituation, receivedSituation, sentSituation, processedSituation, newSituation;
-        try {
-            Iterator<AcademicServiceRequestSituation> situationsIterator = sortedSituations.iterator();
-            deliveredSituation = situationsIterator.next();
-            concludedSituation = situationsIterator.next();
-            receivedSituation = situationsIterator.next();
-            sentSituation = situationsIterator.next();
-            processedSituation = situationsIterator.next();
-            newSituation = situationsIterator.next();
-        } catch (NoSuchElementException ex) {
-            return false;
-        }
-
-        if (!deliveredSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.DELIVERED)) {
-            return false;
-        }
-        if (!deliveredSituation.getJustification().equals("-")) {
-            return false;
-        }
-        if (!(deliveredSituation.getSituationDate().hourOfDay().get() == 0)) {
-            return false;
-        }
-        if (!(deliveredSituation.getSituationDate().minuteOfHour().get() == 5)) {
-            return false;
-        }
-
-        // #####################################################
-
-        if (!concludedSituation.getCreator().equals(deliveredSituation.getCreator())) {
-            return false;
-        }
-        if (!concludedSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.CONCLUDED)) {
-            return false;
-        }
-        if (!concludedSituation.getJustification().equals("-")) {
-            return false;
-        }
-        if (!(concludedSituation.getSituationDate().hourOfDay().get() == 0)) {
-            return false;
-        }
-        if (!(concludedSituation.getSituationDate().minuteOfHour().get() == 4)) {
-            return false;
-        }
-
-        // #####################################################
-
-        if (!receivedSituation.getCreator().equals(deliveredSituation.getCreator())) {
-            return false;
-        }
-        if (!receivedSituation.getAcademicServiceRequestSituationType().equals(
-                AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY)) {
-            return false;
-        }
-        if (!receivedSituation.getJustification().equals("-")) {
-            return false;
-        }
-        if (!(receivedSituation.getSituationDate().hourOfDay().get() == 0)) {
-            return false;
-        }
-        if (!(receivedSituation.getSituationDate().minuteOfHour().get() == 3)) {
-            return false;
-        }
-
-        // #####################################################
-
-        if (!sentSituation.getCreator().equals(deliveredSituation.getCreator())) {
-            return false;
-        }
-        if (!sentSituation.getAcademicServiceRequestSituationType().equals(
-                AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY)) {
-            return false;
-        }
-        if (!sentSituation.getJustification().equals("-")) {
-            return false;
-        }
-        if (!(sentSituation.getSituationDate().hourOfDay().get() == 0)) {
-            return false;
-        }
-        if (!(sentSituation.getSituationDate().minuteOfHour().get() == 2)) {
-            return false;
-        }
-        if (!sentSituation.getSituationDate().toLocalDate().equals(receivedSituation.getSituationDate().toLocalDate())) {
-            return false;
-        }
-
-        // #####################################################
-
-        if (!processedSituation.getCreator().equals(deliveredSituation.getCreator())) {
-            return false;
-        }
-        if (!processedSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
-            return false;
-        }
-        if (!processedSituation.getJustification().equals("-")) {
-            return false;
-        }
-        if (!(processedSituation.getSituationDate().hourOfDay().get() == 0)) {
-            return false;
-        }
-        if (!(processedSituation.getSituationDate().minuteOfHour().get() == 1)) {
-            return false;
-        }
-        if (!processedSituation.getSituationDate().toLocalDate().equals(receivedSituation.getSituationDate().toLocalDate())) {
-            return false;
-        }
-
-        // #####################################################
-
-        if (!newSituation.getCreator().equals(deliveredSituation.getCreator())) {
-            return false;
-        }
-        if (!newSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.NEW)) {
-            return false;
-        }
-        if (!StringUtils.isEmpty(newSituation.getJustification())) {
-            return false;
-        }
-        if (!(newSituation.getSituationDate().hourOfDay().get() == 0)) {
-            return false;
-        }
-        if (!(newSituation.getSituationDate().minuteOfHour().get() == 0)) {
-            return false;
-        }
-        if (!newSituation.getSituationDate().toLocalDate().equals(receivedSituation.getSituationDate().toLocalDate())) {
-            return false;
-        }
-
-        return true;
     }
 
     final public boolean hasFinalAverageDescription() {

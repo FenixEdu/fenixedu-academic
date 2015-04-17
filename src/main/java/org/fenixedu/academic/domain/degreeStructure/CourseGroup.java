@@ -95,12 +95,6 @@ public class CourseGroup extends CourseGroup_Base {
         return false;
     }
 
-    @Deprecated
-    public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
-            ExecutionSemester endExecutionPeriod) {
-        edit(name, nameEn, context, beginExecutionPeriod, endExecutionPeriod, getIsOptional());
-    }
-
     public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
             ExecutionSemester endExecutionPeriod, Boolean isOptional) {
         // override, assure that root's name equals degree curricular plan name

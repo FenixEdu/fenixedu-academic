@@ -1360,11 +1360,6 @@ public class Registration extends Registration_Base {
         return students;
     }
 
-    @Deprecated
-    final public static List<Registration> readStudentsByDegreeType(DegreeType degreeType) {
-        return readRegistrationsByDegreeType(degreeType);
-    }
-
     final public static List<Registration> readRegistrationsByDegreeType(DegreeType degreeType) {
         final List<Registration> students = new ArrayList<Registration>();
         for (final Registration registration : Bennu.getInstance().getRegistrationsSet()) {
@@ -3134,11 +3129,6 @@ public class Registration extends Registration_Base {
         return !hasAnyNotPayedGratuityEventsForPreviousYears(ExecutionYear.readCurrentExecutionYear());
     }
 
-    @Deprecated
-    public void setPayedTuition(Boolean value) {
-        throw new UnsupportedOperationException();
-    }
-
     final public boolean getHasGratuityDebtsCurrently() {
         return hasGratuityDebtsCurrently();
     }
@@ -3368,11 +3358,6 @@ public class Registration extends Registration_Base {
 
     public boolean isEnrolmentByStudentInShiftsAllowed() {
         return isActive();
-    }
-
-    @Deprecated
-    final public boolean getIsForDegreeOffice() {
-        return isForOffice(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
     }
 
     public void editStartDates(final LocalDate startDate, final LocalDate homologationDate, final LocalDate studiesStartDate) {

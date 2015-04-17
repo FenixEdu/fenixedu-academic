@@ -85,8 +85,6 @@ import org.fenixedu.academic.api.beans.publico.FenixRoomEvent;
 import org.fenixedu.academic.api.beans.publico.FenixSchedule;
 import org.fenixedu.academic.api.beans.publico.FenixSpace;
 import org.fenixedu.academic.api.infra.FenixAPIFromExternalServer;
-import org.fenixedu.academic.api.infra.FenixAPIPublic;
-import org.fenixedu.academic.api.infra.FenixAPIScope;
 import org.fenixedu.academic.api.infra.JerseyFacesContext;
 import org.fenixedu.academic.domain.AdHocEvaluation;
 import org.fenixedu.academic.domain.Attends;
@@ -252,7 +250,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("person")
-    @FenixAPIScope(PERSONAL_SCOPE)
     @OAuthEndpoint(PERSONAL_SCOPE)
     public FenixPerson person() {
 
@@ -306,7 +303,6 @@ public class FenixAPIv1 {
      * @return enrolled courses and teaching courses
      * @servicetag CURRICULAR_SCOPE
      */
-    @FenixAPIScope(CURRICULAR_SCOPE)
     @OAuthEndpoint(CURRICULAR_SCOPE)
     @GET
     @Produces(JSON_UTF8)
@@ -467,7 +463,6 @@ public class FenixAPIv1 {
      *         following json.
      * @servicetag SCHEDULE_SCOPE
      */
-    @FenixAPIScope(SCHEDULE_SCOPE)
     @OAuthEndpoint(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/evaluations")
@@ -520,7 +515,6 @@ public class FenixAPIv1 {
      *         following json.
      * @servicetag SCHEDULE_SCOPE
      */
-    @FenixAPIScope(SCHEDULE_SCOPE)
     @OAuthEndpoint(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/classes")
@@ -542,7 +536,6 @@ public class FenixAPIv1 {
      * @summary Curriculum
      * @servicetag CURRICULAR_SCOPE
      */
-    @FenixAPIScope(CURRICULAR_SCOPE)
     @OAuthEndpoint(CURRICULAR_SCOPE)
     @GET
     @Path("person/curriculum")
@@ -635,7 +628,6 @@ public class FenixAPIv1 {
      * @return
      * @servicetag PAYMENTS_SCOPE
      */
-    @FenixAPIScope(PAYMENTS_SCOPE)
     @OAuthEndpoint(PAYMENTS_SCOPE)
     @GET
     @Path("person/payments")
@@ -680,7 +672,6 @@ public class FenixAPIv1 {
      * @return enrolled and not enrolled student's evaluations
      * @servicetag EVALUATIONS_SCOPE
      */
-    @FenixAPIScope(EVALUATIONS_SCOPE)
     @OAuthEndpoint(EVALUATIONS_SCOPE)
     @GET
     @Path("person/evaluations")
@@ -731,7 +722,6 @@ public class FenixAPIv1 {
      * @return all evaluations
      * @servicetag EVALUATIONS_SCOPE
      */
-    @FenixAPIScope(EVALUATIONS_SCOPE)
     @OAuthEndpoint(EVALUATIONS_SCOPE)
     @PUT
     @Produces(JSON_UTF8)
@@ -806,7 +796,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("about")
-    @FenixAPIPublic
     public FenixAbout about() {
         return FenixAbout.getInstance();
     }
@@ -820,7 +809,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("academicterms")
-    @FenixAPIPublic
     public String academicTerms() {
         JsonObject obj = new JsonObject();
         for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet()) {
@@ -872,7 +860,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("degrees")
-    @FenixAPIPublic
     public List<FenixDegreeExtended> degrees(@QueryParam("academicTerm") String academicTerm) {
 
         AcademicInterval academicInterval = getAcademicInterval(academicTerm);
@@ -888,7 +875,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("canteen")
-    @FenixAPIPublic
     public String canteen(@QueryParam("day") String day) {
         validateDay(day);
         if (StringUtils.isBlank(day)) {
@@ -900,7 +886,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("contacts")
-    @FenixAPIPublic
     public String contacts() {
         return FenixAPIFromExternalServer.getContacts();
     }
@@ -908,7 +893,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("shuttle")
-    @FenixAPIPublic
     public String shuttle() {
         return FenixAPIFromExternalServer.getShuttle();
     }
@@ -916,7 +900,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("degrees/all")
-    @FenixAPIPublic
     public Set<FenixDegree> degreesAll() {
 
         Set<FenixDegree> degrees = new HashSet<FenixDegree>();
@@ -994,7 +977,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("degrees/{id}")
-    @FenixAPIPublic
     public FenixDegree degreesByOid(@PathParam("id") String oid, @QueryParam("academicTerm") String academicTerm) {
         Degree degree = getDomainObject(oid, Degree.class);
         final AcademicInterval academicInterval = getAcademicInterval(academicTerm, true);
@@ -1022,7 +1004,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("degrees/{id}/courses")
-    @FenixAPIPublic
     public List<FenixExecutionCourse> coursesByODegreesId(@PathParam("id") String oid,
             @QueryParam("academicTerm") String academicTerm) {
 
@@ -1076,7 +1057,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("courses/{id}/")
-    @FenixAPIPublic
     public FenixCourseExtended coursesByOid(@PathParam("id") String oid) {
         ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
@@ -1157,7 +1137,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("courses/{id}/groups")
-    @FenixAPIPublic
     public List<FenixCourseGroup> groupsCoursesByOid(@PathParam("id") final String oid) {
 
         final ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
@@ -1183,7 +1162,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("courses/{id}/students")
-    @FenixAPIPublic
     public FenixCourseStudents studentsCoursesByOid(@PathParam("id") String oid) {
         ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
         return new FenixCourseStudents(executionCourse);
@@ -1201,7 +1179,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("courses/{id}/evaluations")
-    @FenixAPIPublic
     public List<FenixCourseEvaluation> evaluationCoursesByOid(@PathParam("id") String oid) {
 
         ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
@@ -1320,7 +1297,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("courses/{id}/schedule")
-    @FenixAPIPublic
     public FenixSchedule scheduleCoursesByOid(@PathParam("id") String oid) {
         ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
         return new FenixSchedule(executionCourse);
@@ -1335,7 +1311,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("spaces")
-    @FenixAPIPublic
     public List<FenixSpace> spaces() {
 
         List<FenixSpace> campi = new ArrayList<>();
@@ -1357,7 +1332,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("spaces/{id}")
-    @FenixAPIPublic
     public FenixSpace spacesByOid(@PathParam("id") String oid, @QueryParam("day") String day) {
 
         Space space = getDomainObject(oid, Space.class);
@@ -1377,7 +1351,6 @@ public class FenixAPIv1 {
      */
     @GET
     @Path("spaces/{id}/blueprint")
-    @FenixAPIPublic
     public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
 
         final boolean isDwgFormat = format != null && format.equals("dwg");
@@ -1602,7 +1575,6 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("domainModel")
-    @FenixAPIPublic
     public String domainModel() {
         return new FenixDomainModel().toJSONString();
     }

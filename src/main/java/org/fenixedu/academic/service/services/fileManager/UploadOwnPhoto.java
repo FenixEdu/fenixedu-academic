@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.fileManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -28,7 +26,6 @@ import org.fenixedu.academic.domain.PhotoType;
 import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.dto.person.PhotographUploadBean;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.ContentType;
 
 import pt.ist.fenixframework.Atomic;
@@ -42,7 +39,6 @@ public class UploadOwnPhoto {
 
     @Atomic
     static public void run(byte[] contents, ContentType contentType) {
-        check(RolePredicates.PERSON_PREDICATE);
         Person person = AccessControl.getPerson();
         person.setPersonalPhoto(new Photograph(PhotoType.USER, contentType, contents));
     }

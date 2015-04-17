@@ -26,109 +26,61 @@ import javax.faces.model.SelectItem;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class Data extends FenixUtil {
-    private int _dia;
+public class Data {
 
-    private int _mes;
+    public static final String JANUARY_STRING = "Janeiro";
 
-    private int _ano;
+    public static final String FEBRUARY_STRING = "Fevereiro";
 
-    public static String JANUARY_STRING = "Janeiro";
+    public static final String MARCH_STRING = "Março";
 
-    public static String FEBRUARY_STRING = "Fevereiro";
+    public static final String APRIL_STRING = "Abril";
 
-    public static String MARCH_STRING = "Março";
+    public static final String MAY_STRING = "Maio";
 
-    public static String APRIL_STRING = "Abril";
+    public static final String JUNE_STRING = "Junho";
 
-    public static String MAY_STRING = "Maio";
+    public static final String JULY_STRING = "Julho";
 
-    public static String JUNE_STRING = "Junho";
+    public static final String AUGUST_STRING = "Agosto";
 
-    public static String JULY_STRING = "Julho";
+    public static final String SETEMBER_STRING = "Setembro";
 
-    public static String AUGUST_STRING = "Agosto";
+    public static final String OCTOBER_STRING = "Outubro";
 
-    public static String SETEMBER_STRING = "Setembro";
+    public static final String NOVEMBER_STRING = "Novembro";
 
-    public static String OCTOBER_STRING = "Outubro";
+    public static final String DECEMBER_STRING = "Dezembro";
 
-    public static String NOVEMBER_STRING = "Novembro";
+    public static final String OPTION_STRING = "";
 
-    public static String DECEMBER_STRING = "Dezembro";
+    public static final Integer JANUARY = new Integer(0);
 
-    public static String OPTION_STRING = "";
+    public static final Integer FEBRUARY = new Integer(1);
 
-    public static Integer JANUARY = new Integer(0);
+    public static final Integer MARCH = new Integer(2);
 
-    public static Integer FEBRUARY = new Integer(1);
+    public static final Integer APRIL = new Integer(3);
 
-    public static Integer MARCH = new Integer(2);
+    public static final Integer MAY = new Integer(4);
 
-    public static Integer APRIL = new Integer(3);
+    public static final Integer JUNE = new Integer(5);
 
-    public static Integer MAY = new Integer(4);
+    public static final Integer JULY = new Integer(6);
 
-    public static Integer JUNE = new Integer(5);
+    public static final Integer AUGUST = new Integer(7);
 
-    public static Integer JULY = new Integer(6);
+    public static final Integer SETEMBER = new Integer(8);
 
-    public static Integer AUGUST = new Integer(7);
+    public static final Integer OCTOBER = new Integer(9);
 
-    public static Integer SETEMBER = new Integer(8);
+    public static final Integer NOVEMBER = new Integer(10);
 
-    public static Integer OCTOBER = new Integer(9);
+    public static final Integer DECEMBER = new Integer(11);
 
-    public static Integer NOVEMBER = new Integer(10);
+    public static final String OPTION_DEFAULT = null;
 
-    public static Integer DECEMBER = new Integer(11);
-
-    public static String OPTION_DEFAULT = null;
-
-    /* Construtores */
-
-    public Data(int dia, int mes, int ano) {
-        dia(dia);
-        mes(mes);
-        ano(ano);
-    }
-
-    /* Selectores */
-
-    public int dia() {
-        return _dia;
-    }
-
-    public int mes() {
-        return _mes;
-    }
-
-    public int ano() {
-        return _ano;
-    }
-
-    /* Modificadores */
-
-    public void dia(int dia) {
-        _dia = dia;
-    }
-
-    public void mes(int mes) {
-        _mes = mes;
-    }
-
-    public void ano(int ano) {
-        _ano = ano;
-    }
-
-    /* Comparador */
-
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof Data && _dia == ((Data) o).dia() && _mes == ((Data) o).mes() && _ano == ((Data) o).ano();
-    }
-
-    public static List<LabelValueBean> getMonthDays() {
+    public static final List<LabelValueBean> getMonthDays() {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
         for (int i = 1; i <= 31; i++) {
@@ -137,7 +89,7 @@ public class Data extends FenixUtil {
         return result;
     }
 
-    public static List<SelectItem> getMonthDaysSelectItems() {
+    public static final List<SelectItem> getMonthDaysSelectItems() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         for (int i = 1; i <= 31; i++) {
             result.add(new SelectItem(i, new Integer(i).toString()));
@@ -145,7 +97,7 @@ public class Data extends FenixUtil {
         return result;
     }
 
-    public static List<LabelValueBean> getMonths() {
+    public static final List<LabelValueBean> getMonths() {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
         result.add(new LabelValueBean(Data.JANUARY_STRING, Data.JANUARY.toString()));
@@ -163,7 +115,7 @@ public class Data extends FenixUtil {
         return result;
     }
 
-    public static List<LabelValueBean> getMonthsStartingInOne() {
+    public static final List<LabelValueBean> getMonthsStartingInOne() {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
         result.add(new LabelValueBean(Data.JANUARY_STRING, String.valueOf(Data.JANUARY + 1)));
@@ -181,7 +133,7 @@ public class Data extends FenixUtil {
         return result;
     }
 
-    public static List<SelectItem> getMonthsSelectItems() {
+    public static final List<SelectItem> getMonthsSelectItems() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(Data.JANUARY, Data.JANUARY_STRING));
         result.add(new SelectItem(Data.FEBRUARY, Data.FEBRUARY_STRING));
@@ -198,19 +150,7 @@ public class Data extends FenixUtil {
         return result;
     }
 
-    public static List getYears() {
-        List result = new ArrayList();
-        Calendar date = Calendar.getInstance();
-
-        result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
-
-        for (int i = date.get(Calendar.YEAR); i > 1900; i--) {
-            result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
-        }
-        return result;
-    }
-
-    public static List<SelectItem> getExpirationYearsSelectItems() {
+    public static final List<SelectItem> getExpirationYearsSelectItems() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         Calendar date = Calendar.getInstance();
 
@@ -220,29 +160,7 @@ public class Data extends FenixUtil {
         return result;
     }
 
-    public static List getExpirationYears() {
-        List result = new ArrayList();
-        Calendar date = Calendar.getInstance();
-
-        result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
-
-        for (int i = date.get(Calendar.YEAR) - 10; i < (date.get(Calendar.YEAR) + 20); i++) {
-            result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
-        }
-        return result;
-    }
-
-    public static List getCustomYears(int minYear, int maxYear) {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
-
-        for (int i = minYear; i <= maxYear; i++) {
-            result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
-        }
-        return result;
-    }
-
-    public static boolean validDate(Integer day, Integer month, Integer year) {
+    public static final boolean validDate(Integer day, Integer month, Integer year) {
         boolean leapYear = false;
 
         // check 30 day months
@@ -265,87 +183,6 @@ public class Data extends FenixUtil {
         }
 
         return true;
-    }
-
-    /**
-     * Formats date in format d separator M separator YYYY
-     * 
-     * @param Date
-     *            to Format
-     * @return String separator
-     * 
-     */
-    public static String format2DayMonthYear(java.util.Date date, String separator) {
-        if (date == null) {
-            return null;
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        String result = new String();
-        result += calendar.get(Calendar.DAY_OF_MONTH);
-        result += separator;
-        result += calendar.get(Calendar.MONTH) + 1;
-        result += separator;
-        result += calendar.get(Calendar.YEAR);
-        return result;
-    }
-
-    /**
-     * Formats date in format dd separator MM separator YYYY
-     * 
-     * @param Date
-     *            to Format
-     * @return String separator
-     * 
-     */
-    public static String format2DayMonthYearWithZeros(java.util.Date date, String separator) {
-        if (date == null) {
-            return null;
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        String result = new String();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (day < 10) {
-            result += ("0" + day);
-        } else {
-            result += day;
-        }
-        result += separator;
-        int month = calendar.get(Calendar.MONTH) + 1;
-        if (month < 10) {
-            result += ("0" + month);
-        } else {
-            result += month;
-        }
-        result += separator;
-        result += calendar.get(Calendar.YEAR);
-        return result;
-    }
-
-    /**
-     * Formats data in format d-M-YYYY
-     * 
-     * @param Date
-     *            to Format
-     */
-    public static String format2DayMonthYear(java.util.Date date) {
-        return Data.format2DayMonthYear(date, "-");
-    }
-
-    public static java.util.Date convertStringDate(String stringToConvert, String separator) {
-        java.util.Date dateString = null;
-        if (stringToConvert != null && stringToConvert.length() > 0) {
-            String[] dateTokens = stringToConvert.split(separator);
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.DAY_OF_MONTH, (new Integer(dateTokens[0])).intValue());
-            calendar.set(Calendar.MONTH, (new Integer(dateTokens[1])).intValue() - 1);
-            calendar.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
-            dateString = calendar.getTime();
-        }
-        return dateString;
     }
 
 }

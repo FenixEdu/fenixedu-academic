@@ -172,14 +172,6 @@ valueType java.util.UUID as UUID {
     internalizeWith fromString();
 }
 
-valueType org.fenixedu.academic.util.Strings as Strings {
-    externalizeWith {
-        String exportAsString();
-    }
-
-    internalizeWith importFromString();
-}
-
 valueType org.fenixedu.academic.domain.Grade as Grade {
     externalizeWith {
         String exportAsString();
@@ -2044,14 +2036,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer abstractStudentNumber;
         Boolean distributed;
     }
-
-    class classProperties.GeneralClassProperty  {
-        String nameString;
-        String valueString;
-    }
-
-        class classProperties.ExecutionCourseProperty extends classProperties.GeneralClassProperty {
-        }
 
     class contacts.ContactRoot {
     }
@@ -6967,13 +6951,6 @@ relation ExecutionCourseEvaluationMethod {
     ExecutionCourse playsRole executionCourse;
 }
 
-relation ExecutionCourseExecutionCourseProperty {
-    ExecutionCourse playsRole executionCourse;
-    classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
-        multiplicity *;
-    }
-}
-
 relation ExecutionCourseProfessorship {
     ExecutionCourse playsRole executionCourse;
     Professorship playsRole professorships {
@@ -8738,13 +8715,6 @@ relation RootDomainObjectPendingPhotographs {
 relation RootDomainObjectForumSubscription {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     messaging.ForumSubscription playsRole forumSubscriptions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGeneralClassProperty {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    classProperties.GeneralClassProperty playsRole generalClassPropertys {
         multiplicity *;
     }
 }

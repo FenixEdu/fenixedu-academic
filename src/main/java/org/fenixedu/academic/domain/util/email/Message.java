@@ -58,7 +58,7 @@ public class Message extends Message_Base {
     }
 
     public Message(final Sender sender, String to, String subject, String body) {
-        this(sender, sender.getReplyTos(), null, subject, body, to);
+        this(sender, sender.getReplyTosSet(), null, subject, body, to);
     }
 
     public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> tos,

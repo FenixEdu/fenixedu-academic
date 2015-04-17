@@ -35,40 +35,6 @@ import org.fenixedu.bennu.core.groups.Group;
  */
 public class CompetenceCoursePredicates {
 
-    public static final AccessControlPredicate<CompetenceCourse> readPredicate = new AccessControlPredicate<CompetenceCourse>() {
-
-        @Override
-        public boolean evaluate(CompetenceCourse competenceCourse) {
-
-            if (!competenceCourse.isBolonha()) {
-                return true;
-            }
-
-            Person person = AccessControl.getPerson();
-            if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
-                return true;
-            }
-
-            boolean isDegreeCurricularPlansMember = false;
-            isDegreeCurricularPlansMember = isMemberOfDegreeCurricularPlansGroup(person);
-
-            boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
-
-            switch (competenceCourse.getCurricularStage()) {
-            case DRAFT:
-                return isCompetenceGroupMember;
-            case PUBLISHED:
-                return isCompetenceGroupMember || isDegreeCurricularPlansMember;
-            case APPROVED:
-                return true;
-            default:
-                return false;
-            }
-
-        }
-
-    };
-
     public static final AccessControlPredicate<CompetenceCourse> writePredicate = new AccessControlPredicate<CompetenceCourse>() {
 
         @Override

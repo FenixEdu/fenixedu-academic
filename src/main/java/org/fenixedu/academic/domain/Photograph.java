@@ -19,19 +19,9 @@
 package org.fenixedu.academic.domain;
 
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.photograph.AspectRatio;
 import org.fenixedu.academic.domain.photograph.Picture;
 import org.fenixedu.academic.domain.photograph.PictureMode;
@@ -61,8 +51,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private static final int COMPRESSED_PHOTO_HEIGHT = 100;
 
-    private static final String RESOURCE_BUNDLE_NAME = Bundle.PERSONAL;
-
     private static final String REJECTION_MAIL_SUBJECT_KEY = "photo.email.subject.rejection";
 
     private static final String REJECTION_MAIL_BODY_KEY = "photo.email.body.rejection";
@@ -77,13 +65,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         this();
         setPhotoType(photoType);
         new PictureOriginal(this, original, contentType);
-    }
-
-    @Override
-    @Deprecated
-    public ContentType getContentType() {
-        return super.getContentType();
-        //throw new DomainException("error.photograph.illegalCall");
     }
 
     @Override
@@ -201,48 +182,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     public byte[] getCustomAvatar(int width, int height, PictureMode pictureMode) {
         return getCustomAvatar(width, height, width, height, pictureMode);
-    }
-
-    @Deprecated
-    static private byte[] compressImage(byte[] content, ContentType contentType) {
-        BufferedImage image;
-        try {
-            image = ImageIO.read(new ByteArrayInputStream(content));
-        } catch (IOException e) {
-            throw new DomainException("photograph.compress.errorReadingImage", e);
-        }
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        // calculate resize factor
-        double resizeFactor =
-                Math.min((double) COMPRESSED_PHOTO_WIDTH / image.getWidth(), (double) COMPRESSED_PHOTO_HEIGHT / image.getHeight());
-
-        if (resizeFactor == 1) {
-            return content;
-        }
-
-        // resize image
-        AffineTransform tx = new AffineTransform();
-        tx.scale(resizeFactor, resizeFactor);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        image = op.filter(image, null);
-
-        // set compression
-        ImageWriter writer = ImageIO.getImageWritersByMIMEType(contentType.getMimeType()).next();
-        ImageWriteParam param = writer.getDefaultWriteParam();
-        if (contentType == ContentType.JPG) {
-            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            param.setCompressionQuality(1);
-        }
-
-        // write to stream
-        try {
-            writer.setOutput(ImageIO.createImageOutputStream(outputStream));
-            writer.write(null, new IIOImage(image, null, null), param);
-        } catch (IOException e) {
-            throw new DomainException("photograph.compress.errorWritingImage", e);
-        }
-        return outputStream.toByteArray();
     }
 
     @Override

@@ -19,7 +19,9 @@
 package org.fenixedu.academic.ui.struts.action.publicRelationsOffice;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,6 +58,8 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
 import org.joda.time.DateTime;
+
+import com.google.common.io.CharStreams;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -171,7 +175,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
         final UsernameFileBean usernameFileBean = getRenderedObject();
-        final String contents = FileUtils.readFile(usernameFileBean.getInputStream());
+        final String contents = CharStreams.toString(new InputStreamReader(usernameFileBean.getInputStream(), Charset.defaultCharset()));
         final Set<String> usernames = findUsernames(contents);
         cerimonyInquiry.addPeople(usernames);
         return forwardToInquiry(mapping, request, "viewAlumniCerimonyInquiry", cerimonyInquiry);

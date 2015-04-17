@@ -40,12 +40,6 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
         setWeight(weight);
     }
 
-    @Deprecated
-    public static TeacherCategory find(String name) {
-        return Bennu.getInstance().getTeacherCategorySet().stream().filter(c -> c.getName().getContent().equalsIgnoreCase(name))
-                .findAny().orElse(null);
-    }
-
     public static Optional<TeacherCategory> findByCode(String code) {
         if (Strings.isNullOrEmpty(code)) {
             return Optional.empty();

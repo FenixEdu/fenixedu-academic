@@ -64,9 +64,4 @@ public class ShowStudentTimeTable extends ViewStudentTimeTable {
         }
     }
 
-    @Override
-    protected void skipLayoutInjection(HttpServletRequest request) {
-        // Don't skip layout injection
-    }
-
 }

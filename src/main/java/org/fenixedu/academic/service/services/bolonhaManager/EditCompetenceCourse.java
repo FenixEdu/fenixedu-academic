@@ -44,14 +44,6 @@ public class EditCompetenceCourse {
         competenceCourse.edit(objectives, program, evaluationMethod, objectivesEn, programEn, evaluationMethodEn);
     }
 
-    @Deprecated
-    protected void run(String competenceCourseID, String name, String nameEn, Boolean basic,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage)
-            throws FenixServiceException {
-        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
-        run(competenceCourseID, name, nameEn, basic, competenceCourseLevel, type, curricularStage, competenceCourse.getCode());
-    }
-
     protected void run(String competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, String code)
             throws FenixServiceException {
@@ -270,13 +262,4 @@ public class EditCompetenceCourse {
         }
     }
 
-    @Deprecated
-    @Atomic
-    public static void runEditCompetenceCourse(String competenceCourseID, String name, String nameEn, Boolean basic,
-            CompetenceCourseLevel enumCompetenceCourseLevel, CompetenceCourseType enumCompetenceCourseType,
-            CurricularStage valueOf) throws FenixServiceException {
-        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
-        runEditCompetenceCourse(competenceCourseID, name, nameEn, basic, enumCompetenceCourseLevel, enumCompetenceCourseType,
-                valueOf, competenceCourse.getCode());
-    }
 }

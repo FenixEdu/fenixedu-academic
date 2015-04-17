@@ -26,11 +26,6 @@ public class FenixEduAcademicConfiguration {
     @ConfigurationManager(description = "FenixEdu Academic Configuration")
     public interface ConfigurationProperties {
 
-        @ConfigurationProperty(key = "dges.username.prefix",
-                description = "The prefix for the username of students created via the DGES Student Importation Process.",
-                defaultValue = "ist1")
-        public String dgesUsernamePrefix();
-
         @ConfigurationProperty(key = "ciist.sms.gateway.url")
         public String getCIISTSMSGatewayUrl();
 
@@ -88,12 +83,6 @@ public class FenixEduAcademicConfiguration {
                 defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&confirmationCode=")
         public String getGenericApplicationEmailRecommendationLink();
 
-        @ConfigurationProperty(key = "lastSemesterForCredits")
-        public String getLastSemesterForCredits();
-
-        @ConfigurationProperty(key = "lastYearForCredits", defaultValue = "2010/2011")
-        public String getLastYearForCredits();
-
         @ConfigurationProperty(key = "mailSender.max.recipients", defaultValue = "50")
         public String getMailSenderMaxRecipients();
 
@@ -139,17 +128,11 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "start.semester.for.bolonha.transition", defaultValue = "1")
         public String getStartSemesterForBolonhaTransition();
 
-        @ConfigurationProperty(key = "startSemesterForCredits", defaultValue = "2")
-        public String getStartSemesterForCredits();
-
         @ConfigurationProperty(key = "start.year.for.bolonha.degrees", defaultValue = "2006/2007")
         public String getStartYearForBolonhaDegrees();
 
         @ConfigurationProperty(key = "start.year.for.bolonha.transition", defaultValue = "2007/2008")
         public String getStartYearForBolonhaTransition();
-
-        @ConfigurationProperty(key = "startYearForCredits", defaultValue = "2002/2003")
-        public String getStartYearForCredits();
 
         @ConfigurationProperty(key = "twilio.from.number")
         public String getTwilioFromNumber();
