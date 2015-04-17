@@ -153,11 +153,6 @@
             <version>3.3.9</version>
         </dependency>
         <dependency>
-            <groupId>net.spy</groupId>
-            <artifactId>memcached</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>taglibs</groupId>
             <artifactId>datetime</artifactId>
             <version>1.0.1</version>

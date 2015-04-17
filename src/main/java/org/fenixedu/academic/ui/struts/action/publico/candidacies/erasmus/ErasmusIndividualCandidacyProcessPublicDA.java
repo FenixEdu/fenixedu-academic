@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.publico.candidacies.erasmus;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -29,8 +28,6 @@ import java.util.Set;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.spy.memcached.MemcachedClient;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -73,9 +70,6 @@ import org.fenixedu.academic.ui.struts.action.publico.PublicApplication.PublicCa
 import org.fenixedu.academic.ui.struts.action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.report.ReportsUtils;
-import org.fenixedu.academic.util.stork.AttributesManagement;
-import org.fenixedu.academic.util.stork.SPUtil;
-import org.fenixedu.academic.util.stork.StorkToPersonBeanTranslation;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -543,122 +537,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         return mapping.findForward("redirect-to-peps");
     }
 
-    public ActionForward returnFromPeps(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        AttributesManagement attrManagement = null;
-        try {
-            String memcachedCode = request.getParameter("key");
-            MemcachedClient c =
-                    new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil.getInstance()
-                            .getMemcachedPort()));
-
-            String attrList = null;
-            if (!StringUtils.isEmpty((String) request.getAttribute("storkTestAttrList"))) {
-                attrList = (String) request.getAttribute("storkTestAttrList");
-            } else {
-                attrList = (String) c.get(memcachedCode);
-            }
-
-            if (StringUtils.isEmpty(attrList)) {
-                return mapping.findForward("stork-error-authentication-failed");
-            }
-
-            attrManagement = new AttributesManagement(attrList);
-
-            if (StringUtils.isEmpty(attrManagement.getStorkReturnCode())
-                    || !AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-                String errorCode = attrManagement.getStorkErrorCode();
-                String errorMessage = attrManagement.getStorkErrorMessage();
-
-                Exception e =
-                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
-                                errorCode, errorMessage));
-                logger.error(e.getMessage(), e);
-                return mapping.findForward("stork-error-authentication-failed");
-            }
-
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            return mapping.findForward("stork-error-authentication-failed");
-        }
-
-        String eIdentifier = attrManagement.getEIdentifier();
-
-        ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-        if (actionForwardError != null) {
-            return actionForwardError;
-        }
-
-        MobilityApplicationProcess candidacyProcess = (MobilityApplicationProcess) getCurrentOpenParentProcess();
-
-        if (!StringUtils.isEmpty(eIdentifier) && candidacyProcess.getProcessByEIdentifier(eIdentifier) != null) {
-            return mapping.findForward("stork-candidacy-already-bounded");
-        }
-
-        MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(candidacyProcess);
-        bean.setPersonBean(new PersonBean());
-
-        setPersonalFieldsFromStork(attrManagement, eIdentifier, bean);
-
-        request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-
-        return mapping.findForward("show-application-submission-conditions-for-stork");
-    }
-
-    private void setPersonalFieldsFromStork(AttributesManagement attrManagement, String eIdentifier,
-            MobilityIndividualApplicationProcessBean bean) {
-        StorkToPersonBeanTranslation.copyStorkAttributesToPersonBean(bean.getPersonBean(), attrManagement);
-        bean.getPersonBean().setEidentifier(eIdentifier);
-        bean.setPersonalFieldsFromStork(attrManagement.getStorkAttributesList());
-        bean.willAccessFenix();
-    }
-
     public ActionForward accessApplicationWithNationalCitizenCard(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("redirect-to-peps-to-access-application");
-    }
-
-    public ActionForward returnFromPepsToAccessApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        AttributesManagement attrManagement = null;
-        try {
-            String memcachedCode = request.getParameter("key");
-            MemcachedClient c =
-                    new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil.getInstance()
-                            .getMemcachedPort()));
-            String attrList = (String) c.get(memcachedCode);
-
-            if (StringUtils.isEmpty(attrList)) {
-                return mapping.findForward("stork-error-authentication-failed");
-            }
-
-            attrManagement = new AttributesManagement(attrList);
-
-            if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-                Exception e =
-                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
-                                attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage()));
-                logger.error(e.getMessage(), e);
-                return mapping.findForward("stork-error-authentication-failed");
-            }
-
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            return mapping.findForward("stork-error-authentication-failed");
-        }
-
-        String eidentifier = attrManagement.getEIdentifier();
-        MobilityIndividualApplicationProcess process =
-                ((MobilityApplicationProcess) getCurrentOpenParentProcess()).getOpenProcessByEIdentifier(eidentifier);
-
-        if (process == null) {
-            return mapping.findForward("open-candidacy-processes-not-found");
-        }
-
-        request.setAttribute("individualCandidacyProcess", process);
-        return viewCandidacy(mapping, form, request, response);
     }
 
     public ActionForward prepareCandidacyCreationForStork(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -971,14 +852,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         return mapping.findForward("stork-attr-list-test");
     }
 
-    public ActionForward testStorkAttrString(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        StorkAttrStringTestBean bean = (StorkAttrStringTestBean) getObjectFromViewState("attr.string.test.bean");
-        request.setAttribute("storkTestAttrList", bean.getAttrList());
-
-        return returnFromPeps(mapping, form, request, response);
-    }
-
     public ActionForward prepareBindLinkSubmitedIndividualCandidacyWithStork(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         MobilityIndividualApplicationProcessBean bean =
@@ -986,48 +859,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
         return mapping.findForward("bind-link-submited-individual-candidacy-with-stork");
-    }
-
-    public ActionForward bindLinkSubmitedIndividualCandidacyWithStork(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
-        AttributesManagement attrManagement = null;
-        try {
-            String memcachedCode = request.getParameter("key");
-            MemcachedClient c =
-                    new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil.getInstance()
-                            .getMemcachedPort()));
-            String attrList = (String) c.get(memcachedCode);
-
-            if (StringUtils.isEmpty(attrList)) {
-                return mapping.findForward("stork-error-authentication-failed");
-            }
-
-            attrManagement = new AttributesManagement(attrList);
-
-            if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-                Exception e =
-                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
-                                attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage()));
-                logger.error(e.getMessage(), e);
-                return mapping.findForward("stork-error-authentication-failed");
-            }
-
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            return mapping.findForward("stork-error-authentication-failed");
-        }
-
-        String eidentifier = attrManagement.getEIdentifier();
-        MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) getProcess(request);
-
-        if (process == null) {
-            return mapping.findForward("open-candidacy-processes-not-found");
-        }
-
-        executeActivity(process, "BindLinkSubmitedIndividualCandidacyWithEidentifier", eidentifier);
-
-        request.setAttribute("individualCandidacyProcess", process);
-        return mapping.findForward("show-bind-process-success");
     }
 
     public ActionForward answerNationalIdCardAvoidanceQuestion(ActionMapping mapping, ActionForm form,
