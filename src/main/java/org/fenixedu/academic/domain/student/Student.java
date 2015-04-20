@@ -44,10 +44,8 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.Ingression;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
@@ -67,14 +65,12 @@ import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.predicate.StudentPredicates;
 import org.fenixedu.academic.util.InvocationResult;
-import org.fenixedu.academic.util.Money;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -494,75 +490,6 @@ public class Student extends Student_Base {
         setPerson(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    // TODO: This should be removed when master degree payments start using
-    // Events and Posting Rules for payments
-    public MasterDegreeInsurancePaymentCode calculateMasterDegreeInsurancePaymentCode(final ExecutionYear executionYear) {
-        if (!hasMasterDegreeInsurancePaymentCodeFor(executionYear)) {
-            return createMasterDegreeInsurancePaymentCode(executionYear);
-        } else {
-            final MasterDegreeInsurancePaymentCode masterDegreeInsurancePaymentCode =
-                    getMasterDegreeInsurancePaymentCodeFor(executionYear);
-            final Money insuranceAmount = new Money(executionYear.getInsuranceValue().getAnnualValueBigDecimal());
-            masterDegreeInsurancePaymentCode.update(new YearMonthDay(),
-                    calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount, insuranceAmount);
-
-            return masterDegreeInsurancePaymentCode;
-        }
-    }
-
-    private MasterDegreeInsurancePaymentCode createMasterDegreeInsurancePaymentCode(final ExecutionYear executionYear) {
-        final Money insuranceAmount = new Money(executionYear.getInsuranceValue().getAnnualValueBigDecimal());
-        return MasterDegreeInsurancePaymentCode.create(new YearMonthDay(),
-                calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount, insuranceAmount, this,
-                executionYear);
-    }
-
-    private YearMonthDay calculateMasterDegreeInsurancePaymentCodeEndDate(final ExecutionYear executionYear) {
-        final YearMonthDay insuranceEndDate = executionYear.getInsuranceValue().getEndDateYearMonthDay();
-        final YearMonthDay now = new YearMonthDay();
-
-        if (now.isAfter(insuranceEndDate)) {
-            final YearMonthDay nextMonth = now.plusMonths(1);
-            return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
-        } else {
-            return insuranceEndDate;
-        }
-    }
-
-    private MasterDegreeInsurancePaymentCode getMasterDegreeInsurancePaymentCodeFor(final ExecutionYear executionYear) {
-        for (final PaymentCode paymentCode : getPerson().getPaymentCodesSet()) {
-            if (paymentCode instanceof MasterDegreeInsurancePaymentCode) {
-                final MasterDegreeInsurancePaymentCode masterDegreeInsurancePaymentCode =
-                        ((MasterDegreeInsurancePaymentCode) paymentCode);
-                if (masterDegreeInsurancePaymentCode.getExecutionYear() == executionYear) {
-                    return masterDegreeInsurancePaymentCode;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    private boolean hasMasterDegreeInsurancePaymentCodeFor(final ExecutionYear executionYear) {
-        return getMasterDegreeInsurancePaymentCodeFor(executionYear) != null;
-    }
-
-    // TODO: this method should be refactored as soon as possible
-    public boolean hasToPayMasterDegreeInsuranceFor(final ExecutionYear executionYear) {
-        for (final Registration registration : getRegistrationsMatchingDegreeType(DegreeType::isPreBolonhaMasterDegree)) {
-            if (!registration.isActive() || registration.getActiveStudentCurricularPlan() == null) {
-                continue;
-            }
-
-            if (!registration.hasToPayMasterDegreeInsurance(executionYear)) {
-                return false;
-            }
-
-        }
-
-        return true;
     }
 
     public Set<ExecutionSemester> getEnroledExecutionPeriods() {

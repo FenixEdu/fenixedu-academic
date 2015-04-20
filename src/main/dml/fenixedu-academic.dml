@@ -72,7 +72,6 @@ enum org.fenixedu.academic.domain.candidacy.Ingression                          
 enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
 enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
 enum org.fenixedu.academic.domain.contacts.PartyContactType                                                            as PartyContactType;
-enum org.fenixedu.academic.domain.curricularPeriod.CurricularPeriodType                                                as CurricularPeriodType;
 enum org.fenixedu.academic.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
 enum org.fenixedu.academic.domain.curriculum.CurricularCourseType                                                      as CurricularCourseType;
 enum org.fenixedu.academic.domain.curriculum.EnrollmentCondition                                                       as EnrollmentCondition;

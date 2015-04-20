@@ -26,7 +26,6 @@ import java.util.regex.Pattern;
 
 import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher;
 import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
-import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.rules.Rule;
 
 /**
  * This output stream makes some parsing of the content written to it. The
@@ -101,7 +100,7 @@ public class TransformUrlsStream extends OutputStream {
             String attribute = matcher.group(1);
 
             String foundUrl = matcher.group(3);
-            String transformedUrl = processRules(foundUrl);
+            String transformedUrl = foundUrl;
 
             write(String.format("%s%s=\"%s\"", line.substring(pos, matcher.start()), attribute, transformedUrl));
 
@@ -111,25 +110,6 @@ public class TransformUrlsStream extends OutputStream {
         // write what is left and reset buffer
         write(line.substring(pos));
         buffer.reset();
-    }
-
-    private String processRules(String url) {
-        String transformedUrl = url;
-
-        for (Rule rule : this.resource.getRules()) {
-            if (rule.matches(url)) {
-                transformedUrl = rule.transform(url);
-
-                Resource resource = rule.getResource(url, transformedUrl);
-                if (resource != null) {
-                    this.fetcher.queue(resource);
-                }
-
-                break;
-            }
-        }
-
-        return transformedUrl;
     }
 
     private void write(String string) throws IOException {

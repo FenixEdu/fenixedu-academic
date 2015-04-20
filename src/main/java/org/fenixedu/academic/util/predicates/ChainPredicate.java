@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-public abstract class ChainPredicate<T> implements Predicate<T> {
+abstract class ChainPredicate<T> implements Predicate<T> {
 
     protected Collection<Predicate<T>> predicates;
 

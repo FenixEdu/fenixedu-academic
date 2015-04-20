@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -37,7 +36,6 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.ui.struts.action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
-import org.fenixedu.commons.i18n.I18N;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private static final String SIBS_ENTITY_CODE = FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode();
@@ -59,10 +57,6 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
         if (forward != null) {
             return forward;
         }
-
-        //TODO remove this when public sites portalization is complete
-        request.setAttribute(Globals.LOCALE_KEY, I18N.getLocale());
-        request.getSession().setAttribute(Globals.LOCALE_KEY, I18N.getLocale());
 
         return super.execute(mapping, actionForm, request, response);
     }

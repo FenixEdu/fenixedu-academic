@@ -456,16 +456,3 @@
 		<property name="format" value="${executionYear.year}" />
     </slot>
 </schema>
-
-<!--
-<schema name="coordinator.xviews.inar" type="org.fenixedu.academic.ui.struts.action.coordinator.xviews.Inar" bundle="COORDINATOR_RESOURCES">
-	<slot name="enrolled" key="label.enrolled">
-		<property name="bundle" value="COORDINATOR_RESOURCES"/>
-	</slot>
-	<slot name="frequenting" key="label.frequenting" />
-	<slot name="approved" key="label.approved" />
-	<slot name="notEvaluated" key="label.notEvaluated" />
-	<slot name="flunked" key="label.flunked" />
-	<slot name="checksum" key="label.checksum"/>
-</schema>
--->

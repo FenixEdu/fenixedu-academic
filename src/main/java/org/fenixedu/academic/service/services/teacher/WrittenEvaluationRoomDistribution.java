@@ -36,8 +36,8 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class WrittenEvaluationRoomDistribution {
 
-    protected void run(String executionCourseID, String evaluationID, List<String> roomIDs, Boolean sendSMS,
-            Boolean distributeOnlyEnroledStudents) throws FenixServiceException {
+    protected void run(String executionCourseID, String evaluationID, List<String> roomIDs, Boolean distributeOnlyEnroledStudents)
+            throws FenixServiceException {
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(evaluationID);
         if (writtenEvaluation == null) {
@@ -56,9 +56,6 @@ public class WrittenEvaluationRoomDistribution {
             throw new FenixServiceException("error.repeated.rooms");
         }
         writtenEvaluation.distributeStudentsByRooms(studentsToDistribute, selectedRooms);
-        if (sendSMS) {
-            sendSMSToStudents(writtenEvaluation);
-        }
     }
 
     private List<Space> readRooms(final WrittenEvaluation writtenEvaluation, final List<String> roomIDs) {
@@ -109,19 +106,15 @@ public class WrittenEvaluationRoomDistribution {
         return result;
     }
 
-    private void sendSMSToStudents(WrittenEvaluation writtenEvaluation) {
-        // TODO: Send SMS method: fill this method when we have sms
-    }
-
     // Service Invokers migrated from Berserk
 
     private static final WrittenEvaluationRoomDistribution serviceInstance = new WrittenEvaluationRoomDistribution();
 
     @Atomic
     public static void runWrittenEvaluationRoomDistribution(String executionCourseID, String evaluationID, List<String> roomIDs,
-            Boolean sendSMS, Boolean distributeOnlyEnroledStudents) throws FenixServiceException, NotAuthorizedException {
+            Boolean distributeOnlyEnroledStudents) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseAndExamLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID, evaluationID);
-        serviceInstance.run(executionCourseID, evaluationID, roomIDs, sendSMS, distributeOnlyEnroledStudents);
+        serviceInstance.run(executionCourseID, evaluationID, roomIDs, distributeOnlyEnroledStudents);
     }
 
 }

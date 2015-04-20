@@ -9,13 +9,9 @@ public class ResultCollection<T> {
     private Predicate<T> predicate;
     private Collection<T> result;
 
-    public ResultCollection(final Collection<T> result, final Predicate<T> predicate) {
-        this.result = result;
-        this.predicate = predicate;
-    }
-
     public ResultCollection(final Predicate<T> predicate) {
-        this(new ArrayList<T>(), predicate);
+        this.result = new ArrayList<>();
+        this.predicate = predicate;
     }
 
     public Collection<T> getResult() {

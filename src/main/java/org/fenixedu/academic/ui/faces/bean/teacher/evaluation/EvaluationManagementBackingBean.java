@@ -92,13 +92,12 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.Season;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-
-import org.fenixedu.commons.spreadsheet.Spreadsheet;
-import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -970,7 +969,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         try {
             final Boolean distributeOnlyEnroledStudents = Boolean.valueOf(this.getDistributeEnroledStudentsOption());
             WrittenEvaluationRoomDistribution.runWrittenEvaluationRoomDistribution(getExecutionCourseID(), getEvaluationID(),
-                    getRoomIDs(), Boolean.FALSE, distributeOnlyEnroledStudents);
+                    getRoomIDs(), distributeOnlyEnroledStudents);
             return "enterShowStudentsEnroled";
         } catch (Exception e) {
             setErrorMessage(e.getMessage());

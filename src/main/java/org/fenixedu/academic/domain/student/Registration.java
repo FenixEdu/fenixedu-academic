@@ -1416,29 +1416,6 @@ public class Registration extends Registration_Base {
         return nonReimbursedInsuranceTransactions;
     }
 
-    // TODO: to remove as soon as possible
-    boolean hasToPayMasterDegreeInsurance(final ExecutionYear executionYear) {
-        final StudentCurricularPlan activeStudentCurricularPlan = getActiveStudentCurricularPlan();
-        final boolean isSpecialization =
-                (activeStudentCurricularPlan.getSpecialization() == Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION);
-
-        if (isSpecialization) {
-
-            if (!getEnrolments(executionYear).isEmpty()) {
-                return true;
-            }
-
-            final ExecutionDegree executionDegreeByYear = getActiveDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
-            if (executionDegreeByYear != null && executionDegreeByYear.isFirstYear()) {
-                return true;
-            }
-
-            return false;
-        }
-
-        return readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear).isEmpty();
-    }
-
     final public Enrolment findEnrolmentByEnrolmentID(final String enrolmentID) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);

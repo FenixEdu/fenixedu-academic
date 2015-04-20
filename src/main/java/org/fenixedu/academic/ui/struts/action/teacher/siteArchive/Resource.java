@@ -18,11 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher.siteArchive;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.rules.Rule;
 
 /**
  * A <tt>Resource</tt> represents something that needs to be retrieved by the
@@ -43,8 +38,6 @@ public class Resource {
     private String url;
     private String name;
 
-    private List<Rule> rules;
-
     /**
      * Creates a new resource with the given local name and the given url.
      * 
@@ -59,7 +52,6 @@ public class Resource {
         this.url = url;
         this.name = name;
 
-        this.rules = new ArrayList<Rule>();
     }
 
     public String getName() {
@@ -68,18 +60,6 @@ public class Resource {
 
     public String getUrl() {
         return this.url;
-    }
-
-    public List<Rule> getRules() {
-        return this.rules;
-    }
-
-    public void addRule(Rule rule) {
-        this.rules.add(rule);
-    }
-
-    public void addAllRules(Collection<Rule> rules) {
-        this.rules.addAll(rules);
     }
 
     @Override

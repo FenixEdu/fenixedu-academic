@@ -10,8 +10,6 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonParser;
 
@@ -19,8 +17,6 @@ import com.google.gson.JsonParser;
 public class MultiLanguageString implements Serializable, Comparable<MultiLanguageString> {
     public static final Locale en = new Builder().setLanguage("en").setRegion("UK").build();
     public static final Locale pt = new Builder().setLanguage("pt").setRegion("PT").build();
-
-    protected static final Logger logger = LoggerFactory.getLogger(MultiLanguageString.class);
 
     private final LocalizedString localized;
 
@@ -55,15 +51,6 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
      */
     public MultiLanguageString with(final Locale locale, final String content) {
         return new MultiLanguageString(localized.with(locale, content));
-    }
-
-    /**
-     * @see MultiLanguageString#with(String)
-     * @param content
-     * @return
-     */
-    public MultiLanguageString withDefault(final String content) {
-        return with(I18N.getLocale(), content);
     }
 
     public MultiLanguageString without(Locale locale) {

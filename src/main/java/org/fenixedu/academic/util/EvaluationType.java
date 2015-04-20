@@ -73,32 +73,6 @@ public class EvaluationType extends FenixUtil {
         this.type = new Integer(type);
     }
 
-    public EvaluationType(Integer type) {
-        this.type = type;
-    }
-
-    public EvaluationType(String type) {
-        if (type.equals(EvaluationType.EXAM_STRING)) {
-            this.type = Integer.valueOf(EvaluationType.EXAM);
-        }
-        if (type.equals(EvaluationType.FINAL_STRING)) {
-            this.type = Integer.valueOf(EvaluationType.FINAL);
-        }
-        if (type.equals(EvaluationType.ONLINE_TEST_STRING)) {
-            this.type = Integer.valueOf(EvaluationType.ONLINE_TEST);
-        }
-        if (type.equals(EvaluationType.TEST_STRING)) {
-            this.type = Integer.valueOf(EvaluationType.TEST);
-        }
-        if (type.equals(EvaluationType.PROJECT_TYPE)) {
-            this.type = Integer.valueOf(EvaluationType.PROJECT);
-        }
-        if (type.equals(EvaluationType.AD_HOC_TYPE)) {
-            this.type = Integer.valueOf(EvaluationType.AD_HOC);
-        }
-
-    }
-
     @Override
     public boolean equals(Object obj) {
         boolean resultado = false;

@@ -35,7 +35,7 @@ import org.joda.time.YearMonthDay;
 
 public class GanttDiagram {
 
-    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_BEGIN = new Comparator<Interval>() {
+    private final static Comparator<Interval> INTERVAL_COMPARATOR_BY_BEGIN = new Comparator<Interval>() {
 
         @Override
         public int compare(Interval o1, Interval o2) {
@@ -43,7 +43,7 @@ public class GanttDiagram {
         }
 
     };
-    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_END = new Comparator<Interval>() {
+    private final static Comparator<Interval> INTERVAL_COMPARATOR_BY_END = new Comparator<Interval>() {
 
         @Override
         public int compare(Interval o1, Interval o2) {
@@ -65,10 +65,6 @@ public class GanttDiagram {
     private Map<YearMonthDay, Integer> monthsView;
 
     private List<DateTime> months, days;
-
-    public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_) {
-        return new GanttDiagram(events_, ViewType.TOTAL);
-    }
 
     public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin,
             YearMonthDay end) {

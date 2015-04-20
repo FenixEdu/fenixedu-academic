@@ -19,9 +19,6 @@
 package org.fenixedu.academic.util.sibs.incomming;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -66,28 +63,6 @@ public class SibsIncommingPaymentFile {
 
         if (!totalEntriesAmount.equals(footer.getTransactionsTotalAmount())) {
             throw new RuntimeException("Footer total amount does not match detail lines total amount");
-        }
-
-    }
-
-    public static SibsIncommingPaymentFile parse(final File file) {
-        FileInputStream inputStream = null;
-
-        try {
-            inputStream = new FileInputStream(file);
-
-            return parse(org.fenixedu.academic.util.FileUtils.getFilenameOnly(file.getName()), inputStream);
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
 
     }

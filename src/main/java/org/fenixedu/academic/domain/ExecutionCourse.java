@@ -2345,16 +2345,4 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
-//  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty)
-//  will be corrected and should be uncommented
-//  @ConsistencyPredicate
-//  public boolean checkFinalEvaluation() {
-//      for (Evaluation evaluation : getAssociatedEvaluationsSet()) {
-//          if (evaluation instanceof FinalEvaluation) {
-//              return true;
-//          }
-//      }
-//      return false;
-//  }
-
 }
