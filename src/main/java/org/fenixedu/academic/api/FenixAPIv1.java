@@ -161,7 +161,6 @@ import org.fenixedu.spaces.services.SpaceBlueprintsDWGProcessor;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -781,10 +780,10 @@ public class FenixAPIv1 {
     }
 
     private WebApplicationException newApplicationError(Status status, String error, String description) {
-        JSONObject errorObject = new JSONObject();
-        errorObject.put("error", error);
-        errorObject.put("description", description);
-        return new WebApplicationException(Response.status(status).entity(errorObject.toJSONString()).build());
+        JsonObject errorObject = new JsonObject();
+        errorObject.addProperty("error", error);
+        errorObject.addProperty("description", description);
+        return new WebApplicationException(Response.status(status).entity(errorObject.toString()).build());
     }
 
     /**
