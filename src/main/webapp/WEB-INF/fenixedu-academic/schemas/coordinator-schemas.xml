@@ -42,48 +42,9 @@
     </slot>
 </schema>
 
-<schema name="thesis.bean.selectPerson.internal.orientator" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean"
+<schema name="thesis.bean.selectPerson.internal" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean"
         bundle="APPLICATION_RESOURCES">
-    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="70"/>
-        <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="name"/>
-        <property name="indicatorShown" value="true"/>
-        <property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons"/>
-        <property name="args" value="slot=name"/>
-        <property name="minChars" value="3"/>
-    </slot>
-</schema>
-
-<schema name="thesis.bean.selectPerson.internal.coorientator" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean"
-        bundle="APPLICATION_RESOURCES">
-    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="70"/>
-        <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="name"/>
-        <property name="indicatorShown" value="true"/>
-        <property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons"/>
-        <property name="args" value="slot=name"/>
-        <property name="minChars" value="3"/>
-    </slot>
-</schema>
-
-<schema name="thesis.bean.selectPerson.internal.president" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean"
-        bundle="APPLICATION_RESOURCES">
-    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="70"/>
-        <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="name"/>
-        <property name="indicatorShown" value="true"/>
-        <property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPersons"/>
-        <property name="args" value="thesis=${thesis.externalId}"/>
-        <property name="minChars" value="0"/>
-    </slot>
-</schema>
-
-<schema name="thesis.bean.selectPerson.internal.vowel" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean"
-        bundle="APPLICATION_RESOURCES">
-    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" required="true">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
@@ -96,7 +57,7 @@
 
 <schema name="thesis.bean.selectPerson.external" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean"
         bundle="APPLICATION_RESOURCES">
-    <slot name="externalName" key="label.coordinator.thesis.edit.personName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="externalName" key="label.coordinator.thesis.edit.personName" required="true">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="externalName"/>
         <property name="labelField" value="name"/>
@@ -104,28 +65,11 @@
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
-    <slot name="externalEmail" key="label.coordinator.thesis.edit.email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="externalEmail" key="label.coordinator.thesis.edit.email" required="true">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="externalEmail"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="args" value="slot=name"/>
-        <property name="minChars" value="3"/>
-    </slot>
-</schema>
-
-<schema name="thesis.bean.selectUnit.external" type="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean">
-    <slot name="internal" key="label.coordinator.thesis.edit.internal" read-only="true">
-        <property name="trueLabel" value="label.coordinator.thesis.edit.internalPerson"/>
-        <property name="falseLabel" value="label.coordinator.thesis.edit.externalPerson"/>
-    </slot>
-    <slot name="rawPersonName" key="label.coordinator.thesis.edit.personName.forUnit" read-only="true"/>
-    <slot name="unitName" key="label.coordinator.thesis.edit.unitName" layout="autoComplete"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="70"/>
-        <property name="rawSlotName" value="rawUnitName"/>
-        <property name="labelField" value="unit.nameWithAcronym"/>
-        <property name="indicatorShown" value="true"/>
-        <property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalUnits"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>

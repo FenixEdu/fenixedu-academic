@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
@@ -109,11 +108,20 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
             if (odsb.length() > 0) {
                 odsb.append(" ");
             }
-            final double credistDistribution = thesisEvaluationParticipant.getCreditsDistribution();
+            final double credistDistribution = getCreditsDistribution(thesisEvaluationParticipant);
             odsb.append(Double.toString(credistDistribution));
         }
         row.setCell(oasb.toString());
         row.setCell(odsb.toString());
+    }
+
+    private double getCreditsDistribution(ThesisEvaluationParticipant thesisEvaluationParticipant) {
+        Thesis thesis = thesisEvaluationParticipant.getThesis();
+
+        if (!thesis.hasCredits()) {
+            return 0;
+        }
+        return thesisEvaluationParticipant.getPercentageDistribution();
     }
 
 }

@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.thesis;
 
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.Objects;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -49,12 +50,14 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 
     public ThesisEvaluationParticipant(Thesis thesis, Person person, ThesisParticipationType type) {
         super();
+        Objects.requireNonNull(person);
 
         setRootDomainObject(Bennu.getInstance());
 
         setType(type);
         setThesis(thesis);
         setPerson(person);
+        setPercentageDistribution(0);
         Signal.emit("academic.thesis.participant.created", new DomainObjectEvent<>(this));
     }
 
@@ -66,6 +69,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         setType(type);
         setThesis(thesis);
         setExternalPerson(new ThesisEvaluationExternalParticipant(name, email));
+        setPercentageDistribution(0);
         Signal.emit("academic.thesis.participant.created", new DomainObjectEvent<>(this));
     }
 
@@ -73,49 +77,6 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     public Person getPerson() {
         // FIXME remove when framework supports read-only slots
         return super.getPerson();
-    }
-
-    //Remove on the next major
-    @Deprecated
-    public double getParticipationCredits() {
-        return Thesis.getCredits() * getCreditsDistribution() / 100;
-    }
-
-    //Remove on the next major
-    @Deprecated
-    public double getCreditsDistribution() {
-
-        Thesis thesis = getThesis();
-
-        if (!thesis.hasCredits()) {
-            return 0;
-        }
-        return getPercentageDistribution();
-    }
-
-    @Override
-    public Integer getPercentageDistribution() {
-
-        if (super.getPercentageDistribution() != null) {
-            return super.getPercentageDistribution();
-        } else {
-            ThesisParticipationType type = this.getType();
-            Thesis thesis = getThesis();
-
-            if (type.equals(ThesisParticipationType.ORIENTATOR)) {
-                if (thesis.getOrientatorCreditsDistribution() != null) {
-                    return thesis.getOrientatorCreditsDistribution();
-                }
-            }
-
-            if (type.equals(ThesisParticipationType.COORIENTATOR)) {
-                if (thesis.getCoorientatorCreditsDistribution() != null) {
-                    return thesis.getCoorientatorCreditsDistribution();
-                }
-            }
-        }
-
-        return 0;
     }
 
     public void delete() {

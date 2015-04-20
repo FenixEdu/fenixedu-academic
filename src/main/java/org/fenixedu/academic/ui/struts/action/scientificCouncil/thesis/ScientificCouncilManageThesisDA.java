@@ -779,7 +779,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
                 if (odsb.length() > 0) {
                     odsb.append(" ");
                 }
-                final double credistDistribution = thesisEvaluationParticipant.getCreditsDistribution();
+                final double credistDistribution = getCreditsDistribution(thesisEvaluationParticipant);
                 odsb.append(Double.toString(credistDistribution));
             }
         }
@@ -1019,6 +1019,15 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         }
 
         return viewThesis(mapping, actionForm, request, response);
+    }
+
+    private double getCreditsDistribution(ThesisEvaluationParticipant thesisEvaluationParticipant) {
+        Thesis thesis = thesisEvaluationParticipant.getThesis();
+
+        if (!thesis.hasCredits()) {
+            return 0;
+        }
+        return thesisEvaluationParticipant.getPercentageDistribution();
     }
 
 }

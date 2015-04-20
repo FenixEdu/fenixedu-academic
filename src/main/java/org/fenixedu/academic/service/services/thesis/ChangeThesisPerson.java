@@ -30,7 +30,18 @@ import pt.ist.fenixframework.Atomic;
 public class ChangeThesisPerson {
 
     public static enum PersonTarget {
-        orientator, coorientator, president, vowel
+        orientator(ThesisParticipationType.ORIENTATOR), coorientator(ThesisParticipationType.COORIENTATOR), president(
+                ThesisParticipationType.PRESIDENT), vowel(ThesisParticipationType.VOWEL);
+
+        private ThesisParticipationType type;
+
+        PersonTarget(ThesisParticipationType type) {
+            this.type = type;
+        }
+
+        public ThesisParticipationType getType() {
+            return type;
+        }
     };
 
     public static class PersonChange {
@@ -50,51 +61,18 @@ public class ChangeThesisPerson {
     @Atomic
     public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, PersonChange change)
             throws FenixServiceException {
-        Person person = change.person;
+        ThesisParticipationType type = change.type.getType();
 
-        switch (change.type) {
-        case orientator:
-            thesis.setOrientator(person);
-            break;
-        case coorientator:
-            thesis.setCoorientator(person);
-            break;
-        case president:
-            thesis.setPresident(person);
-            break;
-        case vowel:
+        if (type.isSingle()) {
+            thesis.setParticipation(change.person, type);
+        } else {
             if (change.target != null) {
                 change.target.delete();
-                if (person != null) {
-                    thesis.addVowel(person);
-                }
-            } else {
-                if (person != null) {
-                    thesis.addVowel(person);
-                }
             }
-
-            break;
+            if (change.person != null) {
+                thesis.addParticipant(change.person, type);
+            }
         }
-    }
-
-    private static ThesisParticipationType getThesisEvaluationParticipantType(PersonTarget type) {
-        if (type.equals(PersonTarget.orientator)) {
-            return ThesisParticipationType.ORIENTATOR;
-        }
-
-        if (type.equals(PersonTarget.coorientator)) {
-            return ThesisParticipationType.COORIENTATOR;
-        }
-
-        if (type.equals(PersonTarget.president)) {
-            return ThesisParticipationType.PRESIDENT;
-        }
-
-        if (type.equals(PersonTarget.vowel)) {
-            return ThesisParticipationType.VOWEL;
-        }
-        return null;
     }
 
     @Atomic
@@ -111,7 +89,7 @@ public class ChangeThesisPerson {
 
     @Atomic
     public static void addExternal(Thesis thesis, PersonTarget targetType, String externalName, String externalEmail) {
-        thesis.addExternal(getThesisEvaluationParticipantType(targetType), externalName, externalEmail);
+        thesis.addExternal(targetType.getType(), externalName, externalEmail);
     }
 
     @Atomic

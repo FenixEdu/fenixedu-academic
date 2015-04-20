@@ -3161,7 +3161,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         DateTime evaluation;
         MultiLanguageString keywords;
         Integer mark;
-        Integer orientatorCreditsDistribution;
         String rejectionComment;
         ThesisState state;
         DateTime submission;
@@ -3207,7 +3206,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String affiliation;
         String category;
         ThesisParticipationType type (REQUIRED);
-        Integer percentageDistribution;
+        Integer percentageDistribution (REQUIRED);
     }
     
     class thesis.ThesisEvaluationExternalParticipant {
