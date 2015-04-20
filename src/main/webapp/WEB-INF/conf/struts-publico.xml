@@ -113,14 +113,6 @@
                   <form-property type="java.lang.String" name="beginning"></form-property>
                   <form-property type="java.lang.Integer" name="page"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachersBodyForm">
-                  <form-property type="java.lang.String" name="executionYearId"></form-property>
-                  <form-property type="java.lang.String" name="executionDegreeId"></form-property>
-                  <form-property type="java.lang.String" name="departmentId"></form-property>
-                  <form-property type="java.lang.Integer" name="semester"></form-property>
-                  <form-property type="java.lang.Integer" name="teacherType"></form-property>
-                  <form-property type="java.lang.String" name="searchDetails"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="finalDegreeWorksForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="executionYearOID"></form-property>
