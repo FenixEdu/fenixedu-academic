@@ -31,7 +31,7 @@ public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuiding
 
     @Override
     public Group toGroup() {
-        return GuidingsAndAssistantsOfPhdGroup.get(getPhdIndividualProgramProcess());
+        return AdvisorsAndAssistantsOfPhdGroup.get(getPhdIndividualProgramProcess());
     }
 
     @Override

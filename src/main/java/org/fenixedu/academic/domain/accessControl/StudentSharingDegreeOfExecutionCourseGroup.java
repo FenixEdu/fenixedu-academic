@@ -56,7 +56,7 @@ public class StudentSharingDegreeOfExecutionCourseGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { executionCourse.getNome() };
+        return new String[] { executionCourse.getName() };
     }
 
     @Override
@@ -67,7 +67,7 @@ public class StudentSharingDegreeOfExecutionCourseGroup extends FenixGroup {
         for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             degrees.add(curricularCourse.getDegree());
         }
-        // students of any degree containing the given execution course 
+        // students of any degree containing the given execution course
         for (Degree degree : degrees) {
             for (Registration registration : degree.getActiveRegistrations()) {
                 User user = registration.getPerson().getUser();
@@ -102,7 +102,7 @@ public class StudentSharingDegreeOfExecutionCourseGroup extends FenixGroup {
                 degrees.add(curricularCourse.getDegree());
             }
             for (Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
-                // students of any degree containing the given execution course 
+                // students of any degree containing the given execution course
                 if (degrees.contains(registration.getDegree())) {
                     return true;
                 }

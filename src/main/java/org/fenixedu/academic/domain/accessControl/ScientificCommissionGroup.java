@@ -53,7 +53,7 @@ public class ScientificCommissionGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { degree.getNameI18N().getContent() };
+        return new String[] { degree.getPresentationName() };
     }
 
     @Override

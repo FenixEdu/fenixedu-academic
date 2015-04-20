@@ -37,10 +37,12 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
@@ -131,21 +133,18 @@ public class StudentGroup extends FenixGroup {
     @Override
     public String[] getPresentationNameKeyArgs() {
         List<String> parts = new ArrayList<>();
+        String connector = "";
         if (degreeType != null) {
             parts.add(degreeType.getName().getContent());
         }
         if (degree != null) {
-            parts.add(degree.getNameI18N().getContent());
+            parts.add(degree.getPresentationName());
+        }
+        if (executionCourse != null) {
+            parts.add(executionCourse.getName());
         }
         if (cycle != null) {
             parts.add(cycle.getDescription());
-        }
-        if (campus != null) {
-            parts.add(campus.getName());
-        }
-
-        if (executionCourse != null) {
-            parts.add(executionCourse.getName());
         }
         if (curricularYear != null) {
             parts.add(curricularYear.getYear().toString());
@@ -153,7 +152,17 @@ public class StudentGroup extends FenixGroup {
         if (executionYear != null) {
             parts.add(executionYear.getName());
         }
-        return new String[] { Joiner.on(", ").join(parts) };
+        if (campus != null) {
+            parts.add(campus.getName());
+        }
+        if (!parts.isEmpty()) {
+            if (parts.size() == 1 && campus != null) {
+                connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.campus");
+            } else {
+                connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.default");
+            }
+        }
+        return new String[] { connector, Joiner.on(", ").join(parts) };
     }
 
     private ExecutionYear getExecutionYear() {

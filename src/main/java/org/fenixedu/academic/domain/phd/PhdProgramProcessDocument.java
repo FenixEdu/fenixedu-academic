@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.ExternalUser;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.CoordinatorGroup;
-import org.fenixedu.academic.domain.accessControl.GuidingsAndAssistantsOfPhdGroup;
+import org.fenixedu.academic.domain.accessControl.AdvisorsAndAssistantsOfPhdGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.User;
@@ -87,7 +87,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         if (phdProgram != null) {
             groups.add(CoordinatorGroup.get(phdProgram.getDegree()));
         }
-        groups.add(GuidingsAndAssistantsOfPhdGroup.get(individualProgramProcess));
+        groups.add(AdvisorsAndAssistantsOfPhdGroup.get(individualProgramProcess));
         final Person person = getPhdProgramProcess().getPerson();
         if (person != null && person.getUser() != null) {
             groups.add(UserGroup.of(person.getUser()));

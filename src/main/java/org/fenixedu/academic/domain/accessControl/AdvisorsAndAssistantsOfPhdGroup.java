@@ -33,23 +33,23 @@ import org.joda.time.DateTime;
 import com.google.common.base.Objects;
 
 @GroupOperator("guidingsAndAssistants")
-public class GuidingsAndAssistantsOfPhdGroup extends FenixGroup {
+public class AdvisorsAndAssistantsOfPhdGroup extends FenixGroup {
     private static final long serialVersionUID = -4915895868986948375L;
 
     @GroupArgument
     private PhdIndividualProgramProcess process;
 
-    private GuidingsAndAssistantsOfPhdGroup() {
+    private AdvisorsAndAssistantsOfPhdGroup() {
         super();
     }
 
-    private GuidingsAndAssistantsOfPhdGroup(PhdIndividualProgramProcess process) {
+    private AdvisorsAndAssistantsOfPhdGroup(PhdIndividualProgramProcess process) {
         this();
         this.process = process;
     }
 
-    public static GuidingsAndAssistantsOfPhdGroup get(PhdIndividualProgramProcess process) {
-        return new GuidingsAndAssistantsOfPhdGroup(process);
+    public static AdvisorsAndAssistantsOfPhdGroup get(PhdIndividualProgramProcess process) {
+        return new AdvisorsAndAssistantsOfPhdGroup(process);
     }
 
     @Override
@@ -102,8 +102,8 @@ public class GuidingsAndAssistantsOfPhdGroup extends FenixGroup {
 
     @Override
     public boolean equals(Object object) {
-        if (object instanceof GuidingsAndAssistantsOfPhdGroup) {
-            return Objects.equal(process, ((GuidingsAndAssistantsOfPhdGroup) object).process);
+        if (object instanceof AdvisorsAndAssistantsOfPhdGroup) {
+            return Objects.equal(process, ((AdvisorsAndAssistantsOfPhdGroup) object).process);
         }
         return false;
     }

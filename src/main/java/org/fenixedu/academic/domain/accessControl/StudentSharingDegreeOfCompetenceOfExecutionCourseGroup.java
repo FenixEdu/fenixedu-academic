@@ -59,7 +59,7 @@ public class StudentSharingDegreeOfCompetenceOfExecutionCourseGroup extends Feni
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { executionCourse.getNome() };
+        return new String[] { executionCourse.getName() };
     }
 
     @Override
@@ -104,7 +104,7 @@ public class StudentSharingDegreeOfCompetenceOfExecutionCourseGroup extends Feni
         if (user.getPerson().getStudent() != null) {
             final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
             for (Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
-                // students of any degree sharing the same competence of the given execution course 
+                // students of any degree sharing the same competence of the given execution course
                 for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                     for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                         CompetenceCourse competenceCourse = enrolment.getCurricularCourse().getCompetenceCourse();
