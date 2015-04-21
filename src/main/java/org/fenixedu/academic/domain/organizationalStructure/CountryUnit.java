@@ -58,7 +58,7 @@ public class CountryUnit extends CountryUnit_Base {
                 classification, null, canBeResponsibleOfSpaces, campus);
         countryUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 
-        checkIfAlreadyExistsOneCountryWithSameAcronymAndName(countryUnit);
+        checkIfAlreadyExistsOneCountryWithSameAcronym(countryUnit);
 
         return countryUnit;
     }
@@ -66,7 +66,7 @@ public class CountryUnit extends CountryUnit_Base {
     @Override
     public void edit(MultiLanguageString name, String acronym) {
         super.edit(name, acronym);
-        checkIfAlreadyExistsOneCountryWithSameAcronymAndName(this);
+        checkIfAlreadyExistsOneCountryWithSameAcronym(this);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class CountryUnit extends CountryUnit_Base {
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 
-        checkIfAlreadyExistsOneCountryWithSameAcronymAndName(this);
+        checkIfAlreadyExistsOneCountryWithSameAcronym(this);
     }
 
     @Override
@@ -118,17 +118,13 @@ public class CountryUnit extends CountryUnit_Base {
         return true;
     }
 
-    private static void checkIfAlreadyExistsOneCountryWithSameAcronymAndName(CountryUnit countryUnit) {
+    private static void checkIfAlreadyExistsOneCountryWithSameAcronym(CountryUnit countryUnit) {
         for (Unit parentUnit : countryUnit.getParentUnits()) {
             for (Unit unit : parentUnit.getAllSubUnits()) {
                 if ((!unit.equals(countryUnit)) && unit.isCountryUnit()) {
                     if (countryUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
                         throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: "
                                 + countryUnit.getAcronym());
-                    }
-                    if (countryUnit.getName().equalsIgnoreCase(unit.getName())) {
-                        throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: "
-                                + countryUnit.getName());
                     }
                 }
             }
