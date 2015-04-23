@@ -21,9 +21,9 @@ package org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission;
 import java.util.Date;
 
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.MarkSheet;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 
@@ -33,7 +33,7 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
 
     private MarkSheet markSheet;
     private EnrolmentEvaluation enrolmentEvaluation;
-    private MarkSheetType markSheetType;
+    private EvaluationSeason evaluationSeason;
 
     private Integer studentNumber;
     private String newGrade;
@@ -92,12 +92,12 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
         this.enrolmentEvaluation = enrolmentEvaluation;
     }
 
-    public void setMarkSheetType(MarkSheetType markSheetType) {
-        this.markSheetType = markSheetType;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
-    public MarkSheetType getMarkSheetType() {
-        return markSheetType;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
     @Atomic
@@ -108,7 +108,7 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
         return getEnrolmentEvaluation()
                 .getEnrolment()
                 .getCurricularCourse()
-                .rectifyOldEnrolmentEvaluation(getEnrolmentEvaluation(), getMarkSheetType(), getEvaluationDate(),
+                .rectifyOldEnrolmentEvaluation(getEnrolmentEvaluation(), getEvaluationSeason(), getEvaluationDate(),
                         getRectifiedGrade(), getReason(), person);
     }
 }

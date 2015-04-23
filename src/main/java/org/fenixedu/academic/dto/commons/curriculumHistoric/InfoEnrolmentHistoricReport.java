@@ -19,13 +19,15 @@
 package org.fenixedu.academic.dto.commons.curriculumHistoric;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -50,27 +52,18 @@ public class InfoEnrolmentHistoricReport implements Serializable {
         setEnrolment(enrolment);
     }
 
-    public String getLatestNormalEnrolmentEvaluationInformation() {
-        return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.NORMAL);
+    public List<String> getEvaluationGrades() {
+        return EvaluationSeason.all().sorted().map(s -> enrolment.getLatestEnrolmentEvaluationBySeason(s))
+                .map(InfoEnrolmentHistoricReport::printGrade).collect(Collectors.toList());
     }
 
-    public String getLatestSpecialSeasonEnrolmentEvaluationInformation() {
-        return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.SPECIAL_SEASON);
-    }
-
-    public String getLatestImprovementEnrolmentEvaluationInformation() {
-        return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.IMPROVEMENT);
-    }
-
-    private String getLatestEnrolmentEvaluationInformation(final EnrolmentEvaluationType enrolmentEvaluationType) {
-        final EnrolmentEvaluation latestEnrolmentEvaluation =
-                getEnrolment().getLatestEnrolmentEvaluationBy(enrolmentEvaluationType);
-        if (latestEnrolmentEvaluation == null) {
+    private static String printGrade(final EnrolmentEvaluation evaluation) {
+        if (evaluation == null) {
             return "--";
         }
 
-        final Grade grade = latestEnrolmentEvaluation.getGrade();
-        if (!latestEnrolmentEvaluation.isFinal()) {
+        final Grade grade = evaluation.getGrade();
+        if (!evaluation.isFinal()) {
             return BundleUtil.getString(Bundle.ENUMERATION, "msg.enrolled");
         } else if (grade.isEmpty() || grade.isNotEvaluated()) {
             return BundleUtil.getString(Bundle.ENUMERATION, "msg.notEvaluated");

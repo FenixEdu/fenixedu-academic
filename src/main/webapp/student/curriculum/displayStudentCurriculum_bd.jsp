@@ -27,7 +27,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 <%@ page language="java" %>
 <%@page import="org.fenixedu.academic.domain.degree.DegreeType"%>
-<%@page import="org.apache.struts.util.LabelValueBean"%>
+<%@page import="org.fenixedu.academic.domain.EvaluationSeason"%>
+<%@page import="org.fenixedu.academic.domain.EvaluationConfiguration"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <html:xhtml/>
 
@@ -241,10 +242,9 @@
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.creditsConcluded" bundle="APPLICATION_RESOURCES"/></em></p>			
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.approvedCredits" bundle="APPLICATION_RESOURCES"/></em></p>
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.maxCredits" bundle="APPLICATION_RESOURCES"/></em></p>
-	    <e:labelValues id="enrolmentEvaluationTypes" enumeration="org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType" />
-		<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
-			<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
-		</logic:iterate>
+		<% for (EvaluationSeason evaluationSeason : EvaluationConfiguration.getInstance().getEvaluationSeasonSet()) { %>
+		    <p class="mvert05"><em><%= evaluationSeason.getAcronym().getContent() %>: <%= evaluationSeason.getName().getContent() %></em></p>
+		<% } %>
 	</div>
 </div>
 

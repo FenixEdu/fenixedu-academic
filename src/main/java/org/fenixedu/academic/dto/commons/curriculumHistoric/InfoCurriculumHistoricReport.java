@@ -23,12 +23,16 @@ package org.fenixedu.academic.dto.commons.curriculumHistoric;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 /**
  * @author nmgo
@@ -111,6 +115,11 @@ public class InfoCurriculumHistoricReport implements Serializable {
 
     public void setAcademicInterval(AcademicInterval academicInterval) {
         this.academicInterval = academicInterval;
+    }
+
+    public List<String> getEvaluationSeasons() {
+        return EvaluationSeason.all().sorted().map(EvaluationSeason::getName).map(LocalizedString::getContent)
+                .collect(Collectors.toList());
     }
 
 }

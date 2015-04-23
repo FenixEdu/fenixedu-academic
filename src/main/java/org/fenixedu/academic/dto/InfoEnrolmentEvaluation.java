@@ -21,7 +21,7 @@ package org.fenixedu.academic.dto;
 import java.util.Date;
 
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
 
 /**
@@ -32,7 +32,7 @@ import org.fenixedu.academic.util.EnrolmentEvaluationState;
 public class InfoEnrolmentEvaluation extends InfoObject {
     private String gradeValue;
 
-    private EnrolmentEvaluationType enrolmentEvaluationType;
+    private EvaluationSeason evaluationSeason;
 
     private Date examDate;
 
@@ -62,7 +62,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
 
             resultado =
                     this.getInfoEnrolment().equals(InfoEnrolmentEvaluation.getInfoEnrolment())
-                            && this.getEnrolmentEvaluationType().equals(InfoEnrolmentEvaluation.getEnrolmentEvaluationType());
+                            && this.getEvaluationSeason().equals(InfoEnrolmentEvaluation.getEvaluationSeason());
         }
         return resultado;
     }
@@ -71,7 +71,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "grade = " + this.gradeValue + "; ";
-        result += "evaluationType = " + this.enrolmentEvaluationType + "; ";
+        result += "evaluationType = " + this.evaluationSeason.getExternalId() + "; ";
         result += "examDate = " + this.examDate + "; ";
         result += "infoPersonResponsibleForGrade = " + this.infoPersonResponsibleForGrade + "; ";
         result += "state = " + this.state + "; ";
@@ -82,8 +82,8 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         return result;
     }
 
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        return enrolmentEvaluationType;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
     public Date getExamDate() {
@@ -102,8 +102,8 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         return state;
     }
 
-    public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
-        enrolmentEvaluationType = type;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
     public void setExamDate(Date date) {
@@ -183,7 +183,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
     public void copyFromDomain(EnrolmentEvaluation enrolmentEvaluation) {
         super.copyFromDomain(enrolmentEvaluation);
         if (enrolmentEvaluation != null) {
-            setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+            setEvaluationSeason(enrolmentEvaluation.getEvaluationSeason());
             setState(enrolmentEvaluation.getEnrolmentEvaluationState());
             setGradeValue(enrolmentEvaluation.getGradeValue());
             setExamDate(enrolmentEvaluation.getExamDate());

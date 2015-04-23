@@ -18,19 +18,22 @@
  */
 package org.fenixedu.academic.domain.reports;
 
+import java.util.Set;
+
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationConfiguration;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
@@ -52,6 +55,8 @@ public class EtiReportFile extends EtiReportFile_Base {
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
+        Set<EvaluationSeason> seasons = EvaluationConfiguration.getInstance().getEvaluationSeasonSet();
+
         spreadsheet.setHeader("número aluno");
         setDegreeHeaders(spreadsheet, "aluno");
         spreadsheet.setHeader("semestre");
@@ -62,9 +67,9 @@ public class EtiReportFile extends EtiReportFile_Base {
         spreadsheet.setHeader("estado");
         spreadsheet.setHeader("época");
         spreadsheet.setHeader("nota");
-        spreadsheet.setHeader("época normal");
-        spreadsheet.setHeader("época especial");
-        spreadsheet.setHeader("melhoria");
+        for (EvaluationSeason season : seasons) {
+            spreadsheet.setHeader(season.getName().getContent());
+        }
         spreadsheet.setHeader("tipo Aluno");
         spreadsheet.setHeader("número inscricoes anteriores");
         spreadsheet.setHeader("executionCourseId");
@@ -83,16 +88,16 @@ public class EtiReportFile extends EtiReportFile_Base {
                                             final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
                                             if (curricularCourse.isAnual()) {
                                                 addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse, enrolment,
-                                                        executionSemester, executionSemester);
+                                                        executionSemester, executionSemester, seasons);
                                                 if (executionSemester.getSemester().intValue() == 1) {
                                                     final ExecutionSemester nextSemester =
                                                             executionSemester.getNextExecutionPeriod();
                                                     addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse,
-                                                            enrolment, nextSemester, executionSemester);
+                                                            enrolment, nextSemester, executionSemester, seasons);
                                                 }
                                             } else {
                                                 addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse, enrolment,
-                                                        executionSemester, executionSemester);
+                                                        executionSemester, executionSemester, seasons);
                                             }
 
                                         }
@@ -108,7 +113,7 @@ public class EtiReportFile extends EtiReportFile_Base {
 
     private void addEtiRow(final Spreadsheet spreadsheet, final Degree degree, final CurricularCourse curricularCourse,
             final Enrolment enrolment, final ExecutionSemester executionSemester,
-            final ExecutionSemester executionSemesterForPreviousEnrolmentCount) {
+            final ExecutionSemester executionSemesterForPreviousEnrolmentCount, Set<EvaluationSeason> seasons) {
         final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
         final Registration registration = studentCurricularPlan.getRegistration();
         final Student student = registration.getStudent();
@@ -123,15 +128,13 @@ public class EtiReportFile extends EtiReportFile_Base {
         row.setCell(enrolment.getEctsCredits().toString().replace('.', ','));
         row.setCell(enrolment.isApproved() ? EnrollmentState.APROVED.getDescription() : enrolment.getEnrollmentState()
                 .getDescription());
-        row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
+        row.setCell(enrolment.getEvaluationSeason().getName().getContent());
         row.setCell(enrolment.getGradeValue());
 
-        final EnrolmentEvaluation normal = enrolment.getLatestFinalNormalEnrolmentEvaluation();
-        row.setCell(normal == null ? "" : normal.getGradeValue());
-        final EnrolmentEvaluation special = enrolment.getLatestFinalSpecialSeasonEnrolmentEvaluation();
-        row.setCell(special == null ? "" : special.getGradeValue());
-        final EnrolmentEvaluation improvement = enrolment.getLatestFinalImprovementEnrolmentEvaluation();
-        row.setCell(improvement == null ? "" : improvement.getGradeValue());
+        for (EvaluationSeason season : seasons) {
+            row.setCell(enrolment.getFinalEnrolmentEvaluationBySeason(season).map(EnrolmentEvaluation::getGradeValue)
+                    .orElse(null));
+        }
 
         row.setCell(registration.getRegistrationProtocol().getCode());
         row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));

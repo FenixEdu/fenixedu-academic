@@ -80,19 +80,6 @@
                   <form-property type="java.lang.String" name="executionYearID"></form-property>
                   <form-property type="java.lang.String" name="campusID"></form-property>
                   <form-property type="java.lang.String" name="temporaryExamMap"></form-property>
-                  <form-property type="java.lang.String" name="periodLessonsFirstSemesterBegin"></form-property>
-                  <form-property type="java.lang.String" name="periodLessonsFirstSemesterEnd"></form-property>
-                  <form-property type="java.lang.String" name="periodExamsFirstSemesterBegin"></form-property>
-                  <form-property type="java.lang.String" name="periodExamsFirstSemesterEnd"></form-property>
-                  <form-property type="java.lang.String" name="periodLessonsSecondSemesterBegin"></form-property>
-                  <form-property type="java.lang.String" name="periodLessonsSecondSemesterEnd"></form-property>
-                  <form-property type="java.lang.String" name="periodExamsSecondSemesterBegin"></form-property>
-                  <form-property type="java.lang.String" name="periodExamsSecondSemesterEnd"></form-property>
-                  <form-property type="java.lang.String" name="periodExamsSpecialSeasonBegin"></form-property>
-                  <form-property type="java.lang.String" name="periodExamsSpecialSeasonEnd"></form-property>
-                  <form-property type="java.lang.String" name="periodGradeSubmissionNormalSeasonFirstSemesterEnd"></form-property>
-                  <form-property type="java.lang.String" name="periodGradeSubmissionNormalSeasonSecondSemesterEnd"></form-property>
-                  <form-property type="java.lang.String" name="periodGradeSubmissionSpecialSeasonEnd"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="unitsMergeForm">
                   <form-property type="java.lang.String" name="fromUnitID"></form-property>

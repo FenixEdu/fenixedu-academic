@@ -18,11 +18,9 @@
  */
 package org.fenixedu.academic.ui.struts.action.manager.executionDegreesManagement;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +54,6 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerExecutionsApp;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -195,44 +192,6 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
             form.set("executionYearID", executionDegree.getExecutionYear().getExternalId());
             form.set("campusID", executionDegree.getCampus().getExternalId());
-
-            final String dateFormat = "dd/MM/yyyy";
-            form.set("periodLessonsFirstSemesterBegin", executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay()
-                    .toString(dateFormat));
-            form.set("periodLessonsFirstSemesterEnd", executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay()
-                    .toString(dateFormat));
-            form.set("periodExamsFirstSemesterBegin", executionDegree.getPeriodExamsFirstSemester().getStartYearMonthDay()
-                    .toString(dateFormat));
-            form.set("periodExamsFirstSemesterEnd",
-                    executionDegree.getPeriodExamsFirstSemester().getEndYearMonthDay().toString(dateFormat));
-            form.set("periodLessonsSecondSemesterBegin", executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay()
-                    .toString(dateFormat));
-            form.set("periodLessonsSecondSemesterEnd", executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay()
-                    .toString(dateFormat));
-            form.set("periodExamsSecondSemesterBegin", executionDegree.getPeriodExamsSecondSemester().getStartYearMonthDay()
-                    .toString(dateFormat));
-            form.set("periodExamsSecondSemesterEnd", executionDegree.getPeriodExamsSecondSemester().getEndYearMonthDay()
-                    .toString(dateFormat));
-
-            // not all executionDegrees have these periods defined, but should!
-            if (executionDegree.getPeriodExamsSpecialSeason() != null) {
-                form.set("periodExamsSpecialSeasonBegin", executionDegree.getPeriodExamsSpecialSeason().getStartYearMonthDay()
-                        .toString(dateFormat));
-                form.set("periodExamsSpecialSeasonEnd", executionDegree.getPeriodExamsSpecialSeason().getEndYearMonthDay()
-                        .toString(dateFormat));
-            }
-            if (executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester() != null) {
-                form.set("periodGradeSubmissionNormalSeasonFirstSemesterEnd", executionDegree
-                        .getPeriodGradeSubmissionNormalSeasonFirstSemester().getEndYearMonthDay().toString(dateFormat));
-            }
-            if (executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester() != null) {
-                form.set("periodGradeSubmissionNormalSeasonSecondSemesterEnd", executionDegree
-                        .getPeriodGradeSubmissionNormalSeasonSecondSemester().getEndYearMonthDay().toString(dateFormat));
-            }
-            if (executionDegree.getPeriodGradeSubmissionSpecialSeason() != null) {
-                form.set("periodGradeSubmissionSpecialSeasonEnd", executionDegree.getPeriodGradeSubmissionSpecialSeason()
-                        .getEndYearMonthDay().toString(dateFormat));
-            }
         }
         return mapping.findForward("editExecutionDegree");
     }
@@ -244,48 +203,11 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final String executionDegreeID = (String) form.get("executionDegreeID");
         final String executionYearID = (String) form.get("executionYearID");
         final String campusID = (String) form.get("campusID");
-        final String dateFormat = "dd/MM/yyyy";
         final Boolean temporaryExamMap = Boolean.valueOf((String) form.get("temporaryExamMap"));
 
         try {
-            final Date periodLessonsFirstSemesterBegin =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodLessonsFirstSemesterBegin"));
-            final Date periodLessonsFirstSemesterEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodLessonsFirstSemesterEnd"));
-            final Date periodExamsFirstSemesterBegin =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsFirstSemesterBegin"));
-            final Date periodExamsFirstSemesterEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsFirstSemesterEnd"));
-            final Date periodLessonsSecondSemesterBegin =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodLessonsSecondSemesterBegin"));
-            final Date periodLessonsSecondSemesterEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodLessonsSecondSemesterEnd"));
-            final Date periodExamsSecondSemesterBegin =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSecondSemesterBegin"));
-            final Date periodExamsSecondSemesterEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSecondSemesterEnd"));
-            final Date periodExamsSpecialSeasonBegin =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSpecialSeasonBegin"));
-            final Date periodExamsSpecialSeasonEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSpecialSeasonEnd"));
-            final Date periodGradeSubmissionNormalSeasonFirstSemesterEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodGradeSubmissionNormalSeasonFirstSemesterEnd"));
-            final Date periodGradeSubmissionNormalSeasonSecondSemesterEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodGradeSubmissionNormalSeasonSecondSemesterEnd"));
-            final Date periodGradeSubmissionSpecialSeasonEnd =
-                    DateFormatUtil.parse(dateFormat, (String) form.get("periodGradeSubmissionSpecialSeasonEnd"));
-
-            EditExecutionDegree.run(executionDegreeID, executionYearID, campusID, !temporaryExamMap,
-                    periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd, periodExamsFirstSemesterBegin,
-                    periodExamsFirstSemesterEnd, periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd,
-                    periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd, periodExamsSpecialSeasonBegin,
-                    periodExamsSpecialSeasonEnd, periodGradeSubmissionNormalSeasonFirstSemesterEnd,
-                    periodGradeSubmissionNormalSeasonSecondSemesterEnd, periodGradeSubmissionSpecialSeasonEnd);
-
+            EditExecutionDegree.run(executionDegreeID, executionYearID, campusID, !temporaryExamMap);
             return readExecutionDegrees(mapping, actionForm, request, response);
-
-        } catch (final ParseException e) {
-            addMessage(request, "error.executionDegrees.invalid.date.format");
         } catch (final NotAuthorizedException e) {
             addMessage(request, "error.notAuthorized");
             return readExecutionDegrees(mapping, actionForm, request, response);

@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -112,13 +111,7 @@ public class ViewPeriodsAction extends FenixDispatchAction {
 
         private OccupationPeriod getPeriod(OccupationPeriodType type, ExecutionSemester semester) {
             if (executionSemester != null && executionDegree != null) {
-                Collection<OccupationPeriod> periods =
-                        executionDegree.getPeriods(type, semester == null ? null : semester.getSemester());
-                if (periods.isEmpty()) {
-                    return null;
-                } else {
-                    return periods.iterator().next();
-                }
+                return executionDegree.getPeriods(type, semester == null ? null : semester.getSemester()).findAny().orElse(null);
             }
             return null;
         }

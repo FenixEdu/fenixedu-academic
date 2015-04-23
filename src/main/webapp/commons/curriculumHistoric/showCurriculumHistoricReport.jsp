@@ -67,12 +67,30 @@
 	<logic:notEmpty name="infoCurriculumHistoricReport" property="enrolments">
 		<h3 class="mbottom05"><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
 
-		<fr:view name="infoCurriculumHistoricReport" property="enrolments" schema="info.enrolment.historic.report">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thbold tdcenter mtop05" />
-				<fr:property name="columnClasses" value=",aleft,,,,," />
-			</fr:layout>
-		</fr:view>
+        <table class="table">
+            <thead><tr>
+                <th><bean:message bundle="CURRICULUM_HISTORIC_RESOURCES" key="label.number"/></th>
+                <th><bean:message bundle="CURRICULUM_HISTORIC_RESOURCES" key="label.name"/></th>
+                <th><bean:message bundle="CURRICULUM_HISTORIC_RESOURCES" key="label.Degree"/></th>
+                <logic:iterate id="season" name="infoCurriculumHistoricReport" property="evaluationSeasons">
+                    <th><bean:write name="season"/></th>
+                </logic:iterate>
+                <th><bean:message bundle="CURRICULUM_HISTORIC_RESOURCES" key="label.mark"/></th>
+            </tr></thead>
+            <tbody>
+                <logic:iterate id="enrolment" name="infoCurriculumHistoricReport" property="enrolments" type="org.fenixedu.academic.dto.commons.curriculumHistoric.InfoEnrolmentHistoricReport">
+                    <tr>
+                        <td><bean:write name="enrolment" property="studentCurricularPlan.registration.number"/></td>
+                        <td><bean:write name="enrolment" property="studentCurricularPlan.registration.person.name"/></td>
+                        <td><bean:write name="enrolment" property="studentCurricularPlan.degreeCurricularPlan.degree.sigla"/></td>
+                        <logic:iterate id="grade" name="enrolment" property="evaluationGrades">
+                            <td><bean:write name="grade"/></td>
+                        </logic:iterate>
+                        <td><bean:write name="enrolment" property="latestEnrolmentEvaluationInformation"/></td>
+                    </tr>
+                </logic:iterate>
+            </tbody>
+        </table>
 	</logic:notEmpty>
 
 	<p>

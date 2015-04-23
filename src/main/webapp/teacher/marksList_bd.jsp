@@ -77,7 +77,7 @@
 				<bean:message key="label.name" />
 		   </th>
 		   <th class="listClasses-header">
-				<bean:message key="label.enrolmentEvaluationType" /> 
+				<bean:message key="label.evaluationSeason" /> 
 		   </th>
 			<logic:present name="marksListComponent" property="marksList">  						
 				<th class="listClasses-header">
@@ -111,8 +111,8 @@
 						<logic:empty name="markElem" property="infoEnrolment" >
 							<bean:message key="message.notEnroled"/>
 						</logic:empty>	
-						<logic:notEmpty name="markElem" property="enrolmentEvaluationType">
-							<bean:message name="markElem" property="enrolmentEvaluationType.name"/>
+						<logic:notEmpty name="markElem" property="evaluationSeason">
+							<bean:message name="markElem" property="evaluationSeason.name.content"/>
 						</logic:notEmpty>
 					</td>
 				

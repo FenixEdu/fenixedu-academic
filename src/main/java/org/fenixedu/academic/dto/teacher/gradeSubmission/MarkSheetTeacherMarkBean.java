@@ -24,14 +24,14 @@ package org.fenixedu.academic.dto.teacher.gradeSubmission;
 import java.util.Date;
 
 import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.dto.DataTranferObject;
 
 public class MarkSheetTeacherMarkBean extends DataTranferObject {
 
     private Attends attends;
 
-    private EnrolmentEvaluationType enrolmentEvaluationType;
+    private EvaluationSeason evaluationSeason;
 
     private Date evaluationDate;
 
@@ -42,12 +42,12 @@ public class MarkSheetTeacherMarkBean extends DataTranferObject {
     public MarkSheetTeacherMarkBean() {
     }
 
-    public MarkSheetTeacherMarkBean(Attends attends, Date evaluationDate, String grade,
-            EnrolmentEvaluationType enrolmentEvaluationType, boolean sendMark) {
+    public MarkSheetTeacherMarkBean(Attends attends, Date evaluationDate, String grade, EvaluationSeason evaluationSeason,
+            boolean sendMark) {
         setAttends(attends);
         setEvaluationDate(evaluationDate);
         setGradeValue(grade);
-        setEnrolmentEvaluationType(enrolmentEvaluationType);
+        setEvaluationSeason(evaluationSeason);
         setToSubmitMark(sendMark);
     }
 
@@ -83,11 +83,11 @@ public class MarkSheetTeacherMarkBean extends DataTranferObject {
         this.evaluationDate = evaluationDate;
     }
 
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        return enrolmentEvaluationType;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
-    public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
-        this.enrolmentEvaluationType = enrolmentEvaluationType;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 }

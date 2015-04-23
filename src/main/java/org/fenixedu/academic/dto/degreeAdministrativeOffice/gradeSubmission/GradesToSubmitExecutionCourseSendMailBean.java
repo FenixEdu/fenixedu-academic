@@ -24,12 +24,11 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 
 public class GradesToSubmitExecutionCourseSendMailBean implements Serializable {
@@ -97,14 +96,14 @@ public class GradesToSubmitExecutionCourseSendMailBean implements Serializable {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
 
-                if (enrolment.isValid(getExecutionSemester())
-                        && enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL) {
+                if (enrolment.isValid(getExecutionSemester()) && enrolment.getEvaluationSeason().isNormal()) {
 
-                    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(MarkSheetType.NORMAL)) {
+                    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(EvaluationSeason.readNormalSeason())) {
                         total++;
                     }
 
-                } else if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(MarkSheetType.IMPROVEMENT)
+                } else if (enrolment.hasImprovement()
+                        && !enrolment.hasAssociatedMarkSheet(EvaluationSeason.readImprovementSeason())
                         && enrolment.hasImprovementFor(getExecutionSemester())) {
 
                     total++;

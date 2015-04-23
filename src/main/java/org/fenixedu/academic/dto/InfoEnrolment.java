@@ -26,7 +26,6 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 
 public class InfoEnrolment extends InfoObject {
 
@@ -77,10 +76,6 @@ public class InfoEnrolment extends InfoObject {
         return enrolment.getEnrollmentState();
     }
 
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        return enrolment.getEnrolmentEvaluationType();
-    }
-
     public List<InfoEnrolmentEvaluation> getInfoEvaluations() {
         final List<InfoEnrolmentEvaluation> result = new ArrayList<InfoEnrolmentEvaluation>(enrolment.getEvaluationsSet().size());
         for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {
@@ -90,7 +85,7 @@ public class InfoEnrolment extends InfoObject {
     }
 
     public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
-        return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluation());
+        return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getFinalEnrolmentEvaluation());
     }
 
     public Date getCreationDate() {
@@ -99,26 +94,6 @@ public class InfoEnrolment extends InfoObject {
 
     public EnrollmentCondition getCondition() {
         return enrolment.getEnrolmentCondition();
-    }
-
-    public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
-        return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-                .getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL));
-    }
-
-    public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
-        return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-                .getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT));
-    }
-
-    public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
-        return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-                .getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON));
-    }
-
-    public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
-        return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-                .getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE));
     }
 
     public String getGradeValue() {
@@ -137,7 +112,7 @@ public class InfoEnrolment extends InfoObject {
         result += "infoExecutionPeriod = " + getInfoExecutionPeriod() + "; ";
         result += "state = " + getEnrollmentState() + "; ";
         result += "infoCurricularCourse = " + getInfoCurricularCourse() + "; ";
-        result += "enrolmentEvaluationType = " + getEnrolmentEvaluationType() + "; ";
+        result += "season = " + enrolment.getEvaluationSeason().getName().getContent() + "; ";
         result += "infoEvaluations = " + getInfoEvaluations() + "]\n";
         return result;
     }

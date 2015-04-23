@@ -20,8 +20,8 @@ package org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission;
 
 import java.util.Date;
 
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.MarkSheetState;
-import org.fenixedu.academic.domain.MarkSheetType;
 
 public class MarkSheetManagementSearchBean extends MarkSheetManagementBaseBean {
 
@@ -29,14 +29,14 @@ public class MarkSheetManagementSearchBean extends MarkSheetManagementBaseBean {
     private Date evaluationDate;
 
     private MarkSheetState markSheetState;
-    private MarkSheetType markSheetType;
+    private EvaluationSeason evaluationSeason;
 
-    public MarkSheetType getMarkSheetType() {
-        return markSheetType;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
-    public void setMarkSheetType(MarkSheetType markSheetType) {
-        this.markSheetType = markSheetType;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
     public Date getEvaluationDate() {

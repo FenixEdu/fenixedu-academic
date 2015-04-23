@@ -42,6 +42,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -49,13 +50,11 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.MarkSheet;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.ScientificCommission;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.Teacher;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.FieldIsRequiredException;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificCouncilUnit;
@@ -881,7 +880,7 @@ public class Thesis extends Thesis_Base {
      */
     public boolean hasAnyEvaluations() {
         for (EnrolmentEvaluation evaluation : getEnrolment().getEvaluationsSet()) {
-            if (!evaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
+            if (!evaluation.getEvaluationSeason().isNormal()) {
                 continue;
             }
 
@@ -916,7 +915,7 @@ public class Thesis extends Thesis_Base {
                 continue;
             }
 
-            if (markSheet.getMarkSheetType() != MarkSheetType.SPECIAL_AUTHORIZATION) {
+            if (!markSheet.getEvaluationSeason().isSpecialAuthorization()) {
                 continue;
             }
 
@@ -950,16 +949,14 @@ public class Thesis extends Thesis_Base {
         ExecutionSemester executionSemester = getEnrolment().getExecutionPeriod();
         Teacher responsible = getExecutionCourseTeacher();
         Date evaluationDate = getDiscussed().toDate();
-        MarkSheetType type = MarkSheetType.SPECIAL_AUTHORIZATION;
-
         if (responsible == null) {
             responsible = AccessControl.getPerson().getTeacher();
         }
 
         List<MarkSheetEnrolmentEvaluationBean> evaluations = getStudentEvalutionBean();
 
-        return curricularCourse.createNormalMarkSheet(executionSemester, responsible, evaluationDate, type, true, evaluations,
-                responsible.getPerson());
+        return curricularCourse.createNormalMarkSheet(executionSemester, responsible, evaluationDate,
+                EvaluationSeason.readSpecialAuthorization(), true, evaluations, responsible.getPerson());
     }
 
     private List<MarkSheetEnrolmentEvaluationBean> getStudentEvalutionBean() {

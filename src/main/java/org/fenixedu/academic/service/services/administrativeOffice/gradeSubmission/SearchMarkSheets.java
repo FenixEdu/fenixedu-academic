@@ -27,8 +27,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.MarkSheet;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
@@ -39,7 +39,7 @@ import pt.ist.fenixframework.Atomic;
 public class SearchMarkSheets {
 
     @Atomic
-    public static Map<MarkSheetType, MarkSheetSearchResultBean> run(MarkSheetManagementSearchBean searchBean)
+    public static Map<EvaluationSeason, MarkSheetSearchResultBean> run(MarkSheetManagementSearchBean searchBean)
             throws InvalidArgumentsServiceException {
 
         if (searchBean.getTeacherId() != null) {
@@ -53,17 +53,17 @@ public class SearchMarkSheets {
 
         Collection<MarkSheet> markSheets =
                 curricularCourse.searchMarkSheets(searchBean.getExecutionPeriod(), searchBean.getTeacher(),
-                        searchBean.getEvaluationDate(), searchBean.getMarkSheetState(), searchBean.getMarkSheetType());
+                        searchBean.getEvaluationDate(), searchBean.getMarkSheetState(), searchBean.getEvaluationSeason());
 
-        Map<MarkSheetType, MarkSheetSearchResultBean> result = new TreeMap<MarkSheetType, MarkSheetSearchResultBean>();
+        Map<EvaluationSeason, MarkSheetSearchResultBean> result = new TreeMap<EvaluationSeason, MarkSheetSearchResultBean>();
         for (MarkSheet sheet : markSheets) {
             addToMap(result, sheet);
         }
 
-        for (Entry<MarkSheetType, MarkSheetSearchResultBean> entry : result.entrySet()) {
+        for (Entry<EvaluationSeason, MarkSheetSearchResultBean> entry : result.entrySet()) {
 
             MarkSheetSearchResultBean searchResultBean = entry.getValue();
-            searchResultBean.setShowStatistics(entry.getKey() != MarkSheetType.SPECIAL_AUTHORIZATION);
+            searchResultBean.setShowStatistics(!entry.getKey().isSpecialAuthorization());
             if (searchResultBean.isShowStatistics()) {
                 searchResultBean.setTotalNumberOfStudents(getNumberOfStudentsNotEnrolled(searchBean, curricularCourse, entry)
                         + searchResultBean.getNumberOfEnroledStudents());
@@ -74,18 +74,18 @@ public class SearchMarkSheets {
     }
 
     private static int getNumberOfStudentsNotEnrolled(MarkSheetManagementSearchBean searchBean,
-            CurricularCourse curricularCourse, Entry<MarkSheetType, MarkSheetSearchResultBean> entry) {
+            CurricularCourse curricularCourse, Entry<EvaluationSeason, MarkSheetSearchResultBean> entry) {
         int studentsNotEnrolled =
                 curricularCourse.getEnrolmentsNotInAnyMarkSheet(entry.getKey(), searchBean.getExecutionPeriod()).size();
         return studentsNotEnrolled;
     }
 
-    private static void addToMap(Map<MarkSheetType, MarkSheetSearchResultBean> result, MarkSheet sheet) {
-        getResultBeanForMarkSheetType(result, sheet.getMarkSheetType()).addMarkSheet(sheet);
+    private static void addToMap(Map<EvaluationSeason, MarkSheetSearchResultBean> result, MarkSheet sheet) {
+        getResultBeanForSeason(result, sheet.getEvaluationSeason()).addMarkSheet(sheet);
     }
 
-    private static MarkSheetSearchResultBean getResultBeanForMarkSheetType(Map<MarkSheetType, MarkSheetSearchResultBean> result,
-            MarkSheetType sheetType) {
+    private static MarkSheetSearchResultBean getResultBeanForSeason(Map<EvaluationSeason, MarkSheetSearchResultBean> result,
+            EvaluationSeason sheetType) {
         MarkSheetSearchResultBean markSheetSearchResultBean = result.get(sheetType);
         if (markSheetSearchResultBean == null) {
             markSheetSearchResultBean = new MarkSheetSearchResultBean();

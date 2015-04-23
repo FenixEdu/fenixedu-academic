@@ -94,12 +94,12 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
         ActionMessages actionMessages = createActionMessages();
         checkIfTeacherIsResponsibleOrCoordinator(createBean.getCurricularCourse(), createBean.getExecutionPeriod(),
-                createBean.getTeacherId(), teacher, request, createBean.getMarkSheetType(), actionMessages);
+                createBean.getTeacherId(), teacher, request, createBean.getEvaluationSeason(), actionMessages);
         if (!actionMessages.isEmpty()) {
             createBean.setTeacherId(null);
         }
         checkIfEvaluationDateIsInExamsPeriod(createBean.getDegreeCurricularPlan(), createBean.getExecutionPeriod(),
-                createBean.getEvaluationDate(), createBean.getMarkSheetType(), request, actionMessages);
+                createBean.getEvaluationDate(), createBean.getEvaluationSeason(), request, actionMessages);
 
         prepareCreateEnrolmentEvaluationsForMarkSheet(createBean, request, actionMessages);
 
@@ -114,7 +114,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
             HttpServletRequest request, ActionMessages actionMessages) {
 
         final Collection<Enrolment> enrolments =
-                createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(createBean.getMarkSheetType(),
+                createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(createBean.getEvaluationSeason(),
                         createBean.getExecutionPeriod());
 
         if (enrolments.isEmpty()) {

@@ -62,12 +62,6 @@ public class CreateProjectSubmission {
         return TeacherGroup.get(executionCourse).or(StudentGroupGroup.get(studentGroup)).or(ProjectDepartmentGroup.get(project));
     }
 
-    private static void checkPermissions(Attends attends, Person person) throws FenixServiceException {
-        if (!person.getCurrentAttendsPlusSpecialSeason().contains(attends)) {
-            throw new FenixServiceException("error.NotAuthorized");
-        }
-    }
-
     private static byte[] read(final InputStream stream) {
         try {
             return ByteStreams.toByteArray(stream);

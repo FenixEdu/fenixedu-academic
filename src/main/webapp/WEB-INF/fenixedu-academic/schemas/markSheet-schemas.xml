@@ -104,9 +104,9 @@
 		<property name="defaultText" value="label.markSheet.all.masc"/>
 		<property name="key" value="true"/>
 	</slot>
-	<slot name="markSheetType" key="label.markSheetType">
-		<property name="defaultText" value="label.markSheet.all.masc"/>
-		<property name="key" value="true"/>
+	<slot name="evaluationSeason" layout="menu-select" key="label.evaluationSeason">
+	    <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EvaluationSeasonProvider" />
+	    <property name="format" value="${name.content}" />
 	</slot>
 </schema>
 
@@ -123,7 +123,7 @@
 	<slot name="responsibleTeacher" layout="format" key="label.teacher">
 		<property name="format" value="${person.name} (${teacherId})" />
 	</slot>
-	<slot name="markSheetType"  key="label.markSheetType"/>
+	<slot name="evaluationSeason.name.content"  key="label.evaluationSeason"/>
 	<slot name="evaluationDate" key="label.evaluationDate"/>
 </schema>
 
@@ -177,9 +177,10 @@
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
-	<slot name="markSheetType" key="label.markSheetType"
-		layout="radio"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="evaluationSeason" layout="menu-select" key="label.evaluationSeason" required="true">
+	    <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EvaluationSeasonProvider" />
+	    <property name="format" value="${name.content}" />
+	</slot>
 </schema>
 
 <schema name="markSheet.view.step2" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -195,7 +196,7 @@
 		<property name="format" value="${person.name} (${teacherId})" />
 	</slot>
 	<slot name="evaluationDate" key="label.evaluationDate" />
-	<slot name="markSheetType"  key="label.markSheetType" />
+	<slot name="evaluationSeason.name.content"  key="label.evaluationSeason" />
 </schema>
 
 <schema name="markSheet.create.step.two" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -237,7 +238,7 @@
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
 		<property name="format" value="${semester}º ${executionYear.year}" />
 	</slot>
-	<slot name="markSheet.markSheetType"  key="label.markSheetType"/>
+	<slot name="markSheet.evaluationSeason.name.content"  key="label.evaluationSeason"/>
 </schema>
 
 <schema name="markSheet.edit" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -342,7 +343,7 @@
 	<slot name="attends.registration.person.username" key="label.markSheet.username" read-only="true"/>
 	<slot name="attends.registration.number" key="label.markSheet.number" read-only="true"/>
 	<slot name="attends.registration.person.name" key="label.markSheet.name" read-only="true"/>
-	<slot name="enrolmentEvaluationType" key="label.enrolmentEvaluationType" read-only="true"/>
+	<slot name="evaluationSeason.name.content" key="label.evaluationSeason" read-only="true"/>
 	<slot name="gradeValue" key="label.markToSubmit" read-only="true"/>
 	<slot name="evaluationDate" key="label.markSheet.evaluationDate" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -427,25 +428,6 @@
 	<slot name="examDate" key="label.evaluationDate"/>			
 </schema>
 
-<schema name="info.enrolment.historic.report" bundle="CURRICULUM_HISTORIC_RESOURCES"
-	type="org.fenixedu.academic.dto.commons.curriculumHistoric.InfoEnrolmentHistoricReport">
-	<slot name="studentCurricularPlan.registration.number" key="label.number"/>
-	<slot name="studentCurricularPlan.registration.person.name" key="label.name"/>
-	<slot name="studentCurricularPlan.degreeCurricularPlan.degree.sigla" key="label.Degree"/>
-	<slot name="latestNormalEnrolmentEvaluationInformation" key="label.normal.mark"/>
-	<slot name="latestSpecialSeasonEnrolmentEvaluationInformation" key="label.special.season.mark"/>
-	<slot name="latestImprovementEnrolmentEvaluationInformation" key="label.improvment.mark"/>
-	<slot name="latestEnrolmentEvaluationInformation" key="label.mark"/>
-</schema>
-
-<schema name="markSheet.manager.confirmed.list" bundle="ACADEMIC_OFFICE_RESOURCES"
-	type="org.fenixedu.academic.domain.MarkSheet">
-	<slot name="responsibleTeacher.teacherId" key="label.responsibleTeacher"/>
-	<slot name="evaluationDateDateTime" key="label.evaluationDate"/>	
-	<slot name="markSheetType" key="label.markSheetType"/>
-	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>	
-</schema>
-
 <schema name="markSheet.manager.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="org.fenixedu.academic.domain.EnrolmentEvaluation">
 	<slot name="student.number" key="label.number"/>
@@ -459,7 +441,7 @@
 	<slot name="evaluationDateDateTime" key="label.evaluationDate">
 		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year}"/>
 	</slot>
-	<slot name="markSheetType" key="label.markSheetType"/>
+	<slot name="evaluationSeason.name.content" key="label.evaluationSeason"/>
 	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>
 	<slot name="responsibleTeacher.teacherId" key="label.responsibleTeacher"/>
 	<slot name="stateDiscription" key="label.markSheetState"/>
@@ -472,7 +454,7 @@
 	<slot name="degreeCurricularPlanName" key="label.degreeCurricularPlan" />
 	<slot name="curricularCourseName" key="label.curricular.course.name" />
 	<slot name="responsibleTeacher.teacherId" key="label.responsibleTeacher"/>	
-	<slot name="markSheetType"  key="label.markSheetType"/>
+	<slot name="evaluationSeason.name.content"  key="label.evaluationSeason"/>
 	<slot name="creationDateDateTime" key="label.creationDate"/>
 	<slot name="stateDiscription" key="label.markSheetState"/>
 	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>	
@@ -537,9 +519,9 @@
 		<property name="defaultText" value="label.markSheet.all.masc"/>
 		<property name="key" value="true"/>
 	</slot>
-	<slot name="markSheetType" key="label.markSheetType">
-		<property name="defaultText" value="label.markSheet.all.masc"/>
-		<property name="key" value="true"/>
+	<slot name="evaluationSeason" layout="menu-select" key="label.evaluationSeason">
+	    <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EvaluationSeasonProvider" />
+	    <property name="format" value="${name.content}" />
 	</slot>
 </schema>
 
@@ -568,19 +550,19 @@
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
-	<slot name="markSheetType" key="label.markSheetType"
-		layout="radio"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+    <slot name="evaluationSeason" layout="menu-select" key="label.evaluationSeason" required="true">
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EvaluationSeasonProvider" />
+        <property name="format" value="${name.content}" />
+    </slot>
 </schema>
 
 <schema name="oldMarkSheet.rectify.step.one" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
 	extends="oldMarkSheet.base">
-	<slot name="markSheetType" key="label.markSheetType"
-		layout="radio"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="excludedValues" value="SPECIAL_AUTHORIZATION"/>
-	</slot>
+    <slot name="evaluationSeason" layout="menu-select" key="label.evaluationSeason" required="true">
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EvaluationSeasonProviderWithoutSpecialAuthorization" />
+        <property name="format" value="${name.content}" />
+    </slot>
 </schema>
 
 <schema name="oldMarkSheet.curricular.course.view" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -593,7 +575,7 @@
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
 		<property name="format" value="${semester}ºS ${executionYear.year}" />
 	</slot>
-	<slot name="markSheetType"  key="label.markSheetType"/>
+	<slot name="evaluationSeason.name.content"  key="label.evaluationSeason"/>
 </schema>
 
 <schema name="evaluation.markSheet.view" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -609,7 +591,7 @@
 	<slot name="enrolmentEvaluation.personResponsibleForGrade.teacher" layout="format" key="label.teacher">
 		<property name="format" value="${person.name} (${teacherId})" />
 	</slot>
-	<slot name="markSheetType"  key="label.markSheetType"/>
+	<slot name="evaluationSeason.name.content"  key="label.evaluationSeason"/>
 	<slot name="enrolmentEvaluation.examDate" key="label.evaluationDate"/>
 </schema>
 

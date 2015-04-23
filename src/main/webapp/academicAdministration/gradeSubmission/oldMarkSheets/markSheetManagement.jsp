@@ -83,13 +83,13 @@
 	<logic:notEmpty name="searchResult">
 
 			<logic:iterate id="entry" name="searchResult" >
-				<bean:define id="markSheetType" name="entry" property="key"/>
+				<bean:define id="evaluationSeason" name="entry" property="key"/>
 				<bean:define id="markSheetResult" name="entry" property="value"/>
 
 				<div style="margin-left: 2em;">
 
 					<p>
-						<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="markSheetType" property="name" /></strong>
+						<strong><bean:write name="evaluationSeason" property="name.content" /></strong>
 					</p>
 				
 					<fr:view name="markSheetResult" property="markSheetsSortedByEvaluationDate" schema="markSheet.search.result.list">

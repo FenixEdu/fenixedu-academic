@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission;
 
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +35,10 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.MarkSheet;
-import org.fenixedu.academic.domain.MarkSheetType;
-import org.fenixedu.academic.domain.OccupationPeriod;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.InDebtEnrolmentsException;
@@ -49,8 +49,11 @@ import org.fenixedu.academic.service.services.administrativeOffice.gradeSubmissi
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.core.domain.User;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import com.google.common.base.Strings;
 
 abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 
@@ -161,38 +164,39 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
     }
 
     protected void checkIfEvaluationDateIsInExamsPeriod(DegreeCurricularPlan degreeCurricularPlan,
-            ExecutionSemester executionSemester, Date evaluationDate, MarkSheetType markSheetType, HttpServletRequest request,
+            ExecutionSemester executionSemester, Date evaluationDate, EvaluationSeason season, HttpServletRequest request,
             ActionMessages actionMessages) {
-
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
 
         if (executionDegree == null) {
-            if (!markSheetType.equals(MarkSheetType.IMPROVEMENT)
+            if (!season.isImprovement()
                     || !degreeCurricularPlan.canSubmitImprovementMarkSheets(executionSemester.getExecutionYear())) {
                 addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
             }
 
-        } else if (!executionDegree.isEvaluationDateInExamPeriod(evaluationDate, executionSemester, markSheetType)) {
-
-            OccupationPeriod occupationPeriod = executionDegree.getOccupationPeriodFor(executionSemester, markSheetType);
-            if (occupationPeriod == null) {
+        } else if (!(season.isSpecialAuthorization() || (evaluationDate != null && season.getExamPeriods(executionDegree,
+                executionSemester).anyMatch(
+                o1 -> o1.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate)))))) {
+            String dateFormat = "dd/MM/yyyy";
+            String period =
+                    season.getExamPeriods(executionDegree, executionSemester)
+                            .map(o -> o.getStartYearMonthDay().toString(dateFormat) + "-"
+                                    + o.getEndYearMonthDay().toString(dateFormat)).collect(Collectors.joining(", "));
+            if (Strings.isNullOrEmpty(period)) {
                 addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
             } else {
-                addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriodWithDates", occupationPeriod
-                        .getStartYearMonthDay().toString("dd/MM/yyyy"),
-                        occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
+                addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriodWithDates", period);
             }
         }
     }
 
     protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
             ExecutionSemester executionSemester, String teacherId, Teacher teacher, HttpServletRequest request,
-            MarkSheetType markSheetType, ActionMessages actionMessages) {
+            EvaluationSeason season, ActionMessages actionMessages) {
 
         if (teacher == null) {
             addMessage(request, actionMessages, "error.noTeacher", teacherId);
-        } else if (markSheetType == MarkSheetType.IMPROVEMENT
-                && curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester).isEmpty()) {
+        } else if (season.isImprovement() && curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester).isEmpty()) {
             if (!teacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,
                     executionSemester.getPreviousExecutionPeriod())
                     && !teacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,

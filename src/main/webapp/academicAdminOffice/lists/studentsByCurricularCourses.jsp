@@ -106,7 +106,7 @@
 					readOnly="true" />
 				<fr:slot name="studentCurricularPlan.degreeCurricularPlan.degree.sigla" key="label.degree" readOnly="true" />
 				<fr:slot name="enrollmentState" key="label.state" />
-				<fr:slot name="enrolmentEvaluationType" key="label.epoca" />
+				<fr:slot name="evaluationSeason" key="label.epoca" />
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thright thlight thcenter" />

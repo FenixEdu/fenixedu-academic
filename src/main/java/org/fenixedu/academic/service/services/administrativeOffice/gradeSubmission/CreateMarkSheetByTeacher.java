@@ -32,12 +32,12 @@ import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.FinalMark;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.MarkSheet;
-import org.fenixedu.academic.domain.MarkSheetType;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.dto.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean;
@@ -60,8 +60,8 @@ public class CreateMarkSheetByTeacher {
 
         checkIfTeacherLecturesExecutionCourse(teacher, executionCourse);
 
-        Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation =
-                new HashMap<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>>();
+        Map<CurricularCourse, Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation =
+                new HashMap<CurricularCourse, Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>>();
 
         createMarkSheetEnrolmentEvaluationBeans(submissionBean, executionCourse, markSheetsInformation);
         return createMarkSheets(markSheetsInformation, executionCourse, teacher, submissionBean.getEvaluationDate());
@@ -69,7 +69,7 @@ public class CreateMarkSheetByTeacher {
 
     private static void createMarkSheetEnrolmentEvaluationBeans(MarkSheetTeacherGradeSubmissionBean submissionBean,
             ExecutionCourse executionCourse,
-            Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation)
+            Map<CurricularCourse, Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation)
             throws InvalidArgumentsServiceException {
 
         Date nowDate = new Date();
@@ -84,11 +84,11 @@ public class CreateMarkSheetByTeacher {
     }
 
     private static List<EnrolmentEvaluation> createMarkSheets(
-            Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
+            Map<CurricularCourse, Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
             ExecutionCourse executionCourse, Teacher responsibleTeacher, Date evaluationDate)
             throws InvalidArgumentsServiceException {
         List<EnrolmentEvaluation> enrolmetnEvaluations = new ArrayList<EnrolmentEvaluation>();
-        for (Entry<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> curricularCourseEntry : markSheetsInformation
+        for (Entry<CurricularCourse, Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>> curricularCourseEntry : markSheetsInformation
                 .entrySet()) {
 
             CurricularCourse curricularCourse = curricularCourseEntry.getKey();
@@ -97,16 +97,16 @@ public class CreateMarkSheetByTeacher {
                 throw new InvalidArgumentsServiceException("error.curricularCourse.is.not.available.toSubmit.grades");
             }
 
-            for (Entry<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> markSheetTypeEntry : curricularCourseEntry
+            for (Entry<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>> seasonEntry : curricularCourseEntry
                     .getValue().entrySet()) {
 
-                MarkSheetType markSheetType = markSheetTypeEntry.getKey();
-                Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans = markSheetTypeEntry.getValue();
+                EvaluationSeason season = seasonEntry.getKey();
+                Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans = seasonEntry.getValue();
 
                 if (markSheetEnrolmentEvaluationBeans != null) {
                     MarkSheet markSheet =
                             curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(), responsibleTeacher,
-                                    evaluationDate, markSheetType, Boolean.TRUE, markSheetEnrolmentEvaluationBeans,
+                                    evaluationDate, season, Boolean.TRUE, markSheetEnrolmentEvaluationBeans,
                                     responsibleTeacher.getPerson());
                     enrolmetnEvaluations.addAll(markSheet.getEnrolmentEvaluationsSet());
                 }
@@ -123,62 +123,53 @@ public class CreateMarkSheetByTeacher {
     }
 
     private static void addMarkSheetEvaluationBeanToMap(
-            Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
+            Map<CurricularCourse, Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
             CurricularCourse curricularCourse, ExecutionCourse executionCourse,
             MarkSheetEnrolmentEvaluationBean markSheetEvaluationBean) throws InvalidArgumentsServiceException {
 
-        Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType =
-                getEvaluationBeansForMarkSheetType(markSheetsInformation, curricularCourse);
+        Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForSeason =
+                getEvaluationBeansForSeason(markSheetsInformation, curricularCourse);
 
-        MarkSheetType markSheetType = findMarkSheetType(executionCourse, markSheetEvaluationBean.getEnrolment());
+        EvaluationSeason season = findSeason(executionCourse, markSheetEvaluationBean.getEnrolment());
         Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans =
-                getEvaluationBeans(evaluationBeansForMarkSheetType, markSheetType);
+                getEvaluationBeans(evaluationBeansForSeason, season);
 
         evaluationBeans.add(markSheetEvaluationBean);
     }
 
-    private static Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> getEvaluationBeansForMarkSheetType(
-            Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
+    private static Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>> getEvaluationBeansForSeason(
+            Map<CurricularCourse, Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
             CurricularCourse curricularCourse) {
 
-        Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType =
+        Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForSeason =
                 markSheetsInformation.get(curricularCourse);
-        if (evaluationBeansForMarkSheetType == null) {
-            evaluationBeansForMarkSheetType = new HashMap<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>();
-            markSheetsInformation.put(curricularCourse, evaluationBeansForMarkSheetType);
+        if (evaluationBeansForSeason == null) {
+            evaluationBeansForSeason = new HashMap<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>>();
+            markSheetsInformation.put(curricularCourse, evaluationBeansForSeason);
         }
-        return evaluationBeansForMarkSheetType;
+        return evaluationBeansForSeason;
     }
 
     private static Collection<MarkSheetEnrolmentEvaluationBean> getEvaluationBeans(
-            Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType,
-            MarkSheetType markSheetType) {
-        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = evaluationBeansForMarkSheetType.get(markSheetType);
+            Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForSeason,
+            EvaluationSeason season) {
+        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = evaluationBeansForSeason.get(season);
         if (evaluationBeans == null) {
             evaluationBeans = new ArrayList<MarkSheetEnrolmentEvaluationBean>();
-            evaluationBeansForMarkSheetType.put(markSheetType, evaluationBeans);
+            evaluationBeansForSeason.put(season, evaluationBeans);
         }
         return evaluationBeans;
     }
 
-    private static MarkSheetType findMarkSheetType(ExecutionCourse executionCourse, Enrolment enrolment)
+    private static EvaluationSeason findSeason(ExecutionCourse executionCourse, Enrolment enrolment)
             throws InvalidArgumentsServiceException {
 
         if (enrolment.isImprovementForExecutionCourse(executionCourse)
                 && enrolment.hasImprovementFor(executionCourse.getExecutionPeriod())) {
-            return MarkSheetType.IMPROVEMENT;
+            return EvaluationSeason.readImprovementSeason();
 
         } else {
-            switch (enrolment.getEnrolmentEvaluationType()) {
-            case NORMAL:
-                return MarkSheetType.NORMAL;
-            case IMPROVEMENT:
-                return MarkSheetType.IMPROVEMENT;
-            case SPECIAL_SEASON:
-                return MarkSheetType.SPECIAL_SEASON;
-            default:
-                throw new InvalidArgumentsServiceException("error.markSheetType.invalid.enrolmentEvaluationType");
-            }
+            return enrolment.getEvaluationSeason();
         }
     }
 

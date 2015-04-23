@@ -130,9 +130,9 @@
 					<h:outputText value="#{attends.registration.person.name}" />
 				</h:column>
 				<h:column>
-					<f:facet name="header"><h:outputText value="#{bundle['label.enrolmentEvaluationType']}"/></f:facet>
+					<f:facet name="header"><h:outputText value="#{bundle['label.evaluationSeason']}"/></f:facet>
 					<h:outputText rendered="#{attends.enrolment == null}" value="#{bundle['message.notEnroled']}"/>
-					<h:outputText rendered="#{attends.enrolment != null}" value="#{enumerationBundle[attends.enrolment.enrolmentEvaluationType]}"/>
+					<h:outputText rendered="#{attends.enrolment != null}" value="#{attends.enrolment.evaluationSeason.name.content}"/>
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.Degree']}"/></f:facet>

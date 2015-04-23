@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.log;
 
+import java.util.Locale;
+
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -44,7 +46,7 @@ public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
 
         setGradeValue(enrolmentEvaluation.getGradeValue());
         setGradeScale(enrolmentEvaluation.getGradeScale() != null ? enrolmentEvaluation.getGradeScale().getName() : "");
-        setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType().getName());
+        setEvaluationSeason(enrolmentEvaluation.getEvaluationSeason().getName().getContent(Locale.getDefault()));
         setEnrolmentEvaluationState(enrolmentEvaluation.getEnrolmentEvaluationState() != null ? enrolmentEvaluation
                 .getEnrolmentEvaluationState().getState().toString() : "");
         setExecutionSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getName());

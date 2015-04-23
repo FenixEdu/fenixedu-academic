@@ -22,10 +22,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 
-import org.fenixedu.academic.domain.curriculum.CurriculumValidationEvaluationPhase;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
-import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType;
 import org.fenixedu.academic.domain.curriculum.GradeFactory;
 import org.fenixedu.academic.domain.curriculum.IGrade;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -42,7 +40,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
+public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
     public static final Comparator<EnrolmentEvaluation> COMPARATORY_BY_WHEN = new Comparator<EnrolmentEvaluation>() {
 
@@ -64,26 +62,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     };
 
-    public static final Comparator<EnrolmentEvaluation> SORT_SAME_TYPE_GRADE = new Comparator<EnrolmentEvaluation>() {
-        @Override
-        public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
-            if (o1.getEnrolmentEvaluationType() != o2.getEnrolmentEvaluationType()) {
-                throw new RuntimeException("error.enrolmentEvaluation.different.types");
-            }
-            if (o1.getEnrolmentEvaluationState().getWeight() == o2.getEnrolmentEvaluationState().getWeight()) {
-                return o1.compareMyWhenAlteredDateToAnotherWhenAlteredDate(o2.getWhen());
-            }
-            return o1.getEnrolmentEvaluationState().getWeight() - o2.getEnrolmentEvaluationState().getWeight();
-        }
-    };
-
-    public static final Comparator<EnrolmentEvaluation> SORT_BY_GRADE = new Comparator<EnrolmentEvaluation>() {
-        @Override
-        public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
-            return o1.getGradeWrapper().compareTo(o2.getGradeWrapper());
-        }
-    };
-
     static final public Comparator<EnrolmentEvaluation> COMPARATOR_BY_EXAM_DATE = new Comparator<EnrolmentEvaluation>() {
         @Override
         public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
@@ -100,10 +78,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
     };
 
-    private static final String RECTIFICATION = "RECTIFICAÇÃO";
-
-    private static final String RECTIFIED = "RECTIFICADO";
-
     public EnrolmentEvaluation() {
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -112,19 +86,19 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setContext(EnrolmentEvaluationContext.MARK_SHEET_EVALUATION);
     }
 
-    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type) {
+    public EnrolmentEvaluation(Enrolment enrolment, EvaluationSeason season) {
         this();
-        if (enrolment == null || type == null) {
+        if (enrolment == null || season == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
         setEnrolment(enrolment);
-        setEnrolmentEvaluationType(type);
+        setEvaluationSeason(season);
     }
 
-    private EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
-            EnrolmentEvaluationType type, Person responsibleFor, Grade grade, Date availableDate, Date examDate) {
+    private EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState, EvaluationSeason season,
+            Person responsibleFor, Grade grade, Date availableDate, Date examDate) {
 
-        this(enrolment, type);
+        this(enrolment, season);
 
         if (enrolmentEvaluationState == null || responsibleFor == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
@@ -157,14 +131,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
-            EnrolmentEvaluationType type, Person responsibleFor, Grade grade, Date availableDate, Date examDate, DateTime when) {
-        this(enrolment, enrolmentEvaluationState, type, responsibleFor, grade, availableDate, examDate);
+            EvaluationSeason season, Person responsibleFor, Grade grade, Date availableDate, Date examDate, DateTime when) {
+        this(enrolment, enrolmentEvaluationState, season, responsibleFor, grade, availableDate, examDate);
         setWhenDateTime(when);
     }
 
-    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType,
-            EnrolmentEvaluationState evaluationState) {
-        this(enrolment, enrolmentEvaluationType);
+    protected EnrolmentEvaluation(Enrolment enrolment, EvaluationSeason season, EnrolmentEvaluationState evaluationState) {
+        this(enrolment, season);
         if (evaluationState == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
@@ -172,82 +145,22 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setWhenDateTime(new DateTime());
     }
 
-    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType,
-            EnrolmentEvaluationState evaluationState, Person person) {
-        this(enrolment, enrolmentEvaluationType, evaluationState);
+    protected EnrolmentEvaluation(Enrolment enrolment, EvaluationSeason season, EnrolmentEvaluationState evaluationState,
+            Person person) {
+        this(enrolment, season, evaluationState);
         if (person == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
         setPerson(person);
     }
 
-    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType,
-            EnrolmentEvaluationState evaluationState, Person person, ExecutionSemester executionSemester) {
-        this(enrolment, enrolmentEvaluationType, evaluationState, person);
+    protected EnrolmentEvaluation(Enrolment enrolment, EvaluationSeason season, EnrolmentEvaluationState evaluationState,
+            Person person, ExecutionSemester executionSemester) {
+        this(enrolment, season, evaluationState, person);
         if (executionSemester == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
         setExecutionPeriod(executionSemester);
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
-        if (this.getEnrolment().getStudentCurricularPlan().getDegreeType().isPreBolonhaMasterDegree()) {
-            return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
-        }
-
-        if (this.isInCurriculumValidationContextAndIsFinal() && !enrolmentEvaluation.isInCurriculumValidationContextAndIsFinal()) {
-            return 1;
-        } else if (!this.isInCurriculumValidationContextAndIsFinal()
-                && enrolmentEvaluation.isInCurriculumValidationContextAndIsFinal()) {
-            return -1;
-        } else if (this.isInCurriculumValidationContextAndIsFinal()
-                && enrolmentEvaluation.isInCurriculumValidationContextAndIsFinal()) {
-            return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
-        } else if (this.getEnrolmentEvaluationType() == enrolmentEvaluation.getEnrolmentEvaluationType()) {
-            if ((this.isRectification() && enrolmentEvaluation.isRectification())
-                    || (this.isRectified() && enrolmentEvaluation.isRectified())) {
-                return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
-            }
-            if (this.isRectification()) {
-                return 1;
-            }
-            if (enrolmentEvaluation.isRectification()) {
-                return -1;
-            }
-            return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
-
-        } else {
-            return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
-        }
-    }
-
-    private int compareByGrade(final Grade grade, final Grade otherGrade) {
-        EnrollmentState gradeEnrolmentState = getEnrollmentStateByGrade();
-        EnrollmentState otherGradeEnrolmentState = getEnrollmentStateByGrade();
-        if (gradeEnrolmentState == EnrollmentState.APROVED && otherGradeEnrolmentState == EnrollmentState.APROVED) {
-            return grade.compareTo(otherGrade);
-        }
-
-        return compareByGradeState(gradeEnrolmentState, otherGradeEnrolmentState);
-    }
-
-    private int compareByGradeState(EnrollmentState gradeEnrolmentState, EnrollmentState otherGradeEnrolmentState) {
-        if (gradeEnrolmentState == EnrollmentState.APROVED) {
-            return 1;
-        }
-        if (otherGradeEnrolmentState == EnrollmentState.APROVED) {
-            return -1;
-        }
-        if (gradeEnrolmentState == EnrollmentState.NOT_APROVED && otherGradeEnrolmentState == EnrollmentState.NOT_EVALUATED) {
-            return 1;
-        }
-        if (gradeEnrolmentState == EnrollmentState.NOT_EVALUATED && otherGradeEnrolmentState == EnrollmentState.NOT_APROVED) {
-            return -1;
-        }
-
-        return 0;
     }
 
     private int compareMyExamDateToAnotherExamDate(Date examDate) {
@@ -260,44 +173,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
         return this.getExamDate().compareTo(examDate);
 
-    }
-
-    private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(Date whenAltered) {
-        if (this.getWhen() == null) {
-            return -1;
-        }
-        if (whenAltered == null) {
-            return 1;
-        }
-
-        return this.getWhen().compareTo(whenAltered);
-
-    }
-
-    private int compareMyGradeToAnotherGrade(final Grade otherGrade) {
-        return this.getGrade().compareTo(otherGrade);
-    }
-
-    private int compareForEqualStates(EnrollmentState myEnrolmentState, EnrollmentState otherEnrolmentState, Grade otherGrade,
-            Date otherExamDate) {
-        if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
-            return compareMyGradeToAnotherGrade(otherGrade);
-        }
-        return compareMyExamDateToAnotherExamDate(otherExamDate);
-    }
-
-    private int compareForNotEqualStates(EnrollmentState myEnrolmentState, EnrollmentState otherEnrolmentState) {
-        if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
-            return 1;
-        } else if (myEnrolmentState.equals(EnrollmentState.NOT_APROVED) && otherEnrolmentState.equals(EnrollmentState.APROVED)) {
-            return -1;
-        } else if (myEnrolmentState.equals(EnrollmentState.NOT_APROVED)) {
-            return 1;
-        } else if (myEnrolmentState.equals(EnrollmentState.NOT_EVALUATED)) {
-            return -1;
-        } else {
-            return 0;
-        }
     }
 
     public EnrollmentState getEnrollmentStateByGrade() {
@@ -315,18 +190,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     public GradeScale getAssociatedGradeScale() {
         return super.getGradeScale();
-    }
-
-    public boolean isNormal() {
-        return getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL;
-    }
-
-    public boolean isImprovment() {
-        return getEnrolmentEvaluationType() == EnrolmentEvaluationType.IMPROVEMENT;
-    }
-
-    public boolean isSpecialSeason() {
-        return getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON;
     }
 
     public boolean isNotEvaluated() {
@@ -391,7 +254,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     private void checkRegistrationState() {
 
         if (getRegistration().hasAnyActiveState(getExecutionYear()) || getRegistration().isTransited(getExecutionYear())
-                || (getRegistration().isConcluded() && isImprovment())) {
+                || (getRegistration().isConcluded() && getEvaluationSeason().isImprovement())) {
 
             return;
         }
@@ -442,7 +305,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setWhenDateTime(new DateTime());
 
         EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
-        if (!this.isImprovment()) {
+        if (!this.getEvaluationSeason().isImprovement()) {
             if (MarkType.getRepMarks().contains(getGradeValue())) {
                 newEnrolmentState = EnrollmentState.NOT_APROVED;
             } else if (MarkType.getNaMarks().contains(getGradeValue())) {
@@ -476,18 +339,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     public boolean isFinal() {
         return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ)
-                || getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)
-                || getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ);
+                || getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ);
     }
 
     public boolean isRectification() {
-        return (this.getObservation() != null && this.getObservation().equals(RECTIFICATION))
-                || (this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ));
+        return this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ);
     }
 
     public boolean isRectified() {
-        return (this.getObservation() != null && this.getObservation().equals(RECTIFIED))
-                || (this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ));
+        return this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ);
     }
 
     public void delete() {
@@ -525,7 +385,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getExamDateYearMonthDay() != null ? getExamDateYearMonthDay().toString() : "").append(
                 getGradeValue());
-        stringBuilder.append(getEnrolmentEvaluationType());
+        stringBuilder.append(getEvaluationSeason().getExternalId());
         stringBuilder.append(getEnrolment().getStudentCurricularPlan().getRegistration().getNumber());
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
@@ -613,7 +473,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     @Override
     public ExecutionSemester getExecutionPeriod() {
-        if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.IMPROVEMENT) {
+        if (getEvaluationSeason().isImprovement()) {
             return super.getExecutionPeriod();
         }
 
@@ -622,31 +482,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
 
         return null;
-    }
-
-    public boolean isInCurriculumValidationContext() {
-        return this.getContext() != null && this.getContext().equals(EnrolmentEvaluationContext.CURRICULUM_VALIDATION_EVALUATION);
-    }
-
-    public boolean isInCurriculumValidationContextAndIsFinal() {
-        return this.isInCurriculumValidationContext() && this.isFinal();
-    }
-
-    private static final String NORMAL_TYPE_FIRST_SEASON_DESCRIPTION =
-            "label.curriculum.validation.normal.type.first.season.description";
-    private static final String NORMAL_TYPE_SECOND_SEASON_DESCRIPTION =
-            "label.curriculum.validation.normal.type.second.season.description";
-
-    public String getEnrolmentEvaluationTypeDescription() {
-        if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
-                && CurriculumValidationEvaluationPhase.FIRST_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_FIRST_SEASON_DESCRIPTION);
-        } else if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
-                && CurriculumValidationEvaluationPhase.SECOND_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_SECOND_SEASON_DESCRIPTION);
-        }
-
-        return this.getEnrolmentEvaluationType().getDescription();
     }
 
     @Deprecated

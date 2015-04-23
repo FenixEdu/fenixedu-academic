@@ -32,13 +32,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.CalendarUtil;
-import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.date.IntervalTools;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -59,30 +55,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             throw new DomainException("error.occupationPeriod.invalid.dates");
         }
         this.setPeriodInterval(interval);
-    }
-
-    public OccupationPeriod(LocalDate startDate, LocalDate endDate) {
-        this();
-        if (startDate == null || endDate == null) {
-            throw new DomainException("error.occupationPeriod.invalid.dates");
-        }
-        this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
-    }
-
-    public OccupationPeriod(DateTime startDate, DateTime endDate) {
-        this();
-        if (startDate == null || endDate == null) {
-            throw new DomainException("error.occupationPeriod.invalid.dates");
-        }
-        this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
-    }
-
-    public OccupationPeriod(Date startDate, Date endDate) {
-        this();
-        if (startDate == null || endDate == null || startDate.after(endDate)) {
-            throw new DomainException("error.occupationPeriod.invalid.dates");
-        }
-        this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
     }
 
     /**
@@ -184,14 +156,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         return null;
     }
 
-    public void setEndDate(Calendar calendar) {
-        if (calendar != null) {
-            this.setEnd(calendar.getTime());
-        } else {
-            this.setEnd(null);
-        }
-    }
-
     public Calendar getEndDate() {
         if (this.getEnd() != null) {
             Calendar result = Calendar.getInstance();
@@ -199,26 +163,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             return result;
         }
         return null;
-    }
-
-    public void setStartDate(Calendar calendar) {
-        if (calendar != null) {
-            this.setStart(calendar.getTime());
-        } else {
-            this.setStart(null);
-        }
-    }
-
-    @Deprecated
-    public void setStart(Date date) {
-        Interval interval = this.getPeriodInterval();
-        this.setPeriodInterval(IntervalTools.intervalWithStart(interval, date));
-    }
-
-    @Deprecated
-    public void setEnd(Date date) {
-        Interval interval = this.getPeriodInterval();
-        this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, date));
     }
 
     @Deprecated
@@ -239,10 +183,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             period = period.getNextPeriod();
         }
         return end;
-    }
-
-    private boolean intersectPeriods(final Calendar start, final Calendar end) {
-        return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
     }
 
     private boolean intersectPeriods(YearMonthDay start, YearMonthDay end) {
@@ -307,140 +247,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         return occupationPeriod;
     }
 
-    public static OccupationPeriod readByDates(Date startDate, Date endDate) {
-        for (OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
-            if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
-                    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
-                    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate)) {
-                return occupationPeriod;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 
-     * @param startDate
-     * @param endDate
-     * @param startDatePart2
-     * @param endDatePart2
-     * @return
-     */
-    public static OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate,
-            final Calendar startDatePart2, final Calendar endDatePart2) {
-        OccupationPeriod occupationPeriod =
-                OccupationPeriod.readOccupationPeriod(YearMonthDay.fromCalendarFields(startDate),
-                        YearMonthDay.fromCalendarFields(endDate), YearMonthDay.fromCalendarFields(startDatePart2),
-                        YearMonthDay.fromCalendarFields(endDatePart2));
-        if (occupationPeriod == null) {
-            final OccupationPeriod next =
-                    startDatePart2 == null ? null : new OccupationPeriod(startDatePart2.getTime(), endDatePart2.getTime());
-            occupationPeriod = new OccupationPeriod(startDate.getTime(), endDate.getTime());
-            occupationPeriod.setNextPeriod(next);
-        }
-        return occupationPeriod;
-    }
-
-    public static OccupationPeriod getOccupationPeriod(final YearMonthDay startDate, final YearMonthDay endDate,
-            final YearMonthDay startDatePart2, final YearMonthDay endDatePart2) {
-        OccupationPeriod occupationPeriod =
-                OccupationPeriod.readOccupationPeriod(startDate, endDate, startDatePart2, endDatePart2);
-        if (occupationPeriod == null) {
-            final OccupationPeriod next = startDatePart2 == null ? null : new OccupationPeriod(startDatePart2, endDatePart2);
-            occupationPeriod = new OccupationPeriod(startDate, endDate);
-            occupationPeriod.setNextPeriod(next);
-        }
-        return occupationPeriod;
-    }
-
-    /**
-     * Created because semantics of readOccupationPeriod is not well defined but
-     * we can't touch it because they're afraid of consequences.
-     * 
-     * @param startDate
-     * @param endDate
-     * @param startDatePart2
-     * @param endDatePart2
-     * @return
-     */
-    public static OccupationPeriod getEqualOccupationPeriod(final YearMonthDay startDate, final YearMonthDay endDate,
-            final YearMonthDay startDatePart2, final YearMonthDay endDatePart2) {
-        OccupationPeriod occupationPeriod =
-                OccupationPeriod.readEqualOccupationPeriod(startDate, endDate, startDatePart2, endDatePart2);
-        if (occupationPeriod == null) {
-            final OccupationPeriod next = startDatePart2 == null ? null : new OccupationPeriod(startDatePart2, endDatePart2);
-            occupationPeriod = new OccupationPeriod(startDate, endDate);
-            occupationPeriod.setNextPeriod(next);
-        }
-        return occupationPeriod;
-    }
-
-    public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end) {
-        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
-            if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
-                    && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
-                return occupationPeriod;
-            }
-        }
-        return null;
-    }
-
-    public static OccupationPeriod readEqualOccupationPeriod(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2,
-            final YearMonthDay endPart2) {
-        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
-            if (occupationPeriod.isEqualTo(start, end, startPart2, endPart2)) {
-                return occupationPeriod;
-            }
-        }
-        return null;
-    }
-
-    public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2,
-            final YearMonthDay endPart2) {
-        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
-            if (occupationPeriod.getNextPeriod() == null
-                    && occupationPeriod.getPreviousPeriod() == null
-                    && occupationPeriod.getStartYearMonthDay().equals(start)
-                    && occupationPeriod.getEndYearMonthDay().equals(end)
-                    && ((occupationPeriod.getNextPeriod() == null && startPart2 == null) || (occupationPeriod.getNextPeriod()
-                            .getStartYearMonthDay().equals(startPart2) && occupationPeriod.getNextPeriod().getEndYearMonthDay()
-                            .equals(endPart2)))) {
-                return occupationPeriod;
-            }
-        }
-        return null;
-    }
-
-    public static OccupationPeriod readOccupationPeriod(final ExecutionCourse executionCourse, final YearMonthDay start,
-            final YearMonthDay end) {
-        OccupationPeriod result = null;
-        boolean ok = true;
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-                if (executionCourse.getExecutionYear() == executionDegree.getExecutionYear()) {
-                    final OccupationPeriod occupationPeriod =
-                            executionDegree.getPeriodLessons(executionCourse.getExecutionPeriod());
-                    if (result == null) {
-                        result = occupationPeriod;
-                    } else if (result != occupationPeriod) {
-                        ok = false;
-                    }
-                }
-            }
-        }
-        if (ok && result != null) {
-            return result;
-        }
-        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
-            if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
-                    && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
-                return occupationPeriod;
-            }
-        }
-        return null;
-    }
-
     public static OccupationPeriod createOccupationPeriodForLesson(final ExecutionCourse executionCourse,
             final YearMonthDay beginDate, final YearMonthDay endDate) {
         OccupationPeriod result = null;
@@ -493,17 +299,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         }
 
         return new OccupationPeriod(dates.toArray(new YearMonthDay[0]));
-    }
-
-    public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {
-        OccupationPeriod firstOccupationPeriod = this;
-        while (firstOccupationPeriod != null) {
-            if (firstOccupationPeriod.intersectPeriods(start, end)) {
-                return true;
-            }
-            firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
-        }
-        return false;
     }
 
     public boolean nestedOccupationPeriodsIntersectDates(YearMonthDay start, YearMonthDay end) {
@@ -563,47 +358,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
                 .toLocalDate().toDateTimeAtStartOfDay());
     }
 
-    public static OccupationPeriod getOccupationPeriod(final YearMonthDay[] yearMonthDays) {
-        for (final OccupationPeriod occupationPeriod : Bennu.getInstance().getOccupationPeriodsSet()) {
-            if (occupationPeriod.matches(yearMonthDays)) {
-                return occupationPeriod;
-            }
-        }
-        return null;
-    }
-
-    public boolean matches(final YearMonthDay[] yearMonthDays) {
-        if (yearMonthDays == null || yearMonthDays.length < 2) {
-            return false;
-        }
-        final YearMonthDay start = yearMonthDays[0];
-        final YearMonthDay end = yearMonthDays[1];
-        if (start == null || !start.equals(getStartYearMonthDay()) || end == null || !end.equals(getEndYearMonthDay())) {
-            return false;
-        }
-        if (yearMonthDays.length > 2) {
-            final int l = yearMonthDays.length;
-            final YearMonthDay[] nextYearMonthDays = new YearMonthDay[l - 2];
-            System.arraycopy(yearMonthDays, 2, nextYearMonthDays, 0, l - 2);
-            return getNextPeriod() != null && getNextPeriod().matches(nextYearMonthDays);
-        }
-        return getNextPeriod() == null;
-    }
-
-    public YearMonthDay[] toYearMonthDays() {
-        if (getNextPeriod() != null) {
-            final YearMonthDay[] nextValue = getNextPeriod().toYearMonthDays();
-            final int l = nextValue.length;
-            final YearMonthDay[] result = new YearMonthDay[l + 2];
-            result[0] = getStartYearMonthDay();
-            result[1] = getEndYearMonthDay();
-            System.arraycopy(nextValue, 0, result, 2, l);
-            return result;
-        } else {
-            return new YearMonthDay[] { getStartYearMonthDay(), getEndYearMonthDay() };
-        }
-    }
-
     /*
      * Deprecated getters and setters, meant exclusively for compatibility. New
      * clients of the Class should use the interval ones Instead.
@@ -619,18 +373,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     public YearMonthDay getEndYearMonthDay() {
         Interval interval = this.getPeriodInterval();
         return IntervalTools.getEndYMD(interval);
-    }
-
-    @Deprecated
-    public void setStartYearMonthDay(YearMonthDay start) {
-        Interval interval = this.getPeriodInterval();
-        this.setPeriodInterval(IntervalTools.intervalWithStart(interval, start));
-    }
-
-    @Deprecated
-    public void setEndYearMonthDay(YearMonthDay end) {
-        Interval interval = this.getPeriodInterval();
-        this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, end));
     }
 
     public List<Interval> getIntervals() {
