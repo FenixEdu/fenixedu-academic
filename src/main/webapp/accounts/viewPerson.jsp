@@ -438,6 +438,18 @@
 	<jsp:include page="managePendingContacts.jsp"></jsp:include>
 </logic:notEmpty>
 
+<logic:equal name="person" property="optOutAvailable" value="true">
+	<fr:form >
+		<fr:edit name="person" id="edit-person">
+			<fr:layout name="tabular-editable">
+			</fr:layout>
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.Person">
+				<fr:slot name="disableSendEmails" bundle="APPLICATION_RESOURCES" key="person.disable.send.emails" layout="option-select-postback"></fr:slot>
+			</fr:schema>
+		</fr:edit>
+	</fr:form>
+</logic:equal>
+
 	<!-- Dados Pessoais -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>
