@@ -8515,13 +8515,6 @@ relation RootDomainObjectCurriculum {
     }
 }
 
-relation RootDomainObjectCurriculumModule {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    studentCurriculum.CurriculumModule playsRole curriculumModules {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectDegree {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Degree playsRole degrees {

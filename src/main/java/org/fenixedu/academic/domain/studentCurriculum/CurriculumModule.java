@@ -83,7 +83,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     public CurriculumModule() {
         super();
-        setRootDomainObject(Bennu.getInstance());
         setCreationDateDateTime(new DateTime());
     }
 
@@ -96,7 +95,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setDegreeModule(null);
         setCurriculumGroup(null);
-        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

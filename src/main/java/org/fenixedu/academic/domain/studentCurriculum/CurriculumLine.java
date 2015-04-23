@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.EnrolmentAction;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
 
@@ -56,7 +55,6 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     public CurriculumLine() {
         super();
-        setRootDomainObject(Bennu.getInstance());
         setCreatedBy(getCurrentUser());
         setUsedInSeparationCycle(false);
     }

@@ -22,7 +22,6 @@ import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.EnrolmentAction;
-import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author dcs-rjao
@@ -38,7 +37,6 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
 
     protected EnrolmentInOptionalCurricularCourse() {
         super();
-        setRootDomainObject(Bennu.getInstance());
     }
 
     public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,

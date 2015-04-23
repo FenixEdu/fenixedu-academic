@@ -100,7 +100,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public Enrolment() {
         super();
-        setRootDomainObject(Bennu.getInstance());
         super.setIsExtraCurricular(Boolean.FALSE);
         Signal.emit(Enrolment.SIGNAL_CREATED, new DomainObjectEvent<Enrolment>(this));
     }
