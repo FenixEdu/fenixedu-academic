@@ -55,7 +55,7 @@ public class ConcludePhdProcess extends PhdThesisActivity {
         if (!PhdIndividualProgramProcessState.CONCLUDED.equals(individualProgramProcess.getActiveState())) {
             individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson(), "");
         }
-        UserLoginPeriod.createOpenPeriod(userView);
+        UserLoginPeriod.createOpenPeriod(process.getPerson().getUser());
 
         return process;
     }

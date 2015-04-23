@@ -30,7 +30,7 @@ public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
     protected StudyPlanConcludedState(Registration registration, Person person, DateTime dateTime) {
         super();
         init(registration, person, dateTime);
-        UserLoginPeriod.createOpenPeriod(person.getUser());
+        UserLoginPeriod.createOpenPeriod(registration.getPerson().getUser());
     }
 
     @Override

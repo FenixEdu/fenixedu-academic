@@ -45,7 +45,7 @@ public class ConcludedState extends ConcludedState_Base {
         }
 
         init(registration, person, dateTime);
-        UserLoginPeriod.createOpenPeriod(person.getUser());
+        UserLoginPeriod.createOpenPeriod(registration.getPerson().getUser());
     }
 
     @Override
