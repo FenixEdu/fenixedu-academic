@@ -48,6 +48,7 @@ public class EmptyDegree extends EmptyDegree_Base {
                     type.setEmpty(true);
                     return type;
                 }));
+        super.setGradeScale(GradeScale.TYPE20);
     }
 
     @Override
@@ -148,16 +149,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     @Override
     public void setGradeScale(GradeScale gradeScale) {
         throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public GradeScale getGradeScale() {
-        return null;
-    }
-
-    @Override
-    public GradeScale getGradeScaleChain() {
-        return null;
     }
 
     @Override
