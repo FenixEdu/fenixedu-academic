@@ -74,7 +74,7 @@ public class ActivatePhdProgramProcessInWorkDevelopmentState extends PhdIndividu
 
         RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
 
-        if (!registrationLastActiveState.isActive()) {
+        if (registrationLastActiveState == null || !registrationLastActiveState.isActive()) {
             throw new DomainException(
                     "error.PhdIndividualProgramProcess.set.work.development.state.registration.last.state.is.not.active");
         }
