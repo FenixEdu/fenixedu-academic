@@ -149,10 +149,6 @@ public class Sender extends Sender_Base {
         return replyTos;
     }
 
-    public String getFromName(Person person) {
-        return getFromName();
-    }
-
     public int deleteOldMessages() {
         int deletedCounter = 0;
         final SortedSet<Message> messages = new TreeSet<Message>(Message.COMPARATOR_BY_CREATED_DATE_OLDER_LAST);

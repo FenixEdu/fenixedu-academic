@@ -264,28 +264,25 @@ public class Message extends Message_Base {
     }
 
     public int dispatch() {
-        final Sender sender = getSender();
         final Person person = getPerson();
         final Set<String> destinationBccs = getDestinationBccs();
         final Set<String> tos = getRecipientAddresses(getTosSet());
         final Set<String> ccs = getRecipientAddresses(getCcsSet());
-        createEmailBatch(sender, person, tos, ccs, split(destinationBccs));
+        createEmailBatch(person, tos, ccs, split(destinationBccs));
         return destinationBccs.size() + tos.size() + ccs.size();
     }
 
     @Atomic(mode = TxMode.WRITE)
-    private void createEmailBatch(final Sender sender, final Person person, final Set<String> tos, final Set<String> ccs,
+    private void createEmailBatch(final Person person, final Set<String> tos, final Set<String> ccs,
             Set<Set<String>> destinationBccs) {
         if (getRootDomainObjectFromPendingRelation() != null) {
             for (final Set<String> bccs : destinationBccs) {
                 if (!bccs.isEmpty()) {
-                    new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
-                            Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, this);
+                    new Email(getReplyToAddresses(person), Collections.emptySet(), Collections.emptySet(), bccs, this);
                 }
             }
             if (!tos.isEmpty() || !ccs.isEmpty()) {
-                new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos, ccs,
-                        Collections.EMPTY_SET, this);
+                new Email(getReplyToAddresses(person), tos, ccs, Collections.emptySet(), this);
             }
             setRootDomainObjectFromPendingRelation(null);
             setSent(new DateTime());
@@ -308,30 +305,6 @@ public class Message extends Message_Base {
         return result;
     }
 
-    // public int getPossibleErrorsCount() {
-    // int count = 0;
-    // for (Email email : getEmails()) {
-    // if (email.getFailedAddresses() == null ||
-    // email.getFailedAddresses().isEmpty()) {
-    // if (email.getMessageTransportResult().size() == 1
-    // &&
-    // email.getMessageTransportResult().iterator().next().getDescription().trim().isEmpty()
-    // &&
-    // "No recipient addresses".equals(email.getMessageTransportResult().iterator().next().getDescription()))
-    // {
-    // continue;
-    // } else {
-    // count++;
-    // for (MessageTransportResult result : email.getMessageTransportResult()) {
-    // System.out.println(result.getDescription());
-    // }
-    // System.out.println("----");
-    // }
-    // }
-    // }
-    // return count;
-    // }
-
     public int getPossibleRecipientsCount() {
         return (int) getRecipientsSet().stream().flatMap(r -> r.getMembers().getMembers().stream()).distinct().count();
     }
@@ -349,6 +322,14 @@ public class Message extends Message_Base {
     public int getFailedMailsCount() {
         return (int) getEmailsSet().stream().filter(e -> e.getFailedAddresses() != null)
                 .flatMap(e -> e.getFailedAddresses().toCollection().stream()).distinct().count();
+    }
+
+    public String getFromName() {
+        return getSender().getFromName().replace(",", "");
+    }
+
+    public String getFromAddress() {
+        return getSender().getFromAddress();
     }
 
 }

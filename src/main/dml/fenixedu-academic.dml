@@ -3283,8 +3283,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class util.Email  {
         EmailAddressList bccAddresses;
         EmailAddressList ccAddresses;
-        String fromAddress;
-        String fromName;
         EmailAddressList replyTos;
         EmailAddressList toAddresses;
         EmailAddressList confirmedAddresses;
@@ -8589,13 +8587,6 @@ relation RootDomainObjectEarthUnit {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForEarthUnit;
     organizationalStructure.Unit playsRole earthUnit;
     }
-
-relation RootDomainObjectEmail {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    util.Email playsRole emails {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectEnrolmentEvaluation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;

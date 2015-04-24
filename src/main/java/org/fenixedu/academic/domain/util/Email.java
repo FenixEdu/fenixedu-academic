@@ -75,15 +75,12 @@ public class Email extends Email_Base {
 
     private Email() {
         super();
-        setRootDomainObject(Bennu.getInstance());
-        setRootDomainObjectFromEmailQueue(getRootDomainObject());
+        setRootDomainObjectFromEmailQueue(Bennu.getInstance());
     }
 
-    public Email(final String fromName, final String fromAddress, final String[] replyTos, final Collection<String> toAddresses,
-            final Collection<String> ccAddresses, final Collection<String> bccAddresses, final Message message) {
+    public Email(final String[] replyTos, final Collection<String> toAddresses, final Collection<String> ccAddresses,
+            final Collection<String> bccAddresses, final Message message) {
         this();
-        setFromName(fromName);
-        setFromAddress(fromAddress);
         setReplyTos(new EmailAddressList(replyTos == null ? null : Arrays.asList(replyTos)));
         setToAddresses(new EmailAddressList(toAddresses));
         setCcAddresses(new EmailAddressList(ccAddresses));
@@ -106,7 +103,6 @@ public class Email extends Email_Base {
     public void delete() {
         setMessage(null);
         setRootDomainObjectFromEmailQueue(null);
-        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -210,13 +206,14 @@ public class Email extends Email_Base {
         }
 
         public void send(final Email email) throws MessagingException {
-            if (email.getFromName() == null) {
+            if (email.getMessage().getSender().getFromName() == null) {
                 logProblem("error.from.address.cannot.be.null");
                 abort();
                 return;
             }
 
-            final String from = constructFromString(encode(email.getFromName()), email.getFromAddress());
+            final String from =
+                    constructFromString(encode(email.getMessage().getFromName()), email.getMessage().getFromAddress());
 
             final String[] replyTos = email.replyTos();
             final Address[] replyToAddresses = new Address[replyTos == null ? 0 : replyTos.length];
@@ -383,8 +380,8 @@ public class Email extends Email_Base {
         if (recipients != null && recipients.length > 0) {
             for (final Address address : recipients) {
                 final String[] replyTos = getReplyTos() == null ? null : getReplyTos().toArray();
-                new Email(getFromName(), getFromAddress(), replyTos, Collections.EMPTY_SET, Collections.EMPTY_SET,
-                        Collections.singleton(address.toString()), getMessage());
+                new Email(replyTos, Collections.emptySet(), Collections.emptySet(), Collections.singleton(address.toString()),
+                        getMessage());
                 // addresses.add(address.toString());
             }
         }
@@ -430,11 +427,6 @@ public class Email extends Email_Base {
 
     private boolean hasAnyRecipients(final EmailAddressList emailAddressList) {
         return emailAddressList != null && !emailAddressList.isEmpty();
-    }
-
-    @Override
-    public void setFromName(final String fromName) {
-        super.setFromName(fromName.replace(",", ""));
     }
 
 }
