@@ -531,6 +531,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 	}
 
 	public class degree.DegreeType {
+		public String code (REQUIRED);
 	    public LocalizedString name (REQUIRED);
 	    public boolean empty;
 	    public boolean bolonha;
