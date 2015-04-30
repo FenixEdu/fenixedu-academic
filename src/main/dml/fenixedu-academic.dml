@@ -662,6 +662,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
 	class EvaluationSeason {
+		String code (REQUIRED);
         LocalizedString acronym (REQUIRED);
 	    LocalizedString name (REQUIRED);
 	    boolean normal;
