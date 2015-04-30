@@ -2389,6 +2389,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             }
 
     public class degreeStructure.ProgramConclusion {
+    	public String code;
         public LocalizedString name (REQUIRED);
         public LocalizedString description (REQUIRED);
         public LocalizedString graduationTitle (REQUIRED);
