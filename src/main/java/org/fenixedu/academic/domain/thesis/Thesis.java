@@ -1319,9 +1319,11 @@ public class Thesis extends Thesis_Base {
 
             juryPersons.add(president);  // necessary since there is no express prohibition to the president being an orientation member
             // check that one and only one member of the orientation is in the jury
-            if (getOrientation().stream().filter(p -> juryPersons.contains(p.getPerson())).count() != 1) {
-                conditions.add(new ThesisCondition("thesis.condition.people.jury.orientation.members"));
-            }
+            
+            //FIXME: Removed while it's not possible to check external advisors
+//          if (getOrientation().stream().filter(p -> juryPersons.contains(p.getPerson())).count() != 1) {
+//              conditions.add(new ThesisCondition("thesis.condition.people.jury.orientation.members"));
+//          }
 
         }
 
