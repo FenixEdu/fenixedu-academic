@@ -25,11 +25,13 @@ import org.fenixedu.academic.domain.Alumni;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
@@ -60,7 +62,8 @@ public class AlumniGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { degree.getPresentationName() };
+        return new String[] { degree == null ? "" : BundleUtil.getString(Bundle.GROUP, "label.name.connector.default")
+                + degree.getPresentationName() };
     }
 
     @Override

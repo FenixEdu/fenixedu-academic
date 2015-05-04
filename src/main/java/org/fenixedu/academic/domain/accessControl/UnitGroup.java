@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,10 +28,12 @@ import org.fenixedu.academic.domain.organizationalStructure.Accountability;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -78,10 +81,19 @@ public class UnitGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
+        ArrayList<String> args = new ArrayList<String>();
+        args.add(unit.getNameI18n().getContent());
+        String type = "";
         if (relationType != null) {
-            return new String[] { unit.getNameI18n().getContent(), relationType.getLocalizedName() };
+            type = BundleUtil.getString(Bundle.GROUP, "label.name.unit.connector.relation") + relationType.getLocalizedName();
         }
-        return new String[] { unit.getNameI18n().getContent() };
+        args.add(type);
+        String subunits = "";
+        if (includeSubUnits) {
+            subunits = BundleUtil.getString(Bundle.GROUP, "label.name.unit.subunits");
+        }
+        args.add(subunits);
+        return args.toArray(new String[3]);
     }
 
     @Override
