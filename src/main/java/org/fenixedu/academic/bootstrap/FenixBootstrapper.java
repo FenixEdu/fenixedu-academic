@@ -54,6 +54,7 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.space.SpaceUtils;
+import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
@@ -76,6 +77,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.standards.geographic.Planet;
 
 import com.google.common.collect.Lists;
+import com.google.gson.JsonParser;
 
 @Bootstrapper(sections = { SchoolSetupSection.class, PortalSection.class, AdminUserSection.class }, name = "bootstrapper.name",
         bundle = Bundle.APPLICATION, after = PortalBootstrapper.class)
@@ -116,6 +118,7 @@ public class FenixBootstrapper {
         //new CreateEvaluations().doIt();
 
         createEmptyDegreeAndEmptyDegreeCurricularPlan();
+        createDefaultRegistrationProtocol();
         Installation installation = Installation.getInstance();
         installation.setInstituitionEmailDomain(schoolSetupSection.getSchoolEmailDomain());
         installation.setInstituitionURL(schoolSetupSection.getSchoolURL());
@@ -147,6 +150,15 @@ public class FenixBootstrapper {
         }
 
         return Lists.newArrayList();
+    }
+
+    private static void createDefaultRegistrationProtocol() {
+        LocalizedString description =
+                LocalizedString.fromJson(new JsonParser().parse("{\"pt-PT\":\"Normal\",\"en-GB\":\"Normal\"}"));
+
+        RegistrationProtocol registrationProtocol =
+                new RegistrationProtocol("NORMAL", description, true, true, true, false, false, false, false, false, false, true,
+                        false);
     }
 
     public static class CreateOrganizationalStructure {
