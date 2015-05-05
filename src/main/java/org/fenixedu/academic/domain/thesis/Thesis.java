@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -1256,7 +1257,8 @@ public class Thesis extends Thesis_Base {
             }
 
             // check for duplicated persons
-            if (orientation.size() != orientation.stream().map(ThesisEvaluationParticipant::getPerson).distinct().count()) {
+            if (orientation.stream().map(ThesisEvaluationParticipant::getPerson).filter(Objects::nonNull).count() != orientation
+                    .stream().map(ThesisEvaluationParticipant::getPerson).filter(Objects::nonNull).distinct().count()) {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.orientation"));
             }
         }
