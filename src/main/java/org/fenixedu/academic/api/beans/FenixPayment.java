@@ -25,17 +25,27 @@ import org.fenixedu.academic.api.beans.publico.FenixPeriod;
 public class FenixPayment {
 
     public static class PaymentEvent {
+        String id;
         String amount;
         String type;
         String description;
         String date;
 
-        public PaymentEvent(String amount, String type, String description, String date) {
+        public PaymentEvent(String id, String amount, String type, String description, String date) {
             super();
+            this.id = id;
             this.amount = amount;
             this.type = type;
             this.description = description;
             this.date = date;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getAmount() {
@@ -73,19 +83,30 @@ public class FenixPayment {
     }
 
     public static class PendingEvent {
+        String id;
         String description;
         FenixPeriod paymentPeriod;
         String entity;
         String reference;
         String amount;
 
-        public PendingEvent(String description, FenixPeriod paymentPeriod, String entity, String reference, String amount) {
+        public PendingEvent(String id, String description, FenixPeriod paymentPeriod, String entity, String reference,
+                String amount) {
             super();
+            this.id = id;
             this.description = description;
             this.paymentPeriod = paymentPeriod;
             this.entity = entity;
             this.reference = reference;
             this.amount = amount;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getDescription() {

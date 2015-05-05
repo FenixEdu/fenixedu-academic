@@ -646,11 +646,12 @@ public class FenixAPIv1 {
         List<PaymentEvent> payed = new ArrayList<>();
 
         for (Entry entry : person.getPayments()) {
+            String id = entry.getExternalId();
             String amount = entry.getOriginalAmount().getAmountAsString();
             String name = entry.getPaymentMode().getName();
             String description = entry.getDescription().toString();
             String date = formatDay.print(entry.getWhenRegistered());
-            payed.add(new PaymentEvent(amount, name, description, date));
+            payed.add(new PaymentEvent(id, amount, name, description, date));
         }
 
         List<Event> notPayedEvents = calculateNotPayedEvents(person);
@@ -659,13 +660,14 @@ public class FenixAPIv1 {
         for (Event event : notPayedEvents) {
 
             for (AccountingEventPaymentCode accountingEventPaymentCode : event.getNonProcessedPaymentCodes()) {
+                String id = accountingEventPaymentCode.getExternalId();
                 String description = accountingEventPaymentCode.getDescription();
                 String startDate = formatDay.print(accountingEventPaymentCode.getStartDate()) + " 00:00";
                 String endDate = formatDay.print(accountingEventPaymentCode.getEndDate()) + " 23:59";
                 String entity = accountingEventPaymentCode.getEntityCode();
                 String reference = accountingEventPaymentCode.getFormattedCode();
                 String amount = accountingEventPaymentCode.getMinAmount().getAmountAsString();
-                notPayed.add(new PendingEvent(description, new FenixPeriod(startDate, endDate), entity, reference, amount));
+                notPayed.add(new PendingEvent(id, description, new FenixPeriod(startDate, endDate), entity, reference, amount));
             }
         }
 
