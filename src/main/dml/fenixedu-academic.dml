@@ -6809,7 +6809,7 @@ relation EvaluationSeasonRoot {
 
 relation DefaultEvaluationSeason {
     protected EvaluationConfiguration playsRole evaluationConfigurationAsDefault {
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
     public EvaluationSeason playsRole defaultEvaluationSeason {
         multiplicity 0..1;
