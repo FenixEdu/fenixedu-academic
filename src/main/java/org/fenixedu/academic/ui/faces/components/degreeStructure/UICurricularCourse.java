@@ -207,6 +207,12 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.writeAttribute("align", "right", null);
             writer.append(BundleUtil.getString(Bundle.BOLONHA, "credits.abbreviation")).append(" ");
             writer.append(this.curricularCourse.getEctsCredits(curricularPeriod, executionYear).toString());
+            if (this.curricularCourse.getBaseWeight() != null) {
+                writer.append(" (");
+                writer.append(BundleUtil.getString(Bundle.BOLONHA, "weight")).append(" ");
+                writer.append(this.curricularCourse.getBaseWeight().toString());
+                writer.append(")");
+            }
         } else {
             writer.append("&nbsp;");
             writer.endElement("td");
