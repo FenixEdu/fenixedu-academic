@@ -363,6 +363,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
         }
         setExecutionPeriod(null);
+        setEvaluationSeason(null);
 
         setRootDomainObject(null);
 

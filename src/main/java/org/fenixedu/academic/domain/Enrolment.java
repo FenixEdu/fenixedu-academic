@@ -260,6 +260,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         checkRulesToDelete();
         createCurriculumLineLog(EnrolmentAction.UNENROL);
         deleteInformation();
+        setEvaluationSeason(null);
+
         super.delete();
     }
 

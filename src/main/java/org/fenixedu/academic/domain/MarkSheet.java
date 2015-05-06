@@ -533,6 +533,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
 
         setExecutionPeriod(null);
+        setEvaluationSeason(null);
         setCurricularCourse(null);
         setResponsibleTeacher(null);
         setValidator(null);
