@@ -34,18 +34,18 @@
 <fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=createAcademicOffice">
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
-        <fr:slot name="type" key="documents.type">
+        <fr:slot name="type" key="documents.type" required="true">
         </fr:slot>
 
-        <fr:slot name="nameLS" key="label.fullName">
+        <fr:slot name="nameLS" key="label.fullName" required="true">
         </fr:slot>
 
-        <fr:slot name="building" layout="menu-select" key="label.date.begin">
+        <fr:slot name="building" layout="menu-select" key="label.building" bundle="resources.ApplicationResources" required="true">
             <fr:property name="from" value="buildings"/>
             <fr:property name="format" value="${name}"/>
         </fr:slot>
 
-        <fr:slot name="username" key="label.coordinator.id">
+        <fr:slot name="username" key="label.coordinator.id" required="true">
         </fr:slot>
     </fr:schema>
     <fr:layout name="tabular">

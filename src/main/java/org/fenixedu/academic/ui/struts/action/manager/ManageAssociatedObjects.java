@@ -490,9 +490,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         office.setCoordinator(User.findByUsername(bean.getUsername()));
         office.setRootDomainObject(Bennu.getInstance());
         Unit servicesParent =
-                Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
-                        .filter(x -> ((AggregateUnit) x).getName().equals("Services")).findAny()
-                        .orElse(Bennu.getInstance().getInstitutionUnit());
+                Bennu.getInstance().getInstitutionUnit().getSubUnits().stream().filter(x -> x.getName().equals("Services"))
+                        .findAny().orElse(Bennu.getInstance().getInstitutionUnit());
         Unit.createNewUnit(MultiLanguageString.fromLocalizedString(office.getName()), null, null, null, new YearMonthDay(), null,
                 servicesParent, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
                 UnitClassification.CENTRAL_ORG, office, false, bean.getBuilding());
