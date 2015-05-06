@@ -347,9 +347,11 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         ThesisFileBean bean = getRenderedObject();
         RenderUtils.invalidateViewState();
 
-        if (thesis.getVisibility() == null) {
-            thesis.setVisibility(ThesisVisibilityType.INTRANET);
-        }
+        atomic(() -> {
+            if (thesis.getVisibility() == null) {
+                thesis.setVisibility(ThesisVisibilityType.INTRANET);
+            }
+        });
 
         if (bean != null && bean.getFile() != null) {
             if (thesis.getTitle() != null) {
