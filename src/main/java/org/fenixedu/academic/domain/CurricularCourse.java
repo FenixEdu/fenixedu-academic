@@ -1892,8 +1892,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean isGradeSubmissionAvailableFor(ExecutionSemester executionSemester) {
-        return EvaluationSeason.all()
-                .anyMatch(s -> s.isGradeSubmissionAvailable(this, executionSemester));
+        return EvaluationSeason.all().anyMatch(s -> s.isGradeSubmissionAvailable(this, executionSemester));
     }
 
     public ExecutionDegree getExecutionDegreeFor(AcademicInterval academicInterval) {
@@ -2218,5 +2217,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public void setWeight(final BigDecimal input) {
         super.setWeigth(input == null ? null : input.doubleValue());
+    }
+
+    @Deprecated
+    /**
+     * @deprecated This method is a temporary workaround to access curricular course real weight until ACDM-752 (when weight is 0 or null the system returns 6...) is solved 
+     * 
+     */
+    public Double getBaseWeight() {
+        return super.getWeigth();
     }
 }
