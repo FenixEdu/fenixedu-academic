@@ -141,7 +141,8 @@ public class StudentGroup extends FenixGroup {
             parts.add(degree.getPresentationName());
         }
         if (executionCourse != null) {
-            parts.add(executionCourse.getName());
+            parts.add(executionCourse.getName() + " (" + executionCourse.getSigla() + ") "
+                    + executionCourse.getAcademicInterval().getPathName());
         }
         if (cycle != null) {
             parts.add(cycle.getDescription());
