@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.DegreeSpecializationArea;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -52,6 +54,7 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivity;
 import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.util.Bundle;
@@ -61,9 +64,10 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public class DiplomaSupplement extends AdministrativeOfficeDocument {
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 
-    private static final String GRADUATE_LEVEL_SUFFIX = ".graduate.level";
+public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     protected DiplomaSupplement(final IDocumentRequest documentRequest, final Locale locale) {
         super(documentRequest, locale);
@@ -231,7 +235,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("givenName", person.getGivenNames());
         addParameter("birthDay", person.getDateOfBirthYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
         addParameter("nationality",
-                StringFormatter.prettyPrint(person.getCountry().getCountryNationality().getContent(getLanguage())));
+                StringFormatter.prettyPrint(person.getCountry().getCountryNationality().getContent(getLocale())));
         addParameter(
                 "documentIdType",
                 applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.one.five.one"),
@@ -245,20 +249,25 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     private String getDegreeDesignation() {
-        if (getDocumentRequest().isRequestForRegistration()) {
-            String title = getDocumentRequest().getGraduateTitle(getLocale());
-            title = title.replace("Licenciado", "Licenciatura");
-            title = title.replace("Graduated", "Graduation");
-            title = title.replace("Mestre", "Mestrado");
-            return title;
-        } else if (getDocumentRequest().isRequestForPhd()) {
-            String title = getDocumentRequest().getGraduateTitle(getLocale());
-            title = title.replace("Doutor", "Doutoramento");
-            title = title.replace("Doctor", "Doctoral Programme");
-            return title;
+        DiplomaSupplementRequest request = (DiplomaSupplementRequest) getDocumentRequest();
+        ArrayList<String> res = new ArrayList<>();
+        final String graduationLevel = request.getProgramConclusion().getGraduationLevel().getContent(getLocale());
+
+        if (!Strings.isNullOrEmpty(graduationLevel)) {
+            res.add(graduationLevel);
+            res.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in"));
         }
 
-        return null;
+        Optional<CourseGroup> courseGroup =
+                request.getProgramConclusion().groupFor(request.getRegistration()).map(CurriculumGroup::getDegreeModule);
+
+        if (courseGroup.isPresent()) {
+            res.add(courseGroup.get().getDegreeNameWithTitleSuffix(request.getConclusionYear(), getLocale()));
+        } else {
+            res.add(request.getDegree().getNameI18N(request.getConclusionYear()).getContent(getLocale()));
+        }
+
+        return Joiner.on(" ").join(res);
     }
 
     private void addProgrammeRequirements(String graduateDegree) {
@@ -304,7 +313,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("programmeRequirements", programmeRequirements);
     }
 
-    private void addProfessionalStatus() {
+    protected void addProfessionalStatus() {
         String professionalStatus;
 
         if (!getDocumentRequest().getRequestedCycle().equals(CycleType.SECOND_CYCLE)) {

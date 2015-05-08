@@ -68,26 +68,9 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         final Double ectsCredits = bean.calculateCredits();
         final ExecutionYear ingressionYear = bean.calculateIngressionYear();
         final ExecutionYear conclusionYear = bean.calculateConclusionYear();
-        String[] args = {};
 
-        if (finalAverage == null) {
-            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null", args);
-        }
-        String[] args1 = {};
-        if (average == null) {
-            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null", args1);
-        }
-        String[] args2 = {};
-        if (ectsCredits == null) {
-            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null", args2);
-        }
-        String[] args3 = {};
-        if (ingressionYear == null) {
-            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null", args3);
-        }
-        String[] args4 = {};
-        if (conclusionYear == null) {
-            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null", args4);
+        if (finalAverage == null || average == null || ectsCredits == null || ingressionYear == null || conclusionYear == null) {
+            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null");
         }
 
         super.setConclusionDate(conclusion.toLocalDate());
@@ -97,37 +80,27 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setCurriculum(bean.getCurriculumForConclusion().toString());
         super.setIngressionYear(ingressionYear);
         super.setConclusionYear(conclusionYear);
+        super.setActive(true);
     }
 
-    protected void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate, final String notes) {
-        String[] args = {};
-        if (finalAverage == null) {
-            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null", args);
-        }
-        String[] args1 = {};
-        if (conclusionDate == null) {
-            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null", args1);
+    protected void update(final Person responsible, final Integer finalAverage, final BigDecimal average,
+            final LocalDate conclusionDate, final String notes) {
+
+        if (finalAverage == null || average == null || conclusionDate == null) {
+            throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null");
         }
 
         super.setResponsible(responsible);
         super.setFinalAverage(finalAverage);
+        super.setAverage(average);
         super.setConclusionDate(conclusionDate);
         super.setNotes(StringUtils.isEmpty(notes) ? null : notes);
     }
 
-    protected void update(final Person responsible, final Integer finalAverage, BigDecimal average,
-            final LocalDate conclusionDate, final String notes) {
-        update(responsible, finalAverage, conclusionDate, notes);
-        super.setAverage(average);
-    }
-
     @Override
-    public void setDissertationEnrolment(final Enrolment dissertationEnrolment) {
-        if (getConclusionProcess().isCycleConclusionProcess()) {
-            super.setDissertationEnrolment(dissertationEnrolment);
-        } else {
-            throw new DomainException("error.ConclusionProcessVersion.wrong.method.usage");
-        }
+    public Enrolment getDissertationEnrolment() {
+        //FIXME: remove when the framework enables read-only slots
+        return super.getDissertationEnrolment();
     }
 
     @Override
@@ -193,6 +166,15 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     @Override
     public void setNotes(String notes) {
         throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
+    }
+
+    public boolean isActive() {
+        return super.getActive();
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        super.setActive(active);
     }
 
     @Deprecated

@@ -21,6 +21,8 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -40,6 +42,28 @@ public class AllAlumniGroup extends GroupStrategy {
         return BundleUtil.getString(Bundle.GROUP, "label.name.AllAlumniGroup");
     }
 
+    /**
+     * Returns true if any of the student registrations has a curriculum group
+     * with a conclusion process associated of a program conclusion that provides alumni
+     * 
+     * @param student
+     * @return
+     */
+    private boolean isAlumni(Student student) {
+
+        return student
+                .getRegistrationsSet()
+                .stream()
+                .anyMatch(
+                        registration -> ProgramConclusion
+                                .conclusionsFor(registration)
+                                .filter(ProgramConclusion::isAlumniProvider)
+                                .anyMatch(
+                                        conclusion -> conclusion.groupFor(registration).isPresent()
+                                                && conclusion.groupFor(registration).get().isConclusionProcessed()));
+
+    }
+
     @Override
     public Set<User> getMembers() {
         return Bennu
@@ -48,7 +72,7 @@ public class AllAlumniGroup extends GroupStrategy {
                 .stream()
                 .filter(student -> student.getAlumni() != null
                         || student.hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
-                        || student.hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED))
+                        || student.hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED) || isAlumni(student))
                 .map(student -> student.getPerson().getUser()).collect(Collectors.toSet());
     }
 
@@ -62,8 +86,9 @@ public class AllAlumniGroup extends GroupStrategy {
         return user != null
                 && user.getPerson() != null
                 && user.getPerson().getStudent() != null
-                && (user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.CONCLUDED) || user.getPerson()
-                        .getStudent().hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED));
+                && (user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
+                        || user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED) || isAlumni(user
+                        .getPerson().getStudent()));
     }
 
     @Override

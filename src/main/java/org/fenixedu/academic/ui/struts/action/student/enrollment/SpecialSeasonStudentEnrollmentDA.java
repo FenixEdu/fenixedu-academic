@@ -110,17 +110,6 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
             HttpServletResponse response) {
         SpecialSeasonStudentEnrollmentBean bean = getRenderedObject("bean");
 
-        if (!hasStatute(bean.getStudent(), bean.getExecutionSemester(), bean.getScp().getRegistration())) {
-
-            if (!(bean.getScp().getRegistration().isSeniorStatuteApplicable(bean.getExecutionSemester().getExecutionYear()))) {
-                addActionMessage("error", request, "error.special.season.not.granted");
-                request.setAttribute("bean", bean);
-                return mapping.findForward("showPickSCPAndSemester");
-            }
-
-            bean.getScp().getRegistration().grantSeniorStatute(bean.getExecutionSemester().getExecutionYear());
-        }
-
         request.setAttribute("bolonhaStudentEnrollmentBean",
                 new SpecialSeasonBolonhaStudentEnrolmentBean(bean.getScp(), bean.getExecutionSemester()));
         request.setAttribute("bean", bean);

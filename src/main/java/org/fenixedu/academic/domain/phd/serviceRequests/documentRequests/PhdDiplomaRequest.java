@@ -24,6 +24,7 @@ import java.util.Locale;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdDiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -201,7 +202,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     }
 
     @Override
-    public CycleType getWhatShouldBeRequestedCycle() {
+    public CycleType getRequestedCycle() {
         return CycleType.THIRD_CYCLE;
     }
 
@@ -243,11 +244,6 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     }
 
     @Override
-    public CycleType getRequestedCycle() {
-        return getWhatShouldBeRequestedCycle();
-    }
-
-    @Override
     public String getProgrammeTypeDescription() {
         return BundleUtil.getString(Bundle.PHD, "label.php.program");
     }
@@ -285,5 +281,10 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
             logger.error(e.getMessage(), e);
             throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
         }
+    }
+
+    @Override
+    public ProgramConclusion getProgramConclusion() {
+        return null;
     }
 }

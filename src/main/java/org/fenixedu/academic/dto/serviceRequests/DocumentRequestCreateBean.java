@@ -23,12 +23,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitName;
@@ -71,6 +73,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     private String otherPurpose;
 
     private CurriculumGroup branchCurriculumGroup;
+
+    private ProgramConclusion programConclusion;
 
     private String branch;
 
@@ -360,7 +364,14 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     final public boolean getHasCycleTypeDependency() {
-        return getChosenDocumentRequestType().getHasCycleTypeDependency(getRegistration().getDegreeType());
+        return !getIsForProgramConclusionPurposes()
+                && getChosenDocumentRequestType().getHasCycleTypeDependency(getRegistration().getDegreeType());
+    }
+
+    final public boolean getIsForProgramConclusionPurposes() {
+        return Stream.of(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE, DocumentRequestType.REGISTRY_DIPLOMA_REQUEST,
+                DocumentRequestType.DIPLOMA_REQUEST, DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST).anyMatch(
+                type -> type.equals(getChosenDocumentRequestType()));
     }
 
     final public boolean getHasMobilityProgramDependency() {
@@ -543,6 +554,14 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     @Override
     public boolean hasRegistration() {
         return getRegistration() != null;
+    }
+
+    public ProgramConclusion getProgramConclusion() {
+        return programConclusion;
+    }
+
+    public void setProgramConclusion(ProgramConclusion programConclusion) {
+        this.programConclusion = programConclusion;
     }
 
 }

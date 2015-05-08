@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 import javax.servlet.UnavailableException;
@@ -116,13 +117,14 @@ import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPayme
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.util.icalendar.CalendarFactory;
 import org.fenixedu.academic.domain.util.icalendar.ClassEventBean;
@@ -139,8 +141,6 @@ import org.fenixedu.academic.dto.InfoSiteRoomTimeTable;
 import org.fenixedu.academic.dto.InfoWrittenEvaluation;
 import org.fenixedu.academic.dto.InfoWrittenTest;
 import org.fenixedu.academic.dto.externalServices.PersonInformationBean;
-import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
-import org.fenixedu.academic.dto.student.RegistrationCurriculumBean;
 import org.fenixedu.academic.service.Factory.RoomSiteComponentBuilder;
 import org.fenixedu.academic.service.services.student.EnrolStudentInWrittenEvaluation;
 import org.fenixedu.academic.service.services.student.UnEnrollStudentInWrittenEvaluation;
@@ -555,30 +555,30 @@ public class FenixAPIv1 {
 
         for (Registration registration : registrationsList) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                String start = studentCurricularPlan.getStartDateYearMonthDay().toString(formatDay);
 
-                final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
-                final Integer curricularYear = registrationCurriculumBean.getCurriculum().getCurricularYear();
+                String start = studentCurricularPlan.getStartDateYearMonthDay().toString(formatDay);
 
                 String end = null;
                 if (studentCurricularPlan.getEndDate() != null) {
                     end = studentCurricularPlan.getEndDate().toString(formatDay);
                 }
-                RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
 
-                ICurriculum icurriculum = registrationConclusionBean.getCurriculumForConclusion();
+                Stream<CurriculumGroup> curriculumGroups = getAllGroupsForConclusion(studentCurricularPlan);
 
+                ICurriculum icurriculum = studentCurricularPlan.getCurriculum(new DateTime(), null);
+
+                final Integer curricularYear = icurriculum.getCurricularYear();
                 BigDecimal credits = icurriculum.getSumEctsCredits();
                 BigDecimal average = icurriculum.getAverage();
 
                 Integer calculatedAverage = icurriculum.getRoundedAverage();
 
-                boolean isFinished = registrationConclusionBean.isConcluded();
+                boolean isFinished = studentCurricularPlan.isConcluded();
 
                 final List<FenixCurriculum.ApprovedCourse> courseInfos = new ArrayList<>();
 
-                for (CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getInternalCycleCurriculumGrops()) {
-                    for (ICurriculumEntry iCurriculumEntry : cycleCurriculumGroup.getCurriculum().getCurriculumEntries()) {
+                curriculumGroups.forEach(curriculumGroup -> {
+                    for (ICurriculumEntry iCurriculumEntry : curriculumGroup.getCurriculum().getCurriculumEntries()) {
 
                         String entryGradeValue = iCurriculumEntry.getGradeValue();
                         BigDecimal entryEcts = iCurriculumEntry.getEctsCreditsForCurriculum();
@@ -602,12 +602,20 @@ public class FenixAPIv1 {
                         courseInfos.add(new FenixCurriculum.ApprovedCourse(course, entryGradeValue, entryEcts));
 
                     }
-                }
+                });
                 curriculums.add(new FenixCurriculum(new FenixDegree(studentCurricularPlan.getDegree()), start, end, credits,
                         average, calculatedAverage, isFinished, curricularYear, courseInfos));
             }
         }
         return curriculums;
+    }
+
+    protected Stream<CurriculumGroup> getAllGroupsForConclusion(StudentCurricularPlan studentCurricularPlan) {
+        final Stream<ProgramConclusion> conclusions = ProgramConclusion.conclusionsFor(studentCurricularPlan);
+
+        Stream<CurriculumGroup> curriculumGroups =
+                conclusions.map(pc -> pc.groupFor(studentCurricularPlan)).filter(Optional::isPresent).map(Optional::get);
+        return curriculumGroups;
     }
 
     private List<Event> calculateNotPayedEvents(final Person person) {

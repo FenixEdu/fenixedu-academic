@@ -24,17 +24,20 @@ package org.fenixedu.academic.service.services.bolonhaManager;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
+
 public class EditCourseGroup {
 
     @Atomic
     public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
-            final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isOptional)
-            throws FenixServiceException {
+            final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isOptional,
+            final String programConclusionID) throws FenixServiceException {
 
         final CourseGroup courseGroup = (CourseGroup) FenixFramework.getDomainObject(courseGroupID);
         if (courseGroup == null) {
@@ -45,8 +48,13 @@ public class EditCourseGroup {
             throw new FenixServiceException("error.noContext");
         }
 
+        ProgramConclusion programConclusion = null;
+        if (!Strings.isNullOrEmpty(programConclusionID)) {
+            programConclusion = FenixFramework.getDomainObject(programConclusionID);
+        }
+
         courseGroup.edit(name, nameEn, context, getBeginExecutionPeriod(beginExecutionPeriodID),
-                getEndExecutionPeriod(endExecutionPeriodID), isOptional);
+                getEndExecutionPeriod(endExecutionPeriodID), isOptional, programConclusion);
     }
 
     private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {

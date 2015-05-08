@@ -284,7 +284,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         curriculumLines.addAll(getApprovedCurriculumLines());
 
         if (curriculumLines.isEmpty()) {
-            throw new DomainException("Registration.has.no.approved.curriculum.lines");
+            throw new DomainException("error.curriculum.group.has.no.approved.curriculum.lines", getName().getContent());
         }
 
         return curriculumLines.last();

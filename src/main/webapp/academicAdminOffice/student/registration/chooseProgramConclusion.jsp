@@ -22,6 +22,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@ page isELIgnored="true"%>
 
 <html:xhtml/>
 
@@ -73,11 +74,17 @@
 	<br/>
 	
 	<logic:present name="registrationConclusionBean">
-		<fr:form action="/registration.do?method=chooseCycleCurriculumGroupForConclusion">
+		<fr:form action="/registration.do?method=chooseProgramConclusion">
 
 			<fr:edit id="registrationConclusionBean"
-				name="registrationConclusionBean"
-				schema="IRegistrationBean.edit-cycleCurriculumGroup">
+				name="registrationConclusionBean">
+				
+				<fr:schema type="org.fenixedu.academic.dto.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">
+					<fr:slot name="programConclusion" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.ProgramConclusionProvider" />
+						<fr:property name="format" value="${name.content}" />
+					</fr:slot>
+				</fr:schema>
 			
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
@@ -97,4 +104,4 @@
 	<logic:notPresent name="registrationConclusionBean">
 		<em><strong><bean:message bundle="APPLICATION_RESOURCES" key="label.chooseCycleForRegistrationConclusion.no.cycle"/></strong></em>
 		<br/>
-	</logic:notPresent>		
+	</logic:notPresent>

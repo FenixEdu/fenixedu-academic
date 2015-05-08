@@ -22,6 +22,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@ page isELIgnored="true"%>
 
 <html:xhtml/>
 
@@ -76,21 +77,23 @@
 	<bean:define id="registrationId" name="registrationCurriculumBean" property="registration.externalId" />
 	<fr:form action="/registration.do?method=chooseCycleForViewRegistrationCurriculum">
 
-		<fr:edit id="registrationCurriculumBean" 
-			name="registrationCurriculumBean"
-			visible="false"/>
+		<fr:edit id="registrationCurriculumBean" name="registrationCurriculumBean">
+			<fr:schema type="org.fenixedu.academic.dto.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">
+					<fr:slot name="programConclusion" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.ProgramConclusionProvider" />
+						<fr:property name="format" value="${name.content}" />
+					</fr:slot>
+			</fr:schema>
 			
-		<fr:edit id="registrationCurriculumBean-cycle"
-			name="registrationCurriculumBean"
-			schema="IRegistrationBean.edit-cycleCurriculumGroup">
-		
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
 	     		<fr:property name="columnClasses" value=",,tdclear tderror1"/>			
 			</fr:layout>
+
 			<fr:destination name="invalid" path="<%="/registration.do?method=prepareViewRegistrationCurriculumInvalid&registrationId=" + registrationId %>"/>
 			<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationId=" + registrationId %>"/>
 		</fr:edit>
+			
 		
 		<br/><br/>
 		

@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
@@ -350,6 +351,12 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     @Override
     public boolean isProgrammeLinkVisible() {
         return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
+    }
+
+    @Override
+    public ProgramConclusion getProgramConclusion() {
+        // TODO program conclusion
+        return null;
     }
 
 }

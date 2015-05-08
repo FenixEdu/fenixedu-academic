@@ -83,14 +83,6 @@ public class Diploma extends AdministrativeOfficeDocument {
 
         String graduateTitle = diplomaRequest.getGraduateTitle(getLocale());
 
-        if (graduateTitle.contains("Graduated")) {
-            graduateTitle = graduateTitle.replace("Graduated", "Licenciado");
-        }
-
-        if (graduateTitle.contains("Master")) {
-            graduateTitle = graduateTitle.replace("Master", "Mestre");
-        }
-
         addParameter("graduateTitle", graduateTitle);
         addParameter("message1", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.message1"));
         addParameter("message2", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.message2"));
@@ -195,7 +187,7 @@ public class Diploma extends AdministrativeOfficeDocument {
         final DegreeType degreeType = registration.getDegreeType();
 
         if (degreeType.hasAnyCycleTypes()) {
-            result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), diplomaRequest.getWhatShouldBeRequestedCycle()
+            result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), diplomaRequest.getRequestedCycle()
                     .getQualifiedName()));
             result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "of.masculine"))
                     .append(SINGLE_SPACE);

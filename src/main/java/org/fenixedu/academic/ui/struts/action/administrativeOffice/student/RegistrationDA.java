@@ -44,15 +44,16 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationRegime;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.dto.AddAttendsBean;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.dto.student.RegistrationCurriculumBean;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
-import org.fenixedu.academic.predicate.RegistrationPredicates;
 import org.fenixedu.academic.service.services.administrativeOffice.student.RegistrationConclusionProcess;
 import org.fenixedu.academic.service.services.enrollment.shift.WriteStudentAttendingCourse;
 import org.fenixedu.academic.service.services.registration.DeleteRegistrationRegime;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -64,8 +65,7 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards({
         @Forward(name = "chooseCycleForViewRegistrationCurriculum",
                 path = "/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"),
-        @Forward(name = "chooseCycleForRegistrationConclusion",
-                path = "/academicAdminOffice/student/registration/chooseCycleForRegistrationConclusion.jsp"),
+        @Forward(name = "chooseProgramConclusion", path = "/academicAdminOffice/student/registration/chooseProgramConclusion.jsp"),
         @Forward(name = "view-registration-curriculum",
                 path = "/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp"),
         @Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/registration/registrationConclusion.jsp"),
@@ -91,15 +91,7 @@ public class RegistrationDA extends StudentRegistrationDA {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        if (!registrationCurriculumBean.hasCycleCurriculumGroup()) {
-            final List<CycleCurriculumGroup> internalCycleCurriculumGroups =
-                    registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
-            if (internalCycleCurriculumGroups.size() > 1) {
-                return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
-            }
-        }
-
-        return mapping.findForward("view-registration-curriculum");
+        return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
     }
 
     public ActionForward prepareViewRegistrationCurriculumInvalid(ActionMapping mapping, ActionForm form,
@@ -155,38 +147,15 @@ public class RegistrationDA extends StudentRegistrationDA {
 
         final Registration registration = getAndSetRegistration(request);
 
-        if (registration.isBolonha()) {
-
-            if (registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().size() > 1) {
-                request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
-                return mapping.findForward("chooseCycleForRegistrationConclusion");
-
-            } else if (registration.getInternalCycleCurriculumGrops().size() == 1) {
-                final RegistrationConclusionBean bean = buildRegistrationConclusionBean(registration);
-                bean.setCycleCurriculumGroup(registration.getInternalCycleCurriculumGrops().iterator().next());
-                request.setAttribute("registrationConclusionBean", bean);
-                return mapping.findForward("registrationConclusion");
-
-            } else {
-                return mapping.findForward("chooseCycleForRegistrationConclusion");
-            }
-        }
-
-        request.setAttribute("registrationConclusionBean", buildRegistrationConclusionBean(registration));
-        return mapping.findForward("registrationConclusion");
-    }
-
-    private RegistrationConclusionBean buildRegistrationConclusionBean(final Registration registration) {
-        final RegistrationConclusionBean bean = new RegistrationConclusionBean(registration);
-        bean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.MANAGE_CONCLUSION_PROCESS.evaluate(registration));
-        return bean;
+        request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
+        return mapping.findForward("chooseProgramConclusion");
     }
 
     public ActionForward prepareRegistrationConclusionProcessInvalid(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("registrationConclusionBean", getRegistrationConclusionBeanFromViewState());
 
-        return mapping.findForward("chooseCycleForRegistrationConclusion");
+        return mapping.findForward("chooseProgramConclusion");
 
     }
 
@@ -207,7 +176,7 @@ public class RegistrationDA extends StudentRegistrationDA {
             return mapping.findForward("registrationConclusion");
 
         } catch (final DomainException e) {
-            addActionMessage(request, e.getKey(), e.getArgs());
+            addActionMessage(request, e.getLocalizedMessage(), false);
             request.setAttribute("registrationConclusionBean", registrationConclusionBean);
             return mapping.findForward("registrationConclusion");
         }
@@ -217,8 +186,24 @@ public class RegistrationDA extends StudentRegistrationDA {
 
     }
 
-    public ActionForward chooseCycleCurriculumGroupForConclusion(ActionMapping mapping, ActionForm form,
+    public ActionForward revertRegistrationConclusionLastVersion(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
+
+        final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
+        try {
+            RegistrationConclusionProcess.revert(registrationConclusionBean);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getLocalizedMessage(), false);
+            request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+            return mapping.findForward("registrationConclusion");
+        }
+
+        request.setAttribute("registrationId", registrationConclusionBean.getRegistration().getExternalId());
+        return visualizeRegistration(mapping, form, request, response);
+    }
+
+    public ActionForward chooseProgramConclusion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
         request.setAttribute("registrationConclusionBean", registrationConclusionBean);
@@ -234,14 +219,14 @@ public class RegistrationDA extends StudentRegistrationDA {
         final Registration registration = getAndSetRegistration(request);
         request.setAttribute("registration", registration);
 
-        final Object cycleCurriculumGroupId = getFromRequest(request, "cycleCurriculumGroupId");
-        final CycleCurriculumGroup cycleCurriculumGroup = getDomainObject(request, "cycleCurriculumGroupId");
+        final CurriculumGroup curriculumGroup = getDomainObject(request, "curriculumGroupId");
         final RegistrationConclusionBean registrationConclusionBean;
-        if (cycleCurriculumGroupId == null) {
-            registrationConclusionBean = new RegistrationConclusionBean(registration);
-        } else {
-            registrationConclusionBean = new RegistrationConclusionBean(registration, cycleCurriculumGroup);
+
+        if (curriculumGroup == null || curriculumGroup.getDegreeModule().getProgramConclusion() == null) {
+            addActionMessage(request, BundleUtil.getString(Bundle.APPLICATION, "error.program.conclusion.empty"), false);
         }
+
+        registrationConclusionBean = new RegistrationConclusionBean(registration, curriculumGroup);
         request.setAttribute("registrationConclusionBean", registrationConclusionBean);
 
         String degreePresentationName =

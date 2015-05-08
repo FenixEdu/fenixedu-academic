@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.curriculum.AverageType;
@@ -454,7 +455,8 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public String getGraduateTitle(final ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
+    public String getGraduateTitle(final ExecutionYear executionYear, final ProgramConclusion programConclusion,
+            final Locale locale) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }
 

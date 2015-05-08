@@ -24,7 +24,6 @@ import java.util.Set;
 import org.fenixedu.academic.domain.Alumni;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -99,7 +98,7 @@ public class AlumniGroup extends FenixGroup {
         }
         if (degree != null) {
             for (Registration registration : user.getPerson().getStudent().getRegistrationsFor(degree)) {
-                if (new RegistrationConclusionBean(registration).isConcluded()) {
+                if (registration.isRegistrationConclusionProcessed()) {
                     return true;
                 }
             }

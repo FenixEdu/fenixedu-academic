@@ -71,9 +71,9 @@ public class RegistryDiplomaRequestEvent extends RegistryDiplomaRequestEvent_Bas
     private void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
         final RegistryDiplomaRequest request = (RegistryDiplomaRequest) getAcademicServiceRequest();
-        if (request.getRequestedCycle() != null) {
-            labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION)
-                    .appendLabel(" ").appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
+        if (request.getProgramConclusion() != null) {
+            labelFormatter.appendLabel(request.getProgramConclusion().getName().getContent()).appendLabel(" ")
+                    .appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
         }
 
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());

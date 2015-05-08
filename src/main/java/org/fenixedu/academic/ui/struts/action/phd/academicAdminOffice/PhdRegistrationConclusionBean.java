@@ -30,7 +30,7 @@ public class PhdRegistrationConclusionBean extends RegistrationConclusionBean {
 
     public PhdRegistrationConclusionBean(Registration registration) {
         super(registration);
-        setCycleCurriculumGroup(registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE));
+        setCurriculumGroup(registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE));
     }
 
     public RegistrationStateType getActiveStateType() {
@@ -47,12 +47,12 @@ public class PhdRegistrationConclusionBean extends RegistrationConclusionBean {
 
     @Override
     public YearMonthDay getConclusionDate() {
-        return isConclusionProcessed() ? getCycleCurriculumGroup().getConclusionDate() : null;
+        return isConclusionProcessed() ? getCurriculumGroup().getConclusionDate() : null;
     }
 
     @Override
     public Integer getFinalAverage() {
-        return isConclusionProcessed() ? getCycleCurriculumGroup().getFinalAverage() : null;
+        return isConclusionProcessed() ? getCurriculumGroup().getFinalAverage() : null;
     }
 
 }

@@ -28,6 +28,8 @@
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="applicationBundle"/>
+	
 	
 	<h:outputText value="<em>#{CourseGroupManagement.degreeCurricularPlan.name}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['create.param']} </h2>" escape="false">
@@ -40,6 +42,28 @@
 		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.toOrder' id='toOrder' name='toOrder' type='hidden' value='#{CurricularCourseManagement.toOrder}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
+		
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{applicationBundle['programConclusion']}:</label> " escape="false"/>
+			<h:selectOneMenu value="#{CourseGroupManagement.programConclusionID}">
+			    <f:selectItem itemLabel="-" itemValue=""/>
+			    <f:selectItems value="#{CourseGroupManagement.programConclusionItems}" />
+			</h:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="</fieldset></div>" escape="false"/>
+		
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{applicationBundle['programConclusion']}:</label> " escape="false"/>
+			<h:selectOneMenu value="#{CourseGroupManagement.programConclusionID}">
+			    <f:selectItem itemLabel="-" itemValue=""/>
+			    <f:selectItems value="#{CourseGroupManagement.programConclusionItems}" />
+			</h:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="</fieldset></div>" escape="false"/>
 		
 		<h:outputText value="<table class='tstyle5 thlight thright'>" escape="false"/>
 		<h:outputText value="<tr>" escape="false"/>

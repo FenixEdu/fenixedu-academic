@@ -19,22 +19,28 @@
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import java.util.Locale;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
-import org.fenixedu.academic.domain.student.curriculum.CycleConclusionProcess;
+import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
+import org.fenixedu.academic.report.academicAdministrativeOffice.DiplomaSupplement;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.joda.time.DateTime;
+
+import com.google.common.base.Joiner;
 
 public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest {
 
@@ -47,22 +53,14 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
         super.init(bean);
         checkParameters(bean);
         setLanguage(MultiLanguageString.pt);
+        setProgramConclusion(bean.getProgramConclusion());
     }
 
     @Override
     protected void checkParameters(DocumentRequestCreateBean bean) {
-        if (bean.getHasCycleTypeDependency()) {
-            if (bean.getRequestedCycle() == null) {
-                throw new DomainException("error.diplomaSupplementRequest.requestedCycleMustBeGiven");
-            } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
-                throw new DomainException(
-                        "error.diplomaSupplementRequest.requestedDegreeTypeIsNotAllowedForGivenStudentCurricularPlan");
-            }
-            super.setRequestedCycle(bean.getRequestedCycle());
-        } else {
-            if (bean.getRegistration().getDegreeType().hasExactlyOneCycleType()) {
-                super.setRequestedCycle(bean.getRegistration().getDegreeType().getCycleType());
-            }
+
+        if (bean.getProgramConclusion() == null) {
+            throw new DomainException("error.program.conclusion.empty");
         }
 
         final String fullName = getRegistration().getStudent().getPerson().getName();
@@ -74,21 +72,16 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
             throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
         }
         getRegistration().getPerson().getProfile().changeName(bean.getGivenNames(), bean.getFamilyNames(), null);
-        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(bean.getRequestedCycle());
-        DiplomaRequest diploma = getRegistration().getDiplomaRequest(bean.getRequestedCycle());
+        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
+        DiplomaRequest diploma = getRegistration().getDiplomaRequest(getProgramConclusion());
         if (registry == null && diploma == null) {
             throw new DomainException(
                     "error.diplomaSupplementRequest.cannotAskForSupplementWithoutEitherRegistryDiplomaOrDiplomaRequest");
         }
-        final DiplomaSupplementRequest supplement = getRegistration().getDiplomaSupplementRequest(bean.getRequestedCycle());
+        final DiplomaSupplementRequest supplement = getRegistration().getDiplomaSupplementRequest(getProgramConclusion());
         if (supplement != null && supplement != this) {
             throw new DomainException("error.diplomaSupplementRequest.alreadyRequested");
         }
-    }
-
-    @Override
-    public void setRequestedCycle(CycleType requestedCycle) {
-        throw new DomainException("error.diplomaSupplementRequest.cannotModifyRequestedCycle");
     }
 
     @Override
@@ -98,24 +91,13 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     final public String getDescription() {
-        final DegreeType degreeType = getDegreeType();
-        final CycleType requestedCycle = getRequestedCycle();
-
-        return getDescription(
-                getAcademicServiceRequestType(),
-                getDocumentRequestType().getQualifiedName()
-                        + "."
-                        + (degreeType.isAdvancedFormationDiploma() ? "DFA" : (degreeType.isComposite() ? requestedCycle.name() : degreeType
-                                .getCycleType().name())));
+        return Joiner.on(" : ").join(super.getDescription(getAcademicServiceRequestType()),
+                getProgramConclusion().getName().getContent());
     }
 
     @Override
     public String getDocumentTemplateKey() {
-        String result = getClass().getName() + "." + getDegreeType().getName();
-        if (getRequestedCycle() != null) {
-            result += "." + getRequestedCycle().name();
-        }
-        return result;
+        return DiplomaSupplement.class.getName();
     }
 
     public String getGivenNames() {
@@ -180,12 +162,12 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         super.internalChangeState(academicServiceRequestBean);
         if (academicServiceRequestBean.isToProcess()) {
-            if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
+            if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("error.diplomaSupplement.registration.not.submited.to.conclusion.process");
             }
             if (getRegistryCode() == null) {
-                RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
-                DiplomaRequest diploma = getRegistration().getDiplomaRequest(getRequestedCycle());
+                RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
+                DiplomaRequest diploma = getRegistration().getDiplomaRequest(getProgramConclusion());
                 if (registryRequest != null) {
                     registryRequest.getRegistryCode().addDocumentRequest(this);
                 } else if (diploma != null && diploma.hasRegistryCode()) {
@@ -202,7 +184,8 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public String getGraduateTitle(final Locale locale) {
-        return getRegistration().getGraduateTitle(getRequestedCycle(), locale);
+        return getProgramConclusion().groupFor(getRegistration())
+                .map(cg -> cg.getDegreeModule().getGraduateTitle(getConclusionYear(), locale)).orElse(null);
     }
 
     @Override
@@ -213,23 +196,23 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     @Override
     public String getPrevailingScientificArea(final Locale locale) {
         Degree degree = getDegree();
-        ExecutionYear conclusion =
-                getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess()
-                        .getConclusionYear();
+        ExecutionYear conclusion = getConclusionYear();
         return degree.getFilteredName(conclusion, locale);
     }
 
     @Override
     public double getEctsCredits() {
         ExecutionYear conclusion = getConclusionYear();
-
-        return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getDefaultEcts(conclusion);
+        final Supplier<? extends DomainException> noDefaultCredits =
+                () -> new DomainException("error.CycleCourseGroup.cannot.calculate.default.ects.credits");
+        return getProgramConclusion().groupFor(getRegistration()).map(cg -> cg.getDegreeModule().getDefaultEcts(conclusion))
+                .orElseThrow(noDefaultCredits);
     }
 
     @Override
     public DegreeOfficialPublication getDegreeOfficialPublication() {
-        CycleConclusionProcess conclusionProcess =
-                getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess();
+        ConclusionProcess conclusionProcess =
+                getProgramConclusion().groupFor(getRegistration()).map(cg -> cg.getConclusionProcess()).orElse(null);
 
         DegreeOfficialPublication dr =
                 getRegistration().getDegree().getOfficialPublication(
@@ -240,12 +223,12 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public Integer getFinalAverage() {
-        return getRegistration().getFinalAverage(getRequestedCycle());
+        return getRegistration().getFinalAverage(getProgramConclusion());
     }
 
     @Override
     public String getFinalAverageQualified(final Locale locale) {
-        Integer finalAverage = getRegistration().getFinalAverage(getRequestedCycle());
+        Integer finalAverage = getFinalAverage();
         String qualifiedAverageGrade;
         if (finalAverage <= 13) {
             qualifiedAverageGrade = "sufficient";
@@ -262,12 +245,24 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public ExecutionYear getConclusionYear() {
-        return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess()
-                .getConclusionYear();
+        return getProgramConclusion().groupFor(getRegistration()).map(CurriculumGroup::getConclusionProcess)
+                .map(ConclusionProcess::getConclusionYear).orElse(null);
+    }
+
+    @Override
+    public CycleType getRequestedCycle() {
+        Optional<CurriculumGroup> curriculumGroup = getProgramConclusion().groupFor(getRegistration());
+
+        if (!curriculumGroup.isPresent() || !curriculumGroup.get().isCycleCurriculumGroup()) {
+            throw new DomainException("error.no.cycle.group.present");
+        }
+
+        return ((CycleCurriculumGroup) curriculumGroup.get()).getCycleType();
     }
 
     @Override
     public EctsGraduationGradeConversionTable getGraduationConversionTable() {
+
         return EctsTableIndex.getGraduationGradeConversionTable(getRegistration().getDegree(), getRequestedCycle(),
                 getConclusionYear().getAcademicInterval(), getProcessingDate() != null ? getProcessingDate() : new DateTime());
     }

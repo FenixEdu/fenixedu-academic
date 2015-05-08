@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -67,20 +67,23 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
             }
         }
 
-        for (Registration registration : student.getConcludedRegistrations()) {
-            if (!registration.getDegreeType().isEmpty() && registration.isBolonha()
-                    && registration.isAllowedToManageRegistration()) {
-                RegistrationConclusionBean conclusionBean = null;
-                CycleType cycleType = registration.getDegreeType().getLastOrderedCycleType();
-                if (cycleType != null) {
-                    conclusionBean = new RegistrationConclusionBean(registration, cycleType);
-                } else {
-                    conclusionBean = new RegistrationConclusionBean(registration);
-                }
-                ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
-                if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
-                    phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(registration));
-                }
+        for (Registration concludedRegistration : student.getConcludedRegistrations()) {
+            if (!concludedRegistration.getDegreeType().isEmpty() && concludedRegistration.isBolonha()
+                    && concludedRegistration.isAllowedToManageRegistration()) {
+
+                ProgramConclusion
+                        .conclusionsFor(concludedRegistration)
+                        .filter(ProgramConclusion::isTerminal)
+                        .forEach(
+                                programConclusion -> {
+                                    RegistrationConclusionBean conclusionBean =
+                                            new RegistrationConclusionBean(concludedRegistration, programConclusion);
+
+                                    ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
+                                    if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
+                                        phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(concludedRegistration));
+                                    }
+                                });
             }
         }
         return phdRegistrationWrapperResult;

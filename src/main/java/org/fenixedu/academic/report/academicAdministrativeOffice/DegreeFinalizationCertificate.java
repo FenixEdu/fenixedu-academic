@@ -27,17 +27,14 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FenixStringTools;
@@ -102,7 +99,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         }
 
         result.append(getDegreeFinalizationEcts(req));
-        result.append(getGraduateTitle(getDocumentRequest().getRegistration(), req.getWhatShouldBeRequestedCycle()));
+        result.append(req.getGraduateTitle(req.getLanguage()));
         result.append(getDiplomaDescription());
         result.append(getDetailedInfoIntro(req));
 
@@ -146,20 +143,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
     @Override
     protected String getDegreeDescription() {
-        final DegreeFinalizationCertificateRequest request = getDocumentRequest();
-
-        CycleType cycleType = request.getWhatShouldBeRequestedCycle();
-
-        ExecutionYear conclusionYear = null;
-        if (cycleType == null) {
-            conclusionYear = getDocumentRequest().getRegistration().getConclusionYear();
-        } else {
-            conclusionYear =
-                    getDocumentRequest().getRegistration().getLastStudentCurricularPlan().getCycle(cycleType).getConclusionYear();
-        }
-
-        return getDocumentRequest().getRegistration().getDegreeDescription(conclusionYear,
-                request.getWhatShouldBeRequestedCycle(), getLocale());
+        return getRegistration().getDegreeDescription(getDocumentRequest().getConclusionYear(),
+                getDocumentRequest().getProgramConclusion(), getDocumentRequest().getLanguage());
     }
 
     private String getDegreeFinalizationDate(final DegreeFinalizationCertificateRequest request) {
@@ -242,26 +227,12 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         return res.toString();
     }
 
-    final private String getGraduateTitle(final Registration registration, final CycleType requestedCycle) {
-        final StringBuilder res = new StringBuilder();
-
-        final DegreeType degreeType = getDocumentRequest().getDegreeType();
-        if (degreeType.qualifiesForGraduateTitle()) {
-            res.append(", ").append(
-                    BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
-                            "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
-            res.append(SINGLE_SPACE).append(registration.getGraduateTitle(requestedCycle, getLocale()));
-        }
-
-        return res.toString();
-    }
-
     final private String getDiplomaDescription() {
         final StringBuilder res = new StringBuilder();
 
         final Degree degree = getDocumentRequest().getDegree();
         final DegreeType degreeType = degree.getDegreeType();
-        if (degreeType.qualifiesForGraduateTitle()) {
+        if (!getDocumentRequest().getProgramConclusion().getGraduationTitle(getDocumentRequest().getLanguage()).isEmpty()) {
             res.append(", ");
             if (getDocumentRequest().getRegistryCode() != null) {
                 res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),

@@ -53,6 +53,7 @@ import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.serviceRequests.InstitutionRegistryCodeGenerator;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.util.Bundle;
@@ -170,12 +171,18 @@ public class FenixBootstrapper {
             final SchoolUnit institutionUnit =
                     createSchoolUnit(universityUnit, portalSection.getOrganizationName(), schoolSetupSection.getSchoolAcronym());
             Bennu.getInstance().setInstitutionUnit(institutionUnit);
+
+            setRegistryGenerator(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
             //createServiceUnits(serviceUnits);
             final AggregateUnit departmentUnits = createAggregateUnit(institutionUnit, "Departments");
             //createDepartmentUnits(departmentUnits);
             final AggregateUnit degreeUnits = createAggregateUnit(institutionUnit, "Degrees");
             //createDegreeUnits(degreeUnits);
+        }
+
+        private void setRegistryGenerator(SchoolUnit institutionUnit) {
+            institutionUnit.setRegistryCodeGenerator(new InstitutionRegistryCodeGenerator());
         }
 
         private CountryUnit getCountryUnit(final String countryUnitName) {

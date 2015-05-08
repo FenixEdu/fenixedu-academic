@@ -189,17 +189,6 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
         for (AcademicServiceRequest document : documents) {
             codes.add(document.getRegistryCode());
         }
-        Integer min = null;
-        Integer max = null;
-        for (RegistryCode code : codes) {
-            Integer codeNumber = code.getCodeNumber();
-            if (min == null || codeNumber.intValue() < min.intValue()) {
-                min = codeNumber;
-            }
-            if (max == null || codeNumber.intValue() > max.intValue()) {
-                max = codeNumber;
-            }
-        }
         SheetData<AcademicServiceRequest> data = new SheetData<AcademicServiceRequest>(sorted) {
             @Override
             protected void makeLine(AcademicServiceRequest academicServiceRequest) {
@@ -213,7 +202,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
                             .getRequestedCycle().name()));
                     break;
                 case DIPLOMA_REQUEST:
-                    CycleType cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
+                    CycleType cycle = ((IDiplomaRequest) document).getRequestedCycle();
                     addCell("Ciclo", cycle != null ? BundleUtil.getString(Bundle.ENUMERATION, cycle.name()) : null);
                     break;
                 case DIPLOMA_SUPPLEMENT_REQUEST:
@@ -239,8 +228,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
         };
         try {
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=" + prefix + min + "-" + max + "(" + codes.size()
-                    + ")" + ".xls");
+            response.setHeader("Content-disposition", "attachment; filename=" + prefix + "-" + "(" + codes.size() + ")" + ".xls");
             final ServletOutputStream writer = response.getOutputStream();
             new SpreadsheetBuilder().addSheet("lote", data).build(WorkbookExportFormat.EXCEL, writer);
             writer.flush();

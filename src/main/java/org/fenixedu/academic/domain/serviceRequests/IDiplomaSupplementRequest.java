@@ -22,16 +22,10 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.student.Registration;
 
-public interface IDiplomaSupplementRequest extends IDocumentRequest {
-    public CycleType getRequestedCycle();
-
-    public String getGraduateTitle(final Locale locale);
-
+public interface IDiplomaSupplementRequest extends IProgramConclusionRequest {
     public Integer getRegistrationNumber();
 
     public String getPrevailingScientificArea(final Locale locale);
@@ -57,4 +51,5 @@ public interface IDiplomaSupplementRequest extends IDocumentRequest {
     public Registration getRegistration();
 
     public boolean hasRegistration();
+
 }

@@ -22,15 +22,15 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 
 public class CycleCurriculumGroupPredicates {
 
-    public static final AccessControlPredicate<CycleCurriculumGroup> MANAGE_CONCLUSION_PROCESS =
-            new AccessControlPredicate<CycleCurriculumGroup>() {
+    public static final AccessControlPredicate<CurriculumGroup> MANAGE_CONCLUSION_PROCESS =
+            new AccessControlPredicate<CurriculumGroup>() {
 
                 @Override
-                public boolean evaluate(final CycleCurriculumGroup cycleCurriculumGroup) {
+                public boolean evaluate(final CurriculumGroup curriculumGroup) {
                     final Person person = AccessControl.getPerson();
 
                     if (RoleType.MANAGER.isMember(person.getUser())) {
@@ -38,7 +38,7 @@ public class CycleCurriculumGroupPredicates {
                     }
 
                     return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_CONCLUSION,
-                            cycleCurriculumGroup.getRegistration().getDegree(), person.getUser());
+                            curriculumGroup.getRegistration().getDegree(), person.getUser());
                 }
             };
 

@@ -26,6 +26,7 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -60,8 +61,8 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     @Override
     protected String getDegreeDescription() {
-        return getDocumentRequest().getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(), null,
-                getLocale());
+        return getDocumentRequest().getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(),
+                (ProgramConclusion) null, getLocale());
     }
 
     final private String getApprovementsInfo() {

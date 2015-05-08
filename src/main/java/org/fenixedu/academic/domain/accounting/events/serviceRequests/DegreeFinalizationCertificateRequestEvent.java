@@ -57,9 +57,9 @@ public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizatio
 
     private void addCycleDescriptionIfRequired(LabelFormatter labelFormatter) {
         final DegreeFinalizationCertificateRequest request = getAcademicServiceRequest();
-        if (request.getRequestedCycle() != null) {
-            labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION)
-                    .appendLabel(" ").appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
+        if (request.getProgramConclusion() != null) {
+            labelFormatter.appendLabel(request.getProgramConclusion().getName().getContent()).appendLabel(" ")
+                    .appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
         }
     }
 

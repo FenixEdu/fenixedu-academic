@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -82,7 +83,9 @@ import org.fenixedu.academic.domain.candidacy.Ingression;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.gratuity.ReimbursementGuideState;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
@@ -99,7 +102,6 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDip
 import org.fenixedu.academic.domain.student.curriculum.AverageType;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
-import org.fenixedu.academic.domain.student.curriculum.RegistrationConclusionProcess;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
@@ -112,7 +114,6 @@ import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.StandaloneCurriculumGroup;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.transactions.InsuranceTransaction;
-import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.RegistrationPredicates;
 import org.fenixedu.academic.util.Bundle;
@@ -131,6 +132,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.base.Strings;
 
 public class Registration extends Registration_Base {
 
@@ -685,6 +688,11 @@ public class Registration extends Registration_Base {
 
         return getLastStudentCurricularPlan().getCycle(cycleType).getFinalAverage();
 
+    }
+
+    final public Integer getFinalAverage(ProgramConclusion programConclusion) {
+        Optional<CurriculumGroup> groupFor = programConclusion.groupFor(this);
+        return groupFor.isPresent() ? groupFor.get().getFinalAverage() : null;
     }
 
     final public String getFinalAverageDescription() {
@@ -1765,34 +1773,38 @@ public class Registration extends Registration_Base {
         return getDegreeDescription(degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : getLastConcludedCycleType());
     }
 
+    @Deprecated
     final public String getDegreeDescription(final CycleType cycleType) {
         return getDegreeDescription(cycleType, I18N.getLocale());
     }
 
+    @Deprecated
     final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType) {
         return getDegreeDescription(executionYear, cycleType, I18N.getLocale());
     }
 
+    @Deprecated
     final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
         return getDegreeDescription(this.getStartExecutionYear(), cycleType, locale);
     }
 
-    final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
+    final public String getDegreeDescription(ExecutionYear executionYear, final ProgramConclusion programConclusion,
+            final Locale locale) {
         final StringBuilder res = new StringBuilder();
 
         final Degree degree = getDegree();
         final DegreeType degreeType = degree.getDegreeType();
-        if (!getDegreeType().isAdvancedFormationDiploma() && cycleType != null) {
-            res.append(cycleType.getDescription(locale)).append(",");
-            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.the.male")).append(" ");
+        if (programConclusion != null && !Strings.isNullOrEmpty(programConclusion.getName().getContent(locale))) {
+            res.append(programConclusion.getName().getContent(locale));
+            res.append(", ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.the.male")).append(" ");
         }
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
             res.append(degreeType.getPrefix(locale));
-            res.append(degreeType.getName().getContent(locale).toUpperCase());
-
-            if (getDegreeType().isAdvancedFormationDiploma() && cycleType != null) {
-                res.append(" (").append(cycleType.getDescription(locale)).append(")");
+            if (programConclusion != null && !Strings.isNullOrEmpty(programConclusion.getDescription().getContent(locale))) {
+                res.append(programConclusion.getDescription().getContent(locale).toUpperCase());
+            } else {
+                res.append(degreeType.getName().getContent(locale).toUpperCase());
             }
             res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.in")).append(" ");
         }
@@ -1800,6 +1812,15 @@ public class Registration extends Registration_Base {
         res.append(degree.getFilteredName(executionYear, locale).toUpperCase());
 
         return res.toString();
+    }
+
+    @Deprecated
+    final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
+        CycleCourseGroup cycleCourseGroup = getLastStudentCurricularPlan().getCycleCourseGroup(cycleType);
+        if (cycleCourseGroup.getProgramConclusion() != null) {
+            return getDegreeDescription(executionYear, cycleCourseGroup.getProgramConclusion(), locale);
+        }
+        return "";
     }
 
     public String getDegreeCurricularPlanName() {
@@ -2225,21 +2246,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isRegistrationConclusionProcessed() {
-        if (getDegreeType().isBolonhaType()) {
-            return getLastStudentCurricularPlan().isConclusionProcessed();
-        } else {
-            return getConclusionProcess() != null;
-        }
-    }
-
-    public boolean isRegistrationConclusionProcessed(final CycleType cycleType) {
-        if (cycleType == null) {
-            return isRegistrationConclusionProcessed();
-        } else if (getDegreeType().isBolonhaType() && getDegreeType().hasCycleTypes(cycleType)) {
-            return getLastStudentCurricularPlan().isConclusionProcessed(cycleType);
-        }
-
-        throw new DomainException("Registration.degree.type.has.no.such.cycle.type");
+        return getLastStudentCurricularPlan().isConclusionProcessed();
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
@@ -2378,24 +2385,12 @@ public class Registration extends Registration_Base {
         return isRegistrationConclusionProcessed() ? getConclusionProcess().getLastModificationDateTime() : null;
     }
 
-    final public String getGraduateTitle() {
-        return getGraduateTitle((CycleType) null, I18N.getLocale());
-    }
-
-    final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
-        if (cycleType == null) {
-            if (isRegistrationConclusionProcessed()) {
-                return getLastDegreeCurricularPlan().getGraduateTitle(getConclusionYear(), locale);
-            }
-
-            throw new DomainException("Registration.is.not.concluded");
+    final public String getGraduateTitle(final ProgramConclusion programConclusion, final Locale locale) {
+        if (programConclusion.isConclusionProcessed(this)) {
+            final ExecutionYear conclusionYear =
+                    programConclusion.groupFor(this).map(CurriculumGroup::getConclusionYear).orElse(null);
+            return getLastDegreeCurricularPlan().getGraduateTitle(conclusionYear, programConclusion, locale);
         }
-
-        if (hasConcludedCycle(cycleType)) {
-            return getLastDegreeCurricularPlan().getGraduateTitle(
-                    getLastStudentCurricularPlan().getCycle(cycleType).getConclusionYear(), cycleType, locale);
-        }
-
         throw new DomainException("Registration.hasnt.concluded.requested.cycle");
     }
 
@@ -2417,18 +2412,7 @@ public class Registration extends Registration_Base {
 
     public boolean hasConcluded() {
         final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-
-        if (lastStudentCurricularPlan == null || !lastStudentCurricularPlan.isBolonhaDegree()) {
-            return getConclusionProcess() != null;
-        }
-
-        for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getInternalCycleCurriculumGrops()) {
-            if (!cycleCurriculumGroup.isConcluded()) {
-                return false;
-            }
-        }
-
-        return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
+        return lastStudentCurricularPlan.isConcluded();
     }
 
     public boolean getHasConcluded() {
@@ -2519,25 +2503,6 @@ public class Registration extends Registration_Base {
         return concludedCycles.isEmpty() ? null : concludedCycles.last();
     }
 
-    public void conclude() {
-        if (isBolonha()) {
-            throw new DomainException("error.Registration.cannot.apply.to.bolonha");
-        }
-
-        if (isRegistrationConclusionProcessed()) {
-            if (!canRepeatConclusionProcess(AccessControl.getPerson())) {
-                throw new DomainException("error.Registration.already.concluded");
-            }
-        }
-
-        if (getConclusionProcess() != null) {
-            getConclusionProcess().update(new RegistrationConclusionBean(this));
-        } else {
-            RegistrationConclusionProcess.conclude(new RegistrationConclusionBean(this));
-        }
-
-    }
-
     public boolean canRepeatConclusionProcess(Person person) {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getDegree(),
                 person.getUser());
@@ -2562,7 +2527,7 @@ public class Registration extends Registration_Base {
             throw new DomainException("error.Registration.argument.must.not.be.null", args1);
         }
 
-        getConclusionProcess().update(editor, finalAverage, conclusion.toLocalDate(), notes);
+        getConclusionProcess().update(editor, finalAverage, getConclusionProcess().getAverage(), conclusion.toLocalDate(), notes);
     }
 
     public void editConclusionInformation(final Person editor, final Integer finalAverage, final BigDecimal average,
@@ -2588,28 +2553,23 @@ public class Registration extends Registration_Base {
         getConclusionProcess().update(editor, finalAverage, average, conclusion.toLocalDate(), notes);
     }
 
-    public void conclude(final CycleCurriculumGroup cycleCurriculumGroup) {
+    public void conclude(final CurriculumGroup curriculumGroup) {
         check(this, RegistrationPredicates.MANAGE_CONCLUSION_PROCESS);
-        if (!isBolonha()) {
-            throw new DomainException("error.Registration.cannot.apply.to.preBolonha");
-        }
 
-        if (cycleCurriculumGroup == null || !getLastStudentCurricularPlan().hasCurriculumModule(cycleCurriculumGroup)) {
+        if (curriculumGroup == null || !getLastStudentCurricularPlan().hasCurriculumModule(curriculumGroup)) {
             throw new DomainException("error.Registration.invalid.cycleCurriculumGroup");
         }
 
-        cycleCurriculumGroup.conclude();
+        curriculumGroup.conclude();
 
-        if (!isConcluded() && isRegistrationConclusionProcessed()) {
-            if (isDEA() && getPhdIndividualProgramProcess() != null) {
-                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(),
-                        RegistrationStateType.SCHOOLPARTCONCLUDED);
-            } else {
-                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(),
-                        RegistrationStateType.CONCLUDED);
-            }
+        ProgramConclusion conclusion = curriculumGroup.getDegreeModule().getProgramConclusion();
 
+        if (conclusion != null && conclusion.getTargetState() != null
+                && !conclusion.getTargetState().equals(getActiveStateType())) {
+            RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(),
+                    conclusion.getTargetState());
         }
+
     }
 
     final public boolean hasApprovement(ExecutionYear executionYear) {
@@ -2854,10 +2814,14 @@ public class Registration extends Registration_Base {
     }
 
     final public DiplomaRequest getDiplomaRequest(final CycleType cycleType) {
+        return getDiplomaRequest(getLastStudentCurricularPlan().getCycleCourseGroup(cycleType).getProgramConclusion());
+    }
+
+    final public DiplomaRequest getDiplomaRequest(final ProgramConclusion programConclusion) {
         for (final DocumentRequest documentRequest : getDocumentRequests()) {
             if (documentRequest.isDiploma() && !documentRequest.finishedUnsuccessfully()) {
                 final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
-                if (cycleType == null || cycleType == diplomaRequest.getWhatShouldBeRequestedCycle()) {
+                if (programConclusion == null || programConclusion.equals(diplomaRequest.getProgramConclusion())) {
                     return diplomaRequest;
                 }
             }
@@ -2876,24 +2840,27 @@ public class Registration extends Registration_Base {
     }
 
     final public RegistryDiplomaRequest getRegistryDiplomaRequest(final CycleType cycleType) {
+        return getRegistryDiplomaRequest(getLastStudentCurricularPlan().getCycleCourseGroup(cycleType).getProgramConclusion());
+    }
+
+    final public RegistryDiplomaRequest getRegistryDiplomaRequest(final ProgramConclusion programConclusion) {
         for (final DocumentRequest documentRequest : getDocumentRequests()) {
             if (documentRequest.isRegistryDiploma() && !documentRequest.finishedUnsuccessfully()) {
                 final RegistryDiplomaRequest registryDiplomaRequest = (RegistryDiplomaRequest) documentRequest;
-                if (cycleType == null || cycleType == registryDiplomaRequest.getRequestedCycle()) {
+                if (programConclusion == null || programConclusion.equals(registryDiplomaRequest.getProgramConclusion())) {
                     return registryDiplomaRequest;
                 }
             }
         }
-
         return null;
     }
 
-    final public DiplomaSupplementRequest getDiplomaSupplementRequest(final CycleType cycleType) {
-        for (DocumentRequest documentRequest : getDocumentRequests()) {
+    final public DiplomaSupplementRequest getDiplomaSupplementRequest(final ProgramConclusion programConclusion) {
+        for (final DocumentRequest documentRequest : getDocumentRequests()) {
             if (documentRequest.isDiplomaSupplement() && !documentRequest.finishedUnsuccessfully()) {
-                DiplomaSupplementRequest supplement = (DiplomaSupplementRequest) documentRequest;
-                if (cycleType == supplement.getRequestedCycle()) {
-                    return supplement;
+                final DiplomaSupplementRequest diplomaSupplementRequest = (DiplomaSupplementRequest) documentRequest;
+                if (programConclusion == null || programConclusion.equals(diplomaSupplementRequest.getProgramConclusion())) {
+                    return diplomaSupplementRequest;
                 }
             }
         }
@@ -3353,24 +3320,6 @@ public class Registration extends Registration_Base {
         }
         setRegistrationYear(year);
 
-    }
-
-    public boolean isSeniorStatuteApplicable(ExecutionYear executionYear) {
-
-        if (hasAlreadySeniorStatute(executionYear)) {
-            return false;
-        }
-
-        return getDegreeType().hasSeniorEligibility(this, executionYear);
-    }
-
-    private boolean hasAlreadySeniorStatute(ExecutionYear executionYear) {
-        for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
-            if (seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Atomic

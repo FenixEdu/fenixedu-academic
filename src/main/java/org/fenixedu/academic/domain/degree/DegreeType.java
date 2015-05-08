@@ -32,11 +32,9 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.CycleTypes;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -54,26 +52,6 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
         setName(name);
         setCycles(new CycleTypes());
         setCyclesToEnrol(new CycleTypes());
-    }
-
-    // TODO Provide a proper implementation for this
-    public final boolean qualifiesForGraduateTitle() {
-        throw new UnsupportedOperationException("NYI");
-    }
-
-    // TODO Provide a proper implementation for this
-    public final boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
-        throw new UnsupportedOperationException("NYI");
-    }
-
-    // TODO Provide a proper implementation for this
-    final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
-        throw new UnsupportedOperationException("NYI");
-    }
-
-    // TODO Provide a proper implementation for this
-    public boolean canRemoveEnrolmentIn(final CycleType cycleType) {
-        throw new UnsupportedOperationException("NYI");
     }
 
     public final Collection<CycleType> getCycleTypes() {
@@ -164,19 +142,6 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
         final String string = BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.two");
         result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : " ");
         return result.toString();
-    }
-
-    @Deprecated
-    final public String getSeniorTitle() {
-        return getGraduateTitle();
-    }
-
-    final public String getGraduateTitle() {
-        return getGraduateTitle(I18N.getLocale());
-    }
-
-    final public String getGraduateTitle(final Locale locale) {
-        return getGraduateTitle((CycleType) null, locale);
     }
 
     public boolean isFirstCycle() {

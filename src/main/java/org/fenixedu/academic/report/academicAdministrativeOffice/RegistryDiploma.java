@@ -19,23 +19,23 @@
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
-import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
-import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+
+import com.google.common.base.Joiner;
 
 public class RegistryDiploma extends AdministrativeOfficeDocument {
     private static final long serialVersionUID = 7788392282506503345L;
@@ -77,13 +77,6 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         String graduateTitle = request.getGraduateTitle(getLocale());
 
-        if (graduateTitle.contains("Graduated")) {
-            graduateTitle = graduateTitle.replace("Graduated", "Licenciado");
-        }
-
-        if (graduateTitle.contains("Master")) {
-            graduateTitle = graduateTitle.replace("Master", "Mestre");
-        }
         addParameter("graduateTitle", graduateTitle);
         setFooter();
     }
@@ -104,21 +97,17 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     protected void setHeader() {
 
-        final CycleType cycleType = getDocumentRequest().getRequestedCycle();
-        final String diplomaTypeQualifier;
-        if (cycleType == CycleType.FIRST_CYCLE) {
-            diplomaTypeQualifier = "label.diploma.type.qualifier.first.cycle";
-        } else if (cycleType == CycleType.SECOND_CYCLE) {
-            diplomaTypeQualifier = "label.diploma.type.qualifier.second.cycle";
-        } else if (cycleType == CycleType.THIRD_CYCLE) {
-            diplomaTypeQualifier = "label.diploma.type.qualifier.third.cycle";
-        } else {
-            diplomaTypeQualifier = "label.diploma.type.qualifier.unknown";
+        String degreeRegistrationDiploma =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.degreeRegistrationDiploma");
+        final LocalizedString graduationLevel = getDocumentRequest().getProgramConclusion().getGraduationLevel();
+
+        if (!graduationLevel.isEmpty()) {
+            degreeRegistrationDiploma =
+                    Joiner.on(" ").join(degreeRegistrationDiploma, BundleUtil.getString(Bundle.ACADEMIC, "label.of.both"),
+                            graduationLevel.getContent(getLocale()));
         }
 
-        addParameter("degreeRegistrationDiploma", MessageFormat.format(
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.degreeRegistrationDiploma"),
-                new Object[] { BundleUtil.getString(Bundle.ACADEMIC, getLocale(), diplomaTypeQualifier) }));
+        addParameter("degreeRegistrationDiploma", degreeRegistrationDiploma);
         addParameter("portugueseRepublic_1",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.portugueseRepublic.part1"));
         addParameter("portugueseRepublic_2",
@@ -165,14 +154,13 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
 
-        Degree degree = ((RegistryDiplomaRequest) getDocumentRequest()).getDegree();
-        ExecutionYear year = ((RegistryDiplomaRequest) getDocumentRequest()).getConclusionYear();
+        ExecutionYear year = getDocumentRequest().getConclusionYear();
 
         addParameter(
                 "secondParagraph",
                 MessageFormat.format(secondParagraph, studentGender,
                         BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()),
-                        person.getDocumentIdNumber(), country, getCycleDescription(), degree.getFilteredName(year, getLocale())));
+                        person.getDocumentIdNumber(), country, getProgramConclusionDescription(year)));
     }
 
     protected void setFooter() {
@@ -248,54 +236,20 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     }
 
-    protected String getCycleDescription() {
+    protected String getProgramConclusionDescription(ExecutionYear year) {
+        final ProgramConclusion programConclusion = getDocumentRequest().getProgramConclusion();
+        final ArrayList<String> result = new ArrayList<>();
 
-        final StringBuilder res = new StringBuilder();
-        RegistryDiplomaRequest request = (RegistryDiplomaRequest) getDocumentRequest();
-        CycleType cycle = request.getRequestedCycle();
-        Degree degree = request.getDegree();
-        final DegreeType degreeType = request.getDegreeType();
-        if (degreeType.hasAnyCycleTypes()) {
-            res.append(cycle.getDescription(getLocale()));
-            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.both")).append(" ");
-        }
-        if (!degree.isEmpty()) {
-            res.append(degreeType.getName().getContent(getLocale()));
-        }
-        return res.toString();
-    }
+        result.add(programConclusion.getName().getContent(getLocale()));
 
-    @Override
-    protected String getDegreeDescription() {
-
-        if (getDocumentRequest().isRequestForRegistration()) {
-            final StringBuilder res = new StringBuilder();
-            RegistryDiplomaRequest request = (RegistryDiplomaRequest) getDocumentRequest();
-            CycleType cycle = request.getRequestedCycle();
-            Degree degree = request.getDegree();
-            final DegreeType degreeType = request.getDegreeType();
-            if (degreeType.hasAnyCycleTypes()) {
-                res.append(cycle.getDescription(getLocale()));
-                res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.both")).append(" ");
-            }
-
-            if (!degree.isEmpty()) {
-                res.append(degreeType.getName().getContent(getLocale()));
-                res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in")).append(" ");
-            }
-
-            res.append(degree.getNameI18N(request.getConclusionYear()).getContent(getLanguage()));
-            return res.toString();
-        } else if (getDocumentRequest().isRequestForPhd()) {
-            PhdRegistryDiplomaRequest request = (PhdRegistryDiplomaRequest) getDocumentRequest();
-            final StringBuilder res = new StringBuilder();
-            res.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.doctoral.program.designation"));
-            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in"));
-            res.append(" ").append(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage()));
-
-            return res.toString();
+        if (!programConclusion.getDescription().isEmpty()) {
+            result.add(BundleUtil.getString(Bundle.ACADEMIC, "label.of.both"));
+            result.add(programConclusion.getDescription().getContent(getLocale()));
         }
 
-        throw new DomainException("docs.academicAdministrativeOffice.RegistryDiploma.degreeDescription.invalid.request");
+        result.add(BundleUtil.getString(Bundle.ACADEMIC, "label.in"));
+        result.add(getDocumentRequest().getDegreeName(year));
+
+        return Joiner.on(" ").join(result);
     }
 }

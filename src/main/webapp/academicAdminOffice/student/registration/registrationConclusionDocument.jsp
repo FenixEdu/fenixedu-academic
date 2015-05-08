@@ -52,8 +52,8 @@
 	<tr>
 		<td>
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.concluded.lowercase"/>
-			<logic:equal name="registration" property="degreeType.administrativeOfficeType.qualifiedName" value="AdministrativeOfficeType.MASTER_DEGREE"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.scholarship.of"/></logic:equal><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.degree.of"/>
-			<bean:write name="registration" property="degreeType.localizedName"/> 
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.degree.of"/>
+			<bean:write name="registration" property="degreeType.name.content"/> 
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.metioned.above.with.following.units"/>:
 			<br/>
 			<br/>
@@ -70,96 +70,6 @@
 	</fr:view>
 </logic:equal>
 
-<logic:equal name="registrationConclusionBean" property="curriculumForConclusion.studentCurricularPlan.boxStructure" value="false">
-	<bean:define id="curriculumEntries" name="registrationConclusionBean" property="curriculumForConclusion.curriculumEntries"/>
-		<table class="scplan">
-			<tr class="scplangroup">
-				<td class=" scplancolcurricularcourse" rowspan="2" colspan="2">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.from.curriculum"/>
-				</th>
-				<td class=" scplancolgrade"colspan="3">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="degree.average"/>
-				</th>
-				<td class=" scplancolgrade">
-					<bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</td>
-			</tr>
-			<tr class="scplangroup">
-				<td class=" scplancolgrade">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.grade"/>
-				</td>
-				<td class=" scplancolgrade">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.weight"/>
-				</td>
-				<td class=" scplancolgrade" style="width: 100px;">
-					(<bean:message bundle="APPLICATION_RESOURCES" key="label.weight"/> x <bean:message bundle="APPLICATION_RESOURCES" key="label.grade"/>)
-				</td>
-				<td  class=" scplancolgrade" style="width: 100px;">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.credits"/>
-				</th>
-			</tr>
-			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
-					<tr class="scplanenrollment">
-						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.code"/></td>
-						<td class=" scplancolcurricularcourse"><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
-						<td class=" scplancolgrade"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.gradeValue"/></td>						
-						<td class=" scplancolweight"><bean:write name="curriculumEntry" property="weigthForCurriculum"/></td>
-						<td class=" scplancolweight">
-							<logic:empty name="curriculumEntry" property="weigthTimesGrade">
-								-
-							</logic:empty>
-							<logic:notEmpty name="curriculumEntry" property="weigthTimesGrade">
-								<bean:write name="curriculumEntry" property="weigthTimesGrade"/>
-							</logic:notEmpty>
-						</td>
-						<td class=" scplancolects">
-							<logic:empty name="curriculumEntry" property="ectsCreditsForCurriculum">
-								-
-							</logic:empty>
-							<logic:notEmpty name="curriculumEntry" property="ectsCreditsForCurriculum">
-								<bean:write name="curriculumEntry" property="ectsCreditsForCurriculum"/>
-							</logic:notEmpty>
-						</td>
-					</tr>
-				</logic:equal>
-			</logic:iterate>				
-			<logic:iterate id="curriculumEntry" name="curriculumEntries">
-				<logic:equal name="curriculumEntry" property="class.name" value="org.fenixedu.academic.domain.student.curriculum.GivenCreditsEntry">
-					<tr class="scplanenrollment">
-						<td class="acenter">-</td>
-						<td class=" scplancolcurricularcourse"><bean:message bundle="APPLICATION_RESOURCES" key="label.givenCredits"/></td>
-						<td class=" scplancolgrade">-</td>						
-						<td class=" scplancolweight">-</td>
-						<td class=" scplancolweight">-</td>
-						<td class=" scplancolects">
-							<logic:empty name="curriculumEntry" property="ectsCreditsForCurriculum">
-								-
-							</logic:empty>
-							<logic:notEmpty name="curriculumEntry" property="ectsCreditsForCurriculum">
-								<bean:write name="curriculumEntry" property="ectsCreditsForCurriculum"/>
-							</logic:notEmpty>
-						</td>
-					</tr>
-				</logic:equal>
-			</logic:iterate>				
-			<tr class="scplanenrollment">
-				<td colspan="3" style="text-align: right;">
-					Somatórios
-				</td>
-				<td class=" scplancolweight">
-					<bean:write name="registrationConclusionBean" property="curriculumForConclusion.sumPi"/>
-				</td>
-				<td class=" scplancolweight">
-					<bean:write name="registrationConclusionBean" property="curriculumForConclusion.sumPiCi"/>
-				</td>
-				<td class=" scplancolects">
-					<bean:write name="registrationConclusionBean" property="curriculumForConclusion.sumEctsCredits"/>
-				</td>
-			</tr>
-		</table>
-
-</logic:equal>	
 
 <%
 	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
@@ -219,9 +129,6 @@
 		<td colspan="2" style="padding: 5px;">
 			<p class="apura-pt9">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.concluded.uppercase"/>  
-				<logic:equal name="registration" property="degreeType.administrativeOfficeType.qualifiedName" value="AdministrativeOfficeType.MASTER_DEGREE">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.scholarship.of"/>
-				</logic:equal>
 				o <bean:write name="registrationConclusionBean" property="conclusionDegreeDescription"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.in"/> 
 				<bean:write name="degreeFinalizationDate"/><bean:write name="degreeFinalizationGrade"/>, 
 				tendo obtido o total de <bean:write name="degreeFinalizationEcts"/><bean:write name="creditsDescription"/>.
