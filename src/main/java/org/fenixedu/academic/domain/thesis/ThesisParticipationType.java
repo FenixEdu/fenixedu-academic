@@ -22,7 +22,7 @@ public enum ThesisParticipationType {
     STATE_CREATOR(true), STATE_SUBMITTER(true), STATE_PROPOSAL_APPROVER(true), STATE_CONFIRMER(true), STATE_EVALUATION_APPROVER(
             true),
 
-    ORIENTATOR(false), COORIENTATOR(true), PRESIDENT(true), VOWEL(false);
+    ORIENTATOR(false), COORIENTATOR(false), PRESIDENT(true), VOWEL(false);
 
     private boolean single;
 

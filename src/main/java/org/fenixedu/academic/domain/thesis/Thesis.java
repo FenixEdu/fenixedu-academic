@@ -116,15 +116,10 @@ public class Thesis extends Thesis_Base {
         });
     }
 
-    public static final Comparator<Thesis> COMPARATOR_BY_STUDENT = new Comparator<Thesis>() {
-        @Override
-        public int compare(Thesis t1, Thesis t2) {
-            final int n = Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
-            return n == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(t1, t2) : n;
-        }
+    public static final Comparator<Thesis> COMPARATOR_BY_STUDENT = (t1, t2) -> {
+        final int n = Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
+        return n == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(t1, t2) : n;
     };
-
-    private final static double CREDITS = 1;
 
     public static class ThesisCondition {
         private final String key;
@@ -299,16 +294,6 @@ public class Thesis extends Thesis_Base {
                         || p.getType() == ThesisParticipationType.COORIENTATOR).collect(Collectors.toList());
     }
 
-    @Deprecated
-    public ThesisEvaluationParticipant getOrientator() {
-        return getParticipant(ThesisParticipationType.ORIENTATOR);
-    }
-
-    @Deprecated
-    public ThesisEvaluationParticipant getCoorientator() {
-        return getParticipant(ThesisParticipationType.COORIENTATOR);
-    }
-
     public ThesisEvaluationParticipant getPresident() {
         return getParticipant(ThesisParticipationType.PRESIDENT);
     }
@@ -480,12 +465,6 @@ public class Thesis extends Thesis_Base {
 
     public static Collection<Thesis> getEvaluatedThesis(Degree degree, ExecutionYear executionYear) {
         return getThesisInState(degree, executionYear, ThesisState.EVALUATED);
-    }
-
-    // the credits calculation always depends on the current credits' value for
-    // the thesis (no history)
-    public static double getCredits() {
-        return CREDITS;
     }
 
     public boolean hasCredits() {
@@ -1470,14 +1449,6 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    public void setOrientator(Person person) {
-        setParticipation(person, ThesisParticipationType.ORIENTATOR);
-    }
-
-    public void setCoorientator(Person person) {
-        setParticipation(person, ThesisParticipationType.COORIENTATOR);
-    }
-
     public void setPresident(Person person) {
         setParticipation(person, ThesisParticipationType.PRESIDENT);
     }
@@ -1502,7 +1473,7 @@ public class Thesis extends Thesis_Base {
         setParticipation(person, ThesisParticipationType.STATE_EVALUATION_APPROVER);
     }
 
-    private void setParticipation(Person person, ThesisParticipationType type) {
+    public void setParticipation(Person person, ThesisParticipationType type) {
         if (person == null) {
             removeParticipation(getParticipant(type));
         } else {
@@ -1510,55 +1481,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    public void addVowel(Person person) {
-        if (person != null) {
-            new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
-        }
-    }
-
-    //Remove in the next major
-    @Deprecated
-    public boolean isCreditsDistributionNeeded() {
-        return isOrientatorCreditsDistributionNeeded() || isCoorientatorCreditsDistributionNeeded();
-    }
-
-    public boolean isOrientatorCreditsDistributionNeeded() {
-        return isInternalPerson(getParticipationPerson(getOrientator()));
-    }
-
-    public boolean isCoorientatorCreditsDistributionNeeded() {
-        return isInternalPerson(getParticipationPerson(getCoorientator()));
-    }
-
-    private boolean isInternalPerson(Person person) {
-        return person != null && person.getTeacher() != null && person.getTeacher().isActiveContractedTeacher();
-    }
-
-    //Remove in the next major
-    @Deprecated
-    @Override
-    public void setOrientatorCreditsDistribution(Integer percent) {
-        if (percent != null && (percent < 0 || percent > 100)) {
-            throw new DomainException("thesis.orietation.credits.notValid");
-        }
-
-        super.setOrientatorCreditsDistribution(percent);
-    }
-
-    public Integer getCoorientatorCreditsDistribution() {
-        Integer distribution = getOrientatorCreditsDistribution();
-
-        return distribution != null ? 100 - distribution : null;
-    }
-
-    //Remove in the next major
-    @Deprecated
-    public void setCoorientatorCreditsDistribution(Integer percent) {
-        if (percent != null && (percent < 0 || percent > 100)) {
-            throw new DomainException("thesis.orietation.credits.notValid");
-        }
-
-        setOrientatorCreditsDistribution(percent != null ? 100 - percent : null);
+    public void addParticipant(Person person, ThesisParticipationType type) {
+        new ThesisEvaluationParticipant(this, person, type);
     }
 
     public DateTime getCurrentDiscussedDate() {

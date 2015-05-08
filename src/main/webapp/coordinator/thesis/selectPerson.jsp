@@ -59,7 +59,7 @@
 
 <div class="dinline forminline">
     <fr:form action="<%= String.format("/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-        <fr:edit id="bean" name="bean" schema="<%= "thesis.bean.selectPerson.internal." + target %>">
+        <fr:edit id="bean" name="bean" schema="thesis.bean.selectPerson.internal">
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
                 <fr:property name="columnClasses" value=",,tdclear tderror1"/>
