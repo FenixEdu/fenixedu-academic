@@ -124,7 +124,7 @@ public enum RoleType implements IPresentableEnum {
         Group group = roleType.actualGroup();
         if (group instanceof DynamicGroup) {
             DynamicGroup dynamic = (DynamicGroup) group;
-            dynamic.changeGroup(dynamic.underlyingGroup().grant(user));
+            dynamic.mutator().changeGroup(dynamic.underlyingGroup().grant(user));
         } else {
             logger.warn("RoleType '{}' is not manageable!", roleType.name());
         }
@@ -134,7 +134,7 @@ public enum RoleType implements IPresentableEnum {
         Group group = roleType.actualGroup();
         if (group instanceof DynamicGroup) {
             DynamicGroup dynamic = (DynamicGroup) group;
-            dynamic.changeGroup(dynamic.underlyingGroup().revoke(user));
+            dynamic.mutator().changeGroup(dynamic.underlyingGroup().revoke(user));
         } else {
             logger.warn("RoleType '{}' is not manageable!", roleType.name());
         }

@@ -44,7 +44,7 @@ public class ResidenceRoleManagementDA extends FenixDispatchAction {
     public ActionForward addResidenceRoleManagemenToPerson(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynamicGroup group = getResidenceRoleManagement();
-        group.changeGroup(group.underlyingGroup().grant(getResidenceRoleManagementBean().getPerson().getUser()));
+        group.mutator().changeGroup(group.underlyingGroup().grant(getResidenceRoleManagementBean().getPerson().getUser()));
         return residencePersonsManagement(mapping, actionForm, request, response);
     }
 
@@ -52,7 +52,7 @@ public class ResidenceRoleManagementDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = User.findByUsername(request.getParameter("userToRemove"));
         DynamicGroup group = getResidenceRoleManagement();
-        group.changeGroup(group.underlyingGroup().revoke(user));
+        group.mutator().changeGroup(group.underlyingGroup().revoke(user));
         return residencePersonsManagement(mapping, actionForm, request, response);
     }
 
