@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.student;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.joda.time.LocalDate;
 
 public class SeniorStatute extends SeniorStatute_Base {
 
@@ -27,12 +28,20 @@ public class SeniorStatute extends SeniorStatute_Base {
         super();
     }
 
-    public SeniorStatute(Student student, Registration registration, StudentStatuteType statuteType,
+    public SeniorStatute(Student student, Registration registration, StatuteType statuteType,
             ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+        this(student, registration, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod
+                .getBeginLocalDate(), endExecutionPeriod.getEndLocalDate());
+    }
+
+    public SeniorStatute(Student student, Registration registration, StatuteType statuteType,
+            ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod, LocalDate beginDate, LocalDate endDate) {
         this();
+        setBeginDate(beginDate);
+        setEndDate(endDate);
         setBeginExecutionPeriod(beginExecutionPeriod);
         setEndExecutionPeriod(endExecutionPeriod);
-        setStatuteType(statuteType);
+        setType(statuteType);
 
         for (StudentStatute statute : student.getStudentStatutesSet()) {
             if (!statute.overlapsWith(this)) {
@@ -53,11 +62,13 @@ public class SeniorStatute extends SeniorStatute_Base {
         }
 
         setRegistration(registration);
+
+        checkRules();
     }
 
     @Override
     public void delete() {
-        checkRules();
+        checkRulesToDelete();
         setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
         setStudent(null);

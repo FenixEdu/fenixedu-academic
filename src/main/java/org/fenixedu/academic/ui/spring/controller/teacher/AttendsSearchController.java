@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Recipient;
@@ -172,8 +171,7 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
                                 .getPresentationName());
 
-                        if (attends.getRegistration().getStudent()
-                                .hasActiveStatuteInPeriod(StudentStatuteType.WORKING_STUDENT, attends.getExecutionPeriod())) {
+                        if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod())) {
                             addCell(getLabel("label.workingStudents"),
                                     BundleUtil.getString(Bundle.ENUMERATION,
                                             WorkingStudentSelectionType.WORKING_STUDENT.getQualifiedName()));

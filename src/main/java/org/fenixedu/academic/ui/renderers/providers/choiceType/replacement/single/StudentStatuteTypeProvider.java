@@ -18,24 +18,15 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single;
 
-import java.util.Arrays;
+import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.domain.student.StatuteType;
+import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
-import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
-
-public class StudentStatuteTypeProvider implements DataProvider {
+public class StudentStatuteTypeProvider extends AbstractDomainObjectProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays.asList(StudentStatuteType.values());
+        return StatuteType.readAll().collect(Collectors.toList());
     }
-
-    @Override
-    public Converter getConverter() {
-        return new EnumConverter();
-    }
-
 }

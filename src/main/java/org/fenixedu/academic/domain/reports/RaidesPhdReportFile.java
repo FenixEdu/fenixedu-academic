@@ -39,7 +39,6 @@ import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessState;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.StudentStatute;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
@@ -443,7 +442,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         // Bolseiro (info. oficial)
         boolean sasFound = false;
         for (StudentStatute statute : process.getStudent().getStudentStatutesSet()) {
-            if (statute.getStatuteType() == StudentStatuteType.SAS_GRANT_OWNER
+            if (statute.getType().isGrantOwnerStatute()
                     && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
                 sasFound = true;
                 break;

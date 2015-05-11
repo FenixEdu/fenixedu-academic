@@ -58,7 +58,7 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
+import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
@@ -338,8 +338,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         spreadsheet.newHeaderRow();
         if (searchBean.hasAnyStudentStatuteType()) {
             spreadsheet.addHeader(getResourceMessage("label.statutes") + ":");
-            for (StudentStatuteType statute : searchBean.getStudentStatuteTypes()) {
-                spreadsheet.addHeader(BundleUtil.getString(Bundle.ENUMERATION, statute.name()));
+            for (StatuteType statute : searchBean.getStudentStatuteTypes()) {
+                spreadsheet.addHeader(statute.getName().getContent());
             }
         }
     }

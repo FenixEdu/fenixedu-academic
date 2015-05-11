@@ -106,6 +106,8 @@
 				<fr:property name="providerClass"
 					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple.StudentStatuteTypeProvider" />
 				<fr:property name="classes" value="list2" />
+				<fr:property name="eachSchema" value="StatuteType.view.name.only"/>
+				<fr:property name="eachLayout" value="values"/>
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular-row">

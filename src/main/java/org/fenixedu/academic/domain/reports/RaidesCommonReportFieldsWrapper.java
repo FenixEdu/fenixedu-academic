@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyS
 import org.fenixedu.academic.domain.raides.DegreeDesignation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.StudentStatute;
-import org.fenixedu.academic.domain.student.StudentStatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
@@ -46,11 +45,10 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.ExtraCurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class RaidesCommonReportFieldsWrapper {
 
@@ -407,7 +405,7 @@ public class RaidesCommonReportFieldsWrapper {
         // os dados
         boolean working1Found = false;
         for (StudentStatute statute : registration.getStudent().getStudentStatutesSet()) {
-            if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT
+            if (statute.getType().isWorkingStudentStatute()
                     && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
                 working1Found = true;
                 break;
@@ -420,7 +418,7 @@ public class RaidesCommonReportFieldsWrapper {
         // os dados
         boolean working2Found = false;
         for (StudentStatute statute : registration.getStudent().getStudentStatutesSet()) {
-            if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT
+            if (statute.getType().isWorkingStudentStatute()
                     && statute.isValidInExecutionPeriod(executionYear.getLastExecutionPeriod())) {
                 working2Found = true;
                 break;
@@ -446,7 +444,7 @@ public class RaidesCommonReportFieldsWrapper {
         // Bolseiro (info. oficial)
         boolean sasFound = false;
         for (StudentStatute statute : registration.getStudent().getStudentStatutesSet()) {
-            if (statute.getStatuteType() == StudentStatuteType.SAS_GRANT_OWNER
+            if (statute.getType().isGrantOwnerStatute()
                     && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
                 sasFound = true;
                 break;

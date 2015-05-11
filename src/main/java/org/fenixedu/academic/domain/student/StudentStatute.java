@@ -20,12 +20,14 @@ package org.fenixedu.academic.domain.student;
 
 import java.util.Set;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  * 
@@ -40,12 +42,20 @@ public class StudentStatute extends StudentStatute_Base {
         setCreationDate(new DateTime());
     }
 
-    public StudentStatute(Student student, StudentStatuteType statuteType, ExecutionSemester beginExecutionPeriod,
+    public StudentStatute(Student student, StatuteType statuteType, ExecutionSemester beginExecutionPeriod,
             ExecutionSemester endExecutionPeriod) {
+        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod.getBeginLocalDate(),
+                endExecutionPeriod.getEndLocalDate());
+    }
+
+    public StudentStatute(Student student, StatuteType statuteType, ExecutionSemester beginExecutionPeriod,
+            ExecutionSemester endExecutionPeriod, LocalDate beginDate, LocalDate endDate) {
         this();
+        setBeginDate(beginDate);
+        setEndDate(endDate);
         setBeginExecutionPeriod(beginExecutionPeriod);
         setEndExecutionPeriod(endExecutionPeriod);
-        setStatuteType(statuteType);
+        setType(statuteType);
 
         for (StudentStatute statute : student.getStudentStatutesSet()) {
             if (statute.overlapsWith(this)) {
@@ -54,10 +64,28 @@ public class StudentStatute extends StudentStatute_Base {
         }
 
         setStudent(student);
+
+        checkRules();
+    }
+
+    protected void checkRules() {
+        if (getBeginExecutionPeriod() != null && getEndExecutionPeriod() != null) {
+            if (getBeginExecutionPeriod().isAfter(getEndExecutionPeriod())) {
+                throw new DomainException("error.studentStatute.beginPeriod.after.endPeriod");
+            }
+        }
+        if (getBeginDate() != null && getEndDate() != null) {
+            if (getBeginDate().isAfter(getEndDate())) {
+                throw new DomainException("error.studentStatute.beginDate.after.endPeriod");
+            }
+
+        }
+        if (getType() == null) {
+            throw new DomainException("error.studentStatute.missing.StatuteType");
+        }
     }
 
     public boolean isValidInExecutionPeriod(final ExecutionSemester executionSemester) {
-
         if (getBeginExecutionPeriod() != null && getBeginExecutionPeriod().isAfter(executionSemester)) {
             return false;
         }
@@ -67,6 +95,16 @@ public class StudentStatute extends StudentStatute_Base {
         }
 
         return true;
+    }
+
+    public boolean isValidInExecutionInterval(final ExecutionInterval interval) {
+        if (interval instanceof ExecutionSemester) {
+            return isValidInExecutionPeriod(ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, interval));
+        } else if (interval instanceof ExecutionYear) {
+            return isValidOn(ExecutionInterval.assertExecutionIntervalType(ExecutionYear.class, interval));
+        }
+
+        throw new DomainException("error.StudentStatute.cannot.check.period");
     }
 
     public boolean isValidOn(final ExecutionYear executionYear) {
@@ -94,7 +132,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public void delete() {
-        checkRules();
+        checkRulesToDelete();
         setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
         setStudent(null);
@@ -103,7 +141,6 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean overlapsWith(StudentStatute statute) {
-
         ExecutionSemester statuteBegin =
                 statute.getBeginExecutionPeriod() != null ? statute.getBeginExecutionPeriod() : ExecutionSemester
                         .readFirstExecutionSemester();
@@ -111,13 +148,13 @@ public class StudentStatute extends StudentStatute_Base {
                 statute.getEndExecutionPeriod() != null ? statute.getEndExecutionPeriod() : ExecutionSemester
                         .readLastExecutionSemester();
 
-        return overlapsWith(statute.getStatuteType(), statuteBegin, statuteEnd);
+        return overlapsWith(statute.getType(), statuteBegin, statuteEnd);
 
     }
 
-    public boolean overlapsWith(StudentStatuteType statuteType, ExecutionSemester statuteBegin, ExecutionSemester statuteEnd) {
+    public boolean overlapsWith(StatuteType statuteType, ExecutionSemester statuteBegin, ExecutionSemester statuteEnd) {
 
-        if (statuteType != getStatuteType()) {
+        if (statuteType != getType()) {
             return false;
         }
 
@@ -147,7 +184,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isGrantOwnerStatute() {
-        return getStatuteType() == StudentStatuteType.SAS_GRANT_OWNER;
+        return getType().isGrantOwnerStatute();
     }
 
     public String toDetailedString() {
@@ -155,7 +192,7 @@ public class StudentStatute extends StudentStatute_Base {
                 + (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
     }
 
-    public void checkRules() {
+    public void checkRulesToDelete() {
         if (hasSpecialSeasonEnrolments()) {
             throw new DomainException("error.student.StudentStatute.has.special.season.enrolment");
         }
