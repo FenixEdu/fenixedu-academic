@@ -45,15 +45,15 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
     }
 
     public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree, final Person creator,
-            final Double entryGrade, final String contigent, final Ingression ingression, EntryPhase entryPhase) {
-        this(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase, null);
+            final Double entryGrade, final String contigent, final IngressionType ingressionType, EntryPhase entryPhase) {
+        this(person, executionDegree, creator, entryGrade, contigent, ingressionType, entryPhase, null);
     }
 
     public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree, final Person creator,
-            final Double entryGrade, final String contigent, final Ingression ingression, EntryPhase entryPhase,
+            final Double entryGrade, final String contigent, final IngressionType ingressionType, EntryPhase entryPhase,
             Integer placingOption) {
         super();
-        init(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase, placingOption);
+        init(person, executionDegree, creator, entryGrade, contigent, ingressionType, entryPhase, placingOption);
     }
 
     @Override

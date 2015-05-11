@@ -46,7 +46,7 @@
 <%-- Registration Details --%>
 <h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<logic:present name="process" property="registration.ingression">
+<logic:present name="process" property="registration.ingressionType">
 <fr:view name="process" property="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight"/>
@@ -54,7 +54,7 @@
 	</fr:layout>
 </fr:view>
 </logic:present>
-<logic:notPresent name="process" property="registration.ingression">
+<logic:notPresent name="process" property="registration.ingressionType">
 <fr:view name="process" property="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>

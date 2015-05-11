@@ -35,7 +35,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -391,7 +391,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
         private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess,
                 final SecondCycleIndividualCandidacyProcessBean bean) {
             candidacyProcess.getCandidacy().createRegistration(getDegreeCurricularPlan(bean), CycleType.SECOND_CYCLE,
-                    Ingression.CIA2C);
+                    IngressionType.findByPredicate(IngressionType::isInternal2ndCycleAccess).orElse(null));
         }
 
         private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcessBean bean) {

@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -379,7 +379,8 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
         @Override
         protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
                 User userView, Object object) {
-            process.getCandidacy().createRegistration(getDegreeCurricularPlan(process), CycleType.FIRST_CYCLE, Ingression.TRF);
+            process.getCandidacy().createRegistration(getDegreeCurricularPlan(process), CycleType.FIRST_CYCLE,
+                    IngressionType.findByPredicate(IngressionType::isTransfer).orElse(null));
             return process;
         }
 

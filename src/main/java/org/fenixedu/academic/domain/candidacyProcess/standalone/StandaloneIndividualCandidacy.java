@@ -32,7 +32,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.events.candidacy.StandaloneIndividualCandidacyEvent;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -147,7 +147,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 
     @Override
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
-            final Ingression ingression) {
+            final IngressionType ingressionType) {
 
         if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
@@ -166,16 +166,16 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
         }
 
         getPersonalDetails().ensurePersonInternalization();
-        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingressionType);
     }
 
     @Override
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final CycleType cycleType, final Ingression ingression) {
+            final CycleType cycleType, final IngressionType ingressionType) {
 
         final Registration registration = new Registration(person, degreeCurricularPlan);
         registration.setEntryPhase(EntryPhase.FIRST_PHASE);
-        registration.setIngression(ingression);
+        registration.setIngressionType(ingressionType);
         registration.setRegistrationYear(getCandidacyExecutionInterval().getExecutionYear());
         registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 

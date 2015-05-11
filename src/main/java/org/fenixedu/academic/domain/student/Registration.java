@@ -79,7 +79,7 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -257,9 +257,9 @@ public class Registration extends Registration_Base {
         setStudentCandidacy(studentCandidacy);
         if (studentCandidacy != null) {
             super.setEntryPhase(studentCandidacy.getEntryPhase());
-            super.setIngression(studentCandidacy.getIngression());
+            super.setIngressionType(studentCandidacy.getIngressionType());
 
-            if (studentCandidacy.getIngression() == Ingression.RI) {
+            if (studentCandidacy.getIngressionType().isReIngression()) {
                 final Degree sourceDegree = studentCandidacy.getDegreeCurricularPlan().getEquivalencePlan().getSourceDegree();
                 Registration registration = getStudent().readRegistrationByDegree(sourceDegree);
                 if (registration == null) {
@@ -1682,25 +1682,26 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isFirstCycleAtributionIngression() {
-        return getIngression() == Ingression.AG1C;
+        return getIngressionType().isFirstCycleAttribution();
+
     }
 
     public boolean isSecondCycleInternalCandidacyIngression() {
-        return getIngression() == Ingression.CIA2C;
+        return getIngressionType().isInternal2ndCycleAccess();
     }
 
     @Override
-    public void setIngression(Ingression ingression) {
-        checkIngression(ingression);
-        super.setIngression(ingression);
+    public void setIngressionType(IngressionType ingressionType) {
+        checkIngressionType(ingressionType);
+        super.setIngressionType(ingressionType);
     }
 
-    private void checkIngression(final Ingression ingression) {
-        checkIngression(ingression, getPerson(), getFirstStudentCurricularPlan().getDegreeCurricularPlan());
+    private void checkIngressionType(final IngressionType ingressionType) {
+        checkIngression(ingressionType, getPerson(), getFirstStudentCurricularPlan().getDegreeCurricularPlan());
     }
 
-    public static void checkIngression(Ingression ingression, Person person, DegreeCurricularPlan degreeCurricularPlan) {
-        if (ingression == Ingression.RI) {
+    public static void checkIngression(IngressionType ingressionType, Person person, DegreeCurricularPlan degreeCurricularPlan) {
+        if (ingressionType.isReIngression()) {
             if (person == null || person.getStudent() == null) {
                 throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
             }
@@ -3557,7 +3558,7 @@ public class Registration extends Registration_Base {
         Formatter formatter = new Formatter(result);
         final Student student = getStudent();
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.ingression"),
-                getIngression() == null ? " - " : getIngression().getFullDescription());
+                getIngressionType() == null ? " - " : getIngressionType().getDescription().getContent());
         formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC, "label.studentNumber"), student.getNumber());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.Student.Person.name"), student.getPerson()
                 .getName());
@@ -3601,5 +3602,4 @@ public class Registration extends Registration_Base {
         return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && isActive() && isBolonha()
                 && !getDegreeType().isEmpty() && getRegistrationProtocol().isForOfficialMobilityReporting();
     }
-
 }

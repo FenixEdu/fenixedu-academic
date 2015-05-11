@@ -45,10 +45,10 @@
 </schema>	
 
 <schema name="EditStudentCandidacyDomainObject" type="org.fenixedu.academic.domain.candidacy.StudentCandidacy" bundle="MANAGER_RESOURCES">
-	<slot name="ingression" />
+	<slot name="ingressionType" />
 </schema>
 <schema name="EditIMDCandidacyDomainObject" type="org.fenixedu.academic.domain.candidacy.StudentCandidacy" bundle="MANAGER_RESOURCES">
-	<slot name="ingression" />
+	<slot name="ingressionType" />
 </schema>
 
 <schema name="EditCurricularCourseDomainObject" type="org.fenixedu.academic.domain.CurricularCourse" bundle="MANAGER_RESOURCES">

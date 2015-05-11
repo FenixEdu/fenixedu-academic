@@ -21,10 +21,9 @@ package org.fenixedu.academic.domain.reports;
 import java.util.Collections;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
@@ -89,10 +88,10 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
     }
 
     private void reportIngression(final Row row, final Registration registration) {
-        final Ingression ingression = registration.getIngression();
-        if (ingression != null) {
-            row.setCell(ingression.getName());
-            row.setCell(ingression.getDescription());
+        final IngressionType ingressionType = registration.getIngressionType();
+        if (ingressionType != null) {
+            row.setCell(ingressionType.getCode());
+            row.setCell(ingressionType.getDescription().getContent());
         } else {
             row.setCell("");
             row.setCell("");

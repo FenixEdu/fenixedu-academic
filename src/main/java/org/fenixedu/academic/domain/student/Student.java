@@ -47,7 +47,6 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.candidacy.Ingression;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -602,7 +601,7 @@ public class Student extends Student_Base {
 
     public boolean isHandicapped() {
         for (Registration registration : getRegistrationsSet()) {
-            if (registration.getIngression() != null && registration.getIngression().equals(Ingression.CNA07)) {
+            if (registration.getIngressionType() != null && registration.getIngressionType().isHandicappedContingent()) {
                 return true;
             }
         }

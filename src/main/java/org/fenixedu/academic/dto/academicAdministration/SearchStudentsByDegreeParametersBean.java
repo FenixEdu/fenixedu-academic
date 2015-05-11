@@ -24,7 +24,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
@@ -57,18 +57,18 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private Country nationality = null;
 
-    private Ingression ingression = null;
+    private IngressionType ingressionType = null;
 
     public SearchStudentsByDegreeParametersBean(Set<DegreeType> administratedDegreeTypes, Set<Degree> administratedDegrees) {
         super(administratedDegreeTypes, administratedDegrees);
     }
 
-    public Ingression getIngression() {
-        return ingression;
+    public IngressionType getIngressionType() {
+        return ingressionType;
     }
 
-    public void setIngression(Ingression ingression) {
-        this.ingression = ingression;
+    public void setIngressionType(IngressionType ingressionType) {
+        this.ingressionType = ingressionType;
     }
 
     public List<RegistrationProtocol> getRegistrationProtocols() {

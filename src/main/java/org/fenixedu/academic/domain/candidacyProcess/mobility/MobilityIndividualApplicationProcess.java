@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -1330,9 +1331,9 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     private void createRegistration() {
         if (getCandidacy().getCandidacyProcess().getDegreeCurricularPlan(this).isFirstCycle()) {
-            getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.FIRST_CYCLE, null);
+            getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.FIRST_CYCLE, (IngressionType) null);
         } else {
-            getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, null);
+            getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, (IngressionType) null);
         }
     }
 
