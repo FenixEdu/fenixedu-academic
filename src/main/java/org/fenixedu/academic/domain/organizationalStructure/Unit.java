@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -859,35 +860,17 @@ public class Unit extends Unit_Base {
     }
 
     static public MultiLanguageString getInstitutionName() {
-        final Bennu root = Bennu.getInstance();
-        MultiLanguageString result = new MultiLanguageString();
-        if (root != null) {
-            final Unit institutionUnit = root.getInstitutionUnit();
-            if (root != null) {
-                result = institutionUnit.getNameI18n();
-            }
-        }
-        if (result.isEmpty()) {
-            result = result.with(Locale.getDefault(), BundleUtil.getString(Bundle.GLOBAL, "institution.name"));
-        }
-
-        return result;
+        return Optional
+                .ofNullable(Bennu.getInstance().getInstitutionUnit())
+                .map(Unit::getNameI18n)
+                .orElseGet(
+                        () -> MultiLanguageString.fromLocalizedString(BundleUtil.getLocalizedString(Bundle.GLOBAL,
+                                "error.institutionUnit.notconfigured")));
     }
 
     static public String getInstitutionAcronym() {
-        final Bennu root = Bennu.getInstance();
-        String result = StringUtils.EMPTY;
-        if (root != null) {
-            final Unit institutionUnit = root.getInstitutionUnit();
-            if (root != null) {
-                result = institutionUnit.getAcronym();
-            }
-        }
-        if (result.isEmpty()) {
-            result = BundleUtil.getString(Bundle.GLOBAL, "institution.name.abbreviation");
-        }
-
-        return result;
+        return Optional.ofNullable(Bennu.getInstance().getInstitutionUnit()).map(Unit::getAcronym)
+                .orElseGet(() -> BundleUtil.getString(Bundle.GLOBAL, "error.institutionUnit.notconfigured"));
     }
 
     @Override

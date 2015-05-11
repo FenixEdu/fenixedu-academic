@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.GenericPair;
 
@@ -206,7 +207,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             if (!hasBolonhaDegreeType()) {
                 labelList.add(new GenericPair<Object, Boolean>("label.of", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>("institution.name.abbreviation", true));
+                labelList.add(new GenericPair<Object, Boolean>(Unit.getInstitutionAcronym(), false));
             } else {
                 labelList.add(new GenericPair<Object, Boolean>("label.of1", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
