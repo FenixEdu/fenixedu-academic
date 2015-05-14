@@ -240,7 +240,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 .getWeigth());
         setEnrollmentState(EnrollmentState.ENROLLED);
         setExecutionPeriod(executionSemester);
-        setEvaluationSeason(EvaluationSeason.readDefaultSeasonForNewEnrolments());
+        setEvaluationSeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason());
         setCreatedBy(createdBy);
         setCreationDateDateTime(new DateTime());
         setEnrolmentCondition(enrolmentCondition);
@@ -350,11 +350,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     protected void createEnrolmentEvaluationWithoutGrade() {
         boolean existing =
-                getEnrolmentEvaluationBySeason(EvaluationSeason.readDefaultSeasonForNewEnrolments())
+                getEnrolmentEvaluationBySeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason())
                         .filter(e -> e.getGrade().equals(null)).findAny().isPresent();
         if (!existing) {
             EnrolmentEvaluation evaluation =
-                    new EnrolmentEvaluation(this, EvaluationSeason.readDefaultSeasonForNewEnrolments(),
+                    new EnrolmentEvaluation(this, EvaluationConfiguration.getInstance().getDefaultEvaluationSeason(),
                             EnrolmentEvaluationState.TEMPORARY_OBJ);
             evaluation.setWhenDateTime(new DateTime());
             addEvaluations(evaluation);
@@ -524,7 +524,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public void deleteSpecialSeasonEvaluation() {
         if (getEvaluationSeason().isSpecial() && hasSpecialSeason()) {
             setEnrolmentCondition(EnrollmentCondition.FINAL);
-            setEvaluationSeason(EvaluationSeason.readDefaultSeasonForNewEnrolments());
+            setEvaluationSeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason());
             getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ, EvaluationSeason.readSpecialSeason())
                     .ifPresent(EnrolmentEvaluation::delete);
 

@@ -38,10 +38,6 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
         return getSpecialAuthorization();
     }
 
-    public static EvaluationSeason readDefaultSeasonForNewEnrolments() {
-        return all().filter(EvaluationSeason::isNormal).findAny().orElse(null);
-    }
-
     public static EvaluationSeason readNormalSeason() {
         return all().filter(EvaluationSeason::isNormal).findAny().orElse(null);
     }
