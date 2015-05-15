@@ -1580,7 +1580,7 @@
 <!-- Public Candidacies -->
 
 <schema name="PublicCandidacyProcess.candidacyDataBean" type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
-	<slot name="personBean.name" key="label.full.name">
+	<slot name="personBean.givenNames" key="label.givenNames" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
@@ -1588,6 +1588,15 @@
 		</validator>
 		<property name="size" value="50"/>
 		<property name="maxlength" value="100"/>
+	</slot>
+	<slot name="personBean.familyNames" key="label.familyNames" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="100"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="100"/>		
 	</slot>
 
 	<slot name="personBean.gender" key="label.gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -1678,7 +1687,7 @@
 </schema>
 
 <schema name="PublicCandidacyProcess.candidacyDataBean.internal.candidate.view" type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
-	<slot name="personBean.name" key="label.full.name">
+	<slot name="personBean.givenNames" key="label.givenNames" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
@@ -1686,6 +1695,15 @@
 		</validator>
 		<property name="size" value="50"/>
 		<property name="maxlength" value="100"/>
+	</slot>
+	<slot name="personBean.familyNames" key="label.familyNames" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="100"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="100"/>		
 	</slot>
 
 	<slot name="personBean.dateOfBirth" key="label.dateOfBirth">
