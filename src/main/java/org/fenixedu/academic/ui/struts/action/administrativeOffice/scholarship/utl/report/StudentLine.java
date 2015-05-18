@@ -44,7 +44,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import org.fenixedu.academic.domain.candidacy.Ingression;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -545,7 +544,7 @@ public class StudentLine implements java.io.Serializable {
         }
 
         return getRegistration().getStartExecutionYear() == getForExecutionYear()
-                && Ingression.MCI.equals(getRegistration().getIngression());
+                && getRegistration().getIngressionType().isInternalDegreeChange();
     }
 
     public Boolean getHasMadeDegreeChange() {

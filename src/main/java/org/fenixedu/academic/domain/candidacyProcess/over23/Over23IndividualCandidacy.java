@@ -31,7 +31,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.Formation;
 import org.fenixedu.academic.domain.candidacyProcess.FormationBean;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -231,8 +231,8 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
     @Override
     protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
-            Ingression ingression) {
-        final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
+            IngressionType ingressionType) {
+        final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingressionType);
         registration.setRegistrationYear(getCandidacyExecutionInterval());
         return registration;
     }

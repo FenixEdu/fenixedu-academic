@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.candidacy.Ingression;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -170,7 +169,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     private void checkRulesToDelete() {
         if (isFirstCycle()) {
-            if (getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
+            if (getRegistration().getIngressionType().isDirectAccessFrom1stCycle()
+                    || getRegistration().getIngressionType().isInternal2ndCycleAccess()) {
                 final User userView = Authenticate.getUser();
                 if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getRegistration()
                         .getDegree(), userView.getPerson().getUser())

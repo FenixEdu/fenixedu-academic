@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import org.fenixedu.academic.domain.candidacy.Ingression;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
@@ -146,7 +145,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
     public String getHasMadeDegreeChangeInThisExecutionYear() {
         boolean hasMade =
                 registration.getStartExecutionYear() == readCurrentExecutionYear()
-                        && Ingression.MCI.equals(registration.getIngression());
+                        && registration.getIngressionType().isInternalDegreeChange();
 
         return hasMade ? BundleUtil.getString(Bundle.ACADEMIC, "label.yes") : BundleUtil.getString(Bundle.ACADEMIC, "label.no");
     }

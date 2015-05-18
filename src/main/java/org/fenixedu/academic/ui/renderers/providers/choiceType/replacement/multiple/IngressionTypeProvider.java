@@ -16,26 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single;
+package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple;
 
-import java.util.Arrays;
+import org.fenixedu.bennu.core.domain.Bennu;
 
-import org.fenixedu.academic.domain.candidacy.Ingression;
-
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
-public class IngressionProvider implements DataProvider {
+public class IngressionTypeProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays.asList(Ingression.values());
+        return Bennu.getInstance().getIngressionTypesSet();
     }
 
     @Override
     public Converter getConverter() {
-        return new EnumConverter();
+        return new DomainObjectKeyArrayConverter();
     }
-
 }

@@ -371,8 +371,8 @@
 					<fr:slot name="entryPhase.localizedName" layout="null-as-label" key="label.personal.ingression.data.viewer.entryPhase" />
 				</logic:notEmpty>
 				
-				<logic:notEmpty name="candidacy" property="ingression">
-					<fr:slot name="ingression.localizedName" layout="null-as-label" key="label.personal.ingression.data.viewer.ingression" />
+				<logic:notEmpty name="candidacy" property="ingressionType">
+					<fr:slot name="ingressionType.localizedName" layout="null-as-label" key="label.personal.ingression.data.viewer.ingression" />
 				</logic:notEmpty>
 				
 				<logic:notEmpty name="candidacy" property="applyForResidence">

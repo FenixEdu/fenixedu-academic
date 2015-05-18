@@ -34,7 +34,7 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.caseHandling.StartActivity;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -469,7 +469,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
             getCandidacy().setExecutionDegree(executionDegree);
         }
 
-        getCandidacy().setIngression(Ingression.CIA3C);
+        getCandidacy().setIngressionType(IngressionType.findByPredicate(IngressionType::isInternal3rdCycleAccess).orElse(null));
     }
 
     private void assertRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
@@ -479,7 +479,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
         registration.setHomologationDate(getWhenRatified());
         registration.setStudiesStartDate(bean.getWhenStartedStudies());
-        registration.setIngression(Ingression.CIA3C);
+        registration.setIngressionType(IngressionType.findByPredicate(IngressionType::isInternal3rdCycleAccess).orElse(null));
         registration.setPhdIndividualProgramProcess(getIndividualProgramProcess());
 
         registration.editStartDates(bean.getWhenStartedStudies(), getWhenRatified(), bean.getWhenStartedStudies());

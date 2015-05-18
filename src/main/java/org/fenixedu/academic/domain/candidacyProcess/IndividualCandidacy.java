@@ -36,7 +36,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
 import org.fenixedu.academic.domain.candidacy.IMDCandidacy;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.MDCandidacy;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -215,7 +215,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
-            final Ingression ingression) {
+            final IngressionType ingressionType) {
 
         if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
@@ -229,15 +229,15 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         }
 
         getPersonalDetails().ensurePersonInternalization();
-        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingressionType);
     }
 
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final CycleType cycleType, final Ingression ingression) {
+            final CycleType cycleType, final IngressionType ingressionType) {
 
         final Registration registration = new Registration(person, degreeCurricularPlan, cycleType);
         registration.setEntryPhase(EntryPhase.FIRST_PHASE);
-        registration.setIngression(ingression);
+        registration.setIngressionType(ingressionType);
         registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 
         createRaidesInformation(registration);

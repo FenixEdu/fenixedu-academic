@@ -21,7 +21,7 @@ package org.fenixedu.academic.service.services.student.enrolment.bolonha;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.candidacy.Ingression;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.MDCandidacy;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.student.AffinityCyclesManagement;
@@ -96,7 +96,8 @@ public class EnrolInAffinityCycle {
 
                 newRegistration.setSourceRegistration(studentCurricularPlan.getRegistration());
                 newRegistration.getActiveState().setResponsiblePerson(null);
-                newRegistration.setIngression(Ingression.DA1C);
+                newRegistration.setIngressionType(IngressionType.findByPredicate(IngressionType::isDirectAccessFrom1stCycle)
+                        .orElse(null));
 
                 markOldRegistrationWithConcludedState(studentCurricularPlan);
 

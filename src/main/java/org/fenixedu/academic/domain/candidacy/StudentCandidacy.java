@@ -74,7 +74,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     private void checkParameters(final Person person, final ExecutionDegree executionDegree, final Person creator,
-            final Double entryGrade, final String contigent, final Ingression ingression, final EntryPhase entryPhase) {
+            final Double entryGrade, final String contigent, final IngressionType ingressionType, final EntryPhase entryPhase) {
         if (executionDegree == null) {
             throw new DomainException("error.candidacy.DegreeCandidacy.executionDegree.cannot.be.null");
         }
@@ -98,14 +98,14 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     protected void init(final Person person, final ExecutionDegree executionDegree, final Person creator, Double entryGrade,
-            String contigent, Ingression ingression, EntryPhase entryPhase, Integer placingOption) {
-        checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase);
+            String contigent, IngressionType ingressionType, EntryPhase entryPhase, Integer placingOption) {
+        checkParameters(person, executionDegree, creator, entryGrade, contigent, ingressionType, entryPhase);
         super.setExecutionDegree(executionDegree);
         super.setPerson(person);
         super.setPrecedentDegreeInformation(new PrecedentDegreeInformation());
         super.setEntryGrade(entryGrade);
         super.setContigent(contigent);
-        super.setIngression(ingression);
+        super.setIngressionType(ingressionType);
         super.setEntryPhase(entryPhase);
         super.setPlacingOption(placingOption);
     }
@@ -249,5 +249,4 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public ExecutionYear getExecutionYear() {
         return getExecutionDegree().getExecutionYear();
     }
-
 }

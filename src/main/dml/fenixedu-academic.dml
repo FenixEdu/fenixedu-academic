@@ -67,7 +67,6 @@ enum org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemption
 enum org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
 enum org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
 enum org.fenixedu.academic.domain.branch.BranchType                                                                    as OldBranchType;
-enum org.fenixedu.academic.domain.candidacy.Ingression                                                                 as Ingression;
 enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
 enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
 enum org.fenixedu.academic.domain.contacts.PartyContactType                                                            as PartyContactType;
@@ -1997,7 +1996,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             String contigent;
             Double entryGrade;
             EntryPhase entryPhase;
-            Ingression ingression;
             Boolean applyForResidence;
             String notesAboutResidenceAppliance;
             StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
@@ -2041,6 +2039,28 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             }
 
 
+	class candidacy.IngressionType{
+		String code (REQUIRED);
+		LocalizedString description (REQUIRED);
+		
+		boolean hasEntryPhase;
+		
+		// These predicates correspond to some of the old enumeration values used in the business code
+		// The code must assure that only one IngressionType instance has one of these fields as true
+		protected boolean isExternalDegreeChange;
+		protected boolean isInternalDegreeChange;
+		protected boolean isTransfer;
+		protected boolean isMiddleAndSuperiorCourses;
+		protected boolean isOver23;
+		protected boolean isInternal2ndCycleAccess;
+		protected boolean isIsolatedCurricularUnits;
+		protected boolean isInternal3rdCycleAccess;
+		protected boolean isDirectAccessFrom1stCycle;
+		protected boolean isHandicappedContingent;
+		protected boolean isFirstCycleAttribution;
+		protected boolean isReIngression;
+	}
+	
     class candidacy.degree.ShiftDistribution  {
     }
 
@@ -2916,7 +2936,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Boolean requestedChangeDegree;
         YearMonthDay startDate;
         YearMonthDay studiesStartDate;
-        Ingression ingression;
         EntryPhase entryPhase;
     }
 
@@ -11277,6 +11296,36 @@ relation StudentCandidacyCandidacySummaryFile {
 		multiplicity 0..1;
 	}
 }
+
+
+relation IngressionTypeBennu{
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+        multiplicity 1..1;
+    }
+	candidacy.IngressionType playsRole ingressionTypes{
+		multiplicity *;
+	}
+}
+
+relation StudentCandidacyIngressionType{
+	candidacy.StudentCandidacy playsRole studentCandidacy{
+		multiplicity *;
+	}
+	
+	candidacy.IngressionType playsRole ingressionType{
+		multiplicity 0..1;
+	}
+}
+
+relation RegistrationIngressionType{
+	student.Registration playsRole registration{
+		multiplicity *;
+	}
+	
+	candidacy.IngressionType playsRole ingressionType{
+		multiplicity 0..1;
+	}
+} 
 
 relation StudentCandidacyFirstTimeCandidacyLog { 
 	candidacy.StudentCandidacy playsRole studentCandidacy;
