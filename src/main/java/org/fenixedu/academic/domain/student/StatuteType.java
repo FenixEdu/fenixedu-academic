@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -23,14 +22,10 @@ public class StatuteType extends StatuteType_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public StatuteType(String code, LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
+    public StatuteType(LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
             boolean specialSeasonGrantedByRequest, boolean grantOwnerStatute, boolean seniorStatute, boolean handicappedStatute,
             boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
         this();
-        if (isCodeUsed(code)) {
-            throw new DomainException("error.StatuteType.code.alreadyUsed");
-        }
-        setCode(code);
         setName(name);
         setWorkingStudentStatute(workingStudentStatute);
         setAssociativeLeaderStatute(associativeLeaderStatute);
@@ -45,28 +40,6 @@ public class StatuteType extends StatuteType_Base {
         setSpecialSeasonGranted(specialSeasonGranted);
 
         checkRules();
-    }
-
-    @Override
-    public void setCode(String code) {
-        if (StringUtils.isEmpty(code)) {
-            return;
-        }
-
-        super.setCode("");
-        if (isCodeUsed(code)) {
-            throw new DomainException("error.StatuteType.code.alreadyUsed");
-        }
-        super.setCode(code);
-    }
-
-    private boolean isCodeUsed(String code) {
-        for (StatuteType statuteType : Bennu.getInstance().getStatuteTypesSet()) {
-            if (code.equals(statuteType.getCode())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     protected void checkRules() {
@@ -131,11 +104,6 @@ public class StatuteType extends StatuteType_Base {
             statuteTypes = statuteTypes.filter(predicate);
         }
         return statuteTypes;
-    }
-
-    public static Optional<StatuteType> find(String code) {
-        Predicate<StatuteType> matchesCode = statute -> StringUtils.equals(code, statute.getCode());
-        return readAll(StatuteType::isActive, matchesCode).findFirst();
     }
 
     public static Optional<StatuteType> findSpecialSeasonGrantedByRequestStatuteType() {

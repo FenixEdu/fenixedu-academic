@@ -3012,8 +3012,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	}
 
 	class student.StatuteType {
-		String code;
-		LocalizedString name;
+		LocalizedString name (REQUIRED);
 		boolean workingStudentStatute;
 		boolean associativeLeaderStatute;
 		boolean specialSeasonGrantedByRequest;
