@@ -57,9 +57,10 @@ public class StatuteTypeController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@RequestParam LocalizedString name, @RequestParam(required = false) boolean active, @RequestParam(
-            required = false) boolean visible, @RequestParam(required = false) boolean specialSeasonGranted, @RequestParam(
-            required = false) boolean explicitCreation, @RequestParam(required = false) boolean workingStudentStatute,
+    public String create(@RequestParam String code, @RequestParam LocalizedString name,
+            @RequestParam(required = false) boolean active, @RequestParam(required = false) boolean visible, @RequestParam(
+                    required = false) boolean specialSeasonGranted, @RequestParam(required = false) boolean explicitCreation,
+            @RequestParam(required = false) boolean workingStudentStatute,
             @RequestParam(required = false) boolean associativeLeaderStatute,
             @RequestParam(required = false) boolean specialSeasonGrantedByRequest,
             @RequestParam(required = false) boolean grantOwnerStatute, @RequestParam(required = false) boolean seniorStatute,
@@ -67,7 +68,7 @@ public class StatuteTypeController {
 
         try {
             StatuteType statuteType =
-                    atomic(() -> new StatuteType(name, workingStudentStatute, associativeLeaderStatute,
+                    atomic(() -> new StatuteType(code, name, workingStudentStatute, associativeLeaderStatute,
                             specialSeasonGrantedByRequest, grantOwnerStatute, seniorStatute, handicappedStatute, active,
                             explicitCreation, visible, specialSeasonGranted));
             return "redirect:/academic/configuration/statutes/" + statuteType.getExternalId();
@@ -84,7 +85,7 @@ public class StatuteTypeController {
     }
 
     @RequestMapping(value = "/{statuteType}/edit", method = RequestMethod.POST)
-    public String edit(@PathVariable StatuteType statuteType, @RequestParam LocalizedString name,
+    public String edit(@PathVariable StatuteType statuteType, @RequestParam String code, @RequestParam LocalizedString name,
             @RequestParam(required = false) boolean active, @RequestParam(required = false) boolean visible, @RequestParam(
                     required = false) boolean specialSeasonGranted, @RequestParam(required = false) boolean explicitCreation,
             @RequestParam(required = false) boolean workingStudentStatute,
@@ -93,21 +94,26 @@ public class StatuteTypeController {
             @RequestParam(required = false) boolean grantOwnerStatute, @RequestParam(required = false) boolean seniorStatute,
             @RequestParam(required = false) boolean handicappedStatute, Model model, RedirectAttributes redirectAttributes) {
 
-        atomic(() -> {
-            statuteType.setName(name);
-            statuteType.setActive(active);
-            statuteType.setVisible(visible);
-            statuteType.setSpecialSeasonGranted(specialSeasonGranted);
-            statuteType.setExplicitCreation(explicitCreation);
-            statuteType.setWorkingStudentStatute(workingStudentStatute);
-            statuteType.setAssociativeLeaderStatute(associativeLeaderStatute);
-            statuteType.setSpecialSeasonGrantedByRequest(specialSeasonGrantedByRequest);
-            statuteType.setGrantOwnerStatute(grantOwnerStatute);
-            statuteType.setSeniorStatute(seniorStatute);
-            statuteType.setHandicappedStatute(handicappedStatute);
-        });
-
-        return "redirect:/academic/configuration/statutes/" + statuteType.getExternalId();
+        try {
+            atomic(() -> {
+                statuteType.setCode(code);
+                statuteType.setName(name);
+                statuteType.setActive(active);
+                statuteType.setVisible(visible);
+                statuteType.setSpecialSeasonGranted(specialSeasonGranted);
+                statuteType.setExplicitCreation(explicitCreation);
+                statuteType.setWorkingStudentStatute(workingStudentStatute);
+                statuteType.setAssociativeLeaderStatute(associativeLeaderStatute);
+                statuteType.setSpecialSeasonGrantedByRequest(specialSeasonGrantedByRequest);
+                statuteType.setGrantOwnerStatute(grantOwnerStatute);
+                statuteType.setSeniorStatute(seniorStatute);
+                statuteType.setHandicappedStatute(handicappedStatute);
+            });
+            return "redirect:/academic/configuration/statutes/" + statuteType.getExternalId();
+        } catch (DomainException ex) {
+            ControllerHelper.addErrorMessage(ex.getLocalizedMessage(), model);
+            return edit(statuteType, model);
+        }
     }
 
 }

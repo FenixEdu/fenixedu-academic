@@ -8,7 +8,23 @@ ${portal.toolkit()}
 	<small><c:out value="${statuteType.name.content}"/></small>
 </h1>
 
+<c:if test="${not empty errorMessages}">
+	<div class="alert alert-danger" role="alert">
+
+		<c:forEach items="${errorMessages}" var="message">
+			<p>${message}</p>
+		</c:forEach>
+
+	</div>
+</c:if>
+
 <form method="post" class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-2 control-label"><spring:message code="label.StatuteType.code"/></label>
+		<div class="col-sm-10">
+			<input class="form-control" type="text" name="code" value="<c:out value='${statuteType.code}'/>" />
+		</div>
+	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label"><spring:message code="label.StatuteType.name"/></label>
 		<div class="col-sm-10">

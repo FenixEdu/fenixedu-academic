@@ -31,6 +31,7 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th><spring:message code="label.StatuteType.code" /></th>
 					<th><spring:message code="label.StatuteType.name" /></th>
 					<th><spring:message code="label.StatuteType.active" /></th>
 					<th></th>
@@ -39,6 +40,9 @@
 			<tbody>
 				<c:forEach var="statute" items="${statutes}">
 					<tr>
+						<td>
+							<code><c:out value="${statute.code}" /></code>
+						</td>
 						<td>
 							<c:out value="${statute.name.content}"/>
 							<span class="badge">${statute.studentStatutesSet.size()}</span>

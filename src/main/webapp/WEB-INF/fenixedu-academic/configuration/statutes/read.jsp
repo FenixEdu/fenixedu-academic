@@ -29,6 +29,12 @@
 <table class="table table-striped">
 	<tbody>
 		<tr>
+			<th><spring:message code="label.StatuteType.code"/></th> 
+			<td>
+				<code><c:out value="${statuteType.code}"/></code>
+			</td> 
+		</tr>
+		<tr>
 			<th><spring:message code="label.StatuteType.name"/></th> 
 			<td>
 				<c:out value="${statuteType.name.content}"/> 				

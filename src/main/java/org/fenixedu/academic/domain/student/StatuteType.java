@@ -22,10 +22,11 @@ public class StatuteType extends StatuteType_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public StatuteType(LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
+    public StatuteType(String code, LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
             boolean specialSeasonGrantedByRequest, boolean grantOwnerStatute, boolean seniorStatute, boolean handicappedStatute,
             boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
         this();
+        setCode(code);
         setName(name);
         setWorkingStudentStatute(workingStudentStatute);
         setAssociativeLeaderStatute(associativeLeaderStatute);
@@ -40,6 +41,18 @@ public class StatuteType extends StatuteType_Base {
         setSpecialSeasonGranted(specialSeasonGranted);
 
         checkRules();
+    }
+
+    @Override
+    public void setCode(String code) {
+        if (code == null || code.trim().isEmpty()) {
+            super.setCode(null);
+        } else {
+            if (readAll().filter(statute -> code.equals(statute.getCode()) && statute != StatuteType.this).findAny().isPresent()) {
+                throw new DomainException("error.StatuteType.code.alreadyUsed");
+            }
+            super.setCode(code);
+        }
     }
 
     protected void checkRules() {
