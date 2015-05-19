@@ -184,16 +184,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-    /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     */
-    private boolean isBoxStructure() {
-        return !(getCurricularStage() == CurricularStage.OLD);
-    }
-
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        if (isBoxStructure()) {
+        if (!(getCurricularStage() == CurricularStage.OLD)) {
             return !getParentContextsSet().isEmpty() ? getParentContextsSet().iterator().next().getParentCourseGroup()
                     .getParentDegreeCurricularPlan() : null;
         } else {

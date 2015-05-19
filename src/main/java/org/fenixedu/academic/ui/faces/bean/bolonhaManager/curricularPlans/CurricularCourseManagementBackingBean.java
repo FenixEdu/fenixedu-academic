@@ -74,6 +74,8 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
+
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     protected final String NO_SELECTION_STRING = "-1";
@@ -123,7 +125,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public String getDegreeCurricularPlanID() {
         DegreeCoordinatorIndex.setCoordinatorContext(getRequest());
-        return getAndHoldStringParameter("degreeCurricularPlanID");
+        String degreeCurricularPlanId = getAndHoldStringParameter("degreeCurricularPlanID");
+        if (Strings.isNullOrEmpty(degreeCurricularPlanId)) {
+            degreeCurricularPlanId = getCurricularCourse().getDegreeCurricularPlan().getExternalId();
+        }
+        return degreeCurricularPlanId;
     }
 
     public String getAction() {

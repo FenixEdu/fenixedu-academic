@@ -208,7 +208,6 @@
 
 		<h3 class="mtop15 mbottom05"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-		<logic:equal name="registrationConclusionBean" property="curriculumForConclusion.studentCurricularPlan.boxStructure" value="true">
 			<p>
 				<fr:view name="registrationConclusionBean" property="curriculumForConclusion">
 					<fr:layout>
@@ -216,7 +215,6 @@
 					</fr:layout>
 				</fr:view>
 			</p>
-		</logic:equal>
 
 	<%-- Form used to concluded process or to repeat --%>
 	

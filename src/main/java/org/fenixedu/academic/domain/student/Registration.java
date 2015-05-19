@@ -31,7 +31,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -99,7 +98,7 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentReq
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.PastDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
-import org.fenixedu.academic.domain.student.curriculum.AverageType;
+import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
@@ -565,23 +564,17 @@ public class Registration extends Registration_Base {
             final StudentCurricularPlan lastStudentCurricularPlan = sortedSCPsIterator.previous();
 
             final ICurriculum curriculum;
-            if (lastStudentCurricularPlan.isBoxStructure()) {
-                curriculum = lastStudentCurricularPlan.getCurriculum(when, executionYear);
+            curriculum = lastStudentCurricularPlan.getCurriculum(when, executionYear);
 
-                for (; sortedSCPsIterator.hasPrevious();) {
-                    final StudentCurricularPlan studentCurricularPlan = sortedSCPsIterator.previous();
-                    if (executionYear == null || studentCurricularPlan.getStartExecutionYear().isBeforeOrEquals(executionYear)) {
-                        ((Curriculum) curriculum).add(studentCurricularPlan.getCurriculum(when, executionYear));
-                    }
+            for (; sortedSCPsIterator.hasPrevious();) {
+                final StudentCurricularPlan studentCurricularPlan = sortedSCPsIterator.previous();
+                if (executionYear == null || studentCurricularPlan.getStartExecutionYear().isBeforeOrEquals(executionYear)) {
+                    ((Curriculum) curriculum).add(studentCurricularPlan.getCurriculum(when, executionYear));
                 }
-
-                return curriculum;
-
-            } else {
-                curriculum = new StudentCurriculum(this, executionYear);
             }
 
             return curriculum;
+
         }
     }
 
@@ -598,9 +591,6 @@ public class Registration extends Registration_Base {
     }
 
     final public BigDecimal getAverage() {
-        if (!isBolonha() && isRegistrationConclusionProcessed()) {
-            return getConclusionProcess().getAverage();
-        }
         return getAverage((ExecutionYear) null, (CycleType) null);
     }
 
@@ -625,52 +615,13 @@ public class Registration extends Registration_Base {
         return getCurriculum(executionYear, cycleType).getSumEctsCredits();
     }
 
-    final public AverageType getAverageType() {
-        if (getDegreeType().isPreBolonhaMasterDegree()) {
-            return getLastStudentCurricularPlan().getAverageType();
-        } else {
-            return AverageType.WEIGHTED;
-        }
-    }
-
     final public BigDecimal calculateAverage() {
-        final ICurriculum curriculum = getCurriculum();
-        final BigDecimal weighted = curriculum.getAverage();
-
-        switch (getAverageType()) {
-        case SIMPLE:
-            curriculum.setAverageType(AverageType.SIMPLE);
-            return curriculum.getAverage();
-        case BEST:
-            curriculum.setAverageType(AverageType.SIMPLE);
-            final BigDecimal simple = curriculum.getAverage();
-
-            return weighted.max(simple);
-        default:
-            return weighted;
-        }
-    }
-
-    public Integer calculateRoundedAverage() {
-        if (isBolonha()) {
-            throw new DomainException("error.Registration.for.cannot.calculate.final.average.in.registration.for.bolonha");
-        }
-
-        return Curriculum.getRoundedAverage(calculateAverage());
+        return getCurriculum().getAverage();
     }
 
     final public Integer getFinalAverage() {
-        if (isBolonha()) {
-            final List<CycleCurriculumGroup> internalCycleCurriculumGrops =
-                    getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
-            if (internalCycleCurriculumGrops.size() == 1) {
-                return internalCycleCurriculumGrops.iterator().next().getFinalAverage();
-            } else {
-                throw new DomainException("error.bolonha.Registration.must.get.final.average.from.cycle.curriculum.groups");
-            }
-        }
-
-        return isRegistrationConclusionProcessed() ? getConclusionProcess().getFinalAverage() : null;
+        return ProgramConclusion.getConclusionProcess(getLastStudentCurricularPlan()).map(ConclusionProcess::getFinalAverage)
+                .orElse(null);
     }
 
     final public Integer getFinalAverage(final CycleType cycleType) {
@@ -691,8 +642,7 @@ public class Registration extends Registration_Base {
     }
 
     final public Integer getFinalAverage(ProgramConclusion programConclusion) {
-        Optional<CurriculumGroup> groupFor = programConclusion.groupFor(this);
-        return groupFor.isPresent() ? groupFor.get().getFinalAverage() : null;
+        return programConclusion.groupFor(this).map(CurriculumGroup::getFinalAverage).orElse(null);
     }
 
     final public String getFinalAverageDescription() {
@@ -1407,16 +1357,6 @@ public class Registration extends Registration_Base {
         return null;
     }
 
-    final public List<Enrolment> getEnroledImprovements() {
-        final List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
-        for (final StudentCurricularPlan scp : getStudentCurricularPlansSet()) {
-            if (!scp.isBoxStructure() && scp.getDegreeCurricularPlan().getDegree().getDegreeType().isPreBolonhaDegree()) {
-                enroledImprovements.addAll(scp.getEnroledImprovements());
-            }
-        }
-        return enroledImprovements;
-    }
-
     final public Set<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
         final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
         for (final Attends attends : getAssociatedAttendsSet()) {
@@ -1727,10 +1667,6 @@ public class Registration extends Registration_Base {
     }
 
     final public ExecutionYear getIngressionYear() {
-        if (!isBolonha() && isRegistrationConclusionProcessed()) {
-            return getConclusionProcess().getIngressionYear();
-        }
-
         return calculateIngressionYear();
     }
 
@@ -2207,10 +2143,6 @@ public class Registration extends Registration_Base {
     }
 
     final public double getEctsCredits() {
-        if (!isBolonha() && isRegistrationConclusionProcessed()) {
-            return getConclusionProcess().getCredits().doubleValue();
-        }
-
         return calculateCredits();
     }
 
@@ -2254,10 +2186,6 @@ public class Registration extends Registration_Base {
         return isActive() || isConcluded();
     }
 
-    public ExecutionYear getConclusionYear() {
-        return isRegistrationConclusionProcessed() ? getConclusionProcess() != null ? getConclusionProcess().getConclusionYear() : null : null;
-    }
-
     public ExecutionYear calculateConclusionYear() {
         ExecutionYear result = getLastApprovementExecutionYear();
 
@@ -2284,11 +2212,8 @@ public class Registration extends Registration_Base {
     }
 
     public YearMonthDay getConclusionDate() {
-        if (isBolonha()) {
-            throw new DomainException("error.Registration.for.cannot.get.conclusion.date.in.registration.for.bolonha");
-        }
-
-        return isRegistrationConclusionProcessed() ? getConclusionProcess().getConclusionYearMonthDay() : null;
+        return ProgramConclusion.getConclusionProcess(getLastStudentCurricularPlan())
+                .map(ConclusionProcess::getConclusionYearMonthDay).orElse(null);
     }
 
     public YearMonthDay getConclusionDateForBolonha() {
@@ -2326,35 +2251,7 @@ public class Registration extends Registration_Base {
     }
 
     public YearMonthDay calculateConclusionDate() {
-        if (isBolonha()) {
-            return getLastStudentCurricularPlan().getLastApprovementDate();
-        } else {
-            YearMonthDay result = null;
-
-            for (final StudentCurricularPlan plan : getStudentCurricularPlansSet()) {
-                final YearMonthDay date = plan.getLastApprovementDate();
-                if (date != null && (result == null || result.isBefore(date))) {
-                    result = date;
-                }
-            }
-
-            if (getDegreeType().isPreBolonhaMasterDegree()) {
-                final LocalDate date = this.getDissertationThesisDiscussedDate();
-                if (date != null && (result == null || result.isBefore(date))) {
-                    result = new YearMonthDay(date);
-                }
-
-                if (result == null && hasState(RegistrationStateType.SCHOOLPARTCONCLUDED)) {
-                    return getFirstRegistrationState(RegistrationStateType.SCHOOLPARTCONCLUDED).getStateDate().toYearMonthDay();
-                }
-            }
-
-            if (result == null && hasState(RegistrationStateType.CONCLUDED)) {
-                return getFirstRegistrationState(RegistrationStateType.CONCLUDED).getStateDate().toYearMonthDay();
-            }
-
-            return result;
-        }
+        return getLastStudentCurricularPlan().getLastApprovementDate();
     }
 
     public YearMonthDay calculateConclusionDate(final CycleType cycleType) {

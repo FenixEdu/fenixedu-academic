@@ -40,7 +40,7 @@ public class ReadStudentCurriculum {
             throw new NonExistingServiceException("error.readStudentCurriculum.noStudentCurricularPlan");
         }
 
-        final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>(studentCurricularPlan.getEnrolmentsCount());
+        final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>(studentCurricularPlan.getEnrolmentsSet().size());
         for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
             result.add(InfoEnrolment.newInfoFromDomain(enrolment));
         }

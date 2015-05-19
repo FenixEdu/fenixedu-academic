@@ -115,11 +115,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public boolean isBoxStructure() {
-        return true;
-    }
-
-    @Override
     public CurricularStage getCurricularStage() {
         return CurricularStage.APPROVED;
     }

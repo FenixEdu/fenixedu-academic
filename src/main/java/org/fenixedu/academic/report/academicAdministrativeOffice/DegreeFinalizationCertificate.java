@@ -232,7 +232,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         final Degree degree = getDocumentRequest().getDegree();
         final DegreeType degreeType = degree.getDegreeType();
-        if (!getDocumentRequest().getProgramConclusion().getGraduationTitle(getDocumentRequest().getLanguage()).isEmpty()) {
+        if (!getDocumentRequest().getProgramConclusion().getGraduationTitle().isEmpty()) {
             res.append(", ");
             if (getDocumentRequest().getRegistryCode() != null) {
                 res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),

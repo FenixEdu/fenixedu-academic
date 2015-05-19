@@ -50,7 +50,6 @@ import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -148,15 +147,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     public abstract StudentCurricularPlan getStudentCurricularPlan();
 
-    /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     * 
-     * @return
-     */
-    final public boolean isBoxStructure() {
-        return getStudentCurricularPlan().isBoxStructure();
-    }
-
     final public boolean isBolonhaDegree() {
         return getStudentCurricularPlan().isBolonhaDegree();
     }
@@ -229,7 +219,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public String getFullPath() {
-        if (isRoot() || !isBoxStructure()) {
+        if (isRoot()) {
             return getName().getContent();
         } else {
             return getCurriculumGroup().getFullPath() + " > " + getName().getContent();

@@ -11,6 +11,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.EventTypes;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
@@ -42,7 +43,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
             LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider, boolean isSkipValidation,
             RegistrationStateType targetState, EventTypes eventTypes) {
         this();
-        edit(name, graduationTitle, description, graduationLevel, isAverageEditable, isAlumniProvider, isSkipValidation,
+        edit(name, description, graduationTitle, graduationLevel, isAverageEditable, isAlumniProvider, isSkipValidation,
                 targetState, eventTypes);
     }
 
@@ -165,6 +166,23 @@ public class ProgramConclusion extends ProgramConclusion_Base {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setRoot(null);
         super.deleteDomainObject();
+    }
+
+    public static Optional<ConclusionProcess> getConclusionProcess(StudentCurricularPlan studentCurricularPlan) {
+        return ProgramConclusion.conclusionsFor(studentCurricularPlan).filter(ProgramConclusion::isTerminal)
+                .map(pc -> pc.groupFor(studentCurricularPlan))
+                .filter(cg -> cg.map(CurriculumGroup::isConclusionProcessed).orElse(false))
+                .map(cg -> cg.map(CurriculumGroup::getConclusionProcess)).map(Optional::get).findAny();
+    }
+
+    public static boolean isConclusionProcessed(StudentCurricularPlan studentCurricularPlan) {
+        return ProgramConclusion.conclusionsFor(studentCurricularPlan).filter(ProgramConclusion::isTerminal)
+                .anyMatch(pc -> pc.groupFor(studentCurricularPlan).map(CurriculumGroup::isConclusionProcessed).orElse(false));
+    }
+
+    public static boolean isConcluded(StudentCurricularPlan studentCurricularPlan) {
+        return ProgramConclusion.conclusionsFor(studentCurricularPlan).filter(ProgramConclusion::isTerminal)
+                .anyMatch(pc -> pc.groupFor(studentCurricularPlan).map(CurriculumGroup::isConcluded).orElse(false));
     }
 
 }

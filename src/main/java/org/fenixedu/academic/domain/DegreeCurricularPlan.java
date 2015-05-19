@@ -346,13 +346,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return false;
     }
 
-    /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     */
-    public boolean isBoxStructure() {
-        return !getCurricularStage().equals(CurricularStage.OLD);
-    }
-
     public boolean isApproved() {
         return getCurricularStage() == CurricularStage.APPROVED;
     }
@@ -374,7 +367,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private boolean canDeleteRoot() {
-        return getRoot() == null || getRoot().getCanBeDeleted();
+        return getRoot().getCanBeDeleted();
     }
 
     private boolean canDeleteServiceAgreement() {
@@ -385,9 +378,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             setDegree(null);
-            if (getRoot() != null) {
-                getRoot().delete();
-            }
+            getRoot().delete();
             if (getDegreeStructure() != null) {
                 getDegreeStructure().delete();
             }
@@ -406,16 +397,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String print() {
-        if (getRoot() != null) {
-            StringBuilder dcp = new StringBuilder();
+        StringBuilder dcp = new StringBuilder();
 
-            dcp.append("[DCP ").append(this.getExternalId()).append("] ").append(this.getName()).append("\n");
-            this.getRoot().print(dcp, "", null);
+        dcp.append("[DCP ").append(this.getExternalId()).append("] ").append(this.getName()).append("\n");
+        this.getRoot().print(dcp, "", null);
 
-            return dcp.toString();
-        } else {
-            return "";
-        }
+        return dcp.toString();
     }
 
     public GradeScale getGradeScaleChain() {
@@ -532,16 +519,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionSemester executionSemester) {
         final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
-        for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
-            for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                if (executionCourse.getExecutionPeriod() == executionSemester) {
-                    result.add(executionCourse);
-                }
-            }
-        }
-        if (getRoot() != null) {
-            addExecutionCoursesForExecutionPeriod(result, executionSemester, getRoot().getChildContextsSet());
-        }
+        addExecutionCoursesForExecutionPeriod(result, executionSemester, getRoot().getChildContextsSet());
         return result;
     }
 
@@ -624,10 +602,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 return degreeModule instanceof CurricularCourse && super.add(degreeModule);
             }
         };
-        curricularCourses.addAll(super.getCurricularCoursesSet());
-        if (getRoot() != null) {
-            getRoot().getAllDegreeModules(curricularCourses);
-        }
+        getRoot().getAllDegreeModules(curricularCourses);
         return (Set) curricularCourses;
     }
 
@@ -924,21 +899,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     @Override
     public Set<CurricularCourse> getCurricularCoursesSet() {
-        if (isBoxStructure()) {
-            return this.getCurricularCourses((ExecutionYear) null);
-        } else {
-            return super.getCurricularCoursesSet();
-        }
+        return this.getCurricularCourses((ExecutionYear) null);
     }
 
     public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
-        for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
-            curricularCourse.doForAllCurricularCourses(curricularCourseFunctor);
-        }
-        final RootCourseGroup rootCourseGroup = getRoot();
-        if (rootCourseGroup != null) {
-            rootCourseGroup.doForAllCurricularCourses(curricularCourseFunctor);
-        }
+        getRoot().doForAllCurricularCourses(curricularCourseFunctor);
     }
 
     public Set<CurricularCourse> getCurricularCourses(final ExecutionSemester executionSemester) {
@@ -963,32 +928,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
      */
     private Set<CurricularCourse> getCurricularCourses(final ExecutionYear executionYear) {
         final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-        if (isBoxStructure()) {
-            for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
-                result.add((CurricularCourse) degreeModule);
-            }
-        } else {
-            for (CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-                if (curricularCourse.hasAnyActiveDegreModuleScope(executionYear)) {
-                    result.add(curricularCourse);
-                }
-            }
+        for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
+            result.add((CurricularCourse) degreeModule);
         }
         return result;
     }
 
     public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
-        if (isBoxStructure()) {
-            if (getRoot() != null) {
-                getRoot().applyToCurricularCourses(executionYear, predicate);
-            }
-        } else {
-            for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
-                if (curricularCourse.hasAnyActiveDegreModuleScope(executionYear)) {
-                    curricularCourse.applyToCurricularCourses(executionYear, predicate);
-                }
-            }
-        }
+        getRoot().applyToCurricularCourses(executionYear, predicate);
     }
 
     /**
@@ -1125,12 +1072,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
-        return getRoot() != null ? new ArrayList<DegreeModule>(getRoot().collectAllChildDegreeModules(clazz, executionYear)) : Collections.EMPTY_LIST;
+        return new ArrayList<DegreeModule>(getRoot().collectAllChildDegreeModules(clazz, executionYear));
     }
 
     public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz,
             final ExecutionSemester executionSemester) {
-        return getRoot() != null ? new ArrayList<DegreeModule>(getRoot().collectAllChildDegreeModules(clazz, executionSemester)) : Collections.EMPTY_LIST;
+        return new ArrayList<DegreeModule>(getRoot().collectAllChildDegreeModules(clazz, executionSemester));
     }
 
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(Class<? extends DegreeModule> clazz,
@@ -1416,27 +1363,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void addExecutionCourses(final Collection<ExecutionCourseView> executionCourseViews,
             final ExecutionSemester... executionPeriods) {
         if (executionCourseViews != null && executionPeriods != null) {
-            // Pre-Bolonha structure search
-            for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
-                for (final ExecutionSemester executionSemester : executionPeriods) {
-                    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionPeriod() == executionSemester) {
-                            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
-                                if (curricularCourseScope.isActiveForExecutionPeriod(executionSemester)) {
-                                    executionCourseViews
-                                            .add(constructExecutionCourseView(executionCourse, curricularCourseScope));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Bolonha structure search
-            CourseGroup root = getRoot();
-            if (root != null) {
-                addExecutionCourses(root, executionCourseViews, executionPeriods);
-            }
+            addExecutionCourses(getRoot(), executionCourseViews, executionPeriods);
         }
     }
 
@@ -1653,7 +1580,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
-        return getRoot() != null ? getRoot().hasDegreeModule(degreeModule) : false;
+        return getRoot().hasDegreeModule(degreeModule);
     }
 
     public final List<StudentCurricularPlan> getLastStudentCurricularPlan() {
@@ -1672,10 +1599,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 return degreeModule instanceof CourseGroup && super.add(degreeModule);
             }
         };
-        if (getRoot() != null) {
-            courseGroups.add(getRoot());
-            getRoot().getAllDegreeModules(courseGroups);
-        }
+        courseGroups.add(getRoot());
+        getRoot().getAllDegreeModules(courseGroups);
         return (Set) courseGroups;
     }
 
@@ -1686,10 +1611,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 return degreeModule instanceof BranchCourseGroup && super.add(degreeModule);
             }
         };
-        if (getRoot() != null) {
-            branches.add(getRoot());
-            getRoot().getAllDegreeModules(branches);
-        }
+        branches.add(getRoot());
+        getRoot().getAllDegreeModules(branches);
         return (Set) branches;
     }
 
@@ -1726,10 +1649,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Set<DegreeModule> getAllDegreeModules() {
         final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
         final RootCourseGroup rootCourseGroup = getRoot();
-        if (rootCourseGroup != null) {
-            rootCourseGroup.getAllDegreeModules(degreeModules);
-        }
-        degreeModules.addAll(super.getCurricularCoursesSet());
+        rootCourseGroup.getAllDegreeModules(degreeModules);
         return degreeModules;
     }
 
@@ -1880,7 +1800,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Set<ExecutionYear> getBeginContextExecutionYears() {
-        return isBoxStructure() ? getRoot().getBeginContextExecutionYears() : Collections.EMPTY_SET;
+        return getRoot().getBeginContextExecutionYears();
     }
 
     public ExecutionYear getOldestContextExecutionYear() {
@@ -1905,13 +1825,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Collection<CycleCourseGroup> getDestinationAffinities(final CycleType sourceCycleType) {
-        if (getRoot() != null) {
-            final CycleCourseGroup cycleCourseGroup = getRoot().getCycleCourseGroup(sourceCycleType);
-            if (cycleCourseGroup != null) {
-                return cycleCourseGroup.getDestinationAffinitiesSet();
-            }
+        final CycleCourseGroup cycleCourseGroup = getRoot().getCycleCourseGroup(sourceCycleType);
+        if (cycleCourseGroup != null) {
+            return cycleCourseGroup.getDestinationAffinitiesSet();
         }
-        return Collections.emptyList();
+        return Collections.EMPTY_LIST;
     }
 
     public Double getEctsCredits() {
@@ -2065,10 +1983,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     @Atomic
     public void editDuration(AcademicPeriod duration) {
-
-        if (!isBoxStructure()) {
-            throw new DomainException("error.degreeCurricularPlan.duration.can.only.be.modified.in.box.structured.plans");
-        }
 
         if (duration == null) {
             throw new DomainException("error.degreeCurricularPlan.duration.cannot.be.null");

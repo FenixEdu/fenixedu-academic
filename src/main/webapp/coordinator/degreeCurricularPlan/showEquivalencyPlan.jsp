@@ -59,12 +59,10 @@
 			</html:link>
 		</p>
 
-		<logic:present name="degreeCurricularPlan" property="root">
 			<bean:define id="degreeModule" name="degreeCurricularPlan" property="root" toScope="request"/>
 			<bean:define id="indentLevel" type="java.lang.String" value="0" toScope="request"/>
 			<bean:define id="width" type="java.lang.String" value="70" toScope="request"/>
 			<jsp:include page="showEquivalencyPlanForDegreeModule.jsp"/>
-		</logic:present>
 	</logic:notPresent>
 
 	<logic:present name="viewTable">

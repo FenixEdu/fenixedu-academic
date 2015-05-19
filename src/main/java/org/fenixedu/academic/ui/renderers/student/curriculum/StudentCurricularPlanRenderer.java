@@ -411,12 +411,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             this.executionYearContext = initializeExecutionYear();
             this.executionPeriodContext = executionYearContext.getLastExecutionPeriod();
 
-            if (isOrganizedByGroups() && !this.studentCurricularPlan.isBoxStructure()) {
-                container.addChild(createHtmlTextItalic(BundleUtil.getString(Bundle.STUDENT, "not.applicable")));
-
-                return container;
-            }
-
             final HtmlTable mainTable = new HtmlTable();
             container.addChild(mainTable);
             mainTable.setClasses(getStudentCurricularPlanClass());

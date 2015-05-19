@@ -1223,7 +1223,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         }
     }
 
-    private boolean isSkipConcluded() {
+    public boolean isSkipConcluded() {
         return getDegreeModule() != null && getDegreeModule().getProgramConclusion() != null
                 && getDegreeModule().getProgramConclusion().isSkipValidation();
     }
@@ -1238,7 +1238,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     final public ExecutionYear getIngressionYear() {
-        return isConclusionProcessed() ? getConclusionProcess().getIngressionYear() : calculateIngressionYear();
+        return isConclusionProcessed() ? getConclusionProcess().getIngressionYear() : getRegistration().calculateIngressionYear();
     }
 
     final public ExecutionYear calculateIngressionYear() {

@@ -31,8 +31,7 @@ public class CreateStudentCurricularPlanEquivalencePlan {
     public static StudentCurricularPlanEquivalencePlan run(final Student student) {
         for (final Registration registration : student.getRegistrationsSet()) {
             final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-            if (studentCurricularPlan != null && studentCurricularPlan.isBoxStructure()
-                    && !studentCurricularPlan.isBolonhaDegree()) {
+            if (studentCurricularPlan != null && !studentCurricularPlan.isBolonhaDegree()) {
                 final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan =
                         studentCurricularPlan.getEquivalencePlan();
                 return studentCurricularPlanEquivalencePlan == null ? studentCurricularPlan

@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +34,6 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.EquivalencePlan;
 import org.fenixedu.academic.domain.EquivalencePlanEntry;
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -52,29 +50,11 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
 
 abstract public class DegreeModule extends DegreeModule_Base {
 
-    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = new Comparator<DegreeModule>() {
-
-        @Override
-        public int compare(DegreeModule o1, DegreeModule o2) {
-            String name1;
-            String name2;
-            if (I18N.getLocale().toString().equalsIgnoreCase("pt")) {
-                name1 = o1.getName();
-                name2 = o2.getName();
-            } else {
-                name1 = o1.getNameEn();
-                name2 = o2.getNameEn();
-            }
-
-            final int c = Collator.getInstance().compare(name1, name2);
-            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
-        }
-
-    };
+    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = Comparator.<DegreeModule, MultiLanguageString> comparing(
+            DegreeModule::getNameI18N).thenComparing(DegreeModule::getExternalId);
 
     public static class ComparatorByMinEcts implements Comparator<DegreeModule> {
 

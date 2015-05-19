@@ -6705,7 +6705,9 @@ relation CurricularSemesterCurricularYear {
 }
 
 relation CurriculumGroupStudentCurricularPlan {
-    studentCurriculum.RootCurriculumGroup playsRole root;
+    studentCurriculum.RootCurriculumGroup playsRole root {
+        multiplicity 1..1;
+    }
     StudentCurricularPlan playsRole parentStudentCurricularPlan;
 }
 
@@ -6755,7 +6757,9 @@ relation DegreeCurricularPlanCurricularCourseEquivalence {
 }
 
 relation DegreeCurricularPlanDegreeModule {
-    degreeStructure.RootCourseGroup playsRole root;
+    degreeStructure.RootCourseGroup playsRole root {
+        multiplicity 1..1;
+    }
     DegreeCurricularPlan playsRole parentDegreeCurricularPlan;
 }
 

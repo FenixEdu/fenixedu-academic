@@ -102,38 +102,35 @@ public class UIDegreeCurricularPlan extends UIInput {
         module = facesContext.getExternalContext().getRequestContextPath() + (String) this.getAttributes().get(MODULE);
 
         final DegreeCurricularPlan dcp = getDegreeCurricularPlanAttribute();
-        if (dcp.isBoxStructure()) {
-            this.toEdit =
-                    (this.getBooleanAttribute(TO_EDIT) != null) ? (Boolean) this.getBooleanAttribute(TO_EDIT) : Boolean.FALSE;
-            this.showRules =
-                    (this.getBooleanAttribute(SHOW_RULES) != null) ? (Boolean) this.getBooleanAttribute(SHOW_RULES) : Boolean.FALSE;
-            final String organizeBy =
-                    (this.getAttributes().get(ORGANIZE_BY) != null) ? (String) this.getAttributes().get(ORGANIZE_BY) : "groups";
-            final Boolean onlyStructure = getOnlyStructureAttribute();
-            final Boolean toOrder =
-                    (this.getBooleanAttribute(TO_ORDER) != null) ? (Boolean) this.getBooleanAttribute(TO_ORDER) : Boolean.FALSE;
-            final Boolean hideCourses = getHideCourseAttribute();
-            final Boolean reportsAvailable =
-                    (this.getBooleanAttribute(REPORTS_AVAILABLE) != null) ? (Boolean) this.getBooleanAttribute(REPORTS_AVAILABLE) : Boolean.FALSE;
-            if (this.getAttributes().get(EXECUTION_YEAR) != null) {
-                executionYear = (ExecutionYear) this.getAttributes().get(EXECUTION_YEAR);
-            }
+        this.toEdit = (this.getBooleanAttribute(TO_EDIT) != null) ? (Boolean) this.getBooleanAttribute(TO_EDIT) : Boolean.FALSE;
+        this.showRules =
+                (this.getBooleanAttribute(SHOW_RULES) != null) ? (Boolean) this.getBooleanAttribute(SHOW_RULES) : Boolean.FALSE;
+        final String organizeBy =
+                (this.getAttributes().get(ORGANIZE_BY) != null) ? (String) this.getAttributes().get(ORGANIZE_BY) : "groups";
+        final Boolean onlyStructure = getOnlyStructureAttribute();
+        final Boolean toOrder =
+                (this.getBooleanAttribute(TO_ORDER) != null) ? (Boolean) this.getBooleanAttribute(TO_ORDER) : Boolean.FALSE;
+        final Boolean hideCourses = getHideCourseAttribute();
+        final Boolean reportsAvailable =
+                (this.getBooleanAttribute(REPORTS_AVAILABLE) != null) ? (Boolean) this.getBooleanAttribute(REPORTS_AVAILABLE) : Boolean.FALSE;
+        if (this.getAttributes().get(EXECUTION_YEAR) != null) {
+            executionYear = (ExecutionYear) this.getAttributes().get(EXECUTION_YEAR);
+        }
 
-            if (incorrectUseOfComponent(organizeBy, onlyStructure, toOrder, hideCourses)) {
-                throw new IOException("incorrect.component.usage");
-            }
+        if (incorrectUseOfComponent(organizeBy, onlyStructure, toOrder, hideCourses)) {
+            throw new IOException("incorrect.component.usage");
+        }
 
-            if (organizeBy.equalsIgnoreCase(YEARS)) {
-                encodeByYears(facesContext, dcp);
-            } else {
-                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder,
-                        hideCourses, reportsAvailable, executionYear, module, getCurrentPageAttribute(),
-                        isToEnableGroupExpandOption()).encodeBegin(facesContext);
-            }
+        if (organizeBy.equalsIgnoreCase(YEARS)) {
+            encodeByYears(facesContext, dcp);
+        } else {
+            new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder,
+                    hideCourses, reportsAvailable, executionYear, module, getCurrentPageAttribute(),
+                    isToEnableGroupExpandOption()).encodeBegin(facesContext);
+        }
 
-            if (dcp.getDegreeStructure() != null && !dcp.getDegreeStructure().getChildsSet().isEmpty() && !onlyStructure) {
-                encodeSubtitles(facesContext);
-            }
+        if (dcp.getDegreeStructure() != null && !dcp.getDegreeStructure().getChildsSet().isEmpty() && !onlyStructure) {
+            encodeSubtitles(facesContext);
         }
     }
 

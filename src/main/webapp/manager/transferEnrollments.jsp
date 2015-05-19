@@ -225,13 +225,11 @@
 				</tr>
 			</table>
 			
-			<logic:equal name="infoStudentCurricularPlan" property="studentCurricularPlan.boxStructure" value="true">
 				<logic:iterate id="curriculumGroup" name="infoStudentCurricularPlan" property="studentCurricularPlan.root.allCurriculumGroups" type="org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup">
 					<bean:write name="curriculumGroup" property="fullPath" />
 					<html:radio property="selectedCurriculumGroupID" value="<%= curriculumGroup.getExternalId().toString() %>" />
 					<br/>
 				</logic:iterate>
-			</logic:equal>
 			
 			<br />
 			

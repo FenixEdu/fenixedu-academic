@@ -62,13 +62,11 @@
 </table>
 
 
-<logic:equal name="registrationConclusionBean" property="curriculumForConclusion.studentCurricularPlan.boxStructure" value="true">
 	<fr:view name="registrationConclusionBean" property="curriculumForConclusion">
 		<fr:layout>
 			<fr:property name="visibleCurricularYearEntries" value="false" />
 		</fr:layout>
 	</fr:view>
-</logic:equal>
 
 
 <%

@@ -155,11 +155,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                 return new HtmlText();
             }
 
-            if (studentOptionalEnrolmentBean.getDegreeCurricularPlan().isBoxStructure()) {
-                generateCourseGroup(container, studentOptionalEnrolmentBean.getDegreeCurricularPlan().getRoot(), 0);
-            } else {
-                generateDCP(container, 0);
-            }
+            generateCourseGroup(container, studentOptionalEnrolmentBean.getDegreeCurricularPlan().getRoot(), 0);
             return container;
         }
 

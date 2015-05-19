@@ -128,15 +128,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public boolean isPropaedeutic() {
-        return (isBoxStructure() && super.isPropaedeutic()) || (!isBolonhaDegree() && getCurricularCourse().isPropaedeutic());
+        return super.isPropaedeutic();
     }
 
     @Override
     public boolean isExtraCurricular() {
-        if (!isBoxStructure()) {
-            return super.getIsExtraCurricular() != null && super.getIsExtraCurricular();
-        }
-
         return super.isExtraCurricular();
     }
 
@@ -149,20 +145,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     @Deprecated
     public void setIsExtraCurricular(Boolean isExtraCurricular) {
-        if (isBoxStructure()) {
-            throw new DomainException("error.org.fenixedu.academic.domain.Enrolment.use.markAsExtraCurricular.method.instead");
-        }
-
-        super.setIsExtraCurricular(isExtraCurricular);
+        throw new DomainException("error.org.fenixedu.academic.domain.Enrolment.use.markAsExtraCurricular.method.instead");
     }
 
     public void markAsExtraCurricular() {
-        if (isBoxStructure()) {
-            setCurriculumGroup(getStudentCurricularPlan().getExtraCurriculumGroup());
-            super.setIsExtraCurricular(null);
-        } else {
-            super.setIsExtraCurricular(true);
-        }
+        setCurriculumGroup(getStudentCurricularPlan().getExtraCurriculumGroup());
+        super.setIsExtraCurricular(null);
     }
 
     final public boolean isFinal() {

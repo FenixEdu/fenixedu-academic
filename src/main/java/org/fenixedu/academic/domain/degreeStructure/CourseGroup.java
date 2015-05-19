@@ -300,6 +300,11 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     private void checkDuplicateProgramConclusion(ProgramConclusion programConclusion) {
+
+        if (programConclusion == null) {
+            return;
+        }
+
         if (getParentDegreeCurricularPlan().getAllCoursesGroups().stream().map(CourseGroup::getProgramConclusion)
                 .filter(Objects::nonNull).anyMatch(pc -> pc.equals(programConclusion))) {
             throw new DomainException("error.program.conclusion.already.exists", programConclusion.getName().getContent());

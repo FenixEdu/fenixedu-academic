@@ -78,6 +78,7 @@
 				<h:outputText value="#{curricularCourse.name}" escape="false"/>
 				<f:param name="action" value="close"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 			</h:outputLink>
 			<h:outputText value="</li>" escape="false"/>
 		</fc:dataRepeater>

@@ -206,12 +206,6 @@ public class CurriculumRenderer extends InputRenderer {
                 return container;
             }
 
-            if (!this.curriculum.getStudentCurricularPlan().isBoxStructure()) {
-                container.addChild(createHtmlTextItalic(BundleUtil.getString(Bundle.STUDENT, "not.applicable")));
-
-                return container;
-            }
-
             if (this.curriculum.isEmpty()) {
                 container.addChild(createHtmlTextItalic(BundleUtil.getString(Bundle.STUDENT, "message.no.approvals")));
 
