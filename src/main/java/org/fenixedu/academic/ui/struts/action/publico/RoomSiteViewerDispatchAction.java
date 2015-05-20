@@ -37,7 +37,7 @@ import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.dto.InfoSiteRoomTimeTable;
 import org.fenixedu.academic.dto.RoomKey;
-import org.fenixedu.academic.service.Factory.RoomSiteComponentBuilder;
+import org.fenixedu.academic.service.factory.RoomSiteComponentBuilder;
 import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.service.services.commons.ReadExecutionPeriodByOID;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
