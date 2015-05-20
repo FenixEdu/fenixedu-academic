@@ -24,6 +24,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+${portal.toolkit()}
 
 <h2 class="mbottom15"><bean:message key="title.coordinator.degreeSite.edit"/></h2>
 
@@ -40,14 +43,11 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
         <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%=  degreeCurricularPlanID.toString() %>" />	
-		
-		<fr:edit name="degreeCurricularPlan" type="org.fenixedu.academic.domain.DegreeCurricularPlan" schema="degree.curricular.plan.description" nested="true">
-		    <fr:layout>
-	    	    <fr:property name="classes" value="tstyle2 thlight thright thtop mbottom2"/>
-	        	<fr:property name="columnClasses" value="width10em,pbottom1,tdclear tderror1 valigntop"/>
-		    </fr:layout>
-		</fr:edit>
-	
+
+		<textarea bennu-html-editor bennu-localized-string name="degreeCurricularPlanDescription" id="degreeCurricularPlanDescription">
+			<c:out value="${degreeCurricularPlanDescription.json()}"/>
+		</textarea>
+
 		<p style="margin-top: 2em;">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="button.save"/>                    		         	

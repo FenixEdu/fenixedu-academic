@@ -18,6 +18,13 @@
  */
 package org.fenixedu.academic.ui.struts.action.coordinator;
 
+import static org.fenixedu.bennu.core.security.Authenticate.getUser;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -29,17 +36,18 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.utils.RequestUtils;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.commons.i18n.LocalizedString;
+
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import static org.fenixedu.bennu.core.security.Authenticate.getUser;
+import com.google.gson.JsonParser;
 
 /**
  * @author Tânia Pousão Created on 31/Out/2003
@@ -137,14 +145,36 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             return new ActionForward(mapping.getInput());
         }
         request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+        request.setAttribute(
+                "degreeCurricularPlanDescription",
+                new LocalizedString().with(MultiLanguageString.en, degreeCurricularPlan.getDescriptionEn()).with(
+                        MultiLanguageString.pt, degreeCurricularPlan.getDescription()));
 
         return mapping.findForward("viewDescriptionCurricularPlan");
     }
 
     public ActionForward editDescriptionDegreeCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                                             HttpServletResponse response) {
+            HttpServletResponse response) {
+
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+        String degreeCurricularPlanDescription = request.getParameter("degreeCurricularPlanDescription");
+        LocalizedString localizedDescription = LocalizedString.fromJson(new JsonParser().parse(degreeCurricularPlanDescription));
+        String degreeCurricularPlanDescriptionPt = localizedDescription.getContent(new Locale("pt", "PT"));
+        String degreeCurricularPlanDescriptionEn = localizedDescription.getContent(Locale.ENGLISH);
+
+        updateDegreeCurricularPlanDescription(degreeCurricularPlanDescriptionPt, degreeCurricularPlan,
+                degreeCurricularPlanDescriptionEn);
+
         RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
         return mapping.findForward("editOK");
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void updateDegreeCurricularPlanDescription(String degreeCurricularPlanDescriptionPt,
+            DegreeCurricularPlan degreeCurricularPlan, String degreeCurricularPlanDescriptionEn) {
+        degreeCurricularPlan.setDescription(degreeCurricularPlanDescriptionPt);
+        degreeCurricularPlan.setDescriptionEn(degreeCurricularPlanDescriptionEn);
     }
 
     public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
