@@ -60,7 +60,7 @@
 
 	<p class="mtop2"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="confirm.reject"/></strong></p>
 		<p class="mbottom025"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="justification"/>:</p>
-		<html:form action="<%="/academicServiceRequestsManagement.do?method=rejectAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getExternalId().toString()%>" style="display: inline;">
+		<html:form action="<%="/academicServiceRequestsManagement.do?method=rejectAcademicServiceRequest&amp;academicServiceRequestId=" + academicServiceRequest.getExternalId().toString()%>" style="display: inline;" onsubmit="return checkJustification()">
 			<p class="mtop025">
 				<logic:present name="failingCondition" scope="request">
 					<bean:define id="failingCondition" name="failingCondition" scope="request"/>
@@ -73,6 +73,9 @@
 					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.justification" property="justification" cols="65" rows="5"/>
 				</logic:notPresent>
 			</p>
+
+			<div class="alert-danger" id="justification-error" hidden><bean:message key="error.empty.justification" bundle="ACADEMIC_OFFICE_RESOURCES"/></div>
+
 			<span>
 				<html:submit><bean:message key="reject" bundle="APPLICATION_RESOURCES"/></html:submit>		
 			</span>
@@ -83,3 +86,13 @@
 				<html:submit><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:submit>
 			</span>
 		</html:form>
+
+<script type="text/javascript">
+function checkJustification(){
+	var justification = $('textarea[name="justification"').val();
+	if(justification == null || justification.length == 0) {
+		$('#justification-error').show()
+		return false;
+	}
+}
+</script>
