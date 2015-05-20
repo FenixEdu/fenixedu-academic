@@ -33,6 +33,8 @@
 </html:messages>
 
 <bean:define id="registration" name="ingressionBean" property="registration" />
+<bean:define id="registrationId" name="registration" property="externalId" />
+
 
 
 <p>
@@ -111,3 +113,26 @@
 	<html:cancel onclick="this.form.method.value='prepare'; return true;"><bean:message key="label.cancel" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
 
 </fr:form>
+
+<h3 class="mtop3"><bean:message key="title.registrationIngression.reingressions" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+
+<logic:empty name="registration" property="reingressions">
+	<em><bean:message key="message.registrationIngression.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+</logic:empty>
+
+<logic:notEmpty name="registration" property="reingressions">
+	<fr:view name="registration" property="reingressions" schema="RegistrationReingression.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1 mtop15" />
+			
+			<fr:link name="delete" label="label.delete,APPLICATION_RESOURCES" confirmation="message.registrationIngression.delete.registration.confirmation,ACADEMIC_OFFICE_RESOURCES" 
+				link="<%= String.format("/manageIngression.do?method=deleteReingression&registrationId=%s&executionYearId=${executionYear.externalId}", registrationId) %>" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
+<p class="mtop15">
+	<html:link action="/manageIngression.do?method=prepareCreateReingression" paramId="registrationId" paramName="registration" paramProperty="externalId">
+		<bean:message key="link.registrationIngression.mark.reingression" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	</html:link>
+</p>

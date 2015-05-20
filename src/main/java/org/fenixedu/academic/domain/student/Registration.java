@@ -3431,36 +3431,41 @@ public class Registration extends Registration_Base {
         return true;
     }
 
-    public boolean isReingression(final ExecutionYear executionYear) {
-        final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
-        states.addAll(getRegistrationStatesSet());
+    @Atomic
+    public void createReingression(ExecutionYear executionYear, LocalDate reingressionDate) {
+        RegistrationDataByExecutionYear dataByYear =
+                RegistrationDataByExecutionYear.getOrCreateRegistrationDataByYear(this, executionYear);
+        dataByYear.createReingression(reingressionDate);
+    }
 
-        Registration sourceRegistration = getSourceRegistration();
-        while (sourceRegistration != null) {
-            states.addAll(sourceRegistration.getRegistrationStatesSet());
-            sourceRegistration = sourceRegistration.getSourceRegistration();
-        }
-
-        if (states.size() == 0) {
-            return false;
-        }
-
-        RegistrationState previous = null;
-        for (final RegistrationState registrationState : states) {
-            if (previous != null) {
-                if (registrationState.getExecutionYear() == executionYear
-                        && (registrationState.isActive() || registrationState.getStateType() == RegistrationStateType.TRANSITED)
-                        && (previous.getStateType() == RegistrationStateType.EXTERNAL_ABANDON
-                                || previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
-                    return true;
-                }
-            }
-
-            previous = registrationState;
+    public boolean hasReingression(ExecutionYear executionYear) {
+        RegistrationDataByExecutionYear data = getRegistrationDataByExecutionYear(executionYear);
+        if (data != null) {
+            return data.isReingression();
         }
 
         return false;
+    }
 
+    public Set<RegistrationDataByExecutionYear> getReingressions() {
+        Set<RegistrationDataByExecutionYear> reingressions = new HashSet<RegistrationDataByExecutionYear>();
+        for (RegistrationDataByExecutionYear year : getRegistrationDataByExecutionYearSet()) {
+            if (year.isReingression()) {
+                reingressions.add(year);
+            }
+        }
+        return reingressions;
+    }
+
+    @Atomic
+    public void deleteReingression(ExecutionYear executionYear) {
+        RegistrationDataByExecutionYear dataByExecutionYear = getRegistrationDataByExecutionYear(executionYear);
+
+        if ((dataByExecutionYear == null) || (dataByExecutionYear.getExecutionYear() != executionYear)) {
+            throw new DomainException("error.Registration.reingression.not.marked.in.execution.year");
+        }
+
+        dataByExecutionYear.deleteReingression();
     }
 
     public PersonalInformationBean getPersonalInformationBean(ExecutionYear executionYear) {

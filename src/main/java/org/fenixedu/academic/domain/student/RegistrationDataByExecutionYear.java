@@ -39,7 +39,21 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
         checkRules();
     }
 
-    private void checkRules() {
+    public void createReingression(LocalDate reingressionDate) {
+        setReingression(true);
+        setReingressionDate(reingressionDate);
+
+        checkRules();
+    }
+
+    public void deleteReingression() {
+        setReingression(false);
+        setReingressionDate(null);
+
+        checkRules();
+    }
+
+    protected void checkRules() {
         Optional<RegistrationDataByExecutionYear> result =
                 getRegistration()
                         .getRegistrationDataByExecutionYearSet()
@@ -49,6 +63,23 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
         if (result.isPresent()) {
             throw new DomainException("error.RegistrationDatByExecutionYear.executionYearShouldBeUnique");
         }
+
+        if (isReingression()) {
+            LocalDate reingressionDate = getReingressionDate();
+            if (reingressionDate == null) {
+                throw new DomainException("error.RegistrationDataByExecutionYear.reingressionDate.required");
+            }
+
+            if (!getExecutionYear().containsDate(reingressionDate)) {
+                throw new DomainException(
+                        "error.RegistrationDataByExecutionYear.reingressionDate.must.be.contained.in.executionYear",
+                        getExecutionYear().getName());
+            }
+        }
+    }
+
+    public boolean isReingression() {
+        return getReingression();
     }
 
     public void delete() {
@@ -67,7 +98,7 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
                         .filter(registrationDataByExecutionYear -> registrationDataByExecutionYear.getExecutionYear() == executionYear)
                         .findAny();
 
-        return result.orElse(new RegistrationDataByExecutionYear(registration, executionYear));
+        return result.isPresent() ? result.get() : new RegistrationDataByExecutionYear(registration, executionYear);
     }
 
     public void edit(LocalDate enrolmentDate) {
