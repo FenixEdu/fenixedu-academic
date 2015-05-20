@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess
 import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.fenixedu.academic.util.predicates.OrPredicate;
 import org.fenixedu.academic.util.predicates.PredicateContainer;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndividualProgramProcess> {
 
@@ -83,5 +84,10 @@ public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndivi
         private boolean checkValue(PhdIndividualProgramProcess process) {
             return process.getSeminarProcess().getActiveState().equals(getValue());
         }
+    }
+
+    @Override
+    public String getLocalizedName() {
+        return BundleUtil.getString("resources.PhdResources", PhdSeminarPredicateContainer.class.getName() + "." + name());
     }
 }

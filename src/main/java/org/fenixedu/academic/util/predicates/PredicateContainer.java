@@ -6,4 +6,6 @@ public interface PredicateContainer<Type> {
 
     public Predicate<Type> getPredicate();
 
+    public String getLocalizedName();
+
 }

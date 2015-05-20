@@ -18,13 +18,11 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="org.fenixedu.academic.util.phd.PhdBundleUtil"%>
 <%@page import="org.fenixedu.academic.dto.phd.YearMonth"%>
 
 <style>
@@ -86,7 +84,7 @@
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CivilYearsProvider" />
 			</fr:slot>
 			<fr:slot name="month" key="label.month" layout="menu-postback">
-				<fr:property name="defaultText" value="<%="-- " + PhdBundleUtil.getMessageFromModuleOrApplication("Phd", "label.all") + " --" %>" />
+				<fr:property name="defaultText" value="-- ${fr:message('resources.PhdResources','label.all')} --" />
 			</fr:slot>
 		</fr:schema>
 		<fr:destination name="postBack" path="/phdIndividualProgramProcess.do?method=viewProcessAlertMessageArchive"/>
@@ -111,8 +109,8 @@
 			<fr:slot name="process" layout="link">
 				<fr:property name="contextRelative" value="true"/>
 				<fr:property name="moduleRelative" value="true"/>
-				<fr:property name="linkFormat" value="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewAlertMessages&processId=${externalId}" />
-				<fr:property name="format" value="${processNumber}"/>
+				<fr:property name="linkFormat" value="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewAlertMessages&processId=\${externalId}" />
+				<fr:property name="format" value="\${processNumber}"/>
 			</fr:slot>
 			<fr:slot name="subject" layout="link">
 				<fr:property name="contextRelative" value="true"/>

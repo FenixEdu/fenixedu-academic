@@ -34,9 +34,6 @@ public class EPFLPhdCandidacyProcessProperties {
 
         @ConfigurationProperty(key = "phd.epfl.public.candidacy.referee.form.link")
         public String getPublicCandidacyRefereeFormLink();
-
-        @ConfigurationProperty(key = "phd.public.external.access.link")
-        public String getPhdExternalAccessLink();
     }
 
     public static ConfigurationProperties getConfiguration() {

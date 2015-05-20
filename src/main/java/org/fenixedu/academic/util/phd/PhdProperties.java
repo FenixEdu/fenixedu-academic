@@ -28,9 +28,6 @@ public class PhdProperties {
         @ConfigurationProperty(key = "phd.public.candidacy.access.link")
         public String getPublicCandidacyAccessLink();
 
-        @ConfigurationProperty(key = "phd.public.candidacy.referee.form.link")
-        public String getPublicCandidacyRefereeFormLink();
-
         @ConfigurationProperty(key = "phd.public.external.access.link")
         public String getPhdExternalAccessLink();
     }

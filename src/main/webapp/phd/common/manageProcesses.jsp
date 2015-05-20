@@ -25,7 +25,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
-<%@page import="org.fenixedu.academic.util.phd.PhdBundleUtil"%>
 <%@page import="pt.ist.fenixframework.DomainObject"%>
 
 
@@ -96,7 +95,7 @@
 <logic:iterate id="containerEnum" name="candidacyCategory">
 	<phd:filterProcesses id="processList" predicateContainer="containerEnum" bean="searchProcessBean"/>
 	<bean:size id="size" name="processList" />		
-	<p class="mbottom05"><strong><%= PhdBundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong></p>
+	<p class="mbottom05"><strong>${containerEnum.localizedName} (<%= size %>)</strong></p>
 	
 	<logic:equal name="size" value="0">
 		<p class="mbottom2"><em><bean:message key="message.no.processes.in.state" bundle="PHD_RESOURCES"/></em></p>
@@ -157,7 +156,7 @@
 <logic:iterate id="containerEnum" name="seminarCategory">
 	<phd:filterProcesses id="processList" predicateContainer="containerEnum" bean="searchProcessBean" />
 	<bean:size id="size" name="processList" />
-	<p class="mbottom05"><strong><%= PhdBundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong></p>
+	<p class="mbottom05"><strong>${containerEnum.localizedName} (<%= size %>)</strong></p>
 	
 	<logic:equal name="size" value="0">
 		<p class="mbottom2"><em><bean:message key="message.no.processes.in.state" bundle="PHD_RESOURCES"/></em></p>
@@ -219,7 +218,7 @@
 <logic:iterate id="containerEnum" name="thesisCategory">
 	<phd:filterProcesses id="processList" predicateContainer="containerEnum" bean="searchProcessBean" />
 	<bean:size id="size" name="processList" />
-	<p class="mbottom05"><strong><%= PhdBundleUtil.getEnumName((Enum<?>) containerEnum, "Phd") %> (<%= size %>)</strong></p>
+	<p class="mbottom05"><strong>${containerEnum.localizedName} (<%= size %>)</strong></p>
 	
 	<logic:equal name="size" value="0">
 		<p class="mbottom2"><em><bean:message key="message.no.processes.in.state" bundle="PHD_RESOURCES"/></em></p>
@@ -279,7 +278,7 @@
 <bean:define id="concludedThisYearContainer" name="concludedThisYearContainer"/>
 <phd:filterProcesses id="processList" predicateContainer="concludedThisYearContainer" bean="searchProcessBean" />
 <bean:size id="size" name="processList" />
-<p class="mbottom05"><strong><%= PhdBundleUtil.getEnumName((Enum<?>) concludedThisYearContainer, "Phd") %> (<%= size %>)</strong></p>
+<p class="mbottom05"><strong>${concludedThisYearContainer.localizedName} (<%= size %>)</strong></p>
 
 <logic:equal name="size" value="0">
 	<p class="mbottom2"><em><bean:message key="message.no.processes.in.state" bundle="PHD_RESOURCES"/></em></p>

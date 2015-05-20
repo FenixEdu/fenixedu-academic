@@ -39,8 +39,6 @@ public class InstitutionPhdCandidacyProcessProperties {
         @ConfigurationProperty(key = "phd.institution.public.candidacy.referee.form.link.*")
         public Map<String, String> phdInstitutionPublicCandidacyRefereeFormLink();
 
-        @ConfigurationProperty(key = "phd.public.external.access.link")
-        public String phdPublicExternalAccessLink();
     }
 
     static public String getPublicCandidacyAccessLink(final Locale locale) {
@@ -53,10 +51,6 @@ public class InstitutionPhdCandidacyProcessProperties {
 
     static public String getPublicCandidacyRefereeFormLink(final Locale locale) {
         return getConfiguration().phdInstitutionPublicCandidacyRefereeFormLink().get(readLanguageCode(locale));
-    }
-
-    static public String getPhdExternalAccessLink() {
-        return getConfiguration().phdPublicExternalAccessLink();
     }
 
     static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode,
