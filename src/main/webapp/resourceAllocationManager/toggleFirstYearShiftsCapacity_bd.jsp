@@ -36,7 +36,7 @@
 <h4><bean:message bundle="SOP_RESOURCES" key="label.change.firstYearShiftsCapacity"/> <bean:write name="executionYear" property="name"/></h4>
 
 <span style="float:left;">
-	<fr:form id="firstYearShiftCapacityForm" action="<%="/chooseExecutionPeriod.do?method=blockFirstYearShiftsCapacity&executionYearId=" + executionYear.getOID()%>">
+	<fr:form id="firstYearShiftCapacityForm" action="<%="/chooseExecutionPeriod.do?method=blockFirstYearShiftsCapacity&executionYearId=" + executionYear.getExternalId()%>">
 		<html:submit altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="label.block" />
 		</html:submit>	
@@ -44,7 +44,7 @@
 </span>
 
 <span style="float:left;">
-	<fr:form id="firstYearShiftCapacityForm" action="<%="/chooseExecutionPeriod.do?method=unblockFirstYearShiftsCapacity&executionYearId=" + executionYear.getOID()%>">
+	<fr:form id="firstYearShiftCapacityForm" action="<%="/chooseExecutionPeriod.do?method=unblockFirstYearShiftsCapacity&executionYearId=" + executionYear.getExternalId()%>">
 		<html:submit altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="label.unblock" />
 		</html:submit>

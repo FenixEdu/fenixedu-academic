@@ -66,7 +66,7 @@
 	<li><bean:message key="label.vacancies"/>: <%= contest.getVacancies() == null ? "" : contest.getVacancies().toString() %></li>
 	<li>
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.count"/>:
-		<%= contest.getOutboundMobilityCandidacyCount() == 0 ? "0" : contest.getOutboundMobilityCandidacyCount() %>
+		<%= contest.getOutboundMobilityCandidacySet().size() == 0 ? "0" : contest.getOutboundMobilityCandidacySet().size() %>
 		<div style="margin-top: 10px; margin-left: 15px; width: 1050px;">
 			<table class="tstyle1 mtop05">
 				<tr>

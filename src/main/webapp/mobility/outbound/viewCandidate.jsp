@@ -55,7 +55,7 @@
 
 	.savedGrade { font-size: large; color: green; font-weight: bold; }
 
-<%	for (final Registration registration : person.getStudent().getRegistrations()) {
+<%	for (final Registration registration : person.getStudent().getRegistrationsSet()) {
 		if (!registration.getOutboundMobilityCandidacySubmissionSet().isEmpty()) {
 			for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
 %>

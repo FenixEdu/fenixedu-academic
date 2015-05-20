@@ -410,7 +410,7 @@
 		<br/>
 		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group"/></h3>
 
-		<% if (mobilityGroup.getMobilityCoordinatorCount() == 0) { %>
+		<% if (mobilityGroup.getMobilityCoordinatorSet().size() == 0) { %>
 				<span><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group.empty"/></span>
 		<% } else { %>
 				<fr:form id="removeMobilityCoordinatorForm" action="/outboundMobilityCandidacy.do">
@@ -522,11 +522,11 @@
 						</span>
 				</td>
 				<td>
-					<% if (contest.getOutboundMobilityCandidacyCount() == 0) { %>
+					<% if (contest.getOutboundMobilityCandidacySet().size() == 0) { %>
 							0
 					<% } else { %>
 							<a href="#" onclick="<%= "document.getElementById('deleteContestForm').method.value = 'viewContestForm' ; document.getElementById('deleteContestForm').contestOid.value = " + contest.getExternalId() + " ; document.getElementById('deleteContestForm').submit()" %>">
-								<%= contest.getOutboundMobilityCandidacyCount() %>
+								<%= contest.getOutboundMobilityCandidacySet().size() %>
 							</a>
 					<% } %>
 				</td>

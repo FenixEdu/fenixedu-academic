@@ -81,7 +81,7 @@
 <br />
 
 <logic:equal name="allowCreateGratuityPR" value="true">
-	<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.name() %>">
+	<logic:equal name="degreeCurricularPlan" property="degreeType.advancedFormationDiploma" value="true">
 		<html:link
 			action="<%="/postingRules.do?method=prepareCreateDFAGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 			<bean:message key="label.payments.postingRules.createDFAGratuityPR"
@@ -90,7 +90,7 @@
 		<br />
 	</logic:equal>
 
-	<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name() %>">
+	<logic:equal name="degreeCurricularPlan" property="degreeType.advancedSpecializationDiploma" value="true">
 		<html:link
 			action="<%="/postingRules.do?method=prepareCreateDEAGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 			<bean:message key="label.payments.postingRules.createDEAGratuityPR"
@@ -99,7 +99,7 @@
 		<br />		
 	</logic:equal>
 		
-	<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_SPECIALIZATION_DEGREE.name() %>">
+	<logic:equal name="degreeCurricularPlan" property="degreeType.specializationDegree" value="true">
 		<html:link
 			action="<%="/postingRules.do?method=prepareCreateSpecializationDegreeGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 			<bean:message key="label.payments.postingRules.createSpecializationDegreeGratuityPR"
@@ -113,7 +113,7 @@
 
 <logic:equal name="allowCreateStandaloneGratuityPR" value="true">
 
-	<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name() %>">
+	<logic:equal name="degreeCurricularPlan" property="degreeType.advancedSpecializationDiploma" value="true">
 		<html:link
 			action="<%="/postingRules.do?method=prepareCreateDEAStandaloneEnrolmentGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 			<bean:message key="label.payments.postingRules.createGraduationStandaloneEnrolmentGratuityPostingRule"

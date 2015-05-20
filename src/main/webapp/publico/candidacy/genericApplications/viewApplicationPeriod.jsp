@@ -108,7 +108,7 @@
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.manage.members.list"/>
 	</h3>
 	<%
-		if (genericApplicationPeriod.getManagerCount() == 0) {
+		if (genericApplicationPeriod.getManagerSet().size() == 0) {
 	%>
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.manage.members.none"/>
 			<br/>
@@ -274,10 +274,10 @@
 						<bean:message bundle="RENDERER_RESOURCES" key="<%= Boolean.valueOf((genericApplication.getSubmitted() == null ? false : genericApplication.getSubmitted())).toString().toUpperCase() %>"/>
 					</td>
 					<td class="center">
-						<%= genericApplication.getGenericApplicationFileCount() %>
+						<%= genericApplication.getGenericApplicationFileSet().size() %>
 					</td>
 					<td class="center">
-						<%= genericApplication.getGenericApplicationRecomentationCount() %>
+						<%= genericApplication.getGenericApplicationRecomentationSet().size() %>
 					</td>
 					<td class="center">
 						<%= genericApplication.getAvailableGenericApplicationRecomentationCount() %>

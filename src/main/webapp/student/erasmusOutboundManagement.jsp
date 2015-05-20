@@ -86,7 +86,7 @@
 				<%
 					for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
 					    final OutboundMobilityCandidacyPeriod candidacyPeriod = submission.getOutboundMobilityCandidacyPeriod();
-					    final int candidacyCount = submission.getOutboundMobilityCandidacyCount();
+					    final int candidacyCount = submission.getOutboundMobilityCandidacySet().size();
 					    final int spanner = candidacyCount + 1;
 				%>
 						<form id="orderForm" action="<%= request.getContextPath() + "/student/erasmusOutboundManagement.do?method=reorder" %>">
@@ -246,7 +246,7 @@
 										<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
 										<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %></td>
 										<td><%= contest.getVacancies() == null ? "" : contest.getVacancies().toString() %></td>
-										<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
+										<td><%= contest.getOutboundMobilityCandidacySet().size() %></td>
 										<td>
 											<%
 												if (contest.isAcceptingCandidacies(student) && !contest.hasCandidacy(student)) {
