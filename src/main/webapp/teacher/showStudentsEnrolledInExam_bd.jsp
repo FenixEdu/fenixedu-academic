@@ -23,7 +23,6 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <span class="error"><!-- Error messages go here --><html:errors /></span>	
 
 <bean:define id="component" name="siteView" property="component"/>

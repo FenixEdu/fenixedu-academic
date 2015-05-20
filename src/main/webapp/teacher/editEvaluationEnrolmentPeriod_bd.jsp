@@ -23,7 +23,6 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ page import="org.fenixedu.academic.util.EvaluationType" %> 
 <logic:present name="siteView" property="component">
 	<bean:define id="evaluation" name="siteView" property="component" type="org.fenixedu.academic.dto.InfoEvaluation"/>
