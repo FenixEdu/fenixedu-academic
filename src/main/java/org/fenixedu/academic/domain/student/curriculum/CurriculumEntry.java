@@ -19,9 +19,7 @@
 package org.fenixedu.academic.domain.student.curriculum;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -41,12 +39,6 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
     protected double ectsCredits(final CurricularCourse curricularCourse) {
         final double ectsCredits = curricularCourse.getEctsCredits().doubleValue();
         return ectsCredits == 0 ? 6.0 : ectsCredits;
-    }
-
-    @Override
-    public BigDecimal getWeigthTimesGrade() {
-        final String grade = getGradeValue();
-        return StringUtils.isNumeric(grade) ? getWeigthForCurriculum().multiply(BigDecimal.valueOf(Double.valueOf(grade))) : null;
     }
 
     @Override

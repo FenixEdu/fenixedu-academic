@@ -222,7 +222,6 @@ public class CurriculumRenderer extends InputRenderer {
                 averageContainer.addChild(averageEntriesTable);
                 averageEntriesTable.setClasses(getTableClass());
                 generateAverageRows(averageEntriesTable);
-                generateAverageSums(averageEntriesTable);
             }
 
             if (isVisibleCurricularYearEntries()) {
@@ -330,7 +329,6 @@ public class CurriculumRenderer extends InputRenderer {
             }
             generateGradeCell(enrolmentRow, entry);
             generateWeightCell(enrolmentRow, entry);
-            generateWeightTimesGradeCell(enrolmentRow, entry);
             generateExecutionYearCell(enrolmentRow, entry);
             generateSemesterCell(enrolmentRow, entry);
         }
@@ -370,11 +368,6 @@ public class CurriculumRenderer extends InputRenderer {
 
         private void generateWeightCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
             generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthForCurriculum().toString() : "-",
-                    getWeightCellClass());
-        }
-
-        private void generateWeightTimesGradeCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-            generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthTimesGrade().toString() : "-",
                     getWeightCellClass());
         }
 
@@ -425,28 +418,6 @@ public class CurriculumRenderer extends InputRenderer {
             span.setTitle(title);
 
             cell.setBody(span);
-        }
-
-        private void generateAverageSums(final HtmlTable mainTable) {
-            final HtmlTableRow row = mainTable.createRow();
-            row.setClasses(getHeaderRowClass());
-
-            final HtmlTableCell sumsCell = row.createCell();
-            sumsCell.setText("Somatórios");
-            sumsCell.setStyle("text-align: right;");
-            sumsCell.setColspan(15);
-
-            final HtmlTableCell sumPiCell = row.createCell();
-            sumPiCell.setText(this.curriculum.getSumPi().toString());
-            sumPiCell.setClasses(getGradeCellClass());
-
-            final HtmlTableCell sumPiCiCell = row.createCell();
-            sumPiCiCell.setText(this.curriculum.getSumPiCi().toString());
-            sumPiCiCell.setClasses(getGradeCellClass());
-
-            final HtmlTableCell emptyCell = row.createCell();
-            emptyCell.setClasses(getGradeCellClass());
-            emptyCell.setColspan(2);
         }
 
         private void generateCurricularYearRows(final HtmlTable table) {

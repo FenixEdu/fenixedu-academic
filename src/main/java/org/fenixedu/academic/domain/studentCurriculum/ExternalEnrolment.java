@@ -267,11 +267,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         return BigDecimal.valueOf(getWeigth());
     }
 
-    @Override
-    public BigDecimal getWeigthTimesGrade() {
-        return getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
-    }
-
     /**
      * There is no thesis associated to an external enrolment.
      * 

@@ -169,8 +169,6 @@ public interface ICurriculumEntry {
 
     BigDecimal getWeigthForCurriculum();
 
-    BigDecimal getWeigthTimesGrade();
-
     BigDecimal getEctsCreditsForCurriculum();
 
     ExecutionSemester getExecutionPeriod();

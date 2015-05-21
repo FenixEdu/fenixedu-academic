@@ -582,14 +582,6 @@ public class Registration extends Registration_Base {
         return getCurriculum().getCurriculumEntries().size();
     }
 
-    final public BigDecimal getSumPiCi(final ExecutionYear executionYear) {
-        return getCurriculum(executionYear).getSumPiCi();
-    }
-
-    final public BigDecimal getSumPi(final ExecutionYear executionYear) {
-        return getCurriculum(executionYear).getSumPi();
-    }
-
     final public BigDecimal getAverage() {
         return getAverage((ExecutionYear) null, (CycleType) null);
     }

@@ -117,7 +117,7 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     public BigDecimal getGradeSum() {
         final Curriculum curriculum = getStudentCurricularPlan().getRoot().getCurriculum();
         curriculum.setAverageType(AverageType.SIMPLE);
-        return curriculum.getSumPiCi();
+        return curriculum.getWeigthedGradeSum();
     }
 
     @Override

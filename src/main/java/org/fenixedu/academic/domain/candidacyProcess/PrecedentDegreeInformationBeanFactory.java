@@ -143,7 +143,7 @@ public class PrecedentDegreeInformationBeanFactory {
     private static final BigDecimal calculateGradeSum(final StudentCurricularPlan studentCurricularPlan) {
         final Curriculum curriculum = studentCurricularPlan.getRoot().getCurriculum();
         curriculum.setAverageType(AverageType.SIMPLE);
-        return curriculum.getSumPiCi();
+        return curriculum.getWeigthedGradeSum();
     }
 
     private static final BigDecimal calculateApprovedEcts(final StudentCurricularPlan studentCurricularPlan) {

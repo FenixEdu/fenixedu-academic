@@ -30,10 +30,6 @@ public interface ICurriculum {
 
     abstract public Set<ICurriculumEntry> getCurricularYearEntries();
 
-    abstract public BigDecimal getSumPiCi();
-
-    abstract public BigDecimal getSumPi();
-
     abstract public BigDecimal getAverage();
 
     abstract public Integer getRoundedAverage();

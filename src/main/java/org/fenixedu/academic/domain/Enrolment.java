@@ -685,11 +685,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    public BigDecimal getWeigthTimesGrade() {
-        return getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
-    }
-
-    @Override
     final public boolean isEnroled() {
         return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }

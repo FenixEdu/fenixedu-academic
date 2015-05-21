@@ -316,12 +316,6 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public BigDecimal getWeigthTimesGrade() {
-        return getCredits().isEquivalence() && getGrade().isNumeric() ? getWeigthForCurriculum().multiply(
-                getGrade().getNumericValue()) : BigDecimal.ZERO;
-    }
-
-    @Override
     public String getCode() {
         return hasCurricularCourse() ? getCurricularCourse().getCode() : null;
     }

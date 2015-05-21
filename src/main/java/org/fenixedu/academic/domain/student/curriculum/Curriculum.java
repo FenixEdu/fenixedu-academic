@@ -228,24 +228,13 @@ public class Curriculum implements Serializable, ICurriculum {
         return curricularYearEntries;
     }
 
-    @Override
-    public BigDecimal getSumPiCi() {
+    public BigDecimal getWeigthedGradeSum() {
         if (sumPiCi == null || forceCalculus) {
             doCalculus();
             forceCalculus = false;
         }
 
         return sumPiCi;
-    }
-
-    @Override
-    public BigDecimal getSumPi() {
-        if (sumPi == null || forceCalculus) {
-            doCalculus();
-            forceCalculus = false;
-        }
-
-        return sumPi;
     }
 
     @Override
@@ -330,7 +319,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
                 if (averageType == AverageType.WEIGHTED) {
                     sumPi = sumPi.add(weigth);
-                    sumPiCi = sumPiCi.add(entry.getWeigthTimesGrade());
+                    sumPiCi = sumPiCi.add(entry.getWeigthForCurriculum().multiply(entry.getGrade().getNumericValue()));
                 } else if (averageType == AverageType.SIMPLE) {
                     sumPi = sumPi.add(BigDecimal.ONE);
                     sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
@@ -418,8 +407,6 @@ public class Curriculum implements Serializable, ICurriculum {
             result.append("\n[NO CURRICULUM_MODULE]");
         }
         result.append("\n[SUM ENTRIES] " + (averageEnrolmentRelatedEntries.size() + averageDismissalRelatedEntries.size()));
-        result.append("\n[SUM PiCi] " + getSumPiCi().toString());
-        result.append("\n[SUM Pi] " + getSumPi().toString());
         result.append("\n[AVERAGE] " + getAverage());
         result.append("\n[ROUNDED_AVERAGE] " + getRoundedAverage());
         result.append("\n[SUM ECTS CREDITS] " + getSumEctsCredits().toString());

@@ -31,11 +31,6 @@ public abstract class CreditsCurriculumEntry extends CurriculumEntry {
     }
 
     @Override
-    public BigDecimal getWeigthTimesGrade() {
-        return null;
-    }
-
-    @Override
     public Grade getGrade() {
         return Grade.createEmptyGrade();
     }
