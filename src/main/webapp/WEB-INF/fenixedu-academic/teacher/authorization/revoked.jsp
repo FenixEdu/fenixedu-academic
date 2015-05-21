@@ -60,6 +60,7 @@ text-align: center;
 		<thead>
 			<th><spring:message code="teacher.authorizations.username" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.displayname" ></spring:message></th>
+			<th><spring:message code="teacher.authorizations.creation.date" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.revokeTime" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.contracted" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.department" ></spring:message></th>
@@ -75,7 +76,10 @@ text-align: center;
 				<tr>
 					<td>${user.username}</td>
 					<td>${user.name}</td>
-					<td>
+					<td title="${auth.creationDate.toString('dd/MM/yyyy HH:mm:ss')}">
+						${auth.creationDate == null ? '-' : auth.creationDate.toString('dd/MM/yyyy')}
+					</td>
+					<td title="${auth.revokeTime.toString('dd/MM/yyyy HH:mm:ss')}">
 						${auth.revokeTime.toString("dd/MM/yyyy")}
 					</td>
 					<td>
