@@ -285,32 +285,15 @@ public class CurriculumRenderer extends InputRenderer {
             final HtmlTableCell textCell = groupRow.createCell();
             textCell.setText(text);
             textCell.setClasses(getLabelCellClass());
-            textCell.setRowspan(2);
             textCell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES);
 
-            final HtmlTableCell averageCell = groupRow.createCell();
-            averageCell.setText("Média de Curso");
-            averageCell.setClasses(getGradeCellClass());
-            averageCell.setColspan(3);
+            generateCellWithText(groupRow, BundleUtil.getString(Bundle.APPLICATION, "label.grade"), getGradeCellClass());
+            generateCellWithText(groupRow, BundleUtil.getString(Bundle.APPLICATION, "label.weight"), getEctsCreditsCellClass());
 
             final HtmlTableCell executionYearCell = groupRow.createCell();
             executionYearCell.setText("Ano Lectivo");
             executionYearCell.setClasses(getGradeCellClass());
             executionYearCell.setColspan(2);
-            executionYearCell.setRowspan(2);
-
-            final HtmlTableRow groupSubRow = mainTable.createRow();
-            groupSubRow.setClasses(getHeaderRowClass());
-            generateCellWithText(groupSubRow, BundleUtil.getString(Bundle.APPLICATION, "label.grade"), getGradeCellClass());
-            generateCellWithText(groupSubRow, BundleUtil.getString(Bundle.APPLICATION, "label.weight"), getEctsCreditsCellClass());
-            generateCellWithText(groupSubRow, "Peso x Classificação", getEctsCreditsCellClass());
-        }
-
-        private void generateCellsWithText(final HtmlTableRow row, final int numberOfCells, final String text,
-                final String[] cssClasses) {
-            for (int i = 0; i < numberOfCells; i++) {
-                generateCellWithText(row, "-", cssClasses[i]);
-            }
         }
 
         private void generateRows(HtmlTable mainTable, Set<ICurriculumEntry> entries, int level) {
@@ -397,10 +380,6 @@ public class CurriculumRenderer extends InputRenderer {
             cell.setClasses(cssClass);
             cell.setText(text);
             cell.setColspan(colSpan);
-        }
-
-        private void generateCellWithSpan(final HtmlTableRow row, final String text, final String cssClass) {
-            generateCellWithSpan(row, text, null, cssClass);
         }
 
         private void generateCellWithSpan(final HtmlTableRow row, final String text, final String title, final String cssClass) {

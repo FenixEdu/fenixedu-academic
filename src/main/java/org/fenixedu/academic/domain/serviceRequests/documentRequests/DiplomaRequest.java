@@ -334,7 +334,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         final RegistrationConclusionBean registrationConclusionBean =
                 new RegistrationConclusionBean(getRegistration(), getProgramConclusion());
 
-        return registrationConclusionBean.getFinalAverage();
+        return registrationConclusionBean.getFinalGrade().getIntegerValue();
     }
 
     @Override

@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -60,12 +61,16 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
         return getLastVersion().getResponsible();
     }
 
-    public Integer getFinalAverage() {
-        return getLastVersion().getFinalAverage();
+    public Grade getFinalGrade() {
+        return getLastVersion().getFinalGrade();
     }
 
-    public BigDecimal getAverage() {
-        return getLastVersion().getAverage();
+    public Grade getRawGrade() {
+        return getLastVersion().getRawGrade();
+    }
+
+    public Grade getDescriptiveGrade() {
+        return getLastVersion().getDescriptiveGrade();
     }
 
     public LocalDate getConclusionDate() {
@@ -89,7 +94,7 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
         return getLastVersion().getCredits();
     }
 
-    abstract public void update(final Person responsible, final Integer finalAverage, final BigDecimal average,
+    abstract public void update(final Person responsible, final Grade finalGrade, final Grade rawGrade,
             final LocalDate conclusionDate, final String notes);
 
     abstract public void update(final RegistrationConclusionBean bean);

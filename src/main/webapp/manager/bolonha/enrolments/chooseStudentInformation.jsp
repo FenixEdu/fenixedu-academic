@@ -73,8 +73,6 @@
 				
 					<strong><bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.name"/></strong> (<bean:message name="registration" property="activeStateType.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
 
-					<html:link action="/registrationConclusion.do?method=show" paramId="registrationId" paramName="registration" paramProperty="externalId" ><bean:message  key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
-					,
 					<logic:notEmpty name="registration" property="lastStudentCurricularPlan.externalCurriculumGroups">
 						<html:link action="/bolonhaStudentEnrolment.do?method=separateCycles" paramId="scpOid" paramName="registration" paramProperty="lastStudentCurricularPlan.externalId" >
 							<bean:message  key="student.separateCycle" bundle="ACADEMIC_OFFICE_RESOURCES"/>

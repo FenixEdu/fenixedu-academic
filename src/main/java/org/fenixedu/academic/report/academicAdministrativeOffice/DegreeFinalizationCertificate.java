@@ -198,17 +198,17 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         return result.toString();
     }
 
-    static final public String getDegreeFinalizationGrade(final Integer finalAverage) {
-        return getDegreeFinalizationGrade(finalAverage, I18N.getLocale());
+    static final public String getDegreeFinalizationGrade(final Integer finalGrade) {
+        return getDegreeFinalizationGrade(finalGrade, I18N.getLocale());
     }
 
-    static final public String getDegreeFinalizationGrade(final Integer finalAverage, final Locale locale) {
+    static final public String getDegreeFinalizationGrade(final Integer finalGrade, final Locale locale) {
         final StringBuilder result = new StringBuilder();
 
         result.append(", ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "documents.registration.final.arithmetic.mean"));
         result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.both"));
-        result.append(SINGLE_SPACE).append(finalAverage);
-        result.append(" (").append(BundleUtil.getString(Bundle.ENUMERATION, locale, finalAverage.toString()));
+        result.append(SINGLE_SPACE).append(finalGrade);
+        result.append(" (").append(BundleUtil.getString(Bundle.ENUMERATION, locale, finalGrade.toString()));
         result.append(") ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "values"));
 
         return result.toString();

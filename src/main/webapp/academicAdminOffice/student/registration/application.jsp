@@ -30,7 +30,6 @@
 <%@ page language="java" %>
 <%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 <%@page import="org.fenixedu.academic.domain.student.Registration"%>
-<%@page import="org.fenixedu.academic.domain.student.curriculum.AverageType"%>
 <%@page import="org.fenixedu.academic.domain.student.curriculum.ICurriculum"%>
 <html:xhtml />
 

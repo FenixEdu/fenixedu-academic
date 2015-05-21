@@ -253,7 +253,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
                 public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
                     if (isConcludedAndRegistrationConclusionProcessed(left.getRegistration())
                             && isConcludedAndRegistrationConclusionProcessed(right.getRegistration())) {
-                        return left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
+                        return left.getRegistration().getRawGrade().compareTo(right.getRegistration().getRawGrade());
                     }
 
                     if (isConcludedAndRegistrationConclusionProcessed(left.getRegistration())) {
@@ -276,7 +276,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
                         return 1;
                     }
 
-                    int result = left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
+                    int result = left.getRegistration().getRawGrade().compareTo(right.getRegistration().getRawGrade());
                     return result == 0 ? left.getRegistration().getStudent().getNumber()
                             .compareTo(right.getRegistration().getStudent().getNumber()) : result;
 
@@ -441,7 +441,8 @@ public class SearchDegreeStudentsGroup implements Serializable {
             return false;
         }
 
-        final double arithmeticMean = studentCurricularPlan.getRegistration().getCurriculum().getAverage().doubleValue();
+        final double arithmeticMean =
+                studentCurricularPlan.getRegistration().getCurriculum().getRawGrade().getNumericValue().doubleValue();
 
         if (minGrade != null && minGrade > arithmeticMean) {
             return false;

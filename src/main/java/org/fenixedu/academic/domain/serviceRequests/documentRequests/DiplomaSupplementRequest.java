@@ -223,18 +223,18 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public Integer getFinalAverage() {
-        return getRegistration().getFinalAverage(getProgramConclusion());
+        return getRegistration().getFinalGrade(getProgramConclusion()).getIntegerValue();
     }
 
     @Override
     public String getFinalAverageQualified(final Locale locale) {
-        Integer finalAverage = getFinalAverage();
+        Integer finalGrade = getFinalAverage();
         String qualifiedAverageGrade;
-        if (finalAverage <= 13) {
+        if (finalGrade <= 13) {
             qualifiedAverageGrade = "sufficient";
-        } else if (finalAverage <= 15) {
+        } else if (finalGrade <= 15) {
             qualifiedAverageGrade = "good";
-        } else if (finalAverage <= 17) {
+        } else if (finalGrade <= 17) {
             qualifiedAverageGrade = "verygood";
         } else {
             qualifiedAverageGrade = "excelent";

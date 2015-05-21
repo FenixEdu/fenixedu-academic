@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.externalSupervision.consult;
 
 import java.io.IOException;
-import java.math.RoundingMode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -164,12 +163,12 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction {
         if (registration.isConcluded()) {
             if (registration.isRegistrationConclusionProcessed()
                     && (!registration.isBolonha() || studentCurricularPlan.getInternalCycleCurriculumGroupsSize().intValue() == 1)) {
-                return registration.getAverage().setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+                return registration.getRawGrade().getValue();
             } else {
                 return " - ";
             }
         } else {
-            return registration.getAverage().setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+            return registration.getRawGrade().getValue();
         }
     }
 

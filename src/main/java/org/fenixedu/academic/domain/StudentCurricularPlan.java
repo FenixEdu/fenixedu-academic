@@ -67,7 +67,6 @@ import org.fenixedu.academic.domain.gratuity.GratuitySituationType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.curriculum.AverageType;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
@@ -375,18 +374,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getCycle(cycleType).getConclusionDate();
     }
 
-    public Integer getFinalAverage(final CycleType cycleType) {
-        if (getDegreeType().getCycleTypes().isEmpty()) {
-            throw new DomainException("StudentCurricularPlan.has.no.cycle.type");
-        }
-
-        if (!getDegreeType().hasCycleTypes(cycleType)) {
-            throw new DomainException("StudentCurricularPlan.doesnt.have.such.cycle.type");
-        }
-
-        return getCycle(cycleType).getFinalAverage();
-    }
-
     public YearMonthDay calculateConclusionDate(final CycleType cycleType) {
         if (cycleType == null) {
             return getLastApprovementDate();
@@ -424,10 +411,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
         return getRoot().getCurriculum(when, executionYear);
-    }
-
-    final public AverageType getAverageType() {
-        return getDegreeCurricularPlan().getAverageType();
     }
 
     final public boolean isActive() {

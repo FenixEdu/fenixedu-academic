@@ -18,9 +18,8 @@
  */
 package org.fenixedu.academic.domain.student.curriculum;
 
-import java.math.BigDecimal;
-
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -62,10 +61,10 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
     }
 
     @Override
-    final public void update(final Person responsible, final Integer finalAverage, BigDecimal average,
-            final LocalDate conclusionDate, final String notes) {
+    final public void update(final Person responsible, final Grade finalGrade, Grade rawGrade, final LocalDate conclusionDate,
+            final String notes) {
         addVersions(new RegistrationConclusionBean(getRegistration(), getGroup()));
-        getLastVersion().update(responsible, finalAverage, average, conclusionDate, notes);
+        getLastVersion().update(responsible, finalGrade, rawGrade, conclusionDate, notes);
     }
 
     @Override

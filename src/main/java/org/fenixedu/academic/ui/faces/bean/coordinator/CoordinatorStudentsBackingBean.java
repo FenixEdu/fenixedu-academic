@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.faces.bean.coordinator;
 
 import java.io.IOException;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -419,12 +418,12 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         if (registration.isConcluded()) {
             if (registration.isRegistrationConclusionProcessed()
                     && (!registration.isBolonha() || studentCurricularPlan.getInternalCycleCurriculumGroupsSize().intValue() == 1)) {
-                return registration.getAverage().setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+                return registration.getRawGrade().getValue();
             } else {
                 return " - ";
             }
         } else {
-            return registration.getAverage().setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+            return registration.getRawGrade().getValue();
         }
     }
 

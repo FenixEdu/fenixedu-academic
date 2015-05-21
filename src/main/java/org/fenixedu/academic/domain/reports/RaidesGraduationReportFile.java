@@ -95,12 +95,12 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
                         if (isToAddRegistration
                                 && (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
                             reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
-                                    cycleType, true, registrationConclusionBean.getConclusionDate(),
-                                    registrationConclusionBean.getAverage());
+                                    cycleType, true, registrationConclusionBean.getConclusionDate(), registrationConclusionBean
+                                            .getRawGrade().getNumericValue());
                         } else if (isToAddRegistration
                                 && registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
                             reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
-                                    cycleType, false, null, registrationConclusionBean.getAverage());
+                                    cycleType, false, null, registrationConclusionBean.getRawGrade().getNumericValue());
                         }
                     }
                 }

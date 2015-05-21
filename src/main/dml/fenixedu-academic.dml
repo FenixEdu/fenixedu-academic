@@ -2894,8 +2894,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     class student.curriculum.ConclusionProcessVersion  {
         DateTime creationDateTime (REQUIRED);
         LocalDate conclusionDate (REQUIRED);
-        Integer finalAverage (REQUIRED);
-        BigDecimal average (REQUIRED);
+        protected Grade rawGrade (REQUIRED);
+        protected Grade finalGrade (REQUIRED);
+        protected Grade descriptiveGrade;
         BigDecimal credits (REQUIRED);
         String curriculum (REQUIRED);
         String notes;

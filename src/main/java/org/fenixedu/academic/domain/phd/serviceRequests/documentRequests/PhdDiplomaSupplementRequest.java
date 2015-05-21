@@ -223,22 +223,22 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
             return null;
         }
 
-        return getPhdIndividualProgramProcess().getRegistration().getFinalAverage(getRequestedCycle());
+        return getPhdIndividualProgramProcess().getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle())
+                .getFinalGrade().getIntegerValue();
     }
 
     @Override
     public String getFinalAverageQualified(final Locale locale) {
-        if (getPhdIndividualProgramProcess().getStudyPlan().isExempted()) {
+        Integer finalGrade = getFinalAverage();
+        if (finalGrade == null) {
             return null;
         }
-
-        Integer finalAverage = getPhdIndividualProgramProcess().getRegistration().getFinalAverage(getRequestedCycle());
         String qualifiedAverageGrade;
-        if (finalAverage <= 13) {
+        if (finalGrade <= 13) {
             qualifiedAverageGrade = "sufficient";
-        } else if (finalAverage <= 15) {
+        } else if (finalGrade <= 15) {
             qualifiedAverageGrade = "good";
-        } else if (finalAverage <= 17) {
+        } else if (finalGrade <= 17) {
             qualifiedAverageGrade = "verygood";
         } else {
             qualifiedAverageGrade = "excelent";

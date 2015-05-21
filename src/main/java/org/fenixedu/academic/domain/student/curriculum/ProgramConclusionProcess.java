@@ -18,10 +18,9 @@
  */
 package org.fenixedu.academic.domain.student.curriculum;
 
-import java.math.BigDecimal;
-
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -38,14 +37,11 @@ public class ProgramConclusionProcess extends ProgramConclusionProcess_Base {
 
         final CurriculumGroup group = bean.getCurriculumGroup();
         final ExecutionYear conclusionYear = bean.getConclusionYear();
-        String[] args = {};
-
         if (group == null) {
-            throw new DomainException("error.CycleConclusionProcess.argument.must.not.be.null", args);
+            throw new DomainException("error.CycleConclusionProcess.argument.must.not.be.null");
         }
-        String[] args1 = {};
         if (conclusionYear == null) {
-            throw new DomainException("error.CycleConclusionProcess.argument.must.not.be.null", args1);
+            throw new DomainException("error.CycleConclusionProcess.argument.must.not.be.null");
         }
 
         super.setGroup(group);
@@ -59,10 +55,10 @@ public class ProgramConclusionProcess extends ProgramConclusionProcess_Base {
     }
 
     @Override
-    final public void update(final Person responsible, final Integer finalAverage, final BigDecimal average,
+    final public void update(final Person responsible, final Grade finalGrade, final Grade rawGrade,
             final LocalDate conclusionDate, final String notes) {
         addVersions(new RegistrationConclusionBean(getRegistration(), getGroup()));
-        getLastVersion().update(responsible, finalAverage, average, conclusionDate, notes);
+        getLastVersion().update(responsible, finalGrade, rawGrade, conclusionDate, notes);
     }
 
     @Override

@@ -27,6 +27,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -62,7 +64,9 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private AverageType averageType = AverageType.WEIGHTED;
 
-    private BigDecimal average;
+    private Grade rawGrade;
+
+    private Grade finalGrade;
 
     private BigDecimal sumEctsCredits;
 
@@ -238,22 +242,23 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     @Override
-    public BigDecimal getAverage() {
-        if (average == null || forceCalculus) {
+    public Grade getRawGrade() {
+        if (rawGrade == null || forceCalculus) {
             doCalculus();
             forceCalculus = false;
         }
 
-        return average.setScale(SCALE, ROUNDING_MODE);
+        return rawGrade;
     }
 
     @Override
-    public Integer getRoundedAverage() {
-        return getRoundedAverage(getAverage());
-    }
+    public Grade getFinalGrade() {
+        if (finalGrade == null || forceCalculus) {
+            doCalculus();
+            forceCalculus = false;
+        }
 
-    static public Integer getRoundedAverage(final BigDecimal average) {
-        return average.setScale(0, RoundingMode.HALF_UP).intValue();
+        return finalGrade;
     }
 
     @Override
@@ -298,7 +303,9 @@ public class Curriculum implements Serializable, ICurriculum {
         sumPi = BigDecimal.ZERO;
         countAverage(averageEnrolmentRelatedEntries);
         countAverage(averageDismissalRelatedEntries);
-        average = calculateAverage();
+        BigDecimal avg = calculateAverage();
+        rawGrade = Grade.createGrade(avg.setScale(SCALE, ROUNDING_MODE).toString(), GradeScale.TYPE20);
+        finalGrade = Grade.createGrade(avg.setScale(0, ROUNDING_MODE).toString(), GradeScale.TYPE20);
 
         sumEctsCredits = BigDecimal.ZERO;
         countCurricularYear(curricularYearEntries);
@@ -407,8 +414,8 @@ public class Curriculum implements Serializable, ICurriculum {
             result.append("\n[NO CURRICULUM_MODULE]");
         }
         result.append("\n[SUM ENTRIES] " + (averageEnrolmentRelatedEntries.size() + averageDismissalRelatedEntries.size()));
-        result.append("\n[AVERAGE] " + getAverage());
-        result.append("\n[ROUNDED_AVERAGE] " + getRoundedAverage());
+        result.append("\n[RAW GRADE] " + getRawGrade().getValue());
+        result.append("\n[FINAL GRADE] " + getFinalGrade().getValue());
         result.append("\n[SUM ECTS CREDITS] " + getSumEctsCredits().toString());
         result.append("\n[CURRICULAR YEAR] " + getCurricularYear());
         result.append("\n[REMAINING CREDITS] " + getRemainingCredits().toString());
@@ -451,5 +458,4 @@ public class Curriculum implements Serializable, ICurriculum {
         averageDismissalRelatedEntries.remove(entryToRemove);
         curricularYearEntries.remove(entryToRemove);
     }
-
 }

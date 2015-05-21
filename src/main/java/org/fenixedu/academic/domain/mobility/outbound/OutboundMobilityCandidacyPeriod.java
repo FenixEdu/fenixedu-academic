@@ -231,7 +231,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
                 candidacyRow.setCell(getString("label.preference.order"), candidacy.getPreferenceOrder());
                 candidacyRow.setCell(getString("label.curricular.year"), curriculum.getCurricularYear());
                 candidacyRow.setCell(getString("label.ects.completed.degree"), curriculum.getSumEctsCredits().toString());
-                candidacyRow.setCell(getString("label.average.degree"), curriculum.getAverage().toString());
+                candidacyRow.setCell(getString("label.average.degree"), curriculum.getRawGrade().getValue());
                 group.fillCycleDetails(candidacyRow, CycleType.FIRST_CYCLE, registration,
                         getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
                 group.fillCycleDetails(candidacyRow, CycleType.SECOND_CYCLE, registration,
@@ -249,7 +249,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
                         rowOCI.setCell(getString("label.degree"), otherRegistration.getDegree().getSigla());
                         rowOCI.setCell(getString("label.curricular.year"), curriculumOther.getCurricularYear());
                         rowOCI.setCell(getString("label.ects.completed.degree"), curriculumOther.getSumEctsCredits().toString());
-                        rowOCI.setCell(getString("label.average.degree"), curriculumOther.getAverage().toString());
+                        rowOCI.setCell(getString("label.average.degree"), curriculumOther.getRawGrade().getValue());
                         group.fillCycleDetails(rowOCI, CycleType.FIRST_CYCLE, otherRegistration,
                                 getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
                         group.fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration,

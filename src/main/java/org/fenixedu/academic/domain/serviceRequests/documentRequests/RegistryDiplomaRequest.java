@@ -236,20 +236,20 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public String getFinalAverage(final Locale locale) {
-        return String.valueOf(getRegistration().getFinalAverage(getProgramConclusion()));
+        return String.valueOf(getRegistration().getFinalGrade(getProgramConclusion()));
     }
 
     @Override
     public String getQualifiedAverageGrade(final Locale locale) {
-        Integer finalAverage = getRegistration().getFinalAverage(getProgramConclusion());
+        Integer finalGrade = getRegistration().getFinalGrade(getProgramConclusion()).getIntegerValue();
 
         String qualifiedAverageGrade;
 
-        if (finalAverage <= 13) {
+        if (finalGrade <= 13) {
             qualifiedAverageGrade = "sufficient";
-        } else if (finalAverage <= 15) {
+        } else if (finalGrade <= 15) {
             qualifiedAverageGrade = "good";
-        } else if (finalAverage <= 17) {
+        } else if (finalGrade <= 17) {
             qualifiedAverageGrade = "verygood";
         } else {
             qualifiedAverageGrade = "excelent";

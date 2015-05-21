@@ -19,12 +19,12 @@
 package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
@@ -39,6 +39,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.base.Strings;
+
 public class RegistrationConclusionBean implements Serializable, IRegistrationBean {
 
     private static final long serialVersionUID = 5825221957160251388L;
@@ -51,9 +53,9 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private LocalDate enteredConclusionDate;
 
-    private Integer enteredFinalAverageGrade;
+    private String enteredFinalAverageGrade;
 
-    private Double enteredAverageGrade;
+    private String enteredAverageGrade;
 
     private String observations;
 
@@ -114,36 +116,28 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         return getRegistration().getStartExecutionYear();
     }
 
-    public Integer getFinalAverage() {
+    public Grade getFinalGrade() {
         if (isConclusionProcessed()) {
-            return getCurriculumGroup().getFinalAverage();
+            return getCurriculumGroup().getFinalGrade();
         }
 
-        return calculateFinalAverage();
+        return getCalculatedFinalGrade();
     }
 
-    public Integer calculateFinalAverage() {
-        return getCurriculumGroup().calculateRoundedAverage();
+    public Grade getCalculatedFinalGrade() {
+        return getCurriculumGroup().calculateFinalGrade();
     }
 
-    public Integer getCalculatedFinalAverage() {
-        return calculateFinalAverage();
-    }
-
-    public BigDecimal getAverage() {
+    public Grade getRawGrade() {
         if (isConclusionProcessed()) {
-            return getCurriculumGroup().getAverage();
+            return getCurriculumGroup().getRawGrade();
         }
 
-        return calculateAverage();
+        return getCalculatedRawGrade();
     }
 
-    public BigDecimal calculateAverage() {
-        return getCurriculumGroup().calculateAverage();
-    }
-
-    public BigDecimal getCalculatedAverage() {
-        return calculateAverage();
+    public Grade getCalculatedRawGrade() {
+        return getCurriculumGroup().calculateRawGrade();
     }
 
     public YearMonthDay getConclusionDate() {
@@ -321,28 +315,28 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         this.enteredConclusionDate = enteredConclusionDate;
     }
 
-    public Integer getEnteredFinalAverageGrade() {
+    public String getEnteredFinalAverageGrade() {
         return this.enteredFinalAverageGrade;
     }
 
-    public void setEnteredFinalAverageGrade(final Integer value) {
+    public void setEnteredFinalAverageGrade(final String value) {
         this.enteredFinalAverageGrade = value;
     }
 
     public boolean hasEnteredFinalAverageGrade() {
-        return this.enteredFinalAverageGrade != null;
+        return !Strings.isNullOrEmpty(this.enteredFinalAverageGrade);
     }
 
-    public Double getEnteredAverageGrade() {
+    public String getEnteredAverageGrade() {
         return this.enteredAverageGrade;
     }
 
-    public void setEnteredAverageGrade(final Double averageGrade) {
+    public void setEnteredAverageGrade(final String averageGrade) {
         this.enteredAverageGrade = averageGrade;
     }
 
     public boolean hasEnteredAverageGrade() {
-        return this.enteredAverageGrade != null;
+        return !Strings.isNullOrEmpty(this.enteredAverageGrade);
     }
 
     public String getObservations() {

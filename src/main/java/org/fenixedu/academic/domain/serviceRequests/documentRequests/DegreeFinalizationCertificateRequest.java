@@ -295,7 +295,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     final public Integer getFinalAverage() {
-        return getBean().getFinalAverage();
+        return getBean().getFinalGrade().getIntegerValue();
     }
 
     final public double getEctsCredits() {

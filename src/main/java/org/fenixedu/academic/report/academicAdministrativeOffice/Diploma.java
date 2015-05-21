@@ -208,15 +208,15 @@ public class Diploma extends AdministrativeOfficeDocument {
     }
 
     public String getQualifiedAverageGrade(final Locale locale) {
-        Integer finalAverage = getDocumentRequest().getFinalAverage();
+        Integer finalGrade = getDocumentRequest().getFinalAverage();
 
         String qualifiedAverageGrade;
 
-        if (finalAverage <= 13) {
+        if (finalGrade <= 13) {
             qualifiedAverageGrade = "sufficient";
-        } else if (finalAverage <= 15) {
+        } else if (finalGrade <= 15) {
             qualifiedAverageGrade = "good";
-        } else if (finalAverage <= 17) {
+        } else if (finalGrade <= 17) {
             qualifiedAverageGrade = "verygood";
         } else {
             qualifiedAverageGrade = "excelent";

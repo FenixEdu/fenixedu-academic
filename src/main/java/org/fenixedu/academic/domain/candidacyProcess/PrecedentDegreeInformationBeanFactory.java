@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.candidacyProcess;
 
 import java.math.BigDecimal;
 
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
@@ -95,8 +96,9 @@ public class PrecedentDegreeInformationBeanFactory {
             bean.setConclusionDate(new LocalDate(studentCurricularPlan.getConclusionDate(cycleType)));
         }
 
-        if (studentCurricularPlan.getFinalAverage(cycleType) != null) {
-            bean.setConclusionGrade(studentCurricularPlan.getFinalAverage(cycleType).toString());
+        Grade finalGrade = studentCurricularPlan.getCycle(cycleType).getFinalGrade();
+        if (finalGrade != null) {
+            bean.setConclusionGrade(finalGrade.getValue());
         }
 
         bean.setNumberOfEnroledCurricularCourses(calculateNumberOfEnroledCurricularCourses(studentCurricularPlan));
@@ -118,7 +120,7 @@ public class PrecedentDegreeInformationBeanFactory {
 
         bean.setDegreeDesignation(studentCurricularPlan.getName());
         bean.setConclusionDate(new LocalDate(studentCurricularPlan.getRegistration().getConclusionDate()));
-        bean.setConclusionGrade(studentCurricularPlan.getRegistration().getFinalAverage().toString());
+        bean.setConclusionGrade(studentCurricularPlan.getRegistration().getFinalGrade().getValue());
         bean.setInstitution(Bennu.getInstance().getInstitutionUnit());
         bean.setInstitutionName(Bennu.getInstance().getInstitutionUnit().getName());
         bean.setInstitutionUnitName(Bennu.getInstance().getInstitutionUnit().getUnitName());

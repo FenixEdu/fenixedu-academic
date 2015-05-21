@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.studentCurriculum;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -36,6 +35,7 @@ import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
@@ -304,12 +304,12 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         return getCurriculum(new DateTime(), executionYear);
     }
 
-    public BigDecimal calculateAverage() {
-        return getCurriculum().getAverage();
+    public Grade calculateRawGrade() {
+        return getCurriculum().getRawGrade();
     }
 
-    public Integer calculateRoundedAverage() {
-        return getCurriculum().getRoundedAverage();
+    public Grade calculateFinalGrade() {
+        return getCurriculum().getFinalGrade();
     }
 
     public Double getCreditsConcluded() {

@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.candidacyProcess;
 
 import java.math.BigDecimal;
 
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -83,10 +84,10 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
 
     @Override
     public String getConclusionGrade() {
-        final Integer result =
+        final Grade result =
                 isBolonha() ? (getStudentCurricularPlan().getCycle(getCycleType()) != null ? getStudentCurricularPlan().getCycle(
-                        getCycleType()).getFinalAverage() : null) : getRegistration().getFinalAverage();
-        return (result == null) ? null : String.valueOf(result);
+                        getCycleType()).getFinalGrade() : null) : getRegistration().getFinalGrade();
+        return (result == null) ? null : result.getValue();
     }
 
     @Override

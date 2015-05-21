@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice;
 
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
@@ -51,8 +52,8 @@ public class PhdRegistrationConclusionBean extends RegistrationConclusionBean {
     }
 
     @Override
-    public Integer getFinalAverage() {
-        return isConclusionProcessed() ? getCurriculumGroup().getFinalAverage() : null;
+    public Grade getFinalGrade() {
+        return isConclusionProcessed() ? getCurriculumGroup().getFinalGrade() : Grade.createEmptyGrade();
     }
 
 }

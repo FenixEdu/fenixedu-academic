@@ -102,7 +102,7 @@ public class GraduationReportFile extends GraduationReportFile_Base {
         row.setCell(conclusion == null ? StringUtils.EMPTY : conclusion.getYear());
         row.setCell(conclusionDate == null ? StringUtils.EMPTY : conclusionDate.toString("yyyy-MM-dd"));
         row.setCell(conclusion == null ? StringUtils.EMPTY : String.valueOf(ingression.getDistanceInCivilYears(conclusion) + 1));
-        row.setCell(conclusionProcess.getFinalAverage());
+        row.setCell(conclusionProcess.getFinalGrade().getValue());
 
         setPersonCells(registration, row);
     }

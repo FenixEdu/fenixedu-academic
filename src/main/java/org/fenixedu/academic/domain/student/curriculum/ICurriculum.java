@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
 
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 
 public interface ICurriculum {
@@ -30,9 +31,9 @@ public interface ICurriculum {
 
     abstract public Set<ICurriculumEntry> getCurricularYearEntries();
 
-    abstract public BigDecimal getAverage();
+    abstract public Grade getRawGrade();
 
-    abstract public Integer getRoundedAverage();
+    abstract public Grade getFinalGrade();
 
     abstract public BigDecimal getSumEctsCredits();
 

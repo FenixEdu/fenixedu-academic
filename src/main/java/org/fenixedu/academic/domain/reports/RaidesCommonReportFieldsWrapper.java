@@ -159,7 +159,7 @@ public class RaidesCommonReportFieldsWrapper {
         if (graduation) {
             row.setCell(concluded ? printBigDecimal(average.setScale(0, BigDecimal.ROUND_HALF_EVEN)) : printBigDecimal(average));
         } else {
-            row.setCell(concluded ? lastStudentCurricularPlan.getCycle(cycleType).getCurriculum().getAverage().toPlainString() : "n/a");
+            row.setCell(concluded ? lastStudentCurricularPlan.getCycle(cycleType).getCurriculum().getRawGrade().getValue() : "n/a");
         }
 
         // Data de Conclusão

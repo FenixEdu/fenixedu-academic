@@ -208,7 +208,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                         rowOCI.setCell(getString("label.degree"), otherRegistration.getDegree().getSigla());
                         rowOCI.setCell(getString("label.curricular.year"), curriculumOther.getCurricularYear());
                         rowOCI.setCell(getString("label.ects.completed.degree"), curriculumOther.getSumEctsCredits().toString());
-                        rowOCI.setCell(getString("label.average.degree"), curriculumOther.getAverage().toString());
+                        rowOCI.setCell(getString("label.average.degree"), curriculumOther.getRawGrade().getValue());
                         fillCycleDetails(rowOCI, CycleType.FIRST_CYCLE, otherRegistration,
                                 getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
                         fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration,
@@ -255,7 +255,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         if (isForCycle(cycleType, registration)) {
             ICurriculum curriculum = registration.getCurriculum(cycleType);
             row.setCell(header1, curriculum.getSumEctsCredits().toString());
-            row.setCell(header2, curriculum.getAverage().toString());
+            row.setCell(header2, curriculum.getRawGrade().getValue());
         } else {
             row.setCell(header1, "");
             row.setCell(header2, "");

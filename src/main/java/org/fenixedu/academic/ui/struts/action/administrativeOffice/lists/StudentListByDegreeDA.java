@@ -567,7 +567,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
         spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : EMPTY);
 
-        spreadsheet.addCell(registrationConclusionBean.getAverage().toString());
+        spreadsheet.addCell(registrationConclusionBean.getRawGrade().getValue());
 
         spreadsheet.addCell(BundleUtil.getString(Bundle.APPLICATION,
                 "label." + (registrationConclusionBean.isConclusionProcessed() ? "yes" : "no") + ".capitalized"));

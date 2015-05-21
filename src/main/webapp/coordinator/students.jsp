@@ -246,16 +246,16 @@
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.average&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.arithmetricAverage']}</a>" id="arithmetricAverage" escape="false"/>
+					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.rawGrade&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.arithmetricAverage']}</a>" id="arithmetricAverage" escape="false"/>
 			</f:facet>
 			<h:panelGroup rendered="#{mapEntry.key.registration.concluded}">
-				<h:outputText rendered="#{mapEntry.key.registration.registrationConclusionProcessed && (!mapEntry.key.registration.bolonha || (mapEntry.key.internalCycleCurriculumGroupsSize eq 1))}" value="#{mapEntry.key.registration.average}" id="registrationAverage">
+				<h:outputText rendered="#{mapEntry.key.registration.registrationConclusionProcessed && (!mapEntry.key.registration.bolonha || (mapEntry.key.internalCycleCurriculumGroupsSize eq 1))}" value="#{mapEntry.key.registration.rawGrade.value}" id="registrationAverage">
 					<f:convertNumber maxFractionDigits="0" minIntegerDigits="1" maxIntegerDigits="2"/>
 				</h:outputText>
 				<h:outputText rendered="#{ ! mapEntry.key.registration.registrationConclusionProcessed}" value=" - " id="textSeparator10" />
 			</h:panelGroup>
 			<h:panelGroup rendered="#{ ! mapEntry.key.registration.concluded}">
-				<h:outputText value="#{mapEntry.key.registration.average}" id="registrationAverageConcluded">
+				<h:outputText value="#{mapEntry.key.registration.rawGrade.value}" id="registrationAverageConcluded">
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" minIntegerDigits="1" maxIntegerDigits="2" />
 				</h:outputText>
 			</h:panelGroup>

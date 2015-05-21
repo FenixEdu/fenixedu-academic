@@ -21,6 +21,8 @@ package org.fenixedu.academic.service.services.administrativeOffice.student;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -47,9 +49,10 @@ public class RegistrationConclusionProcess {
 
         if (conclusionBean.hasEnteredConclusionDate() || conclusionBean.hasEnteredFinalAverageGrade()
                 || conclusionBean.hasEnteredAverageGrade()) {
+            GradeScale gradeScale = registration.getDegree().getGradeScale();
             YearMonthDay conclusionDate = conclusionBean.getConclusionDate();
-            Integer finalAverage = curriculumGroup.getFinalAverage();
-            BigDecimal average = curriculumGroup.getAverage();
+            Grade finalGrade = curriculumGroup.getFinalGrade();
+            Grade rawGrade = curriculumGroup.getRawGrade();
 
             if (conclusionBean.hasEnteredConclusionDate()) {
                 checkEnteredConclusionDate(conclusionBean);
@@ -58,21 +61,24 @@ public class RegistrationConclusionProcess {
 
             if (conclusionBean.hasEnteredFinalAverageGrade()) {
                 checkAverage(conclusionBean.getEnteredFinalAverageGrade(), registration);
-                finalAverage = conclusionBean.getEnteredFinalAverageGrade();
+                finalGrade = Grade.createGrade(conclusionBean.getEnteredFinalAverageGrade(), gradeScale);
             }
 
             if (conclusionBean.hasEnteredAverageGrade()) {
                 checkAverage(conclusionBean.getEnteredAverageGrade(), registration);
-                average = new BigDecimal(conclusionBean.getEnteredAverageGrade()).setScale(2, RoundingMode.HALF_UP);
+                rawGrade =
+                        Grade.createGrade(
+                                new BigDecimal(conclusionBean.getEnteredAverageGrade()).setScale(2, RoundingMode.HALF_UP)
+                                        .toString(), gradeScale);
             }
 
-            curriculumGroup.editConclusionInformation(AccessControl.getPerson(), finalAverage, average, conclusionDate,
+            curriculumGroup.editConclusionInformation(AccessControl.getPerson(), finalGrade, rawGrade, conclusionDate,
                     conclusionBean.getObservations());
         }
     }
 
-    private static void checkAverage(Number average, Registration registration) {
-        if (!registration.getDegree().getGradeScale().belongsTo(average.toString())) {
+    private static void checkAverage(String average, Registration registration) {
+        if (!registration.getDegree().getGradeScale().belongsTo(average)) {
             throw new DomainException("error.RegistrationConclusionProcess.final.average.is.invalid");
         }
     }

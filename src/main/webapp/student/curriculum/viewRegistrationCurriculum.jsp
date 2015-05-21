@@ -25,7 +25,6 @@
 <%@page import="java.math.BigDecimal"%>
 <%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 <%@page import="org.fenixedu.academic.domain.student.Registration"%>
-<%@page import="org.fenixedu.academic.domain.student.curriculum.AverageType"%>
 <%@page import="org.fenixedu.academic.domain.student.curriculum.ICurriculum"%>
 <%@page import="org.fenixedu.academic.dto.student.RegistrationCurriculumBean"%>
 <html:xhtml />
@@ -37,12 +36,11 @@
 	final Registration registration = ((RegistrationCurriculumBean) registrationCurriculumBean).getRegistration();
 	request.setAttribute("registration", registration);
 
-	// average
 	ICurriculum curriculum = registrationCurriculumBean.getCurriculum();
 	request.setAttribute("curriculum", curriculum);
 
-	final BigDecimal average = curriculum.getAverage();
-	request.setAttribute("weightedAverage", average);
+    // rawGrade
+	request.setAttribute("rawGrade", curriculum.getRawGrade());
 	
 	// curricular year
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
@@ -83,7 +81,7 @@
 			<p class="mvert05"><strong><bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 
 			<p class="mtop1 mbottom05"><strong><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="pleft1 mvert05"><bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <b class="highlight1"><bean:write name="registrationCurriculumBean" property="finalAverage"/></b></p>
+			<p class="pleft1 mvert05"><bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <b class="highlight1"><bean:write name="registrationCurriculumBean" property="finalGrade.value"/></b></p>
 			<p class="mtop1 mbottom05"><strong><bean:message key="conclusion.date" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 			<p class="pleft1 mvert05"><b class="highlight1"><bean:write name="registrationCurriculumBean" property="conclusionDate"/></b></p>
 		</div>	
@@ -102,7 +100,7 @@
 			<p class="mvert05"><strong><bean:message key="rules.info" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	
 			<p class="mtop1 mbottom05"><strong><bean:message key="degree.average.is.current.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="pleft1 mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="weightedAverage"/></b></p>
+			<p class="pleft1 mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="rawGrade" property="value"/></b></p>
 			<p class="pleft1 mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
 	
 			<p class="mtop1 mbottom05"><strong><bean:message key="curricular.year.in.begin.of.execution.year.info" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="currentExecutionYear" property="year"/></strong>.</p>
@@ -113,49 +111,33 @@
 
 	</logic:equal>
 
-	<table class="tstyle4 thlight tdcenter mtop15">
-		<tr>
-			<th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-			<th><bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-			<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> <bean:message key="AverageType.WEIGHTED" bundle="ENUMERATION_RESOURCES"/></th>
-			<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> <bean:message key="AverageType.SIMPLE" bundle="ENUMERATION_RESOURCES"/></th>
-			<th><bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/></th>
-		</tr>
-		<tr>
-			<bean:size id="curricularEntriesCount" name="curriculum" property="curriculumEntries"/>
-			<td><bean:write name="curricularEntriesCount"/></td>
-			<td><bean:write name="sumEctsCredits"/></td>
-			<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="false">
-				<td><bean:write name="weightedAverage"/></td>
-				<logic:equal name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
-					<td>-</td>
-				</logic:equal>
-				<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
-					<%
-						curriculum.setAverageType(AverageType.SIMPLE);
-						request.setAttribute("simpleAverage", curriculum.getAverage());
-					%>
-					<td><bean:write name="simpleAverage"/></td>
-				</logic:notEqual>
-				<td><bean:write name="curricularYear"/></td>
-			</logic:equal>
-			<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="true">
-				<logic:equal name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
-					<td>
-							<bean:write name="registrationCurriculumBean" property="finalAverage"/>
-					</td>
-					<td>-</td>
-				</logic:equal>
-				<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
-					<td>-</td>
-					<td>
-						<bean:write name="registrationCurriculumBean" property="finalAverage"/>
-					</td>
-				</logic:notEqual>
-				<td>-</td>
-			</logic:equal>			
-		</tr>
-	</table>
+    <table class="tstyle4 thlight tdcenter mtop15">
+        <tr>
+            <th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+            <th><bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+            <th><bean:message key="average" bundle="STUDENT_RESOURCES"/></th>
+            <th><bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/></th>
+        </tr>
+        <tr>
+            <bean:size id="curricularEntriesCount" name="curriculum" property="curriculumEntries"/>
+            <td><bean:write name="curricularEntriesCount"/></td>
+            <td><bean:write name="sumEctsCredits"/></td>
+            <logic:notEmpty name="executionYear">
+                <td><bean:write name="rawGrade" property="value"/></td>
+                <td><bean:write name="curricularYear"/></td>
+            </logic:notEmpty>
+            <logic:empty name="executionYear">
+                <logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="false">
+                    <td><bean:write name="rawGrade" property="value"/></td>
+                    <td><bean:write name="curricularYear"/></td>
+                </logic:equal>
+                <logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="true">
+                    <td><bean:write name="registrationCurriculumBean" property="finalGrade.value"/></td>
+                    <td>-</td>
+                </logic:equal>          
+            </logic:empty>
+        </tr>
+    </table>
 
 		<p>
 			<fr:view name="curriculum"/>

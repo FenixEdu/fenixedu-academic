@@ -48,7 +48,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionCourse;
@@ -582,77 +581,26 @@ public class Registration extends Registration_Base {
         return getCurriculum().getCurriculumEntries().size();
     }
 
-    final public BigDecimal getAverage() {
-        return getAverage((ExecutionYear) null, (CycleType) null);
+    final public Grade getRawGrade() {
+        return ProgramConclusion.getConclusionProcess(getLastStudentCurricularPlan()).map(ConclusionProcess::getRawGrade)
+                .orElseGet(this::calculateRawGrade);
     }
 
-    final public BigDecimal getAverage(final ExecutionYear executionYear) {
-        return getAverage(executionYear, (CycleType) null);
-    }
-
-    final public BigDecimal getAverage(final CycleType cycleType) {
-        return getAverage((ExecutionYear) null, cycleType);
-    }
-
-    final public BigDecimal getAverage(final ExecutionYear executionYear, final CycleType cycleType) {
-        return executionYear == null && cycleType == null && isConcluded() && isRegistrationConclusionProcessed() ? BigDecimal
-                .valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
-    }
-
-    final public BigDecimal getAverage(String cycleTypeName) {
-        return getAverage(CycleType.valueOf(cycleTypeName));
+    final public Grade calculateRawGrade() {
+        return getCurriculum().getRawGrade();
     }
 
     final public BigDecimal getEctsCredits(final ExecutionYear executionYear, final CycleType cycleType) {
         return getCurriculum(executionYear, cycleType).getSumEctsCredits();
     }
 
-    final public BigDecimal calculateAverage() {
-        return getCurriculum().getAverage();
-    }
-
-    final public Integer getFinalAverage() {
-        return ProgramConclusion.getConclusionProcess(getLastStudentCurricularPlan()).map(ConclusionProcess::getFinalAverage)
+    final public Grade getFinalGrade() {
+        return ProgramConclusion.getConclusionProcess(getLastStudentCurricularPlan()).map(ConclusionProcess::getFinalGrade)
                 .orElse(null);
     }
 
-    final public Integer getFinalAverage(final CycleType cycleType) {
-        if (cycleType == null) {
-            return getFinalAverage();
-        }
-
-        if (getDegreeType().getCycleTypes().isEmpty()) {
-            throw new DomainException("Registration.has.no.cycle.type");
-        }
-
-        if (!getDegreeType().hasCycleTypes(cycleType)) {
-            throw new DomainException("Registration.doesnt.have.such.cycle.type");
-        }
-
-        return getLastStudentCurricularPlan().getCycle(cycleType).getFinalAverage();
-
-    }
-
-    final public Integer getFinalAverage(ProgramConclusion programConclusion) {
-        return programConclusion.groupFor(this).map(CurriculumGroup::getFinalAverage).orElse(null);
-    }
-
-    final public String getFinalAverageDescription() {
-        return getFinalAverageDescription((CycleType) null);
-    }
-
-    final public String getFinalAverageDescription(final CycleType cycleType) {
-        final Integer finalAverage = getFinalAverage(cycleType);
-        return finalAverage == null ? null : BundleUtil.getString(Bundle.ENUMERATION, finalAverage.toString());
-    }
-
-    final public String getFinalAverageQualified() {
-        return getFinalAverageQualified((CycleType) null);
-    }
-
-    final public String getFinalAverageQualified(final CycleType cycleType) {
-        final Integer finalAverage = getFinalAverage(cycleType);
-        return finalAverage == null ? null : getDegree().getGradeScale().getQualifiedName(finalAverage.toString());
+    final public Grade getFinalGrade(ProgramConclusion programConclusion) {
+        return programConclusion.groupFor(this).map(CurriculumGroup::getFinalGrade).orElse(null);
     }
 
     final public boolean isInFinalDegreeYear() {
@@ -673,34 +621,6 @@ public class Registration extends Registration_Base {
             }
         }
         return getCurricularYear() == years;
-    }
-
-    public Grade findGradeForCurricularCourse(final CurricularCourse curricularCourse) {
-        final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-                final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
-                if (enrolmentCurricularCourse == curricularCourse
-                        || (enrolmentCurricularCourse.getCompetenceCourse() != null && enrolmentCurricularCourse
-                                .getCompetenceCourse() == curricularCourse.getCompetenceCourse())
-                        || hasGlobalEquivalence(curricularCourse, enrolmentCurricularCourse)) {
-                    enrolments.add(enrolment);
-                }
-            }
-        }
-
-        for (final Enrolment enrolment : enrolments) {
-            final EnrolmentEvaluation enrolmentEvaluation = enrolment.getFinalEnrolmentEvaluation();
-            if (enrolmentEvaluation != null && enrolmentEvaluation.isApproved()) {
-                return enrolmentEvaluation.getGrade();
-            }
-        }
-
-        return null;
-    }
-
-    private boolean hasGlobalEquivalence(final CurricularCourse curricularCourse, final CurricularCourse enrolmentCurricularCourse) {
-        return false;
     }
 
     final public Collection<CurricularCourse> getCurricularCoursesApprovedByEnrolment() {
@@ -2396,51 +2316,6 @@ public class Registration extends Registration_Base {
     public boolean canRepeatConclusionProcess(Person person) {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getDegree(),
                 person.getUser());
-    }
-
-    public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
-        editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
-    }
-
-    public void editConclusionInformation(final Person editor, final Integer finalAverage, final YearMonthDay conclusion,
-            final String notes) {
-        if (!isRegistrationConclusionProcessed()) {
-            throw new DomainException("error.Registration.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
-        }
-        String[] args = {};
-
-        if (finalAverage == null) {
-            throw new DomainException("error.Registration.argument.must.not.be.null", args);
-        }
-        String[] args1 = {};
-        if (conclusion == null) {
-            throw new DomainException("error.Registration.argument.must.not.be.null", args1);
-        }
-
-        getConclusionProcess().update(editor, finalAverage, getConclusionProcess().getAverage(), conclusion.toLocalDate(), notes);
-    }
-
-    public void editConclusionInformation(final Person editor, final Integer finalAverage, final BigDecimal average,
-            final YearMonthDay conclusion, final String notes) {
-
-        if (!isRegistrationConclusionProcessed()) {
-            throw new DomainException("error.Registration.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
-        }
-        String[] args = {};
-
-        if (finalAverage == null) {
-            throw new DomainException("error.Registration.argument.must.not.be.null", args);
-        }
-        String[] args1 = {};
-        if (conclusion == null) {
-            throw new DomainException("error.Registration.argument.must.not.be.null", args1);
-        }
-        String[] args2 = {};
-        if (average == null) {
-            throw new DomainException("error.Registration.argument.must.not.be.null", args2);
-        }
-
-        getConclusionProcess().update(editor, finalAverage, average, conclusion.toLocalDate(), notes);
     }
 
     public void conclude(final CurriculumGroup curriculumGroup) {

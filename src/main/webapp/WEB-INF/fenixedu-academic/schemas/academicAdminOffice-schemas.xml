@@ -1427,30 +1427,12 @@
     </slot>
 </schema>
 
-<schema name="RegistrationConclusionBean.confirmConclusionForRegistration" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="ingressionYear.name" key="ingressionYear"/>
-	<slot name="curriculumEntriesSize" />
-	<slot name="ectsCredits" />
-	<slot name="average" />
-	<slot name="registration.averageType"/>	
-	<slot name="finalAverage" />
-	<slot name="dissertationThesisTitle" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="conclusionDate" />
-	<slot name="conclusionYear.name" key="conclusionYear"/>
-</schema>
-
 <schema name="RegistrationConclusionBean.viewConclusionPreviewForRegistration" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize" />
 	<slot name="calculatedEctsCredits" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.ectsCredits"/>
-	<slot name="calculatedAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
-	<slot name="registration.averageType"/>	
-	<slot name="calculatedFinalAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
+	<slot name="calculatedRawGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
+	<slot name="calculatedFinalGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
@@ -1461,58 +1443,13 @@
 	<slot name="calculatedConclusionYear.name" key="conclusionYear"/>
 </schema>
 
-<schema name="Registration.editConclusionInformation" type="org.fenixedu.academic.domain.student.Registration" bundle="APPLICATION_RESOURCES">
-	<slot name="finalAverage">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{1,2}"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
-        </validator>
-	</slot>
-	<slot name="conclusionDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="conclusionProcessNotes" layout="longText">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>
-	<slot name="conclusionProcessLastModificationDateTime" key="label.modification.date" read-only="true"/> 
-	<slot name="conclusionProcessLastResponsible" key="label.last.responsible" layout="format" read-only="true">
-		<property name="format" value="${name} (${username})"/>
-	</slot>
-    <setter signature="editConclusionInformation(finalAverage,conclusionDate, conclusionProcessNotes)"/>	
-</schema>
-
-<schema name="CycleCurriculumGroup.editConclusionInformation" type="org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup" bundle="APPLICATION_RESOURCES">
-	<slot name="name" read-only="true" />
-	<slot name="finalAverage">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{1,2}"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
-        </validator>
-	</slot>
-	<slot name="conclusionDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="conclusionProcessNotes" layout="longText">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>
-   	<slot name="conclusionProcessLastModificationDateTime" key="label.modification.date" read-only="true"/> 
-	<slot name="conclusionProcessLastResponsible" key="label.last.responsible" layout="format" read-only="true">
-		<property name="format" value="${name} (${username})"/>
-	</slot>
-    <setter signature="editConclusionInformation(finalAverage,conclusionDate, conclusionProcessNotes)"/>
-</schema>
-
 <schema name="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="curriculumGroup.name" />
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
 	<slot name="ectsCredits"/>
-	<slot name="average"/>
-	<slot name="finalAverage"/>
+	<slot name="rawGrade.value"/>
+	<slot name="finalGrade.value"/>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
@@ -1541,8 +1478,8 @@
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
 	<slot name="calculatedEctsCredits" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.ectsCredits"/>
-	<slot name="calculatedAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
-	<slot name="calculatedFinalAverage" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
+	<slot name="calculatedRawGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
+	<slot name="calculatedFinalGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
@@ -1557,9 +1494,8 @@
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="average" />
-	<slot name="registration.averageType"/>	
-	<slot name="finalAverage" />
+	<slot name="rawGrade.value" />
+	<slot name="finalGrade.value" />
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
@@ -1587,14 +1523,13 @@
 	<slot name="curriculumGroup.name" />
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="average" />
+	<slot name="rawGrade.value" />
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForRegistration" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="average" />
-	<slot name="registration.averageType"/>	
+	<slot name="rawGrade.value" />
 </schema>
 
 <schema name="AccountingEventCreateBean.editExecutionYear" type="org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean" bundle="APPLICATION_RESOURCES">

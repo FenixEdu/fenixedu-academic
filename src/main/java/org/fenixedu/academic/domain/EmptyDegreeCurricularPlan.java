@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.curriculum.AverageType;
 import org.fenixedu.academic.dto.ExecutionCourseView;
 import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.academic.util.MultiLanguageString;
@@ -473,11 +472,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public Set<CurricularCourse> getCurricularCoursesByExecutionYearAndCurricularYear(ExecutionYear eY, Integer cY) {
         return Collections.emptySet();
-    }
-
-    @Override
-    final public AverageType getAverageType() {
-        return AverageType.WEIGHTED;
     }
 
     @Override

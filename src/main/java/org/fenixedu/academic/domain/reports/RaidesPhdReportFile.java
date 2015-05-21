@@ -256,8 +256,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
             grade +=
                     " "
                             + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
-                                    .getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage()
-                                    .toPlainString();
+                                    .getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getRawGrade().getValue();
         }
         row.setCell(grade);
 

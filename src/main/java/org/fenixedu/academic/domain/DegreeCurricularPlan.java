@@ -59,7 +59,6 @@ import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.curriculum.AverageType;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
@@ -1702,51 +1701,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
      * in order to make this instance-dependent. Just did this due to time
      * constrains.
      */
-
-    static final Set<String> bestAverage = new HashSet<String>();
-    static {
-        bestAverage.add("MB02/04");
-        bestAverage.add("MB03/05");
-        bestAverage.add("MIOES02/04");
-        bestAverage.add("MT02/04");
-        bestAverage.add("MT03/05");
-        bestAverage.add("MT05/07");
-    };
-
-    static final Set<String> weightedAverage = new HashSet<String>();
-    static {
-        weightedAverage.add("MEE02/04");
-        weightedAverage.add("MEE03/05");
-        weightedAverage.add("MF02/04");
-        weightedAverage.add("MF03/05");
-        weightedAverage.add("MC02/04");
-        weightedAverage.add("MC03/05");
-        weightedAverage.add("MEMAT02/04");
-        weightedAverage.add("MEQ03/04");
-        weightedAverage.add("MSIG02/04");
-        weightedAverage.add("MCES02/04");
-        weightedAverage.add("MEIC02/04");
-        weightedAverage.add("MEIC03/05");
-        weightedAverage.add("ML03/05");
-        weightedAverage.add("ML02/04");
-        weightedAverage.add("ML05/07");
-        weightedAverage.add("MEE04/06");
-        weightedAverage.add("MEE05/07");
-    };
-
-    public AverageType getAverageType() {
-        if (getDegreeType().isPreBolonhaMasterDegree()) {
-            if (bestAverage.contains(getName())) {
-                return AverageType.BEST;
-            } else if (weightedAverage.contains(getName())) {
-                return AverageType.WEIGHTED;
-            } else {
-                return AverageType.SIMPLE;
-            }
-        } else {
-            return AverageType.WEIGHTED;
-        }
-    }
 
     public Set<Registration> getRegistrations(ExecutionYear executionYear, Set<Registration> registrations) {
         for (final StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlansSet()) {

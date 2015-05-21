@@ -19,9 +19,9 @@
 package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
@@ -62,18 +62,18 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
         return getCurriculumGroup() != null;
     }
 
-    public Integer getFinalAverage() {
+    public Grade getFinalGrade() {
         if (hasCurriculumGroup() && getCurriculumGroup().isConclusionProcessed()) {
-            return getCurriculumGroup().getFinalAverage();
+            return getCurriculumGroup().getFinalGrade();
         } else if (getRegistration().isRegistrationConclusionProcessed()) {
-            return getRegistration().getFinalAverage();
+            return getRegistration().getFinalGrade();
         } else {
             return null;
         }
     }
 
-    public BigDecimal getAverage() {
-        return hasCurriculumGroup() ? getCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
+    public Grade getRawGrade() {
+        return hasCurriculumGroup() ? getCurriculumGroup().calculateRawGrade() : getRegistration().calculateRawGrade();
     }
 
     public YearMonthDay getConclusionDate() {
@@ -91,8 +91,8 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
     }
 
     public ICurriculum getCurriculum(final ExecutionYear executionYear) {
-        return hasCurriculumGroup() ? getCurriculumGroup().getCurriculum(executionYear) : getRegistration()
-                .getCurriculum(executionYear);
+        return hasCurriculumGroup() ? getCurriculumGroup().getCurriculum(executionYear) : getRegistration().getCurriculum(
+                executionYear);
     }
 
     public ICurriculum getCurriculum() {

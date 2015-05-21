@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
@@ -63,19 +64,19 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setResponsible(AccessControl.getPerson());
 
         final YearMonthDay conclusion = bean.calculateConclusionDate();
-        final Integer finalAverage = bean.calculateFinalAverage();
-        final BigDecimal average = bean.calculateAverage();
+        final Grade finalGrade = bean.getCalculatedFinalGrade();
+        final Grade rawGrade = bean.getCalculatedRawGrade();
         final Double ectsCredits = bean.calculateCredits();
         final ExecutionYear ingressionYear = bean.calculateIngressionYear();
         final ExecutionYear conclusionYear = bean.calculateConclusionYear();
 
-        if (finalAverage == null || average == null || ectsCredits == null || ingressionYear == null || conclusionYear == null) {
+        if (finalGrade == null || rawGrade == null || ectsCredits == null || ingressionYear == null || conclusionYear == null) {
             throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null");
         }
 
         super.setConclusionDate(conclusion.toLocalDate());
-        super.setFinalAverage(finalAverage);
-        super.setAverage(average);
+        super.setFinalGrade(finalGrade);
+        super.setRawGrade(rawGrade);
         super.setCredits(BigDecimal.valueOf(ectsCredits));
         super.setCurriculum(bean.getCurriculumForConclusion().toString());
         super.setIngressionYear(ingressionYear);
@@ -83,16 +84,16 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setActive(true);
     }
 
-    protected void update(final Person responsible, final Integer finalAverage, final BigDecimal average,
-            final LocalDate conclusionDate, final String notes) {
+    protected void update(final Person responsible, final Grade finalGrade, final Grade rawGrade, final LocalDate conclusionDate,
+            final String notes) {
 
-        if (finalAverage == null || average == null || conclusionDate == null) {
+        if (finalGrade == null || rawGrade == null || conclusionDate == null) {
             throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null");
         }
 
         super.setResponsible(responsible);
-        super.setFinalAverage(finalAverage);
-        super.setAverage(average);
+        super.setFinalGrade(finalGrade);
+        super.setRawGrade(rawGrade);
         super.setConclusionDate(conclusionDate);
         super.setNotes(StringUtils.isEmpty(notes) ? null : notes);
     }
@@ -101,6 +102,24 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     public Enrolment getDissertationEnrolment() {
         //FIXME: remove when the framework enables read-only slots
         return super.getDissertationEnrolment();
+    }
+
+    @Override
+    public Grade getRawGrade() {
+        //FIXME: remove when the framework enables read-only slots
+        return super.getRawGrade();
+    }
+
+    @Override
+    public Grade getFinalGrade() {
+        //FIXME: remove when the framework enables read-only slots
+        return super.getFinalGrade();
+    }
+
+    @Override
+    public Grade getDescriptiveGrade() {
+        //FIXME: remove when the framework enables read-only slots
+        return super.getDescriptiveGrade();
     }
 
     @Override
@@ -130,16 +149,6 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
 
     @Override
     public void setConclusionDate(LocalDate conclusionDate) {
-        throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
-    }
-
-    @Override
-    public void setFinalAverage(Integer finalAverage) {
-        throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
-    }
-
-    @Override
-    public void setAverage(BigDecimal average) {
         throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
     }
 

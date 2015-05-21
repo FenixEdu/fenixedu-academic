@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -1245,17 +1246,16 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return getRegistration().calculateIngressionYear();
     }
 
-    final public BigDecimal getAverage() {
-        return isConclusionProcessed() ? getConclusionProcess().getAverage() : getAverage((ExecutionYear) null);
+    final public Grade getRawGrade() {
+        return isConclusionProcessed() ? getConclusionProcess().getRawGrade() : null;
     }
 
-    final public BigDecimal getAverage(final ExecutionYear executionYear) {
-        return executionYear == null && isConcluded() && isConclusionProcessed() ? BigDecimal.valueOf(getFinalAverage()) : getCurriculum(
-                new DateTime(), executionYear).getAverage();
+    final public Grade getFinalGrade() {
+        return isConclusionProcessed() ? getConclusionProcess().getFinalGrade() : null;
     }
 
-    final public Integer getFinalAverage() {
-        return isConclusionProcessed() ? getConclusionProcess().getFinalAverage() : null;
+    final public Grade getDescriptiveGrade() {
+        return isConclusionProcessed() ? getConclusionProcess().getDescriptiveGrade() : null;
     }
 
     final public ExecutionYear getConclusionYear() {
@@ -1282,18 +1282,18 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return isConclusionProcessed() ? getConclusionProcess().getLastModificationDateTime() : null;
     }
 
-    public void editConclusionInformation(final Person editor, final Integer finalAverage, final BigDecimal average,
+    public void editConclusionInformation(final Person editor, final Grade finalGrade, final Grade rawGrade,
             final YearMonthDay conclusion, final String notes) {
         if (!isConclusionProcessed()) {
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
         }
 
-        if (finalAverage == null || average == null || conclusion == null) {
+        if (finalGrade == null || rawGrade == null || conclusion == null) {
             throw new DomainException("error.CycleCurriculumGroup.argument.must.not.be.null");
         }
 
-        getConclusionProcess().update(editor, finalAverage, average, conclusion.toLocalDate(), notes);
+        getConclusionProcess().update(editor, finalGrade, rawGrade, conclusion.toLocalDate(), notes);
     }
 
     final public ExecutionYear calculateConclusionYear() {

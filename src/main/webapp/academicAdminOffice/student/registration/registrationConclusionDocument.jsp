@@ -71,9 +71,8 @@
 
 <%
 	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
-	final Integer finalAverage = registrationConclusionBean.getFinalAverage();	
-	request.setAttribute("finalAverage", finalAverage);
-	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(finalAverage));
+	request.setAttribute("finalGrade", registrationConclusionBean.getFinalGrade());
+	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(registrationConclusionBean.getFinalGrade().getIntegerValue()));
 	request.setAttribute("degreeFinalizationEcts", String.valueOf(registrationConclusionBean.getEctsCredits()));
 	request.setAttribute("creditsDescription", registration.getDegreeType().getCreditsDescription());
 	
@@ -91,22 +90,15 @@
 	</tr>
 	<tr>
 		<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/></td>
-		<td style="padding: 5px;"><bean:write name="registrationConclusionBean" property="average"/></td>		
+		<td style="padding: 5px;"><bean:write name="registrationConclusionBean" property="rawGrade.value"/></td>		
 		
 		<logic:equal name="registration" property="degreeType" value="MASTER_DEGREE">
 			<td width="50%" style="padding: 5px; padding-left: 15em;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.degree.coordinator"/>,</td>
 		</logic:equal>
 	</tr>
 	<tr>
-		<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.registration.averageType"/></td>
-		<bean:define id="averageType">
-			<bean:write name="registrationConclusionBean" property="registration.averageType.qualifiedName"/>
-		</bean:define>	
-		<td style="padding: 5px;"><bean:message bundle="ENUMERATION_RESOURCES" key="<%=averageType%>"/></td>
-	</tr>
-	<tr>
 		<td style="padding: 5px;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="final.degree.average"/></td>
-		<td style="padding: 5px;"><bean:write name="finalAverage"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="values"/></td>
+		<td style="padding: 5px;"><bean:write name="finalGrade" property="value"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="values"/></td>
 		<td style="padding: 5px; padding-left: 100px;">	</td>
 	</tr>
 	<tr>
