@@ -390,8 +390,8 @@
 
 <schema name="student.show.ingressionInformation" type="org.fenixedu.academic.dto.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registrationProtocol.description.content" key="label.registrationAgreement" />
-	<slot name="ingression" layout="format"  >
-		<property name="format" value="${code} - ${description}" />
+	<slot name="ingressionType" layout="format"  >
+		<property name="format" value="${code} - ${description.content}" />
 	</slot>		
 	<slot name="entryPhase" layout="format"  >
 		<property name="format" value="${localizedName}" />
@@ -458,8 +458,8 @@
 
 <schema name="student.registrationDetail" extends="student.registrationsWithStartData" 
 		type="org.fenixedu.academic.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="ingression" layout="format" key="label.ingression" >
-		<property name="format" value="${code} - ${description}" />
+	<slot name="ingressionType" layout="format" key="label.ingression" >
+		<property name="format" value="${code} - ${description.content}" />
 	</slot>
 	<slot name="entryPhase" layout="format"  >
 		<property name="format" value="${localizedName}" />
