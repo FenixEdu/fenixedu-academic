@@ -47,10 +47,9 @@ public class EurAceReportFile extends EurAceReportFile_Base {
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
         setDegreeHeaders(spreadsheet);
-        spreadsheet.setHeader("nome disciplina");
-        spreadsheet.setHeader("codigo execucao disciplina");
-        spreadsheet.setHeader("id do docente");
-        spreadsheet.setHeader("OID execucao disciplina");
+        spreadsheet.setHeader("Nome disciplina");
+        spreadsheet.setHeader("Id do docente");
+        spreadsheet.setHeader("Código disciplina execucao");
 
         for (final Degree degree : Degree.readNotEmptyDegrees()) {
             if (checkDegreeType(getDegreeType(), degree)) {
@@ -66,9 +65,8 @@ public class EurAceReportFile extends EurAceReportFile_Base {
                                                 final Row row = spreadsheet.addRow();
                                                 setDegreeCells(row, degree);
                                                 row.setCell(curricularCourse.getName());
-                                                row.setCell(executionCourse.getExternalId());
                                                 row.setCell(teacher.getPerson().getUsername());
-                                                row.setCell(String.valueOf(executionCourse.getOid()));
+                                                row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
                                             }
                                         }
                                     }

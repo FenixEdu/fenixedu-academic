@@ -24,12 +24,18 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.QueueJobResult;
+import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
@@ -41,12 +47,53 @@ import org.slf4j.LoggerFactory;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
+import com.google.common.hash.Hashing;
+
 public abstract class GepReportFile extends GepReportFile_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(GepReportFile.class);
+    public static final String CODE_SEPARATOR = "_#_";
 
     public GepReportFile() {
         super();
+    }
+
+    public static String getExecutionSemesterCode(ExecutionSemester executionSemester) {
+        return executionSemester.getSemester() + CODE_SEPARATOR + executionSemester.getYear();
+    }
+
+    public static String getExecutionCourseCode(ExecutionCourse executionCourse) {
+        return executionCourse.getSigla() + CODE_SEPARATOR + getExecutionSemesterCode(executionCourse.getExecutionPeriod());
+    }
+
+    public static String getExecutionDegreeCode(ExecutionDegree executionDegree) {
+        return getDegreeCurricularPlanCode(executionDegree.getDegreeCurricularPlan()) + CODE_SEPARATOR
+                + executionDegree.getExecutionYear().getName();
+    }
+
+    private static String getDegreeCurricularPlanCode(DegreeCurricularPlan dcp) {
+        return dcp.getName() + CODE_SEPARATOR + dcp.getDegree().getSigla();
+    }
+
+    public static String getCompetenceCourseCode(CompetenceCourse competenceCourse) {
+        return competenceCourse.getAcronym();
+    }
+
+    public static String getProfessorshipCode(Professorship professorship) {
+        return professorship.getPerson().getUsername() + CODE_SEPARATOR
+                + getExecutionCourseCode(professorship.getExecutionCourse());
+    }
+
+    public static String getShiftCode(Shift shift) {
+        return shift.getNome() + CODE_SEPARATOR + getExecutionCourseCode(shift.getExecutionCourse());
+    }
+
+    public static String getWrittenEvaluationCode(WrittenEvaluation writtenEvaluation) {
+        StringBuilder code =
+                new StringBuilder().append(writtenEvaluation.getInterval().toString()).append(writtenEvaluation.getFullName())
+                        .append(writtenEvaluation.getEvaluationType().toString());
+        writtenEvaluation.getAssociatedExecutionCoursesSet().stream().forEach(ec -> code.append(getExecutionCourseCode(ec)));
+        return Hashing.murmur3_128().hashBytes(code.toString().getBytes()).toString();
     }
 
     public static ExecutionYear getExecutionYearFourYearsBack(final ExecutionYear executionYear) {
