@@ -39,6 +39,12 @@
 	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty"/>
 </schema>
 
+<schema name="SpecialSeasonEnrolmentPR.view"
+	type="org.fenixedu.academic.domain.accounting.postingRules.SpecialSeasonEnrolmentPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"/>
+</schema>
+
 <schema name="DegreeCandidacyForGraduatedPersonPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -344,6 +350,13 @@
 	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
 </schema>
 
+<schema name="SpecialSeasonEnrolmentPR.edit"
+	type="org.fenixedu.academic.domain.accounting.postingRules.SpecialSeasonEnrolmentPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<setter signature="edit(fixedAmount)"/>
+</schema>
+
 <schema name="DegreeCandidacyForGraduatedPersonPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES">
@@ -556,6 +569,10 @@
 <schema name="ImprovementOfApprovedEnrolmentPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 	<slot name="fixedAmountPenalty" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+</schema>
+
+<schema name="SpecialSeasonEnrolmentPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.SpecialSeasonEnrolmentPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 </schema>
 
 <schema name="FixedAmountPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">

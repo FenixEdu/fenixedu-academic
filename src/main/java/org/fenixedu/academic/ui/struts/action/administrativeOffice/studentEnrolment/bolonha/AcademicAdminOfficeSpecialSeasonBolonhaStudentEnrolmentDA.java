@@ -121,6 +121,32 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
         return "/specialSeasonBolonhaStudentEnrollment.do";
     }
 
+    public ActionForward checkPermission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
+        ExecutionSemester executionSemester = getExecutionPeriod(request);
+
+        if (!hasStatute(studentCurricularPlan.getRegistration().getStudent(), executionSemester,
+                studentCurricularPlan.getRegistration())) {
+            if (!studentCurricularPlan.getRegistration().getStudent().isSenior(executionSemester.getExecutionYear())) {
+                addActionMessage(request, "error.special.season.not.granted");
+                request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+                request.setAttribute("executionPeriod", executionSemester);
+
+                return mapping.findForward("showStudentEnrollmentMenu");
+            }
+        }
+
+        request.setAttribute("action", getAction());
+        request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
+                executionSemester));
+
+        addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+        return mapping.findForward("showDegreeModulesToEnrol");
+
+    }
+
     protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
         Collection<StudentStatute> statutes = student.getStudentStatutesSet();
         for (StudentStatute statute : statutes) {

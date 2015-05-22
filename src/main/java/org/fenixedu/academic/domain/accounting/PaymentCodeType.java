@@ -62,7 +62,10 @@ public enum PaymentCodeType {
 
     PHD_PROGRAM_CANDIDACY_PROCESS(23),
 
+    SPECIAL_SEASON_ENROLMENT(24),
+
     RECTORATE(99);
+    
 
     private int typeDigit;
 
