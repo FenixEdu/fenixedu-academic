@@ -183,42 +183,6 @@
 	<slot name="htmlBody" bundle="MESSAGING_RESOURCES" key="label.email.message.html.content" layout="code-block"/>
 </schema>
 
-<schema name="serverTimings" type="org.fenixedu.academic.dto.log.profiling.ServerBean" bundle="MESSAGING_RESOURCES">
-	    <slot name="serverName" layout="link">
-	    	<property name="contextRelative" value="true"/>
-	    	<property name="moduleRelative" value="true"/>
-	    	<property name="useParent" value="true"/>
-	    	<property name="linkFormat" value="/profileReport.do?method=viewModules&amp;serverName=${serverName}&amp;date=${date}"/>
-	    </slot>
-	    <slot name="minTimeSpent"/>
-	    <slot name="maxTimeSpent"/>
-	    <slot name="invocationCount"/>
-		<slot name="averageTimeSpent"/>
-		<slot name="totalTimeSpent"/>
-</schema>
-
-<schema name="moduleTimings" type="org.fenixedu.academic.dto.log.profiling.ModuleBean" bundle="MESSAGING_RESOURCES">
-	    <slot name="moduleName" layout="link">
-	    		<property name="contextRelative" value="true"/>
-	    		<property name="moduleRelative" value="true"/>
-	    		<property name="useParent" value="true"/>
-	    		<property name="linkFormat" value="/profileReport.do?method=viewRequests&amp;serverName=${serverName}&amp;moduleName=${moduleName}&amp;date=${date}"/>
-	    </slot>
-	    <slot name="minTimeSpent"/>
-	    <slot name="maxTimeSpent"/>
-	    <slot name="invocationCount"/>
-		<slot name="totalTimeSpent"/>
-</schema>
-
-<schema name="requestTimings" type="org.fenixedu.academic.dto.log.profiling.RequestBean" bundle="MESSAGING_RESOURCES">
-	    <slot name="name"/>
-	    <slot name="minTimeSpent"/>
-	    <slot name="maxTimeSpent"/>
-	    <slot name="invocationCount"/>
-		<slot name="averageSpent"/>
-		<slot name="totalTimeSpent"/>
-</schema>
-
 <schema name="registration.selection" type="org.fenixedu.academic.dto.messaging.RegistrationsBean" bundle="MESSAGING_RESOURCES">
 	<slot name="selected" layout="menu-select" key="label.studentCurricularPlan">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.RegistrationProvider"/>

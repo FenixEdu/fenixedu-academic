@@ -1818,18 +1818,6 @@
 	<slot name="page" key="label.set.evaluation.page" />
 </schema>
 
-<schema name="utilities.export.diploma.student.view" type="org.fenixedu.academic.ui.struts.action.administrativeOffice.utilities.StudentDiplomaInformation" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="graduateTitle" key="label.export.diploma.graduateTitle" />
-	<slot name="name" key="label.export.diploma.name" />
-	<slot name="nameOfFather" key="label.export.diploma.nameOfFather" />
-	<slot name="nameOfMother" key="label.export.diploma.nameOfMother" />
-	<slot name="birthLocale" key="label.export.diploma.birthLocale" />
-	<slot name="degreeName" key="label.export.diploma.degreeName" />
-	<slot name="dissertationTitle" key="label.export.diploma.dissertationTitle" />
-	<slot name="conclusionDate" key="label.export.diploma.conclusionDate" />
-	<slot name="filename" key="label.export.diploma.filename" />
-</schema>
-
 <schema type="org.fenixedu.academic.domain.ExecutionSemester" bundle="ACADEMIC_OFFICE_RESOURCES" name="candidacy.enrolment.periods">
 	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsForCandidacyRegistrationProvider" />

@@ -77,39 +77,13 @@ Documentation:
     <renderer type="org.fenixedu.academic.domain.File" layout="link" class="org.fenixedu.academic.ui.renderers.FileLinkRenderer"/>
 
     <renderer type="org.fenixedu.academic.domain.Person" layout="person-email-identity" class="org.fenixedu.academic.ui.renderers.EmailIdentityRenderer"/>
-  
-  	<renderer type="org.fenixedu.academic.domain.Person" layout="person-presentation-card" class="org.fenixedu.academic.ui.renderers.PersonalCardRenderer">
-  		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
-		<property name="formatImageURL" value="/user/photo/${externalId}"/>
-  		<property name="contextRelative" value="true"/>
-		<property name="classes" value="personalcard"/>
-  		<property name="photoCellClasses" value="personalcard_photo"/>
-		<property name="infoCellClasses"  value="personalcard_info"/>
-  	</renderer>
-  	
-  	<renderer type="java.util.List" layout="person-presentation-card" class="org.fenixedu.academic.ui.renderers.MultiplePersonalCardRenderer">
-  		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
-		<property name="formatImageURL" value="/user/photo/${externalId}"/>
-  		<property name="contextRelative" value="true"/>
-		<property name="divClasses" value="personalcard"/>
-  		<property name="photoCellClasses" value="personalcard_photo"/>
-		<property name="infoCellClasses"  value="personalcard_info"/>
-  	</renderer>
   	
     <renderer type="java.lang.String" class="pt.ist.fenixWebFramework.renderers.StringRenderer"/>
           
     <renderer type="java.lang.String" layout="person-name" class="org.fenixedu.academic.ui.renderers.PersonNameRenderer"/>
 
-    <renderer type="java.lang.String" layout="person-short-name" class="org.fenixedu.academic.ui.renderers.PersonNameRenderer">
-        <property name="firstLastOnly" value="true"/>
-    </renderer>
-
     <renderer type="org.fenixedu.academic.domain.Person" layout="name-with-alias" class="org.fenixedu.academic.ui.renderers.PersonNameWithAliasRenderer">
         <property name="label" value="label.person.login.external"/>
-    </renderer>
-
-    <renderer type="org.fenixedu.academic.domain.DegreeCurricularPlan" layout="degree-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
-        <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
         
     <renderer type="org.fenixedu.academic.domain.Shift" layout="shift-plain" class="org.fenixedu.academic.ui.renderers.ShiftPlainRenderer"/>
@@ -184,11 +158,6 @@ Documentation:
     	<property name="nullLabel" value="-"/>
     </renderer>
 
-	<!--@ File displayed as an html picture -->
-    <renderer type="org.fenixedu.academic.domain.File"
-              class="org.fenixedu.academic.ui.renderers.FileAsPictureRenderer"
-              layout="image" />
-    
     <!--@ Money output -->
     <renderer type="org.fenixedu.academic.util.Money" class="org.fenixedu.academic.ui.renderers.MoneyRenderer"/>
 
@@ -203,11 +172,6 @@ Documentation:
 		<property name="day" value="true"/>
 	</renderer>
 	
-	<renderer mode="input" type="org.joda.time.LocalTime" layout="multiple-format-hour-minute" class="pt.ist.fenixWebFramework.rendererExtensions.MultipleFormatTimeInputRenderer">
-		<property name="hour" value="true"/>
-		<property name="minute" value="true"/>
-	</renderer>
-	
 	<renderer mode="input" type="org.fenixedu.academic.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
@@ -218,28 +182,12 @@ Documentation:
 	<renderer type="org.fenixedu.academic.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${hour,02d}:${minuteOfHour,02d}"/>
 	</renderer>	
-	
-    <!--@ Presents a list were each object is presented with it's own layout and schema in a list item. Each item has
-          an checkbox associated. This layout allows to choose several objects from a list. Only the choosen object will
-          be part o the list that is created and used as the slot's value.  -->
-    <renderer mode="input" type="java.util.Collection" layout="option-select" class="pt.ist.fenixWebFramework.rendererExtensions.InputCheckBoxListRenderer">
-    	<property name="eachClasses" value="dinline" />
-    </renderer>
     
     <!--@ The layout username-as-person allows you to insert a person given a username -->
     <renderer mode="input" type="org.fenixedu.academic.domain.Person" layout="username-as-person" class="org.fenixedu.academic.ui.renderers.PersonUsernameStringInputRenderer"/>
 
-    <!--@ The layout username-as-person allows you to insert a person given a username -->
-    <renderer mode="input" type="org.fenixedu.academic.domain.Teacher" layout="teacherId-as-teacher" class="org.fenixedu.academic.ui.renderers.TeacherIdStringInputRenderer"/>
-
 	<!--@ Layout that allows you to render a list with checkboxes with postback -->
 	<renderer mode="input" type="java.util.Collection" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.CheckBoxOptionListRendererWithPostBack"/>
-    
-    <renderer type="org.fenixedu.academic.domain.Person"
-              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
-              layout="format-name-number">
-		<property name="format" value="${name}" />
-	</renderer>
     
 	<renderer mode="input" type="org.fenixedu.academic.domain.student.Student" layout="by-number" class="org.fenixedu.academic.ui.renderers.StudentByNumberInputRenderer"/>
     
