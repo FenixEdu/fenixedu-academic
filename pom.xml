@@ -23,8 +23,8 @@
     </properties>
 
     <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/FenixEdu/fenix/issues/</url>
+        <system>JIRA</system>
+        <url>https://jira.fenixedu.org/browse/ACDM</url>
     </issueManagement>
 
     <licenses>
@@ -37,12 +37,12 @@
 
     <ciManagement>
         <system>Travis CI</system>
-        <url>https://travis-ci.org/FenixEdu/fenix</url>
+        <url>https://travis-ci.org/FenixEdu/fenixedu-academic</url>
     </ciManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:fenixedu/fenix.git</connection>
-        <developerConnection>scm:git:git@github.com:fenixedu/fenix.git</developerConnection>
+        <connection>scm:git:https://github.com/FenixEdu/fenixedu-academic.git</connection>
+        <developerConnection>scm:git:git@github.com:FenixEdu/fenixedu-academic.git</developerConnection>
         <url>http://fenixedu.org</url>
         <tag>HEAD</tag>
     </scm>
