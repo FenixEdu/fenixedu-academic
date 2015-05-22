@@ -89,15 +89,13 @@ import pt.ist.fenixframework.FenixFramework;
 
 public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
-    private static final String SIBS_ENTITY_CODE = FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode();
-
     abstract protected Class<? extends Process> getParentProcessType();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         setParentProcess(request);
-        request.setAttribute("sibsEntityCode", SIBS_ENTITY_CODE);
+        request.setAttribute("sibsEntityCode", FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode());
 
         return super.execute(mapping, actionForm, request, response);
     }

@@ -50,9 +50,6 @@ public class Receipt extends Receipt_Base {
 
     public static final String GENERIC_CONTRIBUTOR_PARTY_NUMBER = " ";
 
-    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = FenixEduAcademicConfiguration.getConfiguration()
-            .getReceiptMinYearToCreate();
-
     private static final Map<Integer, String> NUMBER_SERIES_BY_YEAR = new HashMap<Integer, String>();
 
     static {
@@ -140,8 +137,10 @@ public class Receipt extends Receipt_Base {
 
         final YearMonthDay today = new YearMonthDay();
 
-        if (year < MIN_YEAR_TO_CREATE_RECEIPTS.intValue()) {
-            throw new DomainException("error.accounting.Receipt.invalid.receipt.year", MIN_YEAR_TO_CREATE_RECEIPTS.toString());
+        if (year < FenixEduAcademicConfiguration.getConfiguration()
+                .getReceiptMinYearToCreate().intValue()) {
+            throw new DomainException("error.accounting.Receipt.invalid.receipt.year", FenixEduAcademicConfiguration.getConfiguration()
+                    .getReceiptMinYearToCreate().toString());
         }
 
         for (final Entry entry : entries) {

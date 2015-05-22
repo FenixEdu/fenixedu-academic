@@ -49,8 +49,6 @@ import com.twilio.sdk.resource.instance.Account;
 public class PhoneValidationUtils {
     private static final Logger logger = LoggerFactory.getLogger(PhoneValidationUtils.class);
 
-    public final String HOST = CoreConfiguration.getConfiguration().applicationUrl();
-
     private String TWILIO_FROM_NUMBER;
     private TwilioRestClient TWILIO_CLIENT;
     private String CIIST_SMS_GATEWAY_URL;
@@ -108,7 +106,8 @@ public class PhoneValidationUtils {
         initTwilio();
         initCIISTSMSGateway();
         if (canRun()) {
-            logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);
+            logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, CoreConfiguration
+                    .getConfiguration().applicationUrl());
             logger.info("DSI SMS Gateway Initialized: {}\n", CIIST_SMS_GATEWAY_URL);
         } else {
             logger.debug("Twilio/DSI SMS Gateway not initialized");
@@ -122,8 +121,8 @@ public class PhoneValidationUtils {
             Map<String, String> callParams = new HashMap<String, String>();
             callParams.put("To", phoneNumber);
             callParams.put("From", TWILIO_FROM_NUMBER);
-            callParams.put("Url", HOST + "/external/partyContactValidation.do?method=validatePhone&code=" + code + "&lang="
-                    + lang);
+            callParams.put("Url", CoreConfiguration.getConfiguration().applicationUrl()
+                    + "/external/partyContactValidation.do?method=validatePhone&code=" + code + "&lang=" + lang);
             try {
                 callFactory.create(callParams);
                 return true;

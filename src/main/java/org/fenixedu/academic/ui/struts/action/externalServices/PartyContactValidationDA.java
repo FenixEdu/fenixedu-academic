@@ -27,6 +27,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.contacts.EmailValidation;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -71,7 +72,7 @@ public class PartyContactValidationDA extends FenixDispatchAction {
         final String code = request.getParameter("code");
         final String lang = request.getParameter("lang");
         String xml = "<Response>";
-        final String host = PhoneValidationUtils.getInstance().HOST;
+        final String host = CoreConfiguration.getConfiguration().applicationUrl();
         for (int i = 0; i < 3; i++) {
             xml += String.format("<Play>%s/external/partyContactValidation/%s/start.mp3</Play>", host, lang);
             final String[] split = code.split("");

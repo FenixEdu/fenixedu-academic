@@ -79,10 +79,6 @@ public class FenixEduAcademicConfiguration {
                 defaultValue = "1111")
         public String getSibsEntityCode();
 
-        @ConfigurationProperty(key = "startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments",
-                defaultValue = "2006/2007")
-        public String getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments();
-
         @ConfigurationProperty(key = "start.semester.for.bolonha.degrees", defaultValue = "1")
         public String getStartSemesterForBolonhaDegrees();
 

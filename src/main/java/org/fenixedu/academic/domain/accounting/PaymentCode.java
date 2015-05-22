@@ -38,7 +38,6 @@ import pt.ist.fenixframework.Atomic;
 
 public abstract class PaymentCode extends PaymentCode_Base {
 
-    private static final String ENTITY_CODE = FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode();
     public static final String SIBS_IGNORE_MAX_AMOUNT = "99999999.99";
 
     public static Comparator<PaymentCode> COMPARATOR_BY_CODE = new Comparator<PaymentCode>() {
@@ -66,7 +65,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
         super.setWhenCreated(new DateTime());
         super.setWhenUpdated(new DateTime());
         super.setState(PaymentCodeState.NEW);
-        super.setEntityCode(ENTITY_CODE);
+        super.setEntityCode(FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode());
     }
 
     protected void init(final PaymentCodeType paymentCodeType, final YearMonthDay startDate, final YearMonthDay endDate,

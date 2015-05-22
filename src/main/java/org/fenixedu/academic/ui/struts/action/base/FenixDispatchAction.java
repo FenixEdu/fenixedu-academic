@@ -67,7 +67,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     private static final Logger logger = LoggerFactory.getLogger(FenixDispatchAction.class);
 
     protected static final Bennu rootDomainObject = Bennu.getInstance();
-    private static boolean DEV_MODE = CoreConfiguration.getConfiguration().developmentMode();
     protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     @Override
@@ -81,7 +80,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
             saveMessages(request, actionMessages);
         }
 
-        if (DEV_MODE) {
+        if (CoreConfiguration.getConfiguration().developmentMode()) {
             logger.info("CLASS: " + this.getClass().getName() + ", method: " + getFromRequest(request, "method"));
         }
 
