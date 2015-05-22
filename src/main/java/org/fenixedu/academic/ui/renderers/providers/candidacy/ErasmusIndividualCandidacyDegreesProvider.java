@@ -32,8 +32,8 @@ public class ErasmusIndividualCandidacyDegreesProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
         List<Degree> degrees =
-                Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaMasterDegree,
-                        DegreeType::isIntegratedMasterDegree, DegreeType::isBolonhaDegree));
+                Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree,
+                        DegreeType::isBolonhaDegree));
 
         degrees.remove(Degree.readBySigla("MSCIT"));
 

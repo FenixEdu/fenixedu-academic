@@ -72,8 +72,8 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
         String dispatchDate = getDispatchDate() != null ? getDispatchDate().toString("dd/MM/yyyy") : "-";
-        labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ")
-                .appendLabel(dispatchDate).appendLabel(")");
+        labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ").appendLabel(dispatchDate)
+                .appendLabel(")");
 
         return labelFormatter;
     }

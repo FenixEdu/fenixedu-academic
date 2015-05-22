@@ -131,8 +131,7 @@ public class CreateMarkSheetByTeacher {
                 getEvaluationBeansForSeason(markSheetsInformation, curricularCourse);
 
         EvaluationSeason season = findSeason(executionCourse, markSheetEvaluationBean.getEnrolment());
-        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans =
-                getEvaluationBeans(evaluationBeansForSeason, season);
+        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = getEvaluationBeans(evaluationBeansForSeason, season);
 
         evaluationBeans.add(markSheetEvaluationBean);
     }
@@ -151,8 +150,7 @@ public class CreateMarkSheetByTeacher {
     }
 
     private static Collection<MarkSheetEnrolmentEvaluationBean> getEvaluationBeans(
-            Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForSeason,
-            EvaluationSeason season) {
+            Map<EvaluationSeason, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForSeason, EvaluationSeason season) {
         Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = evaluationBeansForSeason.get(season);
         if (evaluationBeans == null) {
             evaluationBeans = new ArrayList<MarkSheetEnrolmentEvaluationBean>();

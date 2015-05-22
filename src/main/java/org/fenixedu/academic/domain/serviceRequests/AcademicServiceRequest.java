@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;

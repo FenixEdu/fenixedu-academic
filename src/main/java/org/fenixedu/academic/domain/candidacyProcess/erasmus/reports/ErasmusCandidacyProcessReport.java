@@ -29,10 +29,10 @@ import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-
-import pt.ist.fenixframework.Atomic;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+
+import pt.ist.fenixframework.Atomic;
 
 public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport_Base {
 

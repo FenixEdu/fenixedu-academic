@@ -26,7 +26,6 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
-import org.fenixedu.academic.util.FileUtils;
 
 import com.google.common.io.ByteStreams;
 

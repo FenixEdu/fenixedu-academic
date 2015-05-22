@@ -27,11 +27,10 @@ import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.domain.Teacher;
-import org.fenixedu.spaces.domain.Space;
-import org.joda.time.DateTime;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+import org.fenixedu.spaces.domain.Space;
+import org.joda.time.DateTime;
 
 public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base {
 

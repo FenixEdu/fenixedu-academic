@@ -59,8 +59,8 @@ public class CandidacyDocumentUploadBean implements Serializable {
     }
 
     public String getActualFile() {
-        return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet",
-                Bundle.CANDIDATE).toString() : actualFile;
+        return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet", Bundle.CANDIDATE)
+                .toString() : actualFile;
     }
 
     public CandidacyDocument getCandidacyDocument() {

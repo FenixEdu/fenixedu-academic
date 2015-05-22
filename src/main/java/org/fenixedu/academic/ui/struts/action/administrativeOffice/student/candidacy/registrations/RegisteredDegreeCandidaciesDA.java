@@ -41,7 +41,6 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 @StrutsFunctionality(app = AcademicAdminListingsApp.class, path = "registered-degree-candidacies",

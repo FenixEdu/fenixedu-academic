@@ -54,11 +54,11 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-
-import pt.ist.fenixframework.FenixFramework;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.fenixedu.commons.spreadsheet.SpreadsheetXLSExporter;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "coordinator",
         formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class,

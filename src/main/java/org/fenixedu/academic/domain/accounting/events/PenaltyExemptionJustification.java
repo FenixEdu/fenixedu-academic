@@ -59,8 +59,7 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(),
-                Bundle.ENUMERATION);
+        labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
 
         return labelFormatter;
 

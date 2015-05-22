@@ -80,8 +80,8 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
         labelFormatter.appendLabel(" (");
         final DiplomaRequest request = (DiplomaRequest) getAcademicServiceRequest();
         if (request.getRequestedCycle() != null) {
-            labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION)
-                    .appendLabel(" ").appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
+            labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" ")
+                    .appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
         }
 
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());

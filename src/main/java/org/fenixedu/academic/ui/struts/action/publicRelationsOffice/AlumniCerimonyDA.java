@@ -49,7 +49,6 @@ import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -59,9 +58,9 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
 import org.joda.time.DateTime;
 
-import com.google.common.io.CharStreams;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import com.google.common.io.CharStreams;
 
 @StrutsFunctionality(app = PublicRelationsApplication.class, path = "alumni-cerimony",
         titleKey = "label.publicRelationOffice.alumniCerimony.inquiries")
@@ -175,7 +174,8 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
         final UsernameFileBean usernameFileBean = getRenderedObject();
-        final String contents = CharStreams.toString(new InputStreamReader(usernameFileBean.getInputStream(), Charset.defaultCharset()));
+        final String contents =
+                CharStreams.toString(new InputStreamReader(usernameFileBean.getInputStream(), Charset.defaultCharset()));
         final Set<String> usernames = findUsernames(contents);
         cerimonyInquiry.addPeople(usernames);
         return forwardToInquiry(mapping, request, "viewAlumniCerimonyInquiry", cerimonyInquiry);

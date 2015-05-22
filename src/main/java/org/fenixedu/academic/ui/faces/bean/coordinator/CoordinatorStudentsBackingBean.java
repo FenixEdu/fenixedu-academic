@@ -38,10 +38,10 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.ist.fenixframework.FenixFramework;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+
+import pt.ist.fenixframework.FenixFramework;
 
 public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 

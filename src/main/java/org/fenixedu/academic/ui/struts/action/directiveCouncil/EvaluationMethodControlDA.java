@@ -38,10 +38,9 @@ import org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluat
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
-import org.joda.time.DateTime;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+import org.joda.time.DateTime;
 
 public abstract class EvaluationMethodControlDA extends FenixDispatchAction {
 

@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.reports;
 import java.io.IOException;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 public class DissertationsProposalsReportFile extends DissertationsProposalsReportFile_Base {

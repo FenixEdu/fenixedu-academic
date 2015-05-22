@@ -116,8 +116,8 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     @Override
     public String getDescription() {
         return MessageFormat.format(BundleUtil.getString(Bundle.PHD, "message.phd.alert.custom.description"),
-                getTargetAccessGroup().getPresentationName(), getWhenToFire().toString("dd/MM/yyyy"),
-                getFormattedSubject(), getFormattedBody());
+                getTargetAccessGroup().getPresentationName(), getWhenToFire().toString("dd/MM/yyyy"), getFormattedSubject(),
+                getFormattedBody());
     }
 
     @Override

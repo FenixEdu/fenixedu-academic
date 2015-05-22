@@ -45,8 +45,7 @@ public class SecondCycleIndividualCandidacyExemptionJustification extends
 
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(getCandidacyExemptionJustificationType().getQualifiedName(),
-                Bundle.ENUMERATION);
+        return new LabelFormatter().appendLabel(getCandidacyExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
     }
 
 }

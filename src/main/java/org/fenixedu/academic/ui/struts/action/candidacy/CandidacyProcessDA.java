@@ -53,14 +53,14 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
+import org.fenixedu.commons.spreadsheet.SpreadsheetXLSExporter;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.helper.StringUtil;
 
 import pt.ist.fenixframework.FenixFramework;
-import org.fenixedu.commons.spreadsheet.Spreadsheet;
-import org.fenixedu.commons.spreadsheet.SpreadsheetXLSExporter;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

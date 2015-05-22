@@ -179,8 +179,7 @@ public class OriginInformationForm extends Form {
     public List<LabelFormatter> validate() {
         if (schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(otherSchoolLevel)) {
             return Collections.singletonList(new LabelFormatter().appendLabel(
-                    "error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled",
-                    Bundle.CANDIDATE));
+                    "error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled", Bundle.CANDIDATE));
         }
 
         LocalDate now = new LocalDate();

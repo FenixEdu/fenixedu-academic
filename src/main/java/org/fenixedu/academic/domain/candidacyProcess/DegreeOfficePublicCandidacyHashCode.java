@@ -146,13 +146,8 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
         String link = getDefaultPublicLink();
 
         body =
-                String.format(
-                        body,
-                        new String[] {
-                                this.getIndividualCandidacyProcess().getProcessCode(),
-                                link,
-                                this.getIndividualCandidacyProcess().getCandidacyProcess().getCandidacyEnd()
-                                        .toString("dd/MM/yyyy") });
+                String.format(body, new String[] { this.getIndividualCandidacyProcess().getProcessCode(), link,
+                        this.getIndividualCandidacyProcess().getCandidacyProcess().getCandidacyEnd().toString("dd/MM/yyyy") });
 
         sendEmail(subject, body);
     }

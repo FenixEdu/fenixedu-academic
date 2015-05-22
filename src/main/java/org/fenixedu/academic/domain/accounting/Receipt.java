@@ -137,10 +137,9 @@ public class Receipt extends Receipt_Base {
 
         final YearMonthDay today = new YearMonthDay();
 
-        if (year < FenixEduAcademicConfiguration.getConfiguration()
-                .getReceiptMinYearToCreate().intValue()) {
-            throw new DomainException("error.accounting.Receipt.invalid.receipt.year", FenixEduAcademicConfiguration.getConfiguration()
-                    .getReceiptMinYearToCreate().toString());
+        if (year < FenixEduAcademicConfiguration.getConfiguration().getReceiptMinYearToCreate().intValue()) {
+            throw new DomainException("error.accounting.Receipt.invalid.receipt.year", FenixEduAcademicConfiguration
+                    .getConfiguration().getReceiptMinYearToCreate().toString());
         }
 
         for (final Entry entry : entries) {

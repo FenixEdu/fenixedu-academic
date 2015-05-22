@@ -31,7 +31,6 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 @Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdministration",

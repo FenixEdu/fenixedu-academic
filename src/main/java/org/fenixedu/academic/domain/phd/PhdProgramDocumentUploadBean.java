@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.util.FileUtils;
 
 import com.google.common.io.ByteStreams;
 

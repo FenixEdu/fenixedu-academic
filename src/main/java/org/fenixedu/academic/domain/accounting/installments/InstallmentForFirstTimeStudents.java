@@ -111,9 +111,8 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
 
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(Bundle.APPLICATION,
-                "label.InstallmentForFirstTimeStudents.description", getInstallmentOrder().toString(),
-                getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
+        return new LabelFormatter().appendLabel(Bundle.APPLICATION, "label.InstallmentForFirstTimeStudents.description",
+                getInstallmentOrder().toString(), getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
                 getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(), getNumberOfDaysToStartApplyingPenalty()
                         .toString());
 

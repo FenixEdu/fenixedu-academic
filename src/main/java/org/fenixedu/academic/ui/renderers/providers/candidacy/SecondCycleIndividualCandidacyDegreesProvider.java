@@ -70,8 +70,7 @@ public class SecondCycleIndividualCandidacyDegreesProvider implements DataProvid
                 return secondCycleCandidacyProcess.getAvailableDegrees();
             }
         }
-        return Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaMasterDegree,
-                DegreeType::isIntegratedMasterDegree));
+        return Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree));
     }
 
     @Override

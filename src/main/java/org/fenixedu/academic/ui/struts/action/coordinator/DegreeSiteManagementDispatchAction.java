@@ -1,20 +1,20 @@
 /**
  * Copyright © 2002 Instituto Superior Técnico
  *
- * This file is part of FenixEdu Core.
+ * This file is part of FenixEdu Academic.
  *
- * FenixEdu Core is free software: you can redistribute it and/or modify
+ * FenixEdu Academic is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * FenixEdu Core is distributed in the hope that it will be useful,
+ * FenixEdu Academic is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.fenixedu.academic.ui.struts.action.coordinator;
 
@@ -54,15 +54,15 @@ import com.google.gson.JsonParser;
  */
 @Mapping(module = "coordinator", path = "/degreeSiteManagement", input = "/degreeSiteManagement.do?method=subMenu&page=0",
         formBean = "degreeInfoForm", functionality = DegreeCoordinatorIndex.class)
-@Forwards({@Forward(name = "editOK", path = "/coordinator/degreeSite/editOK.jsp"),
+@Forwards({ @Forward(name = "editOK", path = "/coordinator/degreeSite/editOK.jsp"),
         @Forward(name = "viewHistoric", path = "/coordinator/degreeSite/viewHistoric.jsp"),
         @Forward(name = "viewInformation", path = "/coordinator/degreeSite/viewDegreeInfo.jsp"),
-        @Forward(name = "viewDescriptionCurricularPlan", path = "/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp")})
+        @Forward(name = "viewDescriptionCurricularPlan", path = "/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp") })
 public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
+            HttpServletResponse response) throws Exception {
         DegreeCoordinatorIndex.setCoordinatorContext(request);
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         if (degreeCurricularPlan != null) {
@@ -101,7 +101,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                         HttpServletResponse response) throws FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         RequestUtils.getAndSetStringToRequest(request, "info");
 
         String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
@@ -129,7 +129,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editDegreeInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                               HttpServletResponse response) {
+            HttpServletResponse response) {
         RequestUtils.getAndSetStringToRequest(request, "info");
         RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
 
@@ -137,7 +137,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                                       HttpServletResponse response) {
+            HttpServletResponse response) {
         String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
@@ -178,7 +178,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                      HttpServletResponse response) {
+            HttpServletResponse response) {
         // read execution degree
         String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);

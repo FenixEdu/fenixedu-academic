@@ -59,8 +59,7 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(),
-                Bundle.ENUMERATION);
+        labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
 
         return labelFormatter;
 

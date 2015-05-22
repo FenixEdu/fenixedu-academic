@@ -162,15 +162,13 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
         if (isPenaltyAppliable()) {
-            labelFormatter.appendLabel(Bundle.APPLICATION,
-                    "label.PartialRegimeInstallment.description.with.penalty", getInstallmentOrder().toString(), getStartDate()
-                            .toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"), buildExecutionSemesterDescription(),
-                    getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
+            labelFormatter.appendLabel(Bundle.APPLICATION, "label.PartialRegimeInstallment.description.with.penalty",
+                    getInstallmentOrder().toString(), getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
+                    buildExecutionSemesterDescription(), getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
                     getWhenStartToApplyPenalty().toString("dd/MM/yyyy"));
         } else {
-            labelFormatter.appendLabel(Bundle.APPLICATION,
-                    "label.PartialRegimeInstallment.description.without.penalty", getInstallmentOrder().toString(),
-                    getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
+            labelFormatter.appendLabel(Bundle.APPLICATION, "label.PartialRegimeInstallment.description.without.penalty",
+                    getInstallmentOrder().toString(), getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
                     buildExecutionSemesterDescription());
         }
 

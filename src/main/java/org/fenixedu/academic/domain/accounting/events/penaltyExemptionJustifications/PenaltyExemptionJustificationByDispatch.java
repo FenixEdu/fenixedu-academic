@@ -65,8 +65,7 @@ public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJus
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(),
-                Bundle.ENUMERATION);
+        labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
         String penaltyExemptionDate =
                 getPenaltyExemptionDispatchDate() != null ? getPenaltyExemptionDispatchDate().toString("dd/MM/yyyy") : "-";
         labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ")

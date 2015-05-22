@@ -63,8 +63,7 @@ public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJ
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(),
-                Bundle.ENUMERATION);
+        labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
         String gratuityExemptionDate =
                 getGratuityExemptionDispatchDate() != null ? getGratuityExemptionDispatchDate().toString("dd/MM/yyyy") : "-";
         labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ")

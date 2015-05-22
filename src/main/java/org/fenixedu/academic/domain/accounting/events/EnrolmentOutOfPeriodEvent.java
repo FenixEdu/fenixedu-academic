@@ -108,8 +108,7 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter =
-                new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION);
+        final LabelFormatter labelFormatter = new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION);
         addCommonDescription(labelFormatter);
 
         return labelFormatter;

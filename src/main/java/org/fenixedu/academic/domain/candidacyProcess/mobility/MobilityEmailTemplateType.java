@@ -84,9 +84,7 @@ public enum MobilityEmailTemplateType {
                             .getLocale().getLanguage());
 
             String processCode = individualCandidacyProcess.getProcessCode();
-            String endDate =
-                    individualCandidacyProcess.getCandidacyProcess().getCandidacyEnd()
-                            .toString("dd/MM/yyyy");
+            String endDate = individualCandidacyProcess.getCandidacyProcess().getCandidacyEnd().toString("dd/MM/yyyy");
 
             if (body.contains("[process_number]")) {
                 body = body.replace("[process_number]", processCode);

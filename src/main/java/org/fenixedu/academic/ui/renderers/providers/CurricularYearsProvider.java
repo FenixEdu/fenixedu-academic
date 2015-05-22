@@ -39,7 +39,8 @@ public class CurricularYearsProvider implements DataProvider {
 
         if (source instanceof HasExecutionDegree) {
             HasExecutionDegree bean = (HasExecutionDegree) source;
-            index = bean.getExecutionDegree() != null ? bean.getExecutionDegree().getDegreeCurricularPlan().getDurationInYears() : null;
+            index =
+                    bean.getExecutionDegree() != null ? bean.getExecutionDegree().getDegreeCurricularPlan().getDurationInYears() : null;
         }
 
         List<CurricularYear> curricularYearsSet = new ArrayList<CurricularYear>();

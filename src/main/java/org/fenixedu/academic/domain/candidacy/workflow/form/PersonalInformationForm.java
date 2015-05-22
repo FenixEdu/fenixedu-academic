@@ -131,8 +131,7 @@ public class PersonalInformationForm extends Form {
         final User user = User.findByUsername(username);
         if (party != null && party != user.getPerson()) {
             result.add(new LabelFormatter().appendLabel(
-                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists",
-                    Bundle.APPLICATION));
+                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists", Bundle.APPLICATION));
         }
     }
 

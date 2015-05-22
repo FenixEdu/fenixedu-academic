@@ -24,10 +24,9 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
-import org.fenixedu.spaces.domain.Space;
-
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+import org.fenixedu.spaces.domain.Space;
 
 public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Base {
 

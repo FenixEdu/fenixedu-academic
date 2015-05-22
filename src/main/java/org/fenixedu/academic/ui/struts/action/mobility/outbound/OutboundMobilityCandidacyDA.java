@@ -57,10 +57,10 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 @StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "outbound-mobility", titleKey = "label.mobility.outbound",
         accessGroup = "academic(MANAGE_MOBILITY_OUTBOUND)")

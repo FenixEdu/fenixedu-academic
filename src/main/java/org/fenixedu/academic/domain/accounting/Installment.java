@@ -142,8 +142,8 @@ public class Installment extends Installment_Base {
 
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(Bundle.APPLICATION, "label.Installment.description", getInstallmentOrder()
-                .toString(), getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"));
+        labelFormatter.appendLabel(Bundle.APPLICATION, "label.Installment.description", getInstallmentOrder().toString(),
+                getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"));
 
         return labelFormatter;
 

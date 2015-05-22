@@ -70,7 +70,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = TeacherTeachingApp.class, path = "execution-course-management",
-titleKey = "label.executionCourseManagement.menu.management")
+        titleKey = "label.executionCourseManagement.menu.management")
 @Mapping(path = "/manageExecutionCourse", module = "teacher")
 public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 

@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher.siteArchive;
 
-
 /**
  * A <tt>Resource</tt> represents something that needs to be retrieved by the
  * {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher} .

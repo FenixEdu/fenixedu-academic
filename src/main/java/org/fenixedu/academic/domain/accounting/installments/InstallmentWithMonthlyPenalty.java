@@ -105,10 +105,9 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(Bundle.APPLICATION, "label.InstallmentWithMonthlyPenalty.description",
-                getInstallmentOrder().toString(), getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"),
-                getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
-                getWhenStartToApplyPenalty().toString("dd/MM/yyyy"));
+        labelFormatter.appendLabel(Bundle.APPLICATION, "label.InstallmentWithMonthlyPenalty.description", getInstallmentOrder()
+                .toString(), getStartDate().toString("dd/MM/yyyy"), getEndDate().toString("dd/MM/yyyy"), getPenaltyPercentage()
+                .multiply(BigDecimal.valueOf(100)).toString(), getWhenStartToApplyPenalty().toString("dd/MM/yyyy"));
 
         return labelFormatter;
     }

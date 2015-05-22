@@ -54,7 +54,7 @@ public class StudentGroupService {
     public Grouping createOrEditGrouping(ProjectGroupBean bean, ExecutionCourse executionCourse) {
         EnrolmentGroupPolicyType enrolmentPolicyType =
                 bean.getAtomicEnrolmentPolicy() != null && bean.getAtomicEnrolmentPolicy() ? new EnrolmentGroupPolicyType(1) : new EnrolmentGroupPolicyType(
-                2);
+                        2);
         ShiftType shiftType =
                 bean.getShiftType() == null || bean.getShiftType().isEmpty() ? null : ShiftType.valueOf(bean.getShiftType());
 

@@ -27,7 +27,6 @@
  */
 package org.fenixedu.academic.util;
 
-
 public class Season extends FenixUtil {
 
     public static final int SEASON1 = 1;

@@ -63,7 +63,9 @@ public class CreateDegree {
             }
         }
 
-        Degree degree = new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, administrativeOffice);
+        Degree degree =
+                new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea,
+                        administrativeOffice);
         Signal.emit(Degree.CREATED_SIGNAL, new DomainObjectEvent<Degree>(degree));
     }
 

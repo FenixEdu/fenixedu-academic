@@ -33,11 +33,10 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
 public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base {
 

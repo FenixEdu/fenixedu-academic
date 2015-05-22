@@ -93,9 +93,9 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION)
-                .appendLabel(" - ").appendLabel("" + getYear()).appendLabel(" (")
-                .appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
+        return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
+                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName().getContent())
+                .appendLabel(")");
     }
 
     @Override

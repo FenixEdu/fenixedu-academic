@@ -49,7 +49,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMFirstYearShiftsApp;
-import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
