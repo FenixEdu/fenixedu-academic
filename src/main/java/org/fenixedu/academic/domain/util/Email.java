@@ -203,6 +203,7 @@ public class Email extends Email_Base {
         @Override
         protected void updateMessageID() throws MessagingException {
             setHeader("Message-ID", getMessageID());
+            setHeader("Date", getMessage().getCreated().toString());
         }
 
         public void send(final Email email) throws MessagingException {
