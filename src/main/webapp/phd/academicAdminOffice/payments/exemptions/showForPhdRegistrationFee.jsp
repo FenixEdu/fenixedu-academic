@@ -45,10 +45,7 @@
 	</fr:view>
 	
 	<h3>
-		<app:labelFormatter name="event" property="description">
-			<app:property name="enum" value="ENUMERATION_RESOURCES"/>
-			<app:property name="application" value="APPLICATION_RESOURCES"/>
-		</app:labelFormatter>
+		${event.description}
 	</h3>
 
 	<bean:define id="personId" name="person" property="externalId" />

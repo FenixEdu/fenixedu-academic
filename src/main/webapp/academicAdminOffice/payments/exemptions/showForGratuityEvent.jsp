@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -45,10 +44,7 @@
 </fr:view>
 
 <h3>	
-	<app:labelFormatter name="event" property="description">
-		<app:property name="enum" value="ENUMERATION_RESOURCES"/>
-		<app:property name="application" value="APPLICATION_RESOURCES"/>
-	</app:labelFormatter>
+	${event.description}
 </h3>
 
 
