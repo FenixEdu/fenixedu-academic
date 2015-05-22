@@ -1211,6 +1211,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
 	class TeacherAuthorization {
+	    protected DateTime creationDate;
 	    protected Boolean contracted (REQUIRED);
 	    protected DateTime revokeTime;
         protected Double lessonHours (REQUIRED);

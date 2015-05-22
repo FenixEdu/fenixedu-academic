@@ -154,6 +154,7 @@ $(document).ready(function() {
 						<th><spring:message code="teacher.authorizations.category" ></spring:message></th>
 						<th><spring:message code="teacher.authorizations.lessonHours" ></spring:message></th>
 						<th><spring:message code="teacher.authorizations.authorized" ></spring:message></th>
+						<th><spring:message code="teacher.authorizations.creation.date" ></spring:message></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -179,6 +180,9 @@ $(document).ready(function() {
 							<td>${auth.teacherCategory.name.content}</td>
 							<td>${auth.lessonHours}</td>
 							<td>${auth.authorizer.name} (${auth.authorizer.username})</td>
+							<td title="${auth.creationDate.toString('dd/MM/yyyy HH:mm:ss')}">
+								${auth.creationDate == null ? '-' : auth.creationDate.toString('dd/MM/yyyy')}
+							</td>
 							<td>
 								<form:form class="revoke" role="form" method="POST" action="${revokeUrl}/${auth.externalId}/revoke" modelAttribute="search">
 									<input type="hidden" name="department" value="${search.department == null ? null : search.department.externalId}"/>

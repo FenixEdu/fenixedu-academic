@@ -29,6 +29,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     protected TeacherAuthorization() {
         super();
         setRootDomainObject(Bennu.getInstance());
+        setCreationDate(DateTime.now());
     }
 
     protected TeacherAuthorization(Teacher teacher, Department department, ExecutionSemester executionSemester,
@@ -61,6 +62,12 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
             }
         }
         return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours);
+    }
+
+    @Override
+    public DateTime getCreationDate() {
+        //FIXME: remove when the framework enables read-only slots
+        return super.getCreationDate();
     }
 
     public void revoke() {
