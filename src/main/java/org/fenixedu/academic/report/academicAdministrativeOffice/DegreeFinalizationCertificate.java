@@ -321,8 +321,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         final Grade grade = entry.getGrade();
         result.append(SINGLE_SPACE).append(grade.getValue());
-        result.append(StringUtils.rightPad(
-                "(" + BundleUtil.getString(Bundle.ENUMERATION, getDocumentRequest().getLanguage(), grade.getValue()) + ")",
+        result.append(StringUtils.rightPad("(" + grade.getExtendedValue().getContent(getDocumentRequest().getLanguage()) + ")",
                 SUFFIX_LENGTH, ' '));
         String values = BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "values");
         result.append(grade.isNumeric() ? values : StringUtils.rightPad(EMPTY_STR, values.length(), ' '));

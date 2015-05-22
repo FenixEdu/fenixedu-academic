@@ -26,12 +26,13 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public enum GradeScale {
 
-    TYPE20(true) {
+    TYPE20(true, new GradeScaleLogic() {
         @Override
-        protected boolean checkFinal(final Grade grade) {
+        public boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
             if (value.equals(NA) || value.equals(RE)) {
                 return true;
@@ -46,7 +47,7 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean checkNotFinal(final Grade grade) {
+        public boolean checkNotFinal(final Grade grade) {
             final String value = grade.getValue();
             if (value.equals(NA) || value.equals(RE)) {
                 return true;
@@ -61,8 +62,8 @@ public enum GradeScale {
         }
 
         @Override
-        protected String qualify(final Grade grade) {
-            if (grade.getGradeScale() != this) {
+        public String qualify(final Grade grade) {
+            if (grade.getGradeScale() != GradeScale.TYPE20) {
                 return StringUtils.EMPTY;
             }
 
@@ -86,13 +87,13 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean isNotEvaluated(final Grade grade) {
+        public boolean isNotEvaluated(final Grade grade) {
             final String value = grade.getValue();
             return grade.isEmpty() || value.equals(GradeScale.NA);
         }
 
         @Override
-        protected boolean isNotApproved(final Grade grade) {
+        public boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
             if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
                 return true;
@@ -106,7 +107,7 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean isApproved(final Grade grade) {
+        public boolean isApproved(final Grade grade) {
             final String value = grade.getValue();
             if (value.equals(GradeScale.AP)) {
                 return true;
@@ -134,11 +135,11 @@ public enum GradeScale {
             }
         }
 
-    },
+    }),
 
-    TYPE5(true) {
+    TYPE5(true, new GradeScaleLogic() {
         @Override
-        protected boolean checkFinal(final Grade grade) {
+        public boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
             if (value.equals(NA) || value.equals(RE)) {
                 return true;
@@ -153,7 +154,7 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean checkNotFinal(final Grade grade) {
+        public boolean checkNotFinal(final Grade grade) {
             final String value = grade.getValue();
             if (value.equals(NA) || value.equals(RE)) {
                 return true;
@@ -168,8 +169,8 @@ public enum GradeScale {
         }
 
         @Override
-        protected String qualify(final Grade grade) {
-            if (grade.getGradeScale() != this) {
+        public String qualify(final Grade grade) {
+            if (grade.getGradeScale() != GradeScale.TYPE5) {
                 return StringUtils.EMPTY;
             }
 
@@ -191,7 +192,7 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean isNotEvaluated(final Grade grade) {
+        public boolean isNotEvaluated(final Grade grade) {
             if (grade.isEmpty()) {
                 return true;
             }
@@ -200,7 +201,7 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean isNotApproved(final Grade grade) {
+        public boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
             if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
                 return true;
@@ -214,7 +215,7 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean isApproved(final Grade grade) {
+        public boolean isApproved(final Grade grade) {
             try {
                 final int intValue = Integer.parseInt(grade.getValue());
                 return 3 <= intValue && intValue <= 5;
@@ -236,25 +237,24 @@ public enum GradeScale {
                 return false;
             }
         }
+    }),
 
-    },
-
-    TYPEAP(true) {
+    TYPEAP(true, new GradeScaleLogic() {
         @Override
-        protected boolean checkFinal(final Grade grade) {
+        public boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(NA) || value.equals(RE) || value.equals(AP);
         }
 
         @Override
-        protected boolean checkNotFinal(final Grade grade) {
+        public boolean checkNotFinal(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(NA) || value.equals(RE) || value.equals(AP);
         }
 
         @Override
-        protected String qualify(final Grade grade) {
-            if (grade.getGradeScale() != this) {
+        public String qualify(final Grade grade) {
+            if (grade.getGradeScale() != GradeScale.TYPEAP) {
                 return StringUtils.EMPTY;
             }
 
@@ -271,19 +271,19 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean isNotEvaluated(final Grade grade) {
+        public boolean isNotEvaluated(final Grade grade) {
             final String value = grade.getValue();
             return grade.isEmpty() || value.equals(GradeScale.NA);
         }
 
         @Override
-        protected boolean isNotApproved(final Grade grade) {
+        public boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(GradeScale.RE) || isNotEvaluated(grade);
         }
 
         @Override
-        protected boolean isApproved(final Grade grade) {
+        public boolean isApproved(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(GradeScale.AP);
         }
@@ -292,25 +292,24 @@ public enum GradeScale {
         public boolean belongsTo(final String value) {
             return value.equals(NA) || value.equals(RE) || value.equals(AP);
         }
+    }),
 
-    },
-
-    TYPEAPT(false) {
+    TYPEAPT(false, new GradeScaleLogic() {
         @Override
-        protected boolean checkFinal(final Grade grade) {
+        public boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(NA) || value.equals(RE) || value.equals(APT);
         }
 
         @Override
-        protected boolean checkNotFinal(final Grade grade) {
+        public boolean checkNotFinal(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(NA) || value.equals(RE) || value.equals(APT);
         }
 
         @Override
-        protected String qualify(final Grade grade) {
-            if (grade.getGradeScale() != this) {
+        public String qualify(final Grade grade) {
+            if (grade.getGradeScale() != GradeScale.TYPEAPT) {
                 return StringUtils.EMPTY;
             }
 
@@ -327,19 +326,19 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean isNotEvaluated(final Grade grade) {
+        public boolean isNotEvaluated(final Grade grade) {
             final String value = grade.getValue();
             return grade.isEmpty() || value.equals(GradeScale.NA);
         }
 
         @Override
-        protected boolean isNotApproved(final Grade grade) {
+        public boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(GradeScale.RE) || isNotEvaluated(grade);
         }
 
         @Override
-        protected boolean isApproved(final Grade grade) {
+        public boolean isApproved(final Grade grade) {
             final String value = grade.getValue();
             return value.equals(GradeScale.APT);
         }
@@ -348,11 +347,9 @@ public enum GradeScale {
         public boolean belongsTo(final String value) {
             return value.equals(NA) || value.equals(RE) || value.equals(APT);
         }
+    }),
 
-    },
-
-    TYPEECTS(false) {
-
+    TYPEECTS(false, new GradeScaleLogic() {
         @Override
         public boolean belongsTo(String value) {
             return value.equals("A") || value.equals("B") || value.equals("C") || value.equals("D") || value.equals("E")
@@ -360,41 +357,65 @@ public enum GradeScale {
         }
 
         @Override
-        protected boolean checkFinal(Grade grade) {
+        public boolean checkFinal(Grade grade) {
             // TODO Auto-generated method stub
             return false;
         }
 
         @Override
-        protected boolean checkNotFinal(Grade grade) {
+        public boolean checkNotFinal(Grade grade) {
             // TODO Auto-generated method stub
             return false;
         }
 
         @Override
-        protected boolean isApproved(Grade grade) {
+        public boolean isApproved(Grade grade) {
             return !(isNotEvaluated(grade) || isNotApproved(grade));
         }
 
         @Override
-        protected boolean isNotApproved(Grade grade) {
+        public boolean isNotApproved(Grade grade) {
             return grade.getValue().equals("F");
         }
 
         @Override
-        protected boolean isNotEvaluated(Grade grade) {
+        public boolean isNotEvaluated(Grade grade) {
             return grade.getValue().equals(NA);
         }
 
         @Override
-        protected String qualify(Grade grade) {
+        public String qualify(Grade grade) {
             // TODO Auto-generated method stub
             return null;
         }
+    });
 
-    };
+    public static interface GradeScaleLogic {
+        @Deprecated
+        boolean checkFinal(final Grade grade);
+
+        @Deprecated
+        boolean checkNotFinal(final Grade grade);
+
+        @Deprecated
+        String qualify(final Grade grade);
+
+        boolean isNotEvaluated(final Grade grade);
+
+        boolean isNotApproved(final Grade grade);
+
+        boolean isApproved(final Grade grade);
+
+        boolean belongsTo(final String value);
+
+        default LocalizedString getExtendedValue(Grade grade) {
+            return BundleUtil.getLocalizedString(Bundle.ENUMERATION, grade.getValue());
+        }
+    }
 
     private boolean isPublic;
+
+    private GradeScaleLogic logic;
 
     static final public String NA = "NA";
 
@@ -404,14 +425,20 @@ public enum GradeScale {
 
     static final public String APT = "APT";
 
-    private GradeScale(final boolean isPublic) {
+    private GradeScale(final boolean isPublic, GradeScaleLogic logic) {
         setPublic(isPublic);
+        setLogic(logic);
     }
 
     public String getName() {
         return name();
     }
 
+    public void setLogic(GradeScaleLogic logic) {
+        this.logic = logic;
+    }
+
+    @Deprecated
     public boolean isValid(final String value, final EvaluationType evaluationType) {
         try {
             final Grade grade = Grade.createGrade(value, this);
@@ -419,38 +446,45 @@ public enum GradeScale {
                 return false;
             }
             if (EvaluationType.FINAL_TYPE.equals(evaluationType)) {
-                return checkFinal(grade);
+                return logic.checkFinal(grade);
             } else {
-                return checkNotFinal(grade);
+                return logic.checkNotFinal(grade);
             }
         } catch (DomainException de) {
             return false;
         }
     }
 
-    abstract protected boolean checkFinal(final Grade grade);
-
-    abstract protected boolean checkNotFinal(final Grade grade);
-
-    abstract protected String qualify(final Grade grade);
-
-    abstract protected boolean isNotEvaluated(final Grade grade);
-
-    abstract protected boolean isNotApproved(final Grade grade);
-
-    abstract protected boolean isApproved(final Grade grade);
-
-    abstract public boolean belongsTo(final String value);
-
-    final protected boolean belongsTo(final Grade grade) {
-        return belongsTo(grade.getValue());
+    public boolean isNotEvaluated(final Grade grade) {
+        return logic.isNotEvaluated(grade);
     }
 
+    public boolean isNotApproved(final Grade grade) {
+        return logic.isNotApproved(grade);
+    }
+
+    public boolean isApproved(final Grade grade) {
+        return logic.isApproved(grade);
+    }
+
+    public boolean belongsTo(final String grade) {
+        return logic.belongsTo(grade);
+    }
+
+    public boolean belongsTo(final Grade grade) {
+        return logic.belongsTo(grade.getValue());
+    }
+
+    public LocalizedString getExtendedValue(Grade grade) {
+        return logic.getExtendedValue(grade);
+    }
+
+    @Deprecated
     final public String getQualifiedName(final String value) {
         final Grade grade = Grade.createGrade(value, this);
 
-        if (isApproved(grade)) {
-            return qualify(grade);
+        if (logic.isApproved(grade)) {
+            return logic.qualify(grade);
         } else {
             throw new DomainException("GradeScale.unable.to.qualify.given.grade");
         }

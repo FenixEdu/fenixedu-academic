@@ -20,12 +20,12 @@ package org.fenixedu.academic.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class Grade implements Serializable, Comparable<Grade> {
 
@@ -193,12 +193,8 @@ public class Grade implements Serializable, Comparable<Grade> {
         return getGradeScale().isNotEvaluated(this);
     }
 
-    public String getEctsScale() {
-        return GradeDistribution.ECTS_SCALE_20.getDistribution(this).getScale();
-    }
-
-    static public Grade average(@SuppressWarnings("unused") final Collection<Grade> grades) {
-        return null;
+    public LocalizedString getExtendedValue() {
+        return gradeScale.getExtendedValue(this);
     }
 
     public EnrollmentState getEnrolmentState() {
