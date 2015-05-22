@@ -1324,8 +1324,14 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             class accounting.events.insurance.InsuranceEvent extends accounting.events.AnnualEvent {
             }
 
-        class accounting.events.ImprovementOfApprovedEnrolmentEvent extends accounting.AcademicEvent {
+        class accounting.events.EnrolmentEvent extends accounting.AcademicEvent {
         }
+
+	        class accounting.events.ImprovementOfApprovedEnrolmentEvent extends accounting.events.EnrolmentEvent {
+    	    }
+
+        	class accounting.events.SpecialSeasonEnrolmentEvent extends accounting.events.EnrolmentEvent {
+        	}
 
         class accounting.events.dfa.DFACandidacyEvent extends accounting.AcademicEvent {
         }
@@ -1741,6 +1747,10 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             class accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money fixedAmount;
                 Money fixedAmountPenalty;
+            }
+
+            class accounting.postingRules.SpecialSeasonEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
+                Money fixedAmount;
             }
 
             class accounting.postingRules.gratuity.DFAGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
@@ -6958,6 +6968,13 @@ relation EnrolmentEvaluationImprovementOfApprovedEnrolmentEvent {
         multiplicity *;
     }
     accounting.events.ImprovementOfApprovedEnrolmentEvent playsRole improvementOfApprovedEnrolmentEvent;
+}
+
+relation EnrolmentEvaluationSpecialSeasonEnrolmentEvent {
+    EnrolmentEvaluation playsRole specialSeasonEnrolmentEvaluations {
+        multiplicity *;
+    }
+    accounting.events.SpecialSeasonEnrolmentEvent playsRole specialSeasonEnrolmentEvent;
 }
 
 relation EnrolmentEvaluationResponsiblePerson {

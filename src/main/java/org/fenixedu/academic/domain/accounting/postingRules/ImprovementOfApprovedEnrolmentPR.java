@@ -42,7 +42,6 @@ import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
 public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrolmentPR_Base {
 
@@ -75,8 +74,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
                 "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.cannot.modify.fixedAmountPenalty");
     }
 
-    public ImprovementOfApprovedEnrolmentPR edit(final Money fixedAmount, final Money fixedAmountPenalty,
-            final YearMonthDay whenToApplyFixedAmountPenalty) {
+    public ImprovementOfApprovedEnrolmentPR edit(final Money fixedAmount, final Money fixedAmountPenalty) {
         deactivate();
         return new ImprovementOfApprovedEnrolmentPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
                 fixedAmountPenalty);

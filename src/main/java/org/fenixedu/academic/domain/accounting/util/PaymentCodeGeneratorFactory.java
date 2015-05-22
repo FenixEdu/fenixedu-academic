@@ -50,6 +50,7 @@ public class PaymentCodeGeneratorFactory {
         case EXTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS:
         case OVER_23_INDIVIDUAL_CANDIDACY_PROCESS:
         case PHD_PROGRAM_CANDIDACY_PROCESS:
+        case SPECIAL_SEASON_ENROLMENT:
             return individualCandidacyPaymentCodeGenerator;
         case RECTORATE:
             return rectoratePaymentCodeGenerator;
