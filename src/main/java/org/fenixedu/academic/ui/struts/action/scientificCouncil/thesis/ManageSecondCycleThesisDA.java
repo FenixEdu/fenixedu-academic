@@ -56,6 +56,8 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 import com.google.common.io.ByteStreams;
 
@@ -347,9 +349,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         ThesisFileBean bean = getRenderedObject();
         RenderUtils.invalidateViewState();
 
-        if (thesis.getVisibility() == null) {
-            atomic(() -> thesis.setVisibility(ThesisVisibilityType.INTRANET));
-        }
+        setThesisVisibility(thesis);
 
         if (bean != null && bean.getFile() != null) {
             if (thesis.getTitle() != null) {
@@ -368,6 +368,13 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         }
 
         return showThesisDetails(mapping, request, thesis);
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void setThesisVisibility(final Thesis thesis) {
+        if (thesis.getVisibility() == null) {
+            atomic(() -> thesis.setVisibility(ThesisVisibilityType.INTRANET));
+        }
     }
 
     public ActionForward approveThesis(final ActionMapping mapping, final ActionForm actionForm,
