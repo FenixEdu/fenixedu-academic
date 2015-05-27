@@ -208,18 +208,6 @@
 	<!-- END: COORDINATOR Managed Beans -->
 
 	<managed-bean>
-		<managed-bean-name>publicEvaluations</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.publico.PublicEvaluationsBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>DepartmentManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.publico.DepartmentManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
 		<managed-bean-name>studentCalendar</managed-bean-name>
 		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.student.StudentCalendarBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
