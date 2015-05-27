@@ -166,31 +166,7 @@ public class CurriculumRenderer extends InputRenderer {
 
     private class AverageLayout extends Layout {
 
-        private static final String SPACER_IMAGE_PATH = "/images/scp_spacer.gif";
-
-        private static final int MAX_LINE_SIZE = 6;
-
-        private static final int MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS = 17;
-
         private static final int MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES = 14;
-
-        private static final int HEADERS_SIZE = 0;
-
-        private static final int COLUMNS_BETWEEN_TEXT_AND_GRADE = 0;
-
-        private static final int COLUMNS_BETWEEN_TEXT_AND_ECTS = 2;
-
-        private static final int COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE = 3;
-
-        private static final int COLUMNS_BETWEEN_ECTS_AND_ENROLMENT_EVALUATION_DATE =
-                COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE - 1;
-
-        private static final int COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE = COLUMNS_BETWEEN_TEXT_AND_ECTS
-                + COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE;
-
-        private static final int LATEST_ENROLMENT_EVALUATION_COLUMNS = 2;
-
-        private static final String DATE_FORMAT = "yyyy/MM/dd";
 
         private Curriculum curriculum;
 
@@ -380,23 +356,6 @@ public class CurriculumRenderer extends InputRenderer {
             cell.setClasses(cssClass);
             cell.setText(text);
             cell.setColspan(colSpan);
-        }
-
-        private void generateCellWithSpan(final HtmlTableRow row, final String text, final String title, final String cssClass) {
-            generateCellWithSpan(row, text, title, cssClass, 1);
-        }
-
-        private void generateCellWithSpan(final HtmlTableRow row, final String text, final String title, final String cssClass,
-                final Integer colSpan) {
-            final HtmlTableCell cell = row.createCell();
-            cell.setClasses(cssClass);
-            cell.setColspan(colSpan);
-
-            final HtmlInlineContainer span = new HtmlInlineContainer();
-            span.addChild(new HtmlText(text));
-            span.setTitle(title);
-
-            cell.setBody(span);
         }
 
         private void generateCurricularYearRows(final HtmlTable table) {

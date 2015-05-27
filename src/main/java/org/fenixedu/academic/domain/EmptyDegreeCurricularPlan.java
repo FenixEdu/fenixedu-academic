@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.ExecutionCourseView;
 import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -389,12 +388,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
 
     @Override
     public CurricularPeriod createCurricularPeriodFor(int year, int semester) {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
-
-    @Override
-    public void addExecutionCourses(final Collection<ExecutionCourseView> executionCourseViews,
-            final ExecutionSemester... executionPeriods) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }
 

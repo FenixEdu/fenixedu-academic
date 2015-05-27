@@ -1108,10 +1108,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return infoRoom.getExternalId() + "-" + infoRoom.getCapacidadeExame();
     }
 
-    private String getRoomWithExamCapacityString(Space room) {
-        return room.getExternalId() + "-" + room.<Integer> getMetadata("examCapacity").orElse(0);
-    }
-
     public String getAssociatedRooms() throws FenixServiceException {
         StringBuilder result = new StringBuilder();
 

@@ -67,7 +67,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
-import org.fenixedu.academic.dto.ExecutionCourseView;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.DegreeCurricularPlanPredicates;
@@ -1357,51 +1356,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         } else {
             return super.getEndDateYearMonthDay();
         }
-    }
-
-    public void addExecutionCourses(final Collection<ExecutionCourseView> executionCourseViews,
-            final ExecutionSemester... executionPeriods) {
-        if (executionCourseViews != null && executionPeriods != null) {
-            addExecutionCourses(getRoot(), executionCourseViews, executionPeriods);
-        }
-    }
-
-    private void addExecutionCourses(final CourseGroup courseGroup, final Collection<ExecutionCourseView> executionCourseViews,
-            final ExecutionSemester... executionPeriods) {
-        for (final Context context : courseGroup.getChildContextsSet()) {
-            for (final ExecutionSemester executionSemester : executionPeriods) {
-                if (context.isValid(executionSemester)) {
-                    final DegreeModule degreeModule = context.getChildDegreeModule();
-                    if (degreeModule.isLeaf()) {
-                        final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-                        for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                            if (executionCourse.getExecutionPeriod() == executionSemester) {
-                                final Integer curricularYear = context.getCurricularYear();
-                                executionCourseViews.add(constructExecutionCourseView(executionCourse, curricularYear));
-                            }
-                        }
-                    } else {
-                        final CourseGroup childCourseGroup = (CourseGroup) degreeModule;
-                        addExecutionCourses(childCourseGroup, executionCourseViews, executionPeriods);
-                    }
-                }
-            }
-        }
-    }
-
-    private ExecutionCourseView constructExecutionCourseView(final ExecutionCourse executionCourse, final Integer curricularYear) {
-        final ExecutionCourseView executionCourseView = new ExecutionCourseView(executionCourse);
-        executionCourseView.setCurricularYear(curricularYear);
-        executionCourseView.setDegreeCurricularPlanAnotation(getAnotation());
-        return executionCourseView;
-    }
-
-    private ExecutionCourseView constructExecutionCourseView(final ExecutionCourse executionCourse,
-            final CurricularCourseScope curricularCourseScope) {
-        final Integer curricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
-        final ExecutionCourseView executionCourseView = constructExecutionCourseView(executionCourse, curricularYear);
-        executionCourseView.setAnotation(curricularCourseScope.getAnotation());
-        return executionCourseView;
     }
 
     public Collection<StudentCurricularPlan> getActiveStudentCurricularPlans() {
