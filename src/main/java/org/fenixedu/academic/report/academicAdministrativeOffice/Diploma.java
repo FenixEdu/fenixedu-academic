@@ -186,7 +186,7 @@ public class Diploma extends AdministrativeOfficeDocument {
     private void forOthers(StringBuilder result, final DiplomaRequest diplomaRequest, final Registration registration) {
         final DegreeType degreeType = registration.getDegreeType();
 
-        if (degreeType.hasAnyCycleTypes()) {
+        if (degreeType.hasAnyCycleTypes() && diplomaRequest.getRequestedCycle() != null) {
             result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), diplomaRequest.getRequestedCycle()
                     .getQualifiedName()));
             result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "of.masculine"))
@@ -223,6 +223,15 @@ public class Diploma extends AdministrativeOfficeDocument {
         }
 
         return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
+    }
+
+    @Override
+    protected String getDegreeDescription() {
+        if (getRegistration() == null) {
+            return super.getDegreeDescription();
+        }
+        return getRegistration().getDegreeDescription(getRegistration().getStartExecutionYear(),
+                getDocumentRequest().getProgramConclusion(), getLocale());
     }
 
 }

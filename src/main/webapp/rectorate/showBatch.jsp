@@ -77,7 +77,7 @@
 			type="org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry">
 			<fr:slot name="registryCode.code" key="label.rectorateSubmission.registryCode" />
 			<fr:slot name="documentRequestType" key="label.rectorateSubmission.registryCode" />
-			<fr:slot name="requestedCycle" key="label.rectorateSubmission.requestedCycle" />
+			<fr:slot name="requestedCycle" layout="null-as-label" key="label.rectorateSubmission.requestedCycle" />
 			<fr:slot name="programmeTypeDescription" key="label.degreeType" />
 			<fr:slot name="student.number" key="label.studentNumber" />
 			<fr:slot name="person.name" key="label.Student.Person.name" />

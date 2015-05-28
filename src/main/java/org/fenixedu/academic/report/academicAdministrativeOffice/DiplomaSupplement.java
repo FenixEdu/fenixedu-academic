@@ -207,7 +207,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                         + SINGLE_SPACE
                         + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.of")
                         + SINGLE_SPACE + institutionsUniversityUnit.getName());
-        if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)) {
+        if (CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle())) {
             addParameter("languages", BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "pt"));
         } else {
             addParameter(
@@ -272,7 +272,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     private void addProgrammeRequirements(String graduateDegree) {
         String labelThe =
-                getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE) ? BundleUtil.getString(Bundle.ACADEMIC,
+                CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle()) ? BundleUtil.getString(Bundle.ACADEMIC,
                         getLocale(), "label.the.female") : BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.the.male");
         double ectsCreditsValue = getDocumentRequest().getEctsCredits();
         String ectsCredits =
@@ -316,7 +316,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     protected void addProfessionalStatus() {
         String professionalStatus;
 
-        if (!getDocumentRequest().getRequestedCycle().equals(CycleType.SECOND_CYCLE)) {
+        if (!CycleType.SECOND_CYCLE.equals(getDocumentRequest().getRequestedCycle())) {
             professionalStatus =
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.professionalstatus.notapplicable");
         } else {
