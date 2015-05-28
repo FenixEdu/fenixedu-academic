@@ -25,6 +25,8 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.contacts.PartyContactValidationState;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressValidation;
 
+import com.google.common.io.ByteStreams;
+
 public class PhysicalAddressValidationBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -98,9 +100,8 @@ public class PhysicalAddressValidationBean implements Serializable {
     }
 
     public byte[] readStream() throws IOException {
-        byte[] data = new byte[getFileSize().intValue()];
-        stream.read(data);
-        stream.close();
-        return data;
+        try (InputStream stream = this.stream) {
+            return ByteStreams.toByteArray(stream);
+        }
     }
 }

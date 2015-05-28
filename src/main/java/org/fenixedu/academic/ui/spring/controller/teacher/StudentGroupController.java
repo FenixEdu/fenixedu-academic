@@ -59,10 +59,12 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumR
 @RequestMapping("/teacher/{executionCourse}/student-groups/{grouping}")
 public class StudentGroupController extends ExecutionCourseController {
 
-    @Autowired
-    StudentGroupService studentGroupService;
+    private final StudentGroupService studentGroupService;
 
-    Grouping grouping;
+    @Autowired
+    public StudentGroupController(StudentGroupService studentGroupService) {
+        this.studentGroupService = studentGroupService;
+    }
 
     @Override
     protected Class<?> getFunctionalityType() {
@@ -74,20 +76,14 @@ public class StudentGroupController extends ExecutionCourseController {
         return prof.getPermissions().getGroups();
     }
 
-    @ModelAttribute("Grouping")
-    public Grouping getGrouping(@PathVariable Grouping grouping) {
-        this.grouping = grouping;
-        return grouping;
-    }
-
     @RequestMapping(value = "/createStudentGroup", method = RequestMethod.POST)
-    public AbstractUrlBasedView createStudentGroup(Model model, @ModelAttribute("addStudent") @Validated AttendsBean addStudents,
-            BindingResult bindingResult) {
-        return createStudentGroup(model, null, addStudents, bindingResult);
+    public AbstractUrlBasedView createStudentGroup(Model model, @PathVariable Grouping grouping,
+            @ModelAttribute("addStudent") @Validated AttendsBean addStudents, BindingResult bindingResult) {
+        return createStudentGroup(model, grouping, null, addStudents, bindingResult);
     }
 
     @RequestMapping(value = "/shift/{shift}/createStudentGroup", method = RequestMethod.POST)
-    public AbstractUrlBasedView createStudentGroup(Model model, @PathVariable Shift shift,
+    public AbstractUrlBasedView createStudentGroup(Model model, @PathVariable Grouping grouping, @PathVariable Shift shift,
             @ModelAttribute("addStudent") @Validated AttendsBean addStudents, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/view/"
@@ -100,7 +96,7 @@ public class StudentGroupController extends ExecutionCourseController {
     }
 
     @RequestMapping(value = "/viewStudentGroup/{studentGroup}", method = RequestMethod.GET)
-    public TeacherView viewStudentGroup(Model model, @PathVariable StudentGroup studentGroup) {
+    public TeacherView viewStudentGroup(Model model, @PathVariable Grouping grouping, @PathVariable StudentGroup studentGroup) {
 
         model.addAttribute("studentGroup", studentGroup);
 
@@ -131,7 +127,7 @@ public class StudentGroupController extends ExecutionCourseController {
     }
 
     @RequestMapping(value = "/editStudentGroupAttends/{studentGroup}", method = RequestMethod.POST)
-    public AbstractUrlBasedView editStudentGroupAttends(Model model,
+    public AbstractUrlBasedView editStudentGroupAttends(Model model, @PathVariable Grouping grouping,
             @ModelAttribute("attends") @Validated AttendsBean attendsBean, @PathVariable StudentGroup studentGroup,
             BindingResult bindingResult) {
 
@@ -141,7 +137,7 @@ public class StudentGroupController extends ExecutionCourseController {
             model.addAttribute("removeStudent", studentsToRemove);
             model.addAttribute("addStudent", studentsToAdd);
             model.addAttribute("errors", "binding error " + bindingResult.getAllErrors());
-            return viewStudentGroup(model, studentGroup);
+            return viewStudentGroup(model, grouping, studentGroup);
         }
 
         studentGroupService.updateStudentGroupMembers(studentGroup, studentsToRemove, studentsToAdd);
@@ -150,7 +146,7 @@ public class StudentGroupController extends ExecutionCourseController {
     }
 
     @RequestMapping(value = "/editStudentGroupShift/{studentGroup}", method = RequestMethod.POST)
-    public AbstractUrlBasedView editStudentGroupShift(@PathVariable StudentGroup studentGroup,
+    public AbstractUrlBasedView editStudentGroupShift(@PathVariable Grouping grouping, @PathVariable StudentGroup studentGroup,
             @ModelAttribute("newShift") @Validated Shift newShift, BindingResult bindingResult) {
         studentGroupService.updateStudentGroupShift(studentGroup, newShift);
         return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/" + grouping.getExternalId()
@@ -184,10 +180,11 @@ public class StudentGroupController extends ExecutionCourseController {
     }
 
     @RequestMapping(value = "/deleteStudentGroup/{studentGroup}", method = RequestMethod.POST)
-    public AbstractUrlBasedView deleteStudentGroup(Model model, @PathVariable StudentGroup studentGroup) {
+    public AbstractUrlBasedView deleteStudentGroup(Model model, @PathVariable Grouping grouping,
+            @PathVariable StudentGroup studentGroup) {
         if (!studentGroup.getAttendsSet().isEmpty()) {
             model.addAttribute("errors", "errors.invalid.delete.not.empty.studentGroup");
-            return viewStudentGroup(model, studentGroup);
+            return viewStudentGroup(model, grouping, studentGroup);
         }
         studentGroupService.deleteStudentGroup(studentGroup);
         return new RedirectView("/teacher/" + executionCourse.getExternalId() + "/student-groups/view/"

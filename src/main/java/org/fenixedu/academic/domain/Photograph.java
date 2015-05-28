@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.fenixedu.academic.domain.photograph.AspectRatio;
 import org.fenixedu.academic.domain.photograph.Picture;
@@ -32,10 +33,10 @@ import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.ContentType;
+import org.fenixedu.bennu.core.domain.Avatar;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.commons.i18n.I18N;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
@@ -43,13 +44,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 
-import com.google.common.io.ByteStreams;
-
 public class Photograph extends Photograph_Base implements Comparable<Photograph> {
-
-    private static final int COMPRESSED_PHOTO_WIDTH = 100;
-
-    private static final int COMPRESSED_PHOTO_HEIGHT = 100;
 
     private static final String REJECTION_MAIL_SUBJECT_KEY = "photo.email.subject.rejection";
 
@@ -218,12 +213,8 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     public static byte[] mysteryManPhoto(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
-        BufferedImage image;
-        try {
-            image =
-                    Picture.readImage(ByteStreams.toByteArray(Photograph.class.getClassLoader().getResourceAsStream(
-                            "images/photo_placer01_" + I18N.getLocale().getLanguage() + ".gif")));
-            return processImage(image, xRatio, yRatio, width, height, pictureMode);
+        try (InputStream mm = Photograph.class.getClassLoader().getResourceAsStream("META-INF/resources/img/mysteryman.png")) {
+            return Avatar.process(mm, "image/png", width);
         } catch (IOException e) {
             return null;
         }

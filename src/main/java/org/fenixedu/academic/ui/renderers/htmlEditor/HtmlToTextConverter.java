@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,7 +98,7 @@ public class HtmlToTextConverter extends TidyConverter {
         parseNode(tidy, document, "");
 
         try {
-            Writer writer = new OutputStreamWriter(outStream);
+            Writer writer = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
             writer.write(this.buffer.toString());
             writer.flush();
         } catch (IOException e) {
@@ -238,7 +239,7 @@ public class HtmlToTextConverter extends TidyConverter {
             throw new ConversionException("renderers.converter.text.write");
         }
 
-        return new String(outStream.toByteArray());
+        return new String(outStream.toByteArray(), StandardCharsets.UTF_8);
     }
 
     private String getChildTextContent(Tidy tidy, Node node) {

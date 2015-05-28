@@ -81,8 +81,6 @@ import pt.ist.fenixframework.FenixFramework;
                 handler = FenixErrorExceptionHandler.class, scope = "request") })
 public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
     @EntryPoint
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -161,7 +159,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             final DegreeType degreeType = FenixFramework.getDomainObject(degreeTypeString);
             final StudentCurricularPlanState studentCurricularPlanState =
                     StudentCurricularPlanState.valueOf(studentCurricularPlanStateString);
-            final Date startDate = simpleDateFormat.parse(startDateString);
+            final Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(startDateString);
 
             final User userView = Authenticate.getUser();
 

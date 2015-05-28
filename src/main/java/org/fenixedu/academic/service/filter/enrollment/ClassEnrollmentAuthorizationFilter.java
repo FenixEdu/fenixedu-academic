@@ -22,8 +22,6 @@
  */
 package org.fenixedu.academic.service.filter.enrollment;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -38,7 +36,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
@@ -48,10 +45,6 @@ import org.fenixedu.bennu.core.security.Authenticate;
 public class ClassEnrollmentAuthorizationFilter {
 
     public static final ClassEnrollmentAuthorizationFilter instance = new ClassEnrollmentAuthorizationFilter();
-
-    private static SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-    private static String comparableDateFormatString = "yyyyMMddHHmm";
 
     private static ConcurrentLinkedQueue<ClassEnrollmentCondition> conditions = new ConcurrentLinkedQueue<>();
 
@@ -122,19 +115,11 @@ public class ClassEnrollmentAuthorizationFilter {
             return new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
         }
 
-        Date now = new Date();
-        Date startDate = enrolmentPeriodInClasses.getStartDate();
-        Date endDate = enrolmentPeriodInClasses.getEndDate();
-
-        if (DateFormatUtil.compareDates(comparableDateFormatString, startDate, now) > 0
-                || DateFormatUtil.compareDates(comparableDateFormatString, endDate, now) < 0) {
-            String startDateString = outputDateFormat.format(startDate);
-            String endDateString = outputDateFormat.format(endDate);
-
+        if (!enrolmentPeriodInClasses.isValid()) {
             StringBuilder buffer = new StringBuilder();
-            buffer.append(startDateString);
+            buffer.append(enrolmentPeriodInClasses.getStartDateDateTime().toString("dd/MM/yyyy HH:mm"));
             buffer.append(" - ");
-            buffer.append(endDateString);
+            buffer.append(enrolmentPeriodInClasses.getEndDateDateTime().toString("dd/MM/yyyy HH:mm"));
             buffer.append(" (").append(enrolmentPeriodInClasses.getExecutionPeriod().getExecutionYear().getName()).append(")");
             return new OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(buffer.toString());
         }

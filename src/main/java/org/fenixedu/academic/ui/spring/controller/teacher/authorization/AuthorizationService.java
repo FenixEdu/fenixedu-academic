@@ -160,9 +160,9 @@ public class AuthorizationService {
 
         if (user.getPerson().getTeacher() == null) {
             teacher = new Teacher(user.getPerson());
+        } else {
+            teacher = user.getPerson().getTeacher();
         }
-
-        teacher = user.getPerson().getTeacher();
 
         return TeacherAuthorization.createOrUpdate(teacher, department, semester, category, contracted, lessonHours);
     }

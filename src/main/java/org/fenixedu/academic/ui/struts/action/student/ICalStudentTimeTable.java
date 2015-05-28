@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.student;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.crypto.Cipher;
@@ -129,7 +130,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                 cipher.doFinal(("This is for " + to + " calendar ##" + "1.6180339##Sistema Fenix##"
                         + user.getPrivateKey().getPrivateKeyCreation().toString() + "##" + reg.getExternalId() + "##"
                         + user.getPrivateKey().getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar")
-                        .getBytes());
+                        .getBytes(StandardCharsets.UTF_8));
 
         return Hashing.sha1().hashBytes(encrypted).toString();
     }

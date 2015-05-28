@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.service.services.person;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -48,7 +50,7 @@ public class InitializePassword {
         OutputBean output = null;
         if (post.getStatus() == 200) {
             String entity = post.readEntity(String.class);
-            output = new Gson().fromJson((String) entity, OutputBean.class);
+            output = new Gson().fromJson(entity, OutputBean.class);
         }
 
         if (output == null || output.getErrno() != 0) {
@@ -64,7 +66,7 @@ public class InitializePassword {
         String userpass =
                 config.getWebServicesInternationalRegistrationUsername() + ":"
                         + config.getWebServicesInternationalRegistrationPassword();
-        String encoding = new String(BaseEncoding.base64().encode(userpass.getBytes()));
+        String encoding = new String(BaseEncoding.base64().encode(userpass.getBytes(StandardCharsets.UTF_8)));
         return "Basic " + encoding;
     }
 

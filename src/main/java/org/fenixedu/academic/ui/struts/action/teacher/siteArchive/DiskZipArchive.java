@@ -77,17 +77,17 @@ public class DiskZipArchive extends DiskArchive {
         ZipEntry entry = new ZipEntry(prefix + file.getName());
         zipStream.putNextEntry(entry);
 
-        FileInputStream fileStream = new FileInputStream(file);
+        try (FileInputStream fileStream = new FileInputStream(file)) {
+            byte[] buffer = new byte[2048];
+            int length;
 
-        byte[] buffer = new byte[2048];
-        int length;
+            while ((length = fileStream.read(buffer)) != -1) {
+                zipStream.write(buffer, 0, length);
+            }
 
-        while ((length = fileStream.read(buffer)) != -1) {
-            zipStream.write(buffer, 0, length);
+            zipStream.closeEntry();
         }
 
-        fileStream.close();
-        zipStream.closeEntry();
     }
 
 }

@@ -26,6 +26,7 @@ import java.util.Set;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -137,18 +138,21 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
             throws IOException {
         final User userView = Authenticate.getUser();
         if (userView == null) {
-            final String externalUser = (String) request.getSession().getAttribute(getClass().getName());
-            if (externalUser != null && !externalUser.isEmpty()) {
-                return null;
-            }
-            final String username = get(request, "username");
-            if (username == null) {
-                return displayLoginPage(request, response);
-            }
-            final String password = get(request, "password");
-            if (isValidExternalUser(username, password)) {
-                request.getSession().setAttribute(getClass().getName(), username);
-                return null;
+            HttpSession session = request.getSession();
+            synchronized (session) {
+                final String externalUser = (String) request.getSession().getAttribute(getClass().getName());
+                if (externalUser != null && !externalUser.isEmpty()) {
+                    return null;
+                }
+                final String username = get(request, "username");
+                if (username == null) {
+                    return displayLoginPage(request, response);
+                }
+                final String password = get(request, "password");
+                if (isValidExternalUser(username, password)) {
+                    request.getSession().setAttribute(getClass().getName(), username);
+                    return null;
+                }
             }
         } else if (RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
             return null;

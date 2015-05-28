@@ -86,13 +86,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public static final String CREATED_SIGNAL = "academic.executionCourse.create";
 
     public static List<ExecutionCourse> readNotEmptyExecutionCourses() {
-        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>(Bennu.getInstance().getExecutionCoursesSet());
-        for (ExecutionCourse ec : result) {
-            if (ec == null) {
-                result.remove(ec);
-            }
-        }
-        return result;
+        return new ArrayList<ExecutionCourse>(Bennu.getInstance().getExecutionCoursesSet());
     }
 
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR =
