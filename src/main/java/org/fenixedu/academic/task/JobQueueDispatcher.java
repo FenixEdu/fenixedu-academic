@@ -42,7 +42,7 @@ import pt.ist.fenixframework.Atomic.TxMode;
 
 @Task(englishTitle = "JobQueueDispatcher", readOnly = true)
 public class JobQueueDispatcher extends CronTask {
-    private class QueueComparator implements Comparator<QueueJob> {
+    private static class QueueComparator implements Comparator<QueueJob> {
         @Override
         public int compare(final QueueJob queueJob1, final QueueJob queueJob2) {
             final Integer fc1 = queueJob1.getFailedCounter();

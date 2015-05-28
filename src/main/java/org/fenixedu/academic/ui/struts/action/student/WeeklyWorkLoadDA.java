@@ -75,7 +75,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         }
     };
 
-    public class WeeklyWorkLoadView {
+    public static class WeeklyWorkLoadView {
         final Interval executionPeriodInterval;
 
         final int numberOfWeeks;

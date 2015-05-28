@@ -45,7 +45,7 @@ public class DateValidator implements Validator, StateHolder {
 
     private boolean _transient = false;
 
-    private final String INVALID_DATE = "org.fenixedu.academic.ui.faces.validators.dateValidator.INVALID_DATE";
+    private static final String INVALID_DATE = "org.fenixedu.academic.ui.faces.validators.dateValidator.INVALID_DATE";
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {

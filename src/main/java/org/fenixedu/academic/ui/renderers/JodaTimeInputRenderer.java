@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.renderers.converters.DateConverter;
 
 public class JodaTimeInputRenderer extends DateInputRenderer {
 
-    public class JodaTimeConverter extends DateConverter {
+    public static class JodaTimeConverter extends DateConverter {
 
         public JodaTimeConverter(SimpleDateFormat format) {
             super(format);

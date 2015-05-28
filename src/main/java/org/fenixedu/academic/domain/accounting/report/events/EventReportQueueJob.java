@@ -564,7 +564,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         return result;
     }
 
-    private class ExemptionBean {
+    private static class ExemptionBean {
         public String eventExternalId;
         public String exemptionTypeDescription;
         public String exemptionValue;
@@ -712,7 +712,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         return result;
     }
 
-    private class AccountingTransactionBean {
+    private static class AccountingTransactionBean {
 
         public String eventExternalId;
         public String whenRegistered;

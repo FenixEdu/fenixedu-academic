@@ -66,7 +66,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    public class CurricularYearWeeklyWorkLoadView {
+    public static class CurricularYearWeeklyWorkLoadView {
         Interval interval;
         int numberOfWeeks;
 

@@ -561,7 +561,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     }
 
-    public class OfficialPublicationBean extends DegreeManagementBackingBean {
+    public static class OfficialPublicationBean extends DegreeManagementBackingBean {
 
         private String date;
         private String officialReference;
@@ -575,7 +575,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         private DegreeSpecializationArea specializationAreaToDelete;
         private DegreeOfficialPublication degreeOfficialPublicationGoBack;
 
-        public class Pair extends FenixBackingBean {
+        public static class Pair extends FenixBackingBean {
             private String firstValue;
             private String secondValue;
             private final DegreeSpecializationArea areaReference;

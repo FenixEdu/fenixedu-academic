@@ -356,7 +356,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private class InvalidSpreadSheetName extends Exception {
+    private static class InvalidSpreadSheetName extends Exception {
         private final String requestedSheet;
         private final String[] availableSpreadSheets;
 

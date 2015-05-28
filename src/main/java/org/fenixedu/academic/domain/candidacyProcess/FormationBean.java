@@ -35,7 +35,7 @@ public class FormationBean implements Serializable, IFormation {
      */
     private static final long serialVersionUID = 1L;
 
-    private final int FIRST_YEAR = 1933;
+    private static final int FIRST_YEAR = 1933;
 
     private String formationBeginYear;
     private String formationEndYear;

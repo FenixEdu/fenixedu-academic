@@ -141,16 +141,16 @@ public class ClassEnrollmentAuthorizationFilter {
         return null;
     }
 
-    public class NoActiveStudentCurricularPlanOfCorrectTypeException extends FenixServiceException {
+    public static class NoActiveStudentCurricularPlanOfCorrectTypeException extends FenixServiceException {
     }
 
-    public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends FenixServiceException {
+    public static class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends FenixServiceException {
         public CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan() {
             super("error.enrolmentPeriodNotDefined");
         }
     }
 
-    public class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends FenixServiceException {
+    public static class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends FenixServiceException {
         public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan() {
             super();
         }

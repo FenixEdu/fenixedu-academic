@@ -211,7 +211,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         return getEndYearMonthDay() != null;
     }
 
-    public class DegreeModuleScopeCurricularCourseScope extends DegreeModuleScope {
+    public static class DegreeModuleScopeCurricularCourseScope extends DegreeModuleScope {
 
         private final CurricularCourseScope curricularCourseScope;
 

@@ -31,7 +31,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EnrollStudentInShifts {
 
-    public class StudentNotFoundServiceException extends FenixServiceException {
+    public static class StudentNotFoundServiceException extends FenixServiceException {
     }
 
     public ShiftEnrollmentErrorReport run(final Registration registration, final String shiftId) throws FenixServiceException {

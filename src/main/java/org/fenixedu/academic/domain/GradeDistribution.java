@@ -98,7 +98,7 @@ public class GradeDistribution {
         return gradeDistribution.get(grade);
     }
 
-    public class Distribution {
+    public static class Distribution {
         private Grade grade;
         private BigDecimal percentage;
         private String scale;

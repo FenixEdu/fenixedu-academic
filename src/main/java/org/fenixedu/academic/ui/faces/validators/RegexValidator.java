@@ -37,7 +37,7 @@ public class RegexValidator implements Validator, StateHolder {
 
     private boolean _transient = false;
 
-    private final String INVALID_INPUT = "org.fenixedu.academic.ui.faces.validators.INVALID_INPUT";
+    private static final String INVALID_INPUT = "org.fenixedu.academic.ui.faces.validators.INVALID_INPUT";
 
     @Override
     public void validate(FacesContext _context, UIComponent _component, Object _value) throws ValidatorException {

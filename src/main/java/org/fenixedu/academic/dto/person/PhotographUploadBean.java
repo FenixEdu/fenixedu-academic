@@ -43,7 +43,7 @@ import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;
 
 public class PhotographUploadBean implements Serializable {
-    public class UnableToProcessTheImage extends Exception {
+    public static class UnableToProcessTheImage extends Exception {
         private static final long serialVersionUID = 1728978041377445492L;
     }
 

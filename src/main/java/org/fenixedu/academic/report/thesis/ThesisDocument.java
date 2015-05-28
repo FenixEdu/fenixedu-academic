@@ -42,7 +42,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
  */
 public abstract class ThesisDocument extends FenixReport {
 
-    public class OrientationInfo {
+    public static class OrientationInfo {
 
         public OrientationInfo(String advisorName, String advisorCategory, String advisorAffiliation) {
             this.advisorName = advisorName;

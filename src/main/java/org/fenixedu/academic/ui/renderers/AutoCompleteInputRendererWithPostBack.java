@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
  */
 public class AutoCompleteInputRendererWithPostBack extends AutoCompleteInputRenderer {
 
-    private final String HIDDEN_NAME = "postback";
+    private static final String HIDDEN_NAME = "postback";
 
     private String destination;
 

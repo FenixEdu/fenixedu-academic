@@ -101,7 +101,7 @@ public abstract class TidyConverter extends Converter {
 
     protected abstract void parseDocument(OutputStream outStream, Tidy tidy, Document document);
 
-    class TidyErrorsListener implements TidyMessageListener {
+    private static class TidyErrorsListener implements TidyMessageListener {
 
         boolean bogus;
 

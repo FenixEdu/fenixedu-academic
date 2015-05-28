@@ -228,7 +228,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
         }
     }
 
-    private class UpdateSelectedOptionalCurricularCourseController extends HtmlActionLinkController {
+    private static class UpdateSelectedOptionalCurricularCourseController extends HtmlActionLinkController {
 
         static private final long serialVersionUID = 1L;
         private final CurricularCourse curricularCourse;

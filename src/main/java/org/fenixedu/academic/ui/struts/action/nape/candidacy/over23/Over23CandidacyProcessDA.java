@@ -217,7 +217,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
         return (Over23CandidacyProcess) super.getProcess(request);
     }
 
-    private class CandidacyXLSExporter extends SpreadsheetXLSExporter {
+    private static class CandidacyXLSExporter extends SpreadsheetXLSExporter {
 
         @Override
         protected void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells,
@@ -238,7 +238,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
         }
     }
 
-    private class CandidacyReport extends Spreadsheet {
+    private static class CandidacyReport extends Spreadsheet {
 
         public CandidacyReport(final String name) {
             super(name);

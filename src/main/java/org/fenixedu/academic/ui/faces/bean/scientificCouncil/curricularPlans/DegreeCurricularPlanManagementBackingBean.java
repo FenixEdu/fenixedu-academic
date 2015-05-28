@@ -59,7 +59,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean {
-    private final String NO_SELECTION = "noSelection";
+    private static final String NO_SELECTION = "noSelection";
 
     private String degreeId;
     private String dcpId;

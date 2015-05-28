@@ -45,7 +45,7 @@ public class MoneyInputRenderer extends NumberInputRenderer {
         return super.render(money != null ? money.getAmount() : null, type);
     }
 
-    private class MoneyConverter extends Converter {
+    private static class MoneyConverter extends Converter {
 
         @Override
         public Object convert(Class type, Object value) {

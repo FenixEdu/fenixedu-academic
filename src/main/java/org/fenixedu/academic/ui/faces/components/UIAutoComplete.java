@@ -52,10 +52,10 @@ public class UIAutoComplete extends UIInput {
 
     private static final String DEFAULT_AUTO_COMPLETE_SERVLET_URI = "ajax/AutoCompleteServlet";
 
-    private final String INVALID_AUTO_COMPLETE_INPUT =
+    private static final String INVALID_AUTO_COMPLETE_INPUT =
             "org.fenixedu.academic.ui.faces.validators.autoCompleteValidator.INVALID_AUTO_COMPLETE_INPUT";
 
-    private final String AUTO_COMPLETE_VALUE_REQUIRED =
+    private static final String AUTO_COMPLETE_VALUE_REQUIRED =
             "org.fenixedu.academic.ui.faces.validators.autoCompleteValidator.AUTO_COMPLETE_VALUE_REQUIRED";
 
     public UIAutoComplete() {

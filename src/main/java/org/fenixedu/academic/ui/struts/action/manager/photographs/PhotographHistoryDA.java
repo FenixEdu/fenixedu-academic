@@ -51,7 +51,7 @@ import org.joda.time.DateTime;
 @Mapping(path = "/photographs/history", module = "manager")
 @Forwards({ @Forward(name = "history", path = "/manager/photographs/photographHistory.jsp") })
 public class PhotographHistoryDA extends FenixDispatchAction {
-    public class DatedRejections {
+    public static class DatedRejections {
         private final DateTime date;
 
         private final List<Photograph> photographs = new ArrayList<Photograph>();
@@ -73,7 +73,7 @@ public class PhotographHistoryDA extends FenixDispatchAction {
         }
     }
 
-    public class UserHistory {
+    public static class UserHistory {
         private final Person person;
 
         private final SortedSet<Photograph> photographs = new TreeSet<Photograph>();

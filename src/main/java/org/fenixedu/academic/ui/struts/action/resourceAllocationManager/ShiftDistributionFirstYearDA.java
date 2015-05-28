@@ -501,7 +501,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
         return statistics;
     }
 
-    private class SchoolClassDistributionInformation {
+    private static class SchoolClassDistributionInformation {
         private final SchoolClass schoolClass;
         private final String temporarySchoolClassName;
         private int maxCapacity;
@@ -554,7 +554,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
         }
     }
 
-    private class ShiftDistributionDTO implements Serializable {
+    private static class ShiftDistributionDTO implements Serializable {
 
         private static final long serialVersionUID = 1L;
         private static final String COLUMN_SEPARATOR = "\t";

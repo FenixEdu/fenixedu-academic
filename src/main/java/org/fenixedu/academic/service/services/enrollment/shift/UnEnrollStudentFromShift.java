@@ -50,13 +50,13 @@ public class UnEnrollStudentFromShift {
         shift.removeStudents(registration);
     }
 
-    public class StudentNotFoundServiceException extends FenixServiceException {
+    public static class StudentNotFoundServiceException extends FenixServiceException {
     }
 
-    public class ShiftNotFoundServiceException extends FenixServiceException {
+    public static class ShiftNotFoundServiceException extends FenixServiceException {
     }
 
-    public class ShiftEnrolmentNotFoundServiceException extends FenixServiceException {
+    public static class ShiftEnrolmentNotFoundServiceException extends FenixServiceException {
     }
 
     // Service Invokers migrated from Berserk

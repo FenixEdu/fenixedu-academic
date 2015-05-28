@@ -47,7 +47,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
         setData(data);
     }
 
-    public class PhdMigrationGuidingBean {
+    public static class PhdMigrationGuidingBean {
 
         private transient String data;
 

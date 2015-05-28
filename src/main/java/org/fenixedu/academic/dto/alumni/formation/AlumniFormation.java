@@ -40,7 +40,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 
 public class AlumniFormation implements Serializable, IFormation {
 
-    private final int FIRST_YEAR = 1933;
+    private static final int FIRST_YEAR = 1933;
 
     private String typeSchema;
     private String institutionSchema;

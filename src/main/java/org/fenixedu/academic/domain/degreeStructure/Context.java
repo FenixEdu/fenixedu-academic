@@ -431,7 +431,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         return getCurricularPeriod() != null && getCurricularPeriod().equals(curricularPeriod);
     }
 
-    public class DegreeModuleScopeContext extends DegreeModuleScope {
+    public static class DegreeModuleScopeContext extends DegreeModuleScope {
 
         private final Context context;
 

@@ -59,7 +59,7 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
         sortScopes(selectedSemester.getScopes());
     }
 
-    private static Comparator<InfoCurricularCourseScope> COMPARATOR_BY_ANOTATION_AND_CURRICULAR_COURSE_NAME =
+    private static final Comparator<InfoCurricularCourseScope> COMPARATOR_BY_ANOTATION_AND_CURRICULAR_COURSE_NAME =
             new Comparator<InfoCurricularCourseScope>() {
                 @Override
                 public int compare(InfoCurricularCourseScope o1, InfoCurricularCourseScope o2) {
@@ -182,7 +182,7 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
         return selectedCurricularPlan;
     }
 
-    public class DegreeCurricularPlanForPrintDTO extends DataTranferObject {
+    public static class DegreeCurricularPlanForPrintDTO extends DataTranferObject {
 
         private String name;
 
@@ -235,7 +235,7 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     }
 
-    public class CurricularYearForPrintDTO extends DataTranferObject {
+    public static class CurricularYearForPrintDTO extends DataTranferObject {
 
         private Integer year;
 
@@ -266,7 +266,7 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     }
 
-    public class BranchForPrintDTO extends DataTranferObject {
+    public static class BranchForPrintDTO extends DataTranferObject {
 
         private String name;
 
@@ -297,7 +297,7 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     }
 
-    public class CurricularSemesterForPrintDTO extends DataTranferObject {
+    public static class CurricularSemesterForPrintDTO extends DataTranferObject {
 
         private Integer semester;
 
