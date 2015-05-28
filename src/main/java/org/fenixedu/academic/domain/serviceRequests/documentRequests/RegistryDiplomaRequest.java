@@ -230,7 +230,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public String getFinalAverage(final Locale locale) {
-        return String.valueOf(getRegistration().getFinalGrade(getProgramConclusion()));
+        return getRegistration().getFinalGrade(getProgramConclusion()).getValue();
     }
 
     @Override
