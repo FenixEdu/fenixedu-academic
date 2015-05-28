@@ -24,6 +24,8 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 
+import com.google.common.io.ByteStreams;
+
 public class ReportStudentsUTLCandidatesBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,10 +73,7 @@ public class ReportStudentsUTLCandidatesBean implements Serializable {
     }
 
     public byte[] readXLSContents() throws IOException {
-        byte[] contents = new byte[fileSize];
-        xlsFile.read(contents);
-
-        return contents;
+        return ByteStreams.toByteArray(xlsFile);
     }
 
     public Boolean getForFirstYear() {

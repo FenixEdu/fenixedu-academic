@@ -29,6 +29,8 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.caseHandling.Process;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 
+import com.google.common.io.ByteStreams;
+
 public class CandidacyProcessDocumentUploadBean implements Serializable {
     /**
      * 
@@ -129,21 +131,14 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     }
 
     protected byte[] readStreamContents() throws IOException {
-        InputStream stream = this.getStream();
-        long fileLength = this.getFileSize();
-
-        if (stream == null || fileLength == 0) {
-            return null;
+        try (final InputStream stream = this.getStream()) {
+            if (stream == null || getFileSize() == 0) {
+                return null;
+            }
+            if (getFileSize() > MAX_FILE_SIZE) {
+                throw new DomainException("error.file.to.big");
+            }
+            return ByteStreams.toByteArray(stream);
         }
-
-        if (fileLength > MAX_FILE_SIZE) {
-            throw new DomainException("error.file.to.big");
-        }
-
-        byte[] contents = new byte[(int) fileLength];
-        stream.read(contents);
-
-        return contents;
     }
-
 }

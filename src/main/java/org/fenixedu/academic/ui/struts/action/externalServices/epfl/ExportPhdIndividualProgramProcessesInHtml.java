@@ -23,7 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -629,8 +629,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         }
 
         public Page write(final String value) throws IOException {
-            writer.write(value.getBytes(Charset.defaultCharset().name()));
-            writer.write("\n".getBytes());
+            writer.write(value.getBytes(StandardCharsets.UTF_8));
+            writer.write("\n".getBytes(StandardCharsets.UTF_8));
             return this;
         }
 

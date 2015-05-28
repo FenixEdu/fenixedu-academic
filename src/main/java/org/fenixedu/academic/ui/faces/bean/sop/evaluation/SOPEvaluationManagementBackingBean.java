@@ -19,8 +19,6 @@
 package org.fenixedu.academic.ui.faces.bean.sop.evaluation;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -91,7 +89,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private static final MessageResources messages = MessageResources.getMessageResources(Bundle.RESOURCE_ALLOCATION);
     private static final MessageResources enumerations = MessageResources.getMessageResources(Bundle.ENUMERATION);
-    private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
     private String academicInterval;
     protected HtmlInputHidden academicIntervalHidden;
@@ -762,22 +759,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         linkParameters.put("curricularYearIDsParameterString", getCurricularYearIDsParameterString());
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
         return linkParameters;
-    }
-
-    private String constructEvaluationCalendarPresentationString(final WrittenEvaluation writtenEvaluation,
-            final ExecutionCourse executionCourse) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        if (writtenEvaluation instanceof WrittenTest) {
-            stringBuilder.append(messages.getMessage(I18N.getLocale(), "label.evaluation.shortname.test"));
-        } else if (writtenEvaluation instanceof Exam) {
-            stringBuilder.append(messages.getMessage(I18N.getLocale(), "label.evaluation.shortname.exam"));
-        }
-        stringBuilder.append(" ");
-        stringBuilder.append(executionCourse.getSigla());
-        stringBuilder.append(" (");
-        stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginning().getTime()));
-        stringBuilder.append(")");
-        return stringBuilder.toString();
     }
 
     private List<ExecutionCourse> getExecutionCourses() throws FenixServiceException {

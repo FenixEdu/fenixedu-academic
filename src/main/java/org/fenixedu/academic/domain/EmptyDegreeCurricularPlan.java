@@ -45,7 +45,7 @@ import org.fenixedu.bennu.core.groups.Group;
 
 public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
 
-    private static EmptyDegreeCurricularPlan instance = null;
+    private static volatile EmptyDegreeCurricularPlan instance = null;
 
     private EmptyDegreeCurricularPlan() {
         super();

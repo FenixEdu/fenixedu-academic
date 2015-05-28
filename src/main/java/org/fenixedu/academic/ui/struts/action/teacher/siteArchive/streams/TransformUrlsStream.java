@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -113,7 +114,7 @@ public class TransformUrlsStream extends OutputStream {
     }
 
     private void write(String string) throws IOException {
-        this.stream.write(string.getBytes());
+        this.stream.write(string.getBytes(StandardCharsets.UTF_8));
     }
 
 }

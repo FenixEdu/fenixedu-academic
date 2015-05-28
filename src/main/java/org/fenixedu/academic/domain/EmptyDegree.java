@@ -36,7 +36,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class EmptyDegree extends EmptyDegree_Base {
 
-    private static EmptyDegree instance = null;
+    private static volatile EmptyDegree instance = null;
 
     private EmptyDegree() {
         super();

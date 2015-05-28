@@ -20,6 +20,7 @@ package org.fenixedu.academic.service.services.fileManager;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PhotoType;
@@ -55,7 +56,9 @@ public class UploadOwnPhoto {
      */
     @Atomic
     static public void upload(final PhotographUploadBean photo, final Person person) throws FileNotFoundException, IOException {
-        person.setPersonalPhoto(new Photograph(PhotoType.USER, ContentType.getContentType(photo.getContentType()), ByteStreams
-                .toByteArray(photo.getFileInputStream())));
+        try (InputStream stream = photo.getFileInputStream()) {
+            person.setPersonalPhoto(new Photograph(PhotoType.USER, ContentType.getContentType(photo.getContentType()),
+                    ByteStreams.toByteArray(stream)));
+        }
     }
 }

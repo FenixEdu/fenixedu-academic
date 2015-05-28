@@ -21,9 +21,11 @@ package org.fenixedu.academic.ui.renderers.htmlEditor;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -56,7 +58,7 @@ public abstract class TidyConverter extends Converter {
             return null;
         }
 
-        ByteArrayInputStream inStream = new ByteArrayInputStream(htmlText.getBytes());
+        ByteArrayInputStream inStream = new ByteArrayInputStream(htmlText.getBytes(StandardCharsets.UTF_8));
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
         Tidy tidy = createTidyParser();
@@ -88,8 +90,8 @@ public abstract class TidyConverter extends Converter {
         Tidy tidy = new Tidy();
 
         Properties properties = new Properties();
-        try {
-            properties.load(getClass().getResourceAsStream(getTidyProperties()));
+        try (InputStream stream = getClass().getResourceAsStream(getTidyProperties())) {
+            properties.load(stream);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }

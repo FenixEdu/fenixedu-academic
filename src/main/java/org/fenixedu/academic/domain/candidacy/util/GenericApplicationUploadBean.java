@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import pt.ist.fenixframework.Atomic;
 
+import com.google.common.io.ByteStreams;
 import com.lowagie.text.pdf.PdfReader;
 
 public class GenericApplicationUploadBean implements Serializable {
@@ -80,21 +81,18 @@ public class GenericApplicationUploadBean implements Serializable {
     protected static final int MAX_FILE_SIZE = 3698688;
 
     protected byte[] readStreamContents() throws IOException {
-        InputStream stream = this.getStream();
-        long fileLength = this.getFileSize();
-
-        if (stream == null || fileLength == 0) {
-            return null;
+        try (final InputStream stream = this.getStream()) {
+            if (stream == null || getFileSize() == 0) {
+                return null;
+            }
+            if (getFileSize() > MAX_FILE_SIZE) {
+                throw new DomainException("error.file.to.big");
+            }
+            byte[] contents = ByteStreams.toByteArray(stream);
+            // Ensure the submitted file is a PDF
+            new PdfReader(contents);
+            return contents;
         }
-
-        if (fileLength > MAX_FILE_SIZE) {
-            throw new DomainException("error.file.to.big");
-        }
-        byte[] contents = new byte[(int) fileLength];
-        stream.read(contents);
-        PdfReader pdfFile = new PdfReader(contents);
-
-        return contents;
     }
 
     @Atomic

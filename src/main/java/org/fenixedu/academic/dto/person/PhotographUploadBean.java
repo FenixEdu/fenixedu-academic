@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Base64;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -84,6 +85,12 @@ public class PhotographUploadBean implements Serializable {
             return new FileInputStream(temporaryFile);
         } else {
             return null;
+        }
+    }
+
+    public String getBase64Photo() throws IOException {
+        try (InputStream stream = getFileInputStream()) {
+            return Base64.getEncoder().encodeToString(ByteStreams.toByteArray(stream));
         }
     }
 

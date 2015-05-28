@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.person;
 
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -104,10 +103,12 @@ public class UploadPhotoDA extends FenixDispatchAction {
         }
 
         ActionMessages actionMessages = new ActionMessages();
-        if (photo.getFileInputStream() == null) {
-            actionMessages.add("fileRequired", new ActionMessage("errors.fileRequired"));
-            saveMessages(request, actionMessages);
-            return prepare(mapping, actionForm, request, response);
+        try (InputStream stream = photo.getFileInputStream()) {
+            if (stream == null) {
+                actionMessages.add("fileRequired", new ActionMessage("errors.fileRequired"));
+                saveMessages(request, actionMessages);
+                return prepare(mapping, actionForm, request, response);
+            }
         }
 
         if (ContentType.getContentType(photo.getContentType()) == null) {
@@ -138,23 +139,14 @@ public class UploadPhotoDA extends FenixDispatchAction {
         return mapping.findForward("confirm");
     }
 
-    public ActionForward preview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        String filename = request.getParameter("file");
-        FileInputStream file = new FileInputStream(filename);
-        DataOutputStream output = new DataOutputStream(response.getOutputStream());
-        output.write(ByteStreams.toByteArray(file));
-        output.close();
-        return null;
-    }
-
     public ActionForward save(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         PhotographUploadBean photo = getRenderedObject();
         RenderUtils.invalidateViewState();
 
-        UploadOwnPhoto.run(ByteStreams.toByteArray(photo.getFileInputStream()),
-                ContentType.getContentType(photo.getContentType()));
+        try (InputStream stream = photo.getFileInputStream()) {
+            UploadOwnPhoto.run(ByteStreams.toByteArray(stream), ContentType.getContentType(photo.getContentType()));
+        }
         final Person person = Authenticate.getUser().getPerson();
         request.setAttribute("personBean", new PersonBean(person));
         EmergencyContactBean emergencyContactBean = new EmergencyContactBean(person);

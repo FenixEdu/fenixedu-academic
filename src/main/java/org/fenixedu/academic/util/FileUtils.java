@@ -90,37 +90,36 @@ public class FileUtils {
 
     public static File unzipFile(File file) throws IOException {
         File tempDir = Files.createTempDir();
-        FileInputStream fileInputStream = new FileInputStream(file);
 
         FileUtils.copyFileToAnotherDirWithRelativePaths(file.getParentFile(), tempDir, file);
 
-        ZipInputStream zipInputStream = new ZipInputStream(fileInputStream);
+        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(file))) {
+            ZipEntry zipEntry = zipInputStream.getNextEntry();
+            File zipContentFile = null;
+            File zipContentFileParentDir = null;
+            while (zipEntry != null) {
+                zipEntry.getName();
+                zipContentFile = new File(tempDir, zipEntry.getName());
+                zipContentFileParentDir = zipContentFile.getParentFile();
+                zipContentFileParentDir.mkdirs();
 
-        ZipEntry zipEntry = zipInputStream.getNextEntry();
-        File zipContentFile = null;
-        File zipContentFileParentDir = null;
-        while (zipEntry != null) {
-            zipEntry.getName();
-            zipContentFile = new File(tempDir, zipEntry.getName());
-            zipContentFileParentDir = zipContentFile.getParentFile();
-            zipContentFileParentDir.mkdirs();
+                if (!zipEntry.isDirectory()) {
+                    zipContentFile.createNewFile();
+                } else {
+                    zipContentFile.mkdirs();
+                }
 
-            if (!zipEntry.isDirectory()) {
-                zipContentFile.createNewFile();
-            } else {
-                zipContentFile.mkdirs();
+                zipContentFile.deleteOnExit();
+
+                if (!zipEntry.isDirectory() && zipContentFile.exists() && zipContentFile.canWrite()) {
+                    try (OutputStream zipOs = new FileOutputStream(zipContentFile)) {
+                        ByteStreams.copy(zipInputStream, zipOs);
+                    }
+                }
+
+                zipInputStream.closeEntry();
+                zipEntry = zipInputStream.getNextEntry();
             }
-
-            zipContentFile.deleteOnExit();
-
-            if (!zipEntry.isDirectory() && zipContentFile.exists() && zipContentFile.canWrite()) {
-                OutputStream zipOs = new FileOutputStream(zipContentFile);
-                ByteStreams.copy(zipInputStream, zipOs);
-                zipOs.close();
-            }
-
-            zipInputStream.closeEntry();
-            zipEntry = zipInputStream.getNextEntry();
         }
 
         return tempDir;
@@ -139,12 +138,10 @@ public class FileUtils {
             throws FileNotFoundException, IOException {
         String relativePath = makeRelativePath(srcDir.getAbsolutePath(), originalFile.getAbsolutePath(), "");
         File newFile = new File(destDir, relativePath);
-        FileInputStream fis = new FileInputStream(originalFile);
-        FileOutputStream fos = new FileOutputStream(newFile);
-        ByteStreams.copy(fis, fos);
-        fis.close();
-        fos.close();
-        return newFile;
+        try (FileInputStream fis = new FileInputStream(originalFile); FileOutputStream fos = new FileOutputStream(newFile);) {
+            ByteStreams.copy(fis, fos);
+            return newFile;
+        }
     }
 
     public static void deleteDirectory(File directory) {

@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.mobility.outbound;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -42,6 +43,8 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.ByteStreams;
 
 public class OutboundMobilityContextBean implements Serializable {
 
@@ -316,17 +319,12 @@ public class OutboundMobilityContextBean implements Serializable {
     }
 
     protected String readStreamContents() throws IOException {
-        final InputStream stream = this.getStream();
-        final long fileLength = this.getFileSize();
-
-        if (stream == null || fileLength == 0) {
-            return null;
+        try (final InputStream stream = this.getStream()) {
+            if (stream == null || getFileSize() == 0) {
+                return null;
+            }
+            return new String(ByteStreams.toByteArray(stream), StandardCharsets.UTF_8);
         }
-
-        final byte[] contents = new byte[(int) fileLength];
-        stream.read(contents);
-
-        return new String(contents);
     }
 
     public void uploadClassifications() throws IOException {

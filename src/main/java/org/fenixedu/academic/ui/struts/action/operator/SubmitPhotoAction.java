@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.struts.action.operator;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,10 +91,12 @@ public class SubmitPhotoAction extends FenixDispatchAction {
         }
 
         ActionMessages actionMessages = new ActionMessages();
-        if (photo.getFileInputStream() == null) {
-            actionMessages.add("error", new ActionMessage("errors.fileRequired"));
-            saveMessages(request, actionMessages);
-            return preparePhotoUpload(mapping, actionForm, request, response);
+        try (InputStream stream = photo.getFileInputStream()) {
+            if (stream == null) {
+                actionMessages.add("error", new ActionMessage("errors.fileRequired"));
+                saveMessages(request, actionMessages);
+                return preparePhotoUpload(mapping, actionForm, request, response);
+            }
         }
 
         if (ContentType.getContentType(photo.getContentType()) == null) {
@@ -141,7 +144,9 @@ public class SubmitPhotoAction extends FenixDispatchAction {
         if (person == null) {
             throw new DomainException("error.operatorPhotoUpload.invalid.username");
         }
-        person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.getContentType(photo.getContentType()),
-                ByteStreams.toByteArray(photo.getFileInputStream())));
+        try (InputStream stream = photo.getFileInputStream()) {
+            person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.getContentType(photo.getContentType()),
+                    ByteStreams.toByteArray(stream)));
+        }
     }
 }

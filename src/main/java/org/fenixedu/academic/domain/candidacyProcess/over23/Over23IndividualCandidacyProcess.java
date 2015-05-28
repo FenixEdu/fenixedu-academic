@@ -114,7 +114,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     private Over23IndividualCandidacyProcess editCandidacyInformation(final Over23IndividualCandidacyProcessBean bean) {
         getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegrees(), bean.getDisabilities(),
-                bean.getEducation(), bean.getLanguagesRead(), bean.getLanguagesSpeak(), bean.getLanguagesWrite());
+                bean.getEducation(), bean.getLanguagesRead(), bean.getLanguagesWrite(), bean.getLanguagesSpeak());
 
         PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
 

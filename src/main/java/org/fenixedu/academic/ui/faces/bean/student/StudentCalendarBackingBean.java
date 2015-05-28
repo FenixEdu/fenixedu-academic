@@ -353,24 +353,9 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         stringBuilder.append(" ");
         stringBuilder.append(executionCourse.getSigla());
         stringBuilder.append(" (");
-        stringBuilder.append(hourFormat.format(time));
+        stringBuilder.append(new SimpleDateFormat("HH:mm").format(time));
         stringBuilder.append(") ");
         stringBuilder.append(tail);
-        return stringBuilder.toString();
-    }
-
-    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        if (writtenEvaluation instanceof WrittenTest) {
-            stringBuilder.append(messages.getMessage("label.evaluation.shortname.test"));
-        } else if (writtenEvaluation instanceof Exam) {
-            stringBuilder.append(messages.getMessage("label.evaluation.shortname.exam"));
-        }
-        stringBuilder.append(" ");
-        stringBuilder.append(executionCourse.getSigla());
-        stringBuilder.append(" (");
-        stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginningDate()));
-        stringBuilder.append(")");
         return stringBuilder.toString();
     }
 

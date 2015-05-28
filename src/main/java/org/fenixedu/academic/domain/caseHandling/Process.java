@@ -43,7 +43,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     private static Map<String, Activity<? extends Process>> startActivities;
 
-    private static Integer lock = 0;
+    private static final Object lock = new Object();
 
     private static void load() {
         startActivities = new HashMap<String, Activity<? extends Process>>();

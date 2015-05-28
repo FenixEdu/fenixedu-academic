@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.reports;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,7 +93,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
                 new StringBuilder().append(writtenEvaluation.getInterval().toString()).append(writtenEvaluation.getFullName())
                         .append(writtenEvaluation.getEvaluationType().toString());
         writtenEvaluation.getAssociatedExecutionCoursesSet().stream().forEach(ec -> code.append(getExecutionCourseCode(ec)));
-        return Hashing.murmur3_128().hashBytes(code.toString().getBytes()).toString();
+        return Hashing.murmur3_128().hashBytes(code.toString().getBytes(StandardCharsets.UTF_8)).toString();
     }
 
     public static ExecutionYear getExecutionYearFourYearsBack(final ExecutionYear executionYear) {

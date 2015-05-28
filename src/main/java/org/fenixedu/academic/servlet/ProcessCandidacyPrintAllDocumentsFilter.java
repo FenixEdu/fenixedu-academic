@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -112,7 +113,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 // clean the response html and make a DOM document out of it
                 String responseHtml = clean(response.getContent());
                 DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                Document doc = builder.parse(new ByteArrayInputStream(responseHtml.getBytes()));
+                Document doc = builder.parse(new ByteArrayInputStream(responseHtml.getBytes(StandardCharsets.UTF_8)));
 
                 // alter paths of link/img tags so itext can use them properly
                 patchLinks(doc, request);

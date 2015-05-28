@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.util.icalendar;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -47,9 +48,9 @@ public class CalendarFactory {
     public static TimeZone TIMEZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/Lisbon");
 
     private static String digest(String obj) {
-        byte[] defaultBytes = obj.getBytes();
+        byte[] defaultBytes = obj.getBytes(StandardCharsets.UTF_8);
         try {
-            MessageDigest algorithm = MessageDigest.getInstance("MD5");
+            MessageDigest algorithm = MessageDigest.getInstance("SHA-512");
             algorithm.reset();
             algorithm.update(defaultBytes);
             byte messageDigest[] = algorithm.digest();

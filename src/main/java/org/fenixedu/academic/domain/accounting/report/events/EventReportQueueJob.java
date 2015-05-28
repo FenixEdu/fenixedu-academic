@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -162,7 +163,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         if (!errors.toString().isEmpty()) {
             StringBuilder headers = buildHeaders();
             headers.append(errors);
-            EventReportQueueJobFile fileForErrors = new EventReportQueueJobFile(headers.toString().getBytes(), "erros.tsv");
+            EventReportQueueJobFile fileForErrors =
+                    new EventReportQueueJobFile(headers.toString().getBytes(StandardCharsets.UTF_8), "erros.tsv");
             this.setErrorsFile(fileForErrors);
         }
 
@@ -185,11 +187,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     private List<String> getAllEventsExternalIds() {
-        try {
-            Connection connection = ConnectionManager.getCurrentSQLConnection();
-
-            PreparedStatement prepareStatement = connection.prepareStatement("SELECT OID FROM EVENT");
-            ResultSet executeQuery = prepareStatement.executeQuery();
+        Connection connection = ConnectionManager.getCurrentSQLConnection();
+        try (PreparedStatement prepareStatement = connection.prepareStatement("SELECT OID FROM EVENT");
+                ResultSet executeQuery = prepareStatement.executeQuery()) {
 
             List<String> result = new ArrayList<String>();
             while (executeQuery.next()) {

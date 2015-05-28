@@ -31,7 +31,7 @@ import org.joda.time.DateTime;
 
 public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
-    private transient AcademicChronology academicChronology;
+    private transient volatile AcademicChronology academicChronology;
 
     public AcademicCalendarRootEntry(MultiLanguageString title, MultiLanguageString description,
             AcademicCalendarEntry templateCalendar) {
