@@ -78,7 +78,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                 "conclusion.document.concluded.lowercase"));
         result.append(" ");
-        result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.the.male"));
+        result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.the.maleorfemale"));
         result.append(" ");
         result.append(getDegreeDescription());
         result.append(",");
@@ -94,8 +94,6 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         if (req.getAverage()) {
             result.append(getDegreeFinalizationGrade(req.getFinalAverage(), getLocale()));
-        } else {
-            result.append(EMPTY_STR);
         }
 
         result.append(getDegreeFinalizationEcts(req));

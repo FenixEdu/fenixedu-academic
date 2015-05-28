@@ -193,7 +193,8 @@ public class Diploma extends AdministrativeOfficeDocument {
                     .append(SINGLE_SPACE);
         }
 
-        result.append(degreeType.getPrefix(getLocale())).append(degreeType.getName().getContent(getLocale()));
+        result.append(degreeType.getPrefix(getLocale())).append(
+                getDocumentRequest().getProgramConclusion().getDescription().getContent(getLocale()));
     }
 
     private void forDFA(StringBuilder result, final DiplomaRequest diplomaRequest, final Registration registration) {
