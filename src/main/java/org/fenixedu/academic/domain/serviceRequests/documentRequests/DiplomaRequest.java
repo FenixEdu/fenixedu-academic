@@ -39,7 +39,6 @@ package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -240,13 +239,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     @Override
     public CycleType getRequestedCycle() {
-        Optional<CurriculumGroup> curriculumGroup = getProgramConclusion().groupFor(getRegistration());
-
-        if (!curriculumGroup.isPresent() || !curriculumGroup.get().isCycleCurriculumGroup()) {
-            throw new DomainException("error.no.cycle.group.present");
-        }
-
-        return ((CycleCurriculumGroup) curriculumGroup.get()).getCycleType();
+        return getProgramConclusion().groupFor(getRegistration()).filter(CurriculumGroup::isCycleCurriculumGroup)
+                .map(cg -> ((CycleCurriculumGroup) cg).getCycleType()).orElse(null);
     }
 
     public CurriculumGroup getCurriculumGroup() {

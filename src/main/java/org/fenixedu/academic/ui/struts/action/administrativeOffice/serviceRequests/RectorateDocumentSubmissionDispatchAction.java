@@ -38,11 +38,9 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
-import org.fenixedu.academic.domain.serviceRequests.IDiplomaRequest;
-import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.IProgramConclusionRequest;
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch;
 import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState;
@@ -196,22 +194,9 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 
                 addCell("Código", document.getRegistryCode().getCode());
                 addCell("Tipo de Documento", BundleUtil.getString(Bundle.ENUMERATION, document.getDocumentRequestType().name()));
-                switch (document.getDocumentRequestType()) {
-                case REGISTRY_DIPLOMA_REQUEST:
-                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IRegistryDiplomaRequest) document)
-                            .getRequestedCycle().name()));
-                    break;
-                case DIPLOMA_REQUEST:
-                    CycleType cycle = ((IDiplomaRequest) document).getRequestedCycle();
-                    addCell("Ciclo", cycle != null ? BundleUtil.getString(Bundle.ENUMERATION, cycle.name()) : null);
-                    break;
-                case DIPLOMA_SUPPLEMENT_REQUEST:
-                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IDiplomaSupplementRequest) document)
-                            .getRequestedCycle().name()));
-                    break;
-                default:
-                    addCell("Ciclo", null);
-                }
+
+                addCell("Apuramento", document instanceof IProgramConclusionRequest ? ((IProgramConclusionRequest) document)
+                        .getProgramConclusion().getName().getContent() : null);
 
                 if (document.isRequestForRegistration()) {
                     addCell("Tipo de Curso", ((DocumentRequest) document).getDegreeType().getName().getContent());

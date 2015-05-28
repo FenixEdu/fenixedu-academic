@@ -254,13 +254,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     public CycleType getRequestedCycle() {
-        Optional<CurriculumGroup> curriculumGroup = getProgramConclusion().groupFor(getRegistration());
-
-        if (!curriculumGroup.isPresent() || !curriculumGroup.get().isCycleCurriculumGroup()) {
-            throw new DomainException("error.no.cycle.group.present");
-        }
-
-        return ((CycleCurriculumGroup) curriculumGroup.get()).getCycleType();
+        return getProgramConclusion().groupFor(getRegistration()).filter(CurriculumGroup::isCycleCurriculumGroup)
+                .map(ccg -> ((CycleCurriculumGroup) ccg).getCycleType()).orElse(null);
     }
 
     @Override

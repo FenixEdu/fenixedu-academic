@@ -148,7 +148,7 @@
 <schema name="DiplomaSupplementRequest.view"
     type="org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest"
     extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-    <slot name="requestedCycle" key="label.cycleType" />
+    <slot name="requestedCycle" layout="null-as-label" key="label.cycleType" />
     <slot name="givenNames" key="label.givenNames" />
     <slot name="familyNames" key="label.familyNames" />
 </schema>
