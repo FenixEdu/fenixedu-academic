@@ -23,17 +23,16 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.PersonSender;
-import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
@@ -48,7 +47,7 @@ public abstract class ThesisServiceWithMailNotification {
 
     private void sendEmail(Thesis thesis) {
         Sender sender = PersonSender.newInstance(AccessControl.getPerson());
-        new Message(sender, null, getRecipients(thesis), getSubject(thesis), getMessage(thesis), "");
+        new Message(sender, null, null, getSubject(thesis), getMessage(thesis), getEmails(thesis));
     }
 
     protected String getMessage(String key, Object... args) {
@@ -60,19 +59,15 @@ public abstract class ThesisServiceWithMailNotification {
         return MessageFormat.format(template, args);
     }
 
-    private Set<Recipient> getRecipients(Thesis thesis) {
-        Set<Recipient> recipients = new HashSet<Recipient>();
-        for (Person person : getReceivers(thesis)) {
-            recipients.add(Recipient.newInstance(UserGroup.of(person.getUser())));
-        }
-        return recipients;
+    private String getEmails(Thesis thesis) {
+        return getReceiversEmails(thesis).stream().collect(Collectors.joining(", "));
     }
 
     protected abstract String getSubject(Thesis thesis);
 
     protected abstract String getMessage(Thesis thesis);
 
-    protected abstract Collection<Person> getReceivers(Thesis thesis);
+    protected abstract Collection<String> getReceiversEmails(Thesis thesis);
 
     //
     // Utility methods

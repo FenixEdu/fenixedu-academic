@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -62,18 +61,18 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     }
 
     @Override
-    protected Collection<Person> getReceivers(Thesis thesis) {
-        Set<Person> persons =
+    protected Collection<String> getReceiversEmails(Thesis thesis) {
+        Set<String> persons =
                 thesis.getAllParticipants(ThesisParticipationType.ORIENTATOR, ThesisParticipationType.COORIENTATOR,
-                        ThesisParticipationType.PRESIDENT, ThesisParticipationType.VOWEL).stream().map(p -> p.getPerson())
-                        .filter(Objects::nonNull).collect(Collectors.toSet());
-        persons.add(thesis.getStudent().getPerson());
+                        ThesisParticipationType.PRESIDENT, ThesisParticipationType.VOWEL).stream().map(p -> p.getEmail())
+                        .collect(Collectors.toSet());
+        persons.add(thesis.getStudent().getPerson().getProfile().getEmail());
 
         // also send proposal approval to the contact team
         ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
         for (ScientificCommission member : thesis.getDegree().getScientificCommissionMembers(executionYear)) {
             if (member.isContact()) {
-                persons.add(member.getPerson());
+                persons.add(member.getPerson().getProfile().getEmail());
             }
         }
 
