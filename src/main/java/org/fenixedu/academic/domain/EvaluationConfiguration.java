@@ -113,7 +113,7 @@ public class EvaluationConfiguration extends EvaluationConfiguration_Base {
 
         private int compareByGrade(EnrolmentEvaluation enrolmentEvaluation, final Grade grade, final Grade otherGrade) {
             EnrollmentState gradeEnrolmentState = enrolmentEvaluation.getEnrollmentStateByGrade();
-            EnrollmentState otherGradeEnrolmentState = enrolmentEvaluation.getEnrollmentStateByGrade();
+            EnrollmentState otherGradeEnrolmentState = otherGrade.getEnrolmentState();
             if (gradeEnrolmentState == EnrollmentState.APROVED && otherGradeEnrolmentState == EnrollmentState.APROVED) {
                 return grade.compareTo(otherGrade);
             }
