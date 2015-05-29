@@ -153,6 +153,8 @@ public class RegistrationDA extends StudentRegistrationDA {
 
     public ActionForward prepareRegistrationConclusionProcessInvalid(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
+
+        getAndSetRegistration(request);
         request.setAttribute("registrationConclusionBean", getRegistrationConclusionBeanFromViewState());
 
         return mapping.findForward("chooseProgramConclusion");
