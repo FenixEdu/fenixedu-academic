@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 
@@ -49,7 +48,9 @@ public class ApproveJuryDocument extends ThesisDocument {
             author = date = ccAuthor = ccDate = StringUtils.EMPTY;
         } else {
             final Person person = thesisEvaluationParticipant.getPerson();
-            if (person != null && RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
+            boolean isDegreeCoordinator = checkCoordinator(thesis, person);
+
+            if (person != null && !isDegreeCoordinator) {
                 author = date = StringUtils.EMPTY;
                 ccAuthor = thesisEvaluationParticipant.getName();
                 ccDate = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", thesis.getApproval().toDate());
@@ -64,6 +65,11 @@ public class ApproveJuryDocument extends ThesisDocument {
         addParameter("date", date);
         addParameter("ccAuthor", ccAuthor);
         addParameter("ccDate", ccDate);
+    }
+
+    private boolean checkCoordinator(Thesis thesis, final Person person) {
+        return thesis.getDegree().getCurrentCoordinators().stream().map(coordinator -> coordinator.getPerson())
+                .anyMatch(coord -> coord.equals(person));
     }
 
     @Override
