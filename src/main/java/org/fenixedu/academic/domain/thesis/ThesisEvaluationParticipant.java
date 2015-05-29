@@ -144,4 +144,11 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         }
     }
 
+    public String getEmail() {
+        if (getPerson() != null) {
+            return getPerson().getProfile().getEmail();
+        } else {
+            return getExternalPerson() != null ? getExternalPerson().getEmail() : null;
+        }
+    }
 }

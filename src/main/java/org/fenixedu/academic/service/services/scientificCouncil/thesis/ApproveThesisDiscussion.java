@@ -60,18 +60,18 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     }
 
     @Override
-    protected Collection<Person> getReceivers(Thesis thesis) {
-        Set<Person> persons =
+    protected Collection<String> getReceiversEmails(Thesis thesis) {
+        Set<String> persons =
                 thesis.getAllParticipants(ThesisParticipationType.ORIENTATOR, ThesisParticipationType.COORIENTATOR,
-                        ThesisParticipationType.PRESIDENT, ThesisParticipationType.VOWEL).stream().map(p -> p.getPerson())
+                        ThesisParticipationType.PRESIDENT, ThesisParticipationType.VOWEL).stream().map(p -> p.getEmail())
                         .collect(Collectors.toSet());
-        persons.add(thesis.getStudent().getPerson());
+        persons.add(thesis.getStudent().getPerson().getProfile().getEmail());
 
         // also send proposal approval to the contact team
         ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
         for (ScientificCommission member : thesis.getDegree().getScientificCommissionMembers(executionYear)) {
             if (member.isContact()) {
-                persons.add(member.getPerson());
+                persons.add(member.getPerson().getProfile().getEmail());
             }
         }
 
