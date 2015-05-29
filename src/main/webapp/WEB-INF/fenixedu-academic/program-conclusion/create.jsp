@@ -107,6 +107,17 @@ ${portal.toolkit()}
 		</div>
 		
 		<div class="form-group">
+			<label for="eventTypes" class="col-sm-1 control-label"><spring:message code="program.conclusion.event.types" /></label>
+			<div class="col-sm-11">
+				<select class="form-control" name="eventTypes" id="eventTypes" multiple style="height: 150px;">
+					<c:forEach var="eventType" items="${allEventTypes}">
+						<option value="${eventType}" ${programConclusion.eventTypes.types.contains(eventType) ?  'selected' : '' }>${fr:message('resources.EnumerationResources', eventType.qualifiedName)}</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
 			<div class="col-sm-push-1 col-sm-11">
 				<a class="btn btn-default" href="${backUrl}"><spring:message code="label.cancel"/></a>
 				<button type="submit" class="btn btn-primary"><spring:message code="label.save"/></button>

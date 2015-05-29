@@ -107,7 +107,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
         return getClass().getName();
     }
 
-    private Set<EventType> getPossibleEventTypes() {
+    public static Set<EventType> getPossibleEventTypes() {
         return ImmutableSet.of(EventType.BOLONHA_DEGREE_REGISTRY_DIPLOMA_REQUEST,
                 EventType.BOLONHA_MASTER_DEGREE_REGISTRY_DIPLOMA_REQUEST,
                 EventType.BOLONHA_ADVANCED_FORMATION_REGISTRY_DIPLOMA_REQUEST);

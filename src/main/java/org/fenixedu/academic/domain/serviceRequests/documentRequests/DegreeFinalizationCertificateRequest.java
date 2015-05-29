@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -53,6 +54,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base implements
         IProgramConclusionRequest {
@@ -256,6 +258,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     public CycleType getRequestedCycle() {
         return getProgramConclusion().groupFor(getRegistration()).filter(CurriculumGroup::isCycleCurriculumGroup)
                 .map(ccg -> ((CycleCurriculumGroup) ccg).getCycleType()).orElse(null);
+    }
+
+    public static Set<EventType> getPossibleEventTypes() {
+        return ImmutableSet.of(EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST);
     }
 
     @Override

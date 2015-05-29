@@ -145,7 +145,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         return key;
     }
 
-    private Set<EventType> getPossibleEventTypes() {
+    public static Set<EventType> getPossibleEventTypes() {
         return ImmutableSet.of(EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST, EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST,
                 EventType.BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST, EventType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA_REQUEST);
     }
