@@ -77,7 +77,7 @@
 		<fr:view name="studentCurricularPlan" property="credits" schema="student.Dismissal.view.dismissals">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
-				<fr:property name="columnClasses" value=",inobullet ulmvert0,acenter,inobullet ulmvert0,nowrap,nowrap" />
+				<fr:property name="columnClasses" value=",,inobullet ulmvert0,acenter,inobullet ulmvert0,nowrap,nowrap" />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="creditsToDelete" />
 				<fr:property name="checkboxValue" value="externalId" />	
