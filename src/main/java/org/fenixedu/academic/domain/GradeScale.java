@@ -358,13 +358,11 @@ public enum GradeScale {
 
         @Override
         public boolean checkFinal(Grade grade) {
-            // TODO Auto-generated method stub
             return false;
         }
 
         @Override
         public boolean checkNotFinal(Grade grade) {
-            // TODO Auto-generated method stub
             return false;
         }
 
@@ -385,7 +383,44 @@ public enum GradeScale {
 
         @Override
         public String qualify(Grade grade) {
-            // TODO Auto-generated method stub
+            return null;
+        }
+    }),
+
+    TYPEQUALITATIVE(true, new GradeScaleLogic() {
+        @Override
+        public boolean belongsTo(String value) {
+            return NA.equals(value) || RE.equals(value) || S.equals(value) || B.equals(value) || MB.equals(value)
+                    || E.equals(value);
+        }
+
+        @Override
+        public boolean checkFinal(Grade grade) {
+            return false;
+        }
+
+        @Override
+        public boolean checkNotFinal(Grade grade) {
+            return false;
+        }
+
+        @Override
+        public boolean isApproved(Grade grade) {
+            return !(isNotEvaluated(grade) || isNotApproved(grade));
+        }
+
+        @Override
+        public boolean isNotApproved(Grade grade) {
+            return RE.equals(grade.getValue());
+        }
+
+        @Override
+        public boolean isNotEvaluated(Grade grade) {
+            return NA.equals(grade.getValue());
+        }
+
+        @Override
+        public String qualify(Grade grade) {
             return null;
         }
     });
@@ -409,7 +444,7 @@ public enum GradeScale {
         boolean belongsTo(final String value);
 
         default LocalizedString getExtendedValue(Grade grade) {
-            return BundleUtil.getLocalizedString(Bundle.ENUMERATION, grade.getValue());
+            return BundleUtil.getLocalizedString(Bundle.ENUMERATION, GradeScale.class.getSimpleName() + "." + grade.getValue());
         }
     }
 
@@ -424,6 +459,30 @@ public enum GradeScale {
     static final public String AP = "AP";
 
     static final public String APT = "APT";
+
+    static final public String I = "I";
+
+    static final public String S = "S";
+
+    static final public String B = "B";
+
+    static final public String MB = "MB";
+
+    static final public String MBDL = "MBDL";
+
+    static final public String BD = "BD";
+
+    static final public String E = "E";
+
+    static final public String R = "R";
+
+    static final public String AD = "AD";
+
+    static final public String ADL = "ADL";
+
+    static final public String A = "A";
+
+    static final public String AMB = "AMB";
 
     private GradeScale(final boolean isPublic, GradeScaleLogic logic) {
         setPublic(isPublic);
