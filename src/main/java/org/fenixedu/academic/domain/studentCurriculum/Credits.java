@@ -42,6 +42,8 @@ import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.Se
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedOptionalCurricularCourse;
 import org.fenixedu.academic.predicate.CreditsPredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 public class Credits extends Credits_Base {
@@ -294,6 +296,10 @@ public class Credits extends Credits_Base {
 
     public Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
         throw new DomainException("error.Credits.unsupported.operation");
+    }
+
+    public String getDescription() {
+        return BundleUtil.getString("resources.StudentResources", I18N.getLocale(), "label.dismissal.Credits");
     }
 
     public boolean isAllEnrolmentsAreExternal() {

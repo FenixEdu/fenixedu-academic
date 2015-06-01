@@ -29,6 +29,8 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 public class Equivalence extends Equivalence_Base {
 
@@ -87,6 +89,11 @@ public class Equivalence extends Equivalence_Base {
     @Override
     public String getGivenGrade() {
         return getGrade() != null ? getGrade().getValue() : null;
+    }
+
+    @Override
+    public String getDescription() {
+        return BundleUtil.getString("resources.StudentResources", I18N.getLocale(), "label.dismissal.Equivalence");
     }
 
     @Override
