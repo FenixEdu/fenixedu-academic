@@ -43,7 +43,6 @@ import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.Se
 import org.fenixedu.academic.predicate.CreditsPredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 public class Credits extends Credits_Base {
@@ -299,7 +298,7 @@ public class Credits extends Credits_Base {
     }
 
     public String getDescription() {
-        return BundleUtil.getString("resources.StudentResources", I18N.getLocale(), "label.dismissal.Credits");
+        return BundleUtil.getString("resources.StudentResources", "label.dismissal.Credits");
     }
 
     public boolean isAllEnrolmentsAreExternal() {

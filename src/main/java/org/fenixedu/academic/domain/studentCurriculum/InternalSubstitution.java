@@ -34,7 +34,6 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 public class InternalSubstitution extends InternalSubstitution_Base {
@@ -164,7 +163,7 @@ public class InternalSubstitution extends InternalSubstitution_Base {
 
     @Override
     public String getDescription() {
-        return BundleUtil.getString("resources.StudentResources", I18N.getLocale(), "label.dismissal.InternalSubstitution");
+        return BundleUtil.getString("resources.StudentResources", "label.dismissal.InternalSubstitution");
     }
 
     @Override

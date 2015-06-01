@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.commons.i18n.I18N;
 
 public class Equivalence extends Equivalence_Base {
 
@@ -93,7 +92,7 @@ public class Equivalence extends Equivalence_Base {
 
     @Override
     public String getDescription() {
-        return BundleUtil.getString("resources.StudentResources", I18N.getLocale(), "label.dismissal.Equivalence");
+        return BundleUtil.getString("resources.StudentResources", "label.dismissal.Equivalence");
     }
 
     @Override
