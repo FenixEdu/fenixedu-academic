@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.person.PersonBean;
@@ -71,9 +72,16 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
 
     @Override
     public void ensurePersonInternalization() {
-        // TODO Auto-generated method stub
         // creates an internal person, this is called just before the
         // Registration is created.
+        if (getPerson() == null) {
+            Person person = Person.readByDocumentIdNumberAndIdDocumentType(getDocumentIdNumber(), getIdDocumentType());
+            if (person != null) {
+                setPerson(person);
+            } else {
+                setPerson(new Person(this));
+            }
+        }
         setInternalized(Boolean.TRUE);
     }
 
