@@ -34,6 +34,7 @@
     <fr:schema bundle="ACADEMIC_ADMIN_OFFICE"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$DegreeTypeBean">
         <fr:slot name="name"/>
+        <fr:slot name="shortName"/>
         <fr:slot name="cycleTypes" layout="option-select" key="label.cycleType">
             <fr:property name="from" value="possibleCycleTypes"/>
             <fr:property name="classes" value="list-unstyled"/>

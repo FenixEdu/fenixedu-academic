@@ -26,7 +26,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 <%@ page language="java" %>
-<%@page import="org.fenixedu.academic.domain.degree.DegreeType"%>
 <%@page import="org.fenixedu.academic.domain.EvaluationSeason"%>
 <%@page import="org.fenixedu.academic.domain.EvaluationConfiguration"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>

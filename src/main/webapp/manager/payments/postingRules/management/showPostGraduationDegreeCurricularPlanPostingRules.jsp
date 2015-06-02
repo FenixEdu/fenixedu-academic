@@ -26,8 +26,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@ page import="org.fenixedu.academic.domain.degree.DegreeType" %>
-
 <h2><bean:message key="label.payments.postingRules.degreeCurricularPlan.rulesFor"
 	bundle="MANAGER_RESOURCES" /> <bean:write name="degreeCurricularPlan"
 	property="degree.name" /> - <bean:write name="degreeCurricularPlan"

@@ -47,9 +47,14 @@ import org.fenixedu.commons.i18n.LocalizedString;
  */
 public class DegreeType extends DegreeType_Base implements Comparable<DegreeType> {
 
-    public DegreeType(LocalizedString name) {
+    public DegreeType(final LocalizedString name) {
+        this(name, null);
+    }
+
+    public DegreeType(final LocalizedString name, final LocalizedString shortName) {
         setBennu(Bennu.getInstance());
         setName(name);
+        setShortName(shortName);
         setCycles(new CycleTypes());
         setCyclesToEnrol(new CycleTypes());
     }
