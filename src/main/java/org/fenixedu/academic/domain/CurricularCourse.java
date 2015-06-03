@@ -1659,10 +1659,10 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
 
-                if (enrolment.isValid(executionSemester) && season.equals(enrolment.getEvaluationSeason())) {
-                    if (season.isSpecialAuthorization() || !enrolment.hasAssociatedMarkSheetOrFinalGrade(season)) {
-                        result.add(enrolment);
-                    }
+                if (enrolment.isValid(executionSemester)
+                        && (season.isSpecialAuthorization() || (season.equals(enrolment.getEvaluationSeason()) && !enrolment
+                                .hasAssociatedMarkSheetOrFinalGrade(season)))) {
+                    result.add(enrolment);
                 } else if (season.isImprovement()) {
                     if (enrolment.hasImprovementFor(executionSemester) && !enrolment.hasAssociatedMarkSheet(season)) {
                         result.add(enrolment);
