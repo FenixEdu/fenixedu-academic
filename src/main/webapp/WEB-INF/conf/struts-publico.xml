@@ -170,7 +170,6 @@
       <message-resources null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
       <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
       <message-resources null="false" key="STUDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
-      <message-resources null="false" key="TEACHER_CREDITS_SHEET_RESOURCES" parameter="resources.TeacherCreditsSheetResources"></message-resources>
       <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
       <message-resources null="false" key="DEGREE_ADM_OFFICE" parameter="resources.DegreeAdministrativeOfficeResources"></message-resources>
       <message-resources null="false" key="CURRICULUM_HISTORIC_RESOURCES" parameter="resources.CurriculumHistoricResources"></message-resources>

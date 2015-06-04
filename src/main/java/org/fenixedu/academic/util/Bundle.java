@@ -49,6 +49,5 @@ public class Bundle {
     public static final String SITE = "resources.SiteResources";
     public static final String SPACE = "resources.SpaceResources";
     public static final String STUDENT = "resources.StudentResources";
-    public static final String TEACHER_CREDITS = "resources.TeacherCreditsSheetResources";
 
 }
