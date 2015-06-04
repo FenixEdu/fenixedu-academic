@@ -283,7 +283,7 @@
 		<property name="format" value="${description.content}" />
 	</slot>
 	<slot name="ingressionType" key="label.ingression.short" layout="menu-select-postback"  >
-		<property name="format" value="${code} - ${description}" />
+		<property name="format" value="${code} - ${description.content}" />
 		<property name="providerClass"	value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.IngressionTypeProvider" />
 		<property name="destination" value="ingressionPostBack"/>
 	</slot>
@@ -311,7 +311,7 @@
         </validator>
 	</slot>
 	<slot name="ingressionType" key="label.ingression.short" layout="menu-select-postback"  >
-		<property name="format" value="${code} - ${description}" />
+		<property name="format" value="${code} - ${description.content}" />
 		<property name="providerClass"	value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.IngressionTypeProvider" />
 		<property name="destination" value="ingressionPostBack"/>
 	</slot>
