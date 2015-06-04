@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,10 +45,6 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.teacher.NotifyStudentGroup;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
-import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Archive;
-import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.DiskZipArchive;
-import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Fetcher;
-import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -107,18 +105,21 @@ public class ProjectSubmissionsManagementDispatchAction extends ExecutionCourseB
         final List<ProjectSubmission> projectSubmissions =
                 new ArrayList<ProjectSubmission>(project.getLastProjectSubmissionForEachStudentGroup());
 
-        Archive archive = new DiskZipArchive(response, project.getName());
-        Fetcher fetcher = new Fetcher(archive, request, response);
+        try (ZipOutputStream stream = new ZipOutputStream(response.getOutputStream())) {
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + project.getName() + ".zip\"");
 
-        for (ProjectSubmission submission : projectSubmissions) {
-            StudentGroup group = submission.getStudentGroup();
+            for (ProjectSubmission submission : projectSubmissions) {
+                StudentGroup group = submission.getStudentGroup();
+                ZipEntry zipEntry =
+                        new ZipEntry(group.getGroupNumber() + getStudentsISTID(group) + "/"
+                                + submission.getProjectSubmissionFile().getFilename());
+                stream.putNextEntry(zipEntry);
+                stream.write(submission.getProjectSubmissionFile().getContent());
+                stream.closeEntry();
+            }
 
-            fetcher.queue(new Resource(group.getGroupNumber() + getStudentsISTID(group) + "/"
-                    + submission.getProjectSubmissionFile().getFilename(), submission.getProjectSubmissionFile().getDownloadUrl()));
         }
-
-        fetcher.process();
-        archive.finish();
 
         return null;
     }
@@ -157,18 +158,22 @@ public class ProjectSubmissionsManagementDispatchAction extends ExecutionCourseB
 
         final List<ProjectSubmission> subList = projectSubmissions.subList(startIndex, finishIndex);
 
-        Archive archive = new DiskZipArchive(response, project.getName() + "-" + (startIndex + 1) + "-" + finishIndex);
-        Fetcher fetcher = new Fetcher(archive, request, response);
+        try (ZipOutputStream stream = new ZipOutputStream(response.getOutputStream())) {
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + project.getName() + "-" + (startIndex + 1)
+                    + "-" + finishIndex + ".zip\"");
 
-        for (ProjectSubmission submission : subList) {
-            StudentGroup group = submission.getStudentGroup();
+            for (ProjectSubmission submission : subList) {
+                StudentGroup group = submission.getStudentGroup();
+                ZipEntry zipEntry =
+                        new ZipEntry(group.getGroupNumber() + getStudentsISTID(group) + "/"
+                                + submission.getProjectSubmissionFile().getFilename());
+                stream.putNextEntry(zipEntry);
+                stream.write(submission.getProjectSubmissionFile().getContent());
+                stream.closeEntry();
+            }
 
-            fetcher.queue(new Resource(group.getGroupNumber() + getStudentsISTID(group) + "/"
-                    + submission.getProjectSubmissionFile().getFilename(), submission.getProjectSubmissionFile().getDownloadUrl()));
         }
-
-        fetcher.process();
-        archive.finish();
 
         return null;
     }
