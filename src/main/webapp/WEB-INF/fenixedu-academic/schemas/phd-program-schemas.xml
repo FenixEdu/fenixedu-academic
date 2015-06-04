@@ -1202,7 +1202,7 @@
 	</slot>
 	<slot name="conclusionProcessed" />
 	<slot name="conclusionDate" layout="null-as-label" />
-	<slot name="finalGrade.value" layout="null-as-label" />
+	<slot name="finalGrade.value" layout="null-as-label" key="label.finalGrade" />
 </schema>
 
 <schema name="PublicPresentationSeminarProcess.view" type="org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
