@@ -144,14 +144,4 @@ public class FileUtils {
         }
     }
 
-    public static void deleteDirectory(File directory) {
-        File[] files = directory.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                deleteDirectory(file);
-            }
-            file.delete();
-        }
-        directory.delete();
-    }
 }

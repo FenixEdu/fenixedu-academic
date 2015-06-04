@@ -484,16 +484,6 @@
     </slot>
 </schema>
 
-<schema name="executionCourse.archive.options" type="org.fenixedu.academic.ui.struts.action.teacher.siteArchive.ArchiveOptions">
-    <slot name="announcements" key="label.archive.options.announcements"/>
-    <slot name="planning" key="label.archive.options.planning"/>
-    <slot name="schedule" key="label.archive.options.schedule"/>
-    <slot name="shifts" key="label.archive.options.shifts"/>
-    <slot name="groupings" key="label.archive.options.groupings"/>
-    <slot name="evaluations" key="label.archive.options.evaluations"/>
-    <slot name="files" key="label.archive.options.files"/>
-</schema>
-
 <schema name="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
 		type="org.fenixedu.academic.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
 	<slot name="executionPeriod" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.executionPeriod">
