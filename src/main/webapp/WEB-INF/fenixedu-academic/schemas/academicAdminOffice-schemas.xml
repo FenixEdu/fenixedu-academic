@@ -1448,8 +1448,8 @@
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
 	<slot name="ectsCredits"/>
-	<slot name="rawGrade.value"/>
-	<slot name="finalGrade.value"/>
+	<slot name="rawGrade.value" key="label.rawGrade"/>
+	<slot name="finalGrade.value" key="label.finalGrade"/>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
@@ -1494,8 +1494,8 @@
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="rawGrade.value" />
-	<slot name="finalGrade.value" />
+	<slot name="rawGrade.value" key="label.rawGrade"/>
+	<slot name="finalGrade.value" key="label.finalGrade"/>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
@@ -1523,13 +1523,13 @@
 	<slot name="curriculumGroup.name" />
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="rawGrade.value" />
+	<slot name="rawGrade.value" key="label.rawGrade"/>
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForRegistration" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="rawGrade.value" />
+	<slot name="rawGrade.value" key="label.rawGrade"/>
 </schema>
 
 <schema name="AccountingEventCreateBean.editExecutionYear" type="org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean" bundle="APPLICATION_RESOURCES">
