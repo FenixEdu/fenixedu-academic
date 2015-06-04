@@ -227,7 +227,7 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
             actionErrors.add("error.executionDegree.empty.lessonsPeriod", new ActionError(
                     "error.executionDegree.empty.lessonsPeriod"));
             saveErrors(request, actionErrors);
-            return mapping.getInputForward();
+            return mapping.findForward("EditShift");
         }
 
         return mapping.findForward("ShowLessonForm");

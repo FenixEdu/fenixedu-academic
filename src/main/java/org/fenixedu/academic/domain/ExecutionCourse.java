@@ -1796,24 +1796,30 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(getExecutionYear());
             if (semester.intValue() == 1) {
-                if (minBeginDate == null
-                        || minBeginDate.isAfter(executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay())) {
-                    minBeginDate = executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay();
-                }
-                if (maxEndDate == null
-                        || maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester()
-                                .getEndYearMonthDayWithNextPeriods())) {
-                    maxEndDate = executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDayWithNextPeriods();
+                final OccupationPeriod periodLessonsFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
+                if(periodLessonsFirstSemester != null){
+                    if (minBeginDate == null
+                            || minBeginDate.isAfter(periodLessonsFirstSemester.getStartYearMonthDay())) {
+                        minBeginDate = periodLessonsFirstSemester.getStartYearMonthDay();
+                    }
+                    if (maxEndDate == null
+                            || maxEndDate.isBefore(periodLessonsFirstSemester
+                                    .getEndYearMonthDayWithNextPeriods())) {
+                        maxEndDate = periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods();
+                    }
                 }
             } else {
-                if (minBeginDate == null
-                        || minBeginDate.isAfter(executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay())) {
-                    minBeginDate = executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay();
-                }
-                if (maxEndDate == null
-                        || maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester()
-                                .getEndYearMonthDayWithNextPeriods())) {
-                    maxEndDate = executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDayWithNextPeriods();
+                final OccupationPeriod periodLessonsSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
+                if(periodLessonsSecondSemester != null) {
+                    if (minBeginDate == null
+                            || minBeginDate.isAfter(periodLessonsSecondSemester.getStartYearMonthDay())) {
+                        minBeginDate = periodLessonsSecondSemester.getStartYearMonthDay();
+                    }
+                    if (maxEndDate == null
+                            || maxEndDate.isBefore(periodLessonsSecondSemester
+                                    .getEndYearMonthDayWithNextPeriods())) {
+                        maxEndDate = periodLessonsSecondSemester.getEndYearMonthDayWithNextPeriods();
+                    }
                 }
             }
         }
