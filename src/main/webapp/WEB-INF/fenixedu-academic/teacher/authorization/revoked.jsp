@@ -74,8 +74,8 @@ text-align: center;
 			<c:forEach var="auth" items="${authorizations}">
 				<c:set var="user" value="${auth.teacher.person.user}"/>
 				<tr>
-					<td>${user.username}</td>
-					<td>${user.name}</td>
+					<td><c:out value="${user.username}"/></td>
+					<td><c:out value="${user.name}"/></td>
 					<td title="${auth.creationDate.toString('dd/MM/yyyy HH:mm:ss')}">
 						${auth.creationDate == null ? '-' : auth.creationDate.toString('dd/MM/yyyy')}
 					</td>
@@ -92,18 +92,18 @@ text-align: center;
 							</c:otherwise>
 						</c:choose>
 					</td>
-					<td>${auth.department.nameI18n.content}</td>
-					<td>${auth.executionSemester.qualifiedName}</td>
-					<td>${auth.teacherCategory.name.content}</td>
+					<td><c:out value="${auth.department.nameI18n.content}"/></td>
+					<td><c:out value="${auth.executionSemester.qualifiedName}"/></td>
+					<td><c:out value="${auth.teacherCategory.name.content}"/></td>
 					<td>${auth.lessonHours}</td>
 					<c:if test="${not empty auth.authorizer}">
-						<td>${auth.authorizer.profile.displayName} (${auth.authorizer.username})</td>
+						<td><c:out value="${auth.authorizer.profile.displayName} (${auth.authorizer.username})"/></td>
 					</c:if>
 					<c:if test="${empty auth.authorizer}">
 						<td>-</td>
 					</c:if>
 					<c:if test="${not empty auth.revoker}">
-						<td>${auth.revoker.profile.displayName} (${auth.revoker.username})</td>
+						<td><c:out value="${auth.revoker.profile.displayName} (${auth.revoker.username})"/></td>
 					</c:if>
 					<c:if test="${empty auth.revoker}">
 						<td>-</td>

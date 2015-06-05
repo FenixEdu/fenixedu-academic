@@ -232,9 +232,9 @@
 					<c:set var="ocupation" value="${fn:length(shift.studentsSet)}" />
 					<c:set var="type" value="${shift.types }" />
 					<tr class="diferentiatedCapacityShift" data-shiftType="${type}">
-						<td>${ lessons}</td>
-						<td>${ lotacao}</td>
-						<td>${ ocupation}</td>
+						<td><c:out value="${ lessons}" /></td>
+						<td><c:out value="${ lotacao}" /></td>
+						<td><c:out value="${ ocupation}" /></td>
 						<td>
 						<form:input type="number" id="differentiatedCapacityShifts[${id }]"
 							class="form-control" path="differentiatedCapacityShifts[${id }]" /></td>

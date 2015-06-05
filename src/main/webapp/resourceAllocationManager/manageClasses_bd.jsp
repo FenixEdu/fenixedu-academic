@@ -24,10 +24,11 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:include page="/commons/contextExecutionDegreeAndCurricularYear.jsp"/>
 
-<h2>Manipular Turmas <span class="small">${context_selection_bean.executionDegree.degreeCurricularPlan.name} - ${context_selection_bean.curricularYear.year}º ano (${context_selection_bean.academicInterval.pathName})</span></h2>
+<h2>Manipular Turmas <span class="small"><c:out value="${context_selection_bean.executionDegree.degreeCurricularPlan.name} - ${context_selection_bean.curricularYear.year}º ano (${context_selection_bean.academicInterval.pathName})" /></span></h2>
 
 <jsp:include page="context.jsp" />
 

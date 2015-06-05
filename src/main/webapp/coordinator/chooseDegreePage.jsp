@@ -45,7 +45,7 @@
 				</logic:empty>
 		   </td>
 		   <td class="acenter">
-				<a href="${pageContext.request.contextPath}/coordinator/coordinatorIndex.do?degreeCurricularPlanID=${degreeCurricularPlan.externalId}">${degreeCurricularPlan.name}</a>
+				<a href="${pageContext.request.contextPath}/coordinator/coordinatorIndex.do?degreeCurricularPlanID=${degreeCurricularPlan.externalId}"><c:out value="${degreeCurricularPlan.name}" /></a>
 		   </td>	   
 		</tr>
 	</logic:iterate>

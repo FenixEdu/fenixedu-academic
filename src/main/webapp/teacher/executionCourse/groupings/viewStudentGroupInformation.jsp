@@ -53,7 +53,7 @@
 
 
 <h2>${fr:message('resources.ApplicationResources', 'title.StudentGroupInformation')}
-	${studentGroup.groupNumber}</h2>
+	<c:out value="${studentGroup.groupNumber}" /></h2>
 <div class="row">
 	<a class="col-md-12" href="${viewShiftsAndGroups}"><span
 		class="glyphicon glyphicon-chevron-left"></span>
@@ -127,7 +127,7 @@
 						<strong>${fr:message('resources.ApplicationResources', 'property.shift')}</strong>
 						<a
 							href="${studentsAndGroupsByShiftLink.concat('shift/').concat(studentGroup.shift.externalId)} ">
-							${studentGroup.shift.nome } </a>
+							<c:out value="${studentGroup.shift.nome }" /> </a>
 						<button class="btn btn-default btn-xs pull-right"
 							data-toggle="modal" data-target="#editShift">
 							<span class="glyphicon glyphicon-edit"></span>
@@ -147,7 +147,7 @@
 									</p>
 									<p>
 										<strong>${fr:message('resources.ApplicationResources', 'property.lesson.room')}</strong>
-										<span>${lesson.roomOccupation.room.name}</span>
+										<span><c:out value="${lesson.roomOccupation.room.name}" /></span>
 									</p>
 									<p>
 										<strong>${fr:message('resources.ApplicationResources', 'property.lesson.beginning')}</strong>
@@ -236,7 +236,7 @@
 								<td class="acenter showPhotos hide"><img class="lazy"
 									data-original="${userPhotoBaseLink.concat(attends.registration.person.username)}"
 									width="100" height="100" /></td>
-								<td>${attends.registration.person.name}</td>
+								<td><c:out value="${attends.registration.person.name}" /></td>
 								<td><c:choose>
 										<c:when test="${not empty attends.registration.person.email}">
 											<html:link href="mailto:${attends.registration.person.email}">${attends.registration.person.email}</html:link>
@@ -296,7 +296,7 @@
 								<td class="acenter showPhotos hide"><img class="lazy"
 									data-original="${userPhotoBaseLink.concat(reg.person.username)}"
 									width="100" height="100" /></td>
-								<td>${attend.registration.person.name}</td>
+								<td><c:out value="${attend.registration.person.name}" /></td>
 								<td><c:if test="${not empty reg.person.email}">
 										<html:link href="mailto:${reg.person.email}">${reg.person.email}</html:link>
 									</c:if> <c:if test="${empty reg.person.email}">

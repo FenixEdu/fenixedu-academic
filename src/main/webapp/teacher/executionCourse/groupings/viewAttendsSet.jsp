@@ -134,7 +134,7 @@
 										<td class="acenter showPhotos hide"><img class="lazy"
 											data-original="${userPhotoBaseLink.concat(attends.registration.person.username)}"
 											width="100" height="100" /></td>
-										<td>${attends.registration.person.name}</td>
+										<td><c:out value="${attends.registration.person.name}" /></td>
 										<td><c:choose>
 												<c:when
 													test="${not empty attends.registration.person.email}">
@@ -203,7 +203,7 @@
 										<td class="acenter showPhotos hide"><img class="lazy"
 											data-original="${userPhotoBaseLink.concat(registration.person.username)}"
 											width="100" height="100" /></td>
-										<td>${registration.person.name}</td>
+										<td><c:out value="${registration.person.name}" /></td>
 										<td><c:if test="${not empty registration.person.email}">
 												<html:link href="mailto:${registration.person.email}">${registration.person.email}</html:link>
 											</c:if> <c:if test="${empty registration.person.email}">

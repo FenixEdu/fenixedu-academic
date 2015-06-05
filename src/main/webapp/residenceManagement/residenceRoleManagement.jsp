@@ -48,8 +48,8 @@
 	<tbody>
 		<c:forEach items="${role.members}" var="member">
 			<tr>
-				<td>${member.name}</td>
-				<td>${member.username}</td>
+				<td><c:out value="${member.name}" /></td>
+				<td><c:out value="${member.username}" /></td>
 				<td><a href="${pageContext.request.contextPath}/residenceManagement/residenceRoleManagement.do?method=removeResidenceRoleManagemenToPerson&userToRemove=${member.username}">${portal.message('resources.ApplicationResources', 'label.remove')}</a></td>
 			</tr>
 		</c:forEach>

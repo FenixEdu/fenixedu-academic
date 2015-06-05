@@ -117,11 +117,11 @@
 					</tr>
     				<tr>
 						<th class="row"><spring:message code="label.name"/></th>
-						<td>${authorization.teacher.person.user.profile.displayName}</td>
+						<td><c:out value="${authorization.teacher.person.user.profile.displayName}" /></td>
 					</tr>
 					<tr>
 						<th class="row"><spring:message code="label.username"/></th>
-						<td>${authorization.teacher.person.user.username}</td>
+						<td><c:out value="${authorization.teacher.person.user.username}" /></td>
 					</tr>
     			</tbody>
     		</table>
@@ -155,9 +155,9 @@
 					<c:if test="${not empty professorships}">
 						<c:forEach var="professorship" items="${professorships}">
 						<tr data-professorship="${professorship.externalId}" data-responsible="${professorship.responsibleFor}">
-							<td>${professorship.executionCourse.nameI18N.content}</td>
+							<td><c:out value="${professorship.executionCourse.nameI18N.content}" /></td>
 							<td>
-								${professorshipService.getDegreeAcronyms(professorship, ",")}
+								<c:out value="${professorshipService.getDegreeAcronyms(professorship, ',')}" />
 							</td>
 							<td>
 								<div class="btn-group btn-group-xs">
@@ -181,7 +181,7 @@
 	
 	<c:if test="${not empty error}">
 		<div class="alert alert-danger">
-			${error}
+			<c:out value="${error}" />
 		</div>
 		<hr />
 	</c:if>

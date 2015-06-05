@@ -37,7 +37,7 @@
 	<hr />
 	<c:if test="${not empty error}">
 		<div class="alert alert-danger">
-			${error}
+			<c:out value="${error}"/>
 		</div>
 	</c:if>
 	
@@ -61,8 +61,8 @@
 					<c:forEach var="auth" items="${authorizations}">
 						<c:set var="user" value="${auth.teacher.person.user}"/>
 						<tr>
-							<td>${user.username}</td>  
-							<td>${user.name}</td>
+							<td><c:out value="${user.username}"/></td>  
+							<td><c:out value="${user.name}"/></td>
 							<td>
 								<c:choose>
 									<c:when test="${auth.contracted}">
@@ -73,11 +73,11 @@
 									</c:otherwise>
 								</c:choose>
 							</td>
-							<td>${auth.department.nameI18n.content}</td>
-							<td>${auth.executionSemester.qualifiedName}</td>
-							<td>${auth.teacherCategory.name.content}</td>
+							<td><c:out value="${auth.department.nameI18n.content}"/></td>
+							<td><c:out value="${auth.executionSemester.qualifiedName}"/></td>
+							<td><c:out value="${auth.teacherCategory.name.content}"/></td>
 							<td>${auth.lessonHours}</td>
-							<td>${auth.authorizer.name} (${auth.authorizer.username})</td>
+							<td><c:out value="${auth.authorizer.name} (${auth.authorizer.username})"/></td>
 						</tr>
 					</c:forEach>
 				</tbody>

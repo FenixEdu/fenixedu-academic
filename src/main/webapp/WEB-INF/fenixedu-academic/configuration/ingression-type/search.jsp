@@ -29,7 +29,7 @@
 	<div class="alert alert-info" role="alert">
 
 		<c:forEach items="${infoMessages}" var="message">
-			<p>${message}</p>
+			<p><c:out value="${message}" /></p>
 		</c:forEach>
 
 	</div>
@@ -39,7 +39,7 @@
 	<div class="alert alert-danger" role="alert">
 
 		<c:forEach items="${errorMessages}" var="message">
-			<p>${message}</p>
+			<p><c:out value="${message}" /></p>
 		</c:forEach>
 
 	</div>

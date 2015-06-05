@@ -94,7 +94,7 @@
 					<p>${fr:message('resources.ApplicationResources', 'label.projectName')}:
 						<strong> <html:link
 								page="/teacher/${executionCourse.externalId}/student-groups/view/${groupProperties.externalId}">
-								${groupProperties.name}
+								<c:out value="${groupProperties.name}" />
 								</html:link>
 						</strong>
 					</p>
@@ -179,7 +179,7 @@
 						<strong>${fr:message('resources.ApplicationResources', 'label.projectDescription')}:
 						</strong> <span><c:if
 								test="${not empty groupProperties.projectDescription}">
-							${groupProperties.projectDescription}
+							<c:out value="${groupProperties.projectDescription}" />
 						</c:if> <c:if test="${empty groupProperties.projectDescription}">
 							${fr:message('resources.ApplicationResources', 'message.project.wihtout.description')}
 						</c:if></span>
@@ -190,7 +190,7 @@
 							</strong>
 							<c:forEach var="infoExportGrouping"
 								items="${groupProperties.exportGroupingsSet }">
-								${infoExportGrouping.executionCourse.nome}
+								<c:out value="${infoExportGrouping.executionCourse.nome}" />
 
 					</c:forEach>
 						</c:if>

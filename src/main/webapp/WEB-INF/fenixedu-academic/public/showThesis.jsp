@@ -51,7 +51,7 @@
 				<div class="row">
 					<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'student')}</label>
 					<div class="col-sm-10">
-						${thesis.student.person.name} (${thesis.student.person.username})
+						<c:out value="${thesis.student.person.name} (${thesis.student.person.username})"/>
 					</div>
 				</div>
 				<div class="row">
@@ -63,19 +63,19 @@
 				<div class="row">
 					<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.thesis.fullTitle')}</label>
 					<div class="col-sm-10">
-						<strong>${thesis.finalFullTitle.content}</strong>
+						<strong><c:out value="${thesis.finalFullTitle.content}" /></strong>
 					</div>
 				</div>
 				<div class="row">
 					<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.thesis.abstract')}</label>
 					<div class="col-sm-10" id="abstract">
-						${thesis.thesisAbstract.content}
+						<c:out value="${thesis.thesisAbstract.content}" />
 					</div>
 				</div>
 				<div class="row">
 					<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.thesis.keywords')}</label>
 					<div class="col-sm-10">
-						${thesis.keywords}
+						<c:out value="${thesis.keywords}" />
 					</div>
 				</div>
 			</div>
@@ -98,19 +98,19 @@
 						<div class="row">
 							<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.person.name')}</label>
 							<div class="col-sm-10">
-								${advisor.person.name}
+								<c:out value="${advisor.person.name}" />
 							</div>
 						</div>
 						<div class="row">
 							<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.teacher.category')}</label>
 							<div class="col-sm-10">
-								${advisor.category}
+								<c:out value="${advisor.category}" />
 							</div>
 						</div>
 						<div class="row">
 							<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.department')}</label>
 							<div class="col-sm-10">
-								${advisor.affiliation}
+								<c:out value="${advisor.affiliation}" />
 							</div>
 						</div>
 					</div>
@@ -119,7 +119,7 @@
 
 			<h4>${fr:message('resources.ApplicationResources', 'title.thesis.details.publication')}</h4>
 			<c:if test="${thesis.evaluated}">
-				${thesis.finalTitle}, ${thesis.student.name}, ${thesis.discussed.year}
+				<c:out value="${thesis.finalTitle}, ${thesis.student.name}, ${thesis.discussed.year}"/>
 				<p>
 					(<a href="${thesis.extendedAbstract.downloadUrl}">
 						<img src="${pageContext.request.contextPath}/images/icon_pdf.gif"/>

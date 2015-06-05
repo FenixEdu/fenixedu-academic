@@ -23,14 +23,15 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants"%>
 <html:xhtml/>
 
 <jsp:include page="/commons/contextShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 
-<h2><bean:message key="link.manage.turnos"/> <span class="small">${executionDegree.executionDegree.degreeCurricularPlan.name}</span></h2>
+<h2><bean:message key="link.manage.turnos"/> <span class="small"><c:out value="${executionDegree.executionDegree.degreeCurricularPlan.name}" /></span></h2>
 
-<h3><bean:message key="title.editTurno"/> <span class="small">${shift.nome}</span></h3>
+<h3><bean:message key="title.editTurno"/> <span class="small"><c:out value="${shift.nome}" /></span></h3>
 
 <p>
 	<span class="error"><!-- Error messages go here -->

@@ -23,6 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html:xhtml />
 
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
@@ -45,7 +46,7 @@
 	</fr:view>
 	
 	<h3>
-		${event.description}
+		<c:out value="${event.description}" />
 	</h3>
 
 	<bean:define id="personId" name="person" property="externalId" />

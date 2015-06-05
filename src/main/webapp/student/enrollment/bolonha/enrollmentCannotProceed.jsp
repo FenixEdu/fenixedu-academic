@@ -26,7 +26,7 @@
 
 <div class="alert alert-danger">
     <html:messages id="messages" message="true" bundle="STUDENT_RESOURCES">
-        ${messages}
+        <c:out value="${messages}" />
     </html:messages>
 </div>
 <c:if test="${start != null}">

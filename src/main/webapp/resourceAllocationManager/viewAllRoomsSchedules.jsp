@@ -29,7 +29,7 @@
 <c:forEach var="bean" items="${beans}">
 	<div class="single">
 	<div class="alert alert-warning">
-		<strong>${academicInterval.pathName}</strong>
+		<strong><c:out value="${academicInterval.pathName}" /></strong>
 	</div>
 
 	<table class="table table-bordered">
@@ -55,19 +55,19 @@
 		</thead>
 		<tr>
 			<td class="listClasses">
-				${bean.room.name}
+				<c:out value="${bean.room.name}" />
 			</td>
 			<td class="listClasses">
-				${bean.room.classification.name.content}
+				<c:out value="${bean.room.classification.name.content}" />
 			</td>
 			<td class="listClasses">
-				${bean.room.parent.name}
+				<c:out value="${bean.room.parent.name}" />
 			</td>
 			<td class="listClasses">
 				x
 			</td>
 			<td class="listClasses">
-				${bean.room.allocatableCapacity}
+				<c:out value="${bean.room.allocatableCapacity}" />
 			</td>
 			<td class="listClasses">
 				y
