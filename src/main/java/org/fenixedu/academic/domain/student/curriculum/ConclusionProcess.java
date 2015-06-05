@@ -95,7 +95,7 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
     }
 
     abstract public void update(final Person responsible, final Grade finalGrade, final Grade rawGrade,
-            final LocalDate conclusionDate, final String notes);
+            final Grade qualitativeGrade, final LocalDate conclusionDate, final String notes);
 
     abstract public void update(final RegistrationConclusionBean bean);
 

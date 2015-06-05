@@ -23,6 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
+<%@page import="org.apache.struts.action.ActionMessages"%><html:xhtml/>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -33,8 +34,6 @@
 		});	
 	});
 </script>
-
-<%@page import="org.apache.struts.action.ActionMessages"%><html:xhtml/>
 
 <h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
@@ -63,10 +62,12 @@
 	</logic:equal>
 	
 	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>" >
+		<hr />
 		<p>
 			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 		</p>
 	</html:messages>
+	
 	<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="illegal.access">
 		<p>
 			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
@@ -238,6 +239,7 @@
 					<logic:equal name="registrationConclusionBean" property="programConclusion.averageEditable" value="true">
 						<fr:slot name="enteredAverageGrade"/>
 						<fr:slot name="enteredFinalAverageGrade"/>
+						<fr:slot name="enteredDescriptiveGrade"/>
 					</logic:equal>
 					<fr:slot name="observations" key="label.anotation" bundle="ACADEMIC_OFFICE_RESOURCES">
 					</fr:slot>

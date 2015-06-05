@@ -28,6 +28,8 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -48,11 +50,12 @@ public class RegistrationConclusionProcess {
         registration.conclude(curriculumGroup);
 
         if (conclusionBean.hasEnteredConclusionDate() || conclusionBean.hasEnteredFinalAverageGrade()
-                || conclusionBean.hasEnteredAverageGrade()) {
+                || conclusionBean.hasEnteredAverageGrade() || conclusionBean.hasEnteredDescriptiveGrade()) {
             GradeScale gradeScale = registration.getDegree().getGradeScale();
             YearMonthDay conclusionDate = conclusionBean.getConclusionDate();
             Grade finalGrade = curriculumGroup.getFinalGrade();
             Grade rawGrade = curriculumGroup.getRawGrade();
+            Grade descriptiveGrade = null;
 
             if (conclusionBean.hasEnteredConclusionDate()) {
                 checkEnteredConclusionDate(conclusionBean);
@@ -60,26 +63,32 @@ public class RegistrationConclusionProcess {
             }
 
             if (conclusionBean.hasEnteredFinalAverageGrade()) {
-                checkAverage(conclusionBean.getEnteredFinalAverageGrade(), registration);
+                checkGrade(conclusionBean.getEnteredFinalAverageGrade(), gradeScale);
                 finalGrade = Grade.createGrade(conclusionBean.getEnteredFinalAverageGrade(), gradeScale);
             }
 
             if (conclusionBean.hasEnteredAverageGrade()) {
-                checkAverage(conclusionBean.getEnteredAverageGrade(), registration);
+                checkGrade(conclusionBean.getEnteredAverageGrade(), gradeScale);
                 rawGrade =
                         Grade.createGrade(
                                 new BigDecimal(conclusionBean.getEnteredAverageGrade()).setScale(2, RoundingMode.HALF_UP)
                                         .toString(), gradeScale);
             }
 
-            curriculumGroup.editConclusionInformation(AccessControl.getPerson(), finalGrade, rawGrade, conclusionDate,
-                    conclusionBean.getObservations());
+            if (conclusionBean.hasEnteredDescriptiveGrade()) {
+                checkGrade(conclusionBean.getEnteredDescriptiveGrade(), GradeScale.TYPEQUALITATIVE);
+                descriptiveGrade = Grade.createGrade(conclusionBean.getEnteredDescriptiveGrade(), GradeScale.TYPEQUALITATIVE);
+            }
+
+            curriculumGroup.editConclusionInformation(AccessControl.getPerson(), finalGrade, rawGrade, descriptiveGrade,
+                    conclusionDate, conclusionBean.getObservations());
         }
     }
 
-    private static void checkAverage(String average, Registration registration) {
-        if (!registration.getDegree().getGradeScale().belongsTo(average)) {
-            throw new DomainException("error.RegistrationConclusionProcess.final.average.is.invalid");
+    private static void checkGrade(String value, GradeScale gradeScale) {
+        if (!gradeScale.belongsTo(value)) {
+            throw new DomainException("error.RegistrationConclusionProcess.final.average.is.invalid", value, BundleUtil
+                    .getLocalizedString(Bundle.ENUMERATION, gradeScale.name()).getContent());
         }
     }
 

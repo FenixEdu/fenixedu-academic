@@ -1450,6 +1450,9 @@
 	<slot name="ectsCredits"/>
 	<slot name="rawGrade.value" key="label.rawGrade"/>
 	<slot name="finalGrade.value" key="label.finalGrade"/>
+    <slot name="descriptiveGradeExtendedValue" layout="null-as-label" key="label.descriptiveGrade">
+        <property name="label" value="-"/>  
+    </slot>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
@@ -1496,6 +1499,9 @@
 	<slot name="ectsCredits" />
 	<slot name="rawGrade.value" key="label.rawGrade"/>
 	<slot name="finalGrade.value" key="label.finalGrade"/>
+    <slot name="descriptiveGradeExtendedValue" layout="null-as-label" key="label.descriptiveGrade">
+        <property name="label" value="-"/>  
+    </slot>
 	<slot name="dissertationThesisTitle" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
