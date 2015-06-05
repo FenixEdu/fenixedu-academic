@@ -67,7 +67,7 @@
 			</fr:layout>
 			
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisReportFeedbackDocument.class.getName() %>">
-				<fr:slot name="uploadTime" />
+				<fr:slot name="creationDate" />
 				<fr:slot name="filename" />
 				<fr:slot name="documentVersion"/>
 			</fr:schema>

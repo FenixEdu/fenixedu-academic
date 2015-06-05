@@ -39,7 +39,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 
                 @Override
                 public int compare(ApprovedLearningAgreementDocumentFile o1, ApprovedLearningAgreementDocumentFile o2) {
-                    return o1.getUploadTime().compareTo(o2.getUploadTime());
+                    return o1.getCreationDate().compareTo(o2.getCreationDate());
                 }
             };
 

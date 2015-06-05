@@ -20,12 +20,19 @@ package org.fenixedu.academic.domain.accounting.report.events;
 
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class EventReportQueueJobFile extends EventReportQueueJobFile_Base {
 
     public EventReportQueueJobFile(byte[] contents, String filename) {
         super();
         init(filename, filename, contents, AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_EVENT_REPORTS));
+    }
+
+    // Delete jsp usages and delete this method
+    @Deprecated
+    public String getDownloadUrl() {
+        return FileDownloadServlet.getDownloadUrl(this);
     }
 
     @Override

@@ -211,7 +211,7 @@
 				
 					<fr:property name="sortParameter" value="sortBy"/>
 		            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'/>
-	    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacy.mostRecentApprovedLearningAgreement.uploadTime" : request.getParameter("sortBy") %>"/>
+	    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacy.mostRecentApprovedLearningAgreement.creationDate" : request.getParameter("sortBy") %>"/>
 	
 					<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${externalId}"%>' />
 					<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>

@@ -47,7 +47,7 @@ public class ZipUtils {
                 }
                 usedNames.add(filename);
                 zip.putNextEntry(new ZipEntry(filename));
-                zip.write(document.getLastGeneratedDocument().getContents());
+                zip.write(document.getLastGeneratedDocument().getContent());
                 zip.closeEntry();
             }
             zip.close();

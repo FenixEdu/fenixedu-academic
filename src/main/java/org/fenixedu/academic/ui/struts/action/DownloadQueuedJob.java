@@ -43,7 +43,7 @@ public class DownloadQueuedJob extends FenixDispatchAction {
             httpServletResponse.setContentType(((QueueJobWithFile) queueJob).getContentType());
             httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + queueJob.getFilename());
             final OutputStream outputStream = httpServletResponse.getOutputStream();
-            outputStream.write(((QueueJobWithFile) queueJob).getFile().getContents());
+            outputStream.write(((QueueJobWithFile) queueJob).getFile().getContent());
             outputStream.close();
         }
 

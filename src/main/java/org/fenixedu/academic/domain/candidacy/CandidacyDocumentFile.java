@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.candidacy;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
 
@@ -29,6 +30,12 @@ public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
     public CandidacyDocumentFile(String filename, String displayName, byte[] content, Group group) {
         this();
         init(filename, displayName, content, group);
+    }
+
+    // Delete jsp usages and delete this method
+    @Deprecated
+    public String getDownloadUrl() {
+        return FileDownloadServlet.getDownloadUrl(this);
     }
 
     @Override

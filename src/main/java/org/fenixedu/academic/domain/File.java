@@ -25,8 +25,6 @@ import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
-import org.joda.time.DateTime;
 
 @Deprecated
 public abstract class File extends File_Base {
@@ -57,28 +55,6 @@ public abstract class File extends File_Base {
         setAccessGroup(group.toPersistentGroup());
     }
 
-    @Override
-    public boolean isPrivate() {
-        return getPermittedGroup() == null || !getPermittedGroup().isMember(null);
-    }
-
-    @Deprecated
-    public byte[] getContents() {
-        return getContent();
-    }
-
-    /**
-     * @return returns a public url that can be used by a client to download the
-     *         associated file from the external file storage
-     */
-    public String getDownloadUrl() {
-        return getFileDownloadPrefix() + getExternalId() + "/" + getFilename();
-    }
-
-    public final static String getFileDownloadPrefix() {
-        return CoreConfiguration.getConfiguration().applicationUrl() + "/downloadFile/";
-    }
-
     protected void disconnect() {
     }
 
@@ -92,16 +68,6 @@ public abstract class File extends File_Base {
     @Override
     public boolean isAccessible(User user) {
         return getPermittedGroup().isMember(user);
-    }
-
-    @Deprecated
-    public final boolean isPersonAllowedToAccess(Person person) {
-        return isAccessible(person != null ? person.getUser() : null);
-    }
-
-    @Deprecated
-    public DateTime getUploadTime() {
-        return super.getCreationDate();
     }
 
 }

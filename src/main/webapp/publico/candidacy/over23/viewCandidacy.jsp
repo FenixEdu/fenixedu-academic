@@ -263,7 +263,7 @@
 	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="activeDocumentFiles">
 	<tr>
 		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
-		<td><fr:view name="documentFile" property="uploadTime"/></td>
+		<td><fr:view name="documentFile" property="creationDate"/></td>
 		<td><fr:view name="documentFile" property="filename"/></td>
 	</tr>	
 	</logic:iterate>

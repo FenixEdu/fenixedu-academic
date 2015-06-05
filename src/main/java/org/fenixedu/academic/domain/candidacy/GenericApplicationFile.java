@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.candidacy;
 
 import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -29,6 +30,12 @@ public class GenericApplicationFile extends GenericApplicationFile_Base {
         super();
         init(fileName, displayName, content, NobodyGroup.get());
         setGenericApplication(application);
+    }
+
+    // Delete jsp usages and delete this method
+    @Deprecated
+    public String getDownloadUrl() {
+        return FileDownloadServlet.getDownloadUrl(this);
     }
 
     @Atomic

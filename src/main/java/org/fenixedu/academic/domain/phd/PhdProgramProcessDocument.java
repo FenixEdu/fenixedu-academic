@@ -34,13 +34,14 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UnionGroup;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     public static Comparator<PhdProgramProcessDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<PhdProgramProcessDocument>() {
         @Override
         public int compare(PhdProgramProcessDocument left, PhdProgramProcessDocument right) {
-            int comparationResult = left.getUploadTime().compareTo(right.getUploadTime());
+            int comparationResult = left.getCreationDate().compareTo(right.getCreationDate());
             return (comparationResult == 0) ? left.getExternalId().compareTo(right.getExternalId()) : comparationResult;
         }
     };
@@ -122,6 +123,12 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
             throw new DomainException("error.phd.PhdProgramProcessDocument.documentType.and.file.cannot.be.null");
         }
+    }
+
+    // Delete jsp usages and delete this method
+    @Deprecated
+    public String getDownloadUrl() {
+        return FileDownloadServlet.getDownloadUrl(this);
     }
 
     @Override

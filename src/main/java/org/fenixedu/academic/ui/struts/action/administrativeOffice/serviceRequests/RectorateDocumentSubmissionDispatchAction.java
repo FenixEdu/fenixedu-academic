@@ -241,7 +241,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
                 ZipOutputStream zip = new ZipOutputStream(bout);
                 for (AcademicServiceRequest document : requestsToZip) {
                     zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
-                    zip.write(document.getLastGeneratedDocument().getContents());
+                    zip.write(document.getLastGeneratedDocument().getContent());
                     zip.closeEntry();
                 }
                 zip.close();

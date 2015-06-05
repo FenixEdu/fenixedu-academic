@@ -88,7 +88,7 @@
 			<fr:property name="hasContext(view)" value="false" />
 			<fr:property name="contextRelative(view)" value="false" />
 			
-			<fr:property name="sortBy" value="uploadTime=desc" />
+			<fr:property name="sortBy" value="creationDate=desc" />
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

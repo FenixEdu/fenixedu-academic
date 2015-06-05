@@ -19,7 +19,8 @@
 package org.fenixedu.academic.ui.renderers;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.File;
+import org.fenixedu.bennu.io.domain.GenericFile;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -50,8 +51,8 @@ public class FileLinkRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                if (object != null && object instanceof File) {
-                    File file = (File) object;
+                if (object != null && object instanceof GenericFile) {
+                    GenericFile file = (GenericFile) object;
                     HtmlBlockContainer container = new HtmlBlockContainer();
                     HtmlLink link = getLink(file);
                     container.addChild(link);
@@ -62,7 +63,7 @@ public class FileLinkRenderer extends OutputRenderer {
                 return new HtmlLink();
             }
 
-            private HtmlLink getLink(File file) {
+            private HtmlLink getLink(GenericFile file) {
                 HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
 //		if (file.hasLocalContent()) {
 //		    link.setContextRelative(true);
@@ -70,11 +71,11 @@ public class FileLinkRenderer extends OutputRenderer {
                 link.setContextRelative(false);
 //		}
                 link.setModuleRelative(false);
-                link.setUrl(file.getDownloadUrl());
+                link.setUrl(FileDownloadServlet.getDownloadUrl(file));
                 return link;
             }
 
-            private String getLinkText(File file) {
+            private String getLinkText(GenericFile file) {
                 if (getKey() != null) {
                     return RenderUtils.getResourceString(getBundle(), getKey());
                 }

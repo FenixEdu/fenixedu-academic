@@ -80,7 +80,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 
         @Override
         public int compare(GeneratedDocument o1, GeneratedDocument o2) {
-            return o1.getUploadTime().compareTo(o2.getUploadTime());
+            return o1.getCreationDate().compareTo(o2.getCreationDate());
         }
 
     };

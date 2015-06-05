@@ -115,7 +115,7 @@
 			
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdCandidacyFeedbackRequestDocument.class.getName() %>">
 				<fr:slot name="documentType" layout="phd-enum-renderer" />
-				<fr:slot name="uploadTime" />
+				<fr:slot name="creationDate" />
 				<fr:slot name="documentVersion"/>
 				<fr:slot name="this" layout="link"/>
 			</fr:schema>

@@ -163,7 +163,7 @@
 </schema>
 
 <schema name="coordinator.thesis.file" type="org.fenixedu.academic.domain.thesis.ThesisFile">
-    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
+    <slot name="creationDate" key="label.thesis.file.name.creationDate"/>
     <slot name="displayName" layout="link" key="label.thesis.file.name">
         <property name="useParent" value="true"/>
         <property name="linkFormat" value="${downloadUrl}"/>

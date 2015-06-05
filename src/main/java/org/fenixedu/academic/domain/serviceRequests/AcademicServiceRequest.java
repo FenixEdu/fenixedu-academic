@@ -761,8 +761,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         DateTime last = null;
         GeneratedDocument lastDoc = null;
         for (GeneratedDocument document : getDocumentSet()) {
-            if (last == null || document.getUploadTime().isAfter(last)) {
-                last = document.getUploadTime();
+            if (last == null || document.getCreationDate().isAfter(last)) {
+                last = document.getCreationDate();
                 lastDoc = document;
             }
         }

@@ -2853,7 +2853,7 @@
 
 <schema name="IndividualCandidacyDocumentFile.view" type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile" bundle="CANDIDATE_RESOURCES">
 	<slot name="candidacyFileType" key="label.candidacy.document.kind" />
-	<slot name="uploadTime" key="label.dateTime.submission" />
+	<slot name="creationDate" key="label.dateTime.submission" />
 	<slot name="filename" key="label.document.file.name" />
 	<slot name="candidacyFileActive" key="label.document.file.active" />
 	<slot name="this" key="label.document.file.link" layout="link"/>
@@ -2897,7 +2897,7 @@
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="personalDetails.name" key="label.name" />
-	<slot name="candidacy.mostRecentApprovedLearningAgreement.uploadTime" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
+	<slot name="candidacy.mostRecentApprovedLearningAgreement.creationDate" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
 </schema>
 
 <schema name="MobilityIndividualApplicationProcess.show.not.viewed.alerts.processes" type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="APPLICATION_RESOURCES">

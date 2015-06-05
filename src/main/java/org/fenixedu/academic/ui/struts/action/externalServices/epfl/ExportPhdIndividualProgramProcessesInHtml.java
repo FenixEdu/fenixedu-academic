@@ -248,7 +248,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
             for (final PhdProgramProcessDocument document : process.getCandidacyProcessDocuments()) {
                 page.rowStart().column(document.getDocumentType().getLocalizedName());
-                page.column(document.getUploadTime().toString("dd/MM/yyyy HH:mm"));
+                page.column(document.getCreationDate().toString("dd/MM/yyyy HH:mm"));
                 page.column(document.getFilename()).rowEnd();
             }
 

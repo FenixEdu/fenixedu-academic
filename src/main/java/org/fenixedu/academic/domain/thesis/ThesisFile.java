@@ -24,12 +24,19 @@ import org.fenixedu.academic.domain.accessControl.ThesisReadersGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class ThesisFile extends ThesisFile_Base {
 
     public ThesisFile(String filename, String displayName, byte[] content, Group group) {
         super();
         init(filename, displayName, content, group);
+    }
+
+    // Delete jsp usages and delete this method
+    @Deprecated
+    public String getDownloadUrl() {
+        return FileDownloadServlet.getDownloadUrl(this);
     }
 
     @Override

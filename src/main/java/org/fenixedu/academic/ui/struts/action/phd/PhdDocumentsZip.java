@@ -83,7 +83,7 @@ public class PhdDocumentsZip implements Serializable {
     private void zipEntry(final int prefixName, final ZipOutputStream zipFile, final PhdProgramProcessDocument document)
             throws IOException {
         zipFile.putNextEntry(new ZipEntry(String.format("%s-%s", prefixName, document.getFilename())));
-        zipFile.write(document.getContents());
+        zipFile.write(document.getContent());
         zipFile.closeEntry();
     }
 

@@ -85,7 +85,7 @@
 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
-		<fr:property name="sortBy" value="uploadTime=asc"/>
+		<fr:property name="sortBy" value="creationDate=asc"/>
 	</fr:layout>
 </fr:view>
 

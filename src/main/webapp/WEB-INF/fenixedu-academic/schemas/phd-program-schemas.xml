@@ -329,7 +329,7 @@
 	<slot name="documentType">
 		<property name="bundle" value="PHD_RESOURCES" />
 	</slot>
-	<slot name="uploadTime" />
+	<slot name="creationDate" />
 	<slot name="uploader" layout="null-as-label">
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="Person.name" />
@@ -846,7 +846,7 @@
 	<slot name="documentType">
 		<property name="bundle" value="PHD_RESOURCES" />
 	</slot>
-	<slot name="uploadTime" />
+	<slot name="creationDate" />
 	<slot name="filename"/>
 </schema>
 

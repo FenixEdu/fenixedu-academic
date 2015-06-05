@@ -710,7 +710,7 @@
 				<%= file.getSize() %>
 			</td>
 			<td style="text-align: right;">
-				<%= file.getUploadTime().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
+				<%= file.getCreationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
 			</td>
 			<td style="color: gray;">
 				<%= file.getChecksumAlgorithm() %>: <%= file.getChecksum() %>
@@ -878,7 +878,7 @@
 				</td>
 				<td style="text-align: right;">
 					<% if (recomentation.getLetterOfRecomentation() != null) { %>
-						<%= recomentation.getLetterOfRecomentation().getUploadTime().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
+						<%= recomentation.getLetterOfRecomentation().getCreationDate().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
 					<% } %>	
 				</td>
 				<td style="color: gray;">

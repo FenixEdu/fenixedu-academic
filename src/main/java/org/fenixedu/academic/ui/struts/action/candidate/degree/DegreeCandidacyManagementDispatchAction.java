@@ -398,8 +398,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
         response.reset();
         try {
-            response.getOutputStream().write(file.getContents());
-            response.setContentLength(file.getContents().length);
+            response.getOutputStream().write(file.getContent());
+            response.setContentLength(file.getContent().length);
             response.setContentType("application/pdf");
             response.flushBuffer();
         } catch (IOException e) {

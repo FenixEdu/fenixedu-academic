@@ -37,7 +37,7 @@ public class DocumentSearchBean implements Serializable {
 
     private GeneratedDocumentType type;
 
-    private LocalDate uploadTime = new LocalDate();
+    private LocalDate creationDate = new LocalDate();
 
     public PersonBean getAddressee() {
         return addressee;
@@ -73,11 +73,11 @@ public class DocumentSearchBean implements Serializable {
         this.type = type;
     }
 
-    public LocalDate getUploadTime() {
-        return uploadTime;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
-    public void setUploadTime(LocalDate uploadTime) {
-        this.uploadTime = uploadTime;
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 }

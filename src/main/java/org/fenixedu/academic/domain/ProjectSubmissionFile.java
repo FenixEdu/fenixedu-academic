@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
 
@@ -30,6 +31,12 @@ public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
         this();
         init(filename, displayName, content, group);
 
+    }
+
+    // Delete jsp usages and delete this method
+    @Deprecated
+    public String getDownloadUrl() {
+        return FileDownloadServlet.getDownloadUrl(this);
     }
 
     @Override

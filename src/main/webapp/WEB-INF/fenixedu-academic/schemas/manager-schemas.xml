@@ -496,7 +496,7 @@
         <property name="size" value="50" />
     </slot>
 	<slot name="type" key="documents.type" />
-	<slot name="uploadTime" key="documents.uploadtime.after" layout="picker" />
+	<slot name="creationDate" key="documents.creationDate.after" layout="picker" />
 </schema>
 
 <schema name="documents.list" type="org.fenixedu.academic.domain.documents.GeneratedDocument"
@@ -504,7 +504,7 @@
 	<slot name="addressee" key="documents.addressee" layout="name-with-alias" />
 	<slot name="operator" key="documents.operator" layout="name-with-alias" />
 	<slot name="type" key="documents.type" />
-	<slot name="uploadTime" key="documents.uploadtime" />
+	<slot name="creationDate" key="documents.creationDate" />
     <slot name="this" layout="link" key="documents.link" />
 </schema>
 

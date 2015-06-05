@@ -26,8 +26,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <%@ page import="java.util.Locale"%>
-
-<%@ page import="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
+<%@ page import="org.fenixedu.bennu.io.servlets.FileDownloadServlet"%>
+<%@ page import="org.fenixedu.bennu.io.domain.GenericFile"%>
 
 <html:xhtml/>
 
@@ -195,7 +195,7 @@
 		<td>
 			<logic:present name="individualCandidacyProcess" property="photo">
 			<bean:define id="photo" name="individualCandidacyProcess" property="photo"/>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><img src="<%= ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" id="photo"/>
+			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><img src="<%= FileDownloadServlet.getDownloadUrl((GenericFile)photo) %>" id="photo"/>
 			</logic:present>
 			
 			<logic:notPresent name="individualCandidacyProcess" property="photo">
@@ -367,7 +367,7 @@
 	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="activeDocumentFiles">
 	<tr>
 		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
-		<td><fr:view name="documentFile" property="uploadTime"/></td>
+		<td><fr:view name="documentFile" property="creationDate"/></td>
 		<td><fr:view name="documentFile" property="filename"/></td>
 	</tr>	
 	</logic:iterate>

@@ -297,7 +297,7 @@
         <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
     <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
-    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
+    <slot name="creationDate" key="label.thesis.file.name.creationDate"/>
 </schema>
 
 <schema name="student.thesis.file" type="org.fenixedu.academic.domain.thesis.ThesisFile">
@@ -306,7 +306,7 @@
         <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
     <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
-    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
+    <slot name="creationDate" key="label.thesis.file.name.creationDate"/>
 </schema>
 
 <schema name="student.thesisBean.upload" type="org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean">

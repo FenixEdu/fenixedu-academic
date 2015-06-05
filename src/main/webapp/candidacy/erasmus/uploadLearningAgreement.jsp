@@ -62,7 +62,7 @@
 <logic:notEmpty name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements">
 <fr:view name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements">
 	<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile" bundle="CANDIDATE_RESOURCES">
-		<fr:slot name="uploadTime" key="label.dateTime.submission" />
+		<fr:slot name="creationDate" key="label.dateTime.submission" />
 		<fr:slot name="filename" key="label.document.file.name" />
 		<fr:slot name="candidacyFileActive" key="label.document.file.active" />
 		<fr:slot name="this" key="label.erasmus.view.learning.agreement" layout="link"/>
