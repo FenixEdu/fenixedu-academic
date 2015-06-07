@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -276,22 +275,13 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
     }
 
     private void readBolonhaExecutionYears(final List<SelectItem> result) {
-        final Collection<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegreesSet();
-        if (executionDegrees.isEmpty()) {
-            for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-                result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
-            }
-            if (getExecutionYearID() == null) {
-                setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
-            }
-        } else {
-            for (final ExecutionDegree executionDegree : executionDegrees) {
-                result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(), executionDegree.getExecutionYear()
-                        .getYear()));
-            }
-            if (getExecutionYearID() == null) {
-                setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getExternalId());
-            }
+        for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
+            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
+        }
+        if (getExecutionYearID() == null) {
+            final ExecutionDegree mostRecentExecutionDegree = getDegreeCurricularPlan().getMostRecentExecutionDegree();
+            setExecutionYearID(mostRecentExecutionDegree != null ? mostRecentExecutionDegree.getExecutionYear().getExternalId() : ExecutionYear
+                    .readCurrentExecutionYear().getExternalId());
         }
     }
 
