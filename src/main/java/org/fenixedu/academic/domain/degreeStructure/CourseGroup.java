@@ -305,8 +305,8 @@ public class CourseGroup extends CourseGroup_Base {
             return;
         }
 
-        if (getParentDegreeCurricularPlan().getAllCoursesGroups().stream().map(CourseGroup::getProgramConclusion)
-                .filter(Objects::nonNull).anyMatch(pc -> pc.equals(programConclusion))) {
+        if (getParentDegreeCurricularPlan().getAllCoursesGroups().stream().filter(cg -> !cg.equals(this))
+                .map(CourseGroup::getProgramConclusion).filter(Objects::nonNull).anyMatch(pc -> pc.equals(programConclusion))) {
             throw new DomainException("error.program.conclusion.already.exists", programConclusion.getName().getContent());
         }
     }
