@@ -63,8 +63,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
         @Forward(name = "visualizeRegistration", path = "/academicAdministration/student.do?method=visualizeRegistration"),
         @Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
         @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp"),
-        @Forward(name = "editCredits", path = "/academicAdminOffice/dismissal/editCredits.jsp")
-})
+        @Forward(name = "editCredits", path = "/academicAdminOffice/dismissal/editCredits.jsp") })
 public class StudentDismissalsDA extends FenixDispatchAction {
 
     private StudentCurricularPlan getSCP(final HttpServletRequest request) {
@@ -300,8 +299,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
             final HttpServletResponse response) {
         final CreditsBean bean = getRenderedObject("creditsBean");
         try {
-            atomic(() ->
-            {
+            atomic(() -> {
                 bean.getCredits().setOfficialDate(bean.getOfficialDate());
             });
 

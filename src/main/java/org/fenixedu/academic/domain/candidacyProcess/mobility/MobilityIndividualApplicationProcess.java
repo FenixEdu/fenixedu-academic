@@ -355,7 +355,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 && getValidatedByMobilityCoordinator()
                 && getValidatedByGri()
                 && ((getCandidacy().getMostRecentApprovedLearningAgreement() != null && getCandidacy()
-                .getMostRecentApprovedLearningAgreement().getCreationDate().isBefore(dateTime)) || getMobilityProgram()
+                        .getMostRecentApprovedLearningAgreement().getCreationDate().isBefore(dateTime)) || getMobilityProgram()
                         .getRegistrationProtocol().isOnlyAllowedDegreeEnrolment());
     }
 

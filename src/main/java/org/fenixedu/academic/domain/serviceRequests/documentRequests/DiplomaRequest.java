@@ -17,7 +17,7 @@
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
-\ * Copyright © 2002 Instituto Superior Técnico
+ \ * Copyright © 2002 Instituto Superior Técnico
  *
  * This file is part of FenixEdu Academic.
  *

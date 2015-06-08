@@ -863,8 +863,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (!isDismissal && isDetailed() && isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)
                     && enrolment.getAllFinalEnrolmentEvaluations().size() > 1) {
                 EvaluationSeason.all().sorted()
-                        .forEachOrdered(s -> enrolment.getFinalEnrolmentEvaluationBySeason(s).ifPresent(eval ->
-                        {
+                        .forEachOrdered(s -> enrolment.getFinalEnrolmentEvaluationBySeason(s).ifPresent(eval -> {
                             generateEnrolmentEvaluationRows(mainTable, eval, level + 1);
                         }));
             }

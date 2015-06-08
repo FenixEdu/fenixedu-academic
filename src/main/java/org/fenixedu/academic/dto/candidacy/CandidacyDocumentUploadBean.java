@@ -54,7 +54,8 @@ public class CandidacyDocumentUploadBean implements Serializable {
         super();
         CandidacyDocumentFile file = candidacyDocument.getFile();
         this.documentDescription = candidacyDocument.getDocumentDescription();
-        this.actualFile = (file != null) ? file.getFilename() + " - " + file.getCreationDate().toString("dd/MM/yyyy hh:mm") : null;
+        this.actualFile =
+                (file != null) ? file.getFilename() + " - " + file.getCreationDate().toString("dd/MM/yyyy hh:mm") : null;
         this.candidacyDocument = candidacyDocument;
     }
 
