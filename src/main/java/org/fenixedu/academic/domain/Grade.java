@@ -57,28 +57,7 @@ public class Grade implements Serializable, Comparable<Grade> {
 
     @Override
     public int compareTo(final Grade otherGrade) {
-        if (otherGrade == null) {
-            return 1;
-        }
-        final boolean isApproved = isApproved();
-        final boolean isApprovedOther = otherGrade.isApproved();
-        if (isApproved && isApprovedOther) {
-            if (getValue().equals(GradeScale.AP)) {
-                return 1;
-            } else if (otherGrade.getValue().equals(GradeScale.AP)) {
-                return -1;
-            } else if (getGradeScale().equals(otherGrade.getGradeScale())) {
-                return getValue().compareTo(otherGrade.getValue());
-            } else {
-                throw new DomainException("Grade.unsupported.comparassion.of.grades.of.different.scales");
-            }
-        } else if (isApproved || otherGrade.getValue().equals(GradeScale.NA) || otherGrade.getValue().equals(GradeScale.RE)) {
-            return 1;
-        } else if (isApprovedOther || getValue().equals(GradeScale.NA) || getValue().equals(GradeScale.RE)) {
-            return -1;
-        } else {
-            return getValue().compareTo(otherGrade.getValue());
-        }
+        return gradeScale.compareGrades(this, otherGrade);
     }
 
     public BigDecimal getNumericValue() {

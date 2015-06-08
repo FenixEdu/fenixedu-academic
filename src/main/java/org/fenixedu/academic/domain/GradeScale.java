@@ -446,6 +446,31 @@ public enum GradeScale {
         default LocalizedString getExtendedValue(Grade grade) {
             return BundleUtil.getLocalizedString(Bundle.ENUMERATION, GradeScale.class.getSimpleName() + "." + grade.getValue());
         }
+
+        default int compareGrades(Grade grade1, Grade grade2) {
+            if (grade2 == null) {
+                return 1;
+            }
+            final boolean isApproved1 = isApproved(grade1);
+            final boolean isApproved2 = isApproved(grade2);
+            if (isApproved1 && isApproved2) {
+                if (grade1.getValue().equals(GradeScale.AP)) {
+                    return 1;
+                } else if (grade2.getValue().equals(GradeScale.AP)) {
+                    return -1;
+                } else if (grade1.getGradeScale().equals(grade2.getGradeScale())) {
+                    return grade1.getValue().compareTo(grade2.getValue());
+                } else {
+                    throw new DomainException("Grade.unsupported.comparassion.of.grades.of.different.scales");
+                }
+            } else if (isApproved1 || grade2.getValue().equals(GradeScale.NA) || grade2.getValue().equals(GradeScale.RE)) {
+                return 1;
+            } else if (isApproved2 || grade1.getValue().equals(GradeScale.NA) || grade1.getValue().equals(GradeScale.RE)) {
+                return -1;
+            } else {
+                return grade1.getValue().compareTo(grade2.getValue());
+            }
+        }
     }
 
     private boolean isPublic;
@@ -574,6 +599,10 @@ public enum GradeScale {
     public String getPossibleValueDescription(boolean isFinal) {
         final String key = isFinal ? "TYPE.final" : name() + ".description";
         return BundleUtil.getString(Bundle.ENUMERATION, key);
+    }
+
+    public int compareGrades(Grade grade1, Grade grade2) {
+        return logic.compareGrades(grade1, grade2);
     }
 
 }
