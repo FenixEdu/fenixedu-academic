@@ -256,6 +256,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public YearMonthDay calculateConclusionDate() {
+
+        if (getCredits().getOfficialDate() != null) {
+            return new YearMonthDay(getCredits().getOfficialDate());
+        }
+
         final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
         iEnrolments.addAll(getSourceIEnrolments());
 

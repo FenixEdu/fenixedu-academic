@@ -3110,6 +3110,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
     class studentCurriculum.Credits  {
         Double givenCredits;
+        LocalDate officialDate;
     }
 
         class studentCurriculum.Equivalence extends studentCurriculum.Credits {

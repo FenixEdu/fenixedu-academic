@@ -911,7 +911,7 @@
 </schema>
 
 <schema name="student.Dismissal.view.dismissals" bundle="ACADEMIC_OFFICE_RESOURCES"	type="org.fenixedu.academic.domain.studentCurriculum.Credits">
-	<slot name="description" key="label.type" />
+	<slot name="description" key="label.type" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	<slot name="dismissals" key="label.studentDismissal.dismissals" layout="list">
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="Dismissal.with.fullPath" />
@@ -925,6 +925,7 @@
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format">
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
 	</slot>
+	<slot name="officialDate"  key="label.studentDismissal.officialDate" />
 </schema>
 
 <schema name="Dismissal.with.fullPath" bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.studentCurriculum.Dismissal" >

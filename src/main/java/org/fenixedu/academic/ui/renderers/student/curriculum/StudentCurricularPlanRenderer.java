@@ -53,7 +53,6 @@ import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGro
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
@@ -642,7 +641,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             generateCellWithText(dismissalRow, EMPTY_INFO, getLastEnrolmentEvaluationTypeCellClass());
             generateExecutionYearCell(dismissalRow, dismissal);
             generateSemesterCell(dismissalRow, dismissal);
-            generateCreationDateIfRequired(dismissalRow, dismissal.getCreationDateDateTime());
+            generateDismissalApprovementlDateIfRequired(dismissalRow, dismissal.getApprovementDate());
             generateCreatorIfRequired(dismissalRow, dismissal.getCreatedBy());
             generateSpacerCellsIfRequired(dismissalRow);
         }
@@ -685,11 +684,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                     getEctsCreditsCellClass());
         }
 
-        private void generateCreationDateIfRequired(HtmlTableRow enrolmentRow, DateTime creationDate) {
+        private void generateDismissalApprovementlDateIfRequired(HtmlTableRow enrolmentRow, YearMonthDay approvementDate) {
             if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)) {
-                if (creationDate != null) {
-                    generateCellWithSpan(enrolmentRow, creationDate.toString(DATE_FORMAT),
-                            BundleUtil.getString(Bundle.APPLICATION, "creationDate"), getCreationDateCellClass());
+                if (approvementDate != null) {
+                    generateCellWithSpan(enrolmentRow, approvementDate.toString(DATE_FORMAT),
+                            BundleUtil.getString(Bundle.APPLICATION, "label.data.avaliacao"), getCreationDateCellClass());
                 } else {
                     generateCellWithText(enrolmentRow, EMPTY_INFO, getCreationDateCellClass());
                 }
@@ -864,7 +863,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (!isDismissal && isDetailed() && isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)
                     && enrolment.getAllFinalEnrolmentEvaluations().size() > 1) {
                 EvaluationSeason.all().sorted()
-                        .forEachOrdered(s -> enrolment.getFinalEnrolmentEvaluationBySeason(s).ifPresent(eval -> {
+                        .forEachOrdered(s -> enrolment.getFinalEnrolmentEvaluationBySeason(s).ifPresent(eval ->
+                        {
                             generateEnrolmentEvaluationRows(mainTable, eval, level + 1);
                         }));
             }

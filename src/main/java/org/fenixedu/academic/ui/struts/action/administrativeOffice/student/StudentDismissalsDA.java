@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.dto.administrativeOffice.dismissal.CreditsBean;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.DismissalType;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
@@ -61,7 +62,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
         @Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
         @Forward(name = "visualizeRegistration", path = "/academicAdministration/student.do?method=visualizeRegistration"),
         @Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
-        @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp") })
+        @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp"),
+        @Forward(name = "editCredits", path = "/academicAdminOffice/dismissal/editCredits.jsp")
+})
 public class StudentDismissalsDA extends FenixDispatchAction {
 
     private StudentCurricularPlan getSCP(final HttpServletRequest request) {
@@ -279,6 +282,40 @@ public class StudentDismissalsDA extends FenixDispatchAction {
             HttpServletResponse response) {
         request.setAttribute("dismissalBean", getRenderedObject());
         return mapping.findForward("chooseNotNeedToEnrol");
+    }
+
+    public ActionForward prepareEditCredits(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        request.setAttribute("creditsBean", new CreditsBean(getDomainObject(request, "creditsId")));
+        return mapping.findForward("editCredits");
+    }
+
+    public ActionForward prepareEditCreditsInvalid(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        request.setAttribute("creditsBean", getRenderedObject("creditsBean"));
+        return mapping.findForward("editCredits");
+    }
+
+    public ActionForward editCredits(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final CreditsBean bean = getRenderedObject("creditsBean");
+        try {
+            atomic(() ->
+            {
+                bean.getCredits().setOfficialDate(bean.getOfficialDate());
+            });
+
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+            request.setAttribute("creditsBean", bean);
+
+            return mapping.findForward("edit");
+        }
+
+        request.setAttribute("scpID", bean.getCredits().getStudentCurricularPlan().getExternalId());
+
+        return manage(mapping, form, request, response);
+
     }
 
 }

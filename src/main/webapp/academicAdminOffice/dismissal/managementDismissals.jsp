@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -80,7 +81,9 @@
 				<fr:property name="columnClasses" value=",,inobullet ulmvert0,acenter,inobullet ulmvert0,nowrap,nowrap" />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="creditsToDelete" />
-				<fr:property name="checkboxValue" value="externalId" />	
+				<fr:property name="checkboxValue" value="externalId" />
+				
+				<fr:link name="edit" label="label.edit,ACADEMIC_OFFICE_RESOURCES"  link="/studentDismissals.do?method=prepareEditCredits&creditsId=${externalId}" order="1" />	
 			</fr:layout>
 		</fr:view>
 		<html:submit><bean:message key="button.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
