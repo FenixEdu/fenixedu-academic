@@ -263,4 +263,11 @@ public class FindSpacesDA extends FenixDispatchAction {
             }
         }
     }
+
+    @Override
+    protected ActionForward unspecified(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        response.sendError(404);
+        return null;
+    }
 }
