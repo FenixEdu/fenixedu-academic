@@ -24,7 +24,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accounting.CreditNote;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -39,8 +39,9 @@ public class CreditNoteGeneratedDocument extends CreditNoteGeneratedDocument_Bas
     }
 
     @Override
-    protected Group computePermittedGroup() {
-        return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_STUDENT_PAYMENTS);
+    public boolean isAccessible(User user) {
+        return super.isAccessible(user)
+                || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_STUDENT_PAYMENTS).isMember(user);
     }
 
     @Override

@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.domain.documents.GeneratedDocumentType;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -33,8 +33,8 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
     }
 
     @Override
-    protected Group computePermittedGroup() {
-        return RoleType.MANAGER.actualGroup();
+    public boolean isAccessible(User user) {
+        return super.isAccessible(user) || RoleType.MANAGER.isMember(user);
     }
 
     @Override

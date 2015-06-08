@@ -23,7 +23,6 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.Group;
 
 /**
  * {@link GeneratedDocument}s are output files resulting of some process of the
@@ -50,7 +49,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
         setType(type);
         setAddressee(addressee);
         setOperator(operator);
-        init(filename, filename, content, computePermittedGroup());
+        init(filename, filename, content);
     }
 
     @Override
@@ -71,10 +70,8 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
         if (user.getPerson().equals(getAddressee())) {
             return true;
         }
-        return super.isAccessible(user);
+        return false;
     }
-
-    protected abstract Group computePermittedGroup();
 
     public static final Comparator<GeneratedDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<GeneratedDocument>() {
 

@@ -21,68 +21,32 @@ package org.fenixedu.academic.service.services.projectSubmission;
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Project;
 import org.fenixedu.academic.domain.ProjectSubmission;
 import org.fenixedu.academic.domain.ProjectSubmissionFile;
 import org.fenixedu.academic.domain.ProjectSubmissionLog;
 import org.fenixedu.academic.domain.StudentGroup;
-import org.fenixedu.academic.domain.accessControl.ProjectDepartmentGroup;
-import org.fenixedu.academic.domain.accessControl.StudentGroupGroup;
-import org.fenixedu.academic.domain.accessControl.TeacherGroup;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
 
-import com.google.common.io.ByteStreams;
-
 public class CreateProjectSubmission {
-
-    public CreateProjectSubmission() {
-        super();
-    }
 
     @Atomic
     public static void run(byte[] bytes, String filename, Attends attends, Project project, StudentGroup studentGroup,
             Person person) throws FenixServiceException, IOException {
         check(RolePredicates.STUDENT_PREDICATE);
-
-        final Group permittedGroup = createPermittedGroup(attends, studentGroup, project);
-        createProjectSubmission(bytes, filename, attends, project, studentGroup, permittedGroup);
-    }
-
-    private static Group createPermittedGroup(final Attends attends, final StudentGroup studentGroup, final Project project) {
-        final ExecutionCourse executionCourse = attends.getExecutionCourse();
-        return TeacherGroup.get(executionCourse).or(StudentGroupGroup.get(studentGroup)).or(ProjectDepartmentGroup.get(project));
-    }
-
-    private static byte[] read(final InputStream stream) {
-        try {
-            return ByteStreams.toByteArray(stream);
-        } catch (IOException e) {
-            throw new Error(e);
-        }
-    }
-
-    private static ProjectSubmission createProjectSubmission(byte[] bytes, String filename, Attends attends, Project project,
-            StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException {
-
-        final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename, filename, bytes, permittedGroup);
+        final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename, filename, bytes);
 
         final ProjectSubmission projectSubmission = new ProjectSubmission(project, studentGroup, attends, projectSubmissionFile);
 
         new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, projectSubmissionFile.getContentType(),
                 projectSubmissionFile.getChecksum(), projectSubmissionFile.getChecksumAlgorithm(), bytes.length, studentGroup,
                 attends, project);
-
-        return projectSubmission;
-
     }
 
 }

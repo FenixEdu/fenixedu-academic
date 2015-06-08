@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.bennu.core.groups.Group;
 
+@Deprecated
 public class PersistentThesisReadersGroup extends PersistentThesisReadersGroup_Base {
     protected PersistentThesisReadersGroup(Thesis thesis) {
         super();

@@ -33,6 +33,7 @@ import org.joda.time.DateTime;
 import com.google.common.base.Objects;
 
 @GroupOperator("guidingsAndAssistants")
+@Deprecated
 public class AdvisorsAndAssistantsOfPhdGroup extends FenixGroup {
     private static final long serialVersionUID = -4915895868986948375L;
 

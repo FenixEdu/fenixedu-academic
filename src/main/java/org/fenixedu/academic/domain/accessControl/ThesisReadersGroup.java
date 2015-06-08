@@ -33,6 +33,7 @@ import org.joda.time.DateTime;
 import com.google.common.base.Objects;
 
 @GroupOperator("thesisReaders")
+@Deprecated
 public class ThesisReadersGroup extends FenixGroup {
     private static final long serialVersionUID = -784604571687620343L;
 
@@ -64,23 +65,18 @@ public class ThesisReadersGroup extends FenixGroup {
 
     @Override
     public Set<User> getMembers(DateTime when) {
-        if (thesis.isEvaluated()) {
-            if (thesis.getDocumentsAvailableAfter() != null) {
-                if (!when.isAfter(thesis.getDocumentsAvailableAfter())) {
-                    return getThesisMembers();
+        if (thesis.isEvaluated()
+                && (thesis.getDocumentsAvailableAfter() == null || thesis.getDocumentsAvailableAfter().isBeforeNow())) {
+            if (thesis.getVisibility() != null) {
+                switch (thesis.getVisibility()) {
+                case INTRANET:
+                    return LoggedGroup.get().getMembers(when);
+                case PUBLIC:
+                    return AnyoneGroup.get().getMembers(when);
                 }
             }
-            switch (thesis.getVisibility()) {
-            case INTRANET:
-                return LoggedGroup.get().getMembers(when);
-            case PUBLIC:
-                return AnyoneGroup.get().getMembers(when);
-            default:
-                return getThesisMembers();
-            }
-        } else {
-            return getThesisMembers();
         }
+        return getThesisMembers();
     }
 
     @Override
@@ -90,23 +86,18 @@ public class ThesisReadersGroup extends FenixGroup {
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        if (thesis.isEvaluated()) {
-            if (thesis.getDocumentsAvailableAfter() != null) {
-                if (!when.isAfter(thesis.getDocumentsAvailableAfter())) {
-                    return getThesisMembers().contains(user);
+        if (thesis.isEvaluated()
+                && (thesis.getDocumentsAvailableAfter() == null || thesis.getDocumentsAvailableAfter().isBeforeNow())) {
+            if (thesis.getVisibility() != null) {
+                switch (thesis.getVisibility()) {
+                case INTRANET:
+                    return LoggedGroup.get().isMember(user, when);
+                case PUBLIC:
+                    return AnyoneGroup.get().isMember(user, when);
                 }
             }
-            switch (thesis.getVisibility()) {
-            case INTRANET:
-                return LoggedGroup.get().isMember(user, when);
-            case PUBLIC:
-                return AnyoneGroup.get().isMember(user, when);
-            default:
-                return getThesisMembers().contains(user);
-            }
-        } else {
-            return getThesisMembers().contains(user);
         }
+        return getThesisMembers().contains(user);
     }
 
     @Override

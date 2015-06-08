@@ -23,7 +23,7 @@ import org.fenixedu.academic.domain.accounting.Receipt;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -38,8 +38,8 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
     }
 
     @Override
-    protected Group computePermittedGroup() {
-        return RoleType.MANAGER.actualGroup();
+    public boolean isAccessible(User user) {
+        return super.isAccessible(user) || RoleType.MANAGER.isMember(user);
     }
 
     @Override

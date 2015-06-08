@@ -898,7 +898,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
     
     /* Documents */
-    class documents.GeneratedDocument extends File {
+    class documents.GeneratedDocument extends .org.fenixedu.bennu.io.domain.GenericFile {
         GeneratedDocumentType type;
     }
     
@@ -914,16 +914,16 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 Integer year;
             }
 
-        class ProjectSubmissionFile extends File {
+        class ProjectSubmissionFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         }
 
-        class candidacy.CandidacyDocumentFile extends File {
+        class candidacy.CandidacyDocumentFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         }
         
-        class candidacy.CandidacySummaryFile extends File {
+        class candidacy.CandidacySummaryFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         }
 
-        class thesis.ThesisFile extends File {
+        class thesis.ThesisFile extends .org.fenixedu.bennu.io.domain.GenericFile {
             Locale language;
             String subTitle;
             String title;
@@ -2140,7 +2140,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         	String description;
         }
         
-        class contacts.PhysicalAddressValidationFile extends File {
+        class contacts.PhysicalAddressValidationFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         
         }
 
@@ -3517,10 +3517,10 @@ class candidacy.GenericApplicationComment {
 	String comment;
 }
 
-class candidacy.GenericApplicationFile extends File {
+class candidacy.GenericApplicationFile extends .org.fenixedu.bennu.io.domain.GenericFile {
 }
 
-class candidacy.GenericApplicationLetterOfRecomentation extends File {
+class candidacy.GenericApplicationLetterOfRecomentation extends .org.fenixedu.bennu.io.domain.GenericFile {
 }
 
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
@@ -3641,7 +3641,7 @@ class candidacyProcess.IndividualCandidacy  {
     Boolean utlStudent;
 }
 
-    class candidacyProcess.IndividualCandidacyDocumentFile extends File {
+    class candidacyProcess.IndividualCandidacyDocumentFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         IndividualCandidacyDocumentFileType candidacyFileType;
         Boolean candidacyFileActive;
     } 
@@ -4040,7 +4040,7 @@ class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement  {
 	String mailBody;
 }
 
-class phd.PhdProgramProcessDocument extends File {
+class phd.PhdProgramProcessDocument extends .org.fenixedu.bennu.io.domain.GenericFile {
     PhdIndividualProgramDocumentType documentType;  
     String remarks;
     Integer documentVersion;
@@ -4415,7 +4415,7 @@ class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
 	LocalDate beginDate;
 	LocalDate endDate;
 }
-	class accounting.report.events.EventReportQueueJobFile extends File {
+	class accounting.report.events.EventReportQueueJobFile extends .org.fenixedu.bennu.io.domain.GenericFile {
 	}
 
 class ProfessorshipPermissions  {

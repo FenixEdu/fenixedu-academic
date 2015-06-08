@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.documents;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
@@ -33,7 +33,7 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
         checkParameters(year);
         checkRulesToCreate(addressee, year);
         setYear(year);
-        super.init(GeneratedDocumentType.ANNUAL_IRS_DECLARATION, addressee, operator, filename, content);
+        init(GeneratedDocumentType.ANNUAL_IRS_DECLARATION, addressee, operator, filename, content);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
     }
 
     @Override
-    protected Group computePermittedGroup() {
-        return RoleType.MANAGER.actualGroup();
+    public boolean isAccessible(User user) {
+        return super.isAccessible(user) || RoleType.MANAGER.isMember(user);
     }
 
     private void checkRulesToCreate(Person addressee, Integer year) {

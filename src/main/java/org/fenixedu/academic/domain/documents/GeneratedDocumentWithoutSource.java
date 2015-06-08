@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.documents;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -36,8 +36,8 @@ public class GeneratedDocumentWithoutSource extends GeneratedDocumentWithoutSour
     }
 
     @Override
-    protected Group computePermittedGroup() {
-        return RoleType.MANAGER.actualGroup();
+    public boolean isAccessible(User user) {
+        return super.isAccessible(user) || RoleType.MANAGER.isMember(user);
     }
 
     @Atomic

@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.bennu.core.groups.Group;
 
+@Deprecated
 public class PersistentStudentGroupGroup extends PersistentStudentGroupGroup_Base {
     protected PersistentStudentGroupGroup(StudentGroup studentGroup) {
         super();

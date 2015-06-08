@@ -18,18 +18,41 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.util.FileUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
 
-    public CandidacyDocumentFile() {
+    public CandidacyDocumentFile(String filename, String displayName, byte[] content) {
         super();
+        init(displayName, filename, content);
     }
 
-    public CandidacyDocumentFile(String filename, String displayName, byte[] content, Group group) {
-        this();
-        init(filename, displayName, content, group);
+    @Override
+    public void setFilename(String filename) {
+        super.setFilename(FileUtils.cleanupUserInputFilename(filename));
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+        super.setDisplayName(FileUtils.cleanupUserInputFileDisplayName(displayName));
+    }
+
+    @Override
+    public boolean isAccessible(User user) {
+        if (RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.isMember(user)) {
+            return true;
+        }
+        if (RoleType.COORDINATOR.isMember(user)) {
+            return true;
+        }
+        User candidate = getCandidacyDocument().getCandidacy().getPerson().getUser();
+        if (candidate != null && candidate.equals(user)) {
+            return true;
+        }
+        return false;
     }
 
     // Delete jsp usages and delete this method

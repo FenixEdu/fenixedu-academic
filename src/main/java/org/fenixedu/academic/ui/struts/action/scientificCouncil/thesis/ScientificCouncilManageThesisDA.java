@@ -47,6 +47,7 @@ import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.domain.thesis.ThesisFile;
 import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
+import org.fenixedu.academic.domain.thesis.ThesisVisibilityType;
 import org.fenixedu.academic.dto.VariantBean;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisDiscussion;
@@ -56,8 +57,6 @@ import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonCh
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonTarget;
 import org.fenixedu.academic.service.services.thesis.CreateThesisAbstractFile;
 import org.fenixedu.academic.service.services.thesis.CreateThesisDissertationFile;
-import org.fenixedu.academic.service.services.thesis.MakeThesisDocumentsAvailable;
-import org.fenixedu.academic.service.services.thesis.MakeThesisDocumentsUnavailable;
 import org.fenixedu.academic.ui.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
 import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
 import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean;
@@ -522,14 +521,14 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
     public ActionForward makeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Thesis thesis = getThesis(request);
-        MakeThesisDocumentsUnavailable.run(thesis);
+        FenixFramework.atomic(() -> thesis.setVisibility(null));
         return viewThesis(mapping, actionForm, request, response);
     }
 
     public ActionForward makeDocumentAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Thesis thesis = getThesis(request);
-        MakeThesisDocumentsAvailable.run(thesis);
+        FenixFramework.atomic(() -> thesis.setVisibility(ThesisVisibilityType.INTRANET));
         return viewThesis(mapping, actionForm, request, response);
     }
 

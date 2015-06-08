@@ -26,8 +26,8 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -42,7 +42,17 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         this();
         this.setCandidacyFileActive(Boolean.TRUE);
         setCandidacyFileType(type);
-        init(filename, filename, contents, NobodyGroup.get());
+        init(filename, filename, contents);
+    }
+
+    @Override
+    public void setFilename(String filename) {
+        super.setFilename(FileUtils.cleanupUserInputFilename(filename));
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+        super.setDisplayName(FileUtils.cleanupUserInputFileDisplayName(displayName));
     }
 
     @Atomic

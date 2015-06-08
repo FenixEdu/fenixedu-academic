@@ -54,6 +54,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = PublicCandidaciesApp.class, path = "generic-applications", titleKey = "title.applications")
 @Mapping(path = "/genericApplications", module = "publico")
@@ -280,7 +281,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         if (application != null && confirmationCode != null && application.getConfirmationCode() != null
                 && application.getConfirmationCode().equals(confirmationCode) && file != null
                 && file.getGenericApplication() == application) {
-            file.deleteFromApplication();
+            FenixFramework.atomic(() -> file.delete());
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));

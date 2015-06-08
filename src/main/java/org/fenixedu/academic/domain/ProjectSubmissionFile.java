@@ -18,19 +18,50 @@
  */
 package org.fenixedu.academic.domain;
 
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.academic.util.FileUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
 
-    public ProjectSubmissionFile() {
+    public ProjectSubmissionFile(String filename, String displayName, byte[] content) {
         super();
+        init(displayName, filename, content);
     }
 
-    public ProjectSubmissionFile(String filename, String displayName, byte[] content, Group group) {
-        this();
-        init(filename, displayName, content, group);
+    @Override
+    public void setFilename(String filename) {
+        super.setFilename(FileUtils.cleanupUserInputFilename(filename));
+    }
 
+    @Override
+    public void setDisplayName(String displayName) {
+        super.setDisplayName(FileUtils.cleanupUserInputFileDisplayName(displayName));
+    }
+
+    @Override
+    public boolean isAccessible(User user) {
+        ExecutionCourse executionCourse = getProjectSubmission().getAttends().getExecutionCourse();
+        if (user != null && user.getPerson().getTeacher() != null) {
+            final Teacher teacher = user.getPerson().getTeacher();
+            final Department department = teacher.getDepartment();
+            if (department != null && getProjectSubmission().getProject().getDeparmentsSet().contains(department)) {
+                return true;
+            }
+            for (final Professorship professorship : teacher.getProfessorshipsSet()) {
+                if (professorship.getExecutionCourse().equals(executionCourse)) {
+                    return true;
+                }
+            }
+        }
+        if (user != null && user.getPerson().getStudent() != null) {
+            for (final Attends attends : getProjectSubmission().getStudentGroup().getAttendsSet()) {
+                if (attends.getRegistration().getStudent().equals(user.getPerson().getStudent())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // Delete jsp usages and delete this method

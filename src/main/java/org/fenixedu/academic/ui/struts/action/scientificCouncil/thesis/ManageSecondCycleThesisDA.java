@@ -43,8 +43,6 @@ import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveTh
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
 import org.fenixedu.academic.service.services.thesis.CreateThesisAbstractFile;
 import org.fenixedu.academic.service.services.thesis.CreateThesisDissertationFile;
-import org.fenixedu.academic.service.services.thesis.MakeThesisDocumentsAvailable;
-import org.fenixedu.academic.service.services.thesis.MakeThesisDocumentsUnavailable;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean;
@@ -56,6 +54,7 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.io.ByteStreams;
 
@@ -319,14 +318,14 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
     public ActionForward makeDocumentUnavailable(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
-        MakeThesisDocumentsUnavailable.run(thesis);
+        FenixFramework.atomic(() -> thesis.setVisibility(null));
         return showThesisDetails(mapping, request, thesis);
     }
 
     public ActionForward makeDocumentAvailable(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
-        MakeThesisDocumentsAvailable.run(thesis);
+        FenixFramework.atomic(() -> thesis.setVisibility(ThesisVisibilityType.INTRANET));
         return showThesisDetails(mapping, request, thesis);
     }
 

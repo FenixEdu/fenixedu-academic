@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -44,16 +43,8 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Override
     public boolean isAccessible(User user) {
-        if (user != null && user.getPerson() != null && RoleType.RECTORATE.isMember(user.getPerson().getUser())
-                && getSource().hasRegistryCode()) {
-            return true;
-        }
-        return super.isAccessible(user);
-    }
-
-    @Override
-    protected Group computePermittedGroup() {
-        return AcademicAuthorizationGroup.get(AcademicOperationType.SERVICE_REQUESTS);
+        return super.isAccessible(user) || AcademicAuthorizationGroup.get(AcademicOperationType.SERVICE_REQUESTS).isMember(user)
+                || (RoleType.RECTORATE.isMember(user) && getSource().hasRegistryCode());
     }
 
     @Override

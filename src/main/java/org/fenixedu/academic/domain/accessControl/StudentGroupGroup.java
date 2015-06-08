@@ -32,6 +32,7 @@ import org.joda.time.DateTime;
 import com.google.common.base.Objects;
 
 @GroupOperator("studentGroup")
+@Deprecated
 public class StudentGroupGroup extends FenixGroup {
     private static final long serialVersionUID = -4888060704338485808L;
 

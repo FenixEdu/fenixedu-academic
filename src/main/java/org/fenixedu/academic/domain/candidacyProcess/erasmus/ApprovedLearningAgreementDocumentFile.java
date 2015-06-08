@@ -27,7 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.academic.util.FileUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -52,7 +52,17 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         this();
         this.setCandidacyFileActive(Boolean.TRUE);
         setCandidacyFileType(IndividualCandidacyDocumentFileType.APPROVED_LEARNING_AGREEMENT);
-        init(filename, filename, contents, NobodyGroup.get());
+        init(filename, filename, contents);
+    }
+
+    @Override
+    public void setFilename(String filename) {
+        super.setFilename(FileUtils.cleanupUserInputFilename(filename));
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+        super.setDisplayName(FileUtils.cleanupUserInputFileDisplayName(displayName));
     }
 
     @Atomic

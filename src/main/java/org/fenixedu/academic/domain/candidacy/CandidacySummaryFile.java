@@ -18,21 +18,26 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.domain.User;
 
 public class CandidacySummaryFile extends CandidacySummaryFile_Base {
 
     public CandidacySummaryFile(String fileName, byte[] fileByteArray, StudentCandidacy studentCandidacy) {
         super();
-        init(fileName, fileName, fileByteArray, createPermittedGroup(studentCandidacy.getPerson()));
+        init(fileName, fileName, fileByteArray);
         setStudentCandidacy(studentCandidacy);
     }
 
-    private Group createPermittedGroup(Person candidacyStudent) {
-        return UserGroup.of(candidacyStudent.getUser()).or(RoleType.MANAGER.actualGroup());
+    @Override
+    public boolean isAccessible(User user) {
+        if (RoleType.MANAGER.isMember(user)) {
+            return true;
+        }
+        User candidate = getStudentCandidacy().getPerson().getUser();
+        if (candidate != null && candidate.equals(user)) {
+            return true;
+        }
+        return false;
     }
-
 }

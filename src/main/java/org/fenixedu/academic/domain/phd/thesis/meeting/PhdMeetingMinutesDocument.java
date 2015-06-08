@@ -21,15 +21,9 @@ package org.fenixedu.academic.domain.phd.thesis.meeting;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
-import org.fenixedu.academic.domain.accessControl.CoordinatorGroup;
-import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.PhdProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
-import org.fenixedu.bennu.core.groups.Group;
 
 public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 
@@ -44,7 +38,6 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 
     }
 
-    @SuppressWarnings("unchecked")
     protected void init(PhdMeeting meeting, PhdIndividualProgramDocumentType documentType, String remarks, byte[] content,
             String filename, Person uploader) {
 
@@ -58,15 +51,7 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
         super.setUploader(uploader);
         super.setDocumentAccepted(true);
 
-        final Group roleGroup = AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES);
-
-        final PhdIndividualProgramProcess individualProgramProcess =
-                meeting.getMeetingProcess().getThesisProcess().getIndividualProgramProcess();
-        final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
-        final Group coordinatorGroup = CoordinatorGroup.get(phdProgram.getDegree());
-
-        final Group group = roleGroup.or(coordinatorGroup);
-        super.init(filename, filename, content, group);
+        super.init(filename, filename, content);
     }
 
     protected void setDocumentVersion(PhdMeeting meeting, PhdIndividualProgramDocumentType documentType) {

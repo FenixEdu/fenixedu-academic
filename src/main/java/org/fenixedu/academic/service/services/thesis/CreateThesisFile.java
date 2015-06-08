@@ -21,14 +21,11 @@ package org.fenixedu.academic.service.services.thesis;
 import java.io.IOException;
 import java.util.Locale;
 
-import org.fenixedu.academic.domain.accessControl.ScientificCommissionGroup;
-import org.fenixedu.academic.domain.accessControl.ThesisReadersGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisFile;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public abstract class CreateThesisFile {
@@ -52,12 +49,7 @@ public abstract class CreateThesisFile {
             return null;
         }
 
-        Group scientificCouncil = RoleType.SCIENTIFIC_COUNCIL.actualGroup();
-        Group commissionMembers = ScientificCommissionGroup.get(thesis.getDegree());
-        Group thesisGroup = ThesisReadersGroup.get(thesis);
-        final Group permittedGroup = scientificCouncil.or(commissionMembers).or(thesisGroup);
-
-        ThesisFile file = new ThesisFile(fileName, fileName, bytes, permittedGroup);
+        ThesisFile file = new ThesisFile(fileName, fileName, bytes);
 
         updateThesis(thesis, file, title, subTitle, language, fileName, bytes);
 

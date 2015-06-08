@@ -19,21 +19,16 @@
 package org.fenixedu.academic.domain.phd;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExternalUser;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
-import org.fenixedu.academic.domain.accessControl.AdvisorsAndAssistantsOfPhdGroup;
-import org.fenixedu.academic.domain.accessControl.CoordinatorGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UnionGroup;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
@@ -66,7 +61,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     }
 
-    @SuppressWarnings("unchecked")
     protected void init(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType, String remarks, byte[] content,
             String filename, Person uploader) {
 
@@ -80,22 +74,17 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         super.setUploader(uploader);
         super.setDocumentAccepted(true);
 
-        final Set<Group> groups = new HashSet<Group>();
-        groups.add(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES));
+        super.init(filename, filename, content);
+    }
 
-        final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
-        final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
-        if (phdProgram != null) {
-            groups.add(CoordinatorGroup.get(phdProgram.getDegree()));
-        }
-        groups.add(AdvisorsAndAssistantsOfPhdGroup.get(individualProgramProcess));
-        final Person person = getPhdProgramProcess().getPerson();
-        if (person != null && person.getUser() != null) {
-            groups.add(UserGroup.of(person.getUser()));
-        }
+    @Override
+    public void setFilename(String filename) {
+        super.setFilename(FileUtils.cleanupUserInputFilename(filename));
+    }
 
-        final Group group = UnionGroup.of(groups);
-        super.init(filename, filename, content, group);
+    @Override
+    public void setDisplayName(String displayName) {
+        super.setDisplayName(FileUtils.cleanupUserInputFileDisplayName(displayName));
     }
 
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {
@@ -132,10 +121,10 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setUploader(null);
         setPhdProgramProcess(null);
-        super.disconnect();
+        super.delete();
     }
 
 //    /*

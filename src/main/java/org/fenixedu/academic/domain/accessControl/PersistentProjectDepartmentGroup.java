@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.fenixedu.academic.domain.Project;
 import org.fenixedu.bennu.core.groups.Group;
 
+@Deprecated
 public class PersistentProjectDepartmentGroup extends PersistentProjectDepartmentGroup_Base {
     protected PersistentProjectDepartmentGroup(Project project) {
         super();

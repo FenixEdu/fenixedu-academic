@@ -30,8 +30,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
@@ -86,6 +89,19 @@ public class FileUtils {
         }
 
         return filename;
+    }
+
+    public static String cleanupUserInputFilename(final String filename) {
+        return getFilenameOnly(filename);
+    }
+
+    public static String cleanupUserInputFileDisplayName(final String displayName) {
+        String filenamePart = getFilenameOnly(displayName);
+        String validChars = "_\\- .,:;!()*$&'=@";
+        if (!Pattern.matches("[\\p{IsLatin}0-9" + validChars + "]+", filenamePart)) {
+            throw new DomainException("errors.file.displayName.invalid.characters", validChars.replace("\\", ""));
+        }
+        return filenamePart;
     }
 
     public static File unzipFile(File file) throws IOException {

@@ -19,18 +19,20 @@
 package org.fenixedu.academic.domain.thesis;
 
 import java.text.DecimalFormat;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.accessControl.ThesisReadersGroup;
+import org.fenixedu.academic.domain.accessControl.ScientificCommissionGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.DynamicGroup;
 import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 public class ThesisFile extends ThesisFile_Base {
 
-    public ThesisFile(String filename, String displayName, byte[] content, Group group) {
+    public ThesisFile(String filename, String displayName, byte[] content) {
         super();
-        init(filename, displayName, content, group);
+        init(displayName, filename, content);
     }
 
     // Delete jsp usages and delete this method
@@ -40,13 +42,38 @@ public class ThesisFile extends ThesisFile_Base {
     }
 
     @Override
-    public void delete() {
-        Thesis thesis = getDissertationThesis();
-        if (thesis == null) {
-            thesis = getAbstractThesis();
+    public boolean isAccessible(User user) {
+        Thesis thesis = getThesis();
+        if (thesis.isEvaluated()
+                && (thesis.getDocumentsAvailableAfter() == null || thesis.getDocumentsAvailableAfter().isBeforeNow())) {
+            if (thesis.getVisibility() != null) {
+                switch (thesis.getVisibility()) {
+                case INTRANET:
+                    return user != null;
+                case PUBLIC:
+                    return true;
+                }
+            }
         }
+        return DynamicGroup.get("scientificCouncil").or(ScientificCommissionGroup.get(getThesis().getDegree())).isMember(user)
+                || getThesisMembers().contains(user);
+    }
 
-        if (!thesis.isWaitingConfirmation()) {
+    private Thesis getThesis() {
+        return getDissertationThesis() != null ? getDissertationThesis() : getAbstractThesis();
+    }
+
+    private Set<User> getThesisMembers() {
+        Set<User> members =
+                getThesis().getParticipationsSet().stream().filter(p -> p.getPerson() != null)
+                        .map((p) -> p.getPerson().getUser()).collect(Collectors.toSet());
+        members.add(getThesis().getStudent().getPerson().getUser());
+        return members;
+    }
+
+    @Override
+    public void delete() {
+        if (!getThesis().isWaitingConfirmation()) {
             throw new DomainException("thesis.file.delete.notAllowed");
         }
 
@@ -54,33 +81,10 @@ public class ThesisFile extends ThesisFile_Base {
     }
 
     public void deleteWithoutStateCheck() {
-        Thesis thesis = getDissertationThesis();
-        if (thesis == null) {
-            thesis = getAbstractThesis();
-        }
-
         setDissertationThesis(null);
         setAbstractThesis(null);
 
         super.delete();
-    }
-
-    boolean areThesisFilesReadable() {
-        return areThesisFilesReadable(getPermittedGroup());
-    }
-
-    private boolean areThesisFilesReadable(final org.fenixedu.bennu.core.groups.Group group) {
-        if (group instanceof UnionGroup) {
-            final UnionGroup groupUnion = (UnionGroup) group;
-            for (org.fenixedu.bennu.core.groups.Group child : groupUnion.getChildren()) {
-                if (areThesisFilesReadable(child)) {
-                    return true;
-                }
-            }
-        } else if (group instanceof ThesisReadersGroup) {
-            return true;
-        }
-        return false;
     }
 
     public String getPrettyFileSize() {

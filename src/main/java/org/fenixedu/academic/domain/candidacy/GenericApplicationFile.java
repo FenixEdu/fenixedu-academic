@@ -18,18 +18,32 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.academic.util.FileUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
-
-import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationFile extends GenericApplicationFile_Base {
 
     public GenericApplicationFile(final GenericApplication application, final String displayName, final String fileName,
             final byte[] content) {
         super();
-        init(fileName, displayName, content, NobodyGroup.get());
+        init(displayName, fileName, content);
         setGenericApplication(application);
+    }
+
+    @Override
+    public void setFilename(String filename) {
+        super.setFilename(FileUtils.cleanupUserInputFilename(filename));
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+        super.setDisplayName(FileUtils.cleanupUserInputFileDisplayName(displayName));
+    }
+
+    @Override
+    public boolean isAccessible(User user) {
+        return false;
     }
 
     // Delete jsp usages and delete this method
@@ -38,15 +52,9 @@ public class GenericApplicationFile extends GenericApplicationFile_Base {
         return FileDownloadServlet.getDownloadUrl(this);
     }
 
-    @Atomic
-    public void deleteFromApplication() {
-        delete();
-    }
-
     @Override
-    protected void disconnect() {
+    public void delete() {
         setGenericApplication(null);
-        super.disconnect();
+        super.delete();
     }
-
 }

@@ -68,9 +68,9 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setJuryElement(null);
-        super.disconnect();
+        super.delete();
     }
 
     public boolean isAssignedToProcess() {

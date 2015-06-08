@@ -20,31 +20,40 @@ package org.fenixedu.academic.domain.candidacy;
 
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationLetterOfRecomentation extends GenericApplicationLetterOfRecomentation_Base {
 
     public GenericApplicationLetterOfRecomentation(GenericApplicationRecomentation recomentation, String displayName,
             String fileName, byte[] content) {
         super();
-        init(fileName, displayName, content, NobodyGroup.get());
+        init(displayName, fileName, content);
         setRecomentation(recomentation);
         sendEmailForRecommendationUploadNotification();
     }
 
-    @Atomic
-    public void deleteFromApplication() {
-        delete();
+    @Override
+    public void setFilename(String filename) {
+        super.setFilename(FileUtils.cleanupUserInputFilename(filename));
     }
 
     @Override
-    protected void disconnect() {
+    public void setDisplayName(String displayName) {
+        super.setDisplayName(FileUtils.cleanupUserInputFileDisplayName(displayName));
+    }
+
+    @Override
+    public boolean isAccessible(User user) {
+        return false;
+    }
+
+    @Override
+    public void delete() {
         setRecomentation(null);
-        super.disconnect();
+        super.delete();
     }
 
     public void sendEmailForRecommendationUploadNotification() {

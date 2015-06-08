@@ -1595,8 +1595,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public boolean areThesisFilesReadable() {
-        final ThesisFile thesisFile = getDissertation();
-        return thesisFile != null && thesisFile.areThesisFilesReadable();
+        return getDissertation() != null && getVisibility() != null;
     }
 
     public Set<Person> getOrientationPersons() {
