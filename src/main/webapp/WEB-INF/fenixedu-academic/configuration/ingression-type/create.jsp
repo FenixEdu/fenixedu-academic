@@ -31,7 +31,7 @@ ${portal.toolkit()}
 	<div class="alert alert-danger" role="alert">
 
 		<c:forEach items="${errorMessages}" var="message"> 
-			<p>${message}</p>
+			<p><c:out value="${message}" /></p>
 		</c:forEach>
 
 	</div>

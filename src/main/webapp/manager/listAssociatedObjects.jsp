@@ -27,6 +27,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib prefix="if" uri="http://jakarta.apache.org/struts/tags-logic" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html:xhtml/>
 
@@ -35,7 +36,7 @@
 <h3>Degree Types</h3>
 <ul>
     <logic:iterate id="type" name="degreeTypes">
-        <li>${type.name.content} - <html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType&degreeTypeId=${type.externalId}">Edit</html:link><br/>
+        <li><c:out value="${type.name.content}"/> - <html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType&degreeTypeId=${type.externalId}">Edit</html:link><br/>
 </li>
     </logic:iterate>
 </ul>

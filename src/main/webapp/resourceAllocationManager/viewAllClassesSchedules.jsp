@@ -33,10 +33,10 @@
 		<c:if test="${schoolClass.academicInterval == academicInterval}">
 			<div class="single">
 			<div class="alert alert-warning">
-				${degree.presentationName} - ${academicInterval.pathName}
+				<c:out value="${degree.presentationName} - ${academicInterval.pathName}" />
 			</div>
 			<div>
-				<h4><bean:message key="title.class.timetable" />${schoolClass.nome}</h4>
+				<h4><bean:message key="title.class.timetable" /><c:out value="${schoolClass.nome}" /></h4>
 				<% request.setAttribute("lessons", InfoLesson.newInfosForSchoolClass((SchoolClass) pageContext.findAttribute("schoolClass"))); %>
 				<app:gerarHorario name="lessons" definedWidth="false" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/>
 			</div>

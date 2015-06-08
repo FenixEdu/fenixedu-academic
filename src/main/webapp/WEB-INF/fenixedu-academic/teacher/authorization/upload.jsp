@@ -66,7 +66,7 @@
 				</i>
 				<ul>
 					<c:forEach var="category" items="${categories}">
-						<li>${category.name.content} - ${category.code}</li>
+						<li><c:out value="${category.name.content} - ${category.code}"/></li>
 					</c:forEach>
 				</ul>
 			</li>
@@ -78,7 +78,7 @@
 				</i>
 				<ul>
 					<c:forEach var="department" items="${departments}">
-						<li>${department.acronym} - ${department.nameI18n.content}</li>
+						<li><c:out value="${department.acronym} - ${department.nameI18n.content}"/></li>
 					</c:forEach>
 				</ul>
 			</li>

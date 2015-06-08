@@ -167,7 +167,7 @@
 				<c:forEach var="studentGroup" items="${studentGroups}">
 					<a class="btn btn-default pull-left" type="submit"
 						href="${studentGroupBaseLink.concat(studentGroup.externalId)}">
-						${studentGroup.groupNumber } </a>
+						<c:out value="${studentGroup.groupNumber }" /> </a>
 				</c:forEach>
 				<c:if test="${empty studentGroups }">
 					<button class="btn btn-default disabled">${fr:message('resources.ApplicationResources', 'message.shift.without.groups')}</button>
@@ -213,7 +213,7 @@
 										<strong>${fr:message('resources.ApplicationResources', 'property.lesson.room')}</strong>
 										<c:if
 											test="${not empty lesson.roomOccupation and not empty lesson.roomOccupation.room }">
-					               		${ lesson.roomOccupation.room.name}
+					               		<c:out value="${ lesson.roomOccupation.room.name}" />
 					               		</c:if>
 									</p>
 								</div>
@@ -245,7 +245,7 @@
 						items="${studentGroupsByShift[shift]}">
 						<a class="btn btn-default pull-left" type="submit"
 							href="${studentGroupBaseLink.concat(studentGroup.externalId)}">
-							${studentGroup.groupNumber}</a>
+							<c:out value="${studentGroup.groupNumber}" /></a>
 					</c:forEach>
 					<c:if test="${empty studentGroupsByShift[shift] }">
 						<button class="btn btn-default disabled">${fr:message('resources.ApplicationResources', 'message.shift.without.groups')}</button>

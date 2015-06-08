@@ -23,6 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="java.util.List"%>
 <html:xhtml/>
@@ -30,7 +31,7 @@
 <jsp:include page="/commons/contextExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 
 <h2><bean:message key="link.manage.turnos"/> 
-	<span class="small">${context_selection_bean.executionDegree.degreeCurricularPlan.name} - ${context_selection_bean.curricularYear.year}º ano (${context_selection_bean.academicInterval.pathName})</span></h2>
+	<span class="small"><c:out value="${context_selection_bean.executionDegree.degreeCurricularPlan.name} - ${context_selection_bean.curricularYear.year}º ano (${context_selection_bean.academicInterval.pathName})" /></span></h2>
 
 <jsp:include page="context.jsp"/>
 

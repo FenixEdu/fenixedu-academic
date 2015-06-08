@@ -38,7 +38,7 @@
 	value="/teacher/${executionCourse.externalId}/student-groups/viewStudentsAndGroupsByShift/${grouping.externalId}/" />
 
 <h2>${fr:message('resources.ApplicationResources', 'message.attendingStudentsOf')}
-	${executionCourse.name}</h2>
+	<c:out value="${executionCourse.name}" /></h2>
 
 <div ng-app="AttendsSearchApp">
 	<div ng-controller="AttendsSearchCtrl">

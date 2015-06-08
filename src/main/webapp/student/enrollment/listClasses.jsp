@@ -30,7 +30,7 @@
 
 <c:if test="${hasExecutionCourse}">
 	<h6 class="text-center">
-		${executionCourse.name}<br />
+		<c:out value="${executionCourse.name}" /><br />
 		(<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}">
 			<bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses" />
 		</html:link>)
@@ -42,13 +42,13 @@
 		<li class="${schoolClass == selectedSchoolClass ? 'active': ''}">
 			<c:if test="${hasExecutionCourse}">
 				<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}&classId=${schoolClass.externalId}&executionCourseID=${executionCourse.externalId}">
-					<bean:message key="label.class" />&nbsp;${schoolClass.nome}		
+					<bean:message key="label.class" />&nbsp;<c:out value="${schoolClass.nome}" />		
 				</html:link>
 			</c:if>
 			
 			<c:if test="${!hasExecutionCourse}">
 				<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}&classId=${schoolClass.externalId}">
-					<bean:message key="label.class" />&nbsp;${schoolClass.nome}	
+					<bean:message key="label.class" />&nbsp;<c:out value="${schoolClass.nome}" />	
 				</html:link>
 			</c:if>
 		</li>

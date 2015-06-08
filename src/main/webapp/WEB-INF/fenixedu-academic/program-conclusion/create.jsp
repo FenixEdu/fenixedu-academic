@@ -42,28 +42,28 @@ ${portal.toolkit()}
 		<div class="form-group">
 			<label for="name" class="col-sm-1 control-label"><spring:message code="label.name" /></label>
 			<div class="col-sm-11">
-				<input id="name" name="name" bennu-localized-string class="form-control col-sm-11" required value='${programConclusion.name.json()}' />
+				<input id="name" name="name" bennu-localized-string class="form-control col-sm-11" required value='<c:out value="${programConclusion.name.json()}"/>' />
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="description" class="col-sm-1 control-label"><spring:message code="label.description" /></label>
 			<div class="col-sm-11">
-				<input id="description" name="description" bennu-localized-string class="form-control col-sm-11" value='${programConclusion.description.json()}' />
+				<input id="description" name="description" bennu-localized-string class="form-control col-sm-11" value='<c:out value="${programConclusion.description.json()}"/>' />
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="graduationTitle" class="col-sm-1 control-label"><spring:message code="program.conclusion.graduation.title" /></label>
 			<div class="col-sm-11">
-				<input name="graduationTitle" bennu-localized-string class="form-control col-sm-11" value='${programConclusion.graduationTitle.json()}' />
+				<input name="graduationTitle" bennu-localized-string class="form-control col-sm-11" value='<c:out value="${programConclusion.graduationTitle.json()}"/>' />
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="graduationLevel" class="col-sm-1 control-label"><spring:message code="program.conclusion.graduation.level" /></label>
 			<div class="col-sm-11">
-				<input name="graduationLevel" bennu-localized-string class="form-control col-sm-11" value='${programConclusion.graduationLevel.json()}' />
+				<input name="graduationLevel" bennu-localized-string class="form-control col-sm-11" value='<c:out value="${programConclusion.graduationLevel.json()}"/>' />
 			</div>
 		</div>
 		

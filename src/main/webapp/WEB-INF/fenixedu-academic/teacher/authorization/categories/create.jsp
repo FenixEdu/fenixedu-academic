@@ -36,7 +36,7 @@ ${portal.toolkit()}
 <section>
 	<c:if test="${not empty error}">
 		<div class="alert alert-danger">
-			${error}
+			<c:out value="${error}" />
 		</div>
 	</c:if>
 
@@ -45,14 +45,14 @@ ${portal.toolkit()}
 		<div class="form-group">
 			<label for="code" class="col-sm-1 control-label"><spring:message code="teacher.categories.code" /></label>
 			<div class="col-sm-11">
-				<input class="form-control" name="code" id="code" value="${form.code}" required/>
+				<input class="form-control" name="code" id="code" value="<c:out value='${form.code}'/>" required/>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="name" class="col-sm-1 control-label"><spring:message code="teacher.categories.name" /></label>
 			<div class="col-sm-11">
-				<input type="text" class="form-control" bennu-localized-string name="name" id="name" value='${form.name.json()}' required-any/>
+				<input type="text" class="form-control" bennu-localized-string name="name" id="name" value='<c:out value="${form.name.json()}"/>' required-any/>
 			</div>
 		</div>
 

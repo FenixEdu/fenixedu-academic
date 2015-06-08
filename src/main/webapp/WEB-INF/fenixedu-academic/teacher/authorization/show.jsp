@@ -162,8 +162,8 @@ $(document).ready(function() {
 					<c:forEach var="auth" items="${authorizations}">
 						<c:set var="user" value="${auth.teacher.person.user}"/>
 						<tr>
-							<td>${user.username}</td>  
-							<td>${user.name}</td>
+							<td><c:out value="${user.username}"/></td>  
+							<td><c:out value="${user.name}"/></td>
 							<td>
 								<c:choose>
 									<c:when test="${auth.contracted}">
@@ -175,11 +175,11 @@ $(document).ready(function() {
 								</c:choose>
 							</td>
 							<c:if test="${empty search.department}">
-								<td>${auth.department.nameI18n.content}</td>
+								<td><c:out value="${auth.department.nameI18n.content}"/></td>
 							</c:if>
-							<td>${auth.teacherCategory.name.content}</td>
+							<td><c:out value="${auth.teacherCategory.name.content}"/></td>
 							<td>${auth.lessonHours}</td>
-							<td>${auth.authorizer.name} (${auth.authorizer.username})</td>
+							<td><c:out value="${auth.authorizer.name} (${auth.authorizer.username})"/></td>
 							<td title="${auth.creationDate.toString('dd/MM/yyyy HH:mm:ss')}">
 								${auth.creationDate == null ? '-' : auth.creationDate.toString('dd/MM/yyyy')}
 							</td>

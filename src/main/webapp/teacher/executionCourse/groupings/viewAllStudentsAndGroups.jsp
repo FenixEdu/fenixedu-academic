@@ -105,7 +105,7 @@
 								width="100" height="100" /></td>
 
 						</c:if>
-						<td>${student.name}</td>
+						<td><c:out value="${student.name}"/></td>
 						<td><a href="mailto:" ${student.email }> ${student.email}
 						</a></td>
 					</tr>

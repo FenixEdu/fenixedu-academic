@@ -32,8 +32,8 @@
 <div class="row">
 	<main class="col-sm-10 col-sm-push-2">
 		<ol class="breadcrumb">
-			<em>${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}
-				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> ${degree.sigla} </c:forEach>)
+			<em><c:out value="${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}" />
+				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> <c:out value="${degree.sigla}" /> </c:forEach>)
 			</em>
 		</ol>
 		<jsp:include page="${teacher$actual$page}" />
@@ -41,7 +41,7 @@
 	<nav class="col-sm-2 col-sm-pull-10" id="context" style="background-color: #f1f1f1; padding-bottom: 20px">
 		<ul class="nav nav-pills nav-stacked">
 			<li class="navheader">
-				<strong>${executionCourse.prettyAcronym}</strong>
+				<strong><c:out value="${executionCourse.prettyAcronym}" /></strong>
 			</li>
 			<c:if test="${not empty executionCourse.siteUrl}">
 				<li>

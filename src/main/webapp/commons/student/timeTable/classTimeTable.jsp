@@ -26,6 +26,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <%@ page import="org.fenixedu.academic.servlet.taglib.sop.v3.TimeTableType" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html:html xhtml="true">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -36,9 +37,9 @@
 	<body>
 		<logic:present name="LOGGED_USER_ATTRIBUTE">
 			<p>
-				<p><strong><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${person.name}</p>
-				<p><strong><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${person.student.number} </p>
-				<p><strong><bean:message  key="label.username"  bundle="APPLICATION_RESOURCES"/> </strong>: ${person.username} </p>
+				<p><strong><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <c:out value="${person.name}" /></p>
+				<p><strong><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: <c:out value="${person.student.number}" /> </p>
+				<p><strong><bean:message  key="label.username"  bundle="APPLICATION_RESOURCES"/> </strong>: <c:out value="${person.username}" /> </p>
 			</p>
 		</logic:present>
 		

@@ -59,9 +59,9 @@ ${portal.toolkit()}
 		<tbody>
 			<c:forEach var="category" items="${categories}">
 				<tr>
-					<td>${category.code}</td>
-					<td>${category.name.content}</td>
-					<td>${category.weight}</td>
+					<td><c:out value="${category.code}"/></td>
+					<td><c:out value="${category.name.content}"/></td>
+					<td><c:out value="${category.weight}"/></td>
 					<td><a class="btn btn-default" href="${editUrl}/${category.externalId}"><spring:message code="label.edit"/></a></td>
 				</tr>
 			</c:forEach>

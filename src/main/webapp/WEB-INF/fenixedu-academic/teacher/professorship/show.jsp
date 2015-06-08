@@ -206,9 +206,9 @@ $(document).ready(function() {
 						<c:set var="user" value="${auth.teacher.person.user}"/>
 						<c:set var="professorships" value="${professorshipService.getProfessorships(user, search.period)}"/>
 						<tr class="authorization" id="authorization-${auth.externalId}">
-							<td><img src="${user.profile.avatarUrl}" alt="${user.name}" /></td>
-							<td>${user.username}</td>  
-							<td>${user.name}</td>
+							<td><img src="${user.profile.avatarUrl}" alt="<c:out value='${user.name}'/>" /></td>
+							<td><c:out value="${user.username}" /></td>  
+							<td><c:out value="${user.name}" /></td>
 							<td>${professorships.size()}</td>
 							<td><button class="btn btn-default show-courses"><i class="glyphicon glyphicon-collapse-down courses-icon"></i><spring:message code="label.courses"/></button></td>
 						</tr>
@@ -233,9 +233,9 @@ $(document).ready(function() {
 										<c:if test="${not empty professorships }">
 											<c:forEach var="professorship" items="${professorships}">
 											<tr data-professorship="${professorship.externalId}" data-responsible="${professorship.responsibleFor}">
-												<td>${professorship.executionCourse.nameI18N.content}</td>
+												<td><c:out value="${professorship.executionCourse.nameI18N.content}" /></td>
 												<td>
-													${professorshipService.getDegreeAcronyms(professorship, ",")}
+													<c:out value="${professorshipService.getDegreeAcronyms(professorship, ',')}" />
 												</td>
 												<td>
 													<div class="btn-group btn-group-xs">

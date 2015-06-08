@@ -37,7 +37,7 @@
 
 <c:if test="${not empty shift}">
 	<h2>${fr:message('resources.ApplicationResources', 'title.viewStudentsAndGroupsByShift')}
-		${shift.presentationName }</h2>
+		<c:out value="${shift.presentationName }" /></h2>
 </c:if>
 <c:if test="${empty shift}">
 	<h2>${fr:message('resources.ApplicationResources', 'title.viewStudentsAndGroups')}
@@ -66,7 +66,7 @@
 					<strong>${fr:message('resources.ApplicationResources', 'property.shift')}</strong>
 					<a
 						href="${studentsAndGroupsByShiftLink.concat('shift/').concat(studentGroup.shift.externalId)} ">
-						${studentGroup.shift.nome } </a>
+						<c:out value="${studentGroup.shift.nome }" /> </a>
 					<button class="btn btn-default btn-xs pull-right"
 						data-toggle="modal" data-target="#editShift">
 						<span class="glyphicon glyphicon-edit"></span>
@@ -85,7 +85,7 @@
 							</p>
 							<p>
 								<strong>${fr:message('resources.ApplicationResources', 'property.lesson.room')}</strong>
-								<span>${lesson.roomOccupation.room.name}</span>
+								<span><c:out value="${lesson.roomOccupation.room.name}" /></span>
 							</p>
 							<p>
 								<strong>${fr:message('resources.ApplicationResources', 'property.lesson.end')}</strong>
@@ -156,14 +156,14 @@
 					<tr class="studentRow">
 						<td class="acenter">${student.number}</td>
 						<td class="acenter">${student.person.username}</td>
-						<td class="acenter">${group.groupNumber}</td>
+						<td class="acenter"><c:out value="${group.groupNumber}" /></td>
 						<c:if test="${empty showPhotos}">
 							<td class="acenter showPhotos hide"><img class="lazy"
 								data-original="${userPhotoBaseLink.concat(student.person.username)}"
 								width="100" height="100" /></td>
 
 						</c:if>
-						<td>${student.name}</td>
+						<td><c:out value="${student.name}" /></td>
 						<td><a href="mailto:" ${student.email }> ${student.email}
 						</a></td>
 					</tr>
