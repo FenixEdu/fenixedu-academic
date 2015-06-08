@@ -3906,12 +3906,6 @@ class reports.WrittenEvaluationReportFile extends reports.GepReportFile {}
 class candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport extends QueueJobWithFile {
 }
 
-class student.scholarship.report.UTLScholarshipReport extends QueueJobWithFile {
-}
-
-	class student.scholarship.report.UTLScholarshipSource extends File {
-	} 
-
 public class accessControl.rules.AccessRuleSystem;
 
 public class accessControl.rules.AccessRule {
@@ -11424,21 +11418,6 @@ relation ProfessorshipUser {
 	Professorship playsRole professorshipCreated{
 		multiplicity *;
 	}
-}
-
-relation UTLScholarshipReportStudent {
-	student.scholarship.report.UTLScholarshipReport playsRole utlScholarshipReport {
-		multiplicity *;
-	}
-
-	student.Student playsRole student {
-		multiplicity *;
-	}
-}
-
-relation UTLScholarshipReportSource {
-	student.scholarship.report.UTLScholarshipReport playsRole utlScholarshipReport;
-	student.scholarship.report.UTLScholarshipSource playsRole utlScholarshipSource;
 }
 
 relation BennuTeacherAuthorizations {
