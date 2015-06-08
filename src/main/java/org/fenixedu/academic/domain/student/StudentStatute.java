@@ -136,6 +136,7 @@ public class StudentStatute extends StudentStatute_Base {
         setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
         setStudent(null);
+        setType(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
