@@ -55,6 +55,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = PublicApplication.class, path = "find-spaces", titleKey = "title.search.spaces")
 @Mapping(module = "publico", path = "/findSpaces")
@@ -205,6 +206,11 @@ public class FindSpacesDA extends FenixDispatchAction {
 
         Space space = getDomainObject(request, "spaceId");
 
+        if (space == null) {
+            response.sendError(404);
+            return null;
+        }
+
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=blueprint.jpeg");
         final ServletOutputStream writer = response.getOutputStream();
@@ -219,7 +225,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {
         final DomainObject obj = getDomainObject(request, "spaceID");
-        return obj instanceof Space ? (Space) obj : null;
+        return FenixFramework.isDomainObjectValid(obj) && obj instanceof Space ? (Space) obj : null;
     }
 
     private Space getSuroundingSpaceMostRecentBlueprint(Space space) {
