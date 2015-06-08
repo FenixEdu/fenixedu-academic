@@ -1283,7 +1283,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public void editConclusionInformation(final Person editor, final Grade finalGrade, final Grade rawGrade,
-            final YearMonthDay conclusion, final String notes) {
+            final Grade descriptiveGrade, final YearMonthDay conclusion, final String notes) {
         if (!isConclusionProcessed()) {
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
@@ -1293,7 +1293,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
             throw new DomainException("error.CycleCurriculumGroup.argument.must.not.be.null");
         }
 
-        getConclusionProcess().update(editor, finalGrade, rawGrade, conclusion.toLocalDate(), notes);
+        getConclusionProcess().update(editor, finalGrade, rawGrade, descriptiveGrade, conclusion.toLocalDate(), notes);
     }
 
     final public ExecutionYear calculateConclusionYear() {

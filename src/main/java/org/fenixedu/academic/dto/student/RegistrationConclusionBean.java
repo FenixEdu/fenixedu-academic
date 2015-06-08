@@ -57,6 +57,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private String enteredAverageGrade;
 
+    private String enteredDescriptiveGrade;
+
     private String observations;
 
     public RegistrationConclusionBean(final Registration registration) {
@@ -154,6 +156,18 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public YearMonthDay getCalculatedConclusionDate() {
         return calculateConclusionDate();
+    }
+
+    public Grade getDescriptiveGrade() {
+        if (isConclusionProcessed()) {
+            return getCurriculumGroup().getDescriptiveGrade();
+        }
+
+        return null;
+    }
+
+    public String getDescriptiveGradeExtendedValue() {
+        return getDescriptiveGrade() == null ? null : getDescriptiveGrade().getExtendedValue().getContent();
     }
 
     public ExecutionYear getIngressionYear() {
@@ -337,6 +351,18 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public boolean hasEnteredAverageGrade() {
         return !Strings.isNullOrEmpty(this.enteredAverageGrade);
+    }
+
+    public String getEnteredDescriptiveGrade() {
+        return enteredDescriptiveGrade;
+    }
+
+    public void setEnteredDescriptiveGrade(String enteredDescriptiveGrade) {
+        this.enteredDescriptiveGrade = enteredDescriptiveGrade;
+    }
+
+    public boolean hasEnteredDescriptiveGrade() {
+        return !Strings.isNullOrEmpty(this.enteredDescriptiveGrade);
     }
 
     public String getObservations() {

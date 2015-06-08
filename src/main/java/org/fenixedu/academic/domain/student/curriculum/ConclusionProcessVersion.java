@@ -84,8 +84,8 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setActive(true);
     }
 
-    protected void update(final Person responsible, final Grade finalGrade, final Grade rawGrade, final LocalDate conclusionDate,
-            final String notes) {
+    protected void update(final Person responsible, final Grade finalGrade, final Grade rawGrade, final Grade descriptiveGrade,
+            final LocalDate conclusionDate, final String notes) {
 
         if (finalGrade == null || rawGrade == null || conclusionDate == null) {
             throw new DomainException("error.ConclusionProcessVersion.argument.must.not.be.null");
@@ -94,6 +94,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setResponsible(responsible);
         super.setFinalGrade(finalGrade);
         super.setRawGrade(rawGrade);
+        super.setDescriptiveGrade(descriptiveGrade);
         super.setConclusionDate(conclusionDate);
         super.setNotes(StringUtils.isEmpty(notes) ? null : notes);
     }

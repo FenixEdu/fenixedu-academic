@@ -61,10 +61,10 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
     }
 
     @Override
-    final public void update(final Person responsible, final Grade finalGrade, Grade rawGrade, final LocalDate conclusionDate,
-            final String notes) {
+    final public void update(final Person responsible, final Grade finalGrade, final Grade rawGrade,
+            final Grade descriptiveGrade, final LocalDate conclusionDate, final String notes) {
         addVersions(new RegistrationConclusionBean(getRegistration(), getGroup()));
-        getLastVersion().update(responsible, finalGrade, rawGrade, conclusionDate, notes);
+        getLastVersion().update(responsible, finalGrade, rawGrade, descriptiveGrade, conclusionDate, notes);
     }
 
     @Override
