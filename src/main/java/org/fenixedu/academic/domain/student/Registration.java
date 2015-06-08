@@ -1666,10 +1666,9 @@ public class Registration extends Registration_Base {
     @Deprecated
     final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
         CycleCourseGroup cycleCourseGroup = getLastStudentCurricularPlan().getCycleCourseGroup(cycleType);
-        if (cycleCourseGroup != null && cycleCourseGroup.getProgramConclusion() != null) {
-            return getDegreeDescription(executionYear, cycleCourseGroup.getProgramConclusion(), locale);
-        }
-        return "";
+        ProgramConclusion programConclusion = cycleCourseGroup != null ? cycleCourseGroup.getProgramConclusion() : null;
+
+        return getDegreeDescription(executionYear, programConclusion, locale);
     }
 
     public String getDegreeCurricularPlanName() {
