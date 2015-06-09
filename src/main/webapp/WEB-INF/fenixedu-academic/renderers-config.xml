@@ -74,7 +74,7 @@ Documentation:
     
 	<renderer type="java.lang.Object" layout="conditional-link" class="org.fenixedu.academic.ui.renderers.ConditionalObjectLinkRenderer"/>
 
-    <renderer type="org.fenixedu.academic.domain.File" layout="link" class="org.fenixedu.academic.ui.renderers.FileLinkRenderer"/>
+    <renderer type="org.fenixedu.bennu.io.domain.GenericFile" layout="link" class="org.fenixedu.academic.ui.renderers.FileLinkRenderer"/>
 
     <renderer type="org.fenixedu.academic.domain.Person" layout="person-email-identity" class="org.fenixedu.academic.ui.renderers.EmailIdentityRenderer"/>
   	
