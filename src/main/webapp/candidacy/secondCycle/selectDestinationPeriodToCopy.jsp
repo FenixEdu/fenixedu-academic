@@ -55,7 +55,7 @@
 		<fr:schema type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="copyDestinationProcess" required="true" layout="menu-select">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.secondCycle.SecondCycleNextCandidacyProcesses" />
-				<fr:property name="format" value="${candidacyPeriod.presentationName}" />
+				<fr:property name="format" value="${presentationName}" />
 			</fr:slot>
 			
 		</fr:schema>

@@ -62,7 +62,7 @@
 					<td>
 						<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
 							<html:option value=""><!-- w3c complient --></html:option>
-							<html:options collection="candidacyProcesses" property="externalId" labelProperty="candidacyPeriod.presentationName"/>
+							<html:options collection="candidacyProcesses" property="externalId" labelProperty="presentationName"/>
 						</html:select>
 					</td>
 				</tr>
@@ -113,7 +113,7 @@
 						<td>
 							<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
 								<html:option value=""><!-- w3c complient --></html:option>
-								<html:options collection="candidacyProcesses" property="externalId" labelProperty="candidacyPeriod.presentationName"/>
+								<html:options collection="candidacyProcesses" property="externalId" labelProperty="presentationName"/>
 							</html:select>
 						</td>
 					</tr>

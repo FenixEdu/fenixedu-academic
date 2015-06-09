@@ -3530,6 +3530,7 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	LocalizedString alternantePaymentMethod;
 	Boolean doNotRequireCV;
 	Boolean doNotRequireFiscalIdDocument;
+	String name;
 }
 
     class candidacyProcess.over23.Over23CandidacyProcess extends candidacyProcess.CandidacyProcess {

@@ -39,7 +39,6 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     private void init(final SecondCycleCandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
             final DateTime start, final DateTime end) {
         checkParameters(candidacyProcess);
-        checkIfCanCreate(executionInterval, start, end);
         super.init(executionInterval, start, end);
         addCandidacyProcesses(candidacyProcess);
     }
@@ -47,15 +46,6 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     private void checkParameters(final SecondCycleCandidacyProcess candidacyProcess) {
         if (candidacyProcess == null) {
             throw new DomainException("error.SecondCycleCandidacyPeriod.invalid.candidacy.process");
-        }
-    }
-
-    private void checkIfCanCreate(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
-        for (final SecondCycleCandidacyPeriod secondCycleCandidacyPeriod : executionInterval.getSecondCycleCandidacyPeriods()) {
-            if (secondCycleCandidacyPeriod.intercept(start, end)) {
-                throw new DomainException("error.SecondCycleCandidacyPeriod.interception", executionInterval.getName(),
-                        start.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
-            }
         }
     }
 
@@ -67,11 +57,6 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     @Override
     public ExecutionYear getExecutionInterval() {
         return (ExecutionYear) super.getExecutionInterval();
-    }
-
-    @Override
-    public String getPresentationName() {
-        return getStart().toString("dd/MM/yyyy") + " - " + getEnd().toString("dd/MM/yyyy");
     }
 
     @Override

@@ -67,10 +67,12 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
         super();
     }
 
-    private SecondCycleCandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
+    private SecondCycleCandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end,
+            final String name) {
         this();
         checkParameters(executionYear, start, end);
         setState(CandidacyProcessState.STAND_BY);
+        setName(name);
         new SecondCycleCandidacyPeriod(this, executionYear, start, end);
     }
 
@@ -189,7 +191,8 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
         @Override
         protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, User userView, Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-            return new SecondCycleCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+            return new SecondCycleCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd(),
+                    bean.getName());
         }
     }
 

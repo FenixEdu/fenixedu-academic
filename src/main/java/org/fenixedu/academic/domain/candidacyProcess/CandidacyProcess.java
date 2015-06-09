@@ -205,6 +205,15 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
         return false;
     }
 
+    public String getPresentationName() {
+        String presentationName = "";
+        if (getName() != null && !getName().isEmpty()) {
+            presentationName += getName() + " - ";
+        }
+        presentationName += getCandidacyPeriod().getPresentationName();
+        return presentationName;
+    }
+
     private static <T extends CandidacyProcess> Set<T> getAllInstancesOf(final Class<? extends T> type) {
         return Sets.<T> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), type));
     }
