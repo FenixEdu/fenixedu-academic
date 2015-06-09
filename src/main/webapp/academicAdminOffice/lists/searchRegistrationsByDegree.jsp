@@ -70,7 +70,8 @@
 			<fr:slot name="ingressionType" layout="menu-select" key="label.ingression.short">
 				<fr:property name="providerClass"
 					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.IngressionTypeProvider" />
-				<fr:property name="eachLayout" value="" />
+				<fr:property name="format" value="${localizedName}" />
+				<fr:property name="sortBy" value="localizedName" />
 			</fr:slot>
 			<fr:slot name="ingressedInChosenYear" key="label.ingressedInChosenYear" />
 			<fr:slot name="concludedInChosenYear" key="label.concludedInChosenYear" />
