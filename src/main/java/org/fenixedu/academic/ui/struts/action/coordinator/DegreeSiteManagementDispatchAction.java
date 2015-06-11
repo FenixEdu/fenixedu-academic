@@ -36,8 +36,8 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.utils.RequestUtils;
-import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -145,10 +145,19 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             return new ActionForward(mapping.getInput());
         }
         request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-        request.setAttribute(
-                "degreeCurricularPlanDescription",
-                new LocalizedString().with(MultiLanguageString.en, degreeCurricularPlan.getDescriptionEn()).with(
-                        MultiLanguageString.pt, degreeCurricularPlan.getDescription()));
+
+        LocalizedString.Builder builder = new LocalizedString.Builder();
+        CoreConfiguration.supportedLocales().forEach(l -> {
+            if (l.getLanguage().equals("en")) {
+                builder.with(l, degreeCurricularPlan.getDescriptionEn());
+            } else {
+                builder.with(l, degreeCurricularPlan.getDescription());
+            }
+        });
+
+        LocalizedString degreeCurricularPlanLS = builder.build();
+
+        request.setAttribute("degreeCurricularPlanDescription", degreeCurricularPlanLS);
 
         return mapping.findForward("viewDescriptionCurricularPlan");
     }
@@ -160,10 +169,18 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 
         String degreeCurricularPlanDescription = request.getParameter("degreeCurricularPlanDescription");
         LocalizedString localizedDescription = LocalizedString.fromJson(new JsonParser().parse(degreeCurricularPlanDescription));
-        String degreeCurricularPlanDescriptionPt = localizedDescription.getContent(new Locale("pt", "PT"));
-        String degreeCurricularPlanDescriptionEn = localizedDescription.getContent(Locale.ENGLISH);
+        String degreeCurricularPlanDescriptionDef = "";
+        String degreeCurricularPlanDescriptionEn = "";
 
-        updateDegreeCurricularPlanDescription(degreeCurricularPlanDescriptionPt, degreeCurricularPlan,
+        for (Locale l : CoreConfiguration.supportedLocales()) {
+            if (l.getLanguage().equals("en")) {
+                degreeCurricularPlanDescriptionEn = localizedDescription.getContent(l);
+            } else {
+                degreeCurricularPlanDescription = localizedDescription.getContent(l);
+            }
+        }
+
+        updateDegreeCurricularPlanDescription(degreeCurricularPlanDescriptionDef, degreeCurricularPlan,
                 degreeCurricularPlanDescriptionEn);
 
         RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
