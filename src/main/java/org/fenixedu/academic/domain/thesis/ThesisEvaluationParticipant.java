@@ -18,12 +18,10 @@
  */
 package org.fenixedu.academic.domain.thesis;
 
-import java.text.Collator;
 import java.util.Comparator;
 import java.util.Objects;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -39,11 +37,8 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         getRelationThesisHasParticipations().addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
     }
 
-    public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
-    static {
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
-    }
+    public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = Comparator.comparing(
+            ThesisEvaluationParticipant::getName).thenComparing(DomainObjectUtil.COMPARATOR_BY_ID);
 
     public final static Comparator<ThesisEvaluationParticipant> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator(
             "thesis.student.number");
