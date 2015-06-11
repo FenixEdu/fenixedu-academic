@@ -285,6 +285,6 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
     @Override
     public ProgramConclusion getProgramConclusion() {
-        return null;
+        return ProgramConclusion.conclusionsFor(getPhdIndividualProgramProcess().getRegistration()).findAny().orElse(null);
     }
 }

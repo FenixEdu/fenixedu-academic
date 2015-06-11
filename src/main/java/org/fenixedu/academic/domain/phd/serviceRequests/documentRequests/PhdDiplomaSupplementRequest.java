@@ -355,8 +355,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public ProgramConclusion getProgramConclusion() {
-        // TODO program conclusion
-        return null;
+        return ProgramConclusion.conclusionsFor(getRegistration()).findAny().orElse(null);
     }
 
 }

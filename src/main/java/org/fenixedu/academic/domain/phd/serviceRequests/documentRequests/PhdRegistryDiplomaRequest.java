@@ -291,13 +291,11 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     @Override
     public ProgramConclusion getProgramConclusion() {
-        //TODO use this after refactoring phd process
-        return null;
+        return ProgramConclusion.conclusionsFor(getPhdIndividualProgramProcess().getRegistration()).findAny().orElse(null);
     }
 
     @Override
     public String getDegreeName(ExecutionYear year) {
-        //TODO use this after refactoring phd process
-        return null;
+        return getPhdIndividualProgramProcess().getRegistration().getDegreeDescription(year, getRequestedCycle(), getLanguage());
     }
 }

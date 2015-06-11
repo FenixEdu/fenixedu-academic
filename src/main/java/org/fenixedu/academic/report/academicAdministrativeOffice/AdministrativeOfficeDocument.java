@@ -41,8 +41,10 @@ import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.Adminis
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
@@ -222,7 +224,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
             return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getRegistration();
         }
 
-        return null;
+        if (getDocumentRequest().isRequestForPhd()) {
+            return ((PhdDocumentRequest) getDocumentRequest()).getPhdIndividualProgramProcess().getRegistration();
+        }
+
+        throw new DomainException("error.AdministrativeOfficeDocument.registration.not.found");
     }
 
     @Override

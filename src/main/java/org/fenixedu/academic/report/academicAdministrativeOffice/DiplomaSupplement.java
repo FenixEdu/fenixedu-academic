@@ -34,6 +34,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.DegreeSpecializationArea;
 import org.fenixedu.academic.domain.IEnrolment;
@@ -249,7 +250,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     private String getDegreeDesignation() {
-        DiplomaSupplementRequest request = (DiplomaSupplementRequest) getDocumentRequest();
+
+        IDiplomaSupplementRequest request = getDocumentRequest();
+
+        Degree degree = getDocumentRequest().getRegistration().getDegree();
+
         ArrayList<String> res = new ArrayList<>();
         final String graduationLevel = request.getProgramConclusion().getGraduationLevel().getContent(getLocale());
 
@@ -264,7 +269,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         if (courseGroup.isPresent()) {
             res.add(courseGroup.get().getDegreeNameWithTitleSuffix(request.getConclusionYear(), getLocale()));
         } else {
-            res.add(request.getDegree().getNameI18N(request.getConclusionYear()).getContent(getLocale()));
+            res.add(degree.getNameI18N(request.getConclusionYear()).getContent(getLocale()));
         }
 
         return Joiner.on(" ").join(res);
