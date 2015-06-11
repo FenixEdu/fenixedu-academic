@@ -156,8 +156,7 @@ public class FindSpacesBean implements Serializable {
 
     public Boolean getWithSchedule() {
         Space space = getSpace();
-        if (space != null && (SpaceUtils.isRoom(space) || SpaceUtils.isRoomSubdivision(space))
-                && SpaceUtils.isForEducation(space)) {
+        if (space != null && (SpaceUtils.isRoom(space) || SpaceUtils.isRoomSubdivision(space))) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
