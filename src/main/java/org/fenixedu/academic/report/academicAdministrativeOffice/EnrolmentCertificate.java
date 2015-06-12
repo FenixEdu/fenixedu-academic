@@ -29,6 +29,7 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.student.Registration;
@@ -161,7 +162,8 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         final Registration registration = getDocumentRequest().getRegistration();
 
         if (registration.getDegreeType().isComposite() && hasMoreThanOneCycle(registration)) {
-            return registration.getDegreeDescription(getDocumentRequest().getExecutionYear(), null);
+            return registration.getDegreeDescription(getDocumentRequest().getExecutionYear(), (ProgramConclusion) null,
+                    getLocale());
         } else {
             final DegreeType degreeType = registration.getDegreeType();
             final CycleType cycleType =
