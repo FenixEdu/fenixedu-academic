@@ -43,6 +43,8 @@ import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +57,8 @@ public class Email extends Email_Base {
 
     private static Session SESSION = null;
     private static int MAX_MAIL_RECIPIENTS;
+
+    private static DateTimeFormatter rfc5322Fmt = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss Z");
 
     private static synchronized Session init() {
         final Properties properties = new Properties();
@@ -203,7 +207,7 @@ public class Email extends Email_Base {
         @Override
         protected void updateMessageID() throws MessagingException {
             setHeader("Message-ID", getMessageID());
-            setHeader("Date", getMessage().getCreated().toString());
+            setHeader("Date", rfc5322Fmt.print(getMessage().getCreated()));
         }
 
         public void send(final Email email) throws MessagingException {
