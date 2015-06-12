@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.phd.thesis.activities;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
@@ -39,10 +41,25 @@ public class ConcludePhdProcess extends PhdThesisActivity {
             throw new PreConditionNotValidException();
         }
 
-        if (process.getIndividualProgramProcess().getRegistration() != null
-                && !process.getIndividualProgramProcess().getRegistration().isRegistrationConclusionProcessed()) {
+        if (!isStudentCurricularPlanFinishedForPhd(process)) {
             throw new PreConditionNotValidException();
         }
+    }
+
+    /**
+     * TODO: phd-refactor
+     * 
+     * Check if the root group of the phd student curricular plan is concluded is enough
+     * to be able to conclude the phd process.
+     * 
+     * This should be changed when the phd process becomes itself a curriculum group.
+     * 
+     * @param process the student's thesis process
+     * @return true if the root curriculum group has a conclusion process.
+     */
+    private boolean isStudentCurricularPlanFinishedForPhd(PhdThesisProcess process) {
+        return Optional.ofNullable(process.getIndividualProgramProcess().getRegistration())
+                .map(r -> r.getLastStudentCurricularPlan().getRoot().isConclusionProcessed()).orElse(null);
     }
 
     @Override
