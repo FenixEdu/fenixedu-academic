@@ -157,7 +157,7 @@
 			</li>
 			<li>
 				<h4>Como recuperar a password?</h4>
-				<p>Existem várias possibilidades de recuperação, que podem ser consultadas no seguinte endereço: <a href="https://id.ist.utl.pt/password/recover.php?language=pt" title="Recuperar password">https://id.ist.utl.pt/password/recover.php?language=pt</a>.</p>
+				<p>Existem várias possibilidades de recuperação, que podem ser consultadas no seguinte endereço: <a href="https://id.tecnico.ulisboa.pt/password/recover.php?language=pt" title="Recuperar password">https://id.tecnico.ulisboa.pt/password/recover.php?language=pt</a>.</p>
 			</li>
 			<li>
 				<h4>Como alterar a IST-ID?</h4>
@@ -170,8 +170,8 @@
 			<li>
 				<h4>Como alterar o número de telemóvel?</h4>
 				<p>Terá de solicitar ao Núcleo correspondente ao seu Curso a atualização dos seus dados Pessoais (neste caso, telemóvel).<br>
-				Núcleo de Graduação - <a href="mailto:nucleo.graduacao@ist.utl.pt" title="Enviar email">nucleo.graduacao@ist.utl.pt</a><br>
-				Núcleo de Pós-Graduação e Formação Contínua - <a href="mailto:npfc@ist.utl.pt" title="Enviar email">npfc@ist.utl.pt</a></p>
+				Núcleo de Graduação - <a href="mailto:academica@tecnico.ulisboa.pt" title="Enviar email">academica@tecnico.ulisboa.pt</a><br>
+				Núcleo de Pós-Graduação e Formação Contínua - <a href="mailto:npfc@tecnico.ulisboa.pt" title="Enviar email">npfc@tecnico.ulisboa.pt</a></p>
 			</li>
 		</ol>
 	</div>
