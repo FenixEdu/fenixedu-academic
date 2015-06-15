@@ -200,16 +200,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
         }
+        createDefaultCourseGroups();
+
         setCurricularPlanMembersGroup(UserGroup.of(creator.getUser()));
         setDegreeStructure(curricularPeriod);
         setState(DegreeCurricularPlanState.ACTIVE);
 
         newStructureFieldsChange(CurricularStage.DRAFT, null);
 
-        createDefaultCourseGroups();
         createDefaultCurricularRules();
         new DegreeCurricularPlanServiceAgreementTemplate(this);
-
     }
 
     private void createDefaultCourseGroups() {
