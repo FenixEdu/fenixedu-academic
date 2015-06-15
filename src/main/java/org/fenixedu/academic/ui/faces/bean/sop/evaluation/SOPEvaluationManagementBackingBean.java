@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
@@ -60,10 +61,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.dto.InfoDegree;
-import org.fenixedu.academic.dto.InfoExecutionDegree;
 import org.fenixedu.academic.dto.InfoRoom;
-import org.fenixedu.academic.dto.comparators.ComparatorByNameForInfoExecutionDegree;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.service.services.resourceAllocationManager.DefineExamComment;
@@ -88,7 +86,6 @@ import pt.ist.fenixframework.FenixFramework;
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
     private static final MessageResources messages = MessageResources.getMessageResources(Bundle.RESOURCE_ALLOCATION);
-    private static final MessageResources enumerations = MessageResources.getMessageResources(Bundle.ENUMERATION);
 
     private String academicInterval;
     protected HtmlInputHidden academicIntervalHidden;
@@ -252,16 +249,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public String getExecutionDegreeLabel() {
-        ExecutionDegree executionDegreeSelected = getExecutionDegree();
-
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append(enumerations.getMessage(I18N.getLocale(), executionDegreeSelected.getDegreeCurricularPlan()
-                .getDegree().getDegreeType().toString()));
-        stringBuffer.append(" em ");
-        stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree()
-                .getNameFor(executionDegreeSelected.getAcademicInterval()).getContent());
-
-        return stringBuffer.toString();
+        return getExecutionDegree().getDegree().getPresentationName(getExecutionDegree().getExecutionYear());
     }
 
     public Integer getCurricularYearID() {
@@ -498,26 +486,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         List<ExecutionDegree> degrees =
                 ExecutionDegree.filterByAcademicInterval(getAcademicIntervalFromParameter(getAcademicInterval()));
-        List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
-        for (ExecutionDegree degree : degrees) {
-            infoExecutionDegrees.add(new InfoExecutionDegree(degree));
-        }
-        Collections.sort(infoExecutionDegrees, new ComparatorByNameForInfoExecutionDegree());
 
-        List<SelectItem> result = new ArrayList<SelectItem>(infoExecutionDegrees.size());
-        result.add(new SelectItem(0, this.chooseMessage));
-        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
-            StringBuilder label = new StringBuilder();
-            label.append(enumerations.getMessage(I18N.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan()
-                    .getInfoDegree().getDegreeType().toString()));
-            label.append(" em ");
-            label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
-            label.append(addAnotherInfoDegreeToLabel(infoExecutionDegrees, infoExecutionDegree) ? " - "
-                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "");
-            result.add(new SelectItem(infoExecutionDegree.getExternalId(), label.toString()));
-        }
-
-        return result;
+        return degrees
+                .stream()
+                .sorted(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME)
+                .map(executionDegree -> new SelectItem(executionDegree.getExternalId(), executionDegree.getDegree().getPresentationName(
+                        executionDegree.getExecutionYear()))).collect(Collectors.toList());
     }
 
     private AcademicInterval getAcademicIntervalFromParameter(String academicInterval) {
@@ -525,20 +499,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval.replaceAll("-", ":"));
         }
         return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval);
-    }
-
-    private boolean addAnotherInfoDegreeToLabel(List<InfoExecutionDegree> infoExecutionDegrees,
-            InfoExecutionDegree infoExecutionDegree) {
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-
-        for (InfoExecutionDegree infoExecutionDegree2 : infoExecutionDegrees) {
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                    && !(infoExecutionDegree.equals(infoExecutionDegree2))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public List<SelectItem> getCurricularYearItems() {
