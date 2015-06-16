@@ -103,7 +103,8 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         if (!graduationLevel.isEmpty()) {
             degreeRegistrationDiploma =
-                    Joiner.on(" ").join(degreeRegistrationDiploma, BundleUtil.getString(Bundle.ACADEMIC, "label.of.both"),
+                    Joiner.on(" ").join(degreeRegistrationDiploma,
+                            BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.both"),
                             graduationLevel.getContent(getLocale()));
         }
 
