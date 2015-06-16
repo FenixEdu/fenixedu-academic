@@ -209,7 +209,10 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
         DateTime conclusionDate = null;
         if (!getPhdIndividualProgramProcess().getStudyPlan().isExempted()) {
             Registration registration = getPhdIndividualProgramProcess().getRegistration();
-            conclusionDate = registration.getConclusionDateForBolonha().toDateMidnight().toDateTime();
+            //TODO: phd-refactor this should be change to terminal program conclusion
+            conclusionDate =
+                    registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getConclusionDate()
+                            .toDateMidnight().toDateTime();
         } else {
             conclusionDate = lastConclusionProcess.getConclusionDate().toDateMidnight().toDateTime();
         }
@@ -289,7 +292,10 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
         if (!getPhdIndividualProgramProcess().getStudyPlan().isExempted()) {
             Registration registration = getPhdIndividualProgramProcess().getRegistration();
-            conclusionDate = registration.getConclusionDateForBolonha().toDateMidnight().toLocalDate();
+            //TODO: phd-refactor this should be change to terminal program conclusion
+            conclusionDate =
+                    registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getConclusionDate()
+                            .toDateMidnight().toLocalDate();
         } else {
             PhdConclusionProcess conclusionProcess = getPhdIndividualProgramProcess().getLastConclusionProcess();
             conclusionDate = conclusionProcess.getConclusionDate();

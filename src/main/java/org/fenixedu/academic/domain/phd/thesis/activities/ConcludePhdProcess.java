@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.phd.thesis.activities;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess;
@@ -59,7 +60,7 @@ public class ConcludePhdProcess extends PhdThesisActivity {
      */
     private boolean isStudentCurricularPlanFinishedForPhd(PhdThesisProcess process) {
         return Optional.ofNullable(process.getIndividualProgramProcess().getRegistration())
-                .map(r -> r.getLastStudentCurricularPlan().getRoot().isConclusionProcessed()).orElse(null);
+                .map(r -> r.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).isConclusionProcessed()).orElse(null);
     }
 
     @Override

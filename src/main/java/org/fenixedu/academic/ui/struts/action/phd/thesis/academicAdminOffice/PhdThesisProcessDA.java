@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -898,7 +899,10 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
         LocalDate conclusionDate = null;
         if (!individualProgramProcess.getStudyPlan().isExempted()) {
-            conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
+            //TODO: phd-refactor this should be change to terminal program conclusion
+            conclusionDate =
+                    individualProgramProcess.getRegistration().getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
+                            .getConclusionDate().toDateMidnight().toLocalDate();
         } else {
             conclusionDate = bean.getConclusionDate();
         }
@@ -934,7 +938,10 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
         LocalDate conclusionDate = null;
         if (!individualProgramProcess.getStudyPlan().isExempted()) {
-            conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
+            //TODO: phd-refactor this should be change to terminal program conclusion
+            conclusionDate =
+                    individualProgramProcess.getRegistration().getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
+                            .getConclusionDate().toDateMidnight().toLocalDate();
         } else {
             conclusionDate = bean.getConclusionDate();
         }
