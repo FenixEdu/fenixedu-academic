@@ -58,7 +58,9 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
@@ -614,6 +616,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     final public MultiLanguageString getNameI18N(ExecutionYear executionYear) {
         return getNameFor(executionYear);
+    }
+    
+    public LocalizedString getPresentationNameI18N() {
+        return getPresentationNameI18N(ExecutionYear.readCurrentExecutionYear());
+    }
+    
+    public LocalizedString getPresentationNameI18N(final ExecutionYear executionYear) {
+        LocalizedString result = new LocalizedString();
+        
+        for (final Locale locale : CoreConfiguration.supportedLocales()) {
+            result = result.with(locale, getPresentationName(executionYear, locale));
+        }
+        
+        return result;
     }
 
     final public String getPresentationName() {
