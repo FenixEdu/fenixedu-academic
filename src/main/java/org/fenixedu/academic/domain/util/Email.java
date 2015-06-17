@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -58,7 +59,8 @@ public class Email extends Email_Base {
     private static Session SESSION = null;
     private static int MAX_MAIL_RECIPIENTS;
 
-    private static DateTimeFormatter rfc5322Fmt = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss Z");
+    private static DateTimeFormatter rfc5322Fmt = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss Z").withLocale(
+            Locale.ENGLISH);
 
     private static synchronized Session init() {
         final Properties properties = new Properties();
