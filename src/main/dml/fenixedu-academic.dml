@@ -9853,6 +9853,7 @@ relation ThesisHasExtendedAbstractFile {
 }
 
 relation ThesisHasParticipations {
+	//make required in the next major
     thesis.Thesis playsRole thesis;
     thesis.ThesisEvaluationParticipant playsRole participations {
         multiplicity *;
