@@ -119,7 +119,7 @@ public class Person extends Person_Base {
 
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
     
-    public static final String PERSON_CREATE_SIGNAL = "PERSON_CREATE_SIGNAL";
+    public static final String PERSON_CREATE_SIGNAL = "academic.person.create";
 
     private IdDocument getIdDocument() {
         final Iterator<IdDocument> documentIterator = getIdDocumentsSet().iterator();

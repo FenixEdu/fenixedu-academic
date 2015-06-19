@@ -60,6 +60,8 @@ import org.fenixedu.academic.domain.studentCurriculum.InternalCreditsSourceCurri
 import org.fenixedu.academic.domain.studentCurriculum.InternalEnrolmentWrapper;
 import org.fenixedu.academic.domain.studentCurriculum.OptionalDismissal;
 import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentAction;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
@@ -398,6 +400,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 new EnrolmentEvaluation(this, EvaluationSeason.readImprovementSeason(), EnrolmentEvaluationState.TEMPORARY_OBJ,
                         person, executionSemester);
         createAttendForImprovement(executionSemester);
+        
+        Signal.emit(ITreasuryBridgeAPI.IMPROVEMENT_ENROLMENT, new DomainObjectEvent<EnrolmentEvaluation>(enrolmentEvaluation));
+        
         return enrolmentEvaluation;
     }
 
@@ -454,6 +459,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         if (temporaryImprovement == null) {
             throw new DomainException("error.enrolment.cant.unenroll.improvement");
         }
+        
+        TreasuryBridgeAPIFactory.implementation().improvementUnrenrolment(temporaryImprovement);
 
         temporaryImprovement.delete();
         Attends attends = getAttendsFor(executionSemester);

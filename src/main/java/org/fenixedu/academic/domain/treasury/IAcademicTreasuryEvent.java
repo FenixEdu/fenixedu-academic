@@ -1,31 +1,63 @@
 package org.fenixedu.academic.domain.treasury;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.joda.time.LocalDate;
 
 public interface IAcademicTreasuryEvent {
 
     public LocalizedString getDescription();
+    
+    /* -------------------------
+     * KIND OF EVENT INFORMATION
+     * -------------------------
+     */
+    
+    public boolean isTuitionEvent();
+    
+    public boolean isAcademicServiceRequestEvent();
+    
+    public boolean isAcademicTax();
 
+    public boolean isImprovementTax();
+    
+    /* ---------------------
+     * FINANTIAL INFORMATION
+     * ---------------------
+     */
+    
     public boolean isWithDebitEntry();
     
+    public boolean isExempted();
+
     default boolean isInDebt() {
-        return false;
+        return getRemainingAmountToPay().compareTo(BigDecimal.ZERO) > 0;
     }
     
-    default boolean isDueDateExpired() {
-        return false;
-    }
+    public boolean isDueDateExpired(final LocalDate when);
     
-    default boolean isBlockingAcademicActs() {
-        return false;
-    }
+    public boolean isBlockingAcademicalActs(final LocalDate when);
 
     public BigDecimal getAmountToPay();
 
     public BigDecimal getRemainingAmountToPay();
 
+    public BigDecimal getExemptedAmount();
+    
+    public LocalDate getDueDate();
+    
+    public String getExemptionReason();
+    
+    public List<IAcademicTreasuryEventPayment> getPaymentsList();
+    
+    
+    /* ---------------------------------------------
+     * ACADEMIC SERVICE REQUEST EVENT & ACADEMIC TAX
+     * ---------------------------------------------
+     */
+    
     public BigDecimal getBaseAmount();
     
     public BigDecimal getAdditionalUnitsAmount();
@@ -58,59 +90,27 @@ public interface IAcademicTreasuryEvent {
         return getAmountForUrgencyRate().compareTo(BigDecimal.ZERO) > 0;
     }
 
-    public static IAcademicTreasuryEvent zeroValuesEvent(final LocalizedString description) {
-        return new IAcademicTreasuryEvent() {
+    /* -------------------
+     * TUITION INFORMATION
+     * -------------------
+     */
+    
+    public int getTuitionInstallmentSize();
+    
+    public BigDecimal getTuitionInstallmentAmountToPay(int installmentOrder);
+    
+    public BigDecimal getTuitionInstallmentRemainingAmountToPay(int installmentOrder);
+    
+    public BigDecimal getTuitionInstallmentExemptedAmount(int installmentOrder);
+    
+    public LocalDate getTuitionInstallmentDueDate(int installmentOrder);
+    
+    public String getTuitionInstallmentDescription(int installmentOrder);
 
-            @Override
-            public boolean isWithDebitEntry() {
-                return false;
-            }
-
-            @Override
-            public BigDecimal getRemainingAmountToPay() {
-                return BigDecimal.ZERO;
-            }
-
-            @Override
-            public BigDecimal getPagesAmount() {
-                return BigDecimal.ZERO;
-            }
-
-            @Override
-            public BigDecimal getMaximumAmount() {
-                return BigDecimal.ZERO;
-            }
-
-            @Override
-            public LocalizedString getDescription() {
-                return description;
-            }
-
-            @Override
-            public BigDecimal getBaseAmount() {
-                return BigDecimal.ZERO;
-            }
-
-            @Override
-            public BigDecimal getAmountToPay() {
-                return BigDecimal.ZERO;
-            }
-
-            @Override
-            public BigDecimal getAmountForUrgencyRate() {
-                return BigDecimal.ZERO;
-            }
-
-            @Override
-            public BigDecimal getAmountForLanguageTranslationRate() {
-                return BigDecimal.ZERO;
-            }
-
-            @Override
-            public BigDecimal getAdditionalUnitsAmount() {
-                return BigDecimal.ZERO;
-            }
-        };
-    }
-
+    public boolean isTuitionInstallmentExempted(int installmentOrder);
+    
+    public String getTuitionInstallmentExemptionReason(int installmentOrder);
+    
+    public List<IAcademicTreasuryEventPayment> getTuitionInstallmentPaymentsList(int installmentOrder);
+    
 }

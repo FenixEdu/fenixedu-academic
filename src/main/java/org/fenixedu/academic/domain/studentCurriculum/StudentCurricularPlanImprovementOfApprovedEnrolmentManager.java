@@ -35,6 +35,9 @@ import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends StudentCurricularPlanEnrolment {
 
@@ -110,7 +113,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
         Collection<Enrolment> toCreate = new HashSet<Enrolment>();
-
+        
         for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
 
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {

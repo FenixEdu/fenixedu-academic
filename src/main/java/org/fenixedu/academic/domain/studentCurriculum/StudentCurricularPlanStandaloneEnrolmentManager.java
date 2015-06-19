@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.signals.DomainObjectEvent;

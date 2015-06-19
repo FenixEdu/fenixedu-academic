@@ -33,6 +33,12 @@ import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
+
+import com.google.common.collect.Sets;
 
 public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricularPlanEnrolment {
 
@@ -92,24 +98,37 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
 
     @Override
     protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap) {
+
+        final Set<Enrolment> enrolmentsToNotify = Sets.newHashSet();
+
         for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEnrolMap.entrySet()) {
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
                 if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
 
                     checkIDegreeModuleToEvaluate(curricularCourse);
-                    new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
+                    final Enrolment enrolment = new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
                             getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getUsername());
+
+                    enrolmentsToNotify.add(enrolment);
                 }
             }
         }
+
         getRegistration().updateEnrolmentDate(getExecutionYear());
+
+        for (final Enrolment enrolment : enrolmentsToNotify) {
+            Signal.emit(ITreasuryBridgeAPI.EXTRACURRICULAR_ENROLMENT, new DomainObjectEvent<Enrolment>(enrolment));
+        }
+
     }
 
     @Override
     protected void unEnrol() {
         for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
             if (curriculumModule.isLeaf()) {
+                TreasuryBridgeAPIFactory.implementation().extracurricularUnenrolment((Enrolment) curriculumModule);
+                
                 curriculumModule.delete();
             }
         }
