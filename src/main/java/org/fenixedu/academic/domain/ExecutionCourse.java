@@ -68,6 +68,8 @@ import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.ProposalState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -166,6 +168,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setEntryPhase(entryPhase);
         setProjectTutorialCourse(Boolean.FALSE);
         setUnitCreditValue(null);
+        Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
     }
 
     public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission, EntryPhase entryPhase) {
