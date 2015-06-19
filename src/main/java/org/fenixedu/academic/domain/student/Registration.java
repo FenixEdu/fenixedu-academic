@@ -2127,21 +2127,9 @@ public class Registration extends Registration_Base {
                 .map(ConclusionProcess::getConclusionYearMonthDay).orElse(null);
     }
 
+    @Deprecated
     public YearMonthDay getConclusionDateForBolonha() {
-        if (isBolonha()) {
-            if (hasConcluded()) {
-                final SortedSet<CycleCurriculumGroup> concludeCycles =
-                        new TreeSet<CycleCurriculumGroup>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-                concludeCycles.addAll(getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
-                final CycleCurriculumGroup lastConcludedCycle = concludeCycles.last();
-                return (lastConcludedCycle.isConclusionProcessed() ? lastConcludedCycle.getConclusionDate() : lastConcludedCycle
-                        .calculateConclusionDate());
-            }
-
-        } else {
-            return getConclusionDate();
-        }
-        return null;
+        return getConclusionDate();
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
