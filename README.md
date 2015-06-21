@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/FenixEdu/fenixedu-academic.png?branch=master)](https://travis-ci.org/FenixEdu/fenixedu-academic)
 ==========
 
+[![Join the chat at https://gitter.im/FenixEdu/fenixedu-academic](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/FenixEdu/fenixedu-academic?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 FenixEdu Academic is an open source Student Information System. It provides the back office system where schools manage students, teachers, degrees and courses. Take a look at [FenixEdu.org](http://fenixedu.org/) for more information.
 
 ## Getting Started
