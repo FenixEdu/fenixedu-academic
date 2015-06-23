@@ -1643,7 +1643,8 @@ public class Registration extends Registration_Base {
 
         final Degree degree = getDegree();
         final DegreeType degreeType = degree.getDegreeType();
-        if (programConclusion != null && !Strings.isNullOrEmpty(programConclusion.getName().getContent(locale))) {
+        if (programConclusion != null && !programConclusion.isTerminal()
+                && !Strings.isNullOrEmpty(programConclusion.getName().getContent(locale))) {
             res.append(programConclusion.getName().getContent(locale));
             res.append(", ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.the.male")).append(" ");
         }
