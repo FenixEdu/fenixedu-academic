@@ -112,14 +112,13 @@ public class AlumniReportFile extends AlumniReportFile_Base {
                 "PAIS", "EMAIL_PESSOAL", "EMAIL_ENVIAR", "TELEFONE", "REGISTADO EM" });
 
         final Spreadsheet jobData = new Spreadsheet("ALUMNI_JOB_DATA");
-        jobData.setHeaders(new String[] { "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS",
-                "COD_AREA_NEGOCIO", "AREA_NEGOCIO", "POSICAO", "DATA_INICIO", "DATA_FIM", "TIPO_CONTRATO", "FORMA_COLOCACAO",
-                "REMUN_MENSAL_BRUTA", "TIPO_SALARIO", "DATA_ALTERACAO", "DATA_REGISTO" });
+        jobData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS", "COD_AREA_NEGOCIO",
+                "AREA_NEGOCIO", "POSICAO", "DATA_INICIO", "DATA_FIM", "TIPO_CONTRATO", "FORMA_COLOCACAO", "REMUN_MENSAL_BRUTA",
+                "TIPO_SALARIO", "DATA_ALTERACAO", "DATA_REGISTO" });
 
         final Spreadsheet formationData = new Spreadsheet("ALUMNI_FORMATION_DATA");
-        formationData.setHeaders(new String[] { "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "TIPO", "GRAU", "INSTITUICAO",
-                "COD_AREA_EDUCATIVA", "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS", "NUMERO_HORAS", "DATA_ALTERACAO",
-                "DATA_REGISTO" });
+        formationData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "TIPO", "GRAU", "INSTITUICAO", "COD_AREA_EDUCATIVA",
+                "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS", "NUMERO_HORAS", "DATA_ALTERACAO", "DATA_REGISTO" });
 
         int count = 0;
 
@@ -297,13 +296,12 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     private void addJobDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Job job) {
-        // "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE",
+        // "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE",
         // "PAIS",
         // "COD_AREA_NEGOCIO", "AREA_NEGOCIO", "POSICAO", "DATA_INICIO",
         // "DATA_FIM", "FORMA_COLOCACAO", "TIPO_CONTRATO", "SALARIO",
         // "TIPO_SALARIO", "DATA_ALTERACAO", "DATA_REGISTO"
         final Row row = sheet.addRow();
-        row.setCell(job.getExternalId());
         row.setCell(alumniName);
         row.setCell(studentNumber);
         row.setCell(job.getEmployerName());
@@ -324,13 +322,12 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     private void addFormationDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Formation formation) {
-        // "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "TIPO", "GRAU",
+        // "NOME", "NUMERO_ALUNO", "TIPO", "GRAU",
         // "INSTITUICAO",
         // "COD_AREA_EDUCATIVA",
         // "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS",
         // "NUMERO_HORAS", "DATA_ALTERACAO", "DATA_REGISTO"
         final Row row = sheet.addRow();
-        row.setCell(formation.getExternalId());
         row.setCell(alumniName);
         row.setCell(studentNumber);
         row.setCell(formation.getFormationType() != null ? getEnum(formation.getFormationType().getQualifiedName()) : NOT_AVAILABLE);
