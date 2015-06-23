@@ -71,14 +71,14 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
             throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
         }
         getRegistration().getPerson().getProfile().changeName(bean.getGivenNames(), bean.getFamilyNames(), null);
-        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
-        DiplomaRequest diploma = getRegistration().getDiplomaRequest(getProgramConclusion());
+        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(bean.getProgramConclusion());
+        DiplomaRequest diploma = getRegistration().getDiplomaRequest(bean.getProgramConclusion());
         if (registry == null && diploma == null) {
             throw new DomainException(
                     "error.diplomaSupplementRequest.cannotAskForSupplementWithoutEitherRegistryDiplomaOrDiplomaRequest");
         }
-        final DiplomaSupplementRequest supplement = getRegistration().getDiplomaSupplementRequest(getProgramConclusion());
-        if (supplement != null && supplement != this) {
+        final DiplomaSupplementRequest supplement = getRegistration().getDiplomaSupplementRequest(bean.getProgramConclusion());
+        if (supplement != null) {
             throw new DomainException("error.diplomaSupplementRequest.alreadyRequested");
         }
     }

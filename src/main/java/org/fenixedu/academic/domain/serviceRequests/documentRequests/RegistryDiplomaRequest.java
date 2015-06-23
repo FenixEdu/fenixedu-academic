@@ -50,6 +50,8 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
         this();
         super.init(bean);
         checkParameters(bean);
+        setProgramConclusion(bean.getProgramConclusion());
+
         if (isPayedUponCreation() && !isFree()) {
             RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
         }
@@ -73,12 +75,10 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
             throw new DomainException("error.program.conclusion.empty");
         }
 
-        setProgramConclusion(bean.getProgramConclusion());
-
-        if (getRegistration().getDiplomaRequest(getProgramConclusion()) != null) {
+        if (getRegistration().getDiplomaRequest(bean.getProgramConclusion()) != null) {
             throw new DomainException("error.registryDiploma.alreadyHasDiplomaRequest");
         }
-        if (getRegistration().getRegistryDiplomaRequest(getProgramConclusion()) != this) {
+        if (getRegistration().getRegistryDiplomaRequest(bean.getProgramConclusion()) != null) {
             throw new DomainException("error.registryDiploma.alreadyRequested");
         }
         if (hasPersonalInfo() && hasMissingPersonalInfo()) {
