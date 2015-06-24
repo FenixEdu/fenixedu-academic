@@ -176,7 +176,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
             if (l.getLanguage().equals("en")) {
                 degreeCurricularPlanDescriptionEn = localizedDescription.getContent(l);
             } else {
-                degreeCurricularPlanDescription = localizedDescription.getContent(l);
+                degreeCurricularPlanDescriptionDef = localizedDescription.getContent(l);
             }
         }
 
