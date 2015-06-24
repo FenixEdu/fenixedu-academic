@@ -64,6 +64,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         activities.add(new SendEmailForApplicationSubmission());
         activities.add(new ChangePaymentCheckedState());
         activities.add(new RevokeDocumentFile());
+        activities.add(new MoveCandidacy());
     }
 
     protected Over23IndividualCandidacyProcess() {
@@ -612,6 +613,27 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
                 Object object) {
             process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
+            return process;
+        }
+    }
+
+    static private class MoveCandidacy extends Activity<Over23IndividualCandidacyProcess> {
+
+        @Override
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
+            if (!isAllowedToManageProcess(process, userView)) {
+                throw new PreConditionNotValidException();
+            }
+            if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+                throw new PreConditionNotValidException();
+            }
+        }
+
+        @Override
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
+                Object object) {
+            CandidacyProcess candidacyProcess = (CandidacyProcess) object;
+            process.setCandidacyProcess(candidacyProcess);
             return process;
         }
     }

@@ -29,6 +29,8 @@ public class CandidacyProcessBean implements Serializable {
 
     private DateTime start, end;
 
+    private String name;
+
     protected CandidacyProcessBean() {
     }
 
@@ -65,4 +67,13 @@ public class CandidacyProcessBean implements Serializable {
     public void setEnd(DateTime end) {
         this.end = end;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

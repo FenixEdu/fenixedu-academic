@@ -33,6 +33,9 @@
 	<slot name="candidacyExecutionInterval.qualifiedName" key="label.executionInterval">
 		<property name="classes" value="bold" />
 	</slot>
+	<slot name="presentationName" key="label.candidacy.process">
+		<property name="classes" value="italic" />
+	</slot>
 	<slot name="candidacyStart" key="label.begin">
 		<property name="classes" value="italic" />
 	</slot>
@@ -488,6 +491,7 @@
 	</slot>
 	<slot name="start" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="name" key="label.name" />
 </schema>
 
 <schema name="Over23CandidacyProcessBean.selectDegrees" type="org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
@@ -551,6 +555,7 @@
         <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.Over23IndividualCandidacySelectedDegreesProvider" />
         <property name="format" value="${presentationName}" />
     </slot>
+    <slot name="name" key="label.name" />
 </schema>
 
 <schema name="Over23IndividualCandidacyResultBean.manage.all.students" type="org.fenixedu.academic.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
@@ -593,6 +598,7 @@
 	</slot>
 	<slot name="start" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="name" key="label.name" />
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcess.view" type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES"

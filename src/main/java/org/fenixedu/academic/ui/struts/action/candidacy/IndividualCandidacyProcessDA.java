@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,11 +45,14 @@ import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessB
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import org.fenixedu.academic.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import org.fenixedu.academic.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import org.fenixedu.academic.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.caseHandling.Process;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.period.CandidacyPeriod;
+import org.fenixedu.academic.domain.period.CandidacyProcessCandidacyPeriod;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 import org.fenixedu.academic.dto.person.ChoosePersonBean;
@@ -58,6 +62,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.casehandling.CaseHandlingDispatchAction;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.struts.annotations.Forward;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
@@ -87,6 +92,7 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 
+@Forward(name = "prepare-move-process", path = "/candidacy/moveCandidacy.jsp")
 public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
     abstract protected Class<? extends Process> getParentProcessType();
@@ -125,6 +131,34 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
             HttpServletResponse response) {
         setMainCandidacyProcessInformation(request, getParentProcess(request));
         return mapping.findForward("intro");
+    }
+
+    public ActionForward prepareExecuteMoveCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        setMainCandidacyProcessInformation(request, getParentProcess(request));
+        final IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
+        ExecutionInterval executionInterval = getParentProcess(request).getCandidacyPeriod().getExecutionInterval();
+        CandidacyProcessCandidacyPeriod candidacyPeriod = getParentProcess(request).getCandidacyPeriod();
+        List<? extends CandidacyPeriod> cpp = executionInterval.getCandidacyPeriods(candidacyPeriod.getClass());
+        request.setAttribute("individualProcess", readProcess(request));
+        request.setAttribute("processes",
+                cpp.stream().map(cp -> (CandidacyProcessCandidacyPeriod) cp)
+                        .flatMap(cp -> cp.getCandidacyProcessesSet().stream()).collect(Collectors.toList()));
+        request.setAttribute("candidacyProcess", getParentProcess(request));
+        return mapping.findForward("prepare-move-process");
+    }
+
+    public ActionForward executeMoveCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+        try {
+            String parentProcessExternalId = request.getParameter("newParentProcess");
+            CandidacyProcess newParentProcess = FenixFramework.getDomainObject(parentProcessExternalId);
+            executeActivity(getProcess(request), "MoveCandidacy", newParentProcess);
+            request.setAttribute("parentProcess", newParentProcess);
+        } catch (DomainException e) {
+
+        }
+        return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
     @Override

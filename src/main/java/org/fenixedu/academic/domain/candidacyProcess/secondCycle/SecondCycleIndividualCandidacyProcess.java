@@ -76,6 +76,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
         activities.add(new RejectCandidacy());
         activities.add(new RevertApplicationToStandBy());
         activities.add(new CopyIndividualCandidacyToNextCandidacyProcess());
+        activities.add(new MoveCandidacy());
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -704,6 +705,27 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
         protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
                 User userView, Object object) {
             process.rejectCandidacy(userView.getPerson());
+            return process;
+        }
+    }
+
+    static private class MoveCandidacy extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+        @Override
+        public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, User userView) {
+            if (!isAllowedToManageProcess(process, userView)) {
+                throw new PreConditionNotValidException();
+            }
+            if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+                throw new PreConditionNotValidException();
+            }
+        }
+
+        @Override
+        protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+                User userView, Object object) {
+            CandidacyProcess candidacyProcess = (CandidacyProcess) object;
+            process.setCandidacyProcess(candidacyProcess);
             return process;
         }
     }

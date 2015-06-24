@@ -395,8 +395,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     /**
      * Check if the process is complete i.e. if it has all required candidate
      * personal information and candidacy information like the chosen degree.
-     * 
-     * @return
      */
     public abstract Boolean isCandidacyProcessComplete();
 
@@ -437,4 +435,5 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     private static Set<IndividualCandidacyProcess> getAllInstancesOf(final Class<? extends IndividualCandidacyProcess> type) {
         return Sets.<IndividualCandidacyProcess> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), type));
     }
+
 }
