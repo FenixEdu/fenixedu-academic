@@ -125,11 +125,11 @@
                         </logic:equal>
                         <logic:equal name="filter" property="level" value="DEGREE">
                             <fr:slot name="targetEntity.externalId" key="label.externalId" />
-                            <fr:slot name="targetEntity.degreeType.localizedName" key="label.degreeType" />
+                            <fr:slot name="targetEntity.degreeType.name.content" key="label.degreeType" />
                             <fr:slot name="targetEntity.name" key="label.name" />
                             <fr:slot name="curricularYear.year" key="label.curricularYear" />
                             <bean:define id="sortByArg"
-                                value="targetEntity.degreeType.localizedName,targetEntity.name, curricularYear" />
+                                value="targetEntity.degreeType.name.content,targetEntity.name, curricularYear" />
                         </logic:equal>
                         <logic:equal name="filter" property="level" value="CURRICULAR_YEAR">
                             <fr:slot name="cycle" key="label.cycle" />
@@ -140,11 +140,11 @@
                     <logic:equal name="filter" property="type" value="GRADUATION">
                         <logic:equal name="filter" property="level" value="DEGREE">
                             <fr:slot name="targetEntity.externalId" key="label.externalId" />
-                            <fr:slot name="targetEntity.degreeType.localizedName" key="label.degreeType" />
+                            <fr:slot name="targetEntity.degreeType.name.content" key="label.degreeType" />
                             <fr:slot name="targetEntity.name" key="label.name" />
                             <fr:slot name="cycle" key="label.cycle" />
                             <bean:define id="sortByArg"
-                                value="targetEntity.degreeType.localizedName,targetEntity.name" />
+                                value="targetEntity.degreeType.name.content,targetEntity.name" />
                         </logic:equal>
                         <logic:equal name="filter" property="level" value="CYCLE">
                             <fr:slot name="cycle" key="label.cycle" />

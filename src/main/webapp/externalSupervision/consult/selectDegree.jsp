@@ -32,7 +32,7 @@
 	<fr:edit id="sessionBean" name="sessionBean">
 		<fr:schema type="org.fenixedu.academic.ui.struts.action.externalSupervision.consult.ExternalSupervisorViewsBean" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 			<fr:slot name="degreeType" layout="menu-select-postback" key="label.selectDegree.degreeType" required="true">
-				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="format" value="${name.content}"/>
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.BolonhaDegreeTypesProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>

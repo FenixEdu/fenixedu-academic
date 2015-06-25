@@ -78,8 +78,8 @@
 			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean">
 				<fr:slot name="degree" layout="menu-select" key="label.erasmus.degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
-			        <fr:property name="format" value="${degreeType.localizedName} - ${nameI18N}" />
-			        <fr:property name="sortBy" value="degreeType.localizedName=asc, nameI18N=asc"/>
+			        <fr:property name="format" value="${degreeType.name.content} - ${nameI18N}" />
+			        <fr:property name="sortBy" value="degreeType.name.content=asc, nameI18N=asc"/>
 				</fr:slot>
 			</fr:schema>
 			
