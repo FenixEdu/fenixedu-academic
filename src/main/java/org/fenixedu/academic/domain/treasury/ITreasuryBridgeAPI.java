@@ -91,4 +91,12 @@ public interface ITreasuryBridgeAPI {
 
     public List<IAcademicTreasuryEvent> getAllAcademicTreasuryEventsList(final Person person);
     
+    /* ------------------------------------
+     * ACADEMIC TREASURY MODULE INTEGRATION
+     * ------------------------------------
+     */
+    
+    public boolean isPersonAccountTreasuryManagementAvailable(final Person person);
+    public String getPersonAccountTreasuryManagementURL(final Person person);
+    
 }

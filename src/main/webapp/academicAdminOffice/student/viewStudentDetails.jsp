@@ -18,6 +18,9 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.domain.student.Student"%>
+<%@page import="org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory"%>
+<%@page import="org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI"%>
 <%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -173,14 +176,18 @@
 </academic:allowed>
 
 <!-- Payments -->
+<bean:define id="student" name="student" type="org.fenixedu.academic.domain.student.Student" />
+
 <academic:allowed operation="MANAGE_STUDENT_PAYMENTS">
+<% if(TreasuryBridgeAPIFactory.implementation().isPersonAccountTreasuryManagementAvailable(student.getPerson())) { %>
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/payments.do?method=showOperations" paramName="student" paramProperty="person.externalId" paramId="personId">
+	<html:link href="<%= request.getContextPath() + TreasuryBridgeAPIFactory.implementation().getPersonAccountTreasuryManagementURL(student.getPerson()) %>" >
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
 	</html:link>
 </p>
+<% } %>
 </academic:allowed>
 
 <!-- RAIDES -->
