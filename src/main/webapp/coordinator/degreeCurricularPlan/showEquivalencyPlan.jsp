@@ -98,7 +98,7 @@
 					<bean:write name="degreeCurricularPlan" property="name"/>
 				</td>
 				<td>
-					<bean:write name="degreeCurricularPlan" property="degree.degreeType.localizedName"/>
+					<bean:write name="degreeCurricularPlan" property="degree.degreeType.name.content"/>
 				</td>
 				<td>
 					<bean:write name="degreeCurricularPlan" property="degree.name"/>
