@@ -136,7 +136,7 @@
 	<slot name="degreeType" key="label.degreeType"
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="eachLayout" value="" />
+		<property name="format" value="${name.content}" />
 		<property name="providerClass"
 			value="org.fenixedu.academic.ui.renderers.providers.BolonhaDegreeTypesProvider" />
 		<property name="destination" value="updateComboBoxes"/>

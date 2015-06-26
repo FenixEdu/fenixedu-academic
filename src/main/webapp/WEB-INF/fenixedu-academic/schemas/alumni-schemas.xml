@@ -34,6 +34,7 @@
 	        <property name="key" value="true" />
 	        <property name="defaultText" value="label.dropDown.all" />
 	        <property name="bundle" value="ENUMERATION_RESOURCES" />
+            <property name="format" value="${name.content}" />
 		</slot>
 		<slot name="firstExecutionYear" key="label.registration.year.from" layout="menu-select">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
@@ -59,6 +60,7 @@
 	        <property name="key" value="true" />
 	        <property name="defaultText" value="label.dropDown.all" />
 	        <property name="bundle" value="ENUMERATION_RESOURCES" />
+            <property name="format" value="${name.content}" />
 		</slot>
 		<slot name="degree" key="label.degree.name" layout="menu-select" >
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.alumni.AlumniSearchDegreeProvider" />
@@ -84,6 +86,7 @@
 		<slot name="degreeType" key="label.degree.type" layout="menu-postback" >
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreeTypeProvider" />
 			<property name="destination" value="degreeTypePostback" />
+            <property name="format" value="${name.content}" />
 		</slot>
 	</schema>
 
@@ -164,6 +167,7 @@
 	        <property name="key" value="true" />
 	        <property name="defaultText" value="label.dropDown.all" />
 	        <property name="bundle" value="ENUMERATION_RESOURCES" />
+            <property name="format" value="${name.content}" />
 		</slot>
 		<slot name="degrees" key="label.degrees" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.alumni.AlumniSearchDegreeProvider" />
