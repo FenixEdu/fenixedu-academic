@@ -60,7 +60,8 @@ public class ConcludePhdProcess extends PhdThesisActivity {
      */
     private boolean isStudentCurricularPlanFinishedForPhd(PhdThesisProcess process) {
         return Optional.ofNullable(process.getIndividualProgramProcess().getRegistration())
-                .map(r -> r.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).isConclusionProcessed()).orElse(null);
+                .map(r -> r.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).isConclusionProcessed())
+                .orElse(Boolean.TRUE);
     }
 
     @Override
