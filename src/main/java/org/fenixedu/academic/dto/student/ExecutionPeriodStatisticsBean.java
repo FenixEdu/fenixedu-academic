@@ -113,13 +113,14 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
     }
 
     private void calculateAritmeticAverage() {
-        int concludedCurricularCourses = 0, gradesAcumulator = 0;
+        int concludedCurricularCourses = 0;
+        double gradesAcumulator = 0;
         double aritmeticAverage = 0;
 
         for (Enrolment enrolment : getEnrolmentsWithinExecutionPeriod()) {
-            if (enrolment.isApproved() && enrolment.getFinalGrade() != null) {
+            if (enrolment.isApproved() && enrolment.getGrade() != null && enrolment.getGrade().isNumeric()) {
                 concludedCurricularCourses++;
-                gradesAcumulator += enrolment.getFinalGrade();
+                gradesAcumulator += enrolment.getGrade().getNumericValue().doubleValue();
             }
         }
         aritmeticAverage = ((double) gradesAcumulator / (double) concludedCurricularCourses);
