@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
@@ -71,7 +72,10 @@ public class PhdConclusionProcess extends PhdConclusionProcess_Base {
             throw new DomainException("error.phd.PhdConclusionProcess.grade.is.required");
         }
 
-        if (process.getRegistration() != null && !process.getRegistration().isRegistrationConclusionProcessed()) {
+        // TODO: phd-refactor
+        if (process.getRegistration() != null
+                && !process.getRegistration().getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
+                        .isConclusionProcessed()) {
             throw new DomainException("error.phd.PhdConclusionProcess.registration.must.be.concluded.first");
         }
 
