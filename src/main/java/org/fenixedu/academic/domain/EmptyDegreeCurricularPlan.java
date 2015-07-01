@@ -81,6 +81,7 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
                 final EmptyDegreeCurricularPlan newinstance = new EmptyDegreeCurricularPlan();
                 newinstance.setNameOnSuper("Plano Curricular de Unidades Isoladas");
                 newinstance.setDegreeOnSuper(EmptyDegree.getInstance());
+                RootCourseGroup.createRoot(newinstance, newinstance.getName(), newinstance.getName());
                 instance = newinstance;
             }
         }

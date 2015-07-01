@@ -54,7 +54,7 @@
 	</logic:notEmpty>
 		
 	<logic:empty name="academicCalendars">
-		<p class="mtop05"><em><bean:message key="label.empty.academic.calendars" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em></p>				
+		<p class="mtop05"><em><bean:message key="label.empty.academic.calendars" bundle="MANAGER_RESOURCES"/>.</em></p>				
 	</logic:empty>			
 	
 	
