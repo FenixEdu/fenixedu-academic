@@ -78,7 +78,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                 "conclusion.document.concluded.lowercase"));
         result.append(" ");
-        result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.the.maleorfemale"));
+        result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.the.male"));
         result.append(" ");
         result.append(getDegreeDescription());
         result.append(",");
