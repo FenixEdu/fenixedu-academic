@@ -31,16 +31,13 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import org.apache.struts.util.MessageResources;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -48,7 +45,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.ui.struts.action.base.FenixContextDispatchAction;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.util.VariantBean;
 import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -80,24 +76,15 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         AcademicInterval academicInterval = (AcademicInterval) bean.getObject();
         request.setAttribute("bean", bean);
 
-        final MessageResources enumMessages = MessageResources.getMessageResources(Bundle.ENUMERATION);
-        final MessageResources messages = MessageResources.getMessageResources(Bundle.DEGREE);
-
         final List<LabelValueBean> executionDegreeLabelValueBeans = new ArrayList<LabelValueBean>();
         for (final ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {
-            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final Degree degree = degreeCurricularPlan.getDegree();
             String part =
                     addAnotherInfoToLabel(executionDegree, academicInterval) ? " - "
                             + executionDegree.getDegreeCurricularPlan().getName() : "";
-            executionDegreeLabelValueBeans.add(new LabelValueBean(enumMessages.getMessage(getLocale(request), degree
-                    .getDegreeType().toString())
-                    + " "
-                    + messages.getMessage(getLocale(request), "public.degree.information.label.in")
-                    + " "
-                    + degree.getNameFor(academicInterval).getContent() + part, executionDegree.getExternalId().toString()));
+            executionDegreeLabelValueBeans.add(new LabelValueBean(executionDegree.getDegree().getPresentationName() + part,
+                    executionDegree.getExternalId().toString()));
         }
-        Collections.sort(executionDegreeLabelValueBeans, new BeanComparator("label"));
+        Collections.sort(executionDegreeLabelValueBeans, Comparator.comparing(LabelValueBean::getLabel));
         request.setAttribute("executionDegreeLabelValueBeans", executionDegreeLabelValueBeans);
 
         return mapping.findForward("showForm");
