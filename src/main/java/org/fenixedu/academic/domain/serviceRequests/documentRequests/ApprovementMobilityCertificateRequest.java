@@ -150,11 +150,11 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 
     @Override
     final public Integer getNumberOfUnits() {
-        if(!hasConcluded()) {
+        if (!hasConcluded()) {
             return calculateNumberOfUnits();
         }
-        
-        return super.getNumberOfUnits() > 0 ? super.getNumberOfUnits() : calculateNumberOfUnits() ;
+
+        return super.getNumberOfUnits() > 0 ? super.getNumberOfUnits() : calculateNumberOfUnits();
     }
 
     private int calculateNumberOfUnits() {
@@ -169,7 +169,13 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 
     @Override
     public boolean isToPrint() {
-        return !hasConcluded() || (super.getNumberOfUnits() != null && super.getNumberOfUnits().intValue() == calculateNumberOfUnits());
+        return !hasConcluded() || super.getNumberOfUnits() != null
+                && super.getNumberOfUnits().intValue() == calculateNumberOfUnits();
+    }
+
+    @Override
+    public Collection<ICurriculumEntry> getApprovedCurriculumEntries() {
+        return getEntriesToReport(false);
     }
 
     final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {

@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -27,6 +28,7 @@ import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
+import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
@@ -158,6 +160,10 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
     public String getReportFileName() {
         return AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this).iterator().next()
                 .getReportFileName();
+    }
+
+    public Collection<ICurriculumEntry> getApprovedCurriculumEntries() {
+        return null;
     }
 
 }
