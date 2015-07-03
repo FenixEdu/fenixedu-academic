@@ -1637,8 +1637,7 @@ public class Registration extends Registration_Base {
         return getDegreeDescription(this.getStartExecutionYear(), cycleType, locale);
     }
 
-    final public String getDegreeDescription(ExecutionYear executionYear, final ProgramConclusion programConclusion,
-            final Locale locale) {
+    final public String getDegreeDescription(ExecutionYear executionYear, ProgramConclusion programConclusion, final Locale locale) {
         final StringBuilder res = new StringBuilder();
 
         final Degree degree = getDegree();
@@ -1649,14 +1648,17 @@ public class Registration extends Registration_Base {
             res.append(", ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.the.male")).append(" ");
         }
 
+        // the degree type description is always given by the program conclusion description (if exists)
+        if (programConclusion == null) {
+            programConclusion = ProgramConclusion.conclusionsFor(this).findAny().orElse(null);
+        }
+
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
             res.append(degreeType.getPrefix(locale));
             if (programConclusion != null && !Strings.isNullOrEmpty(programConclusion.getDescription().getContent(locale))) {
                 res.append(programConclusion.getDescription().getContent(locale).toUpperCase());
-            } else {
-                res.append(degreeType.getName().getContent(locale).toUpperCase());
+                res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.in")).append(" ");
             }
-            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.in")).append(" ");
         }
 
         res.append(degree.getFilteredName(executionYear, locale).toUpperCase());
