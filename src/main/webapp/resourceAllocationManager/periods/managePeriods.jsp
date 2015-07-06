@@ -25,14 +25,14 @@
 
 <jsp:include page="managePeriodsScripts.jsp"/>
 
-		<header class="col-lg-8">
+		<header class="col-md-8">
 			<h3><bean:message key="label.occupation.period.management" bundle="SOP_RESOURCES" />
 			<span class="small"><bean:write name="managementBean" property="executionYear.year"/> - <a href="#" data-toggle="modal" data-target="#change-year-modal">
 				  <bean:message key="label.change" bundle="APPLICATION_RESOURCES" /></a>
 			</span>
 			<h3>
 		</header>
-			<span class="col-lg-4">
+			<span class="col-md-4">
 			<logic:equal value="false" name="managementBean" property="hasNewObject">
 				<fr:form action="/periods.do?method=addNewPeriod">
 					<fr:edit name="managementBean" visible="false" />
@@ -59,7 +59,7 @@
 		
 		
 		<div class="all">
-		<div class="col-lg-8">
+		<div class="col-md-8">
 				
 			<section id="periods">
 			
@@ -216,7 +216,7 @@
 			</section>
 		</div><!--main-->
 		
-		<div class="col-lg-4">
+		<div class="col-md-4">
 		<div data-spy="affix" id="sidebar">
 			
 			<div id="years-filters">
