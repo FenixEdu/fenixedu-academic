@@ -22,8 +22,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.OccupationPeriodReference;
@@ -48,6 +51,8 @@ public class PeriodsManagementBean implements Serializable {
 
     // Bean elements
 
+    private final String availablePeriodTypes;
+
     private ExecutionYear executionYear;
 
     private List<OccupationPeriodBean> periods = new ArrayList<OccupationPeriodBean>();
@@ -64,6 +69,27 @@ public class PeriodsManagementBean implements Serializable {
 
     public PeriodsManagementBean() {
         setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+        this.availablePeriodTypes = computeAvailablePeriodTypes();
+    }
+
+    private static String computeAvailablePeriodTypes() {
+        EnumSet<OccupationPeriodType> types = EnumSet.of(OccupationPeriodType.LESSONS);
+
+        if (EvaluationSeason.readNormalSeason() != null && EvaluationSeason.readImprovementSeason() != null) {
+            types.add(OccupationPeriodType.EXAMS);
+            types.add(OccupationPeriodType.GRADE_SUBMISSION);
+        }
+
+        if (EvaluationSeason.readSpecialSeason() != null) {
+            types.add(OccupationPeriodType.EXAMS_SPECIAL_SEASON);
+            types.add(OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON);
+        }
+
+        return types.stream().map(Enum::name).collect(Collectors.joining(","));
+    }
+
+    public String getAvailablePeriodTypes() {
+        return availablePeriodTypes;
     }
 
     public Collection<ExecutionYear> getYears() {
