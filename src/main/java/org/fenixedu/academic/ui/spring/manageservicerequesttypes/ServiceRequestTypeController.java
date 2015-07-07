@@ -54,7 +54,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.common.collect.Lists;
 
 @SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "label.title.manageServiceRequestTypes",
-        accessGroup = "academic(MANAGE_TEACHER_AUTHORIZATIONS)")
+        accessGroup = "#managers")
 @RequestMapping("/academic/manageservicerequesttypes/servicerequesttype")
 public class ServiceRequestTypeController {
 

@@ -384,11 +384,28 @@ public class FenixBootstrapper {
     }
 
     private static void createDefaultServiceRequestTypes() {
-        ServiceRequestTypeOption.create("DETAILED",
-                BundleUtil.getLocalizedString("resources.AcademicOfficeResources", ServiceRequestTypeOption.class.getSimpleName() + ".detailed"), true);
+        ServiceRequestTypeOption.create(
+                "DETAILED",
+                BundleUtil.getLocalizedString("resources.AcademicAdminOffice", ServiceRequestTypeOption.class.getSimpleName()
+                        + ".detailed"), true);
 
         for (final AcademicServiceRequestType academicServiceRequestType : AcademicServiceRequestType.values()) {
             if (academicServiceRequestType == AcademicServiceRequestType.DOCUMENT) {
+                continue;
+            } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_REQUEST) {
+                ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
+                        academicServiceRequestType.getLocalizedName()), academicServiceRequestType,
+                        DocumentRequestType.DIPLOMA_REQUEST, true);
+                continue;
+            } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
+                ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
+                        academicServiceRequestType.getLocalizedName()), academicServiceRequestType,
+                        DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true);
+                continue;
+            } else if (academicServiceRequestType == AcademicServiceRequestType.REGISTRY_DIPLOMA_REQUEST) {
+                ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
+                        academicServiceRequestType.getLocalizedName()), academicServiceRequestType,
+                        DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true);
                 continue;
             }
 
@@ -397,6 +414,15 @@ public class FenixBootstrapper {
         }
 
         for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
+
+            if (documentRequestType == DocumentRequestType.DIPLOMA_REQUEST) {
+                continue;
+            } else if (documentRequestType == DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
+                continue;
+            } else if (documentRequestType == DocumentRequestType.REGISTRY_DIPLOMA_REQUEST) {
+                continue;
+            }
+            
             ServiceRequestType.createLegacy(
                     documentRequestType.name(),
                     BundleUtil.getLocalizedString("resources.EnumerationResources",
