@@ -103,6 +103,8 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.joda.time.DateTime;
@@ -118,7 +120,7 @@ import pt.ist.fenixframework.Atomic;
 public class Person extends Person_Base {
 
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
-    
+
     public static final String PERSON_CREATE_SIGNAL = "academic.person.create";
 
     private IdDocument getIdDocument() {
@@ -265,12 +267,20 @@ public class Person extends Person_Base {
      *            The profile to associate with the created person.
      */
     public Person(UserProfile profile) {
+        this(profile, true);
+    }
+
+    private Person(UserProfile profile, boolean emitSignal) {
+
         super();
         setProfile(profile);
         if (profile.getUser() != null) {
             setUser(profile.getUser());
         }
         setMaritalStatus(MaritalStatus.UNKNOWN);
+        if (emitSignal) {
+            Signal.emit(Person.PERSON_CREATE_SIGNAL, new DomainObjectEvent<Person>(this));
+        }
     }
 
     /**
@@ -283,7 +293,11 @@ public class Person extends Person_Base {
      *            The bean containing information about the person to be created.
      */
     public Person(final PersonBean personBean) {
-        this(personBean, false);
+        this(personBean, false, true);
+    }
+
+    public Person(final PersonBean personBean, final boolean validateEmail) {
+        this(personBean, validateEmail, true);
     }
 
     /**
@@ -298,9 +312,9 @@ public class Person extends Person_Base {
      * @param validateEmail
      *            Whether to automatically validate the given email.
      */
-    public Person(final PersonBean personBean, final boolean validateEmail) {
+    private Person(final PersonBean personBean, final boolean validateEmail, final boolean emitSignal) {
         this(new UserProfile(personBean.getGivenNames(), personBean.getFamilyNames(), null, personBean.getEmail(),
-                Locale.getDefault()));
+                Locale.getDefault()), false);
 
         setProperties(personBean);
 
@@ -313,6 +327,9 @@ public class Person extends Person_Base {
             emailAddress.setValid();
         }
         WebAddress.createWebAddress(this, personBean.getWebAddress(), PartyContactType.PERSONAL, true);
+        if (emitSignal) {
+            Signal.emit(Person.PERSON_CREATE_SIGNAL, new DomainObjectEvent<Person>(this));
+        }
     }
 
     /**
@@ -325,7 +342,7 @@ public class Person extends Person_Base {
      */
     public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails, boolean createUser) {
         this(new UserProfile(candidacyPersonalDetails.getGivenNames(), candidacyPersonalDetails.getFamilyNames(), null,
-                candidacyPersonalDetails.getEmail(), Locale.getDefault()));
+                candidacyPersonalDetails.getEmail(), Locale.getDefault()), false);
         if (createUser) {
             setUser(new User(getProfile()));
         }
@@ -344,6 +361,9 @@ public class Person extends Person_Base {
         PhysicalAddress.createPhysicalAddress(this, physicalAddressData, PartyContactType.PERSONAL, true);
         Phone.createPhone(this, candidacyPersonalDetails.getTelephoneContact(), PartyContactType.PERSONAL, true);
         EmailAddress.createEmailAddress(this, candidacyPersonalDetails.getEmail(), PartyContactType.PERSONAL, true);
+
+        //EmitSignal
+        Signal.emit(Person.PERSON_CREATE_SIGNAL, new DomainObjectEvent<Person>(this));
     }
 
     /**

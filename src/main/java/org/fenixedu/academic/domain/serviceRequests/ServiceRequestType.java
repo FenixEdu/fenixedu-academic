@@ -35,7 +35,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         setAcademicServiceRequestType(academicServiceRequestType);
         setDocumentRequestType(documentRequestType);
         setPayed(payed);
-        
+
         checkRules();
     }
 
@@ -105,7 +105,8 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     public static ServiceRequestType findUnique(final AcademicServiceRequestType academicServiceRequestType) {
-        return null;
+        return findAll().filter(x -> x.getAcademicServiceRequestType().equals(academicServiceRequestType))
+                .filter(x -> x.getDocumentRequestType() == null).findFirst().orElse(null);
     }
 
     public static ServiceRequestType findUnique(final AcademicServiceRequestType academicServiceRequestType,
