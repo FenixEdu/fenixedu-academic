@@ -34,6 +34,8 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 /**
  * @author Luis Cruz
  * @author Joao Carvalho (joao.pedro.carvalho@ist.utl.pt)
@@ -49,6 +51,7 @@ public class PeriodsDA extends FenixDispatchAction {
             final HttpServletResponse response) {
 
         PeriodsManagementBean bean = getRenderedObject();
+        RenderUtils.invalidateViewState();
 
         if (bean == null) {
             bean = new PeriodsManagementBean();
