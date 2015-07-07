@@ -41,7 +41,7 @@ public enum DocumentRequestType {
 
     SCHOOL_REGISTRATION_DECLARATION(false, true),
 
-    ENROLMENT_DECLARATION(false, true),
+    ENROLMENT_DECLARATION(true, true),
 
     IRS_DECLARATION(true, true),
 

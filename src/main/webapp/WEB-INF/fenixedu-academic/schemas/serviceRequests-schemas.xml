@@ -244,6 +244,7 @@
 </schema>
 
 <schema name="EnrolmentDeclarationRequest.view" type="org.fenixedu.academic.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
 </schema>
 
 <schema name="GenericDeclarationRequest.view" type="org.fenixedu.academic.domain.serviceRequests.documentRequests.GenericDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -680,6 +681,16 @@
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation.view"
 	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="year" key="label.year"/>
+</schema>
+
+<schema name="DocumentRequestCreateBean.ENROLMENT_DECLARATION.AdditionalInformation"
+	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+    <slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
+</schema>
+
+<schema name="DocumentRequestCreateBean.ENROLMENT_DECLARATION.AdditionalInformation.view"
+	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.GENERIC_DECLARATION.AdditionalInformation" 
