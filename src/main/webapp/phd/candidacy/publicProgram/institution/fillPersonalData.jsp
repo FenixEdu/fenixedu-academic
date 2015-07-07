@@ -90,7 +90,11 @@
 
 		<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean">
 			<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="PHD_RESOURCES">
-				<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="60"/>
+					<fr:property name="maxLength" value="255"/>
+				</fr:slot>
+				<fr:slot name="familyNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="60"/>
 					<fr:property name="maxLength" value="255"/>
 				</fr:slot>
