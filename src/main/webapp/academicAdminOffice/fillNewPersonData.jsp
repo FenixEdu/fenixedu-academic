@@ -41,9 +41,6 @@
 	<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<fr:edit id="personData" name="personBean">
 		<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-			<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="size" value="50" />
-			</fr:slot>
 			<fr:slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="size" value="50" />
 			</fr:slot>
