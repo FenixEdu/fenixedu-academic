@@ -56,7 +56,7 @@ public class InstitutionPhdCandidacyProcessProperties {
     static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode,
             final Locale locale) {
 
-        return String.format("%s?hash=", getPublicCandidacyAccessLink(locale), candidacyProcessHashCode.getValue());
+        return String.format("%s?hash=%s", getPublicCandidacyAccessLink(locale), candidacyProcessHashCode.getValue());
     }
 
     public static ConfigurationProperties getConfiguration() {
