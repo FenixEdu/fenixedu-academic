@@ -291,6 +291,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
         updateCourses(courses);
 
+        reloadIntervals();
     }
 
     // Private Utility Methods
