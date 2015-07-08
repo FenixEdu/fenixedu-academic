@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitName;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeTypeInstance;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
@@ -67,7 +68,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private DocumentRequestType chosenDocumentRequestType;
 
-    private DocumentPurposeType chosenDocumentPurposeType;
+    private DocumentPurposeTypeInstance chosenDocumentPurposeType;
 
     private String otherPurpose;
 
@@ -163,11 +164,11 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         this.chosenDocumentRequestType = chosenDocumentRequestType;
     }
 
-    public DocumentPurposeType getChosenDocumentPurposeType() {
+    public DocumentPurposeTypeInstance getChosenDocumentPurposeType() {
         return chosenDocumentPurposeType;
     }
 
-    public void setChosenDocumentPurposeType(DocumentPurposeType chosenDocumentPurposeType) {
+    public void setChosenDocumentPurposeType(DocumentPurposeTypeInstance chosenDocumentPurposeType) {
         this.chosenDocumentPurposeType = chosenDocumentPurposeType;
     }
 
@@ -256,7 +257,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
             warningsToReport = new HashSet<String>();
 
             if (chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE) {
-                if (chosenDocumentPurposeType == DocumentPurposeType.PROFESSIONAL) {
+                if (chosenDocumentPurposeType.getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
                     warningsToReport.add("aprovementType.professionalPurpose.thirdGrade");
                 }
 
@@ -278,7 +279,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         return !warningsToReport.isEmpty();
     }
 
-    public void setPurpose(DocumentPurposeType chosenDocumentPurposeType, String otherPurpose) {
+    public void setPurpose(DocumentPurposeTypeInstance chosenDocumentPurposeType, String otherPurpose) {
 
         otherPurpose = otherPurpose.trim();
         if (chosenDocumentPurposeType != null && chosenDocumentPurposeType.equals(DocumentPurposeType.OTHER)
@@ -342,6 +343,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         return getChosenDocumentRequestType() == null ? false : getChosenDocumentRequestType().getHasAdditionalInformation();
     }
 
+    @Override
     public boolean getHasCycleTypeDependency() {
         return !getIsForProgramConclusionPurposes() && super.getHasCycleTypeDependency();
     }

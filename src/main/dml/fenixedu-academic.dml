@@ -2746,6 +2746,13 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	boolean value;
     }
     
+    class serviceRequests.documentRequests.DocumentPurposeTypeInstance {
+		String code (REQUIRED);
+		LocalizedString name (REQUIRED);
+		DocumentPurposeType documentPurposeType;
+		Boolean active;
+	}
+    
     class serviceRequests.AcademicServiceRequest  {
         Boolean freeProcessed;
         Boolean urgentRequest;
@@ -12417,4 +12424,36 @@ relation ExternalEnrolmentEctsConversionTable {
     degreeStructure.EctsConversionTable playsRole ectsConversionTable {
         multiplicity 0..1;
     }
+}
+
+/* DocumentPurposeTypeInstance */
+
+relation DocumentPurposeTypeInstanceBennu {
+	protected .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+		multiplicity 1..1;
+	}
+
+	public serviceRequests.documentRequests.DocumentPurposeTypeInstance playsRole documentPurposeTypeInstances {
+		multiplicity *;
+	}
+}
+
+relation DocumentPurposeTypeInstanceDeclarationRequest {
+	public serviceRequests.documentRequests.DocumentPurposeTypeInstance playsRole documentPurposeTypeInstance {
+		multiplicity 0..1;
+	}
+
+	public serviceRequests.documentRequests.DeclarationRequest playsRole declarationRequests {
+		multiplicity *;
+	}
+}
+
+relation DocumentPurposeTypeInstanceCertificateRequest {
+	public serviceRequests.documentRequests.DocumentPurposeTypeInstance playsRole documentPurposeTypeInstance {
+		multiplicity 0..1;
+	}
+
+	public serviceRequests.documentRequests.CertificateRequest playsRole certificateRequests {
+		multiplicity *;
+	}
 }

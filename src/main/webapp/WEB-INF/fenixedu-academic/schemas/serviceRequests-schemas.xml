@@ -91,7 +91,9 @@
 </schema>
 
 <schema name="DocumentRequest.view" type="org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="AcademicServiceRequest.view">
-	<slot name="documentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" />
+	<slot name="documentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" >
+		<property name="format" value="${name.content}" />
+	</slot>
 	<slot name="otherDocumentPurposeTypeDescription" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose" />
 	<slot name="numberOfPages" key="label.documentRequests.DocumentRequest.numberOfPages" />
 </schema>
@@ -744,7 +746,10 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.purposes" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentPurposeType" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose"/>
+	<slot name="chosenDocumentPurposeType" layout="menu-select" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DocumentPurposeTypeProvider" />
+		<property name="format" value="${name.content}" />
+	</slot>
 	<slot name="otherPurpose" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose">
 		<property name="size" value="50"/>
 	</slot>
@@ -757,7 +762,9 @@
 
 <schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
-	<slot name="chosenDocumentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose"/>
+	<slot name="chosenDocumentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" >
+		<property name="format" value="${name.content}" />
+	</slot>
 	<slot name="otherPurpose" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose"/>	
 	<slot name="urgentRequest" read-only="true" key="urgency.charge.view"/>		
 	<slot name="detailed" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.detailed"/>			

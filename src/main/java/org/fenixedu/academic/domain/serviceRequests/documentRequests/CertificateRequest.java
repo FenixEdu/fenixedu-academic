@@ -42,7 +42,9 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
         super.init(bean);
 
         super.checkParameters(bean);
-        super.setDocumentPurposeType(bean.getChosenDocumentPurposeType());
+        super.setDocumentPurposeTypeInstance(bean.getChosenDocumentPurposeType());
+        super.setDocumentPurposeType(getDocumentPurposeTypeInstance() != null ? getDocumentPurposeTypeInstance()
+                .getDocumentPurposeType() : null);
         super.setOtherDocumentPurposeTypeDescription(bean.getOtherPurpose());
     }
 

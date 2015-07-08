@@ -166,6 +166,7 @@
 			</logic:equal>
 	
 			<!-- Can be free processed? -->
+			<!-- Not anymore, they can't...
 			<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
 				<fr:edit id="freeProcessedEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
@@ -174,6 +175,7 @@
 					</fr:layout>	
 				</fr:edit>
 			</logic:equal>
+			 -->
 	
 		</logic:notEmpty>
 		
