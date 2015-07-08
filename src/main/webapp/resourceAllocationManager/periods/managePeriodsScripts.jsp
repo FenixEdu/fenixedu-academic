@@ -51,6 +51,12 @@ ul {
 	overflow-x: hidden;
 }
 
+@media (max-width: 992px) {
+  .affix {
+    position: initial;
+  }
+}
+
 /* Period */
 #period {
 	background: #f9f9f9;
