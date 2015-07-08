@@ -143,6 +143,7 @@
 							<fr:schema type="org.fenixedu.academic.dto.resourceAllocationManager.OccupationPeriodBean" bundle="SOP_RESOURCES">
 							<fr:slot name="occupationPeriodType" key="label.occupation.period.type">
 										<fr:property name="defaultOptionHidden" value="true"/>
+										<fr:property name="includedValues" value="${managementBean.availablePeriodTypes}"/>
 										<fr:property name="onChange" 
 											value="<%= "changeType($(this), " + id + ");"%>"/>
 									</fr:slot>
