@@ -57,16 +57,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import com.google.common.io.ByteStreams;
 
 /**
- * 
+ *
  * @author naat
- * 
+ *
  */
 @StrutsFunctionality(app = StudentSubmitApp.class, path = "projects", titleKey = "projects")
 @Mapping(module = "student", path = "/projectSubmission")
 @Forwards(value = {
         @Forward(name = "viewProjectSubmissions", path = "/student/projectSubmissions/viewProjectSubmissions.jsp"),
         @Forward(name = "viewProjectsWithOnlineSubmission",
-                path = "/student/projectSubmissions/viewProjectsWithOnlineSubmission.jsp"),
+        path = "/student/projectSubmissions/viewProjectsWithOnlineSubmission.jsp"),
         @Forward(name = "submitProject", path = "/student/projectSubmissions/submitProject.jsp") })
 public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
@@ -169,6 +169,11 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
                 (CreateProjectSubmissionBean) viewState.getMetaObject().getObject();
 
         try (InputStream is = createProjectSubmissionBean.getInputStream()) {
+            if (is == null) {
+                saveActionMessageOnRequest(request, "error.file.empty", null);
+
+                return prepareProjectSubmission(mapping, form, request, response);
+            }
             byte[] bytes = ByteStreams.toByteArray(is);
             try {
                 CreateProjectSubmission.run(bytes, createProjectSubmissionBean.getFilename(),
