@@ -27,34 +27,25 @@ import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricular
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.RolePredicates;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class EditDegreeCurricularPlan {
 
     @Atomic
-    public static void run(String dcpId, String name, CurricularStage curricularStage,
-            DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, String executionYearID,
-            AcademicPeriod duration) throws FenixServiceException {
+    public static void run(final DegreeCurricularPlan degreeCurricularPlan, final String name, final CurricularStage stage,
+            final DegreeCurricularPlanState state, final GradeScale gradeScale, final ExecutionYear executionInterval,
+            final AcademicPeriod duration, final Boolean applyPreviousYearsEnrolmentRule) {
+
         check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
-        if (dcpId == null || name == null || curricularStage == null) {
-            throw new InvalidArgumentsServiceException();
+        if (degreeCurricularPlan == null) {
+            throw new IllegalArgumentException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
 
-        final DegreeCurricularPlan dcpToEdit = FenixFramework.getDomainObject(dcpId);
-        if (dcpToEdit == null) {
-            throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
-        }
-
-        final ExecutionYear executionYear =
-                (executionYearID == null) ? null : FenixFramework.<ExecutionYear> getDomainObject(executionYearID);
-
-        dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
-        dcpToEdit.editDuration(duration);
+        degreeCurricularPlan.edit(name, stage, state, gradeScale, executionInterval);
+        degreeCurricularPlan.editDuration(duration);
+        degreeCurricularPlan.editApplyPreviousYearsEnrolment(applyPreviousYearsEnrolmentRule);
     }
 
 }

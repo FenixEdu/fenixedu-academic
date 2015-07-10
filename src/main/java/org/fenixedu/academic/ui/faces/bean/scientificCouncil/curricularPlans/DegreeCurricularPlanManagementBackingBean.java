@@ -63,6 +63,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     private String dcpId;
     private DegreeCurricularPlan dcp;
     private String name;
+    private Boolean applyPreviousYearsEnrolmentRule;
     private String gradeScale;
     private String[] selectedGroupMembersToDelete;
     private String newGroupMember;
@@ -177,6 +178,15 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         this.name = name;
     }
 
+    public Boolean getApplyPreviousYearsEnrolmentRule() {
+        return (applyPreviousYearsEnrolmentRule == null && getDcp() != null) ? (applyPreviousYearsEnrolmentRule =
+                getDcp().getApplyPreviousYearsEnrolmentRule()) : applyPreviousYearsEnrolmentRule;
+    }
+
+    public void setApplyPreviousYearsEnrolmentRule(final Boolean input) {
+        this.applyPreviousYearsEnrolmentRule = input;
+    }
+
     public String getCurricularStage() {
         if (getViewState().getAttribute("curricularStage") == null && getDcp() != null) {
             setCurricularStage(getDcp().getCurricularStage().getName());
@@ -272,6 +282,10 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         return result;
     }
 
+    public ExecutionYear getExecutionYear() {
+        return FenixFramework.getDomainObject(getExecutionYearID());
+    }
+
     public String getExecutionYearID() {
         return (String) getViewState().getAttribute("executionYearID");
     }
@@ -312,24 +326,25 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public String editCurricularPlan() {
+
         try {
-            EditDegreeCurricularPlan.run(getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()),
-                    DegreeCurricularPlanState.valueOf(getState()), null, getExecutionYearID(), getDuration());
-        } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
-            return "curricularPlansManagement";
-        } catch (FenixServiceException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, e.getMessage()));
-            return "";
-        } catch (DomainException e) {
+
+            EditDegreeCurricularPlan.run(getDcp(), getName(), CurricularStage.valueOf(getCurricularStage()),
+                    DegreeCurricularPlanState.valueOf(getState()), (GradeScale) null, getExecutionYear(), getDuration(),
+                    getApplyPreviousYearsEnrolmentRule());
+            addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeCurricularPlan.edited"));
+
+        } catch (final IllegalDataAccessException e) {
+            addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
+
+        } catch (final DomainException e) {
             addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
             return "";
-        } catch (Exception e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.editingDegreeCurricularPlan"));
-            return "curricularPlansManagement";
+
+        } catch (final Exception e) {
+            addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.editingDegreeCurricularPlan"));
         }
 
-        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeCurricularPlan.edited"));
         return "curricularPlansManagement";
     }
 

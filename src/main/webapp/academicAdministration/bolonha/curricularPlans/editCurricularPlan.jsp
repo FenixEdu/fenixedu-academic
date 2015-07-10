@@ -43,7 +43,7 @@
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{scouncilBundle['curricularPlan.data']}</h4>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat3'>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{scouncilBundle['curricularStage']}:</label> " escape="false"/>
 		<h:selectOneMenu id="curricularStage" value="#{DegreeCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
@@ -71,6 +71,11 @@
 		<h:outputText value="<p><label>#{scouncilBundle['name']}:</label>" escape="false"/>
 		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" disabled="#{DegreeCurricularPlanManagement.curricularStage == 'APPROVED'}" value="#{DegreeCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
 		<h:message for="name" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{scouncilBundle['applyPreviousYearsEnrolmentRule']}:</label>" escape="false"/>
+		<h:selectBooleanCheckbox id="applyPreviousYearsEnrolmentRule" value="#{DegreeCurricularPlanManagement.applyPreviousYearsEnrolmentRule}" />
+		<h:message for="applyPreviousYearsEnrolmentRule" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{scouncilBundle['duration']}:</label>" escape="false"/>
