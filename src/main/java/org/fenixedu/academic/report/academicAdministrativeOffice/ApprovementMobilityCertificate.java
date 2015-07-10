@@ -28,11 +28,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -51,6 +54,8 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
+
+import com.google.common.base.Strings;
 
 public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument {
 
@@ -76,8 +81,34 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 
     @Override
     protected String getDegreeDescription() {
-        return getDocumentRequest().getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(),
-                (ProgramConclusion) null, getLocale());
+        StringBuilder res = new StringBuilder();
+        final Degree degree = getRegistration().getDegree();
+        DegreeType degreeType = degree.getDegreeType();
+
+        if (!(getRegistration().getLastStudentCurricularPlan() != null ? getRegistration().getLastStudentCurricularPlan()
+                .isEmpty() : true) && !degreeType.isEmpty()) {
+            res.append(degreeType.getPrefix(getLocale()));
+
+            ProgramConclusion programConclusion;
+
+            CycleType cycleType = degreeType.getCycleTypes().stream().findAny().orElse(null);
+
+            if (cycleType == null) { // registrations with no cycles, choose any program conclusion
+                programConclusion = ProgramConclusion.conclusionsFor(getRegistration()).findAny().orElse(null);
+            } else { // choose program conclusion for a known cycle
+                programConclusion =
+                        getRegistration().getLastStudentCurricularPlan().getCycleCourseGroup(cycleType).getProgramConclusion();
+            }
+
+            if (programConclusion != null && !Strings.isNullOrEmpty(programConclusion.getDescription().getContent(getLocale()))) {
+                res.append(programConclusion.getDescription().getContent(getLocale()).toUpperCase());
+                res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in")).append(" ");
+            }
+        }
+
+        res.append(degree.getFilteredName(getExecutionYear(), getLocale()).toUpperCase());
+
+        return res.toString();
     }
 
     /* ###################### */
