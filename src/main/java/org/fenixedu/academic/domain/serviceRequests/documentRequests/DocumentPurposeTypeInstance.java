@@ -18,13 +18,10 @@ public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Bas
     public static Comparator<DocumentPurposeTypeInstance> COMPARE_BY_LEGACY = new Comparator<DocumentPurposeTypeInstance>(){
         @Override
         public int compare(DocumentPurposeTypeInstance dpti1, DocumentPurposeTypeInstance dpti2) {
-            if(dpti1.getDocumentPurposeType() != null && dpti2.getDocumentPurposeType() != null) {
-                return dpti1.getDocumentPurposeType().compareTo(dpti2.getDocumentPurposeType());
-            }
-            if(dpti1.getDocumentPurposeType() == null && dpti2.getDocumentPurposeType() != null) {
+            if (dpti1.getDocumentPurposeType() != null && dpti1.getDocumentPurposeType() == DocumentPurposeType.OTHER) {
                 return 1;
             }
-            if(dpti1.getDocumentPurposeType() != null && dpti2.getDocumentPurposeType() == null) {
+            if (dpti2.getDocumentPurposeType() != null && dpti2.getDocumentPurposeType() == DocumentPurposeType.OTHER) {
                 return -1;
             }
             return COMPARE_BY_NAME.compare(dpti1, dpti2);
