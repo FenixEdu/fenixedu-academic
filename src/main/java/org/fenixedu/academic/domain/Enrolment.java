@@ -1073,7 +1073,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Double getEctsCredits() {
-        return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0d) : getEctsCreditsForCurriculum().doubleValue();
+        return getEctsCreditsForCurriculum().doubleValue();
     }
 
     @Override
