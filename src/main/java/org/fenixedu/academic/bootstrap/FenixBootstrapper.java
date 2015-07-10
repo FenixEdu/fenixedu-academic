@@ -390,29 +390,30 @@ public class FenixBootstrapper {
                 BundleUtil.getLocalizedString("resources.AcademicAdminOffice", ServiceRequestTypeOption.class.getSimpleName()
                         + ".detailed"), true);
 
+        // By default create all legacy ServiceRequestTypes as Inactive and as Services -> Then configurate accordingly
+
         for (final AcademicServiceRequestType academicServiceRequestType : AcademicServiceRequestType.values()) {
             if (academicServiceRequestType == AcademicServiceRequestType.DOCUMENT) {
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_REQUEST) {
                 ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                        academicServiceRequestType.getLocalizedName()), academicServiceRequestType,
-                        DocumentRequestType.DIPLOMA_REQUEST, true);
+                        academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
+                        DocumentRequestType.DIPLOMA_REQUEST, true, ServiceRequestCategory.SERVICES);
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
                 ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                        academicServiceRequestType.getLocalizedName()), academicServiceRequestType,
-                        DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true);
+                        academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
+                        DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true, ServiceRequestCategory.SERVICES);
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.REGISTRY_DIPLOMA_REQUEST) {
                 ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                        academicServiceRequestType.getLocalizedName()), academicServiceRequestType,
-                        DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true);
+                        academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
+                        DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true, ServiceRequestCategory.SERVICES);
                 continue;
             }
 
-            // By default create all legacy ServiceRequestTypes as Services -> Then configurate accordingly
             ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                    academicServiceRequestType.getLocalizedName()), true, academicServiceRequestType, null, true,
+                    academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType, null, true,
                     ServiceRequestCategory.SERVICES);
         }
 
@@ -430,7 +431,7 @@ public class FenixBootstrapper {
             ServiceRequestType.createLegacy(
                     documentRequestType.name(),
                     BundleUtil.getLocalizedString("resources.EnumerationResources",
-                            "DocumentRequestType." + documentRequestType.name()), true, AcademicServiceRequestType.DOCUMENT,
+                            "DocumentRequestType." + documentRequestType.name()), false, AcademicServiceRequestType.DOCUMENT,
                     documentRequestType, true, ServiceRequestCategory.SERVICES);
         }
     }
