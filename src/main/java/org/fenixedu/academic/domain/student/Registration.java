@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -1648,9 +1649,14 @@ public class Registration extends Registration_Base {
             res.append(", ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.the.male")).append(" ");
         }
 
-        // the degree type description is always given by the program conclusion description (if exists)
+        // the degree type description is always given by the program conclusion of a course group matching available degree cycle types
+        // if no cycle types available, choose any program conclusion
         if (programConclusion == null) {
-            programConclusion = ProgramConclusion.conclusionsFor(this).findAny().orElse(null);
+            programConclusion =
+                    degreeType.getCycleTypes().stream()
+                            .map(cycleType -> getLastStudentCurricularPlan().getCycleCourseGroup(cycleType))
+                            .filter(Objects::nonNull).map(CycleCourseGroup::getProgramConclusion).findAny()
+                            .orElseGet(() -> ProgramConclusion.conclusionsFor(this).findAny().orElse(null));
         }
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
