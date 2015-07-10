@@ -46,28 +46,29 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
     @Atomic
     public Object execute() {
 
-        if (getChosenDocumentRequestType().isCertificate()) {
+        final DocumentRequestType requestType = getChosenServiceRequestType().getDocumentRequestType();
+        if (requestType.isCertificate()) {
             return CertificateRequest.create(this);
 
-        } else if (getChosenDocumentRequestType().isDeclaration()) {
+        } else if (requestType.isDeclaration()) {
             if (this.getExecutionYear() == null) {
                 this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
             }
             return DeclarationRequest.create(this);
 
-        } else if (getChosenDocumentRequestType().isDiploma()) {
+        } else if (requestType.isDiploma()) {
             return new DiplomaRequest(this);
 
-        } else if (getChosenDocumentRequestType().isRegistryDiploma()) {
+        } else if (requestType.isRegistryDiploma()) {
             return new RegistryDiplomaRequest(this);
 
-        } else if (getChosenDocumentRequestType().isPastDiploma()) {
+        } else if (requestType.isPastDiploma()) {
             return CreatePastDiplomaRequest.create(this);
 
-        } else if (getChosenDocumentRequestType().isDiplomaSupplement()) {
+        } else if (requestType.isDiplomaSupplement()) {
             return new DiplomaSupplementRequest(this);
 
-        } else if (getChosenDocumentRequestType() == DocumentRequestType.UNDER_23_TRANSPORTS_REQUEST) {
+        } else if (requestType == DocumentRequestType.UNDER_23_TRANSPORTS_REQUEST) {
             return new Under23TransportsDeclarationRequest(this);
         }
 

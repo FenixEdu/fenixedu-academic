@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
+<%@ page import="org.fenixedu.academic.domain.serviceRequests.ServiceRequestType" %> 
 <%@ page import="org.apache.struts.action.ActionMessages"%>
 
 <html:xhtml/>
@@ -90,7 +90,7 @@
 	
 		<!-- Choose Document Request Type -->
 		<bean:define id="schema" name="documentRequestCreateBean" property="schema" type="java.lang.String"/>
-		<fr:edit id="documentRequestTypeEdit" name="documentRequestCreateBean" schema="<%=schema%>" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
+		<fr:edit id="serviceRequestTypeEdit" name="documentRequestCreateBean" schema="<%=schema%>" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thright thlight mtop025 mbottom0 thmiddle"/>
 				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
@@ -114,7 +114,7 @@
 			</fr:edit>
 		</logic:present>
 		
-		<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
+		<logic:notEmpty name="documentRequestCreateBean" property="chosenServiceRequestType">
 			
 			<!-- Requested Cycle -->
 			<logic:equal name="documentRequestCreateBean" property="hasCycleTypeDependency" value="true">
@@ -167,7 +167,7 @@
 	
 			<!-- Can be free processed? -->
 			<!-- Not anymore, they can't...
-			<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
+			<logic:equal name="documentRequestCreateBean" property="chosenServiceRequestType.documentRequestType.canBeFreeProcessed" value="true">
 				<fr:edit id="freeProcessedEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
@@ -180,7 +180,7 @@
 		</logic:notEmpty>
 		
 		<p class="mtop15">
-			<html:submit><bean:message key="button.continue"/></html:submit>
+			<html:submit><bean:message key="button.continue" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 		</p>
 		
 </fr:form>

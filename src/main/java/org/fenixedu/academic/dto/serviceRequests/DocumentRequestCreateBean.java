@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeTypeInstance;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
@@ -66,7 +67,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private static final long serialVersionUID = 1L;
 
-    private DocumentRequestType chosenDocumentRequestType;
+    private ServiceRequestType chosenServiceRequestType;
 
     private DocumentPurposeTypeInstance chosenDocumentPurposeType;
 
@@ -156,12 +157,12 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         this.registrationProtocol = registrationProtocol;
     }
 
-    public DocumentRequestType getChosenDocumentRequestType() {
-        return chosenDocumentRequestType;
+    public ServiceRequestType getChosenServiceRequestType() {
+        return chosenServiceRequestType;
     }
 
-    public void setChosenDocumentRequestType(DocumentRequestType chosenDocumentRequestType) {
-        this.chosenDocumentRequestType = chosenDocumentRequestType;
+    public void setChosenServiceRequestType(ServiceRequestType chosenServiceRequestType) {
+        this.chosenServiceRequestType = chosenServiceRequestType;;
     }
 
     public DocumentPurposeTypeInstance getChosenDocumentPurposeType() {
@@ -256,7 +257,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         if (warningsToReport == null) {
             warningsToReport = new HashSet<String>();
 
-            if (chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE) {
+            DocumentRequestType documentRequestType = chosenServiceRequestType.getDocumentRequestType();
+            if (documentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE) {
                 if (chosenDocumentPurposeType.getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
                     warningsToReport.add("aprovementType.professionalPurpose.thirdGrade");
                 }
@@ -264,7 +266,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
                 warningsToReport.add("aprovementType.finished.degree");
             }
 
-            if (chosenDocumentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE) {
+            if (documentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE) {
                 warningsToReport.add("degreeFinalizationType.withoutDegreeCertificate");
             }
         }
@@ -340,7 +342,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     final public boolean getHasAdditionalInformation() {
-        return getChosenDocumentRequestType() == null ? false : getChosenDocumentRequestType().getHasAdditionalInformation();
+        DocumentRequestType documentRequestType = chosenServiceRequestType.getDocumentRequestType();
+        return documentRequestType == null ? false : documentRequestType.getHasAdditionalInformation();
     }
 
     @Override
@@ -349,14 +352,16 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     final public boolean getIsForProgramConclusionPurposes() {
+        DocumentRequestType documentRequestType = chosenServiceRequestType.getDocumentRequestType();
         return Stream.of(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE, DocumentRequestType.REGISTRY_DIPLOMA_REQUEST,
                 DocumentRequestType.DIPLOMA_REQUEST, DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST).anyMatch(
-                type -> type.equals(getChosenDocumentRequestType()));
+                type -> type.equals(documentRequestType));
     }
 
     final public boolean getHasMobilityProgramDependency() {
-        return chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE
-                || chosenDocumentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE;
+        DocumentRequestType documentRequestType = chosenServiceRequestType.getDocumentRequestType();
+        return documentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE
+                || documentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE;
     }
 
     final public MobilityProgram getMobilityProgram() {
@@ -487,8 +492,9 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     public boolean getHasPurposeNeed() {
-        return !(chosenDocumentRequestType.isDiploma() || chosenDocumentRequestType.isRegistryDiploma()
-                || chosenDocumentRequestType.isPastDiploma() || chosenDocumentRequestType.isDiplomaSupplement());
+        DocumentRequestType documentRequestType = chosenServiceRequestType.getDocumentRequestType();
+        return !(documentRequestType.isDiploma() || documentRequestType.isRegistryDiploma()
+                || documentRequestType.isPastDiploma() || documentRequestType.isDiplomaSupplement());
     }
 
     public void setPastPaymentAmount(Money paymentAmount) {

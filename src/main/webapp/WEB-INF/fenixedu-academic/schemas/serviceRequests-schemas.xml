@@ -263,8 +263,9 @@
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestType"
 	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DocumentRequestTypeProvider" />
+	<slot name="chosenServiceRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ServiceRequestTypeProvider$CertificatesProvider" />
+		<property name="format" value="${name.content}" />
 		<property name="eachLayout" value=""/>
 		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>
@@ -272,8 +273,9 @@
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestType_preBolonha"
 	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DocumentRequestTypeProvider$PreBolonhaTypes" />
+	<slot name="chosenServiceRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ServiceRequestTypeProvider$PreBolognaCertificatesProvider" />
+		<property name="format" value="${name.content}" />
 		<property name="eachLayout" value=""/>
 		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>
@@ -281,8 +283,9 @@
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestQuickType"
 	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DocumentRequestTypeProvider$QuickDeliveryTypes" />
+	<slot name="chosenServiceRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ServiceRequestTypeProvider$DeclarationsProvider" />
+		<property name="format" value="${name.content}" />
 		<property name="eachLayout" value=""/>
 		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>
@@ -761,7 +764,7 @@
 </schema>
 
 <schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
+	<slot name="chosenServiceRequestType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType"/>
 	<slot name="chosenDocumentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" >
 		<property name="format" value="${name.content}" />
 	</slot>
@@ -803,8 +806,8 @@
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration"
 	type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DocumentRequestTypeForStudentTypeProvider" />
+	<slot name="chosenServiceRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ServiceRequestTypeProvider$StudentIssuedProvider" />
 		<property name="eachLayout" value=""/>
 		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>

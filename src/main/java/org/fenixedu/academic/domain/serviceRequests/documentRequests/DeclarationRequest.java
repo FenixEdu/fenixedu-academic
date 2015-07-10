@@ -44,7 +44,8 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
     }
 
     static final public DeclarationRequest create(final DocumentRequestCreateBean bean) {
-        switch (bean.getChosenDocumentRequestType()) {
+        final DocumentRequestType requestType = bean.getChosenServiceRequestType().getDocumentRequestType();
+        switch (requestType) {
         case SCHOOL_REGISTRATION_DECLARATION:
             return new SchoolRegistrationDeclarationRequest(bean);
         case ENROLMENT_DECLARATION:

@@ -99,7 +99,7 @@
 			</fr:edit>			
 		</logic:present>
 		
-		<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
+		<logic:notEmpty name="documentRequestCreateBean" property="chosenServiceRequestType">
 		
 			<fr:edit id="purposesEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 				<fr:layout name="tabular">

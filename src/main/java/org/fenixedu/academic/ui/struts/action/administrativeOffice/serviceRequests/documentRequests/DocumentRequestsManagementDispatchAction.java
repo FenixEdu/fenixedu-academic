@@ -44,6 +44,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -173,7 +174,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
         final DocumentRequestCreateBean requestCreateBean = getRenderedObject();
 
-        if (requestCreateBean.getChosenDocumentRequestType() != null) {
+        if (requestCreateBean.getChosenServiceRequestType() != null) {
             getAndSetSpecialEnrolments(request, requestCreateBean);
         }
         setAdditionalInformationSchemaName(request, requestCreateBean);
@@ -191,7 +192,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
                 (DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
         RenderUtils.invalidateViewState();
 
-        if (requestCreateBean.getChosenDocumentRequestType() != null) {
+        if (requestCreateBean.getChosenServiceRequestType() != null) {
             getAndSetSpecialEnrolments(request, requestCreateBean);
         }
         setAdditionalInformationSchemaName(request, requestCreateBean);
@@ -201,15 +202,15 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     private void getAndSetSpecialEnrolments(HttpServletRequest request, DocumentRequestCreateBean requestCreateBean) {
         final StudentCurricularPlan curricularPlan = requestCreateBean.getRegistration().getLastStudentCurricularPlan();
-        final DocumentRequestType requestType = requestCreateBean.getChosenDocumentRequestType();
-        if (requestType.equals(DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE)) {
+        final DocumentRequestType requestType = requestCreateBean.getChosenServiceRequestType().getDocumentRequestType();
+        if (requestType != null && requestType.equals(DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE)) {
             List<Enrolment> enrolments = curricularPlan.getExtraCurricularApprovedEnrolmentsNotInDismissal();
             if (enrolments.size() == 0) {
                 addActionMessage("warning", request, "warning.ExtraCurricularCertificateRequest.no.enrolments.available");
             }
             requestCreateBean.setEnrolments(enrolments);
         }
-        if (requestType.equals(DocumentRequestType.STANDALONE_ENROLMENT_CERTIFICATE)) {
+        if (requestType != null && requestType.equals(DocumentRequestType.STANDALONE_ENROLMENT_CERTIFICATE)) {
             List<Enrolment> enrolments = curricularPlan.getStandaloneApprovedEnrolmentsNotInDismissal();
             if (enrolments.size() == 0) {
                 addActionMessage("warning", request, "warning.StandaloneEnrolmentCertificateRequest.no.enrolments.available");
@@ -222,18 +223,21 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         if (!requestCreateBean.getHasAdditionalInformation()) {
             return;
         }
-        DocumentRequestType requestType = requestCreateBean.getChosenDocumentRequestType();
+        ServiceRequestType serviceRequestType = requestCreateBean.getChosenServiceRequestType();
         final StringBuilder schemaName = new StringBuilder();
         schemaName.append("DocumentRequestCreateBean.");
-        schemaName.append(requestType.name());
+        schemaName.append(serviceRequestType.getCode());
 
-        if (requestType.equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)
-                && !requestCreateBean.getRegistrationProtocol().isEnrolmentByStudentAllowed()) {
-            schemaName.append("_mobility");
-        }
+        DocumentRequestType requestType = serviceRequestType.getDocumentRequestType();
+        if (requestType != null) {
+            if (requestType.equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)
+                    && !requestCreateBean.getRegistrationProtocol().isEnrolmentByStudentAllowed()) {
+                schemaName.append("_mobility");
+            }
 
-        if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
-            schemaName.append("_WithBranch");
+            if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
+                schemaName.append("_WithBranch");
+            }
         }
 
         schemaName.append(".AdditionalInformation");
@@ -256,7 +260,8 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         final DocumentRequestCreateBean requestCreateBean =
                 (DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-        if (requestCreateBean.getChosenDocumentRequestType() == DocumentRequestType.EXAM_DATE_CERTIFICATE) {
+        DocumentRequestType documentRequestType = requestCreateBean.getChosenServiceRequestType().getDocumentRequestType();
+        if (documentRequestType == DocumentRequestType.EXAM_DATE_CERTIFICATE) {
             return prepareChooseExamsToCreateExamDateCertificateRequest(mapping, actionForm, request, response, requestCreateBean);
         }
 
@@ -329,7 +334,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             return mapping.findForward("viewRegistrationDetails");
         }
 
-        if (documentRequestCreateBean.getChosenDocumentRequestType().isAllowedToQuickDeliver()) {
+        DocumentRequestType documentRequestType =
+                documentRequestCreateBean.getChosenServiceRequestType().getDocumentRequestType();
+        if (documentRequestType != null && documentRequestType.isAllowedToQuickDeliver()) {
             request.setAttribute("academicServiceRequestId", documentRequest.getExternalId());
             return mapping.findForward("processNewAcademicServiceRequest");
         } else {

@@ -26,6 +26,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.service.factoryExecutors.DocumentRequestCreator;
@@ -110,8 +112,9 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     private void setAdditionalInformationSchemaName(HttpServletRequest request, final DocumentRequestCreateBean requestCreateBean) {
         if (requestCreateBean.getHasAdditionalInformation()) {
-            request.setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
-                    + requestCreateBean.getChosenDocumentRequestType().name() + ".AdditionalInformation");
+            ServiceRequestType serviceRequestType = requestCreateBean.getChosenServiceRequestType();
+            request.setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean." + serviceRequestType.getCode()
+                    + ".AdditionalInformation");
         }
     }
 

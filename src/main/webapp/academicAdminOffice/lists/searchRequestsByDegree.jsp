@@ -86,10 +86,10 @@
 			<%
 			    if (documentRequestSearchBean.getAcademicServiceRequestType() == AcademicServiceRequestType.DOCUMENT) {
 			%>
-			<fr:slot name="chosenDocumentRequestType"
+			<fr:slot name="chosenServiceRequestType"
 				key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select">
 				<fr:property name="providerClass"
-					value="org.fenixedu.academic.ui.renderers.providers.DocumentRequestTypeProvider$QuickDeliveryTypes" />
+					value="org.fenixedu.academic.ui.renderers.providers.ServiceRequestTypeProvider$DeclarationsProvider" />
 				<fr:property name="eachLayout" value="" />
 			</fr:slot>
 			<%

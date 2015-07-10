@@ -51,8 +51,9 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
     static final public CertificateRequest create(final DocumentRequestCreateBean bean) {
 
         CertificateRequest certificateRequest = null;
+        final DocumentRequestType requestType = bean.getChosenServiceRequestType().getDocumentRequestType();
 
-        switch (bean.getChosenDocumentRequestType()) {
+        switch (requestType) {
         case SCHOOL_REGISTRATION_CERTIFICATE:
             certificateRequest = new SchoolRegistrationCertificateRequest(bean);
             break;
