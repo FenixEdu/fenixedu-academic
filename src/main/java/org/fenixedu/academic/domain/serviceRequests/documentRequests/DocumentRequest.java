@@ -54,7 +54,8 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
     }
 
     protected void checkParameters(final DocumentRequestCreateBean bean) {
-        if (bean.getChosenDocumentPurposeType().getDocumentPurposeType() == DocumentPurposeType.OTHER
+        if (bean.getChosenDocumentPurposeType() != null
+                && bean.getChosenDocumentPurposeType().getDocumentPurposeType() == DocumentPurposeType.OTHER
                 && bean.getOtherPurpose() == null) {
             throw new DomainException(
                     "error.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
