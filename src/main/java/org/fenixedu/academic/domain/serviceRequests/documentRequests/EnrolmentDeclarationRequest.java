@@ -18,8 +18,11 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
+import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -65,6 +68,35 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     @Override
     public boolean hasPersonalInfo() {
         return true;
+    }
+
+    @Override
+    final public Integer getNumberOfUnits() {
+        return getEntriesToReport().size() + getExtraCurricularEntriesToReport().size() + getPropaedeuticEntriesToReport().size();
+    }
+
+    final public Collection<Enrolment> getEntriesToReport() {
+        return getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear());
+    }
+
+    final public Collection<Enrolment> getExtraCurricularEntriesToReport() {
+        final Collection<Enrolment> extraCurricular = new HashSet<Enrolment>();
+        for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
+            if (entry.isExtraCurricular() && entry.getEnrolmentWrappersSet().isEmpty()) {
+                extraCurricular.add(entry);
+            }
+        }
+        return extraCurricular;
+    }
+
+    final public Collection<Enrolment> getPropaedeuticEntriesToReport() {
+        final Collection<Enrolment> propaedeutic = new HashSet<Enrolment>();
+        for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
+            if (!(entry.isExtraCurricular() && entry.getEnrolmentWrappersSet().isEmpty()) && entry.isPropaedeutic()) {
+                propaedeutic.add(entry);
+            }
+        }
+        return propaedeutic;
     }
 
     @Override
