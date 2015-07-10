@@ -50,6 +50,7 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.serviceRequests.InstitutionRegistryCodeGenerator;
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestCategory;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
@@ -409,8 +410,10 @@ public class FenixBootstrapper {
                 continue;
             }
 
+            // By default create all legacy ServiceRequestTypes as Services -> Then configurate accordingly
             ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                    academicServiceRequestType.getLocalizedName()), academicServiceRequestType, null, true);
+                    academicServiceRequestType.getLocalizedName()), true, academicServiceRequestType, null, true,
+                    ServiceRequestCategory.SERVICES);
         }
 
         for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
@@ -422,12 +425,13 @@ public class FenixBootstrapper {
             } else if (documentRequestType == DocumentRequestType.REGISTRY_DIPLOMA_REQUEST) {
                 continue;
             }
-            
+
+            // By default create all legacy ServiceRequestTypes as Services -> Then configurate accordingly
             ServiceRequestType.createLegacy(
                     documentRequestType.name(),
                     BundleUtil.getLocalizedString("resources.EnumerationResources",
-                            "DocumentRequestType." + documentRequestType.name()), AcademicServiceRequestType.DOCUMENT,
-                    documentRequestType, true);
+                            "DocumentRequestType." + documentRequestType.name()), true, AcademicServiceRequestType.DOCUMENT,
+                    documentRequestType, true, ServiceRequestCategory.SERVICES);
         }
     }
 

@@ -18,23 +18,25 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    protected ServiceRequestType(final String code, final LocalizedString name, final boolean payed) {
+    protected ServiceRequestType(final String code, final LocalizedString name, final boolean active, final boolean payable,
+            final ServiceRequestCategory category) {
         this();
 
         super.setCode(code);
         super.setName(name);
-        setPayed(payed);
+        setActive(active);
+        setPayable(payable);
+        setServiceRequestCategory(category);
 
         checkRules();
     }
 
-    protected ServiceRequestType(final String code, final LocalizedString name,
+    protected ServiceRequestType(final String code, final LocalizedString name, final boolean active,
             final AcademicServiceRequestType academicServiceRequestType, final DocumentRequestType documentRequestType,
-            final boolean payed) {
-        this(code, name, payed);
+            final boolean payable, final ServiceRequestCategory category) {
+        this(code, name, active, payable, category);
         setAcademicServiceRequestType(academicServiceRequestType);
         setDocumentRequestType(documentRequestType);
-        setPayed(payed);
 
         checkRules();
     }
@@ -43,8 +45,12 @@ public class ServiceRequestType extends ServiceRequestType_Base {
 
     }
 
-    public boolean isPayed() {
-        return getPayed();
+    public boolean isActive() {
+        return getActive();
+    }
+
+    public boolean isPayable() {
+        return getPayable();
     }
 
     public boolean hasOption(final ServiceRequestTypeOption option) {
@@ -52,10 +58,13 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     @Atomic
-    public void edit(final String code, final LocalizedString name, final boolean payed) {
+    public void edit(final String code, final LocalizedString name, final boolean active, final boolean payable,
+            final ServiceRequestCategory category) {
         setCode(code);
         setName(name);
-        setPayed(payed);
+        setActive(active);
+        setPayable(payable);
+        setServiceRequestCategory(category);
 
         checkRules();
     }
@@ -130,16 +139,33 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         }
     }
 
-    @Atomic
-    public static ServiceRequestType create(final String code, final LocalizedString name, final boolean payed) {
-        return new ServiceRequestType(code, name, payed);
+    public static Stream<ServiceRequestType> findActive() {
+        return findAll().filter(ServiceRequestType::isActive);
+    }
+
+    public static Stream<ServiceRequestType> findDeclarations() {
+        return findAll().filter(srt -> srt.getServiceRequestCategory() == ServiceRequestCategory.DECLARATIONS);
+    }
+
+    public static Stream<ServiceRequestType> findCertificates() {
+        return findAll().filter(srt -> srt.getServiceRequestCategory() == ServiceRequestCategory.CERTIFICATES);
+    }
+
+    public static Stream<ServiceRequestType> findServices() {
+        return findAll().filter(srt -> srt.getServiceRequestCategory() == ServiceRequestCategory.SERVICES);
     }
 
     @Atomic
-    public static ServiceRequestType createLegacy(final String code, final LocalizedString name,
+    public static ServiceRequestType create(final String code, final LocalizedString name, final boolean active,
+            final boolean payable, final ServiceRequestCategory category) {
+        return new ServiceRequestType(code, name, active, payable, category);
+    }
+
+    @Atomic
+    public static ServiceRequestType createLegacy(final String code, final LocalizedString name, final boolean active,
             final AcademicServiceRequestType academicServiceRequestType, final DocumentRequestType documentRequestType,
-            final boolean payed) {
-        return new ServiceRequestType(code, name, academicServiceRequestType, documentRequestType, payed);
+            final boolean payable, final ServiceRequestCategory category) {
+        return new ServiceRequestType(code, name, active, academicServiceRequestType, documentRequestType, payable, category);
     }
 
 }

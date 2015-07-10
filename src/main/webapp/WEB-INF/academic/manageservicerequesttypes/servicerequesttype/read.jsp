@@ -122,15 +122,32 @@ ${portal.toolkit()}
 					</tr>
 					<tr>
 						<th scope="row" class="col-xs-3"><spring:message
-								code="label.ServiceRequestType.payed" /></th>
+								code="label.ServiceRequestType.active" /></th>
 						<td>
-							<c:if test="${serviceRequestType.payed}">
+							<c:if test="${serviceRequestType.active}">
 								<spring:message code="label.true" />
 							</c:if>
-							<c:if test="${not serviceRequestType.payed}">
+							<c:if test="${not serviceRequestType.active}">
 								<spring:message code="label.false" />
 							</c:if>
 						</td>
+					</tr>
+					<tr>
+						<th scope="row" class="col-xs-3"><spring:message
+								code="label.ServiceRequestType.payable" /></th>
+						<td>
+							<c:if test="${serviceRequestType.payable}">
+								<spring:message code="label.true" />
+							</c:if>
+							<c:if test="${not serviceRequestType.payable}">
+								<spring:message code="label.false" />
+							</c:if>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row" class="col-xs-3"><spring:message
+								code="label.ServiceRequestType.serviceRequestCategory" /></th>
+						<td><c:out value='${serviceRequestType.serviceRequestCategory.name}' /></td>
 					</tr>
 				</tbody>
 			</table>

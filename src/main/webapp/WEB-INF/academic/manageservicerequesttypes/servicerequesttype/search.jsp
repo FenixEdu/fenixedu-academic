@@ -112,6 +112,9 @@ ${portal.toolkit()}
 					<%--!!!  Field names here --%>
 					<th><spring:message code="label.ServiceRequestType.code"/></th>
 					<th><spring:message code="label.ServiceRequestType.name"/></th>
+					<th><spring:message code="label.ServiceRequestType.serviceRequestCategory"/></th>
+					<th><spring:message code="label.ServiceRequestType.active"/></th>
+					<th><spring:message code="label.ServiceRequestType.payable"/></th>					
 					<%-- Operations Column --%>
 					<th></th>
 				</tr>
@@ -136,9 +139,12 @@ ${portal.toolkit()}
 				"DT_RowId" : '<c:out value='${searchResult.externalId}'/>',
 "code" : "<c:out value='${searchResult.code}'/>",
 "name" : "<c:out value='${searchResult.name.content}'/>",
+"serviceRequestCategory" : "<c:out value='${searchResult.serviceRequestCategory.name}'/>",
+"active" : "<c:if test="${searchResult.active}"><spring:message code="label.true" /></c:if><c:if test="${not searchResult.active}"><spring:message code="label.false" /></c:if>",
+"payable" :"<c:if test="${searchResult.payable}"><spring:message code="label.true" /></c:if><c:if test="${not searchResult.payable}"><spring:message code="label.false" /></c:if>",
 "actions" :
 " <a  class=\"btn btn-default btn-xs\" href=\"${pageContext.request.contextPath}/academic/manageservicerequesttypes/servicerequesttype/search/view/${searchResult.externalId}\"><spring:message code='label.view'/></a>" +
-" <a  class=\"btn btn-xs btn-danger\" href=\"#\" onClick=\"javascript:processDelete('${searchResult.externalId}')\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>&nbsp;<spring:message code='label.delete'/></a>" +
+" <a  class=\"btn btn-xs btn-danger\" href=\"#\" onClick=\"javascript:processDelete('${searchResult.externalId}')\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></a>" +
                 "" 
 			},
             </c:forEach>
@@ -152,6 +158,9 @@ ${portal.toolkit()}
 		"columns": [
 			{ data: 'code' },
 			{ data: 'name' },
+			{ data: 'serviceRequestCategory' },
+			{ data: 'active' },
+			{ data: 'payable' },
 			{ data: 'actions' }
 			
 		],
@@ -159,7 +168,8 @@ ${portal.toolkit()}
 		"columnDefs": [
 		//54
 		//128
-		               { "width": "128px", "targets": 2 } 
+		               { "width": "108px", "targets": 3 },
+		               { "width": "54px", "targets": 2 } 
 		             ],
 		"data" : searchservicerequesttypeDataSet,
 		//Documentation: https://datatables.net/reference/option/dom

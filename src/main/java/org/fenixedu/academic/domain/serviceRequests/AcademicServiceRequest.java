@@ -204,7 +204,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final protected boolean isPayable() {
-        return ServiceRequestType.findUnique(this) != null && ServiceRequestType.findUnique(this).isPayed();
+        return ServiceRequestType.findUnique(this) != null && ServiceRequestType.findUnique(this).isPayable();
     }
 
     protected boolean isPayed() {
@@ -237,8 +237,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
      * 
      */
     public String getPaymentURL() {
-        final IAcademicServiceRequestAndAcademicTaxTreasuryEvent event = TreasuryBridgeAPIFactory.implementation().academicTreasuryEventForAcademicServiceRequest(this);
-        return  event != null ? event.getDebtAccountURL() : null;
+        final IAcademicServiceRequestAndAcademicTaxTreasuryEvent event =
+                TreasuryBridgeAPIFactory.implementation().academicTreasuryEventForAcademicServiceRequest(this);
+        return event != null ? event.getDebtAccountURL() : null;
     }
 
     public boolean isRegistrationAccessible() {

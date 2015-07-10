@@ -91,13 +91,43 @@ ${portal.toolkit()}
 				</div>
 			</div>		
 			<div class="form-group row">
-				<div class="col-sm-2 control-label"><spring:message code="label.ServiceRequestType.payed"/></div> 
+				<div class="col-sm-2 control-label"><spring:message code="label.ServiceRequestType.active"/></div> 
 				
-				<div class="col-sm-10">
-					<select id="serviceRequestType_payed" name="payed">
-						<option value="true" type="radio"><spring:message code="label.yes"/></option>
-						<option value="false" type="radio"><spring:message code="label.no"/></option>
+				<div class="col-sm-2">
+					<select id="serviceRequestType_active" name="active" class="form-control">
+						<option value="false"><spring:message code="label.no"/></option>
+						<option value="true"><spring:message code="label.yes"/></option>				
 					</select>
+					<script>
+						$("#serviceRequestType_active").val('<c:out value='${not empty param.active ? param.active : serviceRequestType.active }'/>');
+					</script>	
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-2 control-label"><spring:message code="label.ServiceRequestType.payable"/></div>				
+				
+				<div class="col-sm-2">
+					<select id="serviceRequestType_payable" name="payable" class="form-control">
+						<option value="false"><spring:message code="label.no"/></option>
+						<option value="true"><spring:message code="label.yes"/></option>				
+					</select>
+					<script>
+						$("#serviceRequestType_payable").val('<c:out value='${not empty param.payable ? param.payable : serviceRequestType.payable }'/>');
+					</script>	
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-2 control-label"><spring:message code="label.ServiceRequestType.serviceRequestCategory"/></div> 
+				
+				<div class="col-sm-4">
+					<select id="serviceRequestType_serviceRequestCategory" class="form-control" name="serviceRequestCategory">
+						<c:forEach items="${serviceRequestCategoryValues}" var="field">
+							<option value='<c:out value='${field}'/>'><c:out value='${field}'/></option>
+						</c:forEach>
+					</select>
+					<script>
+						$("#serviceRequestType_serviceRequestCategory").val('<c:out value='${not empty param.serviceRequestCategory ? param.serviceRequestCategory : serviceRequestType.serviceRequestCategory }'/>');
+					</script>	
 				</div>
 			</div>		
 		</div>
@@ -109,8 +139,6 @@ ${portal.toolkit()}
 
 <script>
 $(document).ready(function() {
-	
-	$("#serviceRequestType_payed").select2().select2('val', '${not empty param.payed ? param.payed : serviceRequestType.payed}');
 	
 });
 </script>

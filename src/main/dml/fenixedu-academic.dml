@@ -96,6 +96,7 @@ enum org.fenixedu.academic.domain.organizationalStructure.UnitClassification    
 enum org.fenixedu.academic.domain.person.Gender                                                                        as Gender;
 enum org.fenixedu.academic.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum org.fenixedu.academic.domain.person.MaritalStatus                                                                 as MaritalStatus;
+enum org.fenixedu.academic.domain.serviceRequests.ServiceRequestCategory											   as ServiceRequestCategory;
 enum org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType                          as AcademicServiceRequestType;
 enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType                                 as DocumentRequestType;
 enum org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
@@ -2733,7 +2734,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	LocalizedString name;
     	AcademicServiceRequestType academicServiceRequestType;
     	DocumentRequestType documentRequestType;
-    	boolean payed;
+    	boolean active;
+    	boolean payable;
+    	ServiceRequestCategory serviceRequestCategory;
     }
     
     class serviceRequests.ServiceRequestTypeOption {
