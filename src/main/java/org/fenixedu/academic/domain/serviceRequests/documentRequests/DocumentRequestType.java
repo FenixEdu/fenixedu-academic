@@ -145,10 +145,6 @@ public enum DocumentRequestType {
         return hasAdditionalInformation;
     }
 
-    final public boolean getHasCycleTypeDependency(final DegreeType degreeType) {
-        return degreeType.getCycleTypes().size() > 1;
-    }
-
     public boolean isAllowedToQuickDeliver() {
         return allowedToQuickDeliver;
     }

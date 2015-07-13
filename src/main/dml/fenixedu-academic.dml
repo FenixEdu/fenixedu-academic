@@ -96,6 +96,8 @@ enum org.fenixedu.academic.domain.organizationalStructure.UnitClassification    
 enum org.fenixedu.academic.domain.person.Gender                                                                        as Gender;
 enum org.fenixedu.academic.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum org.fenixedu.academic.domain.person.MaritalStatus                                                                 as MaritalStatus;
+enum org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType                          as AcademicServiceRequestType;
+enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType                                 as DocumentRequestType;
 enum org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
 enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
 enum org.fenixedu.academic.domain.student.EnrolmentModel                                                               as EnrolmentModel;
@@ -150,6 +152,8 @@ enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as Schoo
 enum org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
 enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
 enum org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType                                     as RegistrationStateType;
+
+
 /*
  * Value types that need special externalization
  */
@@ -2724,19 +2728,40 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Integer latestServiceRequestNumber;
     }
     
+    class serviceRequests.ServiceRequestType {
+    	String code;
+    	LocalizedString name;
+    	AcademicServiceRequestType academicServiceRequestType;
+    	DocumentRequestType documentRequestType;
+    	boolean payed;
+    }
+    
+    class serviceRequests.ServiceRequestTypeOption {
+    	String code;
+    	LocalizedString name;
+    	boolean detailedOption;
+    }
+    
+    class serviceRequests.ServiceRequestTypeOptionBooleanValue {
+    	boolean value;
+    }
+    
     class serviceRequests.AcademicServiceRequest  {
         Boolean freeProcessed;
         Boolean urgentRequest;
         Integer serviceRequestNumber;
         DateTime requestDate;
         Locale language;
+        Integer numberOfPages;
+        Integer numberOfUnits;
+        Boolean detailed;
+	    CycleType requestedCycle;
     }
         
         class serviceRequests.RegistrationAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
         }
     
             class serviceRequests.documentRequests.DocumentRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-                Integer numberOfPages;
             }
     
                 class serviceRequests.documentRequests.CertificateRequest extends serviceRequests.documentRequests.DocumentRequest {
@@ -2748,16 +2773,13 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                         MobilityProgram mobilityProgram;
                         Boolean ignoreExternalEntries;
                         Boolean ignoreCurriculumInAdvance;
-                        Integer numberOfUnits;
                     }
                     
                     class serviceRequests.documentRequests.ApprovementMobilityCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                        Integer numberOfUnits;
                     }
     
                     class serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
                         Boolean average;
-                        Boolean detailed;
                         Boolean technicalEngineer;
                         Boolean internshipAbolished;
                         Boolean internshipApproved;
@@ -2770,7 +2792,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                     }
     
                     class serviceRequests.documentRequests.EnrolmentCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                        Boolean detailed;
                     }
     
                     class serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
@@ -2783,7 +2804,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                     }
     
                     class serviceRequests.documentRequests.CourseLoadRequest extends serviceRequests.documentRequests.CertificateRequest {
-                        CycleType requestedCycle;
                     }
                     
                         class serviceRequests.documentRequests.ExternalCourseLoadRequest extends serviceRequests.documentRequests.CourseLoadRequest {
@@ -2794,7 +2814,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                     }
                     
                     class serviceRequests.documentRequests.ProgramCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                        CycleType requestedCycle;
                     }
                     
                         class serviceRequests.documentRequests.ExternalProgramCertificateRequest extends serviceRequests.documentRequests.ProgramCertificateRequest {
@@ -2879,7 +2898,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         	}
         	
         	class phd.serviceRequests.documentRequests.PhdDocumentRequest extends phd.serviceRequests.PhdAcademicServiceRequest {
-        		Integer numberOfPages;
         	}
         	
 		        class phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest extends phd.serviceRequests.documentRequests.PhdDocumentRequest {
@@ -12308,6 +12326,78 @@ relation BennuFirstTimeDocumentsConfiguration {
 	}
 	candidacy.FirstTimeDocumentsConfiguration playsRole firstTimeDocumentsConfiguration {
 		multiplicity 0..1;
+	}
+
+/* ServiceRequestType */
+
+relation ServiceRequestTypeBennu {
+	protected .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+
+	public serviceRequests.ServiceRequestType playsRole serviceRequestTypes {
+		multiplicity *;
+	}
+}
+
+relation ServiceRequestTypeAcademicServiceRequest {
+	public serviceRequests.ServiceRequestType playsRole serviceRequestType {
+		multiplicity 0..1;
+	}
+
+	public serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
+		multiplicity *;
+	}
+}
+
+relation ServiceRequestTypeOptionBennu {
+	protected .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+
+	public serviceRequests.ServiceRequestTypeOption playsRole serviceRequestTypeOptions {
+		multiplicity *;
+	}
+}
+
+relation ServiceRequestTypeServiceRequestTypeOption {
+	
+	public serviceRequests.ServiceRequestType playsRole serviceRequestTypes {
+		multiplicity *;
+	}
+
+	public serviceRequests.ServiceRequestTypeOption playsRole serviceRequestTypeOptions {
+		multiplicity *;
+	}
+}
+
+relation ServiceRequestTypeOptionBooleanValueBennu {
+	protected .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+
+	protected serviceRequests.ServiceRequestTypeOptionBooleanValue playsRole serviceRequestTypeOptionBooleanValues {
+		multiplicity *;
+	}
+}
+
+relation ServiceRequestTypeOptionBooleanValueServiceRequestTypeOption {
+	public serviceRequests.ServiceRequestTypeOption playsRole serviceRequestTypeOption {
+		multiplicity 1..1;
+	}
+
+	protected serviceRequests.ServiceRequestTypeOptionBooleanValue playsRole serviceRequestTypeOptionBooleanValues {
+		multiplicity *;
+	}
+}
+
+relation ServiceRequestTypeOptionBooleanValueAcademicServiceRequest {
+	public serviceRequests.AcademicServiceRequest playsRole academicServiceRequest {
+		multiplicity 0..1;
+	}
+	
+	public serviceRequests.ServiceRequestTypeOptionBooleanValue playsRole serviceRequestTypeOptionBooleanValues {
+		multiplicity *;
 	}
 }
 

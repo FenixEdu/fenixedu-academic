@@ -159,7 +159,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
                 RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
             }
             if (getRegistration().isBolonha() && getDiplomaSupplement().isConcludedSituationAccepted()) {
-                getDiplomaSupplement().conclude();
+                getDiplomaSupplement().concludeServiceRequest();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
             if (getEvent() != null) {

@@ -223,7 +223,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
             getDiplomaSupplement().process();
         } else if (academicServiceRequestBean.isToConclude()) {
             if (getDiplomaSupplement().isConcludedSituationAccepted()) {
-                getDiplomaSupplement().conclude();
+                getDiplomaSupplement().concludeServiceRequest();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
             if (getEvent() != null) {

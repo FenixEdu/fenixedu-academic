@@ -54,7 +54,7 @@ public class EnrolmentCertificateRequestPR extends EnrolmentCertificateRequestPR
         Money total = checkUrgency && isUrgent(requestEvent) ? getBaseAmount().multiply(2) : getBaseAmount();
 
         final EnrolmentCertificateRequest request = (EnrolmentCertificateRequest) requestEvent.getAcademicServiceRequest();
-        if (request.getDetailed() != null && request.getDetailed().booleanValue()) {
+        if (request.isDetailed()) {
             total = total.add(getAmountForUnits(requestEvent));
         }
         return total;

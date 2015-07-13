@@ -146,7 +146,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     private Money calculateAmountToPayPlusUnits(final EnrolmentCertificateRequest request,
             final EnrolmentCertificateRequestPR requestPR) {
         Money total = requestPR.getBaseAmount();
-        if (request.getDetailed() != null && request.getDetailed().booleanValue()) {
+        if (request.isDetailed()) {
             total = total.add(getAmountForUnits(request, requestPR));
         }
         return total;

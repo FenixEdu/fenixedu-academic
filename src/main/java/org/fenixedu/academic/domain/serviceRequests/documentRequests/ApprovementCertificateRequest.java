@@ -144,8 +144,11 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final public Integer getNumberOfUnits() {
-        final Integer res = super.getNumberOfUnits();
-        return res == null ? calculateNumberOfUnits() : res;
+        if(!hasConcluded()) {
+            return calculateNumberOfUnits();
+        }
+        
+        return super.getNumberOfUnits() > 0 ? super.getNumberOfUnits() : calculateNumberOfUnits();
     }
 
     private int calculateNumberOfUnits() {
@@ -170,8 +173,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     public boolean isToPrint() {
-        final Integer units = super.getNumberOfUnits();
-        return !hasConcluded() || units != null && units.intValue() == calculateNumberOfUnits();
+        return !hasConcluded() || (super.getNumberOfUnits() != null && super.getNumberOfUnits().intValue() == calculateNumberOfUnits());
     }
 
     final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {

@@ -20,20 +20,28 @@ package org.fenixedu.academic.dto.serviceRequests;
 
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.student.RegistrationSelectExecutionYearBean;
 import org.joda.time.DateTime;
 
 public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutionYearBean {
 
+    private static final long serialVersionUID = 1L;
+
     private DateTime requestDate = new DateTime();
 
-    private Boolean urgentRequest = Boolean.FALSE;
+    private boolean urgentRequest = Boolean.FALSE;
 
-    private Boolean freeProcessed = Boolean.FALSE;
+    private boolean freeProcessed = Boolean.FALSE;
 
     private Locale language = Locale.getDefault();
 
+    private boolean detailed = Boolean.FALSE;
+
+    private CycleType requestedCycle;
+
+    
     public AcademicServiceRequestCreateBean(Registration registration) {
         super(registration);
     }
@@ -70,4 +78,24 @@ public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutio
         this.language = language;
     }
 
+    public Boolean getDetailed() {
+        return detailed;
+    }
+
+    public void setDetailed(Boolean detailed) {
+        this.detailed = detailed;
+    }
+
+    public CycleType getRequestedCycle() {
+        return requestedCycle;
+    }
+
+    public void setRequestedCycle(final CycleType cycleType) {
+        this.requestedCycle = cycleType;
+    }
+    
+    public boolean getHasCycleTypeDependency() {
+        return getRegistration().getDegreeType().isComposite();
+    }
+    
 }

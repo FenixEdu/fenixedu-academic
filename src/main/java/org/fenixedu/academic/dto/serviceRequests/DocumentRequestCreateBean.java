@@ -79,8 +79,6 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private Boolean average = Boolean.FALSE;
 
-    private Boolean detailed = Boolean.FALSE;
-
     private Boolean technicalEngineer = Boolean.FALSE;
 
     private Boolean internshipAbolished = Boolean.FALSE;
@@ -98,8 +96,6 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     private Collection<String> warningsToReport;
 
     private Integer year;
-
-    private CycleType requestedCycle;
 
     private String givenNames;
 
@@ -189,14 +185,6 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public void setAverage(Boolean average) {
         this.average = average;
-    }
-
-    public Boolean getDetailed() {
-        return detailed;
-    }
-
-    public void setDetailed(Boolean detailed) {
-        this.detailed = detailed;
     }
 
     public Boolean getTechnicalEngineer() {
@@ -310,14 +298,6 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         this.schema = schema;
     }
 
-    public CycleType getRequestedCycle() {
-        return requestedCycle;
-    }
-
-    public void setRequestedCycle(final CycleType cycleType) {
-        this.requestedCycle = cycleType;
-    }
-
     @Override
     protected void setRegistration(Registration registration) {
         super.setRegistration(registration);
@@ -362,9 +342,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         return getChosenDocumentRequestType() == null ? false : getChosenDocumentRequestType().getHasAdditionalInformation();
     }
 
-    final public boolean getHasCycleTypeDependency() {
-        return !getIsForProgramConclusionPurposes()
-                && getChosenDocumentRequestType().getHasCycleTypeDependency(getRegistration().getDegreeType());
+    public boolean getHasCycleTypeDependency() {
+        return !getIsForProgramConclusionPurposes() && super.getHasCycleTypeDependency();
     }
 
     final public boolean getIsForProgramConclusionPurposes() {

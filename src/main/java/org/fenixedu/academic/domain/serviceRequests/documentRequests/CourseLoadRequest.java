@@ -37,7 +37,6 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
         checkParameters(bean);
         super.getEnrolmentsSet().addAll(bean.getEnrolments());
-        super.setRequestedCycle(bean.getRequestedCycle());
     }
 
     @Override

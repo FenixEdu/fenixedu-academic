@@ -38,7 +38,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
         super.init(bean);
 
         checkParameters(bean);
-        super.setDetailed(bean.getDetailed());
     }
 
     @Override

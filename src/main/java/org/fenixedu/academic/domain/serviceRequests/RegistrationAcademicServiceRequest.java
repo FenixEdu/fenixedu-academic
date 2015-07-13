@@ -139,4 +139,5 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     public boolean hasRegistration() {
         return getRegistration() != null;
     }
+    
 }

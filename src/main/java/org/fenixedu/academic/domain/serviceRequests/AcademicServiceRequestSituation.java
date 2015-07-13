@@ -23,8 +23,12 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.DateTime;
 
 public class AcademicServiceRequestSituation extends AcademicServiceRequestSituation_Base {
@@ -190,15 +194,19 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
     static AcademicServiceRequestSituation create(final AcademicServiceRequest academicServiceRequest,
             final AcademicServiceRequestBean academicServiceRequestBean) {
 
+        AcademicServiceRequestSituation situation = null;
+        
         switch (academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
         case SENT_TO_EXTERNAL_ENTITY:
-            return new SentToExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+            situation = new SentToExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
         case RECEIVED_FROM_EXTERNAL_ENTITY:
-            return new ReceivedFromExternalEntityAcademicServiceRequestSituation(academicServiceRequest,
+            situation = new ReceivedFromExternalEntityAcademicServiceRequestSituation(academicServiceRequest,
                     academicServiceRequestBean);
         default:
-            return new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+            situation = new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
         }
+        
+        return situation;
     }
 
 }

@@ -244,6 +244,11 @@
             <version>${version.commons-httpclient.commons-httpclient}</version>
         </dependency>
         <dependency>
+            <groupId>org.mathjax</groupId>
+            <artifactId>mathjax</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.imgscalr</groupId>
             <artifactId>imgscalr-lib</artifactId>
             <version>${version.org.imgscalr.imgscalr-lib}</version>

@@ -21,9 +21,13 @@ package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 abstract public class CertificateRequest extends CertificateRequest_Base {
 
@@ -41,45 +45,68 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
     }
 
     static final public CertificateRequest create(final DocumentRequestCreateBean bean) {
+        
+        CertificateRequest certificateRequest = null;
+        
         switch (bean.getChosenDocumentRequestType()) {
         case SCHOOL_REGISTRATION_CERTIFICATE:
-            return new SchoolRegistrationCertificateRequest(bean);
+            certificateRequest = new SchoolRegistrationCertificateRequest(bean);
+            break;
 
         case ENROLMENT_CERTIFICATE:
-            return new EnrolmentCertificateRequest(bean);
+            certificateRequest = new EnrolmentCertificateRequest(bean);
+            break;
 
         case APPROVEMENT_CERTIFICATE:
-            return new ApprovementCertificateRequest(bean);
+            certificateRequest = new ApprovementCertificateRequest(bean);
+            break;
 
         case APPROVEMENT_MOBILITY_CERTIFICATE:
-            return new ApprovementMobilityCertificateRequest(bean);
+            certificateRequest = new ApprovementMobilityCertificateRequest(bean);
+            break;
 
         case DEGREE_FINALIZATION_CERTIFICATE:
-            return new DegreeFinalizationCertificateRequest(bean);
+            certificateRequest = new DegreeFinalizationCertificateRequest(bean);
+            break;
 
         case EXAM_DATE_CERTIFICATE:
-            return new ExamDateCertificateRequest(bean);
+            certificateRequest = new ExamDateCertificateRequest(bean);
+            break;
+            
         case COURSE_LOAD:
-            return new CourseLoadRequest(bean);
+            certificateRequest = new CourseLoadRequest(bean);
+            break;
 
         case EXTERNAL_COURSE_LOAD:
-            return new ExternalCourseLoadRequest(bean);
+            certificateRequest = new ExternalCourseLoadRequest(bean);
+            break;
 
         case PROGRAM_CERTIFICATE:
-            return new ProgramCertificateRequest(bean);
+            certificateRequest = new ProgramCertificateRequest(bean);
+            break;
 
         case EXTERNAL_PROGRAM_CERTIFICATE:
-            return new ExternalProgramCertificateRequest(bean);
+            certificateRequest = new ExternalProgramCertificateRequest(bean);
+            break;
 
         case EXTRA_CURRICULAR_CERTIFICATE:
-            return new ExtraCurricularCertificateRequest(bean);
+            certificateRequest = new ExtraCurricularCertificateRequest(bean);
+            break;
 
         case STANDALONE_ENROLMENT_CERTIFICATE:
-            return new StandaloneEnrolmentCertificateRequest(bean);
-
+            certificateRequest = new StandaloneEnrolmentCertificateRequest(bean);
+            break;
+            
         }
-
-        throw new DomainException("error.CertificateRequest.unexpected.document.type");
+        
+        if(certificateRequest == null) {
+            throw new DomainException("error.CertificateRequest.unexpected.document.type");
+        }
+        
+        Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT, new DomainObjectEvent<AcademicServiceRequest>(certificateRequest));
+        
+        return certificateRequest;
+        
     }
 
     @Override
@@ -93,11 +120,9 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
                 "error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.otherDocumentTypeDescription");
     }
 
-    abstract public Integer getNumberOfUnits();
-
     final public void edit(final DocumentRequestBean certificateRequestBean) {
 
-        if (isPayable() && isPayed() && !getNumberOfPages().equals(certificateRequestBean.getNumberOfPages())) {
+        if (isPayable() && isPayed() && getNumberOfPages() == certificateRequestBean.getNumberOfPages()) {
             throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
         }
 

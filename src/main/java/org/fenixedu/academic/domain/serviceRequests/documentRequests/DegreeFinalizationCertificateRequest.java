@@ -69,7 +69,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
         checkParameters(bean);
         super.setAverage(bean.getAverage());
-        super.setDetailed(bean.getDetailed());
         super.setMobilityProgram(bean.getMobilityProgram());
         super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
         super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());

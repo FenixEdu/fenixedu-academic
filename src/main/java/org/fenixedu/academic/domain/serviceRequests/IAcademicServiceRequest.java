@@ -20,14 +20,40 @@ package org.fenixedu.academic.domain.serviceRequests;
 
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.joda.time.DateTime;
 
+/**
+ * Declares API for service request
+ *
+ */
 public interface IAcademicServiceRequest {
-    public String getDescription();
-
-    public Locale getLanguage();
-
+    
     public Person getPerson();
+
+    public AcademicProgram getAcademicProgram();
+    
+    public CycleType getRequestedCycle();
+    
+    /* request variations */
+    
+    public boolean isRequestedWithCycle();
+    
+    public boolean isDetailed();
+    
+    public boolean isUrgentRequest();
+    
+    public Locale getLanguage();
+    
+    public DateTime getRequestDate();
+    
+    public Integer getNumberOfUnits();
+    
+    public Integer getNumberOfPages();
+    
+    public String getDescription();
 
     public boolean isRequestForRegistration();
 

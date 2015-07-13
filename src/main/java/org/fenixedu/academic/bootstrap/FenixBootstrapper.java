@@ -50,6 +50,10 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.serviceRequests.InstitutionRegistryCodeGenerator;
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.util.Bundle;
@@ -150,6 +154,8 @@ public class FenixBootstrapper {
             CoreConfiguration.supportedLocales().stream().forEach(l -> room.with(l, SpaceUtils.ROOM));
             sc.addChildren(new SpaceClassification("1.4", room.build()));
         }
+
+        createDefaultServiceRequestTypes();
 
         return Lists.newArrayList();
     }
@@ -374,6 +380,28 @@ public class FenixBootstrapper {
         for (final Country country : Country.readDistinctCountries()) {
             CountryUnit.createNewCountryUnit(new LocalizedString(Locale.getDefault(), country.getName()), null, null,
                     country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
+        }
+    }
+
+    private static void createDefaultServiceRequestTypes() {
+        ServiceRequestTypeOption.create("DETAILED",
+                BundleUtil.getLocalizedString("resources.AcademicOfficeResources", ServiceRequestTypeOption.class.getSimpleName() + ".detailed"), true);
+
+        for (final AcademicServiceRequestType academicServiceRequestType : AcademicServiceRequestType.values()) {
+            if (academicServiceRequestType == AcademicServiceRequestType.DOCUMENT) {
+                continue;
+            }
+
+            ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
+                    academicServiceRequestType.getLocalizedName()), academicServiceRequestType, null, true);
+        }
+
+        for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
+            ServiceRequestType.createLegacy(
+                    documentRequestType.name(),
+                    BundleUtil.getLocalizedString("resources.EnumerationResources",
+                            "DocumentRequestType." + documentRequestType.name()), AcademicServiceRequestType.DOCUMENT,
+                    documentRequestType, true);
         }
     }
 

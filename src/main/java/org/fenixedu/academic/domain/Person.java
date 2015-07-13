@@ -118,6 +118,8 @@ import pt.ist.fenixframework.Atomic;
 public class Person extends Person_Base {
 
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
+    
+    public static final String PERSON_CREATE_SIGNAL = "PERSON_CREATE_SIGNAL";
 
     private IdDocument getIdDocument() {
         final Iterator<IdDocument> documentIterator = getIdDocumentsSet().iterator();
