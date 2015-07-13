@@ -399,57 +399,69 @@
 
     					<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${externalId}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
     					<fr:property name="key(view)" value="view"/>
+    					<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 
                         <fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${externalId}&amp;registrationID=${registration.externalId}"/>
                         <fr:property name="key(reject)" value="reject"/>
+                        <fr:property name="bundle(reject)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(reject)" value="rejectedSituationAccepted" />
                         <fr:property name="visibleIfNot(reject)" value="piggyBackedOnRegistry" />
 
                         <fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${externalId}&amp;registrationID=${registration.externalId}"/>
                         <fr:property name="key(cancel)" value="cancel"/>
+                        <fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
                         <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
 
                         <fr:property name="linkFormat(payments)" value="${paymentURL}"/>
                         <fr:property name="module(payments)" value=""/>                        
                         <fr:property name="key(payments)" value="payments"/>
+                        <fr:property name="bundle(payments)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIfNot(payments)" value="isPayed"/>
 						<fr:property name="visibleIf(payments)" value="paymentsAccessible"/>
 
                         <fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(processing)" value="processing"/>
+                        <fr:property name="bundle(processing)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(processing)" value="processingSituationAccepted"/>
                         <fr:property name="visibleIfNot(processing)" value="piggyBackedOnRegistry"/>
 
                         <fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(send)" value="label.send"/>
+                        <fr:property name="bundle(send)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(send)" value="sendToExternalEntitySituationAccepted"/>
                         <fr:property name="visibleIfNot(send)" value="managedWithRectorateSubmissionBatch"/>
 
                         <fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
+                        <fr:property name="bundle(receiveFrom)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(receiveFrom)" value="receivedSituationAccepted"/>
 
                         <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=downloadDocument&amp;documentRequestId=${externalId}&amp;"/>
                         <fr:property name="key(print)" value="print"/>
+                        <fr:property name="bundle(print)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(print)" value="downloadPossible"/>
 
 
                         <fr:property name="linkFormat(reprint)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${externalId}&amp;"/>
                         <fr:property name="key(reprint)" value="reprint"/>
+                        <fr:property name="bundle(reprint)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(reprint)" value="rePrintPossible"/>
         
                         <fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(deliver)" value="deliver"/>
+                        <fr:property name="bundle(deliver)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(deliver)" value="deliveredSituationAccepted"/>
                         
     
                         <fr:property name="linkFormat(code)" value="/academicServiceRequestsManagement.do?method=generateRegistryCode&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(code)" value="label.generateRegistryCode"/>
+                        <fr:property name="bundle(code)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(code)" value="canGenerateRegistryCode"/>
     
                         <fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(conclude)" value="conclude"/>
+                        <fr:property name="bundle(conclude)" value="APPLICATION_RESOURCES" />
                         <fr:property name="visibleIf(conclude)" value="concludedSituationAccepted"/>
 
     					<fr:property name="order(view)" value="1" />
