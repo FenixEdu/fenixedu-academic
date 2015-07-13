@@ -85,13 +85,6 @@ public class CreatePastDiplomaRequest {
     }
 
     private static void createPaymentSituation(PastDiplomaRequest request, DocumentRequestCreateBean bean) {
-        if (isPayed(bean)) {
-            PastDegreeDiplomaRequestEvent event =
-                    new PastDegreeDiplomaRequestEvent(request.getAdministrativeOffice(), request.getPerson(), request,
-                            bean.getPastPaymentAmount());
-
-            event.depositAmount(Authenticate.getUser(), bean.getPastPaymentAmount(), createTransactionDetailDTO(bean));
-        }
     }
 
     private static boolean isPayed(DocumentRequestCreateBean bean) {

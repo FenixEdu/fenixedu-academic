@@ -120,6 +120,18 @@ ${portal.toolkit()}
 								code="label.ServiceRequestType.name" /></th>
 						<td><c:out value='${serviceRequestType.name.content}' /></td>
 					</tr>
+					<tr>
+						<th scope="row" class="col-xs-3"><spring:message
+								code="label.ServiceRequestType.payed" /></th>
+						<td>
+							<c:if test="${serviceRequestType.payed}">
+								<spring:message code="label.true" />
+							</c:if>
+							<c:if test="${not serviceRequestType.payed}">
+								<spring:message code="label.false" />
+							</c:if>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</form>

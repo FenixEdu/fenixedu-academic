@@ -29,12 +29,14 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
 import org.fenixedu.academic.ui.struts.action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.joda.time.LocalDate;
 
 @Mapping(path = "/bolonhaStudentEnrollment", module = "academicAdministration", formBean = "bolonhaStudentEnrollmentForm",
         functionality = SearchForStudentsDA.class)
@@ -60,8 +62,8 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
 
     protected void addDebtsWarningMessages(final Student student, final ExecutionSemester executionSemester,
             final HttpServletRequest request) {
-        if (student.isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
-            addActionMessage("warning", request, "label.student.events.in.debt.warning");
+        if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(student.getPerson(), new LocalDate())) {
+            addActionMessage("warning", request, "label.student.events.in.debt.unpayed.warning");
         }
     }
 

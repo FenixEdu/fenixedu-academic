@@ -26,6 +26,8 @@ package org.fenixedu.academic.dto;
 
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
+import org.joda.time.LocalDate;
 
 /**
  * @author tfc130
@@ -52,7 +54,7 @@ public class InfoStudent extends InfoObject {
     }
 
     public Boolean getPayedTuition() {
-        return getRegistration().getPayedTuition();
+        return !TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(registration.getPerson(), new LocalDate());
     }
 
     @Override

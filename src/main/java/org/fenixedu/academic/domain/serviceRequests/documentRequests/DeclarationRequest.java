@@ -20,6 +20,8 @@ package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.DeclarationRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.treasury.IAcademicTreasuryEvent;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
@@ -72,7 +74,10 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
 
     final public void edit(final DocumentRequestBean documentRequestBean) {
 
-        if (isPayable() && isPayed() && !getNumberOfPages().equals(documentRequestBean.getNumberOfPages())) {
+        final IAcademicTreasuryEvent event =
+                TreasuryBridgeAPIFactory.implementation().academicTreasuryEventForAcademicServiceRequest(this);
+
+        if (isPayable() && event != null && !getNumberOfPages().equals(documentRequestBean.getNumberOfPages())) {
             throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
         }
 
@@ -87,10 +92,6 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
         if (academicServiceRequestBean.isToConclude()) {
             if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
                 throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
-            }
-
-            if (!isFree()) {
-                new DeclarationRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
             }
         }
     }

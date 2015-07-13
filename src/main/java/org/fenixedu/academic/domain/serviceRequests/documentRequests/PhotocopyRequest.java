@@ -56,20 +56,9 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 
-        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
-            getEvent().cancel(academicServiceRequestBean.getResponsible());
-
-        } else if (academicServiceRequestBean.isToConclude()) {
+        if (academicServiceRequestBean.isToConclude()) {
             if (!hasNumberOfPages()) {
                 throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
-            }
-
-            if (!isFree()) {
-                new PhotocopyRequestEvent(getAdministrativeOffice(), getPerson(), this);
-            }
-        } else if (academicServiceRequestBean.isToDeliver()) {
-            if (isPayable() && !isPayed()) {
-                throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }
         }
     }

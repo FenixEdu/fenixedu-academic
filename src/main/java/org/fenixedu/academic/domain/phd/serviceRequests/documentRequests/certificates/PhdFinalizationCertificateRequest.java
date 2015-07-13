@@ -66,11 +66,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
     @Override
     protected void init(PhdDocumentRequestCreateBean bean) {
         super.init(bean);
-
-        if (!isFree()) {
-            PhdFinalizationCertificateRequestEvent.create(getAdministrativeOffice(), getPerson(), this);
-        }
-
+        
         if (!bean.getPhdIndividualProgramProcess().isBolonha()) {
             return;
         }
@@ -150,7 +146,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override

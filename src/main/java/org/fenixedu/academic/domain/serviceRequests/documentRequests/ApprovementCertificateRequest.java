@@ -124,7 +124,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     protected boolean isPayed() {
-        return super.isPayed() || getEvent().isCancelled();
+        return super.isPayed();
     }
 
     @Override

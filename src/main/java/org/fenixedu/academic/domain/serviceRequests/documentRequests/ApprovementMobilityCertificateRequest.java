@@ -129,7 +129,7 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 
     @Override
     protected boolean isPayed() {
-        return super.isPayed() || getEvent().isCancelled();
+        return super.isPayed();
     }
 
     @Override

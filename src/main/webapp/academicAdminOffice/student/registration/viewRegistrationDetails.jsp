@@ -410,7 +410,8 @@
                         <fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
                         <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
 
-                        <fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.externalId}" %>"/>
+                        <fr:property name="linkFormat(payments)" value="${paymentURL}"/>
+                        <fr:property name="module(payments)" value=""/>                        
                         <fr:property name="key(payments)" value="payments"/>
                         <fr:property name="visibleIfNot(payments)" value="isPayed"/>
 						<fr:property name="visibleIf(payments)" value="paymentsAccessible"/>

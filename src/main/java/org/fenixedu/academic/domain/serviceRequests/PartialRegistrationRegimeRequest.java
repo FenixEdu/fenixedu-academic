@@ -48,36 +48,21 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 
     @Override
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
-        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
-            getEvent().cancel(academicServiceRequestBean.getResponsible());
-
-        } else if (academicServiceRequestBean.isToConclude()) {
-            if (isPayable() && !isPayed()) {
-                throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
-            }
+        if (academicServiceRequestBean.isToConclude()) {
             academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
         }
     }
 
     @Override
     protected boolean isPayed() {
-        return super.isPayed() || getEvent().isCancelled();
+        return super.isPayed();
     }
 
     @Override
     protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
         super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
-        if (academicServiceRequestBean.isToProcess() && !isFree()) {
-            FixedAmountPR partialRegistrationPostingRule =
-                    (FixedAmountPR) getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(
-                            EventType.PARTIAL_REGISTRATION_REGIME_REQUEST,
-                            getExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight());
-
-            if (partialRegistrationPostingRule.getFixedAmount().greaterThan(Money.ZERO)) {
-                new PartialRegistrationRegimeRequestEvent(getAdministrativeOffice(), getPerson(), this);
-            }
-        } else if (academicServiceRequestBean.isToConclude()) {
+        if (academicServiceRequestBean.isToConclude()) {
             AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
                     AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
 
@@ -116,7 +101,7 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override

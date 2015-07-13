@@ -58,7 +58,7 @@ public class PastDiplomaRequest extends PastDiplomaRequest_Base {
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override

@@ -509,10 +509,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private void assertInsuranceEvent(final ExecutionYear executionYear) {
-        if (!getPerson().hasInsuranceEventFor(executionYear)
-                && !getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-            new InsuranceEvent(getPerson(), executionYear);
-        }
     }
 
     private void assertRegistrationFormalizationAlerts() {

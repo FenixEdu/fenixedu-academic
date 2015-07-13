@@ -21,11 +21,13 @@ package org.fenixedu.academic.service.services.enrollment.shift;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.enrollment.shift.ShiftEnrollmentErrorReport;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.filter.enrollment.ClassEnrollmentAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -52,7 +54,7 @@ public class EnrollStudentInShifts {
             throw new StudentNotFoundServiceException();
         }
 
-        if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
+        if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(registration.getPerson(), new LocalDate())) {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 

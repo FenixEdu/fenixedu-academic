@@ -39,17 +39,11 @@ public class DuplicateRequest extends DuplicateRequest_Base {
         checkParameters(bean);
         super.setDescription(bean.getDescription());
         super.setAmountToPay(bean.getAmountToPay());
-
-        new DuplicateRequestEvent(getAdministrativeOffice(), getPerson(), this);
     }
 
     private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
         if (StringUtils.isEmpty(bean.getDescription())) {
             throw new DomainException("error.DuplicateRequest.invalid.description");
-        }
-
-        if (bean.getAmountToPay() == null || Money.ZERO.equals(bean.getAmountToPay())) {
-            throw new DomainException("error.DuplicateRequest.invalid.amountToPay");
         }
     }
 
@@ -60,7 +54,7 @@ public class DuplicateRequest extends DuplicateRequest_Base {
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override

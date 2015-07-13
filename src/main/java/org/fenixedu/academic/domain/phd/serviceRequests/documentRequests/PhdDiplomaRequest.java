@@ -66,10 +66,6 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
         checkParameters(bean);
         super.init(bean);
 
-        if (!isFree()) {
-            PhdDiplomaRequestEvent.create(getAdministrativeOffice(), getPhdIndividualProgramProcess().getPerson(), this);
-        }
-
         applyRegistryCode();
     }
 
@@ -105,10 +101,6 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
         }
 
         PhdRegistryDiplomaRequest phdRegistryDiploma = process.getRegistryDiplomaRequest();
-
-        if (phdRegistryDiploma.isPayedUponCreation() && !phdRegistryDiploma.getEvent().isPayed()) {
-            throw new PhdDomainOperationException("error.phdDiploma.registryDiploma.must.be.payed");
-        }
     }
 
     @Override
@@ -128,7 +120,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override
@@ -184,18 +176,10 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
                 throw new PhdDomainOperationException("error.registryDiploma.registrationNotSubmitedToConclusionProcess");
             }
 
-            if (isPayable() && !isPayed()) {
-                throw new PhdDomainOperationException("AcademicServiceRequest.hasnt.been.payed");
-            }
-
             getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 
             if (getLastGeneratedDocument() == null) {
                 generateDocument();
-            }
-        } else if (academicServiceRequestBean.isToCancelOrReject()) {
-            if (getEvent() != null) {
-                getEvent().cancel(academicServiceRequestBean.getResponsible());
             }
         }
     }

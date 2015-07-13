@@ -73,23 +73,11 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     @Override
     protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
         super.createAcademicServiceRequestSituations(academicServiceRequestBean);
-
-        if (academicServiceRequestBean.isNew()) {
-            if (!isFree()) {
-                new EquivalencePlanRequestEvent(getAdministrativeOffice(), getPerson(), this);
-            }
-        }
     }
 
     @Override
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
-        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
-            getEvent().cancel(academicServiceRequestBean.getResponsible());
-
-        } else if (academicServiceRequestBean.isToProcess()) {
-            if (isPayable() && !isPayed()) {
-                throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
-            }
+        if (academicServiceRequestBean.isToProcess()) {
             academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
         }
     }
@@ -123,7 +111,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override

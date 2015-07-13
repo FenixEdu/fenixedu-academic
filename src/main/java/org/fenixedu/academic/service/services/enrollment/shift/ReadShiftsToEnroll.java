@@ -26,10 +26,12 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.ShiftToEnrol;
 import org.fenixedu.academic.service.filter.enrollment.ClassEnrollmentAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -51,7 +53,7 @@ public class ReadShiftsToEnroll {
             throw new FenixServiceException("errors.impossible.operation");
         }
 
-        if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
+        if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(registration.getPerson(), new LocalDate())) {
             if (!registration.getInterruptedStudies()) {
                 throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
             }

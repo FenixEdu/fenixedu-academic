@@ -105,7 +105,6 @@ public class DFACandidacy extends DFACandidacy_Base {
         addCandidacyDocuments(new CandidacyDocument("interest.letter"));
 
         final AdministrativeOffice administrativeOffice = executionDegree.getDegree().getAdministrativeOffice();
-        new DFACandidacyEvent(administrativeOffice, person, this);
         new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
     }
 
@@ -136,12 +135,6 @@ public class DFACandidacy extends DFACandidacy_Base {
     }
 
     public void cancelEvents() {
-        for (Event event : getPerson().getEventsByEventType(EventType.CANDIDACY_ENROLMENT)) {
-            DFACandidacyEvent candidacyEvent = (DFACandidacyEvent) event;
-            if (candidacyEvent.getCandidacy() == this) {
-                candidacyEvent.cancel(AccessControl.getPerson());
-            }
-        }
     }
 
     @Override

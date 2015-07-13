@@ -60,13 +60,7 @@ public abstract class Event extends Event_Base {
     };
 
     protected Event() {
-        super();
-
-        super.setRootDomainObject(Bennu.getInstance());
-        super.setWhenOccured(new DateTime());
-        super.setCreatedBy(AccessControl.getPerson() != null ? AccessControl.getPerson().getUsername() : null);
-
-        changeState(EventState.OPEN, new DateTime());
+        throw new RuntimeException("Event is deprecated");
     }
 
     protected void init(EventType eventType, Person person) {

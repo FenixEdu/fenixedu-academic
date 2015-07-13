@@ -137,9 +137,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
         super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
         if (academicServiceRequestBean.isNew()) {
-            if (!isFree()) {
-                new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
-            }
         } else if (academicServiceRequestBean.isToConclude()) {
             AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
                     AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
@@ -148,13 +145,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
-            getEvent().cancel(academicServiceRequestBean.getResponsible());
-
-        } else if (academicServiceRequestBean.isToProcess()) {
-            if (isPayable() && !isPayed()) {
-                throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
-            }
+        if (academicServiceRequestBean.isToProcess()) {
             academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 
         } else if (academicServiceRequestBean.isToConclude() && hasExecutionDegree()) {
@@ -198,7 +189,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override

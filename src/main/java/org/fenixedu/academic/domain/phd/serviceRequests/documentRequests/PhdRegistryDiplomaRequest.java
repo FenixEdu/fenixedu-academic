@@ -69,9 +69,10 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
         checkParameters(bean);
         super.init(bean);
 
-        if (!isFree()) {
-            PhdRegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getPhdIndividualProgramProcess().getPerson(), this);
-        }
+        // ANIL
+//        if (!isFree()) {
+//            PhdRegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getPhdIndividualProgramProcess().getPerson(), this);
+//        }
 
         setDiplomaSupplement(PhdDiplomaSupplementRequest.create(bean));
     }
@@ -94,7 +95,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override
@@ -199,10 +200,6 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
                 throw new PhdDomainOperationException("error.registryDiploma.registrationNotSubmitedToConclusionProcess");
             }
 
-            if (isPayable() && !isPayed()) {
-                throw new PhdDomainOperationException("AcademicServiceRequest.hasnt.been.payed");
-            }
-
             if (getRegistryCode() == null) {
 
                 PhdDiplomaRequest diplomaRequest = getPhdIndividualProgramProcess().getDiplomaRequest();
@@ -226,9 +223,6 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
                 getDiplomaSupplement().concludeServiceRequest();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
-            if (getEvent() != null) {
-                getEvent().cancel(academicServiceRequestBean.getResponsible());
-            }
 
             if (academicServiceRequestBean.isToCancel()) {
                 getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());

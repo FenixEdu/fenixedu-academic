@@ -18,13 +18,9 @@
  */
 package org.fenixedu.academic.service.services.accounting;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.events.dfa.DfaRegistrationEvent;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -32,39 +28,26 @@ public class AccountingEventsCreator {
 
     @Atomic
     static public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-        check(AcademicPredicates.MANAGE_ACCOUNTING_EVENTS);
-        studentCurricularPlan.getRegistration().getStudent().createInsuranceEvent(studentCurricularPlan, executionYear);
     }
 
     @Atomic
     static public void createGratuityEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-        check(AcademicPredicates.MANAGE_ACCOUNTING_EVENTS);
-        studentCurricularPlan.getRegistration().getStudent().createGratuityEvent(studentCurricularPlan, executionYear);
     }
 
     @Atomic
     static public void createAdministrativeOfficeFeeAndInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
-        check(AcademicPredicates.MANAGE_ACCOUNTING_EVENTS);
-        studentCurricularPlan.getRegistration().getStudent()
-                .createAdministrativeOfficeFeeEvent(studentCurricularPlan, executionYear);
     }
 
     @Atomic
     static public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
-        check(AcademicPredicates.MANAGE_ACCOUNTING_EVENTS);
-        studentCurricularPlan.getRegistration().getStudent()
-                .createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     @Atomic
     @Deprecated
     static public void createDfaRegistrationEvent(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
-        check(AcademicPredicates.MANAGE_ACCOUNTING_EVENTS);
-        new DfaRegistrationEvent(studentCurricularPlan.getDegree().getAdministrativeOffice(), studentCurricularPlan.getPerson(),
-                studentCurricularPlan.getRegistration(), executionYear);
     }
 
 }

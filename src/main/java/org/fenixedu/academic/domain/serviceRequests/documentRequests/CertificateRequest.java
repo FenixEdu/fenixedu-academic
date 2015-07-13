@@ -22,7 +22,9 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.treasury.IAcademicTreasuryEvent;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
@@ -45,9 +47,9 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
     }
 
     static final public CertificateRequest create(final DocumentRequestCreateBean bean) {
-        
+
         CertificateRequest certificateRequest = null;
-        
+
         switch (bean.getChosenDocumentRequestType()) {
         case SCHOOL_REGISTRATION_CERTIFICATE:
             certificateRequest = new SchoolRegistrationCertificateRequest(bean);
@@ -72,7 +74,7 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
         case EXAM_DATE_CERTIFICATE:
             certificateRequest = new ExamDateCertificateRequest(bean);
             break;
-            
+
         case COURSE_LOAD:
             certificateRequest = new CourseLoadRequest(bean);
             break;
@@ -96,17 +98,18 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
         case STANDALONE_ENROLMENT_CERTIFICATE:
             certificateRequest = new StandaloneEnrolmentCertificateRequest(bean);
             break;
-            
+
         }
-        
-        if(certificateRequest == null) {
+
+        if (certificateRequest == null) {
             throw new DomainException("error.CertificateRequest.unexpected.document.type");
         }
-        
-        Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT, new DomainObjectEvent<AcademicServiceRequest>(certificateRequest));
-        
+
+        Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT,
+                new DomainObjectEvent<AcademicServiceRequest>(certificateRequest));
+
         return certificateRequest;
-        
+
     }
 
     @Override
@@ -122,7 +125,10 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
 
     final public void edit(final DocumentRequestBean certificateRequestBean) {
 
-        if (isPayable() && isPayed() && getNumberOfPages() == certificateRequestBean.getNumberOfPages()) {
+        final IAcademicTreasuryEvent event =
+                TreasuryBridgeAPIFactory.implementation().academicTreasuryEventForAcademicServiceRequest(this);
+
+        if (isPayable() && event != null && getNumberOfPages() == certificateRequestBean.getNumberOfPages()) {
             throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
         }
 
@@ -144,18 +150,11 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
         if (!hasNumberOfPages()) {
             throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
         }
-
-        if (!isFree()) {
-            if (getEvent() == null) {
-                createCertificateRequestEvent();
-            } else {
-                getEvent().recalculateState(academicServiceRequestBean.getFinalSituationDate());
-            }
-        }
     }
 
     protected void createCertificateRequestEvent() {
-        new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
+        // ANIL
+        // new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
     }
 
     /**

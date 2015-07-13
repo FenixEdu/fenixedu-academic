@@ -52,9 +52,6 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
         checkParameters(bean);
         setProgramConclusion(bean.getProgramConclusion());
 
-        if (isPayedUponCreation() && !isFree()) {
-            RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
-        }
         if (bean.getRegistration().isBolonha()) {
             setDiplomaSupplement(new DiplomaSupplementRequest(bean));
         }
@@ -138,12 +135,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
             if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("error.registryDiploma.registrationNotSubmitedToConclusionProcess");
             }
-            if (!getFreeProcessed()) {
-                assertPayedEvents();
-            }
-            if (isPayable() && !isPayed()) {
-                throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
-            }
+            
             if (getRegistryCode() == null) {
                 getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
                 getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
@@ -155,16 +147,10 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
                 getDiplomaSupplement().process();
             }
         } else if (academicServiceRequestBean.isToConclude()) {
-            if (!isFree() && getEvent() == null && !isPayedUponCreation()) {
-                RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
-            }
             if (getRegistration().isBolonha() && getDiplomaSupplement().isConcludedSituationAccepted()) {
                 getDiplomaSupplement().concludeServiceRequest();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
-            if (getEvent() != null) {
-                getEvent().cancel(academicServiceRequestBean.getResponsible());
-            }
             if (getRegistration().isBolonha() && academicServiceRequestBean.isToCancel()) {
                 getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
             }
@@ -186,7 +172,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public boolean isPayedUponCreation() {
-        return true;
+        return false;
     }
 
     @Override

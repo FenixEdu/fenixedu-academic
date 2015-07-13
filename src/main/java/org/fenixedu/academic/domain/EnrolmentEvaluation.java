@@ -31,6 +31,8 @@ import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.domain.treasury.IImprovementTreasuryEvent;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.academic.util.FenixDigestUtils;
@@ -294,9 +296,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION,
                     "error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet"));
         }
-        if (getImprovementOfApprovedEnrolmentEvent() != null && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.enrolmentEvaluation.has.been.payed"));
-        }
     }
 
     public boolean hasConfirmedMarkSheet() {
@@ -330,9 +329,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         setMarkSheet(null);
         setRectification(null);
         setRectified(null);
-        if (getImprovementOfApprovedEnrolmentEvent() != null) {
-            getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
-        }
+
         setExecutionPeriod(null);
         setEvaluationSeason(null);
 
@@ -440,11 +437,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
     public boolean isPayable() {
-        return getImprovementOfApprovedEnrolmentEvent() != null && !getImprovementOfApprovedEnrolmentEvent().isCancelled();
+        final IImprovementTreasuryEvent event = TreasuryBridgeAPIFactory.implementation().getImprovementTaxTreasuryEvent(getRegistration(), getExecutionYear());
+        
+        return event != null && event.isWithDebitEntry(this);
     }
 
     public boolean isPayed() {
-        return getImprovementOfApprovedEnrolmentEvent().isPayed();
+        final IImprovementTreasuryEvent event = TreasuryBridgeAPIFactory.implementation().getImprovementTaxTreasuryEvent(getRegistration(), getExecutionYear());
+
+        return event != null && event.isPayed(this);
     }
 
     @Override

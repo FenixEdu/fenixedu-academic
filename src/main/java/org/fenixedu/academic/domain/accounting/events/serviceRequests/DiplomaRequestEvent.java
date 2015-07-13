@@ -42,22 +42,7 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
 
     final static public DiplomaRequestEvent create(final AdministrativeOffice administrativeOffice, final Person person,
             final DiplomaRequest diplomaRequest) {
-        switch (diplomaRequest.getEventType()) {
-        case BOLONHA_DEGREE_DIPLOMA_REQUEST:
-            return new BolonhaDegreeDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(), person,
-                    diplomaRequest);
-        case BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST:
-            return new BolonhaMasterDegreeDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(), person,
-                    diplomaRequest);
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST:
-            return new BolonhaAdvancedFormationDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(), person,
-                    diplomaRequest);
-        case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA_REQUEST:
-            return new BolonhaAdvancedSpecializationDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(),
-                    person, diplomaRequest);
-        default:
-            throw new DomainException("DiplomaRequestEvent.invalid.event.type.in.creation");
-        }
+        throw new RuntimeException("Event is deprecated");
     }
 
     @Override

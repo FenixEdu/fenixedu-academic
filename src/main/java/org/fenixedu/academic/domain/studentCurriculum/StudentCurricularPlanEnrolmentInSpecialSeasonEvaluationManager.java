@@ -44,6 +44,8 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.StudentStatute;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
+import org.joda.time.LocalDate;
 
 public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager extends StudentCurricularPlanEnrolment {
 
@@ -62,7 +64,13 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void checkDebts() {
-        if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(getExecutionYear())) {
+        boolean isAcademicalActsBlocked = TreasuryBridgeAPIFactory
+                .implementation()
+                .isAcademicalActsBlocked(
+                        getPerson(),
+                        getExecutionYear().getEndLocalDate().isBefore(new LocalDate()) ? getExecutionYear().getEndLocalDate() : new LocalDate());
+        
+        if (isAcademicalActsBlocked) {
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
     }

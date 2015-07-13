@@ -76,9 +76,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
         checkParameters(bean);
         setProgramConclusion(bean.getProgramConclusion());
-        if (isPayedUponCreation() && !isFree()) {
-            DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
-        }
     }
 
     @Override
@@ -92,10 +89,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
             if (registryRequest == null) {
                 throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
-            } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null
-                    && !registryRequest.getEvent().isPayed()) {
-                throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
-            }
+            } 
         }
 
         checkForDuplicate(bean.getProgramConclusion());
@@ -184,17 +178,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
             }
 
-            if (!getFreeProcessed()) {
-                if (hasCurriculumGroup()) {
-                    assertPayedEvents(getCurriculumGroup().getIEnrolmentsLastExecutionYear());
-                } else {
-                    assertPayedEvents();
-                }
-            }
-
-            if (isPayable() && !isPayed()) {
-                throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
-            }
 
             if (!getRegistration().getDegreeType().isAdvancedFormationDiploma()
                     && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
@@ -218,15 +201,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             if (getLastGeneratedDocument() == null) {
                 generateDocument();
             }
-        }
-
-        if (academicServiceRequestBean.isToConclude() && !isFree() && getEvent() == null && !isPayedUponCreation()) {
-            DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
-        }
-
-        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null && getEvent().isOpen()) {
-            getEvent().cancel(academicServiceRequestBean.getResponsible());
-        }
+        }        
     }
 
     final public boolean hasFinalAverageDescription() {
@@ -314,7 +289,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     @Override
     public boolean isPayedUponCreation() {
-        return !getDegreeType().isAdvancedFormationDiploma();
+        return false;
     }
 
     @Override

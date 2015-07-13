@@ -42,7 +42,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
-import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.CandidacySituation;
@@ -1697,10 +1696,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         for (final Enrolment enrolment : toCreate) {
             created.add(enrolment.createEnrolmentEvaluationForImprovement(person, executionSemester));
-        }
-
-        if (isToPayImprovementOfApprovedEnrolments()) {
-            new ImprovementOfApprovedEnrolmentEvent(this.getDegree().getAdministrativeOffice(), getPerson(), created);
         }
     }
 

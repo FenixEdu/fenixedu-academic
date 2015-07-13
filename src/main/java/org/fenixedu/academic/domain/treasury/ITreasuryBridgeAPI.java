@@ -21,7 +21,7 @@ public interface ITreasuryBridgeAPI {
 
     public void registerNewAcademicServiceRequestSituationHandler();
 
-    public IAcademicTreasuryEvent academicTreasuryEventForAcademicServiceRequest(
+    public IAcademicServiceRequestAndAcademicTaxTreasuryEvent academicTreasuryEventForAcademicServiceRequest(
             final AcademicServiceRequest academicServiceRequest);
 
     /* ----------
@@ -52,16 +52,16 @@ public interface ITreasuryBridgeAPI {
 
     public boolean isToPayTuition(final Registration registration, final ExecutionYear executionYear);
     
-    public IAcademicTreasuryEvent getTuitionForRegistrationTreasuryEvent(final Registration registration,
+    public ITuitionTreasuryEvent getTuitionForRegistrationTreasuryEvent(final Registration registration,
             final ExecutionYear executionYear);
 
-    public IAcademicTreasuryEvent getTuitionForStandaloneTreasuryEvent(final Registration registration,
+    public ITuitionTreasuryEvent getTuitionForStandaloneTreasuryEvent(final Registration registration,
             final ExecutionYear executionYear);
 
-    public IAcademicTreasuryEvent getTuitionForExtracurricularTreasuryEvent(final Registration registration,
+    public ITuitionTreasuryEvent getTuitionForExtracurricularTreasuryEvent(final Registration registration,
             final ExecutionYear executionYear);
 
-    public IAcademicTreasuryEvent getTuitionForImprovementTreasuryEvent(final Registration registration,
+    public ITuitionTreasuryEvent getTuitionForImprovementTreasuryEvent(final Registration registration,
             final ExecutionYear executionYear);
 
     /* --------------
@@ -69,6 +69,8 @@ public interface ITreasuryBridgeAPI {
      * --------------
      */
 
+    public IImprovementTreasuryEvent getImprovementTaxTreasuryEvent(final Registration registration, final ExecutionYear executionYear);
+    
     public List<IAcademicTreasuryEvent> getAcademicTaxesList(final Registration registration, final ExecutionYear executionYear);
 
 

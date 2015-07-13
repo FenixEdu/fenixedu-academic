@@ -44,6 +44,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.ShiftToEnrol;
 import org.fenixedu.academic.service.filter.enrollment.ClassEnrollmentAuthorizationFilter;
 import org.fenixedu.academic.service.filter.enrollment.ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan;
@@ -64,6 +65,7 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -221,6 +223,12 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
 
         final List<ShiftToEnrol> shiftsToEnrol;
         try {
+            
+            if(TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(registration.getPerson(), new LocalDate())) {
+                addActionMessage(request, "error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+                return mapping.getInputForward();
+            }
+            
             shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration, executionSemester);
         } catch (OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan exception) {
             addActionMessage(request, "error.enrollment.period.closed", exception.getArgs());

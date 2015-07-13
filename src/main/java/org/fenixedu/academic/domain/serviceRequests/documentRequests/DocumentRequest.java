@@ -27,10 +27,12 @@ import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import org.fenixedu.academic.util.report.ReportsUtils;
+import org.joda.time.LocalDate;
 
 public abstract class DocumentRequest extends DocumentRequest_Base implements IDocumentRequest {
     public static Comparator<AcademicServiceRequest> COMPARATOR_BY_REGISTRY_NUMBER = new Comparator<AcademicServiceRequest>() {
@@ -106,40 +108,12 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         super.internalChangeState(academicServiceRequestBean);
-
-        if (academicServiceRequestBean.isToProcess()) {
-            if (!getFreeProcessed()) {
-                assertPayedEvents();
-            }
-        }
-    }
-
-    protected void assertPayedEvents() {
-        if (getRegistration().hasGratuityDebtsCurrently()) {
-            throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
-        }
-
-        if (getRegistration().hasInsuranceDebtsCurrently()) {
-            throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
-        }
-
-        if (getRegistration().hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(getAdministrativeOffice())) {
-            throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
-        }
     }
 
     protected void assertPayedEvents(final ExecutionYear executionYear) {
         if (executionYear != null) {
-            if (getRegistration().hasGratuityDebts(executionYear)) {
-                throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
-            }
-
-            if (getRegistration().hasInsuranceDebts(executionYear)) {
-                throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
-            }
-
-            if (getRegistration().hasAdministrativeOfficeFeeAndInsuranceDebts(getAdministrativeOffice(), executionYear)) {
-                throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
+            if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(getPerson(), new LocalDate())) {
+                throw new DomainException("DocumentRequest.student.has.not.payed.debts");
             }
         }
     }

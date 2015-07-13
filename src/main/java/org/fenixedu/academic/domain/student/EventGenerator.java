@@ -21,23 +21,10 @@ package org.fenixedu.academic.domain.student;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
 
 public class EventGenerator {
 
     public static void generateNecessaryEvents(StudentCurricularPlan studentCurricularPlan, Person person,
             ExecutionYear executionYear) {
-
-        if (studentCurricularPlan.getDegree().getDegreeType().isAdvancedFormationDiploma()) {
-
-            final AccountingEventsManager accountingEventsManager = new AccountingEventsManager();
-            final ExecutionYear executionYearToCreateEvents =
-                    executionYear != null ? executionYear : ExecutionYear.readCurrentExecutionYear();
-
-            accountingEventsManager.createGratuityEvent(studentCurricularPlan, executionYearToCreateEvents, false);
-
-            accountingEventsManager.createAdministrativeOfficeFeeAndInsuranceEvent(studentCurricularPlan,
-                    executionYearToCreateEvents);
-        }
     }
 }

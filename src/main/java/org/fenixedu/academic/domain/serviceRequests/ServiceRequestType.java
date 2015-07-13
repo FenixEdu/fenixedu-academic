@@ -34,7 +34,8 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         this(code, name, payed);
         setAcademicServiceRequestType(academicServiceRequestType);
         setDocumentRequestType(documentRequestType);
-
+        setPayed(payed);
+        
         checkRules();
     }
 
