@@ -33,6 +33,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -107,9 +108,11 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDisp
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionCourseId = (String) form.get("wantedCourse");
+        ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
+        request.setAttribute("executionSemesterID", executionSemester.getExternalId());
 
         try {
-            WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourseId);
+            WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourseId, executionSemester);
 
         } catch (NotAuthorizedException exception) {
             addActionMessage(request, "error.attend.curricularCourse.impossibleToEnroll");
@@ -143,6 +146,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDisp
         }
 
         checkParameter(request);
+        request.setAttribute("executionSemesterID", request.getParameter("executionSemesterID"));
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionCourseId = (String) form.get("removedCourse");
@@ -183,16 +187,19 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDisp
 
         final SchoolClass schoolClass = setSelectedSchoolClass(request, classIdSelected, schoolClassesToEnrol);
 
+        final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
         final List<InfoShowOccupation> infoClasslessons =
-                ReadClassTimeTableByStudent.runReadClassTimeTableByStudent(registration, schoolClass, executionCourse);
+                ReadClassTimeTableByStudent.runReadClassTimeTableByStudent(registration, schoolClass, executionCourse,
+                        executionSemester);
 
         request.setAttribute("infoClasslessons", infoClasslessons);
         request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
-        final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration, null);
+        final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration, executionSemester);
         request.setAttribute("person", registration.getPerson());
         request.setAttribute("infoLessons", infoLessons);
         request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));
+        request.setAttribute("executionSemesterID", executionSemester.getExternalId());
 
         return mapping.findForward("showShiftsToEnroll");
     }
@@ -278,6 +285,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDisp
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
+        request.setAttribute("executionSemesterID", request.getParameter("executionSemesterID"));
         if (getAndSetRegistration(request) == null) {
             addActionMessage(request, "errors.impossible.operation");
             return mapping.getInputForward();

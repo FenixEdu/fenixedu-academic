@@ -73,8 +73,11 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
-        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request,
-                ExecutionSemester.readActualExecutionSemester());
+        ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
+        if (executionSemester == null) {
+            executionSemester = ExecutionSemester.readActualExecutionSemester();
+        }
+        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request, executionSemester);
     }
 
     protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,

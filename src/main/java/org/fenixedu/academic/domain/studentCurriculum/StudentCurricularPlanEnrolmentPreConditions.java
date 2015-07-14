@@ -143,19 +143,19 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 
         if (semester.isFirstOfYear() && hasSpecialSeason(scp, semester)) {
 
-            if (scp.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
+            if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesSpecialSeason(semester).isPresent()) {
                 return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
                         .getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
             }
 
         } else if (semester.isFirstOfYear() && hasPrescribed(scp, semester)) {
 
-            if (scp.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesFlunkedSeason() == null) {
+            if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesFlunkedSeason(semester).isPresent()) {
                 return outOfPeriodResult("flunked", scp.getDegreeCurricularPlan()
                         .getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason());
             }
 
-        } else if (!scp.getDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses()) {
+        } else if (!scp.getDegreeCurricularPlan().getActiveCurricularCourseEnrolmentPeriod(semester).isPresent()) {
             return outOfPeriodResult("normal", scp.getDegreeCurricularPlan().getNextEnrolmentPeriod());
         }
 

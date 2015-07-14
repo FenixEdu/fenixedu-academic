@@ -35,4 +35,8 @@ public class EnrolmentPeriodInClasses extends EnrolmentPeriodInClasses_Base {
         init(degreeCurricularPlan, executionSemester, startDate, endDate);
     }
 
+    @Override
+    public boolean isForClasses() {
+        return true;
+    }
 }

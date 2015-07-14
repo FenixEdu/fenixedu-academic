@@ -83,6 +83,14 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
         setEndDateDateTime(endDate);
     }
 
+    public boolean isForCurricularCourses() {
+        return false;
+    }
+
+    public boolean isForClasses() {
+        return false;
+    }
+
     public boolean isValid() {
         return containsDate(new DateTime());
     }

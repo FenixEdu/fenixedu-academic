@@ -24,7 +24,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
+
+<h3>${fr:message('resources.StudentResources', 'label.enrolment.choose.semester')}</h3>
 
 <c:if test="${not empty debtsMessage}">
     <div class="alert alert-danger">
@@ -32,15 +33,19 @@
     </div>
 </c:if>
 
-<logic:present name="executionSemester" property="enrolmentInstructions">
-    <bean:write name="executionSemester" property="enrolmentInstructions.tempInstructions.content" filter="false"/>
-</logic:present>
-
-<bean:define id="registrationOid" name="registration" property="externalId" />
-<bean:define id="executionSemesterID" name="executionSemester" property="externalId" />
-
-<c:if test="${empty debtsMessage}">
-    <a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registrationOid}&executionSemesterID=${executionSemesterID}">
-        ${fr:message('resources.ApplicationResources', 'label.continue')}
-    </a>
-</c:if>
+<fr:form action="/studentEnrollmentManagement.do?method=chooseExecutionPeriod">
+	<fr:edit id="chooseSemester" name="chooseSemester">
+		<fr:schema bundle="STUDENT_RESOURCES"
+			type="org.fenixedu.academic.ui.struts.action.student.enrollment.bolonha.BolonhaStudentEnrollmentDispatchAction$ChooseEnrolmentSemester">
+			<fr:slot name="chosenSemester" layout="menu-select-postback" key="label.semester" required="true">
+				<fr:property name="from" value="semestersForCourses" />
+				<fr:property name="format" value="\${name} - \${executionYear.name}" />
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+        <fr:destination name="postBack" path="/studentEnrollmentManagement.do?method=chooseExecutionPeriod" />
+	</fr:edit>      
+</fr:form>
