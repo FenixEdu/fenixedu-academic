@@ -76,8 +76,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 
     @Override
     protected String getDegreeDescription() {
-        return getDocumentRequest().getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(),
-                (ProgramConclusion) null, getLocale());
+        return getRegistration().getDegreeDescription(getExecutionYear(), (ProgramConclusion) null, getLocale());
     }
 
     /* ###################### */
