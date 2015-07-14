@@ -77,24 +77,21 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
     }
 
     public Stream<OccupationPeriod> getExamPeriods(ExecutionDegree executionDegree, ExecutionSemester semester) {
-        return executionDegree
-                .getPeriodReferences(OccupationPeriodType.EXAMS, semester == null ? null : semester.getSemester(), null)
+        return executionDegree.getPeriodReferences(null, semester == null ? null : semester.getSemester(), null)
                 .filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
                 .map(OccupationPeriodReference::getOccupationPeriod);
     }
 
     public boolean isGradeSubmissionAvailable(CurricularCourse curricularCourse, ExecutionSemester semester) {
         final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(semester.getExecutionYear());
-        return executionDegree
-                .getPeriodReferences(OccupationPeriodType.GRADE_SUBMISSION, semester == null ? null : semester.getSemester(),
-                        null).filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
+        return executionDegree.getPeriodReferences(null, semester == null ? null : semester.getSemester(), null)
+                .filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
                 .map(OccupationPeriodReference::getOccupationPeriod).anyMatch(o -> o.getPeriodInterval().containsNow());
     }
 
     public Stream<OccupationPeriod> getGradeSubmissionPeriods(ExecutionDegree executionDegree, ExecutionSemester semester) {
-        return executionDegree
-                .getPeriodReferences(OccupationPeriodType.GRADE_SUBMISSION, semester == null ? null : semester.getSemester(),
-                        null).filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
+        return executionDegree.getPeriodReferences(null, semester == null ? null : semester.getSemester(), null)
+                .filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
                 .map(OccupationPeriodReference::getOccupationPeriod);
     }
 
