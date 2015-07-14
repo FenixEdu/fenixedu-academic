@@ -343,7 +343,7 @@ public class SearchPerson implements Serializable {
         }
 
         protected boolean verifyActiveState(Boolean activePersons, Person person) {
-            return (activePersons == null || ((Boolean) RoleType.PERSON.isMember(person.getUser())).equals(activePersons));
+            return (activePersons == null || person.getUser().isLoginExpired() == !activePersons.booleanValue());
         }
 
         protected boolean verifyUsernameEquality(String usernameToSearch, Person person) {
