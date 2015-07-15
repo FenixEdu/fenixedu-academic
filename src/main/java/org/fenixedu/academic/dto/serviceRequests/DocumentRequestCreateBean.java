@@ -132,7 +132,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     private LocalDate pastDispatchDate;
 
     private RegistrationProtocol registrationProtocol;
-    
+
     public DocumentRequestCreateBean(Registration registration) {
         super(registration);
         this.enrolments = new ArrayList<Enrolment>();
@@ -153,6 +153,24 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public void setRegistrationProtocol(final RegistrationProtocol registrationProtocol) {
         this.registrationProtocol = registrationProtocol;
+    }
+
+    @Override
+    public ServiceRequestType getChosenServiceRequestType() {
+        return chosenServiceRequestType;
+    }
+
+    @Override
+    public void setChosenServiceRequestType(ServiceRequestType chosenServiceRequestType) {
+        this.chosenServiceRequestType = chosenServiceRequestType;;
+    }
+
+    public DocumentRequestType getChosenDocumentRequestType() {
+        return getChosenServiceRequestType() != null ? getChosenServiceRequestType().getDocumentRequestType() : null;
+    }
+
+    public void setChosenDocumentRequestType(DocumentRequestType chosenDocumentRequestType) {
+        this.chosenServiceRequestType = ServiceRequestType.findUnique(getAcademicServiceRequestType(), chosenDocumentRequestType);
     }
 
     public DocumentPurposeTypeInstance getChosenDocumentPurposeType() {
@@ -482,10 +500,10 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     public boolean getHasPurposeNeed() {
-        if(!chosenServiceRequestType.isLegacy()) {
+        if (!chosenServiceRequestType.isLegacy()) {
             return false;
         }
-        
+
         DocumentRequestType documentRequestType = chosenServiceRequestType.getDocumentRequestType();
         return !(documentRequestType.isDiploma() || documentRequestType.isRegistryDiploma()
                 || documentRequestType.isPastDiploma() || documentRequestType.isDiplomaSupplement());
@@ -543,6 +561,5 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     public void setProgramConclusion(ProgramConclusion programConclusion) {
         this.programConclusion = programConclusion;
     }
-    
 
 }
