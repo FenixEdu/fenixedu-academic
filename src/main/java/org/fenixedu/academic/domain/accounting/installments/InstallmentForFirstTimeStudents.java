@@ -105,7 +105,8 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
     }
 
     private int getNumberOfMonthsToChargePenalty(final Event event, final DateTime when) {
-        final int numberOfMonths = (new Period(getWhenStartToApplyPenalty(event, when), when.toDateMidnight()).getMonths() + 1);
+        final Period period = new Period(getWhenStartToApplyPenalty(event, when), when.toDateMidnight());
+        final int numberOfMonths = (period.getYears() * 12) + (period.getMonths() + 1);
         return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
     }
 
