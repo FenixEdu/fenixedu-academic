@@ -2737,12 +2737,14 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	boolean active;
     	boolean payable;
     	ServiceRequestCategory serviceRequestCategory;
+    	LocalizedString numberOfUnitsLabel;
     }
     
     class serviceRequests.ServiceRequestTypeOption {
     	String code;
     	LocalizedString name;
     	boolean detailedOption;
+    	boolean numberOfUnitsOption;
     }
     
     class serviceRequests.ServiceRequestTypeOptionBooleanValue {
@@ -2900,7 +2902,10 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             
             class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
             }
-                        
+            
+            class serviceRequests.CustomServiceRequestRequest extends serviceRequests.RegistrationAcademicServiceRequest {
+            }
+            
         class phd.serviceRequests.PhdAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
         }
         

@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -52,19 +53,28 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     public boolean isPayable() {
         return getPayable();
     }
+    
+    public boolean isLegacy() {
+        return getAcademicServiceRequestType() != null;
+    }
 
     public boolean hasOption(final ServiceRequestTypeOption option) {
-        return false;
+        return getServiceRequestTypeOptionsSet().contains(option);
     }
 
     @Atomic
     public void edit(final String code, final LocalizedString name, final boolean active, final boolean payable,
-            final ServiceRequestCategory category) {
+            final ServiceRequestCategory category, final LocalizedString numberOfUnitsLabel) {
         setCode(code);
         setName(name);
         setActive(active);
         setPayable(payable);
         setServiceRequestCategory(category);
+        if(hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) {
+            setNumberOfUnitsLabel(numberOfUnitsLabel);
+        } else {
+            setNumberOfUnitsLabel(null);            
+        }
 
         checkRules();
     }
@@ -114,7 +124,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     public static ServiceRequestType findUnique(final AcademicServiceRequestType academicServiceRequestType) {
-        return findAll().filter(x -> x.getAcademicServiceRequestType().equals(academicServiceRequestType))
+        return findAll().filter(x -> x.getAcademicServiceRequestType() != null && x.getAcademicServiceRequestType().equals(academicServiceRequestType))
                 .filter(x -> x.getDocumentRequestType() == null).findFirst().orElse(null);
     }
 
@@ -137,6 +147,14 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         } else {
             return findUnique(academicServiceRequest.getAcademicServiceRequestType());
         }
+    }
+    
+    public static Stream<ServiceRequestType> findByCode(final String code) {
+        return findAll().filter(l -> l.getCode().equalsIgnoreCase(code));
+    }
+    
+    public static Optional<ServiceRequestType> findUniqueByCode(final String code) {
+        return findByCode(code).findFirst();
     }
 
     public static Stream<ServiceRequestType> findActive() {

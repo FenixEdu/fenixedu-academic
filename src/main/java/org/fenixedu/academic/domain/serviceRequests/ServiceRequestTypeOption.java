@@ -22,12 +22,13 @@ public class ServiceRequestTypeOption extends ServiceRequestTypeOption_Base {
         setRootDomainObject(Bennu.getInstance());
     }
     
-    protected ServiceRequestTypeOption(final String code, final LocalizedString name, final boolean detailedOption) {
+    protected ServiceRequestTypeOption(final String code, final LocalizedString name, final boolean detailedOption, final boolean numberOfUnitsOption) {
         this();
         
         super.setCode(code);
         super.setName(name);
         super.setDetailedOption(detailedOption);
+        super.setNumberOfUnitsOption(numberOfUnitsOption);
         
         checkRules();
     }
@@ -67,6 +68,10 @@ public class ServiceRequestTypeOption extends ServiceRequestTypeOption_Base {
         return getDetailedOption();
     }
     
+    public boolean isNumberOfUnitsOption() {
+        return getNumberOfUnitsOption();
+    }
+    
     /*---------
      * SERVICES
      * --------
@@ -91,9 +96,13 @@ public class ServiceRequestTypeOption extends ServiceRequestTypeOption_Base {
         return findAll().filter(s -> s.isDetailedOption()).findFirst();
     }
     
+    public static Optional<ServiceRequestTypeOption> findNumberOfUnitsOption() {
+        return findAll().filter(ServiceRequestTypeOption::isNumberOfUnitsOption).findFirst();
+    }
+    
     @Atomic
-    public static ServiceRequestTypeOption create(final String code, final LocalizedString name, final boolean detailedOption) {
-        return new ServiceRequestTypeOption(code, name, detailedOption);
+    public static ServiceRequestTypeOption create(final String code, final LocalizedString name, final boolean detailedOption, final boolean numberOfUnitsOption) {
+        return new ServiceRequestTypeOption(code, name, detailedOption, numberOfUnitsOption);
     }
     
 }

@@ -20,6 +20,8 @@ package org.fenixedu.academic.service.factoryExecutors;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
+import org.fenixedu.academic.domain.serviceRequests.CustomServiceRequestRequest;
 import org.fenixedu.academic.domain.serviceRequests.Under23TransportsDeclarationRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DeclarationRequest;
@@ -28,9 +30,12 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupp
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.service.services.serviceRequests.documentRequests.CreatePastDiplomaRequest;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -46,33 +51,40 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
     @Atomic
     public Object execute() {
 
-        final DocumentRequestType requestType = getChosenServiceRequestType().getDocumentRequestType();
-        if (requestType.isCertificate()) {
-            return CertificateRequest.create(this);
-
-        } else if (requestType.isDeclaration()) {
-            if (this.getExecutionYear() == null) {
-                this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+        AcademicServiceRequest academicServiceRequest = null;
+        if(!getChosenServiceRequestType().isLegacy()) {
+            academicServiceRequest = CustomServiceRequestRequest.create(this);
+        } else {
+            final DocumentRequestType requestType = getChosenServiceRequestType().getDocumentRequestType();
+            if (requestType.isCertificate()) {
+                academicServiceRequest = CertificateRequest.create(this);
+            } else if (requestType.isDeclaration()) {
+                if (this.getExecutionYear() == null) {
+                    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+                }
+                
+                academicServiceRequest = DeclarationRequest.create(this);
+            } else if (requestType.isDiploma()) {
+                academicServiceRequest = new DiplomaRequest(this);
+            } else if (requestType.isRegistryDiploma()) {
+                academicServiceRequest = new RegistryDiplomaRequest(this);
+            } else if (requestType.isPastDiploma()) {
+                academicServiceRequest = CreatePastDiplomaRequest.create(this);
+            } else if (requestType.isDiplomaSupplement()) {
+                academicServiceRequest = new DiplomaSupplementRequest(this);
+            } else if (requestType == DocumentRequestType.UNDER_23_TRANSPORTS_REQUEST) {
+                academicServiceRequest = new Under23TransportsDeclarationRequest(this);
             }
-            return DeclarationRequest.create(this);
-
-        } else if (requestType.isDiploma()) {
-            return new DiplomaRequest(this);
-
-        } else if (requestType.isRegistryDiploma()) {
-            return new RegistryDiplomaRequest(this);
-
-        } else if (requestType.isPastDiploma()) {
-            return CreatePastDiplomaRequest.create(this);
-
-        } else if (requestType.isDiplomaSupplement()) {
-            return new DiplomaSupplementRequest(this);
-
-        } else if (requestType == DocumentRequestType.UNDER_23_TRANSPORTS_REQUEST) {
-            return new Under23TransportsDeclarationRequest(this);
+        }
+        
+        if(academicServiceRequest == null) {
+            throw new DomainException("error.DocumentRequestCreator.unexpected.document.request.type");
         }
 
-        throw new DomainException("error.DocumentRequestCreator.unexpected.document.request.type");
+        Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT,
+                new DomainObjectEvent<AcademicServiceRequest>(academicServiceRequest));
+        
+        return academicServiceRequest;
     }
 
 }

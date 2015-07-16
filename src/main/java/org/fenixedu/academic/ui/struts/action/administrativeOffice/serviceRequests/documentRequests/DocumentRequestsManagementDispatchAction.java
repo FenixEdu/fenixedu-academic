@@ -323,9 +323,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         final Registration registration = documentRequestCreateBean.getRegistration();
         request.setAttribute("registration", registration);
 
-        DocumentRequest documentRequest = null;
+        AcademicServiceRequest documentRequest = null;
         try {
-            documentRequest = (DocumentRequest) executeFactoryMethod();
+            documentRequest = (AcademicServiceRequest) executeFactoryMethod();
         } catch (DomainException ex) {
             addActionMessage(request, ex.getKey(), ex.getArgs());
             return mapping.findForward("viewRegistrationDetails");
@@ -334,15 +334,18 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             return mapping.findForward("viewRegistrationDetails");
         }
 
-        DocumentRequestType documentRequestType =
-                documentRequestCreateBean.getChosenServiceRequestType().getDocumentRequestType();
-        if (documentRequestType != null && documentRequestType.isAllowedToQuickDeliver()) {
-            request.setAttribute("academicServiceRequestId", documentRequest.getExternalId());
-            return mapping.findForward("processNewAcademicServiceRequest");
-        } else {
-            addActionMessage(request, "document.request.created.with.success");
-            return mapping.findForward("viewRegistrationDetails");
-        }
+//        DocumentRequestType documentRequestType =
+//                documentRequestCreateBean.getChosenServiceRequestType().getDocumentRequestType();
+//        if (documentRequestType != null && documentRequestType.isAllowedToQuickDeliver()) {
+//            request.setAttribute("academicServiceRequestId", documentRequest.getExternalId());
+//            return mapping.findForward("processNewAcademicServiceRequest");
+//        } else {
+//            addActionMessage(request, "document.request.created.with.success");
+//            return mapping.findForward("viewRegistrationDetails");
+//        }
+        
+        addActionMessage(request, "document.request.created.with.success");
+        return mapping.findForward("viewRegistrationDetails");
     }
 
     public ActionForward useAllPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

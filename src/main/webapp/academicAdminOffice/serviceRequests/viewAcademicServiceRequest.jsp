@@ -18,7 +18,8 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
+<%@page import="org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption"%>
+<%@ page isELIgnored="false"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -47,20 +48,21 @@
 	</fr:layout>
 </fr:view>
 
-<logic:equal name="academicServiceRequest" property="editable" value="true">
-	<fr:form>
-		<fr:edit id="academicServiceRequest" name="academicServiceRequest">
-			<fr:schema type="org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
-				<fr:slot name="language" layout="null-as-label">
-					<fr:property name="label" value="-"/>
-				</fr:slot>
-			</fr:schema>
-		</fr:edit>
-		<div>
-			<html:submit><bean:message key="label.edit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
-		</div>
-	</fr:form>
-</logic:equal>
+<!-- Detailed -->
+	<fr:view name="academicServiceRequest" >
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
+<% if(!academicServiceRequest.getServiceRequestType().isLegacy() && academicServiceRequest.getServiceRequestType().hasOption(ServiceRequestTypeOption.findDetailedOption().get())) { %>
+			<fr:slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
+<% } %>
+<% if(!academicServiceRequest.getServiceRequestType().isLegacy() && academicServiceRequest.getServiceRequestType().hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) { %>
+			<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" arg0="${academicServiceRequest.serviceRequestType.numberOfUnitsLabel.content}"/>
+<% } %>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+			<fr:property name="rowClasses" value=",tdhl1,,,,,,,,tdhl1"/>
+		</fr:layout>	
+	</fr:view>
 
 <academic:allowed operation="SERVICE_REQUESTS_RECTORAL_SENDING" office="<%= academicServiceRequest.getAdministrativeOffice() %>">
 	<logic:notEmpty name="academicServiceRequest" property="rectorateSubmissionBatch">

@@ -108,9 +108,6 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
             throw new DomainException("error.CertificateRequest.unexpected.document.type");
         }
 
-        Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT,
-                new DomainObjectEvent<AcademicServiceRequest>(certificateRequest));
-
         return certificateRequest;
 
     }

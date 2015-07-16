@@ -20,7 +20,9 @@ package org.fenixedu.academic.service.factoryExecutors;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.CourseGroupChangeRequest;
+import org.fenixedu.academic.domain.serviceRequests.CustomServiceRequestRequest;
 import org.fenixedu.academic.domain.serviceRequests.DuplicateRequest;
 import org.fenixedu.academic.domain.serviceRequests.EquivalencePlanRequest;
 import org.fenixedu.academic.domain.serviceRequests.EquivalencePlanRevisionRequest;
@@ -31,8 +33,11 @@ import org.fenixedu.academic.domain.serviceRequests.SpecialSeasonRequest;
 import org.fenixedu.academic.domain.serviceRequests.StudentReingressionRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -46,54 +51,63 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
     @Override
     @Atomic
     public Object execute() {
-        final Object result;
-        switch (getAcademicServiceRequestType()) {
-        case REINGRESSION:
-            result = new StudentReingressionRequest(this);
-            break;
-
-        case EQUIVALENCE_PLAN:
-            result = new EquivalencePlanRequest(this);
-            break;
-
-        case REVISION_EQUIVALENCE_PLAN:
-            result = new EquivalencePlanRevisionRequest(this);
-            break;
-
-        case COURSE_GROUP_CHANGE_REQUEST:
-            this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-            result = new CourseGroupChangeRequest(this);
-            break;
-
-        case EXTRA_EXAM_REQUEST:
-            this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-            result = new ExtraExamRequest(this);
-            break;
-
-        case FREE_SOLICITATION_ACADEMIC_REQUEST:
-            result = new FreeSolicitationAcademicRequest(this);
-            break;
-
-        case SPECIAL_SEASON_REQUEST:
-            result = new SpecialSeasonRequest(this);
-            break;
-
-        case PHOTOCOPY_REQUEST:
-            this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-            result = new PhotocopyRequest(this);
-            break;
-
-        case PARTIAL_REGIME_REQUEST:
-            result = new PartialRegistrationRegimeRequest(this);
-            break;
-
-        case DUPLICATE_REQUEST:
-            result = new DuplicateRequest(this);
-            break;
-
-        default:
-            throw new DomainException("error.RegistrationAcademicServiceRequestCreator.no.executor");
+        final AcademicServiceRequest result;
+        
+        if(!getChosenServiceRequestType().isLegacy()) {
+            result = CustomServiceRequestRequest.create(this);
+        } else {
+        
+            switch (getChosenServiceRequestType().getAcademicServiceRequestType()) {
+            case REINGRESSION:
+                result = new StudentReingressionRequest(this);
+                break;
+    
+            case EQUIVALENCE_PLAN:
+                result = new EquivalencePlanRequest(this);
+                break;
+    
+            case REVISION_EQUIVALENCE_PLAN:
+                result = new EquivalencePlanRevisionRequest(this);
+                break;
+    
+            case COURSE_GROUP_CHANGE_REQUEST:
+                this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+                result = new CourseGroupChangeRequest(this);
+                break;
+    
+            case EXTRA_EXAM_REQUEST:
+                this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+                result = new ExtraExamRequest(this);
+                break;
+    
+            case FREE_SOLICITATION_ACADEMIC_REQUEST:
+                result = new FreeSolicitationAcademicRequest(this);
+                break;
+    
+            case SPECIAL_SEASON_REQUEST:
+                result = new SpecialSeasonRequest(this);
+                break;
+    
+            case PHOTOCOPY_REQUEST:
+                this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+                result = new PhotocopyRequest(this);
+                break;
+    
+            case PARTIAL_REGIME_REQUEST:
+                result = new PartialRegistrationRegimeRequest(this);
+                break;
+    
+            case DUPLICATE_REQUEST:
+                result = new DuplicateRequest(this);
+                break;
+    
+            default:
+                throw new DomainException("error.RegistrationAcademicServiceRequestCreator.no.executor");
+            }
         }
+        
+        Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT,
+                new DomainObjectEvent<AcademicServiceRequest>(result));
 
         return result;
     }

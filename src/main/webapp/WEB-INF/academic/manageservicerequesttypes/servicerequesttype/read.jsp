@@ -149,6 +149,15 @@ ${portal.toolkit()}
 								code="label.ServiceRequestType.serviceRequestCategory" /></th>
 						<td><c:out value='${serviceRequestType.serviceRequestCategory.name}' /></td>
 					</tr>
+					
+					<% request.setAttribute("serviceRequestTypeOption", org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption.findNumberOfUnitsOption().get()); %>
+					<c:if test="${serviceRequestType.hasOption(serviceRequestTypeOption)}">					
+					<tr>
+						<th scope="row" class="col-xs-3"><spring:message
+								code="label.ServiceRequestType.numberOfUnitsLabel" /></th>
+						<td><c:out value='${serviceRequestType.numberOfUnitsLabel.content}' /></td>
+					</tr>		
+					</c:if>
 				</tbody>
 			</table>
 		</form>

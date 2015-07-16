@@ -388,7 +388,12 @@ public class FenixBootstrapper {
         ServiceRequestTypeOption.create(
                 "DETAILED",
                 BundleUtil.getLocalizedString("resources.AcademicAdminOffice", ServiceRequestTypeOption.class.getSimpleName()
-                        + ".detailed"), true);
+                        + ".detailed"), true, false);
+
+        ServiceRequestTypeOption.create(
+                "NUMBER_OF_UNITS",
+                BundleUtil.getLocalizedString("resources.AcademicAdminOffice", ServiceRequestTypeOption.class.getSimpleName()
+                        + ".numberOfUnitsOption"), false, true);
 
         // By default create all legacy ServiceRequestTypes as Inactive and as Services -> Then configurate accordingly
 

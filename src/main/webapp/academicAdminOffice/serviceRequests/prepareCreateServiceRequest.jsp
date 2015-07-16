@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -69,8 +70,8 @@
 	<fr:edit id="academicServiceRequestCreateBean" name="academicServiceRequestCreateBean" visible="false" />
 
 	<bean:define id="schema">RegistrationAcademicServiceRequestCreateBean.choose.type</bean:define>
-	<logic:notEmpty name="academicServiceRequestCreateBean" property="academicServiceRequestType">
-		<bean:define id="schema">RegistrationAcademicServiceRequestCreateBean.<bean:write name="academicServiceRequestCreateBean" property="academicServiceRequestType.name"/></bean:define>	
+	<logic:notEmpty name="academicServiceRequestCreateBean" property="serviceRequestSchema">
+		<bean:define id="schema"><bean:write name="academicServiceRequestCreateBean" property="serviceRequestSchema"/></bean:define>	
 	</logic:notEmpty>
 
 	<p class="mbottom025"><strong><bean:message key="message.service.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
@@ -82,6 +83,56 @@
 		<fr:destination name="invalid" path="/academicServiceRequestsManagement.do?method=chooseServiceRequestTypeInvalid" />
 		<fr:destination name="academicServiceRequestTypeChoosedPostBack" path="/academicServiceRequestsManagement.do?method=chooseServiceRequestTypePostBack" />
 	</fr:edit>
+
+	<!-- Requested Cycle -->
+	<logic:equal name="academicServiceRequestCreateBean" property="hasCycleTypeDependency" value="true">
+		<fr:edit id="requestedCycleEdit" name="academicServiceRequestCreateBean">
+			<fr:schema  type="org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:slot name="requestedCycle" key="label.cycleType" layout="menu-select"
+					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass"
+						value="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean$CycleTypeProvider" />
+					<fr:property name="eachLayout" value="" />
+				</fr:slot>
+			</fr:schema>
+			
+
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+			</fr:layout>	
+		</fr:edit>
+	</logic:equal>
+	
+	<bean:define id="academicServiceRequestCreateBean" name="academicServiceRequestCreateBean" type="org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestCreateBean" />
+	
+	<logic:notEmpty name="academicServiceRequestCreateBean" property="chosenServiceRequestType">
+	<!-- Detailed -->
+	<% if(!academicServiceRequestCreateBean.getChosenServiceRequestType().isLegacy() && academicServiceRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findDetailedOption().get())) { %>
+		<fr:edit id="detailedEdit" name="academicServiceRequestCreateBean" >
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
+				<fr:slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+			</fr:layout>	
+		</fr:edit>
+	<% } %>
+				
+	<!-- Number of units -->
+	<% if(!academicServiceRequestCreateBean.getChosenServiceRequestType().isLegacy() && academicServiceRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) { %>
+		<fr:edit id="numberOfUnitsEdit" name="academicServiceRequestCreateBean" >
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
+				<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" arg0="${academicServiceRequestCreateBean.chosenServiceRequestType.numberOfUnitsLabel.content}"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+			</fr:layout>	
+		</fr:edit>
+	<% } %>
+	</logic:notEmpty>
 	
 	<p class="mtop15">
 		<html:submit><bean:message key="button.confirm"/></html:submit>

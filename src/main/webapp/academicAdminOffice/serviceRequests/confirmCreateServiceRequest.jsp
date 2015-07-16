@@ -68,9 +68,9 @@
 	
 	<fr:edit id="academicServiceRequestCreateBean" name="academicServiceRequestCreateBean" visible="false" />
 	
-	<bean:define id="schema">RegistrationAcademicServiceRequestCreateBean.<bean:write name="academicServiceRequestCreateBean" property="academicServiceRequestType.name"/></bean:define>	
+	<bean:define id="schema"><bean:write name="academicServiceRequestCreateBean" property="serviceRequestSchema"/></bean:define>	
 
-	<h3 class="mbottom05"><strong><bean:message key="message.confirm.create.service" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></h3>
+	<h3 class="mbottom05"><bean:message key="message.confirm.create.service" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="academicServiceRequestCreateBean" schema="<%= schema %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>

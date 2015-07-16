@@ -129,7 +129,19 @@ ${portal.toolkit()}
 						$("#serviceRequestType_serviceRequestCategory").val('<c:out value='${not empty param.serviceRequestCategory ? param.serviceRequestCategory : serviceRequestType.serviceRequestCategory }'/>');
 					</script>	
 				</div>
+			</div>
+			<% request.setAttribute("serviceRequestTypeOption", org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption.findNumberOfUnitsOption().get()); %>
+			<c:if test="${serviceRequestType.hasOption(serviceRequestTypeOption)}">					
+			
+			<div class="form-group row">
+				<div class="col-sm-2 control-label"><spring:message code="label.ServiceRequestType.numberOfUnitsLabel"/></div> 
+				
+				<div class="col-sm-10">
+					<input id="serviceRequestType_numberOfUnitsLabel" class="form-control" type="text" name="numberOfUnitsLabel"  bennu-localized-string value='${not empty param.numberOfUnitsLabel ? param.numberOfUnitsLabel : serviceRequestType.numberOfUnitsLabel.json() }'/> 
+				</div>
 			</div>		
+			</c:if>
+								
 		</div>
 		<div class="panel-footer">
 			<input type="submit" class="btn btn-default" role="button" value="<spring:message code="label.submit" />"/>

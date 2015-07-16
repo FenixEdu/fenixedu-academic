@@ -47,6 +47,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
         checkParameters(bean);
         setNumberOfEquivalences(bean.getNumberOfEquivalences());
+        setNumberOfUnits(bean.getNumberOfEquivalences());
     }
 
     private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {

@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
@@ -149,6 +148,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
             addServiceRequestTypeOptionBooleanValues(ServiceRequestTypeOptionBooleanValue.create(ServiceRequestTypeOption
                     .findDetailedOption().get(), true));
         }
+
     }
 
     private int getServiceRequestYear() {
@@ -251,6 +251,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
         final StringBuilder result = new StringBuilder();
+        
+        if(getServiceRequestType() != null && !getServiceRequestType().isLegacy()) {
+            return getServiceRequestType().getName().getContent();
+        }
+        
         result.append(BundleUtil.getString(Bundle.ENUMERATION, academicServiceRequestType.getQualifiedName()));
         if (specificServiceType != null) {
             result.append(": ");

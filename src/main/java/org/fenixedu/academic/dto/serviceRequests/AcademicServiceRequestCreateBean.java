@@ -21,6 +21,7 @@ package org.fenixedu.academic.dto.serviceRequests;
 import java.util.Locale;
 
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.student.RegistrationSelectExecutionYearBean;
 import org.joda.time.DateTime;
@@ -41,6 +42,9 @@ public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutio
 
     private CycleType requestedCycle;
 
+    protected ServiceRequestType chosenServiceRequestType;
+    
+    protected int numberOfUnits;
     
     public AcademicServiceRequestCreateBean(Registration registration) {
         super(registration);
@@ -96,6 +100,30 @@ public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutio
     
     public boolean getHasCycleTypeDependency() {
         return getRegistration().getDegreeType().isComposite();
+    }
+    
+    public ServiceRequestType getChosenServiceRequestType() {
+        return chosenServiceRequestType;
+    }
+
+    public void setChosenServiceRequestType(ServiceRequestType chosenServiceRequestType) {
+        this.chosenServiceRequestType = chosenServiceRequestType;;
+    }
+    
+    public int getNumberOfUnits() {
+        return numberOfUnits;
+    }
+    
+    public void setNumberOfUnits(int numberOfUnits) {
+        this.numberOfUnits = numberOfUnits;
+    }
+    
+    public String getServiceRequestSchema() {
+        if(getChosenServiceRequestType() != null && getChosenServiceRequestType().isLegacy()) {
+            return "RegistrationAcademicServiceRequestCreateBean." + getChosenServiceRequestType().getAcademicServiceRequestType().getName();
+        }
+        
+        return "RegistrationAcademicServiceRequestCreateBean.CUSTOM_SERVICE_REQUEST";
     }
     
 }

@@ -59,7 +59,7 @@ import com.google.common.collect.Lists;
 @RequestMapping("/academic/manageservicerequesttypes/servicerequesttype")
 public class ServiceRequestTypeController {
 
-    private static final String BUNDLE = "resources.AcademicAdminOffice";
+    private static final String BUNDLE = "resources.ApplicationResources";
 
     @RequestMapping(method = GET)
     public String home(Model model) {
@@ -107,8 +107,9 @@ public class ServiceRequestTypeController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@RequestParam(value = "code", required = true) java.lang.String code, @RequestParam(value = "name",
             required = true) LocalizedString name, @RequestParam(value = "active", required = true) final boolean active,
-            @RequestParam(value = "payable", required = true) final boolean payable, @RequestParam(
-                    value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, Model model,
+            @RequestParam(value = "payable", required = true) final boolean payable, 
+            @RequestParam(value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, 
+            Model model,
             RedirectAttributes redirectAttributes) {
         try {
 
@@ -145,13 +146,15 @@ public class ServiceRequestTypeController {
             @RequestParam(value = "name", required = true) LocalizedString name,
             @RequestParam(value = "active", required = true) final boolean active, @RequestParam(value = "payable",
                     required = true) final boolean payable,
-            @RequestParam(value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, Model model,
+            @RequestParam(value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, 
+            @RequestParam(value = "numberOfUnitsLabel", required = false) final LocalizedString numberOfUnitsLabel,
+            Model model,
             RedirectAttributes redirectAttributes) {
 
         model.addAttribute("serviceRequestType", serviceRequestType);
 
         try {
-            serviceRequestType.edit(code, name, active, payable, category);
+            serviceRequestType.edit(code, name, active, payable, category, numberOfUnitsLabel);
 
             return redirect("/academic/manageservicerequesttypes/servicerequesttype/read/" + serviceRequestType.getExternalId(),
                     model, redirectAttributes);
