@@ -24,8 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -100,6 +102,42 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
         final StudentEnrolmentBean studentEnrolmentBean = getRenderedObject();
         request.setAttribute("registrationId", studentEnrolmentBean.getStudentCurricularPlan().getRegistration().getExternalId());
         return mapping.findForward("visualizeRegistration");
+    }
+
+    public ActionForward annulEnrolment(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final Enrolment enrolment = getDomainObject(request, "enrolmentId");
+        try {
+            atomic(enrolment::annul);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }
+
+        final StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
+        studentEnrolmentBean.setExecutionPeriod(getDomainObject(request, "executionPeriodId"));
+        studentEnrolmentBean.setStudentCurricularPlan(getDomainObject(request, "scpID"));
+        return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, form, request, response);
+
+    }
+
+    public ActionForward activateEnrolment(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
+
+        try {
+            atomic(() ->
+            {
+                final Enrolment enrolment = getDomainObject(request, "enrolmentId");
+                enrolment.activate();
+            });
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }
+
+        final StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
+        studentEnrolmentBean.setExecutionPeriod(getDomainObject(request, "executionPeriodId"));
+        studentEnrolmentBean.setStudentCurricularPlan(getDomainObject(request, "scpID"));
+        return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, form, request, response);
+
     }
 
 }
