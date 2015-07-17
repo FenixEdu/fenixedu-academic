@@ -23,6 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
+<%@ page isELIgnored="true"%>
+
 <html:xhtml/>
 
 <h2><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
@@ -119,6 +121,17 @@
 				<fr:property name="classes" value="tstyle2"/>
 		      	<fr:property name="columnClasses" value="nowrap,acenter,nowrap,smalltxt color888,acenter"/>
 				<fr:property name="sortBy" value="name"/>
+				
+				<fr:property name="linkFormat(activate)" value="/studentEnrolments.do?method=activateEnrolment&enrolmentId=${externalId}&scpID=${studentCurricularPlan.externalId}&executionPeriodId=${executionPeriod.externalId}" />
+				<fr:property name="key(activate)" value="label.enrolment.activate"/>
+				<fr:property name="bundle(activate)" value="ACADEMIC_OFFICE_RESOURCES"/>
+				<fr:property name="visibleIf(activate)" value="annulled"/>
+			
+				<fr:property name="linkFormat(annul)" value="/studentEnrolments.do?method=annulEnrolment&enrolmentId=${externalId}&scpID=${studentCurricularPlan.externalId}&executionPeriodId=${executionPeriod.externalId}" />
+				<fr:property name="key(annul)" value="label.enrolment.annul"/>
+				<fr:property name="bundle(annul)" value="ACADEMIC_OFFICE_RESOURCES"/>
+				<fr:property name="visibleIfNot(annul)" value="annulled"/>
+				
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
