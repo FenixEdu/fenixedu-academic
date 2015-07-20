@@ -39,6 +39,11 @@ public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Bas
     }
 
     public static DocumentPurposeTypeInstance create(String code, LocalizedString name) {
+        if (findUnique(code) != null) {
+            throw new IllegalStateException(
+                    "DocumentPurposeTypeInstance: could not create new instance because already exists one for the provided code ["
+                            + code + "]");
+        }
         DocumentPurposeTypeInstance documentPurposeType = new DocumentPurposeTypeInstance();
         documentPurposeType.setCode(code);
         documentPurposeType.setName(name);
@@ -46,6 +51,11 @@ public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Bas
     }
 
     public static DocumentPurposeTypeInstance create(String code, LocalizedString name, DocumentPurposeType type) {
+        if (findUnique(code) != null) {
+            throw new IllegalStateException(
+                    "DocumentPurposeTypeInstance: could not create new instance because already exists one for the provided code ["
+                            + code + "]");
+        }
         if (findUnique(type) != null) {
             throw new IllegalStateException(
                     "DocumentPurposeTypeInstance: could not create new instance because already exists one for the provided type ["
@@ -68,5 +78,9 @@ public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Bas
     
     public static Stream<DocumentPurposeTypeInstance> findActives() {
         return findAll().filter((DocumentPurposeTypeInstance::getActive));
+    }
+    
+    public static DocumentPurposeTypeInstance findUnique(String code) {
+        return findAll().filter(dpti -> dpti.getCode().equals(code)).findFirst().orElse(null);
     }
 }
