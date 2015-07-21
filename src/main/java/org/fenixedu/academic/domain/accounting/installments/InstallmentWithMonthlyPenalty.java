@@ -92,8 +92,8 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     }
 
     protected int getNumberOfMonthsToChargePenalty(DateTime when) {
-        final int numberOfMonths =
-                (new Period(getWhenStartToApplyPenalty().withDayOfMonth(1).toDateMidnight(), when.toDateMidnight()).getMonths() + 1);
+        final Period period = new Period(getWhenStartToApplyPenalty().withDayOfMonth(1).toDateMidnight(), when.toDateMidnight());
+        final int numberOfMonths = (period.getYears() * 12) + (period.getMonths() + 1);
         return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
     }
 
