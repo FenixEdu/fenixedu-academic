@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.lists;
 
-import java.util.Set;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -40,9 +40,9 @@ public class DegreesForMarksheetsByPersonPermissions implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         Person person = AccessControl.getPerson();
-        Set<Degree> degreesForOperation =
+        List<Degree> degreesForOperation =
                 AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser())
-                        .collect(Collectors.toSet());
+                        .sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID).collect(Collectors.toList());
         if (!degreesForOperation.isEmpty()) {
             return degreesForOperation;
         }
