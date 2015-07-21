@@ -142,7 +142,8 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
             return new IMDCandidacy(studentPerson, executionDegree);
         }
 
-        return null;
+        // Fallback, if the Degree Type is not recognized
+        return new DegreeCandidacy(studentPerson, executionDegree);
     }
 
     public static Set<StudentCandidacy> readByIds(final List<String> studentCandidacyIds) {
