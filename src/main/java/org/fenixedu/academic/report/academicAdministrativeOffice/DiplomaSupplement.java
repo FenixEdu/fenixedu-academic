@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,6 @@ import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.DegreeSpecializationArea;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -55,7 +53,6 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivity;
 import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
-import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.util.Bundle;
@@ -188,6 +185,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     protected String fillGroup2() {
+
         final UniversityUnit institutionsUniversityUnit = getUniversity(getDocumentRequest().getRequestDate());
         String degreeDesignation = getDegreeDesignation();
 
@@ -208,6 +206,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                         + SINGLE_SPACE
                         + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.of")
                         + SINGLE_SPACE + institutionsUniversityUnit.getName());
+
         if (CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle())) {
             addParameter("languages", BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "pt"));
         } else {
@@ -253,7 +252,14 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         IDiplomaSupplementRequest request = getDocumentRequest();
 
-        Degree degree = getDocumentRequest().getRegistration().getDegree();
+        Degree degree;
+
+        //TODO: phd-refactor registration should always be present in phd
+        if (request.hasRegistration()) {
+            degree = request.getRegistration().getDegree();
+        } else {
+            degree = ((PhdDiplomaSupplementRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getDegree();
+        }
 
         ArrayList<String> res = new ArrayList<>();
         final String graduationLevel = request.getProgramConclusion().getGraduationLevel().getContent(getLocale());
@@ -263,14 +269,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             res.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in"));
         }
 
-        Optional<CourseGroup> courseGroup =
-                request.getProgramConclusion().groupFor(request.getRegistration()).map(CurriculumGroup::getDegreeModule);
-
-        if (courseGroup.isPresent()) {
-            res.add(courseGroup.get().getDegreeNameWithTitleSuffix(request.getConclusionYear(), getLocale()));
-        } else {
-            res.add(degree.getNameI18N(request.getConclusionYear()).getContent(getLocale()));
-        }
+        res.add(degree.getNameI18N(request.getConclusionYear()).getContent(getLocale()));
 
         return Joiner.on(" ").join(res);
     }
