@@ -21,11 +21,11 @@ package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -290,12 +290,21 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     }
 
     @Override
-    public ProgramConclusion getProgramConclusion() {
-        return ProgramConclusion.conclusionsFor(getPhdIndividualProgramProcess().getRegistration()).findAny().orElse(null);
-    }
-
-    @Override
     public String getDegreeName(ExecutionYear year) {
-        return getPhdIndividualProgramProcess().getRegistration().getDegreeDescription(year, getRequestedCycle(), getLanguage());
+
+        /**
+         * TODO: phd-refactor
+         * all individual processes must have a registration therefore degree comes always from registration
+         */
+
+        Degree degree;
+
+        if (getPhdIndividualProgramProcess().getRegistration() != null) {
+            degree = getPhdIndividualProgramProcess().getRegistration().getDegree();
+        } else {
+            degree = getPhdIndividualProgramProcess().getPhdProgram().getDegree();
+        }
+
+        return degree.getNameI18N(year).getContent(getLanguage());
     }
 }
