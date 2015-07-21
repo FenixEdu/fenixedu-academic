@@ -24,25 +24,25 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 
+@SuppressWarnings("serial")
 public class CurriculumLineLocationBean implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     private CurriculumLine curriculumLine;
 
     private CurriculumGroup curriculumGroup;
 
+    private boolean withContextInPlan = true;
+
     private boolean withRules = true;
 
     public CurriculumLineLocationBean() {
-
     }
 
     public CurriculumLineLocationBean(final CurriculumLine curriculumLine, final CurriculumGroup curriculumGroup,
             final boolean withRules) {
         setCurriculumLine(curriculumLine);
         setCurriculumGroup(curriculumGroup);
-        withRules(withRules);
+        setWithRules(withRules);
     }
 
     public CurriculumLine getCurriculumLine() {
@@ -69,11 +69,20 @@ public class CurriculumLineLocationBean implements Serializable {
         return getCurriculumLine().getStudent();
     }
 
+    public boolean isWithContextInPlan() {
+        return this.withContextInPlan;
+    }
+
+    public void setWithContextInPlan(final boolean input) {
+        this.withContextInPlan = input;
+    }
+
     public boolean isWithRules() {
         return withRules;
     }
 
-    public void withRules(boolean value) {
+    public void setWithRules(boolean value) {
         this.withRules = value;
     }
+
 }

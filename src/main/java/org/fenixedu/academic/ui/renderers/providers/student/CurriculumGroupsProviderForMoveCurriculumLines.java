@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.student;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,23 +36,35 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
+import com.google.common.collect.Sets;
+
 public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvider {
 
     @Override
-    public Object provide(Object source, Object currentValue) {
+    public Object provide(final Object source, final Object currentValue) {
+
         final CurriculumLineLocationBean bean = (CurriculumLineLocationBean) source;
 
+        final Set<CurriculumGroup> result =
+                bean.isWithContextInPlan() ? provideWithContextInPlan(bean) : provideAllFromRegistrations(bean);
+
+        return filterResults(result);
+    }
+
+    static private Set<CurriculumGroup> provideAllFromRegistrations(final CurriculumLineLocationBean bean) {
+        final Set<CurriculumGroup> result = Sets.newHashSet();
+
         final Student student = bean.getStudent();
-        final Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 
         for (final Registration registration : student.getRegistrationsSet()) {
 
-            if (!registration.isBolonha()) {
-                result.addAll(registration.getLastStudentCurricularPlan().getAllCurriculumGroups());
+            final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+
+            if (studentCurricularPlan.getCycleCurriculumGroups().isEmpty()) {
+                result.addAll(studentCurricularPlan.getAllCurriculumGroups());
                 continue;
             }
 
-            final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
             result.addAll(studentCurricularPlan.getNoCourseGroupCurriculumGroups());
 
             for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
@@ -66,15 +77,20 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
             }
         }
 
+        return result;
+    }
+
+    static protected Set<CurriculumGroup> filterResults(final Set<CurriculumGroup> result) {
+
         final Set<AcademicProgram> programs =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                         Authenticate.getUser()).collect(Collectors.toSet());
 
-        return result.stream().filter(group -> programs.contains(group.getDegreeCurricularPlanOfStudent().getDegree()))
-                .collect(Collectors.toList());
+        return result.stream().filter(i -> programs.contains(i.getDegreeCurricularPlanOfStudent().getDegree()))
+                .collect(Collectors.toSet());
     }
 
-    private boolean isConcluded(final Student student, final CycleCurriculumGroup cycle) {
+    static private boolean isConcluded(final Student student, final CycleCurriculumGroup cycle) {
         return cycle.getConclusionProcess() != null
                 || (cycle.isExternal() && student.hasRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()));
     }
@@ -82,6 +98,26 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
     @Override
     public Converter getConverter() {
         return new DomainObjectKeyConverter();
+    }
+
+    static private Set<CurriculumGroup> provideWithContextInPlan(final CurriculumLineLocationBean bean) {
+        final Set<CurriculumGroup> result = Sets.newHashSet();
+
+        final StudentCurricularPlan studentCurricularPlan = bean.getCurriculumLine().getStudentCurricularPlan();
+
+        for (final CurriculumGroup curriculumGroup : studentCurricularPlan.getAllCurriculumGroups()) {
+
+            if (curriculumGroup == bean.getCurriculumLine().getCurriculumGroup()
+                    || curriculumGroup.isInternalCreditsSourceGroup()) {
+                continue;
+            }
+
+            if (curriculumGroup.canAdd(bean.getCurriculumLine())) {
+                result.add(curriculumGroup);
+            }
+        }
+
+        return result;
     }
 
 }

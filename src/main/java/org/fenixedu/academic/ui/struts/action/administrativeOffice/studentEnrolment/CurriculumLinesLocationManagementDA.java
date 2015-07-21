@@ -30,6 +30,8 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 @Mapping(path = "/curriculumLinesLocationManagement", module = "academicAdministration",
         functionality = SearchForStudentsDA.class)
 @Forwards({
@@ -44,4 +46,14 @@ public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLines
         return mapping.findForward("backToStudentEnrolments");
     }
 
+    public ActionForward withContextInPlanChangePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        request.setAttribute("moveCurriculumLinesBean", getRenderedObject("move-curriculum-lines-bean"));
+        
+        RenderUtils.invalidateViewState();
+
+        return mapping.findForward("chooseNewLocation");
+    }
+    
 }

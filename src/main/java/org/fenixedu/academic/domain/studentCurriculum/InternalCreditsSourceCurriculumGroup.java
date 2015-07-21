@@ -31,6 +31,11 @@ public class InternalCreditsSourceCurriculumGroup extends InternalCreditsSourceC
     }
 
     @Override
+    public boolean isInternalCreditsSourceGroup() {
+        return true;
+    }
+
+    @Override
     public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType() {
         return NoCourseGroupCurriculumGroupType.INTERNAL_CREDITS_SOURCE_GROUP;
     }
