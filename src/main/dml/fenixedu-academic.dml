@@ -2757,6 +2757,14 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 		DocumentPurposeType documentPurposeType;
 		Boolean active;
 	}
+	
+	public class serviceRequests.documentRequests.DocumentSigner {
+		String responsibleName;
+		LocalizedString responsibleFunction;
+		LocalizedString responsibleUnit;
+		Gender responsibleGender;
+		Boolean defaultSignature;
+	}
     
     class serviceRequests.AcademicServiceRequest  {
         Boolean freeProcessed;
@@ -12464,4 +12472,36 @@ relation DocumentPurposeTypeInstanceCertificateRequest {
 	public serviceRequests.documentRequests.CertificateRequest playsRole certificateRequests {
 		multiplicity *;
 	}
+}
+
+/* DocumentSigner */
+
+relation DocumentSignerBennu {
+	serviceRequests.documentRequests.DocumentSigner playsRole documentSigners {
+ 		multiplicity *;
+ 	}
+ 	
+ 	.org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+}
+
+relation DocumentSignerAdministrativeOffice {
+	serviceRequests.documentRequests.DocumentSigner playsRole documentSigners {
+ 		multiplicity  *;
+ 	}
+ 	
+ 	.org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
+        multiplicity 0..1;
+    }
+}
+
+relation DocumentSignerAcademicServiceRequest {
+	serviceRequests.documentRequests.DocumentSigner playsRole documentSigner {
+ 		multiplicity  0..1;
+ 	}
+ 	
+ 	.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
+        multiplicity *;
+    }
 }

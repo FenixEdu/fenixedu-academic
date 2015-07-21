@@ -77,12 +77,20 @@
 
 <logic:equal name="documentRequest" property="toPrint" value="true">
 <p>
-	<span class="gen-button">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="externalId">
-		<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
-	</html:link>
-	</span>
+	<fr:form action="<%= "/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=" + academicServiceRequest.getExternalId().toString() %>">
+		<fr:edit id="academicServiceRequest" name="academicServiceRequest">
+			<fr:schema type="org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:slot name="documentSigner" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES"
+						 key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.documentSigner">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DocumentSignerProvider" />
+					<fr:property name="format" value="\${responsibleName} - \${responsibleFunction.content}" />
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+			</fr:layout>
+		</fr:edit>
+		<html:submit><bean:message key="print" bundle="APPLICATION_RESOURCES"/></html:submit>
+	</fr:form>
 </p>
 </logic:equal>
 

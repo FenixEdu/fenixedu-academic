@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.Declaration
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentSigner;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
@@ -52,7 +53,7 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
     public Object execute() {
 
         AcademicServiceRequest academicServiceRequest = null;
-        if(!getChosenServiceRequestType().isLegacy()) {
+        if (!getChosenServiceRequestType().isLegacy()) {
             academicServiceRequest = CustomServiceRequestRequest.create(this);
         } else {
             final DocumentRequestType requestType = getChosenServiceRequestType().getDocumentRequestType();
@@ -62,7 +63,7 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
                 if (this.getExecutionYear() == null) {
                     this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
                 }
-                
+
                 academicServiceRequest = DeclarationRequest.create(this);
             } else if (requestType.isDiploma()) {
                 academicServiceRequest = new DiplomaRequest(this);
@@ -76,14 +77,15 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
                 academicServiceRequest = new Under23TransportsDeclarationRequest(this);
             }
         }
-        
-        if(academicServiceRequest == null) {
+
+        if (academicServiceRequest == null) {
             throw new DomainException("error.DocumentRequestCreator.unexpected.document.request.type");
         }
 
         Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT,
                 new DomainObjectEvent<AcademicServiceRequest>(academicServiceRequest));
-        
+
+        academicServiceRequest.setDocumentSigner(DocumentSigner.findDefaultDocumentSignature());
         return academicServiceRequest;
     }
 

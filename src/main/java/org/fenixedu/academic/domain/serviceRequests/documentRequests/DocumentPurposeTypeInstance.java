@@ -56,7 +56,7 @@ public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Bas
                     "DocumentPurposeTypeInstance: could not create new instance because already exists one for the provided code ["
                             + code + "]");
         }
-        if (findUnique(type) != null) {
+        if (type != null && findUnique(type) != null) {
             throw new IllegalStateException(
                     "DocumentPurposeTypeInstance: could not create new instance because already exists one for the provided type ["
                             + type.getName() + "]");
