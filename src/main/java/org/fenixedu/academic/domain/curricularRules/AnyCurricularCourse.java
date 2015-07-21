@@ -241,6 +241,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     protected void removeOwnParameters() {
         setDegree(null);
         setDepartmentUnit(null);
+        setBolonhaDegreeType(null);
     }
 
     public boolean hasBolonhaDegreeType() {
