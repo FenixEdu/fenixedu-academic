@@ -19,8 +19,12 @@
 package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
@@ -155,6 +159,27 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
     public String getReportFileName() {
         return AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this).iterator().next()
                 .getReportFileName();
+    }
+
+    public ProgramConclusion getProgramConclusion() {
+
+        if (getPhdIndividualProgramProcess().getRegistration() != null) {
+            return ProgramConclusion.conclusionsFor(getPhdIndividualProgramProcess().getRegistration()).findAny()
+                    .orElseThrow(() -> new DomainException("error.program.conclusion.empty"));
+        }
+
+        /**
+         * TODO: phd-refactor
+         * The following code should be removed since after phd-refactor all individual processes must have a registration
+         */
+
+        DegreeCurricularPlan lastActiveDegreeCurricularPlan =
+                Optional.ofNullable(getPhdIndividualProgramProcess().getPhdProgram().getDegree())
+                        .map(Degree::getLastActiveDegreeCurricularPlan)
+                        .orElseThrow(() -> new DomainException("error.program.conclusion.empty"));
+
+        return ProgramConclusion.conclusionsFor(lastActiveDegreeCurricularPlan).findAny()
+                .orElseThrow(() -> new DomainException("error.program.conclusion.empty"));
     }
 
 }

@@ -124,4 +124,9 @@ public class PhdRegistryDiploma extends RegistryDiploma {
                                 .getName().getContent(getLanguage())));
     }
 
+    @Override
+    protected String getDegreeDescription() {
+        return getDocumentRequest().getDegreeName(getDocumentRequest().getConclusionYear());
+    }
+
 }

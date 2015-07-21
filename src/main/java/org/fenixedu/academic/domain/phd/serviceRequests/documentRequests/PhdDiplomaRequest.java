@@ -24,7 +24,6 @@ import java.util.Locale;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdDiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -283,8 +282,4 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
         }
     }
 
-    @Override
-    public ProgramConclusion getProgramConclusion() {
-        return ProgramConclusion.conclusionsFor(getPhdIndividualProgramProcess().getRegistration()).findAny().orElse(null);
-    }
 }
