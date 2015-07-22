@@ -2201,6 +2201,8 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             }
 
             class curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod extends curricularRules.Rule {
+                public Double maxCredits;
+                public Double maxCreditsPartialTime;
             }
 
             class curricularRules.MinimumNumberOfCreditsToEnrol extends curricularRules.Rule {

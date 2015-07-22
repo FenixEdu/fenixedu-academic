@@ -62,10 +62,12 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 
         }
 
-        if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME) {
+        double maxAllowedCredits =
+                MaximumNumberOfCreditsForEnrolmentPeriod.getMaximumNumberOfCredits(studentCurricularPlan, executionYear);
+
+        if (enroledEctsCredits > maxAllowedCredits) {
             throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed",
-                    String.valueOf(enroledEctsCredits), executionYear.getQualifiedName(),
-                    String.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME));
+                    String.valueOf(enroledEctsCredits), executionYear.getQualifiedName(), String.valueOf(maxAllowedCredits));
         }
     }
 

@@ -28,12 +28,24 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.GenericPair;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
+    /**
+     * This is a default value, and should not be used externally.
+     * 
+     * Use instead {@link #getMaximumCredits()} on a specific instance.
+     */
+    @Deprecated
     static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
+
+    /**
+     * This is a default value, and should not be used externally.
+     * 
+     * Use instead {@link #getMaximumCreditsPartialTime()} on a specific instance.
+     */
+    @Deprecated
     static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2;
 
     /*
@@ -86,7 +98,10 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 
         result.add(new GenericPair<Object, Boolean>("label.maximumNumberOfCreditsForEnrolmentPeriod", true));
         result.add(new GenericPair<Object, Boolean>(": ", false));
-        result.add(new GenericPair<Object, Boolean>(MAXIMUM_NUMBER_OF_CREDITS, false));
+        result.add(new GenericPair<Object, Boolean>(getMaxCredits(), false));
+        result.add(new GenericPair<Object, Boolean>(" (", false));
+        result.add(new GenericPair<Object, Boolean>(getMaxCreditsPartialTime(), false));
+        result.add(new GenericPair<Object, Boolean>(")", false));
 
         return result;
     }
@@ -96,13 +111,41 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
+    @Override
+    public Double getMaxCredits() {
+        // TODO Make this property required in the next major
+        if (super.getMaxCredits() == null) {
+            return MAXIMUM_NUMBER_OF_CREDITS;
+        } else {
+            return super.getMaxCredits();
+        }
+    }
+
+    @Override
+    public Double getMaxCreditsPartialTime() {
+        // TODO Make this property required in the next major
+        if (super.getMaxCreditsPartialTime() == null) {
+            return MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME;
+        } else {
+            return super.getMaxCreditsPartialTime();
+        }
+    }
+
     static public Double getAccumulatedEcts(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
         return curricularCourse.getEctsCredits(executionSemester.getSemester(), executionSemester) * ACCUMULATED_FACTOR;
     }
 
     static public double getMaximumNumberOfCredits(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
-        final Registration registration = studentCurricularPlan.getRegistration();
-        return registration.isPartialRegime(executionYear) ? MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME : MAXIMUM_NUMBER_OF_CREDITS;
+        boolean partialRegime = studentCurricularPlan.getRegistration().isPartialRegime(executionYear);
+        return studentCurricularPlan
+                .getDegreeCurricularPlan()
+                .getRoot()
+                .getCurricularRules(CurricularRuleType.MAXIMUM_NUMBER_OF_CREDITS_FOR_ENROLMENT_PERIOD, executionYear)
+                .stream()
+                .map(MaximumNumberOfCreditsForEnrolmentPeriod.class::cast)
+                .mapToDouble(
+                        partialRegime ? MaximumNumberOfCreditsForEnrolmentPeriod::getMaxCreditsPartialTime : MaximumNumberOfCreditsForEnrolmentPeriod::getMaxCredits)
+                .min().orElse(partialRegime ? MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME : MAXIMUM_NUMBER_OF_CREDITS);
     }
 }
