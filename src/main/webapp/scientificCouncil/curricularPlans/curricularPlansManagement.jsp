@@ -29,6 +29,7 @@
 
 <f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
+	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
 	<h:outputText value="<h2>#{scouncilBundle['curricularPlansManagement']}</h2>" escape="false"/>
@@ -45,7 +46,19 @@
 
 	<h:messages errorClass="error0" infoClass="success0"/>
 	
-	<fc:dataRepeater value="#{DegreeManagement.bolonhaDegrees}" var="degree">
+	<h:form>
+		<h:panelGrid columns="2" style="infocell" columnClasses="infocell">
+				<h:outputText value="#{bolonhaBundle['degreeType']}:" escape="false"/>
+				<fc:selectOneMenu value="#{DegreeManagement.bolonhaDegreeType}" onchange="submit()">
+					<f:selectItems value="#{DegreeManagement.bolonhaDegreeTypes}"/>
+				</fc:selectOneMenu>
+		</h:panelGrid>
+	</h:form>
+
+	<h:outputText value="<i>#{bolonhaBundle['no.curricularPlans.for.degreeType']}</i>" escape="false" rendered="#{empty DegreeManagement.bolonhaDegrees}"/>
+	
+	
+	<fc:dataRepeater value="#{DegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty DegreeManagement.bolonhaDegrees}">
 		<h:outputText value="<table style='width: 100%;' class='showinfo1'>" escape="false"/>
 		<h:outputText value="<tr class='bgcolor1'><th style='width: 80px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 

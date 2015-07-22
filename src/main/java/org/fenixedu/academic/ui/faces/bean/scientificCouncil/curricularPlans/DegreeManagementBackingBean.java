@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.event.ValueChangeEvent;
@@ -112,15 +113,27 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.degreeOfficialPublicationId = degreeOfficialPublicationId;
     }
 
+    private List<Degree> getDegrees() {
+        if (getDegreeType() == null) {
+            return Degree.readNotEmptyDegrees();
+        }
+
+        return Degree.readNotEmptyDegrees().stream().filter(degree -> degree.getDegreeType().equals(getDegreeType()))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * @return all degrees except the empty one
+     */
     public List<Degree> getBolonhaDegrees() {
-        final List<Degree> result = Degree.readBolonhaDegrees();
+        final List<Degree> result = getDegrees();
         Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         return result;
     }
 
     public List<Degree> getFilteredBolonhaDegrees() {
         final Set<Degree> result = new HashSet<Degree>();
-        for (final Degree degree : Degree.readBolonhaDegrees()) {
+        for (final Degree degree : getDegrees()) {
             for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlansSet()) {
                 if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED)
                         || dcp.getCurricularStage().equals(CurricularStage.APPROVED)
@@ -236,12 +249,15 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.prevailingScientificArea = prevailingScientificArea;
     }
 
+    /**
+     * @return all degrees types except the empty one
+     */
     public List<SelectItem> getBolonhaDegreeTypes() {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
 
-        DegreeType.all().filter(type -> !type.isEmpty()).filter(DegreeType::isBolonhaType).forEach(type -> {
+        DegreeType.all().filter(type -> !type.isEmpty()).forEach(type -> {
             result.add(new SelectItem(type.getExternalId(), type.getName().getContent()));
         });
 

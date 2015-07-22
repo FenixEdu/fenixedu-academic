@@ -33,8 +33,17 @@
 	
 	<h:outputText value="<h2>#{bolonhaBundle['curricularPlans']}</h2>" escape="false"/>
 
+	<h:form>
+		<h:panelGrid columns="2" style="infocell" columnClasses="infocell">
+				<h:outputText value="#{bolonhaBundle['degreeType']}:" escape="false"/>
+				<fc:selectOneMenu value="#{DegreeManagement.bolonhaDegreeType}" onchange="submit()">
+					<f:selectItems value="#{DegreeManagement.bolonhaDegreeTypes}"/>
+				</fc:selectOneMenu>
+		</h:panelGrid>
+	</h:form>
+	
 	<h:outputText value="<i>#{bolonhaBundle['no.degree.access']}</i>" escape="false" rendered="#{empty DegreeManagement.filteredBolonhaDegrees}"/>
-
+	
 	<h:panelGroup>
 		<h:outputText value="<br/>" escape="false" />
 		<h:messages errorClass="error0" infoClass="success0"/>
