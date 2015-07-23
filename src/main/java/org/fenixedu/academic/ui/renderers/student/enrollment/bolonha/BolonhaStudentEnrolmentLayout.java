@@ -598,11 +598,6 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
             final ExecutionSemester executionSemester, final StudentCurricularPlan studentCurricularPlan, int depth) {
 
-        if (studentCurricularPlan.hasConcludedAnyInternalCycle()
-                && studentCurricularPlan.getDegreeType().hasExactlyOneCycleType()) {
-            return;
-        }
-
         if (canPerformStudentEnrolments) {
             for (final CycleType cycleType : getAllCycleTypesToEnrolPreviousToFirstExistingCycle(studentCurricularPlan)) {
                 generateCourseGroupToEnroll(container,

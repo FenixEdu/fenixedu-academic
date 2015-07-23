@@ -24,6 +24,8 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 
 import pt.ist.fenixframework.Atomic;
 
+//TODO remove in next major
+@Deprecated
 public class AffinityCyclesManagement {
     private StudentCurricularPlan studentCurricularPlan;
 

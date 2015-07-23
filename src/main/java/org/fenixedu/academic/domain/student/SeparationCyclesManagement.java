@@ -75,6 +75,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+//TODO remove in next major
+@Deprecated
 public class SeparationCyclesManagement {
 
     private static final Predicate<DegreeType> ACCEPTED_DEGREE_TYPES = DegreeType.oneOf(DegreeType::isBolonhaDegree,

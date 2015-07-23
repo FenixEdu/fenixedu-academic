@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
+import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
@@ -45,7 +46,6 @@ import org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolBolonhaStudent;
-import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolInAffinityCycle;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -131,8 +131,21 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
         RenderUtils.invalidateViewState();
 
-        return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
-                bolonhaStudentEnrollmentBean.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod());
+        //after an enrolment the registration can change state
+        StudentCurricularPlan scp = getActiveRegistration(bolonhaStudentEnrollmentBean.getStudentCurricularPlan());
+
+        return prepareShowDegreeModulesToEnrol(mapping, form, request, response, scp,
+                bolonhaStudentEnrollmentBean.getExecutionPeriod());
+    }
+
+    private StudentCurricularPlan getActiveRegistration(final StudentCurricularPlan scp) {
+        if (!scp.getRegistration().isActive()) {
+            List<Registration> activeRegistrations = scp.getRegistration().getStudent().getActiveRegistrations();
+            if (activeRegistrations.size() > 0) {
+                return activeRegistrations.get(0).getLastStudentCurricularPlan();
+            }
+        }
+        return scp;
     }
 
     protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
@@ -193,8 +206,11 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
             return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
         }
 
-        return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
-                optionalStudentEnrollmentBean.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod());
+        //after an enrolment the registration can change state
+        StudentCurricularPlan scp = getActiveRegistration(optionalStudentEnrollmentBean.getStudentCurricularPlan());
+
+        return prepareShowDegreeModulesToEnrol(mapping, form, request, response, scp,
+                optionalStudentEnrollmentBean.getExecutionPeriod());
     }
 
     private List<IDegreeModuleToEvaluate> buildOptionalDegreeModuleToEnrolList(
@@ -267,7 +283,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
         final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
         try {
-            EnrolInAffinityCycle.run(getLoggedPerson(request), cycleEnrolmentBean);
+            cycleEnrolmentBean.getStudentCurricularPlan().enrolInAffinityCycle(cycleEnrolmentBean.getCycleCourseGroupToEnrol(),
+                    cycleEnrolmentBean.getExecutionPeriod());
 
         } catch (final IllegalDataAccessException e) {
             addActionMessage(request, "error.NotAuthorized");
