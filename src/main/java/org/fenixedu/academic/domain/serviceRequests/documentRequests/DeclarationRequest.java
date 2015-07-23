@@ -92,7 +92,7 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         super.internalChangeState(academicServiceRequestBean);
 
-        if (academicServiceRequestBean.isToConclude()) {
+        if (academicServiceRequestBean.isToConclude() && getServiceRequestType().isPayable()) {
             if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
                 throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
             }

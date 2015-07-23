@@ -4,7 +4,9 @@ import java.util.Comparator;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.Gender;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -59,10 +61,18 @@ public class DocumentSigner extends DocumentSigner_Base {
     }
 
     public boolean isDeletable() {
-        return true;
+        return getAcademicServiceRequestsSet().stream().filter(AcademicServiceRequest::finishedSuccessfully).count() == 0;
     }
 
     public void delete() {
+        if (!isDeletable()) {
+            throw new DomainException(
+                    "serviceRequests.documentRequests.DocumentSigner.cant.delete.signer.associated.with.concluded.or.delivered.documents");
+        }
+        DocumentSigner defaultSigner = findDefaultDocumentSignature();
+        for (AcademicServiceRequest asr : getAcademicServiceRequestsSet()) {
+            asr.setDocumentSigner(defaultSigner != this ? defaultSigner : null);
+        }
         setBennu(null);
         setAdministrativeOffice(null);
         deleteDomainObject();

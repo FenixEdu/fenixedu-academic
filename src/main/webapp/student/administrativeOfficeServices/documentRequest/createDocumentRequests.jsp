@@ -103,6 +103,17 @@
 		
 		<logic:notEmpty name="documentRequestCreateBean" property="chosenServiceRequestType">
 		
+			<!-- Requested Cycle -->
+			<logic:equal name="documentRequestCreateBean" property="hasCycleTypeDependency" value="true">
+				<fr:edit id="requestedCycleEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.requestedCycle" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+					</fr:layout>	
+				</fr:edit>
+			</logic:equal>
+		
+			<!-- Purposes -->
 			<fr:edit id="purposesEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>

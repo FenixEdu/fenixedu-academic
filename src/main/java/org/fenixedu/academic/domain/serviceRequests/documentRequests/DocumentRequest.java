@@ -168,4 +168,8 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
         return null;
     }
 
+    public boolean isSelfIssued() {
+        return (getActiveSituation().getCreator() == getRegistration().getPerson());
+    }
+
 }

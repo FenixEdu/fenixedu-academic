@@ -141,7 +141,7 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
 
         super.internalChangeState(academicServiceRequestBean);
 
-        if (academicServiceRequestBean.isToConclude()) {
+        if (academicServiceRequestBean.isToConclude() && getServiceRequestType().isPayable()) {
             tryConcludeServiceRequest(academicServiceRequestBean);
         }
     }

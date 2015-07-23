@@ -1,6 +1,7 @@
 package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.Comparator;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
@@ -46,8 +47,10 @@ public class ServiceRequestTypeProvider implements DataProvider {
     public static class StudentIssuedProvider extends ServiceRequestTypeProvider {
         @Override
         public Object provide(Object source, Object currentValue) {
-            return ServiceRequestType.findActive()
-                    .filter(srt -> srt.getDocumentRequestType() != null && srt.getDocumentRequestType().isStudentRequestable())
+            final Predicate<ServiceRequestType> isStudentRequestable =
+                    srt -> srt.getDocumentRequestType() != null && srt.getDocumentRequestType().isStudentRequestable();
+            final Predicate<ServiceRequestType> hasNoCharges = srt -> !srt.getPayable();
+            return ServiceRequestType.findActive().filter(hasNoCharges.or(isStudentRequestable))
                     .sorted(Comparator.comparing(ServiceRequestType::getName)).collect(Collectors.toList());
         }
     }
