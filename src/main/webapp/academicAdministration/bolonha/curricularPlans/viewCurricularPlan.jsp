@@ -162,7 +162,7 @@
 		<fc:degreeCurricularPlanRender 
 			dcp="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan}" 
 			organizeBy="#{AcademicAdministrationCurricularCourseManagement.organizeBy}"
-			showRules="#{AcademicAdministrationCurricularCourseManagement.showRules}"
+			showRules="true"
 			hideCourses="#{AcademicAdministrationCurricularCourseManagement.hideCourses}" 
 			executionYear="#{AcademicAdministrationCurricularCourseManagement.executionYear}"
 			module="/academicAdministration/bolonha/curricularPlans"/>
