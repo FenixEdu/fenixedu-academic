@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.Curr
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
@@ -48,6 +47,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolBolonhaStudent;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
+import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 
@@ -123,9 +123,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
             return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
 
-        } catch (DomainException ex) {
-            addActionMessage("error", request, ex.getKey(), ex.getArgs());
-
+        } catch (DomainException de) {
+            addActionMessage("error", request, de.getLocalizedMessage(), false);
             return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
         }
 
@@ -199,10 +198,9 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
             return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
 
-        } catch (DomainException ex) {
-            addActionMessage("error", request, ex.getKey(), ex.getArgs());
+        } catch (DomainException de) {
+            addActionMessage("error", request, de.getLocalizedMessage(), false);
             request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
-
             return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
         }
 
