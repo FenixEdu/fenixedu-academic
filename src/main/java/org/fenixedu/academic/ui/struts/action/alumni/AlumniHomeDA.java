@@ -192,7 +192,7 @@ public class AlumniHomeDA extends FenixAction {
             if (job.getContractType() != null) {
                 numberOfHits++;
             }
-            if (job.getSalaryType() != null) {
+            if (job.getSalary() != null) {
                 numberOfHits++;
             }
             completionPercentage += (double) numberOfHits / (double) totalNumber;
