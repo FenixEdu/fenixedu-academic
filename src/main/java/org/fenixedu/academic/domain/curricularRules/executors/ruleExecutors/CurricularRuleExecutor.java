@@ -32,10 +32,39 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 abstract public class CurricularRuleExecutor {
 
-    protected CurricularRuleExecutor() {
+    private CurricularRuleExecutorLogic logic;
+
+    protected CurricularRuleExecutorLogic getLogic() {
+        if (this.logic == null) {
+            throw new DomainException("curricularRules.ruleExecutors.logic.unavailable", BundleUtil.getString(Bundle.BOLONHA,
+                    I18N.getLocale(), "label.enrolmentPeriodRestrictions"));
+        }
+
+        return logic;
+    }
+
+    protected void setLogic(final CurricularRuleExecutorLogic input) {
+        if (input == null) {
+            throw new DomainException("curricularRules.ruleExecutors.logic.unavailable", BundleUtil.getString(Bundle.BOLONHA,
+                    I18N.getLocale(), "label.enrolmentPeriodRestrictions"));
+        }
+
+        this.logic = input;
+    }
+
+    /**
+     * Allows delegating execution logic to external class
+     */
+    public static interface CurricularRuleExecutorLogic {
+
+        public RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
+                final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
     }
 
     public RuleResult execute(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,

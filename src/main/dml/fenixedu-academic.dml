@@ -2200,6 +2200,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 Boolean even;
             }
 
+            class curricularRules.EnrolmentPeriodRestrictions extends curricularRules.Rule {
+            }
+
             class curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod extends curricularRules.Rule {
             }
 

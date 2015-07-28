@@ -21,40 +21,23 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.GenericPair;
 
-public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
+public class EnrolmentPeriodRestrictions extends EnrolmentPeriodRestrictions_Base {
 
-    static final public double MAXIMUM_NUMBER_OF_CREDITS = FenixEduAcademicConfiguration.getConfiguration().getMaximumNumberOfCreditsForEnrolment();
-
-    static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2;
-
-    /*
-     * Previous value was 0.75d until 2008/2009. These constants should be rule
-     * attributes, and to change this we should have a new rule. When
-     * refactoring rule pay attention to these values. Be aware of
-     * getAccumulatedEcts and getMaximumNumberOfCredits static methods, it can
-     * not be used in this way
-     */
-    static final private double ACCUMULATED_FACTOR = 1.0d;
-
-    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
+    public EnrolmentPeriodRestrictions(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
             final ExecutionSemester end) {
 
         super();
         checkDegreeModule(degreeModuleToApplyRule);
-        init(degreeModuleToApplyRule, null, begin, end, CurricularRuleType.MAXIMUM_NUMBER_OF_CREDITS_FOR_ENROLMENT_PERIOD);
+        init(degreeModuleToApplyRule, null, begin, end, CurricularRuleType.ENROLMENT_PERIOD_RESTRICTIONS);
     }
 
-    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
+    public EnrolmentPeriodRestrictions(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
         this(degreeModuleToApplyRule, begin, null);
     }
 
@@ -84,9 +67,7 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
     public List<GenericPair<Object, Boolean>> getLabel() {
         final List<GenericPair<Object, Boolean>> result = new ArrayList<GenericPair<Object, Boolean>>(3);
 
-        result.add(new GenericPair<Object, Boolean>("label.maximumNumberOfCreditsForEnrolmentPeriod", true));
-        result.add(new GenericPair<Object, Boolean>(": ", false));
-        result.add(new GenericPair<Object, Boolean>(MAXIMUM_NUMBER_OF_CREDITS, false));
+        result.add(new GenericPair<Object, Boolean>("label.enrolmentPeriodRestrictions", true));
 
         return result;
     }
@@ -94,19 +75,6 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
     @Override
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
-    }
-
-    static public Double getAccumulatedEcts(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        return curricularCourse.getEctsCredits(executionSemester.getSemester(), executionSemester) * ACCUMULATED_FACTOR;
-    }
-
-    /**
-     * @deprecated Use static MAXIMUM_NUMBER_OF_CREDITS field instead
-     */
-    @Deprecated
-    static public double getMaximumNumberOfCredits(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionYear executionYear) {
-    	return MAXIMUM_NUMBER_OF_CREDITS;
     }
 
 }
