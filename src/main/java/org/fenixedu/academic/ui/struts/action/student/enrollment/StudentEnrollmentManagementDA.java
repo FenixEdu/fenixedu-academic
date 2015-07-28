@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.student.enrollment;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,16 +29,27 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
+import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
+import org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean;
+import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolInAffinityCycle;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentEnrollApp;
+import org.fenixedu.academic.ui.struts.action.student.enrollment.bolonha.BolonhaStudentEnrollmentDispatchAction.ChooseEnrolmentSemester;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+
+import com.google.common.collect.Lists;
 
 @StrutsFunctionality(app = StudentEnrollApp.class, path = "courses", titleKey = "link.student.enrollment")
 @Mapping(module = "student", path = "/studentEnrollmentManagement")
@@ -49,7 +59,9 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
         @Forward(name = "choosePersonalDataAuthorizationChoice",
                 path = "/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"),
         @Forward(name = "proceedToEnrolment", path = "/student/bolonhaStudentEnrollment.do?method=showWelcome"),
+        @Forward(name = "showAffinityToEnrol", path = "/student/enrollment/bolonha/showAffinityToEnrol.jsp"),
         @Forward(name = "chooseSemester", path = "/student/enrollment/chooseSemester.jsp"),
+        @Forward(name = "selectAffinityToEnrol", path = "/student/enrollment/bolonha/selectAffinityToEnrol.jsp"),
         @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp") })
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
@@ -61,7 +73,23 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             request.setAttribute("student", student);
             return mapping.findForward("choosePersonalDataAuthorizationChoice");
         }
-        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+        ChooseEnrolmentSemester chooseSemester = new ChooseEnrolmentSemester();
+        List<ExecutionSemester> semesters = chooseSemester.getSemestersForCourses();
+        ExecutionSemester executionSemester = null;
+        if (semesters.size() == 1) {
+            executionSemester = semesters.get(0);
+        } else if (semesters.size() < 1) {
+            executionSemester = ExecutionSemester.readActualExecutionSemester();
+        } else {
+            request.setAttribute("chooseSemester", chooseSemester);
+            return mapping.findForward("chooseSemester");
+        }
+
+        return forwardToRegistration(mapping, request, student, executionSemester);
+    }
+
+    private ActionForward forwardToRegistration(ActionMapping mapping, HttpServletRequest request, final Student student,
+            ExecutionSemester executionSemester) {
         request.setAttribute("executionSemester", executionSemester);
         final List<Registration> registrationsToEnrol = getRegistrationsToEnrolByStudent(request);
         if (registrationsToEnrol.size() == 1) {
@@ -76,9 +104,20 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         }
     }
 
+    public ActionForward chooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        ChooseEnrolmentSemester chooseSemester = getRenderedObject("chooseSemester");
+        return forwardToRegistration(mapping, request, getLoggedStudent(request), chooseSemester.getChosenSemester());
+    }
+
     // TODO: refactor this method
     private List<Registration> getRegistrationsToChooseSecondCycle(final Student student) {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = Lists.newArrayList();
+
+        if (!Registration.getEnrolmentsAllowStudentToCreateRegistrationForAffinityCycle()) {
+            return result;
+        }
 
         for (final Registration registration : student.getRegistrationsSet()) {
 
@@ -115,13 +154,145 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             request.setAttribute("debtsMessage", "error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
         }
 
+        // ----------------------------------------------------------------------
+        // ---------------------------------------------
+        // TODO: refactor this code, should be more generic
+        // ----------------------------------------------------------------------
+        // ---------------------------------------------
+
         if (!studentCurricularPlan.isActive() && !studentCurricularPlan.getRegistration().isConcluded()) {
             request.setAttribute("registrationsToEnrol", Collections.singletonList(registration));
             addActionMessage(request, "error.studentCurricularPlan.is.not.active.or.concluded");
             return mapping.findForward("chooseRegistration");
         }
 
-        request.setAttribute("registration", registration);
+        if (studentCurricularPlan.getDegreeType().isBolonhaMasterDegree()) {
+            request.setAttribute("registration", registration);
+            return mapping.findForward("proceedToEnrolment");
+
+        } else {
+            final CycleCurriculumGroup firstCycle = studentCurricularPlan.getFirstCycle();
+
+            if (firstCycle == null || !firstCycle.isConcluded()) {
+                request.setAttribute("registration", registration);
+                return mapping.findForward("proceedToEnrolment");
+
+            } else {
+
+                if (!Registration.getEnrolmentsAllowStudentToCreateRegistrationForAffinityCycle()) {
+                    request.setAttribute("registration", registration);
+                    return mapping.findForward("proceedToEnrolment");
+                }
+
+                final CycleCurriculumGroup secondCycle = studentCurricularPlan.getSecondCycle();
+                if (secondCycle == null) {
+                    return prepareSelectAffinityToEnrol(mapping, request, studentCurricularPlan, executionSemester);
+
+                } else if (secondCycle.isExternal()) {
+                    final Student student = studentCurricularPlan.getRegistration().getStudent();
+                    final Registration newRegistration =
+                            student.getActiveRegistrationFor(secondCycle.getDegreeCurricularPlanOfDegreeModule());
+
+                    if (newRegistration != null) {
+                        request.setAttribute("registration", newRegistration);
+                        return mapping.findForward("proceedToEnrolment");
+                    }
+
+                    return showAffinityToEnrol(mapping, request, studentCurricularPlan, executionSemester, secondCycle);
+
+                } else {
+                    request.setAttribute("registration", registration);
+                    return mapping.findForward("proceedToEnrolment");
+                }
+            }
+        }
+
+        // ----------------------------------------------------------------------
+        // ---------------------------------------------
+        // TODO: refactor this code, should be more generic
+        // ----------------------------------------------------------------------
+        // ---------------------------------------------
+
+    }
+
+    private ActionForward prepareSelectAffinityToEnrol(final ActionMapping mapping, final HttpServletRequest request,
+            final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+
+        if (!canContinueToEnrolment(request, studentCurricularPlan, executionSemester)) {
+            return mapping.findForward("enrollmentCannotProceed");
+        }
+
+        request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester,
+                CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE));
+
+        return mapping.findForward("selectAffinityToEnrol");
+    }
+
+    private ActionForward showAffinityToEnrol(final ActionMapping mapping, final HttpServletRequest request,
+            final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+            final CycleCurriculumGroup curriculumGroup) {
+
+        if (!canContinueToEnrolment(request, studentCurricularPlan, executionSemester)) {
+            return mapping.findForward("enrollmentCannotProceed");
+        }
+
+        request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester,
+                curriculumGroup.getCycleCourseGroup()));
+
+        return mapping.findForward("showAffinityToEnrol");
+    }
+
+    public ActionForward showAffinityToEnrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        final CycleEnrolmentBean bean = getCycleEnrolmentBeanFromViewState();
+
+        if (!canContinueToEnrolment(request, bean.getStudentCurricularPlan(), bean.getExecutionPeriod())) {
+            return mapping.findForward("enrollmentCannotProceed");
+        }
+
+        request.setAttribute("cycleEnrolmentBean", bean);
+        return mapping.findForward("showAffinityToEnrol");
+    }
+
+    private boolean canContinueToEnrolment(final HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
+            final ExecutionSemester executionSemester) {
+
+        final EnrolmentPreConditionResult result =
+                StudentCurricularPlanEnrolmentPreConditions.checkPreConditionsToEnrol(studentCurricularPlan, executionSemester);
+
+        if (!result.isValid()) {
+
+            addActionMessage(request, result.message(), result.args());
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+    public ActionForward enrolInAffinityCycle(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+
+        final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
+
+        try {
+            final Registration registration =
+                    EnrolInAffinityCycle.run(getLoggedPerson(request), cycleEnrolmentBean.getStudentCurricularPlan(),
+                            cycleEnrolmentBean.getCycleCourseGroupToEnrol(), cycleEnrolmentBean.getExecutionPeriod());
+
+            request.setAttribute("registration", registration);
+        } catch (final IllegalDataAccessException e) {
+            addActionMessage(request, "error.NotAuthorized");
+            request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
+            return mapping.findForward("showAffinityToEnrol");
+
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+            request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
+            return mapping.findForward("showAffinityToEnrol");
+        }
+
         return mapping.findForward("proceedToEnrolment");
     }
 
@@ -164,4 +335,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         return getLoggedPerson(request).getStudent();
     }
 
+    private CycleEnrolmentBean getCycleEnrolmentBeanFromViewState() {
+        return getRenderedObject();
+    }
 }
