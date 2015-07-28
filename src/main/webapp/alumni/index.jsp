@@ -129,7 +129,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 		<bean:define id="educationStatus" name="educationStatus" type="java.lang.String"/>
 		<ul class="mbottom05">		
 			<li><b><bean:message key="link.professional.information" bundle="ALUMNI_RESOURCES"/>:</b> 
-				<bean:message key="message.education.sufficientData" arg0="<%= professionalStatus %>" bundle="ALUMNI_RESOURCES"/>
+				<bean:message key="message.professional.sufficientData" arg0="<%= professionalStatus %>" bundle="ALUMNI_RESOURCES"/>
 				<logic:notPresent name="dontShowJobComplete"> 
 					<html:link page="/professionalInformation.do?method=innerProfessionalInformation">
 						(<bean:message key="link.complete.data" bundle="ALUMNI_RESOURCES" />)
