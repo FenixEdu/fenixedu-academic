@@ -68,10 +68,6 @@ import org.joda.time.DateTime;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
-    private static final double ECTS_CREDITS_FOR_PRE_BOLONHA = 6;
-
-    private static final double WEIGHT_FOR_PRE_BOLONHA = 6;
-
     static final public Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME =
             new Comparator<CurricularCourse>() {
                 @Override
@@ -1033,9 +1029,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (getDegreeType().isMasterDegree() && credits != null) {
                 return credits;
             }
-
-            final Double ectsCredits = super.getEctsCredits();
-            return (ectsCredits == null || ectsCredits == 0.0) ? ECTS_CREDITS_FOR_PRE_BOLONHA : ectsCredits;
+            return super.getEctsCredits();
         }
 
         throw new DomainException("CurricularCourse.with.no.ects.credits");
@@ -1067,8 +1061,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getCredits();
         }
 
-        final Double weigth = super.getWeigth();
-        return (weigth == null || weigth == 0.0) ? WEIGHT_FOR_PRE_BOLONHA : weigth;
+        return super.getWeigth();
     }
 
     final public Double getWeight(ExecutionSemester semester) {
@@ -1080,8 +1073,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getCredits();
         }
 
-        final Double weigth = super.getWeigth();
-        return (weigth == null || weigth == 0.0) ? WEIGHT_FOR_PRE_BOLONHA : weigth;
+        return super.getWeigth();
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
@@ -2214,7 +2206,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Deprecated
     /**
-     * @deprecated This method is a temporary workaround to access curricular course real weight until ACDM-752 (when weight is 0 or null the system returns 6...) is solved 
+     * @deprecated Use {@link #getWeight()} instead.
      * 
      */
     public Double getBaseWeight() {
