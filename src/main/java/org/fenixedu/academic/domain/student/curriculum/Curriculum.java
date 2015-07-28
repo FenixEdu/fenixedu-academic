@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -42,6 +43,206 @@ public class Curriculum implements Serializable, ICurriculum {
 
     static private final long serialVersionUID = -8365985725904139675L;
 
+    public static interface CurricularYearCalculator {
+        Integer curricularYear(Curriculum curriculum);
+
+        Integer totalCurricularYears(Curriculum curriculum);
+
+        BigDecimal approvedCredits(Curriculum curriculum);
+
+        BigDecimal remainingCredits(Curriculum curriculum);
+    }
+
+    private static Supplier<CurricularYearCalculator> CURRICULAR_YEAR_CALCULATOR = () -> new CurricularYearCalculator() {
+        private BigDecimal approvedCredits;
+
+        private BigDecimal remainingCredits;
+
+        private Integer curricularYear;
+
+        private Integer totalCurricularYears;
+
+        @Override
+        public Integer curricularYear(Curriculum curriculum) {
+            if (curricularYear == null) {
+                doCalculus(curriculum);
+            }
+            return curricularYear;
+        }
+
+        @Override
+        public Integer totalCurricularYears(Curriculum curriculum) {
+            if (totalCurricularYears == null) {
+                doCalculus(curriculum);
+            }
+            return totalCurricularYears;
+        }
+
+        @Override
+        public BigDecimal approvedCredits(Curriculum curriculum) {
+            if (approvedCredits == null) {
+                doCalculus(curriculum);
+            }
+            return approvedCredits;
+        }
+
+        @Override
+        public BigDecimal remainingCredits(Curriculum curriculum) {
+            if (remainingCredits == null) {
+                doCalculus(curriculum);
+            }
+            return remainingCredits;
+        }
+
+        private void doCalculus(Curriculum curriculum) {
+            StudentCurricularPlan scp = curriculum.getStudentCurricularPlan();
+            totalCurricularYears = scp == null ? 0 : scp.getDegreeCurricularPlan().getDurationInYears(getCycleType(curriculum));
+
+            approvedCredits = BigDecimal.ZERO;
+            for (final ICurriculumEntry entry : curriculum.getCurricularYearEntries()) {
+                approvedCredits = approvedCredits.add(entry.getEctsCreditsForCurriculum());
+            }
+            accountForDirectIngressions(curriculum);
+            if (approvedCredits.compareTo(BigDecimal.ZERO) == 0) {
+                curricularYear = Integer.valueOf(1);
+            } else {
+                final BigDecimal ectsCreditsCurricularYear =
+                        curriculum.getSumEctsCredits().add(BigDecimal.valueOf(24))
+                                .divide(BigDecimal.valueOf(60), 2 * 2 + 1, RoundingMode.HALF_EVEN).add(BigDecimal.valueOf(1));
+                curricularYear = Math.min(ectsCreditsCurricularYear.intValue(), totalCurricularYears.intValue());
+            }
+
+            remainingCredits = BigDecimal.ZERO;
+            for (final ICurriculumEntry entry : curriculum.getCurricularYearEntries()) {
+                if (entry instanceof Dismissal) {
+                    final Dismissal dismissal = (Dismissal) entry;
+                    if (dismissal.getCredits().isCredits() || dismissal.getCredits().isEquivalence()
+                            || (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
+                        remainingCredits = remainingCredits.add(entry.getEctsCreditsForCurriculum());
+                    }
+                }
+            }
+        }
+
+        private void accountForDirectIngressions(Curriculum curriculum) {
+            if (getCycleType(curriculum) != null) {
+                return;
+            }
+            if (!curriculum.getStudentCurricularPlan().getDegreeCurricularPlan().isBolonhaDegree()) {
+                return;
+            }
+            //this is to prevent some oddly behavior spotted (e.g. student 57276)
+            if (curriculum.getStudentCurricularPlan().getCycleCurriculumGroups().isEmpty()) {
+                return;
+            }
+            CycleCurriculumGroup sgroup =
+                    Collections.min(curriculum.getStudentCurricularPlan().getCycleCurriculumGroups(),
+                            CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+            CycleType cycleIter = sgroup.getCycleType().getPrevious();
+            while (cycleIter != null) {
+                if (curriculum.getStudentCurricularPlan().getDegreeCurricularPlan().getCycleCourseGroup(cycleIter) != null) {
+                    approvedCredits = approvedCredits.add(new BigDecimal(cycleIter.getEctsCredits()));
+                }
+                cycleIter = cycleIter.getPrevious();
+            }
+        }
+
+        private CycleType getCycleType(Curriculum curriculum) {
+            if (!curriculum.hasCurriculumModule() || !curriculum.isBolonha()) {
+                return null;
+            }
+
+            final CurriculumModule module = curriculum.getCurriculumModule();
+            final CycleType cycleType = module.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) module).getCycleType() : null;
+            return cycleType;
+        }
+
+    };
+
+    public static void setCurricularYearCalculator(Supplier<CurricularYearCalculator> calculator) {
+        CURRICULAR_YEAR_CALCULATOR = calculator;
+    }
+
+    public static interface CurriculumGradeCalculator {
+        Grade rawGrade(Curriculum curriculum);
+
+        Grade finalGrade(Curriculum curriculum);
+
+        @Deprecated
+        BigDecimal weigthedGradeSum(Curriculum curriculum);
+    }
+
+    private static Supplier<CurriculumGradeCalculator> CURRICULUM_GRADE_CALCULATOR = () -> new CurriculumGradeCalculator() {
+        private BigDecimal sumPiCi;
+
+        private BigDecimal sumPi;
+
+        private Grade rawGrade;
+
+        private Grade finalGrade;
+
+        private void doCalculus(Curriculum curriculum) {
+            sumPiCi = BigDecimal.ZERO;
+            sumPi = BigDecimal.ZERO;
+            countAverage(curriculum.averageEnrolmentRelatedEntries, curriculum.getAverageType());
+            countAverage(curriculum.averageDismissalRelatedEntries, curriculum.getAverageType());
+            BigDecimal avg = calculateAverage();
+            rawGrade = Grade.createGrade(avg.setScale(2, RoundingMode.HALF_UP).toString(), GradeScale.TYPE20);
+            finalGrade = Grade.createGrade(avg.setScale(0, RoundingMode.HALF_UP).toString(), GradeScale.TYPE20);
+        }
+
+        private void countAverage(final Set<ICurriculumEntry> entries, AverageType averageType) {
+            for (final ICurriculumEntry entry : entries) {
+                if (entry.getGrade().isNumeric()) {
+                    final BigDecimal weigth = entry.getWeigthForCurriculum();
+
+                    if (averageType == AverageType.WEIGHTED) {
+                        sumPi = sumPi.add(weigth);
+                        sumPiCi = sumPiCi.add(entry.getWeigthForCurriculum().multiply(entry.getGrade().getNumericValue()));
+                    } else if (averageType == AverageType.SIMPLE) {
+                        sumPi = sumPi.add(BigDecimal.ONE);
+                        sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
+                    } else {
+                        throw new DomainException("Curriculum.average.type.not.supported");
+                    }
+                }
+            }
+        }
+
+        private BigDecimal calculateAverage() {
+            return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, 2 * 2 + 1,
+                    RoundingMode.HALF_UP);
+        }
+
+        @Override
+        public Grade rawGrade(Curriculum curriculum) {
+            if (rawGrade == null) {
+                doCalculus(curriculum);
+            }
+            return rawGrade;
+        }
+
+        @Override
+        public Grade finalGrade(Curriculum curriculum) {
+            if (finalGrade == null) {
+                doCalculus(curriculum);
+            }
+            return finalGrade;
+        }
+
+        @Override
+        public BigDecimal weigthedGradeSum(Curriculum curriculum) {
+            if (sumPiCi == null) {
+                doCalculus(curriculum);
+            }
+            return sumPiCi;
+        }
+    };
+
+    public static void setCurriculumGradeCalculator(Supplier<CurriculumGradeCalculator> calculator) {
+        CURRICULUM_GRADE_CALCULATOR = calculator;
+    }
+
     private CurriculumModule curriculumModule;
 
     private Boolean bolonhaDegree;
@@ -54,25 +255,11 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private final Set<ICurriculumEntry> curricularYearEntries = new HashSet<ICurriculumEntry>();
 
-    private BigDecimal sumPiCi;
-
-    private BigDecimal sumPi;
-
-    static final protected int SCALE = 2;
-
-    static final protected RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
-
     private AverageType averageType = AverageType.WEIGHTED;
 
-    private Grade rawGrade;
+    private CurricularYearCalculator curricularYearCalculator = CURRICULAR_YEAR_CALCULATOR.get();
 
-    private Grade finalGrade;
-
-    private BigDecimal sumEctsCredits;
-
-    private Integer curricularYear;
-
-    private boolean forceCalculus;
+    private CurriculumGradeCalculator gradeCalculator = CURRICULUM_GRADE_CALCULATOR.get();
 
     static public Curriculum createEmpty(final ExecutionYear executionYear) {
         return Curriculum.createEmpty(null, executionYear);
@@ -109,7 +296,8 @@ public class Curriculum implements Serializable, ICurriculum {
         addAverageEntries(averageDismissalRelatedEntries, curriculum.getDismissalRelatedEntries());
         addCurricularYearEntries(curricularYearEntries, curriculum.getCurricularYearEntries());
 
-        forceCalculus = true;
+        curricularYearCalculator = CURRICULAR_YEAR_CALCULATOR.get();
+        gradeCalculator = CURRICULUM_GRADE_CALCULATOR.get();
     }
 
     private void addAverageEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
@@ -232,173 +420,51 @@ public class Curriculum implements Serializable, ICurriculum {
         return curricularYearEntries;
     }
 
+    @Deprecated
     public BigDecimal getWeigthedGradeSum() {
-        if (sumPiCi == null || forceCalculus) {
-            doCalculus();
-            forceCalculus = false;
-        }
-
-        return sumPiCi;
+        return gradeCalculator.weigthedGradeSum(this);
     }
 
     @Override
     public Grade getRawGrade() {
-        if (rawGrade == null || forceCalculus) {
-            doCalculus();
-            forceCalculus = false;
-        }
-
-        return rawGrade;
+        return gradeCalculator.rawGrade(this);
     }
 
     @Override
     public Grade getFinalGrade() {
-        if (finalGrade == null || forceCalculus) {
-            doCalculus();
-            forceCalculus = false;
-        }
-
-        return finalGrade;
+        return gradeCalculator.finalGrade(this);
     }
 
     @Override
     public BigDecimal getSumEctsCredits() {
-        if (sumEctsCredits == null || forceCalculus) {
-            doCalculus();
-            forceCalculus = false;
-        }
-
-        return sumEctsCredits;
+        return curricularYearCalculator.approvedCredits(this);
     }
 
     @Override
     public Integer getCurricularYear() {
-        if (curricularYear == null || forceCalculus) {
-            doCalculus();
-            forceCalculus = false;
-        }
-
-        return curricularYear;
+        return curricularYearCalculator.curricularYear(this);
     }
 
     @Override
     public BigDecimal getRemainingCredits() {
-        BigDecimal result = BigDecimal.ZERO;
-
-        for (final ICurriculumEntry entry : curricularYearEntries) {
-            if (entry instanceof Dismissal) {
-                final Dismissal dismissal = (Dismissal) entry;
-                if (dismissal.getCredits().isCredits() || dismissal.getCredits().isEquivalence()
-                        || (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
-                    result = result.add(entry.getEctsCreditsForCurriculum());
-                }
-            }
-        }
-
-        return result;
+        return curricularYearCalculator.remainingCredits(this);
     }
 
-    private void doCalculus() {
-        sumPiCi = BigDecimal.ZERO;
-        sumPi = BigDecimal.ZERO;
-        countAverage(averageEnrolmentRelatedEntries);
-        countAverage(averageDismissalRelatedEntries);
-        BigDecimal avg = calculateAverage();
-        rawGrade = Grade.createGrade(avg.setScale(SCALE, ROUNDING_MODE).toString(), GradeScale.TYPE20);
-        finalGrade = Grade.createGrade(avg.setScale(0, ROUNDING_MODE).toString(), GradeScale.TYPE20);
-
-        sumEctsCredits = BigDecimal.ZERO;
-        countCurricularYear(curricularYearEntries);
-        accountForDirectIngressions();
-        curricularYear = calculateCurricularYear();
-    }
-
+    @Deprecated
     @Override
     public void setAverageType(AverageType averageType) {
         this.averageType = averageType;
-        forceCalculus = true;
+        gradeCalculator = CURRICULUM_GRADE_CALCULATOR.get();
     }
 
-    private void countAverage(final Set<ICurriculumEntry> entries) {
-        for (final ICurriculumEntry entry : entries) {
-            if (entry.getGrade().isNumeric()) {
-                final BigDecimal weigth = entry.getWeigthForCurriculum();
-
-                if (averageType == AverageType.WEIGHTED) {
-                    sumPi = sumPi.add(weigth);
-                    sumPiCi = sumPiCi.add(entry.getWeigthForCurriculum().multiply(entry.getGrade().getNumericValue()));
-                } else if (averageType == AverageType.SIMPLE) {
-                    sumPi = sumPi.add(BigDecimal.ONE);
-                    sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
-                } else {
-                    throw new DomainException("Curriculum.average.type.not.supported");
-                }
-            }
-        }
-    }
-
-    private BigDecimal calculateAverage() {
-        return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1, ROUNDING_MODE);
-    }
-
-    private void countCurricularYear(final Set<ICurriculumEntry> entries) {
-        for (final ICurriculumEntry entry : entries) {
-            sumEctsCredits = sumEctsCredits.add(entry.getEctsCreditsForCurriculum());
-        }
-    }
-
-    private void accountForDirectIngressions() {
-        if (getCycleType() != null) {
-            return;
-        }
-        if (!getStudentCurricularPlan().getDegreeCurricularPlan().isBolonhaDegree()) {
-            return;
-        }
-        //this is to prevent some oddly behavior spotted (e.g. student 57276)
-        if (getStudentCurricularPlan().getCycleCurriculumGroups().isEmpty()) {
-            return;
-        }
-        CycleCurriculumGroup sgroup =
-                Collections.min(getStudentCurricularPlan().getCycleCurriculumGroups(),
-                        CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-        CycleType cycleIter = sgroup.getCycleType().getPrevious();
-        while (cycleIter != null) {
-            if (getStudentCurricularPlan().getDegreeCurricularPlan().getCycleCourseGroup(cycleIter) != null) {
-                sumEctsCredits = sumEctsCredits.add(new BigDecimal(cycleIter.getEctsCredits()));
-            }
-            cycleIter = cycleIter.getPrevious();
-        }
-    }
-
-    private Integer calculateCurricularYear() {
-        if (sumEctsCredits.compareTo(BigDecimal.ZERO) == 0) {
-            return Integer.valueOf(1);
-        }
-
-        final BigDecimal ectsCreditsCurricularYear =
-                sumEctsCredits.add(BigDecimal.valueOf(24))
-                        .divide(BigDecimal.valueOf(60), SCALE * SCALE + 1, RoundingMode.HALF_EVEN).add(BigDecimal.valueOf(1));
-        return Math.min(ectsCreditsCurricularYear.intValue(), getTotalCurricularYears().intValue());
+    @Deprecated
+    public AverageType getAverageType() {
+        return averageType;
     }
 
     @Override
     public Integer getTotalCurricularYears() {
-        final StudentCurricularPlan plan = getStudentCurricularPlan();
-        if (plan == null) {
-            return Integer.valueOf(0);
-        }
-
-        return plan.getDegreeCurricularPlan().getDurationInYears(getCycleType());
-    }
-
-    private CycleType getCycleType() {
-        if (!hasCurriculumModule() || !isBolonha()) {
-            return null;
-        }
-
-        final CurriculumModule module = getCurriculumModule();
-        final CycleType cycleType = module.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) module).getCycleType() : null;
-        return cycleType;
+        return curricularYearCalculator.totalCurricularYears(this);
     }
 
     @Override
