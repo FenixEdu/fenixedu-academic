@@ -1001,12 +1001,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return result;
     }
 
-    static final public BigDecimal LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC = BigDecimal.valueOf(4.0d);
-
-    static final BigDecimal LMAC_AND_LCI_WEIGHT_FACTOR = BigDecimal.valueOf(0.25d);
-
-    static final BigDecimal LMAC_WEIGHT_BEFORE_0607_EXCEPT_LMAC_AND_LCI_DEGREE_MODULES = BigDecimal.valueOf(7.5d);
-
     @Override
     final public Double getWeigth() {
         return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0) : getWeigthForCurriculum().doubleValue();
@@ -1014,42 +1008,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public BigDecimal getWeigthForCurriculum() {
-        if (!isBolonhaDegree()) {
-
-            final DegreeCurricularPlan dcpOfStudent = getDegreeCurricularPlanOfStudent();
-            if (dcpOfStudent.getDegreeType().isDegree()) {
-
-                final Degree leicPb = Degree.readBySigla("LEIC-pB");
-                if (isStudentFromDegree(leicPb, dcpOfStudent)) {
-                    return getBaseWeigth();
-                }
-
-                if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
-                    return getEctsCreditsForCurriculum();
-                }
-
-                final Degree lmacPb = Degree.readBySigla("LMAC-pB");
-                final DegreeCurricularPlan dcpOfDegreeModule = getDegreeCurricularPlanOfDegreeModule();
-                if (isDegreeModuleFromDegree(lmacPb, dcpOfDegreeModule)) {
-                    return getBaseWeigth().multiply(LMAC_AND_LCI_WEIGHT_FACTOR);
-                }
-
-                final Degree lciPb = Degree.readBySigla("LCI-pB");
-                if (isDegreeModuleFromDegree(lciPb, dcpOfDegreeModule)) {
-                    return getBaseWeigth().multiply(LMAC_AND_LCI_WEIGHT_FACTOR);
-                }
-
-                if (isStudentFromDegree(lmacPb, dcpOfStudent)) {
-                    return LMAC_WEIGHT_BEFORE_0607_EXCEPT_LMAC_AND_LCI_DEGREE_MODULES;
-                }
-
-            }
-        }
-
-        return getBaseWeigth();
-    }
-
-    private BigDecimal getBaseWeigth() {
         final Double d;
         if (super.getWeigth() == null || super.getWeigth() == 0d) {
             final CurricularCourse curricularCourse = getCurricularCourse();
@@ -1058,20 +1016,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             d = super.getWeigth();
         }
         return d == null ? BigDecimal.ZERO : BigDecimal.valueOf(d);
-    }
-
-    private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
-        final ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
-        final ExecutionYear executionYear0607 = ExecutionYear.readExecutionYearByName("2006/2007");
-        return executionYear.isAfterOrEquals(executionYear0607);
-    }
-
-    private boolean isStudentFromDegree(final Degree degree, final DegreeCurricularPlan degreeCurricularPlanOfStudent) {
-        return degree.getDegreeCurricularPlansSet().contains(degreeCurricularPlanOfStudent);
-    }
-
-    private boolean isDegreeModuleFromDegree(final Degree degree, DegreeCurricularPlan degreeCurricularPlanOfDegreeModule) {
-        return degree.getDegreeCurricularPlansSet().contains(degreeCurricularPlanOfDegreeModule);
     }
 
     /**
