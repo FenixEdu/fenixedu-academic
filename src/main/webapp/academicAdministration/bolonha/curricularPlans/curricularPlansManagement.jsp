@@ -57,7 +57,7 @@
 
 			<h:outputText value="<tr><td colspan='3' align='center'><i>#{bolonhaBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
 	
-			<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans and degree.canBeAccessedByUser}" rowIndexVar="index">
+			<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}" rowIndexVar="index">
 				<h:outputText value="<tr>" escape="false"/>
 
 				<h:outputText value="<tr>" escape="false"/>
@@ -79,8 +79,8 @@
 					<f:param name="hideCourses" value="false"/>
 					<f:param name="action" value="view"/>
 				</h:outputLink>
-				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
-				<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/editCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
+				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild and degree.canBeAccessedByUser}"/>
+				<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/editCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild and degree.canBeAccessedByUser}">
 					<h:outputText value="#{bolonhaBundle['edit']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
@@ -88,8 +88,8 @@
 					<f:param name="hideCourses" value="false"/>
 					<f:param name="action" value="view"/>
 				</h:outputLink>
-				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
-				<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
+				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild and degree.canBeAccessedByUser}"/>
+				<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild and degree.canBeAccessedByUser}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
