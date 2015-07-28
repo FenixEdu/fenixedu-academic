@@ -64,6 +64,7 @@
 
 
 <bean:define id="registrationToEnrol" name="registration" property="externalId" />
+<bean:define id="executionSemesterID" name="executionSemesterID" type="java.lang.String" />
 
 <logic:present name="selectedExecutionDegree">
 
@@ -78,6 +79,7 @@
 
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="start" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationOID" property="registrationOID" value="<%= registrationToEnrol.toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" property="executionSemesterID" value="<%= executionSemesterID %>" />
 				
 				<logic:present name="selectCourses">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectCourses" property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
@@ -93,9 +95,10 @@
 
 				<input type="hidden" name="method" id="mainMethod" />
 			
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationOID" property="registrationOID" value="<%= registrationToEnrol.toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationOID" property="registrationOID" value="<%= registrationToEnrol.toString() %>" />				
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree" value="<%= degreeSelected.toString() %>" />
-				
+				<html:hidden bundle="HTMLALT_RESOURCES" property="executionSemesterID" value="<%= executionSemesterID %>" />
+
 				<logic:present name="selectCourses">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectCourses" property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
 				</logic:present>

@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -57,7 +56,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="sortBy" value="startDate=desc"/>			
 				<fr:property name="classes" value="tstyle4 thlight mtop025"/>
-				<fr:property name="linkFormat(enrol)" value="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning&registrationOID=${externalId}" />
+				<fr:property name="linkFormat(enrol)" value="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning&registrationOID=\${externalId}&executionSemesterID=${executionSemesterID}" />
 				<fr:property name="key(enrol)" value="enrol.in.shift"/>
 				<fr:property name="bundle(enrol)" value="STUDENT_RESOURCES"/>
 				<fr:property name="contextRelative(enrol)" value="true"/>

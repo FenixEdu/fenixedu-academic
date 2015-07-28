@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.service.services.enrollment.shift;
 
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.enrollment.shift.ShiftEnrollmentErrorReport;
@@ -92,6 +93,13 @@ public class EnrollStudentInShifts {
     public static ShiftEnrollmentErrorReport runEnrollStudentInShifts(Registration registration, String shiftId)
             throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
+        return serviceInstance.run(registration, shiftId);
+    }
+
+    @Atomic
+    public static ShiftEnrollmentErrorReport runEnrollStudentInShifts(Registration registration, String shiftId,
+            ExecutionSemester executionSemester) throws FenixServiceException, NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionSemester);
         return serviceInstance.run(registration, shiftId);
     }
 

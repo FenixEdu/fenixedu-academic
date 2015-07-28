@@ -24,6 +24,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:set var="registrationOID" value="${registration.externalId}" />
+<c:set var="executionSemesterID" value="${executionSemesterID}" />
 <c:set var="hasExecutionCourse" value="${!empty executionCourse}" />
 
 <h4 class="text-center"><bean:message key="link.shift.enrolment" bundle="STUDENT_RESOURCES" /></h4>
@@ -31,7 +32,7 @@
 <c:if test="${hasExecutionCourse}">
 	<h6 class="text-center">
 		<c:out value="${executionCourse.name}" /><br />
-		(<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}">
+		(<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}&executionSemesterID=${executionSemesterID}">
 			<bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses" />
 		</html:link>)
 	</h6>
@@ -41,13 +42,13 @@
 	<c:forEach var="schoolClass" items="${schoolClassesToEnrol}">
 		<li class="${schoolClass == selectedSchoolClass ? 'active': ''}">
 			<c:if test="${hasExecutionCourse}">
-				<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}&classId=${schoolClass.externalId}&executionCourseID=${executionCourse.externalId}">
+				<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}&classId=${schoolClass.externalId}&executionCourseID=${executionCourse.externalId}&executionSemesterID=${executionSemesterID}">
 					<bean:message key="label.class" />&nbsp;<c:out value="${schoolClass.nome}" />		
 				</html:link>
 			</c:if>
 			
 			<c:if test="${!hasExecutionCourse}">
-				<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}&classId=${schoolClass.externalId}">
+				<html:link page="/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&registrationOID=${registrationOID}&classId=${schoolClass.externalId}&executionSemesterID=${executionSemesterID}">
 					<bean:message key="label.class" />&nbsp;<c:out value="${schoolClass.nome}" />	
 				</html:link>
 			</c:if>
@@ -57,7 +58,7 @@
 </ul>
 
 <div class="text-center">
-	<html:link styleClass="btn btn-default" page="/studentShiftEnrollmentManager.do?method=start&registrationOID=${registrationOID}">
+	<html:link styleClass="btn btn-default" page="/studentShiftEnrollmentManager.do?method=start&registrationOID=${registrationOID}&executionSemesterID=${executionSemesterID}">
 		« <bean:message key="button.back" bundle="STUDENT_RESOURCES" />
 	</html:link>
 </div>

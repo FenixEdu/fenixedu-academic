@@ -34,7 +34,8 @@
 <bean:define id="classId" name="selectedSchoolClass" property="externalId"/>
 <bean:define id="infoClasslessonsEndTime" name="infoClasslessonsEndTime"/>
 <bean:define id="infoLessonsEndTime" name="infoLessonsEndTime"/>
-<bean:define id="infoClasslessons" name="infoClasslessons"/>	
+<bean:define id="infoClasslessons" name="infoClasslessons"/>
+<bean:define id="executionSemesterID" name="executionSemesterID" type="java.lang.String"/>
 
 <div class="col-md-10">
 
@@ -50,7 +51,7 @@
 <logic:present name="executionCourse">
 	<p class="mbottom05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.visibleCourse"/>: <strong><bean:write name="executionCourse" property="nome"/></strong></p>
 	<bean:define id="link">proceedToShiftEnrolment</bean:define>
-	<p class="mtop05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.showAllCourses"/>: <html:link page="<%="/studentShiftEnrollmentManagerLookup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses"/></html:link></p>
+	<p class="mtop05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.showAllCourses"/>: <html:link page="<%="/studentShiftEnrollmentManagerLookup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() + "&amp;executionSemesterID=" + executionSemesterID %>"><bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses"/></html:link></p>
 </logic:present>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -76,6 +77,7 @@
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
 			executionCourseID="<%= executionCourseID.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
 	</logic:present>
 
@@ -85,6 +87,7 @@
 			studentID="<%= registrationOID.toString() %>"
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
 	</logic:notPresent>
 
@@ -103,6 +106,7 @@
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
 			executionCourseID="<%= executionCourseID.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
 	</logic:present>
 
@@ -112,6 +116,7 @@
 			studentID="<%= registrationOID.toString() %>"
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
 	</logic:notPresent>
 </logic:present>
@@ -128,6 +133,7 @@
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
 			executionCourseID="<%= executionCourseID.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
 	</logic:present>
 
@@ -137,6 +143,7 @@
 			studentID="<%= registrationOID.toString() %>"
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
 	</logic:notPresent>
 
@@ -155,6 +162,7 @@
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
 			executionCourseID="<%= executionCourseID.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
 	</logic:present>
 
@@ -164,13 +172,14 @@
 			studentID="<%= registrationOID.toString() %>"
 			application="<%= request.getContextPath() %>"
 			classID="<%= classId.toString() %>"
+			executionSemesterID="<%= executionSemesterID %>"
 			endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
 	</logic:notPresent>
 </logic:notPresent>
 
 <br/>
 <ul>
-	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message bundle="STUDENT_RESOURCES"  key="button.finish" /></strong></html:link></li>
+	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID + "&amp;executionSemesterID=" + executionSemesterID %>"><strong><bean:message bundle="STUDENT_RESOURCES"  key="button.finish" /></strong></html:link></li>
 </ul>
 
 </div>

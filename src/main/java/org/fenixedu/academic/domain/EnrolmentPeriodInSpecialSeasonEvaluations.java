@@ -43,4 +43,9 @@ public class EnrolmentPeriodInSpecialSeasonEvaluations extends EnrolmentPeriodIn
         init(degreeCurricularPlan, executionSemester, startDate, endDate);
     }
 
+    @Override
+    public boolean isForCurricularCourses() {
+        return true;
+    }
+
 }

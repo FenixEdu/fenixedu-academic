@@ -55,12 +55,15 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
     private String executionCourseID;
 
+    private String executionSemesterID;
+
     public ShiftEnrollmentTimeTableLessonContentRenderer(String studentID, String application, String classID,
-            String executionCourseID, String action) {
+            String executionCourseID, String executionSemesterID, String action) {
         setStudentID(studentID);
         setApplication(application);
         setClassID(classID);
         setExecutionCourseID(executionCourseID);
+        setExecutionSemesterID(executionSemesterID);
         setAction(action);
     }
 
@@ -239,7 +242,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
         strBuffer.append(getStudentID()).append("&shiftId=").append(shift.getExternalId());
         strBuffer.append("&classId=").append(getClassID()).append("&executionCourseID=").append(getExecutionCourseID())
-                .append("\">");
+                .append("&executionSemesterID=").append(getExecutionSemesterID()).append("\">");
         return strBuffer;
     }
 
@@ -281,5 +284,13 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
     public void setExecutionCourseID(String executionCourseID) {
         this.executionCourseID = executionCourseID;
+    }
+
+    public String getExecutionSemesterID() {
+        return executionSemesterID;
+    }
+
+    public void setExecutionSemesterID(String executionSemesterID) {
+        this.executionSemesterID = executionSemesterID;
     }
 }

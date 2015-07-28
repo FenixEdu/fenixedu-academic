@@ -74,6 +74,8 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private String executionCourseID = "";
 
+    private String executionSemesterID = "";
+
     private String action = "";
 
     private String endTime = "";
@@ -217,6 +219,7 @@ public final class RenderTimeTableTag extends TagSupport {
         this.studentID = null;
         this.classID = null;
         this.executionCourseID = null;
+        this.executionSemesterID = null;
         this.action = null;
         this.endTime = null;
     }
@@ -365,7 +368,7 @@ public final class RenderTimeTableTag extends TagSupport {
         case TimeTableType.SHIFT_ENROLLMENT_TIMETABLE:
             this.lessonSlotContentRenderer =
                     new ShiftEnrollmentTimeTableLessonContentRenderer(getStudentID(), getApplication(), getClassID(),
-                            getExecutionCourseID(), getAction());
+                            getExecutionCourseID(), getExecutionSemesterID(), getAction());
             this.colorPicker = new ClassTimeTableColorPicker();
             Integer defaultTime = new Integer(19);
             Integer endTime = defaultTime;
@@ -430,6 +433,14 @@ public final class RenderTimeTableTag extends TagSupport {
 
     public void setExecutionCourseID(String executionCourseID) {
         this.executionCourseID = executionCourseID;
+    }
+
+    public String getExecutionSemesterID() {
+        return executionSemesterID;
+    }
+
+    public void setExecutionSemesterID(String executionSemesterID) {
+        this.executionSemesterID = executionSemesterID;
     }
 
     public String getEndTime() {

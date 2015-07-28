@@ -91,6 +91,12 @@
 		<required>false</required>
 		<rtexprvalue>true</rtexprvalue>
 	</attribute>
+	
+	<attribute>
+		<name>executionSemesterID</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
 			
 	<attribute>
 		<name>endTime</name>

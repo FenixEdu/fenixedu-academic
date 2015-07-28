@@ -48,6 +48,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentEnrollApp;
+import org.fenixedu.academic.ui.struts.action.student.enrollment.bolonha.BolonhaStudentEnrollmentDispatchAction.ChooseEnrolmentSemester;
 import org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler;
 import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 import org.fenixedu.academic.util.ExecutionDegreesFormat;
@@ -69,6 +70,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "showEnrollmentPage",
                 path = "/student/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment"),
         @Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp"),
+        @Forward(name = "chooseSemester", path = "/student/enrollment/shifts/chooseSemester.jsp"),
         @Forward(name = "showShiftsEnrollment", path = "/student/enrollment/showShiftsEnrollment.jsp"),
         @Forward(name = "prepareEnrollmentViewWarning", path = "/student/enrollment/prepareEnrollmentViewWarning.jsp"),
         @Forward(name = "selectCourses", path = "/student/enrollment/showCoursesByDegree.jsp"),
@@ -90,6 +92,24 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
 
         final Student student = getUserView(request).getPerson().getStudent();
 
+        ChooseEnrolmentSemester chooseSemester = new ChooseEnrolmentSemester();
+        List<ExecutionSemester> semesters = chooseSemester.getSemestersForClasses();
+        ExecutionSemester executionSemester = null;
+        if (semesters.size() == 1) {
+            executionSemester = semesters.get(0);
+        } else if (semesters.size() < 1) {
+            executionSemester = ExecutionSemester.readActualExecutionSemester();
+        } else {
+            request.setAttribute("chooseSemester", chooseSemester);
+            return mapping.findForward("chooseSemester");
+        }
+
+        request.setAttribute("executionSemesterID", executionSemester.getExternalId());
+        return chooseRegistration(mapping, form, request, response, student);
+    }
+
+    private ActionForward chooseRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response, final Student student) {
         final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
         if (toEnrol.size() == 1) {
             request.setAttribute("registrationOID", toEnrol.iterator().next().getExternalId());
@@ -100,8 +120,20 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         }
     }
 
+    public ActionForward chooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        ChooseEnrolmentSemester chooseSemester = getRenderedObject("chooseSemester");
+        request.setAttribute("executionSemesterID", chooseSemester.getChosenSemester().getExternalId());
+        return chooseRegistration(mapping, form, request, response, getLoggedPerson(request).getStudent());
+    }
+
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration = getDomainObject(request, "registrationOID");
+        String registrationOID = (String) request.getAttribute("registrationOID");
+        if (StringUtils.isEmpty(registrationOID)) {
+            registrationOID = request.getParameter("registrationOID");
+        }
+        final Registration registration = FenixFramework.getDomainObject(registrationOID);
         if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
@@ -114,6 +146,10 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
     public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
+        String executionSemesterID = (String) getFromRequest(request, "executionSemesterID");
+        if (!StringUtils.isEmpty(executionSemesterID)) {
+            request.setAttribute("executionSemesterID", executionSemesterID);
+        }
         if (getAndSetRegistration(request) == null) {
             addActionMessage(request, "errors.impossible.operation");
             return mapping.getInputForward();
@@ -144,7 +180,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
             return mapping.findForward("showEnrollmentPage");
         }
 
-        final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+        ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
+        request.setAttribute("executionSemesterID", executionSemester.getExternalId());
         if (readAndSetSelectCoursesParameter(request) == null) {
             return prepareShiftEnrolmentInformation(mapping, request, registration, executionSemester);
         } else {
@@ -198,9 +235,9 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
 
         final List<ShiftToEnrol> shiftsToEnrol;
         try {
-            shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
+            shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration, executionSemester);
         } catch (OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan exception) {
-            addActionMessage(request, "error.enrollment.period.closed", exception.getMessage());
+            addActionMessage(request, "error.enrollment.period.closed", exception.getArgs());
             return mapping.getInputForward();
         } catch (FenixServiceException exception) {
             addActionMessage(request, exception.getMessage());
@@ -305,7 +342,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         }
 
         try {
-            UnEnrollStudentFromShift.runUnEnrollStudentFromShift(registration, shiftId);
+            UnEnrollStudentFromShift.runUnEnrollStudentFromShift(registration, shiftId,
+                    getDomainObject(request, "executionSemesterID"));
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

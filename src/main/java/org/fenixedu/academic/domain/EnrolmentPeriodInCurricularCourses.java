@@ -58,6 +58,11 @@ public class EnrolmentPeriodInCurricularCourses extends EnrolmentPeriodInCurricu
         init(degreeCurricularPlan, executionSemester, startDate, endDate);
     }
 
+    @Override
+    public boolean isForCurricularCourses() {
+        return true;
+    }
+
     private void checkParameters(DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) {
 
         String[] args = {};

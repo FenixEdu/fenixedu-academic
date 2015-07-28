@@ -19,6 +19,7 @@
 package org.fenixedu.academic.service.services.enrollment.shift;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.filter.enrollment.ClassEnrollmentAuthorizationFilter;
@@ -61,6 +62,13 @@ public class WriteStudentAttendingCourse {
     public static void runWriteStudentAttendingCourse(Registration registration, String executionCourseId)
             throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
+        serviceInstance.run(registration, executionCourseId);
+    }
+
+    @Atomic
+    public static void runWriteStudentAttendingCourse(Registration registration, String executionCourseId,
+            ExecutionSemester executionSemester) throws FenixServiceException, NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionSemester);
         serviceInstance.run(registration, executionCourseId);
     }
 

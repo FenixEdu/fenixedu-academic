@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.enrollment.shift.ShiftEnrollmentErrorReport;
@@ -63,7 +64,8 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
         try {
             ShiftEnrollmentErrorReport errorReport =
-                    EnrollStudentInShifts.runEnrollStudentInShifts(getRegistration(request), shiftId);
+                    EnrollStudentInShifts.runEnrollStudentInShifts(getRegistration(request), shiftId,
+                            getExecutionSemester(request));
 
             if (errorReport.getUnAvailableShifts().size() > 0) {
                 for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {
@@ -98,4 +100,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
         return FenixFramework.getDomainObject(request.getParameter("registrationOID"));
     }
 
+    private ExecutionSemester getExecutionSemester(HttpServletRequest request) {
+        return FenixFramework.getDomainObject(request.getParameter("executionSemesterID"));
+    }
 }

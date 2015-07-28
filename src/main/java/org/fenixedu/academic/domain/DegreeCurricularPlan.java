@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -641,6 +642,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
+    public Optional<EnrolmentPeriod> getActiveCurricularCourseEnrolmentPeriod(ExecutionSemester executionSemester) {
+        return getEnrolmentPeriodsSet()
+                .stream()
+                .filter(ep -> ep.getExecutionPeriod() == executionSemester && ep instanceof EnrolmentPeriodInCurricularCourses
+                        && ep.isValid()).findAny();
+    }
+
     public boolean hasActualEnrolmentPeriodInCurricularCourses() {
         return getActualEnrolmentPeriod() != null;
     }
@@ -667,6 +675,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return false;
     }
 
+    //TODO remove in next major it's no used and there can be more than one active, if don't specify the semester
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
         for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
             if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason && enrolmentPeriod.isValid()) {
@@ -674,6 +683,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return null;
+    }
+
+    public Optional<EnrolmentPeriod> getActiveEnrolmentPeriodInCurricularCoursesSpecialSeason(ExecutionSemester executionSemester) {
+        return getEnrolmentPeriodsSet()
+                .stream()
+                .filter(ep -> ep.getExecutionPeriod() == executionSemester
+                        && ep instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason && ep.isValid()).findAny();
     }
 
     public boolean hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(final ExecutionSemester executionSemester) {
@@ -690,6 +706,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return false;
     }
 
+    //TODO remove in next major it's no used and there can be more than one active, if don't specify the semester
     public EnrolmentPeriodInCurricularCoursesFlunkedSeason getActualEnrolmentPeriodInCurricularCoursesFlunkedSeason() {
         for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
             if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason && enrolmentPeriod.isValid()) {
@@ -697,6 +714,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return null;
+    }
+
+    public Optional<EnrolmentPeriod> getActiveEnrolmentPeriodInCurricularCoursesFlunkedSeason(ExecutionSemester executionSemester) {
+        return getEnrolmentPeriodsSet()
+                .stream()
+                .filter(ep -> ep.getExecutionPeriod() == executionSemester
+                        && ep instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason && ep.isValid()).findAny();
     }
 
     public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionSemester executionSemester) {
@@ -771,6 +795,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return null;
+    }
+
+    public Optional<EnrolmentPeriod> getClassesEnrollmentPeriod(ExecutionSemester executionSemester) {
+        return getEnrolmentPeriodsSet().stream().filter(ep -> ep.isForClasses() && ep.getExecutionPeriod() == executionSemester)
+                .findAny();
     }
 
     public CandidacyPeriodInDegreeCurricularPlan getCurrentCandidacyPeriodInDCP() {

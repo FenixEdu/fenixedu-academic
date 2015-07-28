@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.service.services.enrollment.shift;
 
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.ServiceMonitoring;
@@ -68,6 +69,14 @@ public class UnEnrollStudentFromShift {
             throws StudentNotFoundServiceException, ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException,
             FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
+        serviceInstance.run(registration, shiftId);
+    }
+
+    @Atomic
+    public static void runUnEnrollStudentFromShift(Registration registration, String shiftId, ExecutionSemester executionSemester)
+            throws StudentNotFoundServiceException, ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException,
+            FenixServiceException, NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionSemester);
         serviceInstance.run(registration, shiftId);
     }
 

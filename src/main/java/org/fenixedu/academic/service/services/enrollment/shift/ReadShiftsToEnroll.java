@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.student.Registration;
@@ -34,12 +35,12 @@ import pt.ist.fenixframework.Atomic;
 
 public class ReadShiftsToEnroll {
 
-    protected List run(Registration registration) throws FenixServiceException {
+    protected List run(Registration registration, ExecutionSemester executionSemester) throws FenixServiceException {
 
         checkStudentRestrictionsForShiftsEnrolments(registration);
 
         final List<ShiftToEnrol> result = new ArrayList<ShiftToEnrol>();
-        for (final Attends attends : registration.readAttendsInCurrentExecutionPeriod()) {
+        for (final Attends attends : registration.readAttendsByExecutionPeriod(executionSemester)) {
             result.add(buildShiftToEnrol(attends));
         }
         return result;
@@ -156,7 +157,14 @@ public class ReadShiftsToEnroll {
     @Atomic
     public static List runReadShiftsToEnroll(Registration registration) throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
-        return serviceInstance.run(registration);
+        return serviceInstance.run(registration, ExecutionSemester.readActualExecutionSemester());
+    }
+
+    @Atomic
+    public static List runReadShiftsToEnroll(Registration registration, ExecutionSemester executionSemester)
+            throws FenixServiceException, NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionSemester);
+        return serviceInstance.run(registration, executionSemester);
     }
 
 }
