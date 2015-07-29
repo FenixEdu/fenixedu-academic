@@ -34,6 +34,8 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
+import com.google.common.base.Strings;
+
 public class Message extends Message_Base {
 
     static final public Comparator<Message> COMPARATOR_BY_CREATED_DATE_OLDER_FIRST = new Comparator<Message>() {
@@ -264,6 +266,12 @@ public class Message extends Message_Base {
     }
 
     public int dispatch() {
+        if (Strings.isNullOrEmpty(getSubject())) {
+            return 0;
+        }
+        if (Strings.isNullOrEmpty(getBody()) && Strings.isNullOrEmpty(getHtmlBody())) {
+            return 0;
+        }
         final Person person = getPerson();
         final Set<String> destinationBccs = getDestinationBccs();
         final Set<String> tos = getRecipientAddresses(getTosSet());
