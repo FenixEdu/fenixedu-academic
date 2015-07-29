@@ -1138,7 +1138,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getPerson();
         return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this.getDegree())
-                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person.getUser()) : false);
+                || this.getCurricularPlanMembersGroup().isMember(person.getUser());
     }
 
     public Boolean getCanModify() {

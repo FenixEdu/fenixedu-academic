@@ -214,6 +214,7 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
     }
 
+    @Deprecated
     public String createOldCurricularCourse() {
         try {
             checkCourseGroup();
@@ -243,6 +244,7 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         return "buildCurricularPlan";
     }
 
+    @Deprecated
     public String editOldCurricularCourse() {
         try {
             EditOldCurricularCourse.run(getCurricularCourseID(), getName(), getNameEn(), getCode(), getAcronym(),

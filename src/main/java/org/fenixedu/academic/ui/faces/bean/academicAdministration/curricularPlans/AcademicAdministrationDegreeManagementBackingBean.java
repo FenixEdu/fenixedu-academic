@@ -25,6 +25,10 @@ import java.util.List;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeManagementBackingBean;
 
+/**
+ * This should be removed in the next major since it is no longer used
+ */
+@Deprecated
 public class AcademicAdministrationDegreeManagementBackingBean extends DegreeManagementBackingBean {
 
     public List<Degree> getFilteredPreBolonhaDegrees() {

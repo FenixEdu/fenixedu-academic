@@ -28,6 +28,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+@Deprecated
 public class EditOldCurricularCourse {
 
     @Atomic
