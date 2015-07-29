@@ -292,8 +292,9 @@ public class Registration extends Registration_Base {
     }
 
     private static DateTime calculateStartDate(final ExecutionYear executionYear) {
-        return executionYear == null || executionYear.isCurrent() ? new DateTime() : executionYear.getBeginDateYearMonthDay()
-                .toDateTimeAtMidnight();
+        DateTime now = new DateTime();
+        return executionYear == null || (executionYear.isCurrent() && executionYear.getAcademicInterval().contains(now)) ? now : executionYear
+                .getBeginDateYearMonthDay().toDateTimeAtMidnight();
     }
 
     @Override
