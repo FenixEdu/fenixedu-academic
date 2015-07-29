@@ -62,7 +62,6 @@ import org.fenixedu.academic.report.candidacy.erasmus.LearningAgreementDocument;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.student.administrativeOfficeServices.CreateExtraEnrolment;
 import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolBolonhaStudent;
-import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolInAffinityCycle;
 import org.fenixedu.academic.ui.struts.FenixActionForm;
 import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -503,7 +502,8 @@ public class ErasmusIndividualCandidacyProcessDA extends
         final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
         try {
-            EnrolInAffinityCycle.run(getLoggedPerson(request), cycleEnrolmentBean);
+            cycleEnrolmentBean.getStudentCurricularPlan().enrolInAffinityCycle(cycleEnrolmentBean.getCycleCourseGroupToEnrol(),
+                    cycleEnrolmentBean.getExecutionPeriod());
 
         } catch (final IllegalDataAccessException e) {
             addActionMessage(request, "error.NotAuthorized");

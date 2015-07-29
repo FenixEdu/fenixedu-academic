@@ -1776,6 +1776,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return enrol(executionSemester, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
     }
 
+    @Atomic
     public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionSemester executionSemester) {
         check(this, StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE);
         CurriculumGroupFactory.createGroup(getRoot(), cycleCourseGroup, executionSemester);

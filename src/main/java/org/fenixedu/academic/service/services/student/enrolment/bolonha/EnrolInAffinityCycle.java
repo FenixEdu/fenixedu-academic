@@ -39,6 +39,8 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 
+//TODO remove in next major
+@Deprecated
 public class EnrolInAffinityCycle {
 
     /**

@@ -36,6 +36,8 @@ import org.fenixedu.commons.i18n.I18N;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
+//TODO remove in next major
+@Deprecated
 @Task(englishTitle = "SeparateSecondCycle", readOnly = true)
 public class SeparateSecondCycle extends CronTask {
 
