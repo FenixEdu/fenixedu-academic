@@ -192,7 +192,9 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     @Override
     protected YearMonthDay getStartDate() {
         final ExecutionInterval interval = getCandidacyExecutionInterval().getExecutionYear();
-        return interval.isCurrent() ? new YearMonthDay() : interval.getBeginDateYearMonthDay();
+        final YearMonthDay today = new YearMonthDay();
+        return interval.isCurrent() && interval.getAcademicInterval().contains(today.toDateMidnight()) ? today : interval
+                .getBeginDateYearMonthDay();
     }
 
     private void enrolInCurricularCourses(final Registration registration) {
