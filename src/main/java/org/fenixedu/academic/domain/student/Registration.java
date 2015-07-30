@@ -1656,8 +1656,8 @@ public class Registration extends Registration_Base {
             programConclusion =
                     degreeType.getCycleTypes().stream()
                             .map(cycleType -> getLastStudentCurricularPlan().getCycleCourseGroup(cycleType))
-                            .filter(Objects::nonNull).map(CycleCourseGroup::getProgramConclusion).findAny()
-                            .orElseGet(() -> ProgramConclusion.conclusionsFor(this).findAny().orElse(null));
+                            .filter(Objects::nonNull).map(CycleCourseGroup::getProgramConclusion).filter(Objects::nonNull)
+                            .findAny().orElseGet(() -> ProgramConclusion.conclusionsFor(this).findAny().orElse(null));
         }
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
