@@ -110,10 +110,4 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
         super.setExecutionYear(null);
         super.delete();
     }
-
-    @Override
-    public void setPerson(Person student) {
-        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.person");
-    }
-
 }

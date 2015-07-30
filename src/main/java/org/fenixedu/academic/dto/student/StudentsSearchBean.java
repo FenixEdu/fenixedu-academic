@@ -99,7 +99,7 @@ public class StudentsSearchBean implements Serializable {
             }
 
             final Student student = Student.readStudentByNumber(getNumber());
-            if (student != null) {
+            if (student != null && !student.getRegistrationsSet().isEmpty()) {
                 students.add(student);
             }
 

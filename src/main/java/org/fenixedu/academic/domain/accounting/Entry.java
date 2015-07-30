@@ -85,11 +85,6 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public void setAccount(Account account) {
-        throw new DomainException("error.accounting.entry.cannot.modify.account");
-    }
-
-    @Override
     public void setAccountingTransaction(AccountingTransaction accountingTransaction) {
         throw new DomainException("error.accounting.entry.cannot.modify.accountingTransaction");
     }

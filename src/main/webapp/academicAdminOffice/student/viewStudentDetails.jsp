@@ -76,6 +76,15 @@
 			</html:link>
 		</span>
 	</academic:allowed>
+
+	<academic:allowed operation="CREATE_REGISTRATION">
+        <span class="pleft05">
+            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+            <html:link page="/../academic/move-registrations" paramId="target" paramName="student" paramProperty="person.user.username">
+                <bean:message key="link.student.moveRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+            </html:link>
+        </span>
+	</academic:allowed>
 </p>
 
 <academic:allowed operation="MANAGE_REGISTRATIONS">
