@@ -1,10 +1,14 @@
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
+
+import pt.ist.fenixframework.Atomic;
 
 public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Base {
     
@@ -36,6 +40,22 @@ public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Bas
     public void delete() {
         setBennu(null);
         deleteDomainObject();
+    }
+    
+    @Atomic
+    public void edit(String code, LocalizedString name, DocumentPurposeType type, boolean active, List<ServiceRequestType> serviceRequestTypes) {
+        setCode(code);
+        setName(name);
+        setDocumentPurposeType(type);
+        setActive(active);
+        for (ServiceRequestType srt : getServiceRequestTypesSet()) {
+            removeServiceRequestTypes(srt);
+        }
+        if (serviceRequestTypes != null) {
+            for (ServiceRequestType srt : serviceRequestTypes) {
+                addServiceRequestTypes(srt);
+            }
+        }
     }
 
     public static DocumentPurposeTypeInstance create(String code, LocalizedString name) {
@@ -82,5 +102,9 @@ public class DocumentPurposeTypeInstance extends DocumentPurposeTypeInstance_Bas
     
     public static DocumentPurposeTypeInstance findUnique(String code) {
         return findAll().filter(dpti -> dpti.getCode().equals(code)).findFirst().orElse(null);
+    }
+    
+    public static Stream<DocumentPurposeTypeInstance> findActivesFor(ServiceRequestType type) {
+        return findActives().filter(dpti -> dpti.getServiceRequestTypesSet().contains(type));
     }
 }
