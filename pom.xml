@@ -9,7 +9,7 @@
 
     <artifactId>fenixedu-academic</artifactId>
     <packaging>jar</packaging>
-    <version>5.1.2</version>
+    <version>5.1.3</version>
 
     <name>FenixEdu Academic</name>
     <url>http://fenixedu.org</url>
