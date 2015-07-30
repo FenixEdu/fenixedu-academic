@@ -42,6 +42,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EnrolmentInstructions;
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClassesMobility;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
@@ -90,6 +91,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
             EnrolmentPeriodInSpecialSeasonEvaluations.class,
 
             EnrolmentPeriodInClasses.class,
+
+            EnrolmentPeriodInClassesMobility.class,
 
             EnrolmentPeriodInImprovementOfApprovedEnrolment.class,
 

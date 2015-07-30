@@ -798,7 +798,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Optional<EnrolmentPeriod> getClassesEnrollmentPeriod(ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodsSet().stream().filter(ep -> ep.isForClasses() && ep.getExecutionPeriod() == executionSemester)
+        return getEnrolmentPeriodsSet().stream()
+                .filter(ep -> ep instanceof EnrolmentPeriodInClasses && ep.getExecutionPeriod() == executionSemester).findAny();
+    }
+
+    public Optional<EnrolmentPeriod> getClassesEnrollmentPeriodMobility(ExecutionSemester executionSemester) {
+        return getEnrolmentPeriodsSet().stream()
+                .filter(ep -> ep instanceof EnrolmentPeriodInClassesMobility && ep.getExecutionPeriod() == executionSemester)
                 .findAny();
     }
 

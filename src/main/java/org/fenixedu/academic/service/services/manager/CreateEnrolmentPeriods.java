@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClassesMobility;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
@@ -86,6 +87,10 @@ public class CreateEnrolmentPeriods {
         if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CLASSES.equals(enrolmentPeriodType)) {
 
             new EnrolmentPeriodInClasses(degreeCurricularPlan, executionSemester, startDate, endDate);
+
+        } else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CLASSES_MOBILITY.equals(enrolmentPeriodType)) {
+
+            new EnrolmentPeriodInClassesMobility(degreeCurricularPlan, executionSemester, startDate, endDate);
 
         } else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CURRICULAR_COURSES.equals(enrolmentPeriodType)) {
 
