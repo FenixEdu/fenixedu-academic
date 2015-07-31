@@ -46,6 +46,15 @@ public interface IEnrolment extends ICurriculumEntry {
     @Override
     String getExternalId();
 
+    /**
+     * @deprecated
+     *             Use {@link ICurriculumEntry#getGrade()} instead.
+     *             Code should not assume that final grades are integers.
+     *             This method will be removed on next major release
+     *
+     * 
+     */
+    @Deprecated
     Integer getFinalGrade();
 
     String getDescription();

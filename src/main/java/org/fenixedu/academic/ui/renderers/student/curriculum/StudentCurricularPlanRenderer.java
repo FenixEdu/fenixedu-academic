@@ -863,7 +863,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (!isDismissal && isDetailed() && isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)
                     && enrolment.getAllFinalEnrolmentEvaluations().size() > 1) {
                 EvaluationSeason.all().sorted()
-                        .forEachOrdered(s -> enrolment.getFinalEnrolmentEvaluationBySeason(s).ifPresent(eval -> {
+                        .forEachOrdered(s -> enrolment.getFinalEnrolmentEvaluationBySeason(s).ifPresent(eval ->
+                        {
                             generateEnrolmentEvaluationRows(mainTable, eval, level + 1);
                         }));
             }
@@ -1066,7 +1067,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         private void generateEnrolmentWeightCell(HtmlTableRow enrolmentRow, IEnrolment enrolment, boolean isFromDetail) {
             // Weight is only relevant to show when enrolment has numeric value
             final String weight;
-            if (enrolment.getFinalGrade() != null) {
+            if (enrolment.getGrade() != null && !enrolment.getGrade().isEmpty()) {
                 weight = String.valueOf(isFromDetail ? enrolment.getWeigthForCurriculum() : enrolment.getWeigth());
             } else {
                 weight = EMPTY_INFO;
