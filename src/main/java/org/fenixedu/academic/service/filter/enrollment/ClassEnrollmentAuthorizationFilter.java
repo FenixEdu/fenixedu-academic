@@ -132,13 +132,13 @@ public class ClassEnrollmentAuthorizationFilter {
 
     private FenixServiceException verify(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
         final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-        FenixServiceException result = verify(degreeCurricularPlan, executionSemester);
+        FenixServiceException result = verifyEnrolmentPeriod(degreeCurricularPlan, executionSemester, studentCurricularPlan);
         if (result == null) {
             return null;
         }
         for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : degreeCurricularPlan.getTargetEquivalencePlansSet()) {
             final DegreeCurricularPlan otherDegreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
-            result = verify(otherDegreeCurricularPlan, executionSemester);
+            result = verifyEnrolmentPeriod(degreeCurricularPlan, executionSemester, studentCurricularPlan);
             if (result == null) {
                 return null;
             }
@@ -146,9 +146,14 @@ public class ClassEnrollmentAuthorizationFilter {
         return result;
     }
 
-    private FenixServiceException verify(DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) {
-        final Optional<EnrolmentPeriod> enrolmentPeriodInClasses =
-                degreeCurricularPlan.getClassesEnrollmentPeriod(executionSemester);
+    private FenixServiceException verifyEnrolmentPeriod(DegreeCurricularPlan dcp, ExecutionSemester executionSemester,
+            StudentCurricularPlan scp) {
+        Optional<EnrolmentPeriod> enrolmentPeriodInClasses = null;
+        if (scp.getRegistration().getRegistrationProtocol().isMobilityAgreement()) {
+            enrolmentPeriodInClasses = dcp.getClassesEnrollmentPeriodMobility(executionSemester);
+        } else {
+            enrolmentPeriodInClasses = dcp.getClassesEnrollmentPeriod(executionSemester);
+        }
         if (!enrolmentPeriodInClasses.isPresent() || enrolmentPeriodInClasses.get().getStartDateDateTime() == null
                 || enrolmentPeriodInClasses.get().getEndDateDateTime() == null) {
             return new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();

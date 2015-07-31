@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.enrolmentPeriods;
 
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClassesMobility;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
@@ -86,6 +87,14 @@ public enum EnrolmentPeriodType {
         @Override
         protected Class<? extends EnrolmentPeriod> getClassFor() {
             return EnrolmentPeriodInClasses.class;
+        }
+    },
+
+    ENROLMENT_PERIOD_IN_CLASSES_MOBILITY {
+
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInClassesMobility.class;
         }
     };
 

@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClassesMobility;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.OccupationPeriod;
@@ -91,6 +92,18 @@ public class ViewPeriodsAction extends FenixDispatchAction {
                     if (enrolmentPeriod instanceof EnrolmentPeriodInClasses
                             && executionDegree.getDegreeCurricularPlan() == enrolmentPeriod.getDegreeCurricularPlan()) {
                         return (EnrolmentPeriodInClasses) enrolmentPeriod;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public EnrolmentPeriodInClassesMobility getEnrolmentPeriodInClassesMobility() {
+            if (executionSemester != null && executionDegree != null) {
+                for (final EnrolmentPeriod enrolmentPeriod : executionSemester.getEnrolmentPeriodSet()) {
+                    if (enrolmentPeriod instanceof EnrolmentPeriodInClassesMobility
+                            && executionDegree.getDegreeCurricularPlan() == enrolmentPeriod.getDegreeCurricularPlan()) {
+                        return (EnrolmentPeriodInClassesMobility) enrolmentPeriod;
                     }
                 }
             }
