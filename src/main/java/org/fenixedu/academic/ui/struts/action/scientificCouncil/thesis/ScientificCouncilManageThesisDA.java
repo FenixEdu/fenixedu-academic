@@ -732,6 +732,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
                 if (thesis.getDiscussed() != null) {
                     row.setCell(thesis.getDiscussed().toDate().toString());
+                } else {
+                    row.setCell("");
                 }
 
                 row.setCell(thesis.getThesisAbstractPt());
