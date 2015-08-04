@@ -756,12 +756,13 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
             if (numbers.length() > 0) {
                 numbers.append(" ");
             }
-            numbers.append(thesisEvaluationParticipant.getPerson().getUsername());
+            numbers.append(thesisEvaluationParticipant.getPerson() != null ? thesisEvaluationParticipant.getPerson()
+                    .getUsername() : "");
 
             if (names.length() > 0) {
                 names.append(" ");
             }
-            names.append(thesisEvaluationParticipant.getPerson().getName());
+            names.append(thesisEvaluationParticipant.getName());
 
             if (oasb.length() > 0) {
                 oasb.append(" ");
