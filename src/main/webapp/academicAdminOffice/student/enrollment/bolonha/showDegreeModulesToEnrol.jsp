@@ -93,6 +93,13 @@
 			<fr:property name="impossibleEnrolmentClasses" value="se_impossible smalltxt,se_impossible smalltxt aright,se_impossible smalltxt aright,se_impossible smalltxt aright,se_impossible aright" />
 			<fr:property name="curricularCourseToEnrolClasses" value="smalltxt, smalltxt aright, smalltxt aright, aright" />				
 			<fr:property name="groupRowClasses" value="se_groups" />
+
+			<fr:property name="encodeGroupRules" value="true" />
+			<fr:property name="encodeCurricularRules" value="true" />
+			
+			<fr:property name="allowedToChooseAffinityCycle" value="true"/>
+			<fr:property name="allowedToEnrolInAffinityCycle" value="true"/>
+						
 		</fr:layout>
 	</fr:edit>
 	

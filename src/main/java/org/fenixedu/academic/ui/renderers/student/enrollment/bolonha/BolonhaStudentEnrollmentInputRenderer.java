@@ -42,6 +42,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
     private boolean encodeGroupRules = false;
     private boolean encodeCurricularRules = true;
     private String defaultLayout = null;
+    
+    private boolean allowedToChooseAffinityCycle = false;
+    private boolean allowedToEnrolInAffinityCycle = false;
 
     public String getDefaultLayout() {
         return defaultLayout;
@@ -217,6 +220,22 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     public void setEncodeGroupRules(boolean encodeGroupRules) {
         this.encodeGroupRules = encodeGroupRules;
+    }
+    
+    public boolean isAllowedToEnrolInAffinityCycle() {
+        return allowedToEnrolInAffinityCycle;
+    }
+
+    public void setAllowedToEnrolInAffinityCycle(final boolean input) {
+        this.allowedToEnrolInAffinityCycle = input;
+    }
+
+    public boolean isAllowedToChooseAffinityCycle() {
+        return allowedToChooseAffinityCycle;
+    }
+
+    public void setAllowedToChooseAffinityCycle(final boolean input) {
+        this.allowedToChooseAffinityCycle = input;
     }
 
     @Override

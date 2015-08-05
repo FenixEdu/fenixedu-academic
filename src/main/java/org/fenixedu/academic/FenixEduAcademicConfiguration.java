@@ -34,6 +34,12 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key = "ciist.sms.username")
         public String getCIISTSMSUsername();
+        
+        @ConfigurationProperty(key = "domain.academic.enrolments.AllowStudentToChooseAffinityCycle", defaultValue = "true")
+        public Boolean getEnrolmentsAllowStudentToChooseAffinityCycle();
+
+        @ConfigurationProperty(key = "domain.academic.enrolments.AllowStudentToEnrolInAffinityCycle", defaultValue = "true")
+        public Boolean getEnrolmentsAllowStudentToEnrolInAffinityCycle();
 
         @ConfigurationProperty(key = "ciist.sms.shouldRun")
         public Boolean getCIISTSMSShouldRun();

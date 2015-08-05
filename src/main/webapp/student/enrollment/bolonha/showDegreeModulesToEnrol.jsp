@@ -140,6 +140,10 @@
 
 				<fr:property name="encodeGroupRules" value="true" />
 				<fr:property name="encodeCurricularRules" value="true" />
+				
+				<fr:property name="allowedToChooseAffinityCycle" value="<%= org.fenixedu.academic.domain.student.Registration.getEnrolmentsAllowStudentToChooseAffinityCycle().toString() %>"/>
+				<fr:property name="allowedToEnrolInAffinityCycle" value="<%= org.fenixedu.academic.domain.student.Registration.getEnrolmentsAllowStudentToEnrolInAffinityCycle().toString() %>"/>
+				
 			</fr:layout>
 		</fr:edit>
 		
