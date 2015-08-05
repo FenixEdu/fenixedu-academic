@@ -43,4 +43,14 @@ public class Installation extends Installation_Base {
         }
     }
 
+    @Override
+    public String getAcademicEmailAddress() {
+        String academicEmailAddress = super.getAcademicEmailAddress();
+        if (academicEmailAddress == null) {
+            return "academica@tecnico.ulisboa.pt";
+        } else {
+            return academicEmailAddress;
+        }
+    }
+
 }

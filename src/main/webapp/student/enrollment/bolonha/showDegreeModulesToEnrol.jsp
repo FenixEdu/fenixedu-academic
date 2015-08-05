@@ -57,7 +57,9 @@
 			<html:link action="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.externalId" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
 		</li>
 		<li>			
-			<html:link href="mailto:academica@tecnico.ulisboa.pt" styleClass="externallink">
+			
+			<% request.setAttribute("academicSupportAddress", org.fenixedu.academic.domain.Installation.getInstance().getAcademicEmailAddress()); %>
+			<html:link href="mailto:${academicSupportAddress}" styleClass="externallink">
 				<bean:message key="link.academicSupport" bundle="GLOBAL_RESOURCES"/>
 			</html:link>
 		</li>
