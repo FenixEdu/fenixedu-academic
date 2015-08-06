@@ -30,6 +30,7 @@
 	<h2><bean:message key="label.enrollment.enrolIn" bundle="STUDENT_RESOURCES" /> <bean:message  key="<%=cycleTypeToEnrolQualifiedName.toString()%>" bundle="ENUMERATION_RESOURCES"/></h2>
 	
 	<bean:define id="registrationId" name="cycleEnrolmentBean" property="studentCurricularPlan.registration.externalId" />
+	<bean:define id="executionSemesterID" name="cycleEnrolmentBean" property="executionPeriod.externalId" />
 	
 	<logic:empty name="cycleEnrolmentBean" property="cycleDestinationAffinities">
 		<span class="error0">
@@ -62,7 +63,7 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="invalid" path="/bolonhaStudentEnrollment.do?method=enrolInCycleCourseGroupInvalid" />
-			<fr:destination name="cancel" path="<%="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=" + registrationId%>"/>
+			<fr:destination name="cancel" path="<%="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=" + registrationId +"&executionSemesterID="+ executionSemesterID%>"/>
 		</fr:edit>
 	</logic:notEmpty>
 </logic:present>

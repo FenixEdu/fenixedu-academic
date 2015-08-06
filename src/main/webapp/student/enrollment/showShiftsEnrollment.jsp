@@ -79,7 +79,23 @@
 		</ul>
 	</logic:notPresent>
 
-
+<logic:present name="openedEnrolmentPeriodsSemesters">
+				<div>
+					<bean:message bundle="STUDENT_RESOURCES"  key="label.semester"/>:
+					
+					<logic:iterate id="period" name="openedEnrolmentPeriodsSemesters">
+							<logic:equal name="executionSemesterID" value="${period.externalId}">
+								<span class="btn btn-default" disabled="disabled">${period.qualifiedName}</span>
+							</logic:equal>
+							<logic:notEqual name="executionSemesterID" value="${period.externalId}">
+								<html:link action="studentShiftEnrollmentManager.do?method=prepareShiftEnrollment&registrationOID=${registration.externalId}&executionSemesterID=${period.externalId}" styleClass="btn btn-default">
+									${period.qualifiedName}
+								</html:link>
+							</logic:notEqual>
+					</logic:iterate>
+				</div>
+			</logic:present>
+	<br/>
 	<div style="background: #fafafa; border: 1px solid #ccc; padding: 0.5em 1em;">
 
 	<logic:present name="studentShifts">
