@@ -65,9 +65,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
         @Override
         public int compare(CompetenceCourse o1, CompetenceCourse o2) {
-            int result = Collator.getInstance().compare(o1.getName(), o2.getName());            
-            return result == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : result;
+            final int result = Collator.getInstance().compare(o1.getName(), o2.getName());
+            return result != 0 ? result : DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
         }
+
     };
 
     protected CompetenceCourse() {
