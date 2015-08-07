@@ -270,12 +270,13 @@ public class AdministrativeOfficeDocument extends FenixReport {
         final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
         final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
 
-        final Money amountPerPage = certificateRequestPR.getAmountPerPage();
+        final Money amountPerPage = certificateRequestPR != null ? certificateRequestPR.getAmountPerPage() : Money.ZERO;
         final Money baseAmountPlusAmountForUnits =
-                certificateRequestPR.getBaseAmount().add(
+                certificateRequestPR != null ? certificateRequestPR.getBaseAmount().add(
                         certificateRequestPR.getAmountPerUnit().multiply(
-                                BigDecimal.valueOf(certificateRequest.getNumberOfUnits())));
-        final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
+                                BigDecimal.valueOf(certificateRequest.getNumberOfUnits()))) : Money.ZERO;
+        final Money urgencyAmount =
+                certificateRequest.getUrgentRequest() && certificateRequestPR != null ? certificateRequestPR.getBaseAmount() : Money.ZERO;
         addParameter("printed",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.printingPriceLabel"));
         addParameter("printPriceLabel",

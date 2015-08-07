@@ -94,9 +94,10 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
         final PostingRule postingRule = getPostingRuleByEventTypeAndDate(eventType, when);
 
         if (postingRule == null) {
-            throw new DomainException(
-                    "error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date.desc",
-                    when.toDateTime().toString("dd-MM-yyyy HH:mm"), getEnumerationResourcesString(eventType.getQualifiedName()));
+            /* dsimoes-07-08-2015: With new treasury module this is obsolete and causes troubles generating paid documents. */
+//            throw new DomainException(
+//                    "error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date.desc",
+//                    when.toDateTime().toString("dd-MM-yyyy HH:mm"), getEnumerationResourcesString(eventType.getQualifiedName()));
         }
 
         return postingRule;
