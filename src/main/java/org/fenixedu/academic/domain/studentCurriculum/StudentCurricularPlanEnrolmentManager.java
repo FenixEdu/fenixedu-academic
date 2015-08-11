@@ -43,6 +43,10 @@ import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlanEnrolment {
 
@@ -159,6 +163,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
         }
 
         getRegistration().updateEnrolmentDate(getExecutionYear());
+        Signal.emit(ITreasuryBridgeAPI.NORMAL_ENROLMENT, new DomainObjectEvent<Registration>(enrolmentContext.getRegistration()));
     }
 
     protected EnrollmentCondition getEnrolmentCondition(final Enrolment enrolment, final EnrolmentResultType enrolmentResultType) {
