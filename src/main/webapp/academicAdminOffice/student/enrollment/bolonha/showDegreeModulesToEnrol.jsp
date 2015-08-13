@@ -126,3 +126,5 @@
 	<td><bean:message bundle="APPLICATION_RESOURCES"  key="label.impossibleEnrollments"/><span class="color888"> (<bean:message bundle="APPLICATION_RESOURCES"  key="label.redLines"/>)</span></td>
 </tr>
 </table>
+
+<script>$(function(){$('table').removeClass('table')})</script>
