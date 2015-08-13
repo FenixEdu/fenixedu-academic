@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.student.enrollment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -158,6 +159,13 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
         request.setAttribute("executionSemesterID", executionSemester.getExternalId());
         if (readAndSetSelectCoursesParameter(request) == null) {
+            Optional<String> returnURL =
+                    EnrolmentContextHandler.getRegisteredEnrolmentContextHandler().getReturnURLForStudentInClasses(request,
+                            registration);
+            if (returnURL.isPresent()) {
+                request.setAttribute("returnURL", returnURL.get());
+            }
+
             return prepareShiftEnrolmentInformation(mapping, request, registration, executionSemester);
         } else {
             return prepareSelectCoursesInformation(mapping, actionForm, request, registration, executionSemester);

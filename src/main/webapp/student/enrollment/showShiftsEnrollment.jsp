@@ -73,9 +73,11 @@
 					<strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item2" /></strong>
 				</html:link>
 			</li>
+			<logic:present name="returnURL">
 			<li>
-				<html:link href="<%= request.getContextPath() + "/student/showStudentPortal.do" %>"><strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item3" /></strong></html:link>
+				<html:link href="${returnURL}"><strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item3" /></strong></html:link>
 			</li>
+			</logic:present>
 		</ul>
 	</logic:notPresent>
 

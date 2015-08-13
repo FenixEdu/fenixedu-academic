@@ -115,7 +115,11 @@
 		<p class="mtop025 mbottom1">
 			<button type="submit" class="btn btn-primary" onclick="submitForm(this);"><bean:message bundle="APPLICATION_RESOURCES"  key="label.save"/></button>
 		</p>
-		
+		<logic:present name="returnURL">
+			<li>
+				<html:link href="${returnURL}"><strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item3" /></strong></html:link>
+			</li>
+		</logic:present>
 		<logic:present name="openedEnrolmentPeriodsSemesters">		
 			<ul class="nav nav-tabs">
 				<logic:iterate id="period" name="openedEnrolmentPeriodsSemesters">				
