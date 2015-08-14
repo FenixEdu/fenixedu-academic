@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.dto.student.ManageStudentStatuteBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -34,7 +38,13 @@ public class StudentExecutionPeriodsProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
 
-        return ((ManageStudentStatuteBean) source).getStudent().getEnroledExecutionPeriods();
+        final ExecutionYear firstExecutionYear =
+                ((ManageStudentStatuteBean) source).getStudent().getFirstRegistrationExecutionYear();
+
+        return ExecutionYear.readNotClosedExecutionYears().stream().filter(ey -> ey.isAfterOrEquals(firstExecutionYear))
+                .flatMap(ey -> ey.getExecutionPeriodsSet().stream())
+                .sorted(Collections.reverseOrder(ExecutionYear.COMPARATOR_BY_BEGIN_DATE)).collect(Collectors.toList());
+
     }
 
     @Override
