@@ -42,6 +42,8 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.net.HttpHeaders;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -50,30 +52,42 @@ import pt.ist.fenixframework.FenixFramework;
         functionality = VisualizePersonalInfo.class)
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
+    private static final String MISTERY_MAN_ETAG = "W/\"mm\"";
     private static final Logger logger = LoggerFactory.getLogger(RetrievePersonalPhotoAction.class);
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "max-age=31536000");
         final User userView = Authenticate.getUser();
         final Photograph personalPhoto = userView.getPerson().getPersonalPhotoEvenIfPending();
         if (personalPhoto != null) {
-            writePhoto(response, personalPhoto);
+            writePhoto(request, response, personalPhoto);
             return null;
         }
-        writeUnavailablePhoto(response);
+        writeUnavailablePhoto(request, response);
         return null;
     }
 
     public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "max-age=31536000");
         final String photoID = request.getParameter("photoCode");
         Photograph photo = FenixFramework.getDomainObject(photoID);
         if (photo != null) {
-            writePhoto(response, photo);
+            writePhoto(request, response, photo);
             return null;
         }
-        writeUnavailablePhoto(response);
+        writeUnavailablePhoto(request, response);
         return null;
+    }
+
+    private static void writePhoto(HttpServletRequest request, HttpServletResponse response, Photograph personalPhoto) {
+        response.setHeader(HttpHeaders.ETAG, etag(personalPhoto));
+        if (etag(personalPhoto).equals(request.getHeader(HttpHeaders.IF_NONE_MATCH))) {
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+        } else {
+            writePhoto(response, personalPhoto);
+        }
     }
 
     public static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
@@ -85,6 +99,19 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
             dos.close();
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
+        }
+    }
+
+    private static String etag(Photograph photo) {
+        return "W/\"" + photo.getExternalId() + "\"";
+    }
+
+    public void writeUnavailablePhoto(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader(HttpHeaders.ETAG, MISTERY_MAN_ETAG);
+        if (MISTERY_MAN_ETAG.equals(request.getHeader(HttpHeaders.IF_NONE_MATCH))) {
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+        } else {
+            writeUnavailablePhoto(response, getServlet());
         }
     }
 
