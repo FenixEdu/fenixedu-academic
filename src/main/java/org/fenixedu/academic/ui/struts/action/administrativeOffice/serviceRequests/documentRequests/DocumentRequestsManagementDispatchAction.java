@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,7 +44,6 @@ import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.student.Registration;
@@ -90,20 +88,19 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward downloadDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
-        final IDocumentRequest documentRequest = getDocumentRequest(request);
-        GeneratedDocument doc = documentRequest.getLastGeneratedDocument();
+            HttpServletResponse response) throws IOException, FenixServiceException {
+        final AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) getDocumentRequest(request);
+        if (academicServiceRequest.isConcluded() || academicServiceRequest.isDelivered()) {
+            return printLastGeneratedDocument(mapping, actionForm, request, response);
+        }
+        return printDocument(mapping, actionForm, request, response);
+    }
+
+    public ActionForward printLastGeneratedDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, FenixServiceException {
+        GeneratedDocument doc = getDocumentRequest(request).getLastGeneratedDocument();
         if (doc != null) {
-            final ServletOutputStream writer = response.getOutputStream();
-            try {
-                response.setContentLength(doc.getSize().intValue());
-                response.setContentType("application/pdf");
-                response.addHeader("Content-Disposition", "attachment; filename=" + doc.getFilename());
-                writer.write(doc.getContent());
-                writer.flush();
-            } finally {
-                writer.close();
-            }
+            writeFile(response, doc.getFilename(), "application/pdf", doc.getContent());
         }
         return null;
     }
@@ -111,23 +108,10 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws IOException, FenixServiceException {
         final IDocumentRequest documentRequest = getDocumentRequest(request);
-        try {
-            byte[] data = documentRequest.generateDocument();
-
-            response.setContentLength(data.length);
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName() + ".pdf");
-
-            final ServletOutputStream writer = response.getOutputStream();
-            writer.write(data);
-            writer.flush();
-            writer.close();
-
-            response.flushBuffer();
-            return null;
-        } catch (DomainException e) {
-            throw e;
-        }
+        byte[] content = documentRequest.generateDocument();
+        String fileName = documentRequest.getReportFileName() + ".pdf";
+        writeFile(response, fileName, "application/pdf", content);
+        return null;
     }
 
     public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -343,7 +327,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 //            addActionMessage(request, "document.request.created.with.success");
 //            return mapping.findForward("viewRegistrationDetails");
 //        }
-        
+
         addActionMessage(request, "document.request.created.with.success");
         return mapping.findForward("viewRegistrationDetails");
     }
