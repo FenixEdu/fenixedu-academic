@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.spring;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
 import org.fenixedu.bennu.core.rest.JsonAwareResource;
 import org.fenixedu.bennu.portal.domain.MenuFunctionality;
 import org.fenixedu.bennu.portal.model.Functionality;
@@ -34,7 +35,10 @@ public abstract class StrutsFunctionalityController extends JsonAwareResource {
     @ModelAttribute
     private void selectStrutsFunctionality(HttpServletRequest request) {
         Functionality functionality = RenderersAnnotationProcessor.getFunctionalityForType(getFunctionalityType());
-        BennuPortalDispatcher.selectFunctionality(request,
-                MenuFunctionality.findFunctionality(functionality.getProvider(), functionality.getKey()));
+        MenuFunctionality menuItem = MenuFunctionality.findFunctionality(functionality.getProvider(), functionality.getKey());
+        if (menuItem == null || !menuItem.isAvailableForCurrentUser()) {
+            throw AuthorizationException.unauthorized();
+        }
+        BennuPortalDispatcher.selectFunctionality(request, menuItem);
     }
 }
