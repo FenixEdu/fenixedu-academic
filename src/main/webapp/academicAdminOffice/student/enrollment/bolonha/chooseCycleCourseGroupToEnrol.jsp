@@ -59,26 +59,33 @@
 		</div>
 	</logic:messagesPresent>
 	
-	<fr:edit id="cycleEnrolmentBean" 
-			 name="cycleEnrolmentBean" 
-			 schema="CycleEnrolmentBean.chooseCycleCourseGroupToEnrol">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thmiddle"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="invalid" path="/bolonhaStudentEnrollment.do?method=enrolInCycleCourseGroupInvalid" />
-	</fr:edit>
-	
-	<table>
-		<tr>
-			<td>
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='enrolInCycleCourseGroup';"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/></html:submit>
-			</td>
-			<td>
-				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='cancelChooseCycleCourseGroupToEnrol';"><bean:message bundle="APPLICATION_RESOURCES" key="label.cancel"/></html:cancel>
-			</td>
-		</tr>
-	</table>
+	<div>
+		<div class="enrol-in-cycle-renderer">
+			<fr:edit id="cycleEnrolmentBean" 
+					 name="cycleEnrolmentBean" 
+					 schema="CycleEnrolmentBean.chooseCycleCourseGroupToEnrol">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thmiddle"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/bolonhaStudentEnrollment.do?method=enrolInCycleCourseGroupInvalid" />
+			</fr:edit>
+		</div>
+		<div>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='enrolInCycleCourseGroup';"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/></html:submit>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='cancelChooseCycleCourseGroupToEnrol';"><bean:message bundle="APPLICATION_RESOURCES" key="label.cancel"/></html:cancel>
+		</div>
+	</div>
 	
 </html:form>
 </logic:notEmpty>
+
+<style>
+	.enrol-in-cycle-renderer .form-group {
+		display: inline-block;
+		margin-bottom: 0;
+	}
+	.enrol-in-cycle-renderer .control-label {
+		margin-top: 3px;
+	}
+</style>
