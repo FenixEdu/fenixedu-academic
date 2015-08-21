@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
+import org.fenixedu.academic.domain.candidacy.DFACandidacy;
+import org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -42,10 +44,8 @@ public class CandidateGroup extends GroupStrategy {
 
     @Override
     public Set<User> getMembers() {
-        return Bennu.getInstance().getCandidaciesSet().stream().filter(candidacy -> {
-            CandidacySituationType situation = candidacy.getActiveCandidacySituationType();
-            return situation != null && situation.isActive() && !situation.equals(CandidacySituationType.REGISTERED);
-        }).map(candidacy -> candidacy.getPerson().getUser()).collect(Collectors.toSet());
+        return Bennu.getInstance().getCandidaciesSet().stream().filter(this::isActive)
+                .map(candidacy -> candidacy.getPerson().getUser()).collect(Collectors.toSet());
     }
 
     @Override
@@ -60,13 +60,22 @@ public class CandidateGroup extends GroupStrategy {
 
     private boolean hasActiveCandidacies(Person person) {
         for (Candidacy candidacy : person.getCandidaciesSet()) {
-            CandidacySituationType situation = candidacy.getActiveCandidacySituationType();
-            if (situation != null && situation.isActive() && !situation.equals(CandidacySituationType.REGISTERED)
-                    && !situation.equals(CandidacySituationType.ADMITTED)) {
+            if (isActive(candidacy)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean isActive(Candidacy candidacy) {
+        CandidacySituationType situation = candidacy.getActiveCandidacySituationType();
+        // Filter out legacy, inactive and registered candidacies...
+        if (situation == null || !situation.isActive() || situation.equals(CandidacySituationType.REGISTERED)) {
+            return false;
+        }
+        // ... and also DFA/PHD Candidacies in the admitted state (as this seems to be one of the last possible outcomes).
+        return !((candidacy instanceof DFACandidacy || candidacy instanceof PHDProgramCandidacy) && situation
+                .equals(CandidacySituationType.ADMITTED));
     }
 
     @Override
