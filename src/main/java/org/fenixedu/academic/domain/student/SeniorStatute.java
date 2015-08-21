@@ -73,6 +73,7 @@ public class SeniorStatute extends SeniorStatute_Base {
         setEndExecutionPeriod(null);
         setStudent(null);
         setRegistration(null);
+        setType(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
