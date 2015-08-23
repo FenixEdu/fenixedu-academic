@@ -18,9 +18,12 @@ public interface ITreasuryBridgeAPI {
      */
 
     public static String ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT = "ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT";
+    public static String ACADEMIC_SERVICE_REQUEST_REJECT_OR_CANCEL_EVENT = "ACADEMIC_SERVICE_REQUEST_REJECT_OR_CANCEL_EVENT";
 
     public void registerNewAcademicServiceRequestSituationHandler();
 
+    public void registerAcademicServiceRequestCancelOrRejectHandler();
+    
     public IAcademicServiceRequestAndAcademicTaxTreasuryEvent academicTreasuryEventForAcademicServiceRequest(
             final AcademicServiceRequest academicServiceRequest);
 
