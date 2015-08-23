@@ -115,9 +115,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     protected void checkSpecificConditions(ProgramConclusion programConclusion) {
-        if (!programConclusion.getGraduationTitle().isEmpty()) {
-            checkForDiplomaRequest(getRegistration(), programConclusion);
-        } else {
+        if (programConclusion.getGraduationTitle().isEmpty()) {
             if (!programConclusion.isConclusionProcessed(getRegistration())) {
                 throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
             }
@@ -151,6 +149,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         if (academicServiceRequestBean.isToProcess()) {
             checkSpecificConditions(getProgramConclusion());
+            
+            if (!getProgramConclusion().getGraduationTitle().isEmpty()) {
+                checkForDiplomaRequest(getRegistration(), getProgramConclusion());
+            }            
 
             if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
