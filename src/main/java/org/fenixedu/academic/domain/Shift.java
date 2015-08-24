@@ -117,6 +117,7 @@ public class Shift extends Shift_Base {
 
         setLotacao(newCapacity);
         shiftTypeManagement(newTypes, newExecutionCourse);
+        setNome(newName);
 
         beforeExecutionCourse.setShiftNames();
         if (!beforeExecutionCourse.equals(newExecutionCourse)) {
@@ -128,6 +129,10 @@ public class Shift extends Shift_Base {
         }
 
         setComment(comment);
+    }
+    
+    public boolean isCustomName() {
+        return StringUtils.isNotBlank(getNome()) && !getNome().matches(getExecutionCourse().getSigla() + "[a-zA-Z]+[0-9]+");
     }
 
     @Override
