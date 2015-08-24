@@ -20,7 +20,6 @@ package org.fenixedu.academic.ui.struts.action.student.administrativeOfficeServi
 
 import java.io.IOException;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,8 +32,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentSigner;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.service.factoryExecutors.DocumentRequestCreator;
@@ -175,10 +172,10 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     private void processConcludeAndDeliver(AcademicServiceRequest documentRequest) {
         documentRequest.process();
         if (documentRequest instanceof DocumentRequest) {
-            ((DocumentRequest) documentRequest).setDocumentSigner(DocumentSigner.findDefaultDocumentSignature());
             ((DocumentRequest) documentRequest).generateDocument();
         }
         documentRequest.concludeServiceRequest();
         documentRequest.delivered();
     }
+
 }

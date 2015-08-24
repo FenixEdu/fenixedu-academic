@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.Declaration
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentSigner;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
@@ -85,7 +84,6 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
         Signal.emit(ITreasuryBridgeAPI.ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT,
                 new DomainObjectEvent<AcademicServiceRequest>(academicServiceRequest));
 
-        academicServiceRequest.setDocumentSigner(DocumentSigner.findDefaultDocumentSignature());
         return academicServiceRequest;
     }
 

@@ -116,10 +116,10 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-
         if (request.getAttribute("academicServiceRequest") == null) {
             request.setAttribute("academicServiceRequest", getAndSetAcademicServiceRequest(request));
         }
+
         return mapping.findForward("printDocument");
     }
 

@@ -61,19 +61,6 @@
 <logic:equal name="documentRequest" property="toPrint" value="true">
 <p>
 	<fr:form action="<%= "/documentRequest.do?method=printDocument&amp;documentRequestId=" + documentRequest.getExternalId().toString() %>">
-		<fr:edit id="documentRequest" name="documentRequest">
-			<fr:schema type="org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
-				<%--
-				<fr:slot name="documentSigner" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES"
-						 key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.documentSigner">
-					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DocumentSignerProvider" />
-					<fr:property name="format" value="\${responsibleName} - \${responsibleFunction.content}" />
-				</fr:slot>
-				--%>
-			</fr:schema>
-			<fr:layout name="tabular">
-			</fr:layout>
-		</fr:edit>
 		<html:submit><bean:message key="print" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</fr:form>
 </p>
