@@ -152,7 +152,13 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         }
 
         request.setAttribute("documentRequest", documentRequest);
-        processConcludeAndDeliver(documentRequest);
+
+        try {
+            processConcludeAndDeliver(documentRequest);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage());
+            return viewDocumentRequestToCreate(mapping, actionForm, request, response);
+        }
 
         return mapping.findForward("printDocument");
     }
