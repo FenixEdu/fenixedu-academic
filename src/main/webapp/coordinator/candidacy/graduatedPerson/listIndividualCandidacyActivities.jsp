@@ -82,7 +82,7 @@
 	<strong>Informação de seriação:</strong>
 	<fr:view name="seriesGrade" >
 		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade">
-			<fr:slot name="degree.name" key="label.candidacy.degree">
+			<fr:slot name="degree.name" key="label.Degree">
 			</fr:slot>
 			<fr:slot name="professionalExperience" key="label.candidacy.professionalExperience">
 			</fr:slot>
@@ -92,7 +92,7 @@
 			</fr:slot>
 			<fr:slot name="candidacyGrade" key="label.candidacy.grade">
 			</fr:slot>
-			<fr:slot name="state" key="label.candidacy.state">
+			<fr:slot name="state" key="label.state">
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">

@@ -113,7 +113,7 @@
 	<strong>Informação de seriação:</strong>
 	<fr:view name="process" property="candidacy.individualCandidacySeriesGrade">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacySeriesGrade">
-			<fr:slot name="degree.name" key="label.candidacy.degree">
+			<fr:slot name="degree.name" key="label.Degree">
 			</fr:slot>
 			<fr:slot name="affinity" key="label.candidacy.affinity">
 			</fr:slot>
@@ -125,7 +125,7 @@
 			</fr:slot>
 			<fr:slot name="seriesCandidacyGrade" key="label.candidacy.degreeTransfer.seriesCandidacyGrade">
 			</fr:slot>
-			<fr:slot name="state" key="label.candidacy.state">
+			<fr:slot name="state" key="label.state">
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">

@@ -101,7 +101,7 @@
 	<logic:notEmpty name="seriesGrade">
 		<fr:view name="seriesGrade" >
 			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade">
-				<fr:slot name="degree.name" key="label.candidacy.degree">
+				<fr:slot name="degree.name" key="label.Degree">
 				</fr:slot>
 				<fr:slot name="professionalExperience" key="label.candidacy.professionalExperience">
 				</fr:slot>
@@ -115,7 +115,7 @@
 				</fr:slot>
 				<fr:slot name="seriesCandidacyGrade" key="label.candidacy.seriesGrade">
 				</fr:slot>
-				<fr:slot name="state" key="label.candidacy.state">
+				<fr:slot name="state" key="label.state">
 				</fr:slot>
 				<fr:slot name="notes" key="label.candidacy.notes">
 				</fr:slot>

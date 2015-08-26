@@ -310,7 +310,7 @@
 </schema>
 
 <schema name="student.thesisBean.upload" type="org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean">
-    <slot name="file" key="label.thesis.file">
+    <slot name="file" key="label.thesis.file" bundle="STUDENT_RESOURCES">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
             <property name="required" value="true"/>
             <property name="typeMessage" value="student.thesis.document.type"/>
@@ -336,7 +336,7 @@
         <property name="includedValues" value="pt, en"/>
     </slot>
  -->
-    <slot name="file" key="label.thesis.file">
+    <slot name="file" key="label.thesis.file" bundle="STUDENT_RESOURCES">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
             <property name="required" value="true"/>
             <property name="typeMessage" value="student.thesis.document.type"/>

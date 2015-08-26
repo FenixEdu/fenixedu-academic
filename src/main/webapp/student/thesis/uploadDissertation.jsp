@@ -36,16 +36,14 @@
 <bean:define id="callbackUrl" type="java.lang.String">/thesisSubmission.do?method=prepareThesisSubmission&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
 <bean:define id="uploadUrl" type="java.lang.String">/thesisSubmission.do?method=uploadDissertation&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
     <fr:view name="fileBean" schema="student.thesisBean.upload.dissertation">
-		<fr:schema type="org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean" bundle="APPLICATION_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean" bundle="STUDENT_RESOURCES">
 		    <fr:slot name="title" key="label.thesis.title">
 		        <fr:property name="size" value="60"/>
     		</fr:slot>
     		<fr:slot name="subTitle" key="label.thesis.subtitle">
         		<fr:property name="size" value="60"/>
     		</fr:slot>
-    		<fr:slot name="language" key="label.thesis.language">
-        		<fr:property name="includedValues" value="pt, en"/>
-    		</fr:slot>
+    		<fr:slot name="language.displayName" key="label.thesis.language"/>
     	</fr:schema>
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
