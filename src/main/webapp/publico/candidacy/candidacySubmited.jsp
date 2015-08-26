@@ -86,7 +86,7 @@
 				</tr>
 				<tr>
 					<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
-					<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+					<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.accountingEvent.originalAmountToPay"/></td>
 				</tr>
 			</table>
 		</td>		

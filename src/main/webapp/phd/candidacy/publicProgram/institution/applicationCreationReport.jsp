@@ -78,7 +78,7 @@
 		</tr>
 		<tr>
 			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/> &euro;</td>
+			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.accountingEvent.originalAmountToPay"/> &euro;</td>
 		</tr>
 	</table>
 		
@@ -93,7 +93,7 @@
 			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.swift" bundle="PHD_RESOURCES" />: CGDIPTPL</li>
 			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.nib" bundle="PHD_RESOURCES" />: 003503730000914273075</li>
 			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.iban" bundle="PHD_RESOURCES" />: PT50003503730000914273075</li>
-			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.value" bundle="PHD_RESOURCES" />: <fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/> &euro;</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.value" bundle="PHD_RESOURCES" />: <fr:view name="individualCandidacyProcess" property="associatedPaymentCode.accountingEvent.originalAmountToPay"/> &euro;</li>
 		</ul>
 	</p>
 	
