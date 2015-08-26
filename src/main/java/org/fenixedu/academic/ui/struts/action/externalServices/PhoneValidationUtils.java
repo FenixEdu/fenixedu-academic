@@ -34,6 +34,7 @@ import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.bennu.core.api.SystemResource;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.configuration.ConfigurationProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
