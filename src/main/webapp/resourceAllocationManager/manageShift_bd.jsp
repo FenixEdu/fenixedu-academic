@@ -152,7 +152,7 @@
 				<bean:message key="property.turno.name"/>:
 			</th>
 			<td>
-				<bean:write name="createShiftForm" property="nome"/>
+				<html:text property="nome"/>
 			</td>
 		</tr>
 		<tr>
