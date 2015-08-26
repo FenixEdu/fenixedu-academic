@@ -4552,6 +4552,9 @@ class mobility.outbound.OutboundMobilityCandidacyContestGroup  {
 class Installation {
 	String instituitionURL;
 	String instituitionEmailDomain;
+	// Support e-mail for academic troubleshooting
+	// Should be marked as required in future versions
+	String academicEmailAddress;
 }
 
 class accessControl.PersistentRoleGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {

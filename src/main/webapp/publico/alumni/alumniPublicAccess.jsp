@@ -169,8 +169,9 @@
 			</li>
 			<li>
 				<h4>Como alterar o número de telemóvel?</h4>
+				<% request.setAttribute("academicSupportAddress", org.fenixedu.academic.domain.Installation.getInstance().getAcademicEmailAddress()); %>
 				<p>Terá de solicitar ao Núcleo correspondente ao seu Curso a atualização dos seus dados Pessoais (neste caso, telemóvel).<br>
-				Núcleo de Graduação - <a href="mailto:academica@tecnico.ulisboa.pt" title="Enviar email">academica@tecnico.ulisboa.pt</a><br>
+				Núcleo de Graduação - <a href="mailto:${academicSupportAddress}" title="Enviar email">${academicSupportAddress}</a><br>
 				Núcleo de Pós-Graduação e Formação Contínua - <a href="mailto:npfc@tecnico.ulisboa.pt" title="Enviar email">npfc@tecnico.ulisboa.pt</a></p>
 			</li>
 		</ol>
