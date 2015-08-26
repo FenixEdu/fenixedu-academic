@@ -285,7 +285,7 @@ public class Student extends Student_Base {
     public static Integer generateStudentNumber() {
         int nextNumber = 0;
         for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
-            if (studentNumber.getNumber().intValue() < 100000 && studentNumber.getNumber().intValue() > nextNumber) {
+            if (studentNumber.getNumber().intValue() > nextNumber) {
                 nextNumber = studentNumber.getNumber().intValue();
             }
         }
