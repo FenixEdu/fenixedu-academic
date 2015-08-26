@@ -2286,7 +2286,7 @@
 	</slot>
 	<slot name="otherSchoolLevel" />
 	
-	<slot name="countryWhereFinishedHighSchoolLevel" key="label.erasmus.country.highschool" layout="menu-select">
+	<slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select">
 		<property name="format" value="${localizedName}" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -2479,7 +2479,7 @@
 </schema>
 
 <schema name="ErasmusIndividualCandidacyProcess.personalDataBean" type="org.fenixedu.academic.dto.person.PersonBean" bundle="APPLICATION_RESOURCES">
-	<slot name="givenNames" key="label.given.name" >
+	<slot name="givenNames" key="label.givenNames" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
@@ -2488,7 +2488,7 @@
 		<property name="size" value="50"/>
 		<property name="maxlength" value="100"/>
 	</slot>
-	<slot name="familyNames" key="label.family.name" >
+	<slot name="familyNames" key="label.familyNames" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>

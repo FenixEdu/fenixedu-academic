@@ -103,7 +103,7 @@
 </schema>
 
 <schema name="selectableEntryBean.view-selectable" type="org.fenixedu.academic.dto.accounting.SelectableEntryBean" bundle="APPLICATION_RESOURCES">
-	<slot name="selected" key="label.commons.emptySelected" />
+	<slot name="selected" key="label.choose" />
 	<slot name="entry.description" read-only="true" key="label.org.fenixedu.academic.domain.accounting.Entry.description" />
 	<slot name="entry.whenRegistered" read-only="true" key="label.org.fenixedu.academic.domain.accounting.Entry.whenRegistered" />
 	<slot name="entry.amountWithAdjustment" read-only="true" key="label.org.fenixedu.academic.domain.accounting.Entry.amountWithAdjustment"  />
