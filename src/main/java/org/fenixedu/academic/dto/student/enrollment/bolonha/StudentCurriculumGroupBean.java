@@ -229,8 +229,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     public boolean isToBeDisabled() {
-        return isRoot() || isEnrolledInAnyCurriculumCourses() || isEnrolledInAnyCurriculumGroups()
-                || isNoCourseGroupCurriculumGroup();
+        return isRoot() || !getCurriculumModule().getCurriculumModulesSet().isEmpty() || isNoCourseGroupCurriculumGroup();
     }
 
 }
