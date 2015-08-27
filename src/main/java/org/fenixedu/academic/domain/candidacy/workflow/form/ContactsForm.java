@@ -20,7 +20,9 @@ package org.fenixedu.academic.domain.candidacy.workflow.form;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.fenixedu.academic.domain.EmergencyContact;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.util.workflow.Form;
 import org.fenixedu.academic.util.LabelFormatter;
@@ -35,6 +37,8 @@ public class ContactsForm extends Form {
 
     private String webAddress;
 
+    private String emergencyContact;
+
     private boolean isEmailAvailable;
 
     private boolean isHomepageAvailable;
@@ -46,13 +50,15 @@ public class ContactsForm extends Form {
     public static ContactsForm createFromPerson(Person person) {
         final boolean availableEmail = person.isDefaultEmailVisible();
         final boolean availableWebSite = person.isDefaultWebAddressVisible();
+        final String emergencyContact =
+                Optional.ofNullable(person.getProfile().getEmergencyContact()).map(EmergencyContact::getContact).orElse(null);
 
         return new ContactsForm(person.getEmail(), person.getDefaultWebAddressUrl(), availableEmail, availableWebSite,
-                person.getDefaultMobilePhoneNumber(), person.getDefaultPhoneNumber());
+                person.getDefaultMobilePhoneNumber(), person.getDefaultPhoneNumber(), emergencyContact);
     }
 
     private ContactsForm(String email, String homepage, boolean isEmailAvailable, boolean isHomepageAvailable,
-            String mobileNumber, String phoneNumber) {
+            String mobileNumber, String phoneNumber, String emergencyContact) {
         this();
         this.email = email;
         this.webAddress = homepage;
@@ -60,6 +66,7 @@ public class ContactsForm extends Form {
         this.isHomepageAvailable = isHomepageAvailable;
         this.mobileNumber = mobileNumber;
         this.phoneNumber = phoneNumber;
+        this.emergencyContact = emergencyContact;
     }
 
     public String getEmail() {
@@ -108,6 +115,14 @@ public class ContactsForm extends Form {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
     }
 
     @Override

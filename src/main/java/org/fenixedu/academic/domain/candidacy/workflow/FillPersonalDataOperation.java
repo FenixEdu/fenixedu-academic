@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.candidacy.workflow;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.EmergencyContact;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.SchoolLevelType;
@@ -267,6 +268,8 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         }
 
         person.setDefaultMobilePhoneNumber(getContactsForm().getMobileNumber());
+
+        EmergencyContact.updateEmergencyContact(person.getProfile(), getContactsForm().getEmergencyContact());
     }
 
     protected void fillResidenceInformation() {
