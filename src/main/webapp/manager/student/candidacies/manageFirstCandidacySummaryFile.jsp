@@ -61,12 +61,12 @@
 		<bean:define id="candidacyID" name="candidacy" property="externalId" />
 		
 		<br/><br/>
-		<html:link	module="/candidate" action="<%= "/degreeCandidacyManagement.do?method=generateSummaryFile&amp;candidacyID=" + candidacyID%>">
+		<html:link	module="/student" action="<%= "/firstTimeCandidacyDocuments.do?method=generateDocuments&amp;candidacyID=" + candidacyID%>">
 			Gerar PDF de Sumário
 		</html:link>
 		<br/>
 		<logic:present name="hasPDF">
-			<html:link	module="/candidate" action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
+			<html:link	module="/student" action="<%= "/firstTimeCandidacyDocuments.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
 				Mostrar PDF de Sumário
 			</html:link>
 		</logic:present>

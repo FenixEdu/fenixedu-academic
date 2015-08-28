@@ -107,8 +107,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) arg0;
 
-        if ("doOperation".equals(request.getParameter("method"))
-                && "PRINT_ALL_DOCUMENTS".equals(request.getParameter("operationType"))) {
+        if ("generateDocuments".equals(request.getParameter("method"))) {
 
             try {
                 ResponseWrapper response = (ResponseWrapper) arg1;
@@ -319,7 +318,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {
         String url =
-                "/candidate/degreeCandidacyManagement.do?method=showCandidacyDetails&candidacyID=" + candidacy.getExternalId();
+                "/student/firstTimeCandidacyDocuments.do?method=showCandidacyDetails&candidacyID=" + candidacy.getExternalId();
 
         String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url, request.getSession());
 
