@@ -154,7 +154,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             executeOperation(mapping, actionForm, request, response, operation);
             LogFirstTimeCandidacyTimestamp.logTimestamp(candidacy, FirstTimeCandidacyStage.FINISHED_FILLING_FORMS);
 
-            return new ActionForward(buildSummaryPdfGeneratorURL(request, candidacy), true);
+            return new ActionForward(null, buildSummaryPdfGeneratorURL(request, getCandidacy(request)), true, "/student");
         }
     }
 
@@ -377,21 +377,19 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
-        String url =
-                "/candidate/degreeCandidacyManagement.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
-                        + candidacy.getExternalId();
-
+        String url = "/student/firstTimeCandidacyDocuments.do?method=generateDocuments&candidacyID=" + candidacy.getExternalId();
         String urlWithChecksum =
                 GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url, request.getSession(false));
-
-        return urlWithChecksum.substring("/candidate".length());
+        return urlWithChecksum.substring("/student".length());
     }
 
+    @Deprecated
     public ActionForward generateSummaryFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        return new ActionForward(buildSummaryPdfGeneratorURL(request, getCandidacy(request)), true);
+        return new ActionForward(null, buildSummaryPdfGeneratorURL(request, getCandidacy(request)), false, "/student");
     }
 
+    @Deprecated
     public ActionForward showSummaryFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         CandidacySummaryFile file = getCandidacy(request).getSummaryFile();

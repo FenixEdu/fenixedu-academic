@@ -64,7 +64,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
-		<url-pattern>/candidate/*</url-pattern>
+		<url-pattern>/student/firstTimeCandidacyDocuments.do</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
