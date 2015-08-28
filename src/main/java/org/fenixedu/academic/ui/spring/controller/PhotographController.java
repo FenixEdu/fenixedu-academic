@@ -46,6 +46,13 @@ public class PhotographController {
             defaultValue = "100") Integer size, @RequestHeader(value = "If-None-Match", required = false) String ifNoneMatch)
             throws IOException {
 
+        if (size <= 0) {
+            size = 100;
+        }
+        if (size > 512) {
+            size = 512;
+        }
+
         User user = User.findByUsername(username);
 
         if (user != null && user.getPerson() != null) {
