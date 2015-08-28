@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,6 +50,7 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.portal.domain.PortalConfiguration;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
@@ -202,8 +204,16 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             }
 
             try {
-                String realPath = servletContext.getResource(src).toString();
+                String realPath = null;
+                if (src.startsWith("api/bennu-portal/configuration/logo")) {
+                    realPath =
+                            "data:" + PortalConfiguration.getInstance().getLogoType() + ";base64,"
+                                    + Base64.getEncoder().encodeToString(PortalConfiguration.getInstance().getLogo());
+                } else {
+                    realPath = servletContext.getResource(src).toString();
+                }
                 img.setAttribute("src", realPath);
+
             } catch (MalformedURLException e) {
                 logger.error(e.getMessage(), e);
             }
