@@ -131,7 +131,7 @@ public class PersonalInformationForm extends Form {
         final User user = User.findByUsername(username);
         if (party != null && party != user.getPerson()) {
             result.add(new LabelFormatter().appendLabel(
-                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists", Bundle.APPLICATION));
+                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists", Bundle.CANDIDATE));
         }
     }
 
@@ -139,7 +139,7 @@ public class PersonalInformationForm extends Form {
         if (getGrantOwnerType().equals(GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER) && getGrantOwnerProvider() == null) {
             result.add(new LabelFormatter().appendLabel(
                     "error.candidacy.workflow.PersonalInformationForm.grant.owner.must.choose.granting.institution",
-                    Bundle.APPLICATION));
+                    Bundle.CANDIDATE));
         }
     }
 

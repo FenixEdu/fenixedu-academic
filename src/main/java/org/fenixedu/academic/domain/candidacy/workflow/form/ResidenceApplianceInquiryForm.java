@@ -57,7 +57,7 @@ public class ResidenceApplianceInquiryForm extends Form {
         if (!StringUtils.isEmpty(this.notesAboutApplianceForResidence) && !isToApplyForResidence) {
             return Collections.singletonList(new LabelFormatter().appendLabel(
                     "error.candidacy.workflow.ResidenceApplianceInquiryForm.notes.can.only.be.filled.in.case.of.appliance",
-                    Bundle.APPLICATION));
+                    Bundle.CANDIDATE));
         }
 
         return Collections.emptyList();
