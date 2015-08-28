@@ -30,7 +30,7 @@ import org.fenixedu.academic.dto.GenericPair;
 
 public class MaximumNumberOfEctsInStandaloneCurriculumGroup extends CurricularRuleNotPersistent {
 
-    static public double MAXIMUM_DEFAULT_VALUE = 20.25d;
+    static public double MAXIMUM_DEFAULT_VALUE = 30.00d;
 
     private StandaloneCurriculumGroup standaloneCurriculumGroup;
     private double maximumEcts;
