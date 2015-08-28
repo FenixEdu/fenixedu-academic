@@ -43,6 +43,7 @@ import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.dto.enrollment.shift.ShiftEnrollmentErrorReport;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.dto.teacher.CreateLessonPlanningBean;
 import org.fenixedu.academic.dto.teacher.ImportLessonPlanningsBean;
@@ -440,24 +441,25 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         }
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(request.getParameter("executionCourseID"));
 
+        final ActionErrors actionErrors = new ActionErrors();
         if (person != null) {
             try {
-                new EnrollStudentInShifts().run(executionCourse.getRegistration(person), request.getParameter("shiftID"));
+                ShiftEnrollmentErrorReport errorReport =
+                        new EnrollStudentInShifts().run(executionCourse.getRegistration(person), request.getParameter("shiftID"));
+                if (errorReport.getUnAvailableShifts().size() > 0) {
+                    actionErrors.add("error", new ActionMessage("error.exception.shift.full"));
+                }
             } catch (FenixServiceException e) {
-                final ActionErrors actionErrors = new ActionErrors();
                 if (e.getMessage() != null) {
                     actionErrors.add("error", new ActionMessage(e.getMessage()));
                 } else {
                     actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
                 }
-
-                saveErrors(request, actionErrors);
             }
         } else {
-            final ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
-            saveErrors(request, actionErrors);
         }
+        saveErrors(request, actionErrors);
         return editShift(mapping, form, request, response);
     }
 
