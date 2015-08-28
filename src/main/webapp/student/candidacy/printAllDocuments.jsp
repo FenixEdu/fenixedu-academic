@@ -36,17 +36,9 @@
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
-
 </head>
 
-
-
 <body>
-
-<%--<div>
-	<jsp:include page="printUnder23TransportsDeclaration.jsp" />
-</div>--%>
 
 <div>
 	<jsp:include page="printRegistrationDeclaration.jsp" />
