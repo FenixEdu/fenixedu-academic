@@ -149,7 +149,7 @@ public class FiliationForm extends Form {
                     || StringUtils.isEmpty(getParishOfBirth())) {
                 return Collections.singletonList(new LabelFormatter(
                         "error.candidacy.workflow.FiliationForm.zone.information.is.required.for.national.students",
-                        Bundle.APPLICATION));
+                        Bundle.CANDIDATE));
             }
         }
 
