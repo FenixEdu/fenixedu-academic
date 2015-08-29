@@ -34,7 +34,7 @@ public class DegreesToCreateRegistration implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         return AcademicAccessRule
                 .getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION, Authenticate.getUser())
-                .sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID).collect(Collectors.toSet());
+                .sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID).distinct().collect(Collectors.toList());
     }
 
     @Override
