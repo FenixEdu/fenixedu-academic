@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
@@ -163,36 +164,21 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws IOException, FenixServiceException {
 
         final DocumentRequest documentRequest = FenixFramework.getDomainObject(request.getParameter("documentRequestId"));
-        resetDocumentSigner(documentRequest);
-        try {
-            byte[] data = documentRequest.generateDocument();
-
-            response.setContentLength(data.length);
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName() + ".pdf");
-
-            final ServletOutputStream writer = response.getOutputStream();
-            writer.write(data);
-            writer.flush();
-            writer.close();
-
-            response.flushBuffer();
-            return null;
-        } catch (DomainException e) {
-            throw e;
+        GeneratedDocument doc = documentRequest.getLastGeneratedDocument();
+        if (doc != null) {
+            writeFile(response, doc.getFilename(), "application/pdf", doc.getContent());
         }
+        return null;
     }
 
     @Atomic
     private void processConcludeAndDeliver(AcademicServiceRequest documentRequest) {
         documentRequest.process();
+        if (documentRequest instanceof DocumentRequest) {
+            ((DocumentRequest) documentRequest).setDocumentSigner(DocumentSigner.findDefaultDocumentSignature());
+            ((DocumentRequest) documentRequest).generateDocument();
+        }
         documentRequest.concludeServiceRequest();
         documentRequest.delivered();
     }
-
-    @Atomic
-    private void resetDocumentSigner(DocumentRequest documentRequest) {
-        documentRequest.setDocumentSigner(DocumentSigner.findDefaultDocumentSignature());
-    }
-
 }
