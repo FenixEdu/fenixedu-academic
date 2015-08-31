@@ -258,7 +258,7 @@ public class Registration extends Registration_Base {
             super.setEntryPhase(studentCandidacy.getEntryPhase());
             super.setIngressionType(studentCandidacy.getIngressionType());
 
-            if (studentCandidacy.getIngressionType().isReIngression()) {
+            if (studentCandidacy.getIngressionType() != null && studentCandidacy.getIngressionType().isReIngression()) {
                 final Degree sourceDegree = studentCandidacy.getDegreeCurricularPlan().getEquivalencePlan().getSourceDegree();
                 Registration registration = getStudent().readRegistrationByDegree(sourceDegree);
                 if (registration == null) {
