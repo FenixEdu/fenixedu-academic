@@ -174,6 +174,7 @@ public class Installment extends Installment_Base {
 
         checkParameters(amount, startDate, endDate);
 
+        super.setAmount(amount);
         super.setStartDate(startDate);
         super.setEndDate(endDate);
     }
