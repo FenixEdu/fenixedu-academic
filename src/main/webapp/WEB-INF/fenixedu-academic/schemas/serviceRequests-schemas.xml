@@ -62,7 +62,7 @@
 	<slot name="creator" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="responsible.name"/>
+		<property name="subSchema" value="responsible.displayName"/>
 	</slot>
 	<slot name="justification" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
@@ -73,7 +73,7 @@
 	<slot name="creator" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="responsible.name"/>
+		<property name="subSchema" value="responsible.displayName"/>
 	</slot>
 	<slot name="justification" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
@@ -84,7 +84,7 @@
 	<slot name="creator" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="responsible.name"/>
+		<property name="subSchema" value="responsible.displayName"/>
 	</slot>
 	<slot name="justification" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
