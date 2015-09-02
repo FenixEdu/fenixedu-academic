@@ -23,6 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ page import="org.apache.struts.action.ActionMessages" %>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <html:xhtml />
 
 	<h2><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses" /></h2>
@@ -86,6 +87,7 @@
 		<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.warnings.in.enrolment" />:</strong></p>
 		<ul class="mvert05">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="warning">
+				<% pageContext.setAttribute("messages", ((String) pageContext.getAttribute("messages")).replaceAll("\\?\\?\\?" + I18N.getLocale().toString() + "\\.", "").replaceAll("\\?\\?\\?", ""));%>
 				<li><span><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -97,6 +99,7 @@
 			<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</strong></p>
 			<ul class="mvert05">
 				<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
+					<% pageContext.setAttribute("messages", ((String) pageContext.getAttribute("messages")).replaceAll("\\?\\?\\?" + I18N.getLocale().toString() + "\\.", "").replaceAll("\\?\\?\\?", ""));%>
 					<li><span><bean:write name="messages" /></span></li>
 				</html:messages>
 			</ul>

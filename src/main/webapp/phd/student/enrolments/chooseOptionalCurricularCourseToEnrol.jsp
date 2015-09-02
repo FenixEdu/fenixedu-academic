@@ -24,6 +24,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <%@page import="org.fenixedu.academic.domain.CompetenceCourse"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <html:xhtml />
 
 <h2><bean:message key="label.phd.student.enrolments" bundle="PHD_RESOURCES" /></h2>
@@ -68,6 +69,7 @@
 		<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</strong></p>
 		<ul class="mvert05">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
+				<% pageContext.setAttribute("messages", ((String) pageContext.getAttribute("messages")).replaceAll("\\?\\?\\?" + I18N.getLocale().toString() + "\\.", "").replaceAll("\\?\\?\\?", ""));%>
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
