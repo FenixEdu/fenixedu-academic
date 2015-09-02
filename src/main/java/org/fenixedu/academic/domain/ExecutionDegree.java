@@ -181,6 +181,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         if (getGratuityValues() != null) {
             getGratuityValues().delete();
         }
+        
+        getPublishedExamMapsSet().clear();
 
         setExecutionYear(null);
         setDegreeCurricularPlan(null);
