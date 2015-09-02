@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.DomainObjectUtil;
@@ -463,15 +464,19 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
                 return;
             }
 
-            final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
-            if (party != null && party != this) {
-                throw new DomainException("error.party.existing.contributor.number");
-            } else {
-                if (getPartySocialSecurityNumber() != null) {
-                    getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);
-                } else {
-                    new PartySocialSecurityNumber(this, socialSecurityNumber);
+            String defaultSocialSecurityNumber =
+                    FenixEduAcademicConfiguration.getConfiguration().getDefaultSocialSecurityNumber();
+            if (defaultSocialSecurityNumber == null || !defaultSocialSecurityNumber.equals(socialSecurityNumber)) {
+                final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
+                if (party != null && party != this) {
+                    throw new DomainException("error.party.existing.contributor.number");
                 }
+            }
+
+            if (getPartySocialSecurityNumber() != null) {
+                getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);
+            } else {
+                new PartySocialSecurityNumber(this, socialSecurityNumber);
             }
         }
     }
