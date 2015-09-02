@@ -157,7 +157,7 @@ public class CurricularRulesManager {
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
 
-        return new EnrolmentToBeApprovedByCoordinator((CurricularCourse) toApplyRule, contextCourseGroup, begin, end);
+        return new EnrolmentToBeApprovedByCoordinator(toApplyRule, contextCourseGroup, begin, end);
     }
 
     private static CurricularRule createCreditsLimit(DegreeModule toApplyRule, ExecutionSemester begin, ExecutionSemester end,

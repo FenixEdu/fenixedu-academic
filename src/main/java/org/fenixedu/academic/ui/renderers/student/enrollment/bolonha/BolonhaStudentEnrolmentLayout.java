@@ -34,12 +34,14 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.DegreeModuleToEnrol;
+import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
@@ -250,7 +252,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
         checkBoxCell.setBody(checkBox);
 
-        if (studentCurriculumGroupBean.isToBeDisabled()) {
+        if (isToDisableEnrolmentOption(studentCurriculumGroupBean)) {
             checkBox.setDisabled(true);
         } else {
             enrollmentsController.addCheckBox(checkBox);
@@ -394,6 +396,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 }
                 checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
                 checkBox.setUserValue(degreeModuleToEvaluate.getKey());
+                checkBox.setVisible(!isToDisableEnrolmentOption(degreeModuleToEvaluate));
                 getDegreeModulesToEvaluateController().addCheckBox(checkBox);
                 checkBoxCell.setBody(checkBox);
             } else {
@@ -407,8 +410,13 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 final HtmlActionLink actionLink = new HtmlActionLink();
                 actionLink.setText(BundleUtil.getString(Bundle.STUDENT, "label.chooseOptionalCurricularCourse"));
                 actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
-                actionLink
-                        .setOnClick("$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'prepareChooseOptionalCurricularCourseToEnrol');");
+                if (isToDisableEnrolmentOption(degreeModuleToEvaluate)) {
+                    actionLink.setOnClick("function(){return false;}");
+                    actionLink.setStyle("text-decoration: line-through; color: grey; border-bottom: none;");
+                } else {
+                    actionLink
+                            .setOnClick("$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'prepareChooseOptionalCurricularCourseToEnrol');");
+                }
                 //actionLink.setOnClick("document.forms[2].method.value='prepareChooseOptionalCurricularCourseToEnrol';");
                 actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getExternalId()
                         + "_" + degreeModuleToEvaluate.getContext().getExternalId());
@@ -419,6 +427,79 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 encodeCurricularRules(groupTable, degreeModuleToEvaluate);
             }
         }
+    }
+
+    private boolean isToDisableEnrolmentOption(final StudentCurriculumGroupBean input) {
+        return input.isToBeDisabled()
+                || (isStudentLogged() && appliesAnyRules(input.getCurriculumModule(),
+                        CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR));
+    }
+
+    private boolean isToDisableEnrolmentOption(final IDegreeModuleToEvaluate input) {
+        if (isStudentLogged()) {
+
+            if (appliesAnyRules(input, CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean appliesAnyRules(final IDegreeModuleToEvaluate input, final CurricularRuleType... curricularRuleTypes) {
+
+        if (input != null && input.getContext() != null && curricularRuleTypes != null) {
+
+            for (final CurricularRuleType curricularRuleType : curricularRuleTypes) {
+
+                final CourseGroup parentCourseGroup = input.getCurriculumGroup().getDegreeModule();
+
+                // check self rules
+                final ExecutionSemester executionInterval = this.bolonhaStudentEnrollmentBean.getExecutionPeriod();
+                List<? extends ICurricularRule> rules =
+                        input.getDegreeModule().getCurricularRules(curricularRuleType, parentCourseGroup, executionInterval);
+
+                if (!rules.isEmpty() && rules.iterator().next().appliesToContext(input.getContext())) {
+                    return true;
+                }
+
+                // check parent group rules
+                rules = parentCourseGroup.getCurricularRules(curricularRuleType, executionInterval);
+                if (!rules.isEmpty() && rules.iterator().next().appliesToContext(input.getContext())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean appliesAnyRules(final CurriculumGroup input, final CurricularRuleType... curricularRuleTypes) {
+
+        if (input != null && curricularRuleTypes != null) {
+
+            for (final CurricularRuleType curricularRuleType : curricularRuleTypes) {
+
+                final CurriculumGroup parentCurriculumGroup = input.getCurriculumGroup();
+                final CourseGroup parentCourseGroup = parentCurriculumGroup.getDegreeModule();
+
+                // check self rules
+                final ExecutionSemester executionInterval = this.bolonhaStudentEnrollmentBean.getExecutionPeriod();
+                List<? extends ICurricularRule> rules =
+                        input.getDegreeModule().getCurricularRules(curricularRuleType, parentCourseGroup, executionInterval);
+
+                if (!rules.isEmpty()) {
+                    return true;
+                }
+
+                // check parent group rules, recursively until root
+                if (!parentCurriculumGroup.isRoot() && appliesAnyRules(parentCurriculumGroup, curricularRuleTypes)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     protected void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
@@ -475,6 +556,10 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     protected void generateEnrolment(final HtmlTable groupTable, Enrolment enrolment, final String enrolmentNameClasses,
             final String enrolmentYearClasses, final String enrolmentSemesterClasses, final String enrolmentEctsClasses,
             final String enrolmentCheckBoxClasses) {
+
+        final EnroledCurriculumModuleWrapper wrapper =
+                new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod());
+
         HtmlTableRow htmlTableRow = groupTable.createRow();
         HtmlTableCell cellName = htmlTableRow.createCell();
         cellName.setClasses(enrolmentNameClasses);
@@ -528,6 +613,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         HtmlCheckBox checkBox = new HtmlCheckBox(true);
         checkBox.setName("enrolmentCheckBox" + enrolment.getExternalId());
         checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
+        checkBox.setDisabled(isToDisableEnrolmentOption(wrapper));
         enrollmentsController.addCheckBox(checkBox);
 
         HtmlTableCell cellCheckBox = htmlTableRow.createCell();
@@ -595,6 +681,14 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         if (getRenderer().isEncodeGroupRules()) {
             encodeCurricularRules(groupTable, degreeModuleToEnrol);
         }
+    }
+
+    private boolean isStudentLogged() {
+        return isStudentLogged(bolonhaStudentEnrollmentBean.getStudentCurricularPlan());
+    }
+
+    private boolean isStudentLogged(final StudentCurricularPlan studentCurricularPlan) {
+        return Authenticate.getUser().getPerson() == studentCurricularPlan.getPerson();
     }
 
     protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,

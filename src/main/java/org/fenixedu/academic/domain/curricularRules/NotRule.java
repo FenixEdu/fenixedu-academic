@@ -62,6 +62,11 @@ public class NotRule extends NotRule_Base {
     }
 
     @Override
+    public boolean isRulePreventingAutomaticEnrolment() {
+        return false;
+    }
+    
+    @Override
     protected void removeOwnParameters() {
         getWrappedRule().delete();
     }

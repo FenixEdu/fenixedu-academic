@@ -24,4 +24,10 @@ public abstract class Rule extends Rule_Base {
     public boolean isLeaf() {
         return true;
     }
+    
+    @Override
+    public boolean isRulePreventingAutomaticEnrolment() {
+        return getCurricularRuleType().isPreventsAutomaticEnrolment();
+    }
+    
 }

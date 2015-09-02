@@ -21,6 +21,8 @@
  */
 package org.fenixedu.academic.domain.curricularRules;
 
+import java.util.Arrays;
+
 public enum CurricularRuleType {
 
     PRECEDENCY_APPROVED_DEGREE_MODULE,
@@ -67,6 +69,14 @@ public enum CurricularRuleType {
 
     public String getName() {
         return name();
+    }
+
+    public boolean isPreventsAutomaticEnrolment() {
+        return Arrays.asList(
+
+        CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR
+
+        ).contains(this);
     }
 
 }

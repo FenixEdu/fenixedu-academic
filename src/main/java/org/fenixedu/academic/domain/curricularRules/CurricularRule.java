@@ -195,6 +195,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     abstract public boolean isLeaf();
 
+    abstract public boolean isRulePreventingAutomaticEnrolment();
+    
     @Override
     abstract public List<GenericPair<Object, Boolean>> getLabel();
 

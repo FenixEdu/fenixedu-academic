@@ -41,6 +41,7 @@ import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
@@ -134,10 +135,29 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         checkParameters(courseGroup, executionSemester);
     }
 
-    protected void addChildCurriculumGroups(final CourseGroup courseGroup, final ExecutionSemester executionSemester) {
-        for (final CourseGroup childCourseGroup : courseGroup.getNotOptionalChildCourseGroups(executionSemester)) {
-            CurriculumGroupFactory.createGroup(this, childCourseGroup, executionSemester);
+    protected void addChildCurriculumGroups(final CourseGroup courseGroup, final ExecutionSemester executionInterval) {
+        if (!canCreateGroupOrChilds(courseGroup, executionInterval)) {
+            return;
         }
+
+        for (final CourseGroup iter : courseGroup.getNotOptionalChildCourseGroups(executionInterval)) {
+            if (!canCreateGroupOrChilds(iter, executionInterval)) {
+                continue;
+            }
+            
+            CurriculumGroupFactory.createGroup(this, iter, executionInterval);
+        }
+    }
+    
+    private boolean canCreateGroupOrChilds(final CourseGroup courseGroup, final ExecutionSemester executionInterval) {
+
+        for (final CurricularRule iter : courseGroup.getCurricularRules(executionInterval)) {
+            if (iter.isRulePreventingAutomaticEnrolment()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override

@@ -21,11 +21,11 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.EnrolmentToBeApprovedByCoordinatorVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.dto.GenericPair;
 
 public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByCoordinator_Base {
@@ -35,7 +35,7 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
         setCurricularRuleType(CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR);
     }
 
-    protected EnrolmentToBeApprovedByCoordinator(final CurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
+    protected EnrolmentToBeApprovedByCoordinator(final DegreeModule toApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionSemester begin, final ExecutionSemester end) {
 
         this();
@@ -50,12 +50,7 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
     public List<GenericPair<Object, Boolean>> getLabel() {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>(1);
         labelList.add(new GenericPair<Object, Boolean>("label.enrolmentToBeApprovedByCoordinator", true));
-        if (getContextCourseGroup() != null) {
-            labelList.add(new GenericPair<Object, Boolean>(", ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
-        }
+
         return labelList;
     }
 

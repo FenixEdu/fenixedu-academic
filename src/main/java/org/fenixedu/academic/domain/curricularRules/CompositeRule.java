@@ -164,4 +164,15 @@ public abstract class CompositeRule extends CompositeRule_Base {
         return false;
     }
 
+    @Override
+    public boolean isRulePreventingAutomaticEnrolment() {
+        for (final CurricularRule iter : getCurricularRulesSet()) {
+            if (iter.isRulePreventingAutomaticEnrolment()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
