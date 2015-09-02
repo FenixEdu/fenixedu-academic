@@ -2185,6 +2185,10 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 Double minimumCredits;
                 Double maximumCredits;
             }
+            
+            class curricularRules.AnyCurricularCourseExceptions extends curricularRules.Rule {
+            	Boolean optionalsConfiguration;
+            }
 
             class curricularRules.CreditsLimit extends curricularRules.Rule {
                 Double maximumCredits;

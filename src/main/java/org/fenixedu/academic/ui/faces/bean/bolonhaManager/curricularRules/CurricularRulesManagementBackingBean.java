@@ -87,6 +87,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private UISelectItems departmentUnitItems;
     private UISelectItems beginExecutionPeriodItemsForRule;
     private UISelectItems endExecutionPeriodItemsForRule;
+    private UISelectItems optionalsConfigurationItems;
 
     public String getDegreeCurricularPlanID() {
         return getAndHoldStringParameter("degreeCurricularPlanID");
@@ -179,6 +180,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 break;
 
             case ANY_CURRICULAR_COURSE:
+            case ANY_CURRICULAR_COURSE_EXCEPTIONS:
                 if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
                     if (curricularCourse.isOptionalCurricularCourse()) {
@@ -213,12 +215,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         }
 
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         for (final CurricularRuleType iter : curricularRuleTypes) {
             addSelectItemCurricularRuleType(result, iter);
         }
-
         Collections.sort(result, new BeanComparator("label"));
+        
+        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -379,6 +381,33 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String getSelectedEven() {
         return (String) getViewState().getAttribute("even");
+    }
+
+    public UISelectItems getOptionalsConfigurationItems() {
+        if (optionalsConfigurationItems == null) {
+            
+            final List<SelectItem> values = new ArrayList<SelectItem>(3);
+            values.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "all")));
+            values.add(1, new SelectItem(Boolean.TRUE.toString(), BundleUtil.getString(Bundle.BOLONHA, "optional")));
+            values.add(2, new SelectItem(Boolean.FALSE.toString(), BundleUtil.getString(Bundle.BOLONHA, "mandatory")));
+            
+            optionalsConfigurationItems = new UISelectItems();
+            optionalsConfigurationItems.setValue(values);
+        }
+        
+        return optionalsConfigurationItems;
+    }
+    
+    public void setOptionalsConfigurationItems(final UISelectItems input) {
+        this.optionalsConfigurationItems = input;
+    }
+
+    public void setSelectedOptionalsConfiguration(final String input) {
+        getViewState().setAttribute("optionalsConfiguration", input);
+    }
+
+    public String getSelectedOptionalsConfiguration() {
+        return (String) getViewState().getAttribute("optionalsConfiguration");
     }
 
     public String getCurricularRuleID() {
@@ -817,6 +846,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));
         parametersDTO.setEven(Boolean.valueOf(getSelectedEven()));
+        parametersDTO.setOptionalsConfiguration(getSelectedOptionalsConfiguration() == null
+                || getSelectedOptionalsConfiguration().equals(NO_SELECTION_STRING) ? null : Boolean
+                .valueOf(getSelectedOptionalsConfiguration()));
         return parametersDTO;
     }
+
 }

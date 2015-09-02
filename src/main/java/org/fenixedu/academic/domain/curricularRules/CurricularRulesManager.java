@@ -67,6 +67,9 @@ public class CurricularRulesManager {
         case ANY_CURRICULAR_COURSE:
             return createAnyCurricularCourse(toApplyRule, begin, end, parametersDTO);
 
+        case ANY_CURRICULAR_COURSE_EXCEPTIONS:
+            return createAnyCurricularCourseExceptions(toApplyRule, begin, end, parametersDTO);
+
         case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
             return createMinimumNumberOfCreditsToEnrol(toApplyRule, begin, end, parametersDTO);
 
@@ -122,6 +125,15 @@ public class CurricularRulesManager {
                 parametersDTO.getMinimumCredits(), parametersDTO.getMaximumCredits(), parametersDTO.getCurricularPeriodInfoDTO()
                         .getOrder(), parametersDTO.getMinimumYear(), parametersDTO.getMaximumYear(),
                 parametersDTO.getDegreeType(), degree, departmentUnit);
+    }
+
+    private static CurricularRule createAnyCurricularCourseExceptions(DegreeModule toApplyRule, ExecutionSemester begin,
+            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+
+        final CourseGroup contextCourseGroup =
+                (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
+
+        return new AnyCurricularCourseExceptions((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end, parametersDTO.getOptionalsConfiguration());
     }
 
     private static CurricularRule createExclusiveness(DegreeModule firstExclusiveDegreeModule, ExecutionSemester begin,

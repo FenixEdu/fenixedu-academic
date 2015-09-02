@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
+import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourseExceptions;
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueCurricularCourseEnrolmentForPeriod;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -64,6 +65,7 @@ public class CurricularRuleExecutorFactory {
         executors.put(DegreeModulesSelectionLimit.class, new DegreeModulesSelectionLimitExecutor());
         executors.put(CreditsLimit.class, new CreditsLimitExecutor());
         executors.put(AnyCurricularCourse.class, new AnyCurricularCourseExecutor());
+        executors.put(AnyCurricularCourseExceptions.class, new AnyCurricularCourseExceptionsExecutor());
         executors.put(MaximumNumberOfCreditsForEnrolmentPeriod.class, new MaximumNumberOfCreditsForEnrolmentPeriodExecutor());
         executors.put(EnrolmentPeriodRestrictions.class, new EnrolmentPeriodRestrictionsExecutor());
         executors.put(PreviousYearsEnrolmentCurricularRule.class, new PreviousYearsEnrolmentExecutor());

@@ -164,6 +164,16 @@
 				<h:outputText value="</p>" escape="false"/>
 			</h:panelGroup>
 			
+			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE_EXCEPTIONS'}">
+			
+				<h:outputText value="<p><label>#{bolonhaBundle['optionalsConfiguration']}:</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedOptionalsConfiguration}">
+					<f:selectItems binding="#{CurricularRulesManagement.optionalsConfigurationItems}"/>
+				</fc:selectOneMenu>
+				<h:outputText value="</p>" escape="false"/>
+			
+			</h:panelGroup>
+			
 			<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['group']}:</label>" escape="false"/>
 			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedContextCourseGroupID}">
 				<f:selectItems binding="#{CurricularRulesManagement.courseGroupItems}"/>

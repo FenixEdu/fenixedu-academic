@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.academic.dto.DataTranferObject;
 
+@SuppressWarnings("serial")
 public class CurricularRuleParametersDTO extends DataTranferObject {
 
     private String selectedDegreeModuleID;
@@ -41,6 +42,7 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     private Double credits;
     private DegreeType degreeType;
     private Boolean even;
+    private Boolean optionalsConfiguration;
 
     public CurricularRuleParametersDTO() {
     }
@@ -156,4 +158,13 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     public void setEven(Boolean even) {
         this.even = even;
     }
+
+    public Boolean getOptionalsConfiguration() {
+        return optionalsConfiguration;
+    }
+
+    public void setOptionalsConfiguration(final Boolean input) {
+        this.optionalsConfiguration = input;
+    }
+
 }
