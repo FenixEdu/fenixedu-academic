@@ -120,6 +120,7 @@
 				<html:link href="${returnURL}"><strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item3" /></strong></html:link>
 			</li>
 		</logic:present>
+		</p>
 		<logic:present name="openedEnrolmentPeriodsSemesters">		
 			<ul class="nav nav-tabs">
 				<logic:iterate id="period" name="openedEnrolmentPeriodsSemesters">				
