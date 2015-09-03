@@ -107,20 +107,20 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
 
                     checkIDegreeModuleToEvaluate(curricularCourse);
-                    final Enrolment enrolment = new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
-                            getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getUsername());
+                    final Enrolment enrolment =
+                            new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(),
+                                    curricularCourse, getExecutionSemester(), EnrollmentCondition.VALIDATED,
+                                    getResponsiblePerson().getUsername());
 
                     enrolmentsToNotify.add(enrolment);
                 }
             }
         }
 
-        getRegistration().updateEnrolmentDate(getExecutionYear());
-
         for (final Enrolment enrolment : enrolmentsToNotify) {
             Signal.emit(ITreasuryBridgeAPI.EXTRACURRICULAR_ENROLMENT, new DomainObjectEvent<Enrolment>(enrolment));
         }
-
+        getRegistration().updateEnrolmentDate(getExecutionYear());
     }
 
     @Override
@@ -128,7 +128,7 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
         for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
             if (curriculumModule.isLeaf()) {
                 TreasuryBridgeAPIFactory.implementation().extracurricularUnenrolment((Enrolment) curriculumModule);
-                
+
                 curriculumModule.delete();
             }
         }

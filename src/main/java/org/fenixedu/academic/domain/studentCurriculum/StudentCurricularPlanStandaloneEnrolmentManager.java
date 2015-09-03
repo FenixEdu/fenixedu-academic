@@ -210,12 +210,10 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
             new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(getStudentCurricularPlan(), getExecutionYear());
         }
 
-        getRegistration().updateEnrolmentDate(getExecutionYear());
-
         for (final Enrolment enrolment : enrolmentsToNotify) {
             Signal.emit(ITreasuryBridgeAPI.STANDALONE_ENROLMENT, new DomainObjectEvent<Enrolment>(enrolment));
         }
-
+        getRegistration().updateEnrolmentDate(getExecutionYear());
     }
 
     @Override
