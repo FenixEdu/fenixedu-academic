@@ -107,6 +107,7 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
                 }
             }
         }
+        getRegistration().updateEnrolmentDate(getExecutionYear());
     }
 
     @Override

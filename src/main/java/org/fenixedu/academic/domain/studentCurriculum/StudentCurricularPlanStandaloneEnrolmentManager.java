@@ -196,6 +196,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
         if (getStudentCurricularPlan().getRegistration().getRegistrationProtocol().isToPayGratuity()) {
             new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(getStudentCurricularPlan(), getExecutionYear());
         }
+
+        getRegistration().updateEnrolmentDate(getExecutionYear());
     }
 
     @Override

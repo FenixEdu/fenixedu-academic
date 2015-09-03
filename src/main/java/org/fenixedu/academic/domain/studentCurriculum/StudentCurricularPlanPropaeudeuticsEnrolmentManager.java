@@ -111,6 +111,7 @@ public class StudentCurricularPlanPropaeudeuticsEnrolmentManager extends Student
                 }
             }
         }
+        getRegistration().updateEnrolmentDate(getExecutionYear());
     }
 
     @Override
