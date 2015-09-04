@@ -92,10 +92,4 @@ public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_B
 
         super.delete();
     }
-
-    @Override
-    public void setPerson(Person student) {
-        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.person");
-    }
-
 }

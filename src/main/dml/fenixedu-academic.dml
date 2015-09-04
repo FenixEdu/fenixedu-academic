@@ -4628,6 +4628,11 @@ class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPre
 	public AcademicPeriod onCurrentPeriod (REQUIRED);
 }
 
+public class log.StudentRegistrationTransferLog {
+    protected DateTime when;
+    protected String who;
+}
+
 /*
  * Relations definitions
  * 
@@ -12215,3 +12220,20 @@ relation RegistrationProtocolMobilityProgram {
 	} 
 }
 
+relation StudentRegistrationTransferLogSource {
+    protected student.Student playsRole source {
+        multiplicity 1..1;
+    }
+    public log.StudentRegistrationTransferLog playsRole transferLogAsSource {
+        multiplicity *;
+    }
+}
+
+relation StudentRegistrationTransferLogTarget {
+    public log.StudentRegistrationTransferLog playsRole transferLogAsTarget {
+        multiplicity *;
+    }
+    protected student.Student playsRole target {
+        multiplicity 1..1;
+    }
+}

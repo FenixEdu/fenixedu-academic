@@ -146,15 +146,6 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
         this.setAccountingEvent(event);
     }
 
-    @Override
-    public void setPerson(Person student) {
-        if (this.getPerson() != null || !this.isNew()) {
-            throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.person");
-        }
-
-        super._setPerson(student);
-    }
-
     @Atomic
     public static List<IndividualCandidacyPaymentCode> createPaymentCodes(PaymentCodeType type, LocalDate beginDate,
             LocalDate endDate, Money minimum, Money maximum, Integer numberOfPaymentCodes) {

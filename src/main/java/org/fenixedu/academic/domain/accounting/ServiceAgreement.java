@@ -76,11 +76,6 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
     }
 
     @Override
-    public void setPerson(Person person) {
-        throw new DomainException("error.accounting.agreement.serviceAgreement.cannot.modify.person");
-    }
-
-    @Override
     public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
         throw new DomainException("error.accounting.agreement.serviceAgreement.cannot.modify.serviceAgreementTemplate");
     }

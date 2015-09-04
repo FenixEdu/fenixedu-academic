@@ -189,11 +189,6 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public void setPerson(Person person) {
-        throw new DomainException("error.accounting.Receipt.cannot.modify.person");
-    }
-
-    @Override
     public void setYear(Integer year) {
         throw new DomainException("error.accounting.Receipt.cannot.modify.year");
     }
