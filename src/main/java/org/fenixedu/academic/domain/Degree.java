@@ -59,6 +59,8 @@ import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
@@ -617,29 +619,29 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getNameFor(executionYear);
     }
 
+    public LocalizedString getPresentationNameI18N() {
+        return getPresentationNameI18N(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public LocalizedString getPresentationNameI18N(final ExecutionYear executionYear) {
+        LocalizedString in = BundleUtil.getLocalizedString(Bundle.APPLICATION, "label.in");
+        LocalizedString degreeType = getDegreeType().getName();
+        Builder builder = degreeType.builder();
+        degreeType.getLocales().forEach(l -> builder.append(in.getContent(l), " "));
+        builder.append(getNameFor(executionYear).toLocalizedString(), " ");
+        return builder.build();
+    }
+
     final public String getPresentationName() {
-        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
+        return getPresentationNameI18N().getContent();
     }
 
     public String getPresentationName(final ExecutionYear executionYear) {
-        return getPresentationName(executionYear, I18N.getLocale());
+        return getPresentationNameI18N(executionYear).getContent();
     }
 
     protected String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
-        final StringBuilder res = new StringBuilder();
-
-        final String degreeType = getDegreeType().getName().getContent(locale);
-        if (!StringUtils.isEmpty(degreeType)) {
-            res.append(degreeType).append(" ");
-            res.append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
-            res.append(" ");
-        }
-
-        final MultiLanguageString mls = getNameFor(executionYear);
-        final Locale language = locale;
-        res.append(mls.hasContent(language) ? mls.getContent(language) : mls.getPreferedContent());
-
-        return res.toString();
+        return getPresentationNameI18N(executionYear).getContent(locale);
     }
 
     final public String getFilteredName() {

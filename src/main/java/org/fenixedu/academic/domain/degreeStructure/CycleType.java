@@ -30,7 +30,7 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public enum CycleType {
 
@@ -90,12 +90,16 @@ public enum CycleType {
         return this.getClass().getSimpleName() + "." + name();
     }
 
+    public LocalizedString getDescriptionI18N() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION, getQualifiedName());
+    }
+
     public String getDescription() {
-        return getDescription(I18N.getLocale());
+        return getDescriptionI18N().getContent();
     }
 
     public String getDescription(final Locale locale) {
-        return BundleUtil.getString(Bundle.ENUMERATION, locale, getQualifiedName());
+        return getDescriptionI18N().getContent(locale);
     }
 
     public Double getEctsCredits() {
@@ -156,5 +160,4 @@ public enum CycleType {
     public boolean hasPrevious() {
         return getPrevious() != null;
     }
-
 }

@@ -25,7 +25,7 @@ import java.util.Locale;
 
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
@@ -59,10 +59,14 @@ public enum IDDocumentType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return getLocalizedName(I18N.getLocale());
+        return getLocalizedNameI18N().getContent();
     }
 
     public String getLocalizedName(final Locale locale) {
-        return BundleUtil.getString(Bundle.ENUMERATION, locale, name());
+        return getLocalizedNameI18N().getContent(locale);
+    }
+
+    public LocalizedString getLocalizedNameI18N() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION, name());
     }
 }
