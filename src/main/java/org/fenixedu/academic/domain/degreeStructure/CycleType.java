@@ -30,7 +30,9 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public enum CycleType {
 
@@ -157,4 +159,14 @@ public enum CycleType {
         return getPrevious() != null;
     }
 
+    public LocalizedString getDescriptionI18N() {
+        LocalizedString result = new LocalizedString();
+        
+        for (final Locale locale : CoreConfiguration.supportedLocales()) {
+            result = result.with(locale, getDescription(locale));
+        }
+        
+        return result;
+    }
+    
 }
