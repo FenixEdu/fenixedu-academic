@@ -95,7 +95,7 @@
 		<property name="format" value="${presentationName}" />
 		<property name="sortBy" value="presentationName" />
 		<property name="destination" value="degreePostBack" />
-		<property name="nullOptionHidden" value="true" />
+		<property name="nullOptionHidden" value="false" />
 	</slot>
 	<slot name="curricularYear" layout="menu-select-postback" key="property.context.curricular.year"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
