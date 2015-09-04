@@ -79,7 +79,7 @@ public class FindPersonAction extends FenixDispatchAction {
             roleType = bean.getRoleType() == null ? null : bean.getRoleType().toString();
             departmentId = bean.getDepartmentExternalId();
             degreeId = bean.getDegreeExternalId();
-            degreeType = bean.getDegreeType() == null ? null : bean.getDegreeType().toString();
+            degreeType = bean.getDegreeType() == null ? null : bean.getDegreeType().getExternalId();
         } else {
             roleType = request.getParameter("roleType");
 
