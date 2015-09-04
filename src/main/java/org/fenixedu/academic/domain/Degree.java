@@ -58,9 +58,9 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
-import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
@@ -624,11 +624,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public LocalizedString getPresentationNameI18N(final ExecutionYear executionYear) {
-        LocalizedString in = BundleUtil.getLocalizedString(Bundle.APPLICATION, "label.in");
         LocalizedString degreeType = getDegreeType().getName();
-        Builder builder = degreeType.builder();
-        degreeType.getLocales().forEach(l -> builder.append(in.getContent(l), " "));
-        builder.append(getNameFor(executionYear).toLocalizedString(), " ");
+
+        LocalizedString.Builder builder = new LocalizedString.Builder();
+        CoreConfiguration.supportedLocales().forEach(
+                l -> builder.with(l, degreeType.getContent(l) + " " + BundleUtil.getString(Bundle.APPLICATION, "label.in") + " "
+                        + getNameI18N(executionYear).getContent(l)));
         return builder.build();
     }
 
