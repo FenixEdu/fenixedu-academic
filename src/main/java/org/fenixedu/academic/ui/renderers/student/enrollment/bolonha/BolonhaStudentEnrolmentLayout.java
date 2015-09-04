@@ -162,7 +162,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             generateCycleCourseGroupsToEnrol(blockContainer, executionSemester, studentCurricularPlan, depth);
         }
     }
-    
+
     static private boolean isCycleExternal(final StudentCurriculumGroupBean studentCurriculumGroupBean) {
         final CurriculumGroup curriculumModule = studentCurriculumGroupBean.getCurriculumModule();
         return curriculumModule.isCycleCurriculumGroup() && ((CycleCurriculumGroup) curriculumModule).isExternal();
@@ -348,8 +348,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         return coursesTable;
     }
 
-    protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean,
-            List<IDegreeModuleToEvaluate> degreeModulesToSelect,final ExecutionSemester executionSemester) {
+    protected void generateCurricularCoursesToEnrol(final HtmlTable groupTable, final StudentCurriculumGroupBean studentCurriculumGroupBean,
+            final List<IDegreeModuleToEvaluate> degreeModulesToSelect,final ExecutionSemester executionSemester) {
 
         final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
 
