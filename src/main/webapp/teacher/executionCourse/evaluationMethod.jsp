@@ -24,6 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <jsp:include page="/includeMathJax.jsp" />
 <h2><bean:message key="link.evaluationMethod" /></h2>
 
@@ -58,20 +60,14 @@
 	</ul>
 	</logic:equal>
 
-	<h3 class="mtop15">
-		<bean:message key="title.evaluationMethod"/>
-	</h3>
-	
-	<blockquote>
-		<bean:write name="executionCourse" property="evaluationMethodText" filter="false"/>
-	</blockquote>
+    <c:forEach var="lang" items="${evaluationMethods.locales}">
+        <h3 class="mtop15">
+            ${lang.displayName}
+        </h3>
 
-	<h3 class="mtop2">
-		<bean:message key="title.evaluationMethod.eng"/>
-	</h3>
-	
-	<blockquote>
-		<bean:write name="executionCourse" property="evaluationMethodTextEn" filter="false"/>
-	</blockquote>
+        <blockquote>
+            ${evaluationMethods.getContent(lang)}
+        </blockquote>
+    </c:forEach>
 
 </logic:present>
