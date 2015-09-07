@@ -2717,9 +2717,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isInCandidateEnrolmentProcess(ExecutionYear executionYear) {
         //We are assuming a student can enrol if she has a student candidacy for the current year which is not yet completed
         StudentCandidacy studentCandidacy = getRegistration().getStudentCandidacy();
-        return studentCandidacy != null
-                && studentCandidacy.getExecutionYear() == executionYear
-                && studentCandidacy.getCandidacySituationsSet().stream()
-                        .anyMatch(cs -> cs.getCandidacySituationType() == CandidacySituationType.STAND_BY);
+        return studentCandidacy != null && studentCandidacy.getExecutionYear() == executionYear
+                && studentCandidacy.getActiveCandidacySituationType() == CandidacySituationType.STAND_BY;
     }
 }
