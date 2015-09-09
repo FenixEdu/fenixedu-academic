@@ -81,7 +81,7 @@ public class PersonSearcher {
         } else {
             stream = Bennu.getInstance().getUserSet().stream().map(User::getProfile);
         }
-        return stream.filter(Objects::nonNull).map(UserProfile::getPerson).filter(Objects::nonNull);
+        return stream.filter(Objects::nonNull).map(UserProfile::getPerson).filter(Objects::nonNull).limit(maxHits);
     }
 
     public Stream<Person> search() {

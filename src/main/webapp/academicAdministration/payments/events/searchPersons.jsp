@@ -59,6 +59,13 @@
 			
 	</logic:empty>
 	<logic:notEmpty name="persons">
+		<logic:notEmpty name="sizeWarning">
+		<p class="bg-warning">
+			<div class="alert alert-warning" role="alert">
+					<bean:write name="sizeWarning"/>
+			</div>
+		</p>
+		</logic:notEmpty>
 		<fr:view name="persons" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>

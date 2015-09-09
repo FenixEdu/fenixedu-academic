@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.struts.action.academicAdministration.payments;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +50,9 @@ import org.fenixedu.academic.service.services.accounting.TransferPaymentsToOther
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPaymentsApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -102,14 +105,18 @@ public class PaymentsManagementDA extends FenixDispatchAction {
                 (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
         request.setAttribute("searchPersonBean", searchPersonBean);
 
-        final Collection<Person> persons = searchPersonBean.search();
+        Collection<Person> persons = searchPersonBean.search();
+        request.removeAttribute("sizeWarning");
         if (persons.size() == 1) {
             request.setAttribute("personId", persons.iterator().next().getExternalId());
 
             return showOperations(mapping, form, request, response);
 
         }
-
+        if (persons.size() > 50) {
+            persons = persons.stream().limit(50).collect(Collectors.toSet());
+            request.setAttribute("sizeWarning", BundleUtil.getString(Bundle.ACADEMIC, "warning.need.to.filter.candidates"));
+        }
         request.setAttribute("persons", persons);
         return mapping.findForward("searchPersons");
     }
