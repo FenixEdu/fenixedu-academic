@@ -309,7 +309,7 @@
     <repositories>
         <repository>
             <id>ulisboa-repo</id>
-            <url>http://nexjen.ulisboa.pt/nexus/content/groups/public/</url>
+            <url>http://nexus.ulisboa.pt:8081/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>fenixedu-maven-repository</id>
