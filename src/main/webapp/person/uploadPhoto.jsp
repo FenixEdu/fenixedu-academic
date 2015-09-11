@@ -30,7 +30,7 @@
 <style type="text/css">
 	#photo-uploader {
 		margin-top: 30px;
-		width: 500px;
+		width: 480px;
 		margin-left: 10px;
 	}
 	#upload-button {
@@ -40,8 +40,10 @@
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
-<script src="<%= request.getContextPath() + "/javaScript/phroper/fabric-1.2.0.all.min.js" %>" type="text/javascript" ></script>
-<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.2.0.min.js" %>" type="text/javascript" ></script>
+<link href="<%= request.getContextPath() + "/javaScript/phroper/cropper/cropper-1.0.0-rc1.min.css" %>" rel="stylesheet">
+<script src="<%= request.getContextPath() + "/javaScript/phroper/cropper/cropper-1.0.0-rc1.min.js" %>" type="text/javascript" ></script>
+<link href="<%= request.getContextPath() + "/javaScript/phroper/phroper-2.1.0.css" %>" rel="stylesheet">
+<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-2.1.0.js" %>" type="text/javascript"></script>
 
 <logic:notPresent name="preview">
 	<script type="text/javascript">
@@ -61,29 +63,54 @@
 			}
 			if (phroper.testEnvironment()) {
 				$('#old-info-panel').toggle();
+				$('#photoForm .form-group').toggle();
 				$('<div id="photo-uploader"></div>').prependTo('#photoForm').css('margin-bottom','15px');
-				phroper.start(false,captions);
-				$('#photoForm table').toggle();
+				phroper.start(false, 480, 480, captions);
 				
 				$('#submitButton').click( function () {
 					if (phroper.hasLoadedPicture()) {
-						var base64Thumbnail = phroper.getThumbnail();
-						$('<input type="hidden" name="encodedThumbnail" value="'+base64Thumbnail+'">').appendTo('#photoForm');
-						var base64Picture = phroper.getPicture();
-						$('<input type="hidden" name="encodedPicture" value="'+base64Picture+'">').appendTo('#photoForm');
+						var data = {}
+						data.encodedPhoto = phroper.getPicture();
+						var processResponse = function(response){
+							if (response.success) {
+								window.location.href = '${pageContext.request.contextPath}/personal';
+							}
+							if (response.reload) {
+								phroper.reset();
+							}
+							if (response.error) {
+								if ($('.error').length == 0) {
+									$('<p class="mtop15">\
+									        <span class="error"><!-- Error messages go here -->' +
+									        	response.message + 
+								        '</span>\
+								    </p>').insertBefore('#new-info-panel');
+									$('html, body').animate({ scrollTop: 0 }, 'slow');
+								} else {
+									$('.error').html(response.message);
+									$('html, body').animate({ scrollTop: 0 }, 'slow');
+								}
+								
+								phroper.reset();
+							}
+						};
+						$.ajax({
+						    headers: { 
+						        'Accept': 'application/json',
+						        'Content-Type': 'application/json' 
+						    },
+						    'type': 'POST',
+						    'url': '${pageContext.request.contextPath}/user/photo/upload',
+						    'data': JSON.stringify(data),
+						    'dataType': 'json',
+						    'success': processResponse
+						    });
+						return false;
 					}
 				});
 				
 				$('<button id="resetButton" type="button"><%= request.getAttribute("buttonClean") != null ? request.getAttribute("buttonClean") : "Clear canvas"  %></button>').appendTo('#photoForm').click( function () {
 					phroper.reset(true);
-				});
-				$('<button id="toggleClassic" type="button"><%= request.getAttribute("buttonRevert") != null ? request.getAttribute("buttonRevert") : "Use old version"  %></button>').appendTo('#photoForm').click( function () {
-					$('#new-info-panel').toggle();
-					$('#old-info-panel').toggle();
-					$('#photo-uploader').toggle();
-					$('#photoForm table').toggle();
-					$('#resetButton').toggle();
-					$('#toggleClassic').toggle();
 				});
 			}
 		});
@@ -151,7 +178,7 @@
         <fr:edit id="photoUpload" name="photo" schema="party.photo.upload.clean" />
 		<bean:define id="tempfile" name="photo" property="tempCompressedFile.absolutePath" />
 		<div class="mvert1">
-			<img src="data:${photo.contentType};base64,${photo.base64Photo}"/>
+			<img src="data:${photo.contentType};base64,${photo.base64RawThumbnail}"/>
 		</div>
 		<p class="mtop15 mbottom1">
 			<bean:message key="message.person.uploadPhoto.confirm"/>

@@ -90,13 +90,15 @@ public class UploadPhotoDA extends FenixDispatchAction {
     public ActionForward upload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         PhotographUploadBean photo = getRenderedObject();
+        if (photo == null) {
+            photo = new PhotographUploadBean();
+        }
         RenderUtils.invalidateViewState();
         String base64Thumbnail = request.getParameter("encodedThumbnail");
         String base64Image = request.getParameter("encodedPicture");
         if (base64Image != null && base64Thumbnail != null) {
             DateTime now = new DateTime();
-            photo.setFilename("mylovelypic_" + now.getYear() + now.getMonthOfYear() + now.getDayOfMonth() + now.getHourOfDay()
-                    + now.getMinuteOfDay() + now.getSecondOfMinute() + ".png");
+            photo.setFilename("photo" + now.getMillis() + ".png");
             photo.setBase64RawContent(base64Image.split(",")[1]);
             photo.setBase64RawThumbnail(base64Thumbnail.split(",")[1]);
             photo.setContentType(base64Image.split(",")[0].split(":")[1].split(";")[0]);

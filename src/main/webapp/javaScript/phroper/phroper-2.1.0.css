@@ -1,0 +1,283 @@
+/**
+ * This file was created by Quorum Born IT <http://www.qub-it.com/> and its 
+ * copyright terms are bound to the legal agreement regulating the FenixEdu@ULisboa 
+ * software development project between Quorum Born IT and Serviços Partilhados da
+ * Universidade de Lisboa:
+ *  - Copyright © 2015 Quorum Born IT (until any Go-Live phase)
+ *  - Copyright © 2015 Universidade de Lisboa (after any Go-Live phase)
+ *
+ * Contributors: diogo.simoes@qub-it.com 
+ *
+ * 
+ * This file is part of FenixEdu Academic.
+ *
+ * FenixEdu Academic is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Academic is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
+#phroper-canvas {
+	position: relative;
+	width: 640px;
+	height: 480px;
+	border: 2px dashed #dadada;
+}
+
+#phroper-title {
+	position: absolute;
+	display: block;
+	font: 30px Helvetica, sans-serif;
+	color: #cacaca;
+	text-align: center;
+	width: inherit;
+}
+
+#phroper-subtitle {
+	position: absolute;
+	display: block;
+	font: 18px Helvetica, sans-serif;
+	color: #bababa;
+	text-align: center;
+	width: inherit;
+}
+
+#phroper-loading-caption {
+	position: absolute;
+	display: block;
+	font: italic 22px Helvetica, sans-serif;
+	color: #bababa;
+	text-align: center;
+	width: inherit;
+}
+
+#phroper-thumbnail {
+	margin: 20px auto 0 auto;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+}
+
+#phroper-upload-button {
+	position: relative;
+	-moz-box-shadow: 0px 1px 0px 0px #54a3f7;
+	-webkit-box-shadow: 0px 1px 0px 0px #54a3f7;
+	box-shadow: 0px 1px 0px 0px #54a3f7;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #00a4d8), color-stop(1, #007dc1));
+	background: -moz-linear-gradient(top, #00a4d8 5%, #007dc1 100%);
+	background: -webkit-linear-gradient(top, #00a4d8 5%, #007dc1 100%);
+	background: -o-linear-gradient(top, #00a4d8 5%, #007dc1 100%);
+	background: -ms-linear-gradient(top, #00a4d8 5%, #007dc1 100%);
+	background: linear-gradient(to bottom, #00a4d8 5%, #007dc1 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00a4d8', endColorstr='#007dc1',GradientType=0);
+	background-color: #007dc1;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #124d77;
+	display: inline-block;
+	color: #ffffff;
+	font-family: Helvetica;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 6px 24px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #154682;
+}
+
+#phroper-upload-button:hover {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #00a4d8));
+	background: -moz-linear-gradient(top, #007dc1 5%, #00a4d8 100%);
+	background: -webkit-linear-gradient(top, #007dc1 5%, #00a4d8 100%);
+	background: -o-linear-gradient(top, #007dc1 5%, #00a4d8 100%);
+	background: -ms-linear-gradient(top, #007dc1 5%, #00a4d8 100%);
+	background: linear-gradient(to bottom, #007dc1 5%, #00a4d8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#00a4d8',GradientType=0);
+}
+
+#loading-bar{
+	position:relative;
+	width:150px;
+	height:18px;
+	margin:auto;
+}
+
+.fountainG{
+	position:absolute;
+	top:0;
+	background-color:rgb(136,136,136);
+	width:18px;
+	height:18px;
+	animation-name:bounce_fountainG;
+		-o-animation-name:bounce_fountainG;
+		-ms-animation-name:bounce_fountainG;
+		-webkit-animation-name:bounce_fountainG;
+		-moz-animation-name:bounce_fountainG;
+	animation-duration:1.5s;
+		-o-animation-duration:1.5s;
+		-ms-animation-duration:1.5s;
+		-webkit-animation-duration:1.5s;
+		-moz-animation-duration:1.5s;
+	animation-iteration-count:infinite;
+		-o-animation-iteration-count:infinite;
+		-ms-animation-iteration-count:infinite;
+		-webkit-animation-iteration-count:infinite;
+		-moz-animation-iteration-count:infinite;
+	animation-direction:normal;
+		-o-animation-direction:normal;
+		-ms-animation-direction:normal;
+		-webkit-animation-direction:normal;
+		-moz-animation-direction:normal;
+	transform:scale(.3);
+		-o-transform:scale(.3);
+		-ms-transform:scale(.3);
+		-webkit-transform:scale(.3);
+		-moz-transform:scale(.3);
+	border-radius:12px;
+		-o-border-radius:12px;
+		-ms-border-radius:12px;
+		-webkit-border-radius:12px;
+		-moz-border-radius:12px;
+}
+
+#fountainG_1{
+	left:0;
+	animation-delay:0s;
+		-o-animation-delay:0s;
+		-ms-animation-delay:0s;
+		-webkit-animation-delay:0s;
+		-moz-animation-delay:0s;
+}
+
+#fountainG_2{
+	left:19px;
+	animation-delay:0.19s;
+		-o-animation-delay:0.19s;
+		-ms-animation-delay:0.19s;
+		-webkit-animation-delay:0.19s;
+		-moz-animation-delay:0.19s;
+}
+
+#fountainG_3{
+	left:37px;
+	animation-delay:0.38s;
+		-o-animation-delay:0.38s;
+		-ms-animation-delay:0.38s;
+		-webkit-animation-delay:0.38s;
+		-moz-animation-delay:0.38s;
+}
+
+#fountainG_4{
+	left:56px;
+	animation-delay:0.57s;
+		-o-animation-delay:0.57s;
+		-ms-animation-delay:0.57s;
+		-webkit-animation-delay:0.57s;
+		-moz-animation-delay:0.57s;
+}
+
+#fountainG_5{
+	left:75px;
+	animation-delay:0.76s;
+		-o-animation-delay:0.76s;
+		-ms-animation-delay:0.76s;
+		-webkit-animation-delay:0.76s;
+		-moz-animation-delay:0.76s;
+}
+
+#fountainG_6{
+	left:94px;
+	animation-delay:0.95s;
+		-o-animation-delay:0.95s;
+		-ms-animation-delay:0.95s;
+		-webkit-animation-delay:0.95s;
+		-moz-animation-delay:0.95s;
+}
+
+#fountainG_7{
+	left:112px;
+	animation-delay:1.14s;
+		-o-animation-delay:1.14s;
+		-ms-animation-delay:1.14s;
+		-webkit-animation-delay:1.14s;
+		-moz-animation-delay:1.14s;
+}
+
+#fountainG_8{
+	left:131px;
+	animation-delay:1.33s;
+		-o-animation-delay:1.33s;
+		-ms-animation-delay:1.33s;
+		-webkit-animation-delay:1.33s;
+		-moz-animation-delay:1.33s;
+}
+
+
+
+@keyframes bounce_fountainG{
+	0%{
+	transform:scale(1);
+		background-color:rgb(136,136,136);
+	}
+
+	100%{
+	transform:scale(.3);
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-o-keyframes bounce_fountainG{
+	0%{
+	-o-transform:scale(1);
+		background-color:rgb(136,136,136);
+	}
+
+	100%{
+	-o-transform:scale(.3);
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-ms-keyframes bounce_fountainG{
+	0%{
+	-ms-transform:scale(1);
+		background-color:rgb(136,136,136);
+	}
+
+	100%{
+	-ms-transform:scale(.3);
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-webkit-keyframes bounce_fountainG{
+	0%{
+	-webkit-transform:scale(1);
+		background-color:rgb(136,136,136);
+	}
+
+	100%{
+	-webkit-transform:scale(.3);
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-moz-keyframes bounce_fountainG{
+	0%{
+	-moz-transform:scale(1);
+		background-color:rgb(136,136,136);
+	}
+
+	100%{
+	-moz-transform:scale(.3);
+		background-color:rgb(255,255,255);
+	}
+}

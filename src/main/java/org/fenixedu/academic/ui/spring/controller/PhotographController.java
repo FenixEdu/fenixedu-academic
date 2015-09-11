@@ -23,23 +23,39 @@ import java.io.InputStream;
 
 import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.domain.photograph.PictureMode;
+import org.fenixedu.academic.service.services.fileManager.UploadOwnPhoto;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.domain.Avatar;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.common.base.Strings;
+import com.google.common.io.BaseEncoding;
+import com.google.common.io.ByteStreams;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.twilio.sdk.verbs.Redirect;
 
 @Controller
 @RequestMapping("/user/photo")
 public class PhotographController {
+
+    public static int MAX_PHOTO_SIZE = 1048576; //1M
 
     @RequestMapping(value = "{username:.+}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> get(@PathVariable String username, @RequestParam(value = "s", required = false,
@@ -88,5 +104,26 @@ public class PhotographController {
     public ResponseEntity<byte[]> getWithSize(@PathVariable String username, @PathVariable Integer size, @RequestHeader(
             value = "If-None-Match", required = false) String ifNoneMatch) throws IOException {
         return get(username, size, ifNoneMatch);
+    }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public @ResponseBody String upload(@RequestBody final PhotographForm jsonPhotographForm) {
+        final JsonObject response = new JsonObject();
+        String encodedPhoto = jsonPhotographForm.getEncodedPhoto();
+        if (Strings.isNullOrEmpty(encodedPhoto)) {
+            response.addProperty("reload", "true");
+            return new GsonBuilder().create().toJson(response);
+        }
+        String encodedContent = encodedPhoto.split(",")[1];
+        String photoContentType = encodedPhoto.split(",")[0].split(":")[1].split(";")[0];
+        byte[] photoContent = BaseEncoding.base64().decode(encodedContent);
+        if (photoContent.length > MAX_PHOTO_SIZE) {
+            response.addProperty("error", "true");
+            response.addProperty("message", BundleUtil.getString(Bundle.MANAGER, "errors.fileTooLarge"));
+            return new GsonBuilder().create().toJson(response);
+        }
+        UploadOwnPhoto.run(photoContent, ContentType.getContentType(photoContentType));
+        response.addProperty("success", "true");
+        return new GsonBuilder().create().toJson(response);
     }
 }
