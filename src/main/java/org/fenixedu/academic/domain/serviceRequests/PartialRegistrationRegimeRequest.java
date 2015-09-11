@@ -18,21 +18,13 @@
  */
 package org.fenixedu.academic.domain.serviceRequests;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.PartialRegistrationRegimeRequestEvent;
-import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR;
-import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationRegime;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
-import org.fenixedu.academic.util.Money;
 
 public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeRequest_Base {
 
@@ -49,23 +41,8 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
     protected void checkRulesToChangeState(AcademicServiceRequestSituationType situationType) {
         super.checkRulesToChangeState(situationType);
         if (situationType == AcademicServiceRequestSituationType.PROCESSING) {
-            checkEctsCredits(getRegistration(), getExecutionYear());
-        }
-    }
-
-    private void checkEctsCredits(final Registration registration, final ExecutionYear executionYear) {
-        final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-
-        double enroledEctsCredits = 0d;
-        for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
-            enroledEctsCredits += studentCurricularPlan.getAccumulatedEctsCredits(semester);
-
-        }
-
-        if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS) {
-            throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed",
-                    String.valueOf(enroledEctsCredits), executionYear.getQualifiedName(),
-                    String.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS));
+            RegistrationRegime.getRegistrationRegimeVerifier().checkEctsCredits(getRegistration(), getExecutionYear(),
+                    RegistrationRegimeType.PARTIAL_TIME);
         }
     }
 

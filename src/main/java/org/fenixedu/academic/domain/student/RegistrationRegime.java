@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.student;
 
 import java.util.Comparator;
+import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -74,22 +75,44 @@ public class RegistrationRegime extends RegistrationRegime_Base {
             throw new DomainException("error.RegistrationRegime.cannot.apply.to.empty.degrees");
         }
 
-        checkEctsCredits(registration, executionYear);
+        registrationRegimeVerifier.checkEctsCredits(registration, executionYear, type);
     }
 
-    private void checkEctsCredits(final Registration registration, final ExecutionYear executionYear) {
-        final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+    private static Supplier<RegistrationRegimeVerifier> REGISTRATION_REGIME_VERIFIER = () -> new RegistrationRegimeVerifier() {
 
-        double enroledEctsCredits = 0d;
-        for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
-            enroledEctsCredits += studentCurricularPlan.getAccumulatedEctsCredits(semester);
+        public void checkEctsCredits(final Registration registration, final ExecutionYear executionYear,
+                final RegistrationRegimeType type) {
+
+            final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+
+            double enroledEctsCredits = 0d;
+            for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
+                enroledEctsCredits += studentCurricularPlan.getAccumulatedEctsCredits(semester);
+            }
+
+            if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME) {
+                throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed",
+                        String.valueOf(enroledEctsCredits), executionYear.getQualifiedName(),
+                        String.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME));
+            }
         }
 
-        if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS) {
-            throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed",
-                    String.valueOf(enroledEctsCredits), executionYear.getQualifiedName(),
-                    String.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS));
-        }
+    };
+
+    public static interface RegistrationRegimeVerifier {
+
+        void checkEctsCredits(final Registration registration, final ExecutionYear executionYear,
+                final RegistrationRegimeType type);
+    }
+
+    private RegistrationRegimeVerifier registrationRegimeVerifier = REGISTRATION_REGIME_VERIFIER.get();
+
+    public static RegistrationRegimeVerifier getRegistrationRegimeVerifier() {
+        return REGISTRATION_REGIME_VERIFIER.get();
+    }
+
+    public static void setRegistrationRegimeVerifier(final Supplier<RegistrationRegimeVerifier> input) {
+        REGISTRATION_REGIME_VERIFIER = input;
     }
 
     public boolean isPartTime() {
