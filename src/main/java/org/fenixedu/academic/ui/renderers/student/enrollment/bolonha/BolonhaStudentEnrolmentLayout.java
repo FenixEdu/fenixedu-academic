@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
@@ -151,7 +152,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
             final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
             generateEnrolments(studentCurriculumGroupBean, coursesTable);
-            generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean, degreeModulesToSelect);
+            generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean, degreeModulesToSelect, executionSemester);
 
             generateGroups(blockContainer, degreeModulesToSelect, studentCurriculumGroupBean, studentCurricularPlan,
                     executionSemester, depth);
@@ -348,28 +349,36 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean,
-            List<IDegreeModuleToEvaluate> degreeModulesToSelect) {
+            List<IDegreeModuleToEvaluate> degreeModulesToSelect,final ExecutionSemester executionSemester) {
+
         final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
 
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
+
             HtmlTableRow htmlTableRow = groupTable.createRow();
             HtmlTableCell cellName = htmlTableRow.createCell();
             cellName.setClasses(getRenderer().getCurricularCourseToEnrolNameClasses());
 
-            String degreeName = degreeModuleToEvaluate.getName();
+            String degreeModuleName = degreeModuleToEvaluate.getDegreeModule().getNameI18N(executionSemester).getContent();
 
-            if (canPerformStudentEnrolments && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
+            if (degreeModuleToEvaluate.getDegreeModule().isLeaf() && !degreeModuleToEvaluate.isOptionalCurricularCourse()) {
+
                 if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
-                    degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
+                    degreeModuleName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeModuleName;
                 }
 
-                CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
-                degreeName +=
-                        " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
-                                + curricularCourse.getGradeScaleChain().getDescription() + ") ";
+                if (canPerformStudentEnrolments) {
+                    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
+                    final GradeScale gradeScaleChain = curricularCourse.getGradeScaleChain();
+                    if (gradeScaleChain != GradeScale.TYPE20) {
+                        degreeModuleName +=
+                                " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
+                                        + gradeScaleChain.getDescription() + ")";
+                    }
+                }
             }
 
-            cellName.setBody(new HtmlText(degreeName));
+            cellName.setBody(new HtmlText(degreeModuleName));
 
             // Year
             final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -564,19 +573,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         HtmlTableCell cellName = htmlTableRow.createCell();
         cellName.setClasses(enrolmentNameClasses);
 
-        String enrolmentName = getPresentationNameFor(enrolment);
-        if (canPerformStudentEnrolments && enrolment.getDegreeModule() instanceof CurricularCourse) {
-            CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
-
-            if (!StringUtils.isEmpty(curricularCourse.getCode())) {
-                enrolmentName = curricularCourse.getCode() + " - " + enrolmentName;
-            }
-
-            enrolmentName +=
-                    " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
-                            + curricularCourse.getGradeScaleChain().getDescription() + ") ";
-        }
-
+        final String enrolmentName = getPresentationNameFor(enrolment);
         cellName.setBody(new HtmlText(enrolmentName));
 
         // Year
@@ -622,14 +619,39 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected String getPresentationNameFor(final Enrolment enrolment) {
+        String result = null;
+
+        String code = StringUtils.EMPTY;
+        if (!StringUtils.isEmpty(enrolment.getCode())) {
+            code = enrolment.getCode() + " - ";
+        }
+
         if (enrolment instanceof OptionalEnrolment) {
+            final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
             final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
 
-            return optionalEnrolment.getOptionalCurricularCourse().getName() + " ("
-                    + optionalEnrolment.getCurricularCourse().getName() + ")";
+            result =
+                    optionalEnrolment.getOptionalCurricularCourse().getNameI18N(executionSemester).getContent() + " (" + code
+                            + optionalEnrolment.getCurricularCourse().getNameI18N(executionSemester).getContent() + ")";
         } else {
-            return enrolment.getName().getContent();
+
+            result = code + enrolment.getName().getContent();
         }
+
+        if (enrolment.getDegreeModule().isLeaf() && !enrolment.isOptional()) {
+
+            if (canPerformStudentEnrolments) {
+                final CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
+                final GradeScale gradeScaleChain = curricularCourse.getGradeScaleChain();
+                if (gradeScaleChain != GradeScale.TYPE20) {
+                    result +=
+                            " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
+                                    + gradeScaleChain.getDescription() + ")";
+                }
+            }
+        }
+
+        return result;
     }
 
     protected void generateGroups(final HtmlBlockContainer container, List<IDegreeModuleToEvaluate> degreeModulesToSelect,

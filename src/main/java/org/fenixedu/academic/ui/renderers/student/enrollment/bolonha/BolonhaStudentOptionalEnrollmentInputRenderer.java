@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
@@ -182,7 +183,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                     final HtmlTableRow htmlTableRow = table.createRow();
                     HtmlTableCell cellName = htmlTableRow.createCell();
                     cellName.setClasses(getCurricularCourseNameClasses());
-                    cellName.setBody(new HtmlText(getCurricularCoursePresentationName(curricularCourse)));
+                    cellName.setBody(generateCurricularCourseNameComponent(curricularCourse));
 
                     // Year
                     final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -215,22 +216,37 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
             }
         }
 
-        private String getCurricularCoursePresentationName(final CurricularCourse curricularCourse) {
-            String departmentName = null;
+        private HtmlBlockContainer generateCurricularCourseNameComponent(final CurricularCourse curricularCourse) {
+            final ExecutionSemester executionSemester = this.bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod();
+
+            final HtmlBlockContainer container = new HtmlBlockContainer();
+            container.addChild(new HtmlText(curricularCourse.getCode() + " - "
+                    + curricularCourse.getNameI18N(executionSemester).getContent()));
+
             if (curricularCourse.getCompetenceCourse() != null) {
-                final DepartmentUnit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
-                if (unit != null) {
-                    departmentName = unit.getName();
+
+                String description = "";
+                if (curricularCourse.getCompetenceCourse() != null) {
+                    final DepartmentUnit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
+                    if (unit != null) {
+                        description = unit.getName();
+                    }
+                }
+
+                if (StringUtils.isNotBlank(description)) {
+                    final HtmlText descriptionText = new HtmlText("\n" + description, false, true);
+                    descriptionText.setStyle("font-style: italic;");
+                    container.addChild(descriptionText);
                 }
             }
-
-            return (StringUtils.isEmpty(departmentName) ? "" : departmentName + " - ") + curricularCourse.getName();
+            return container;
         }
+
     }
 
+    @SuppressWarnings("serial")
     private static class UpdateSelectedOptionalCurricularCourseController extends HtmlActionLinkController {
 
-        static private final long serialVersionUID = 1L;
         private final CurricularCourse curricularCourse;
 
         public UpdateSelectedOptionalCurricularCourseController(final CurricularCourse curricularCourse) {

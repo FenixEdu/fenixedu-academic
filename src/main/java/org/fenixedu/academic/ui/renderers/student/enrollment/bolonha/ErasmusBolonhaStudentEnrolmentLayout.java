@@ -26,6 +26,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
@@ -63,9 +64,8 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
     @Override
     protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean,
-            List<IDegreeModuleToEvaluate> degreeModulesToSelect) {
-        final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
-        generateCurricularCoursesToEnrol(groupTable, coursesToEvaluate, degreeModulesToSelect);
+            List<IDegreeModuleToEvaluate> degreeModulesToSelect, final ExecutionSemester executionSemester) {
+        generateCurricularCoursesToEnrol(groupTable, degreeModulesToSelect, degreeModulesToSelect);
     }
 
     private void generateCurricularCoursesToEnrol(HtmlTable groupTable, final List<IDegreeModuleToEvaluate> coursesToEvaluate,
