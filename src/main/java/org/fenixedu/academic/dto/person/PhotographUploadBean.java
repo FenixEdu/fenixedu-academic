@@ -149,6 +149,7 @@ public class PhotographUploadBean implements Serializable {
         temporaryFile = rawContents != null ? FileUtils.copyToTemporaryFile(new ByteArrayInputStream(rawContents)) : null;
         tempCompressedFile =
                 compressedContents != null ? FileUtils.copyToTemporaryFile(new ByteArrayInputStream(compressedContents)) : null;
+        base64RawContent = BaseEncoding.base64().encode(rawContents);
     }
 
     public File getTemporaryFile() {

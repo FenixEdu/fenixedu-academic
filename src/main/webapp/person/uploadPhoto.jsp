@@ -112,6 +112,8 @@
 				$('<button id="resetButton" type="button"><%= request.getAttribute("buttonClean") != null ? request.getAttribute("buttonClean") : "Clear canvas"  %></button>').appendTo('#photoForm').click( function () {
 					phroper.reset(true);
 				});
+			} else {
+				$('#new-info-panel').toggle();
 			}
 		});
 	</script>
@@ -178,7 +180,7 @@
         <fr:edit id="photoUpload" name="photo" schema="party.photo.upload.clean" />
 		<bean:define id="tempfile" name="photo" property="tempCompressedFile.absolutePath" />
 		<div class="mvert1">
-			<img src="data:${photo.contentType};base64,${photo.base64RawThumbnail}"/>
+			<img src="data:${photo.contentType};base64,${photo.base64RawContent}" width="100" height="100" align="middle" style="border: 2px #eee solid">
 		</div>
 		<p class="mtop15 mbottom1">
 			<bean:message key="message.person.uploadPhoto.confirm"/>
