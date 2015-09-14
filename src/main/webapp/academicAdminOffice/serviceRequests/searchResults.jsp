@@ -186,7 +186,7 @@
 			<fr:property name="bundle(delivered)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="visibleIf(delivered)" value="concluded"/>
 
-			<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.externalId}" %>"/>
+			<fr:property name="linkFormat(payments)" value="${paymentURL}"/>
 			<fr:property name="key(payments)" value="payments"/>
 			<fr:property name="bundle(payments)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="visibleIfNot(payments)" value="isPayed"/>
