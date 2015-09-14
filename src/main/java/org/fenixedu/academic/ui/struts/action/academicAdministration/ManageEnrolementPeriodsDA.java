@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +40,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.EmptyDegreeCurricularPlan;
 import org.fenixedu.academic.domain.EnrolmentInstructions;
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
@@ -260,12 +262,18 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
             this.type = type;
         }
 
+        public List<DegreeType> getDegreeTypes() {
+            return DegreeType.all().sorted().collect(Collectors.toList());
+        }
+
         @Override
         public SortedSet<DegreeCurricularPlan> getPossibleScope() {
             SortedSet<DegreeCurricularPlan> possible =
                     new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
             if (degreeType != null && type != null && semester != null) {
-                if (degreeType.isBolonhaType()) {
+                if (degreeType.isEmpty() && EmptyDegreeCurricularPlan.getInstance() != null) {
+                    addIfNotUsedInPeriod(possible, EmptyDegreeCurricularPlan.getInstance());
+                } else if (degreeType.isBolonhaType()) {
                     for (ExecutionDegree execution : semester.getExecutionYear().getExecutionDegreesByType(degreeType)) {
                         DegreeCurricularPlan dcp = execution.getDegreeCurricularPlan();
                         addIfNotUsedInPeriod(possible, dcp);
