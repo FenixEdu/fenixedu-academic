@@ -97,7 +97,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
                                     cycleType, true, registrationConclusionBean.getConclusionDate(), registrationConclusionBean
                                             .getRawGrade().getNumericValue());
                         } else if (isToAddRegistration
-                                && registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
+                                && (registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear) || registration
+                                        .hasAnyCurriculumLines(executionYear))) {
                             reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
                                     cycleType, false, null, registrationConclusionBean.getRawGrade().getNumericValue());
                         }
