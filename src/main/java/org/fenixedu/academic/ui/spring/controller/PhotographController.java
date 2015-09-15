@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/user/photo")
 public class PhotographController {
 
-    @RequestMapping(value = "{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "{username:.+}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> get(@PathVariable String username, @RequestParam(value = "s", required = false,
             defaultValue = "100") Integer size, @RequestHeader(value = "If-None-Match", required = false) String ifNoneMatch)
             throws IOException {
@@ -84,7 +84,7 @@ public class PhotographController {
         throw BennuCoreDomainException.resourceNotFound(username);
     }
 
-    @RequestMapping(value = "{size}/{username}")
+    @RequestMapping(value = "{size}/{username:.+}")
     public ResponseEntity<byte[]> getWithSize(@PathVariable String username, @PathVariable Integer size, @RequestHeader(
             value = "If-None-Match", required = false) String ifNoneMatch) throws IOException {
         return get(username, size, ifNoneMatch);
