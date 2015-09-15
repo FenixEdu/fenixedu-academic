@@ -46,7 +46,6 @@ import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividual
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
@@ -64,6 +63,7 @@ import org.fenixedu.academic.service.services.student.administrativeOfficeServic
 import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolBolonhaStudent;
 import org.fenixedu.academic.ui.struts.FenixActionForm;
 import org.fenixedu.academic.util.report.ReportsUtils;
+import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -142,7 +142,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
                 return listProcessAllowedActivities(mapping, actionForm, request, response);
             }
         } catch (final DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage(request, e.getLocalizedMessage(), false);
         }
 
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
@@ -178,7 +178,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
             executeActivity(getProcess(request), "ImportToLDAP", getIndividualCandidacyProcessBean());
 
         } catch (final DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage(request, e.getLocalizedMessage(), false);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("create-student-data");
         }
@@ -213,7 +213,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
         try {
             executeActivity(getProcess(request), "SetEIdentifierForTesting", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage(request, e.getLocalizedMessage(), false);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("edit-eidentifier");
         }
@@ -308,7 +308,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
         try {
             executeActivity(getProcess(request), "RevertCandidacyToStandBy", null);
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage(request, e.getLocalizedMessage(), false);
             return mapping.findForward("revert-candidacy-to-standby");
         }
         return listProcessAllowedActivities(mapping, form, request, response);
@@ -387,9 +387,8 @@ public class ErasmusIndividualCandidacyProcessDA extends
 
             return enrolStudent(mapping, form, request, response);
 
-        } catch (DomainException ex) {
-            addActionMessage("error", request, ex.getKey(), ex.getArgs());
-
+        } catch (DomainException de) {
+            addActionMessage("error", request, de.getLocalizedMessage(), false);
             return enrolStudent(mapping, form, request, response);
         }
 
@@ -440,7 +439,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
                 return enrolStudent(mapping, form, request, response);
 
             } catch (final DomainException e) {
-                addActionMessage("error", request, e.getMessage(), e.getArgs());
+                addActionMessage("error", request, e.getLocalizedMessage(), false);
                 return enrolStudent(mapping, form, request, response);
             }
         }
@@ -513,7 +512,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
             return mapping.findForward("chooseCycleCourseGroupToEnrol");
 
         } catch (final DomainException e) {
-            addActionMessage(request, e.getKey(), e.getArgs());
+            addActionMessage(request, e.getLocalizedMessage(), false);
 
             request.setAttribute("withRules", request.getParameter("withRules"));
             request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);

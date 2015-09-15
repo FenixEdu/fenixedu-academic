@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -51,6 +52,7 @@ import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrol
 abstract public class StudentCurricularPlanEnrolment {
 
     protected EnrolmentContext enrolmentContext;
+    private static ConcurrentLinkedQueue<CurricularCourseEnrollmentCondition> conditions = new ConcurrentLinkedQueue<>();
 
     protected StudentCurricularPlanEnrolment(final EnrolmentContext enrolmentContext) {
         checkParameters(enrolmentContext);
@@ -105,6 +107,19 @@ abstract public class StudentCurricularPlanEnrolment {
         } else {
             assertOtherRolesPreConditions();
         }
+
+        for (CurricularCourseEnrollmentCondition condition : conditions) {
+            condition.verify(getStudentCurricularPlan());
+        }
+    }
+
+    @FunctionalInterface
+    public static interface CurricularCourseEnrollmentCondition {
+        public void verify(StudentCurricularPlan scp) throws DomainException;
+    }
+
+    public static void registerCondition(CurricularCourseEnrollmentCondition condition) {
+        conditions.add(condition);
     }
 
     protected void checkDebts() {
