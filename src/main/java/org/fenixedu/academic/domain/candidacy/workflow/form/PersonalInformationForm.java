@@ -38,6 +38,8 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.base.Strings;
+
 public class PersonalInformationForm extends Form {
 
     /**
@@ -123,7 +125,17 @@ public class PersonalInformationForm extends Form {
 
         checkGrantOwnerType(result);
         validateSocialSecurityNumber(result);
+        validateIdDocument(result);
         return result;
+    }
+
+    private void validateIdDocument(List<LabelFormatter> result) {
+        if (getIdDocumentType().equals(IDDocumentType.IDENTITY_CARD)) {
+            if (Strings.isNullOrEmpty(getIdentificationDocumentSeriesNumber())
+                    || !getIdentificationDocumentSeriesNumber().matches("[0-9]|([0-9][a-zA-Z][a-zA-Z][0-9])")) {
+                result.add(new LabelFormatter().appendLabel("error.firstTimeStudent.invalidFormat", Bundle.CANDIDATE));
+            }
+        }
     }
 
     private void validateSocialSecurityNumber(List<LabelFormatter> result) {
