@@ -25,6 +25,8 @@
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+
 var phroper = {};
 
 (function () {
@@ -134,8 +136,7 @@ var phroper = {};
 		evt.stopPropagation();
 		evt.preventDefault();
 
-		$('#photo-uploader').off('dragover');
-		$('#photo-uploader').off('drop');
+		phroper.reset();
 		$('#upload-button').css('display', 'none');
 
 		var file = evt.originalEvent.dataTransfer ? evt.originalEvent.dataTransfer.files[0] : evt.originalEvent.target.files[0]; // FileList object.
