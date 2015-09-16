@@ -67,16 +67,22 @@
 				$('<div id="photo-uploader"></div>').prependTo('#photoForm').css('margin-bottom','15px');
 				phroper.start(false, 480, 480, captions);
 				
-				$('#submitButton').click( function () {
+				var submitHandler = function () {
 					if (phroper.hasLoadedPicture()) {
+						$('#submitButton').off("click"); 
+						$('#submitButton').on("click", function () {
+							return false;
+						});
 						var data = {}
 						data.encodedPhoto = phroper.getPicture();
-						var processResponse = function(response){
+						var processResponse = function (response) {
 							if (response.success) {
 								window.location.href = '${pageContext.request.contextPath}/personal';
 							}
 							if (response.reload) {
 								phroper.reset();
+								$('#submitButton').off("click"); 
+								$('#submitButton').on("click", submitHandler);
 							}
 							if (response.error) {
 								if ($('.error').length == 0) {
@@ -92,7 +98,9 @@
 								}
 								
 								phroper.reset();
-							}
+								$('#submitButton').off("click"); 
+								$('#submitButton').on("click", submitHandler);
+							}							
 						};
 						$.ajax({
 						    headers: { 
@@ -107,7 +115,8 @@
 						    });
 						return false;
 					}
-				});
+				};
+				$('#submitButton').on("click", submitHandler);
 				
 				$('<button id="resetButton" type="button"><%= request.getAttribute("buttonClean") != null ? request.getAttribute("buttonClean") : "Clear canvas"  %></button>').appendTo('#photoForm').click( function () {
 					phroper.reset(true);
