@@ -133,11 +133,6 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public boolean isValid(final ExecutionSemester executionSemester) {
-        return hasExecutionPeriod() && getExecutionPeriod().equals(executionSemester);
-    }
-
-    @Override
     final public ExecutionYear getIEnrolmentsLastExecutionYear() {
         ExecutionYear result = null;
 
@@ -161,8 +156,18 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        return (executionSemester == null || !hasExecutionPeriod() || getExecutionPeriod().isBeforeOrEquals(executionSemester))
-                && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester);
+        return isValid(executionSemester) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester);
+    }
+
+    @Override
+    public boolean isValid(final ExecutionSemester executionSemester) {
+        return executionSemester == null || getExecutionPeriod() == null
+                || getExecutionPeriod().isBeforeOrEquals(executionSemester);
+    }
+
+    protected boolean isValid(final ExecutionYear executionYear) {
+        return executionYear == null || getExecutionPeriod() == null
+                || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
     }
 
     @Override
@@ -276,30 +281,18 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     final public Curriculum getCurriculum(final DateTime when, final ExecutionYear year) {
 
-        if (wasCreated(when) && (year == null || !hasExecutionPeriod() || getExecutionYear().isBeforeOrEquals(year))) {
-
-            final Collection<ICurriculumEntry> averageEntries = getAverageEntries(year);
-            if (!averageEntries.isEmpty() || getCredits().isCredits()) {
-                return new Curriculum(this, year, Collections.EMPTY_SET, averageEntries,
-                        Collections.singleton((ICurriculumEntry) this));
-            }
+        if (wasCreated(when) && isValid(year)) {
+            return getCredits().getCurriculum(this, when, year);
 
         } else if (getCredits().isInternalSubstitution()) {
+            // Evaluate each origin creation date and add them to averageEnrolmentRelatedEntries 
             return getCredits().getCurriculum(this, when, year);
+
+        } else {
+            return Curriculum.createEmpty(this, year);
         }
-
-        return Curriculum.createEmpty(this, year);
-    }
-
-    private Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear year) {
-        if (getCredits().isEquivalence() && (year == null || !hasExecutionPeriod() || getExecutionYear().isBefore(year))) {
-            return Collections.singleton((ICurriculumEntry) this);
-        }
-
-        return getCredits().getAverageEntries(year);
     }
 
     @Override

@@ -116,18 +116,15 @@ public class Substitution extends Substitution_Base {
         return true;
     }
 
+    /**
+     * Returns origins before given year
+     */
     @Override
-    @SuppressWarnings("unchecked")
-    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
+    protected Collection<ICurriculumEntry> getAverageEntries(final Dismissal dismissal, final ExecutionYear executionYear) {
         final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
-        for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
-            final IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
-            if (enrolment != null
-                    && (executionYear == null || enrolment.getExecutionYear() == null || enrolment.getExecutionYear().isBefore(
-                            executionYear))) {
-                result.add(enrolmentWrapper.getIEnrolment());
-            }
+        for (final EnrolmentWrapper enrolmentWrapper : getEnrolmentsSetBefore(executionYear)) {
+            result.add(enrolmentWrapper.getIEnrolment());
         }
 
         return result;

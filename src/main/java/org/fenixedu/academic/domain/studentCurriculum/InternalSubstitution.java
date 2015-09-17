@@ -166,26 +166,24 @@ public class InternalSubstitution extends InternalSubstitution_Base {
         return BundleUtil.getString("resources.StudentResources", "label.dismissal.InternalSubstitution");
     }
 
+    /**
+     * Evaluate each origin creation date and add them to averageEnrolmentRelatedEntries
+     */
     @Override
-    public Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
+    protected Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
 
         Curriculum curriculum = Curriculum.createEmpty(year);
 
-        for (final EnrolmentWrapper wrapper : getEnrolmentsSet()) {
+        for (final EnrolmentWrapper wrapper : getEnrolmentsSetBefore(year)) {
             final Enrolment enrolment = (Enrolment) wrapper.getIEnrolment();
 
-            if (enrolment.wasCreated(when) && isBefore(enrolment, year)) {
-                curriculum.add(new Curriculum(dismissal, year, Collections.singleton((ICurriculumEntry) enrolment), Collections
-                        .<ICurriculumEntry> emptySet(), Collections.singleton((ICurriculumEntry) enrolment)));
+            if (enrolment.wasCreated(when)) {
+                curriculum.add(new Curriculum(dismissal, year, Collections.<ICurriculumEntry> singleton(enrolment), Collections
+                        .<ICurriculumEntry> emptySet(), Collections.<ICurriculumEntry> singleton(enrolment)));
             }
         }
 
         return curriculum;
-
-    }
-
-    private boolean isBefore(final Enrolment enrolment, final ExecutionYear year) {
-        return year == null || enrolment.getExecutionYear().isBefore(year);
     }
 
 }

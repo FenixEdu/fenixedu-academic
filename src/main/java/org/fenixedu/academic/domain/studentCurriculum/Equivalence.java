@@ -19,17 +19,22 @@
 package org.fenixedu.academic.domain.studentCurriculum;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.curriculum.Curriculum;
+import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.joda.time.DateTime;
 
 public class Equivalence extends Equivalence_Base {
 
@@ -108,6 +113,24 @@ public class Equivalence extends Equivalence_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkGrade() {
         return getGrade() != null;
+    }
+
+    /**
+     * Returns empty if no average entry is found
+     */
+    @Override
+    protected Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
+        final Collection<ICurriculumEntry> averageEntries = getAverageEntries(dismissal, year);
+        return averageEntries.isEmpty() ? Curriculum.createEmpty(dismissal, year) : super.getCurriculum(dismissal, when, year);
+    }
+
+    /**
+     * Returns itself if all origins are before the given year
+     */
+    @Override
+    protected Collection<ICurriculumEntry> getAverageEntries(final Dismissal dismissal, final ExecutionYear executionYear) {
+        final boolean allBefore = getEnrolmentsSetBefore(executionYear).size() == getEnrolmentsSet().size();
+        return allBefore ? Collections.<ICurriculumEntry> singleton(dismissal) : Collections.<ICurriculumEntry> emptyList();
     }
 
 }

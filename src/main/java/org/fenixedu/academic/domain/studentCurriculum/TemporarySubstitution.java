@@ -52,9 +52,8 @@ public class TemporarySubstitution extends TemporarySubstitution_Base {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
-        return Collections.EMPTY_SET;
+    public Collection<ICurriculumEntry> getAverageEntries(final Dismissal dismissal, final ExecutionYear executionYear) {
+        return Collections.<ICurriculumEntry> emptyList();
     }
 
 }

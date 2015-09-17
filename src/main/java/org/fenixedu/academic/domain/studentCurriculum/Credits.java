@@ -45,6 +45,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
+import com.google.common.collect.Sets;
+
 public class Credits extends Credits_Base {
 
     public Credits() {
@@ -169,6 +171,23 @@ public class Credits extends Credits_Base {
         }
     }
 
+    static protected boolean isBefore(final IEnrolment enrolment, final ExecutionYear year) {
+        return year == null || enrolment.getExecutionYear() == null || enrolment.getExecutionYear().isBefore(year);
+    }
+
+    protected Set<EnrolmentWrapper> getEnrolmentsSetBefore(final ExecutionYear executionYear) {
+        final Set<EnrolmentWrapper> result = Sets.newHashSet();
+
+        for (final EnrolmentWrapper wrapper : getEnrolmentsSet()) {
+            final IEnrolment enrolment = wrapper.getIEnrolment();
+            if (enrolment != null && isBefore(enrolment, executionYear)) {
+                result.add(wrapper);
+            }
+        }
+
+        return result;
+    }
+
     final public Collection<IEnrolment> getIEnrolments() {
         final Set<IEnrolment> result = new HashSet<IEnrolment>();
         for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
@@ -270,10 +289,6 @@ public class Credits extends Credits_Base {
         return false;
     }
 
-    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
-        return Collections.emptyList();
-    }
-
     public boolean hasAnyDismissalInCurriculum() {
         for (final Dismissal dismissal : getDismissalsSet()) {
             if (!dismissal.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
@@ -293,8 +308,19 @@ public class Credits extends Credits_Base {
         return false;
     }
 
-    public Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
-        throw new DomainException("error.Credits.unsupported.operation");
+    /**
+     * Standard behaviour, may be overriden
+     */
+    protected Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
+        return new Curriculum(dismissal, year, Collections.<ICurriculumEntry> emptySet(), getAverageEntries(dismissal, year),
+                Collections.<ICurriculumEntry> singleton(dismissal));
+    }
+
+    /**
+     * Standard behaviour, may be overriden
+     */
+    protected Collection<ICurriculumEntry> getAverageEntries(final Dismissal dismissal, final ExecutionYear executionYear) {
+        return Collections.<ICurriculumEntry> emptyList();
     }
 
     public String getDescription() {
