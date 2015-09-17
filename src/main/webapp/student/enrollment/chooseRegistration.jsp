@@ -49,7 +49,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="sortBy" value="startDate=desc"/>			
 				<fr:property name="classes" value="tstyle4 thlight mtop025 indent1"/>
-				<fr:property name="linkFormat(enrol)" value="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=\${externalId}&executionSemesterID=${executionSemesterID}"/>
+				<fr:property name="linkFormat(enrol)" value="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=\${externalId}&executionSemesterID=${executionSemester.externalId}"/>
 				<fr:property name="key(enrol)" value="label.enroll"/>
 				<fr:property name="bundle(enrol)" value="STUDENT_RESOURCES"/>
 				<fr:property name="contextRelative(enrol)" value="true"/>
@@ -71,7 +71,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="sortBy" value="startDate=desc"/>			
 				<fr:property name="classes" value="tstyle4 thlight mtop025 indent1"/>
-				<fr:property name="linkFormat(enrol)" value="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=\${externalId}&executionSemesterID=${executionSemesterID}" />
+				<fr:property name="linkFormat(enrol)" value="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=\${externalId}&executionSemesterID=${executionSemester.externalId}" />
 				<fr:property name="key(enrol)" value="label.enrol.secondCycle"/>
 				<fr:property name="bundle(enrol)" value="STUDENT_RESOURCES"/>
 				<fr:property name="contextRelative(enrol)" value="true"/>
