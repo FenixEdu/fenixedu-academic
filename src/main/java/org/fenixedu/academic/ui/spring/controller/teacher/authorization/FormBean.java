@@ -24,6 +24,7 @@ import org.fenixedu.bennu.core.domain.User;
 public class FormBean extends SearchBean {
 
     private User user;
+    private String username;
     private TeacherCategory category;
     private Double lessonHours;
     private Boolean contracted;
@@ -38,11 +39,22 @@ public class FormBean extends SearchBean {
     }
 
     public User getUser() {
+        if (user == null && username != null) {
+            return User.findByUsername(username);
+        }
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public TeacherCategory getCategory() {

@@ -173,6 +173,17 @@ function check(e,v){
 		</logic:equal>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>		
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
+		<html:link styleClass="btn btn-default" action="/summariesManagement.do?method=prepareShowSummaries" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="button.cancel" bundle="DEFAULT"/></html:link>
 	</fr:form>			
 </logic:present>
+
+<style>
+	.editor-input {
+		border: solid 1px #ddd;
+		border-radius: 2px;
+	}
+	
+	input[type=submit] {
+		margin-right: 4px;
+	}
+</style>

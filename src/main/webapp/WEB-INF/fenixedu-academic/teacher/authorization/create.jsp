@@ -66,7 +66,7 @@ ${portal.toolkit()}
 		<div class="form-group">
 			<label for="username" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.username" /></label>
 			<div class="col-sm-11">
-				<input id="user" name="user" bennu-user-autocomplete class="form-control col-sm-11 user-search" required placeholder="${i18n.message('teacher.authorizations.placeholder.user')}" value=""/>
+				<input id="username" name="username" bennu-user-autocomplete class="form-control col-sm-11 user-search" required placeholder="${i18n.message('teacher.authorizations.placeholder.user')}" value=""/>
 			</div>
 		</div>
 		
