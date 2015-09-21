@@ -303,3 +303,10 @@ function check(e,v){
 		</logic:equal>	
 	</fr:form>				
 </logic:present>
+
+<style>
+	.editor-input {
+		border: solid 1px #ddd;
+		border-radius: 2px;
+	}
+</style>

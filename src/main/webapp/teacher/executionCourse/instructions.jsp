@@ -47,9 +47,9 @@
 <%-- 			<li><bean:message key="label.executionCourse.instructions01.communication"/></li> --%>
 <%-- 			<li><bean:message key="label.executionCourse.instructions02.announcements"/></li> --%>
 <%-- 			<li><bean:message key="label.executionCourse.instructions03.sections"/></li> --%>
+			<li><bean:message key="label.executionCourse.instructions06.students"/></li>
 			<li><bean:message key="label.executionCourse.instructions04.summaries"/></li>
 			<li><bean:message key="label.executionCourse.instructions05.teachers"/></li>
-			<li><bean:message key="label.executionCourse.instructions06.students"/></li>
 <%-- 			<li><bean:message key="label.executionCourse.instructions07.planning"/></li> --%>
 <%-- 			<li><bean:message key="label.executionCourse.instructions08.evaluation"/></li> --%>
 <%-- 			<li><bean:message key="label.executionCourse.instructions09.objectives"/></li> --%>

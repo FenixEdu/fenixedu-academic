@@ -32,6 +32,10 @@
 	form{
 		display:inline-block;
 	}
+	
+	.table-responsive {
+		overflow-x: auto;
+	}
 
 </style>
 <spring:url var="studentsAndGroupsByShiftLink"
@@ -176,72 +180,74 @@
         <pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage"
                max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 
-		<table class="table table-bordered table-responsive table-striped table-hover">
-			<thead>
-				<tr>
-					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.username')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.username',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.username')}</th>
-					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('number')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('number',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.number')}</th>
-					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.firstAndLastNames')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.firstAndLastNames',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.name')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.email')}</th>
-					<th ng-if="showPhotos" rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.photo')}</th>
-					<th ng-if="groupings" colspan="{{groupings.length}}">${fr:message('resources.ApplicationResources', 'label.projectGroup')}</th>
-					<th ng-if="shiftTypes" colspan="{{shiftTypes.length}}">${fr:message('resources.ApplicationResources', 'label.attends.shifts')}</th>
-					<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('enrolmentsInThisCourse')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('enrolmentsInThisCourse',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.enrollments')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.attends.enrollmentState')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.registration.state')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.Degree')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.studentStatutes')}</th>
-				</tr>
-				<tr>
-					<th ng-repeat="grouping in groupings">{{grouping.name}}</th>
-					<th ng-repeat="shiftType in shiftTypes">{{shiftType.fullName}}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="attendee in paginatedAttends track by attendee.externalId">
-					<td>{{ attendee.person.username }}</td>
-					<td>{{ attendee.number }}</td>
-					<td><span data-toggle="tooltip" data-placement="top" title="{{ attendee.person.name}}">{{ attendee.person.firstAndLastNames }}</span></td>
-					<td><a href="mailto:{{attendee.person.email}}">{{ attendee.person.email }}</a></td>
-					<td ng-if="showPhotos"><img err-src="${pageContext.request.contextPath}"  ng-src="${pageContext.request.contextPath}/user/photo/{{attendee.person.username}}"></td>
-					<td ng-repeat="grouping in groupings">
-						<span ng-repeat="studentGroup in studentGroups =(attendee.studentGroups | filter:grouping.externalId)">
-							<a href="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/student-groups/{{grouping.externalId}}/viewStudentGroup/{{studentGroup.externalId}}">{{
-								studentGroup.groupNumber }}</a>
-						</span>
-						<span ng-if="studentGroups.length == 0">-</span>
-					</td>
-					<td ng-repeat="shiftType in shiftTypes">
-						{{attendee.shifts[shiftType.name].shortName}}
-						<span ng-if="isEmpty(attendee.shifts[shiftType.name])">-</span>
-					</td>
-					<td>{{ attendee.enrolmentsInThisCourse}}</td>
-					<td>{{ attendee.enrolmentType}}</td>
-					<td>{{ attendee.registrationState}}</td>
-					<td>{{ attendee.curricularPlan.name}}</td>
-					<td>
-						<span ng-repeat="studentStatute in attendee.studentStatutes">
-							<div>{{ studentStatute.type.name }}</div>
-								<ul ng-if="studentStatute.comment">
-									<li>{{ studentStatute.comment }}</li>
-								</ul>
-								<span ng-if="!studentStatute.comment">
-									<p>
-								</span>
-						</span>
-						<span ng-if="attendee.studentStatutes.length == 0">-</span>
-					</td> 
-				</tr>
-				<tr ng-if="!attends">
-					<td colspan="{{9 + groupings.length + shiftTypes.length}}"
-						class="center"><h4>${fr:message('resources.ApplicationResources', 'label.loading')}</h4></td>
-				</tr>
-				<tr ng-show="paginatedAttends.length == 0 || attends == {} || attends == []">
-					<td colspan="{{9 + groupings.length + shiftTypes.length}}"
-						class="center">${fr:message('resources.ApplicationResources', 'label.table.empty')}</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-responsive">		
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.username')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.username',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.username')}</th>
+						<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('number')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('number',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.number')}</th>
+						<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.firstAndLastNames')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.firstAndLastNames',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.name')}</th>
+						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.email')}</th>
+						<th ng-if="showPhotos" rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.photo')}</th>
+						<th ng-if="groupings" colspan="{{groupings.length}}">${fr:message('resources.ApplicationResources', 'label.projectGroup')}</th>
+						<th ng-if="shiftTypes" colspan="{{shiftTypes.length}}">${fr:message('resources.ApplicationResources', 'label.attends.shifts')}</th>
+						<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('enrolmentsInThisCourse')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('enrolmentsInThisCourse',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.enrollments')}</th>
+						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.attends.enrollmentState')}</th>
+						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.registration.state')}</th>
+						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.Degree')}</th>
+						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.studentStatutes')}</th>
+					</tr>
+					<tr>
+						<th ng-repeat="grouping in groupings">{{grouping.name}}</th>
+						<th ng-repeat="shiftType in shiftTypes">{{shiftType.fullName}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="attendee in paginatedAttends track by attendee.externalId">
+						<td>{{ attendee.person.username }}</td>
+						<td>{{ attendee.number }}</td>
+						<td><span data-toggle="tooltip" data-placement="top" title="{{ attendee.person.name}}">{{ attendee.person.firstAndLastNames }}</span></td>
+						<td><a href="mailto:{{attendee.person.email}}">{{ attendee.person.email }}</a></td>
+						<td ng-if="showPhotos"><img err-src="${pageContext.request.contextPath}"  ng-src="${pageContext.request.contextPath}/user/photo/{{attendee.person.username}}"></td>
+						<td ng-repeat="grouping in groupings">
+							<span ng-repeat="studentGroup in studentGroups =(attendee.studentGroups | filter:grouping.externalId)">
+								<a href="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/student-groups/{{grouping.externalId}}/viewStudentGroup/{{studentGroup.externalId}}">{{
+									studentGroup.groupNumber }}</a>
+							</span>
+							<span ng-if="studentGroups.length == 0">-</span>
+						</td>
+						<td ng-repeat="shiftType in shiftTypes">
+							{{attendee.shifts[shiftType.name].shortName}}
+							<span ng-if="isEmpty(attendee.shifts[shiftType.name])">-</span>
+						</td>
+						<td>{{ attendee.enrolmentsInThisCourse}}</td>
+						<td>{{ attendee.enrolmentType}}</td>
+						<td>{{ attendee.registrationState}}</td>
+						<td>{{ attendee.curricularPlan.name}}</td>
+						<td>
+							<span ng-repeat="studentStatute in attendee.studentStatutes">
+								<div>{{ studentStatute.type.name }}</div>
+									<ul ng-if="studentStatute.comment">
+										<li>{{ studentStatute.comment }}</li>
+									</ul>
+									<span ng-if="!studentStatute.comment">
+										<p>
+									</span>
+							</span>
+							<span ng-if="attendee.studentStatutes.length == 0">-</span>
+						</td> 
+					</tr>
+					<tr ng-if="!attends">
+						<td colspan="{{9 + groupings.length + shiftTypes.length}}"
+							class="center"><h4>${fr:message('resources.ApplicationResources', 'label.loading')}</h4></td>
+					</tr>
+					<tr ng-show="paginatedAttends.length == 0 || attends == {} || attends == []">
+						<td colspan="{{9 + groupings.length + shiftTypes.length}}"
+							class="center">${fr:message('resources.ApplicationResources', 'label.table.empty')}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		
 		<pagination ng-show="totalItems > itemsPerPage" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
         <div class="row">
