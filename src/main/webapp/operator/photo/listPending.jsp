@@ -27,9 +27,9 @@
 
 <html:xhtml />
 
-<h2><bean:message key="label.operator.photo.title" bundle="MANAGER_RESOURCES" /></h2>
+<h2><bean:message key="label.operator.photo.title" bundle="MANAGER_RESOURCES" /> <small><bean:message key="label.operator.photo.subtitle" bundle="MANAGER_RESOURCES" /></small></h2>
 
-<p><strong>Fotografias pendentes para aprovação</strong></p>
+<div class="alert alert-info" role="alert"><bean:message key="label.operator.photo.instructions" bundle="MANAGER_RESOURCES" /></div>
 
 <logic:empty name="pending">
     <p><em><bean:message key="label.operator.photo.no.pending" bundle="MANAGER_RESOURCES"/>.</em></p>
@@ -43,3 +43,23 @@
 		</fr:layout>
 	</fr:edit>
 </logic:notEmpty>
+
+<style>
+	.btn-tag {
+	    font-size: 12px;
+		padding: 2px 4px;
+	    border-radius: 4px;
+	    cursor: default;
+	    margin: auto 2px;
+	}
+	
+	.keyb-tag {
+	    font-size: 12px;
+	    font-family: Monospace;
+	    background-color: #787878;
+	    padding: 2px 4px;
+	    border-radius: 4px;
+	    color: #ffffff;
+	    font-weight: 100;
+	}
+</style>
