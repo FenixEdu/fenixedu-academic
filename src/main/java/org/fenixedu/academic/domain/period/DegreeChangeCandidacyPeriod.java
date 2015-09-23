@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.period;
 
-import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -34,17 +33,8 @@ public class DegreeChangeCandidacyPeriod extends DegreeChangeCandidacyPeriod_Bas
             final DateTime start, final DateTime end) {
         this();
         checkParameters(candidacyProcess);
-        checkIfCanCreate(executionYear);
         super.init(executionYear, start, end);
         addCandidacyProcesses(candidacyProcess);
-    }
-
-    private void checkIfCanCreate(final ExecutionInterval executionInterval) {
-        if (executionInterval.hasDegreeChangeCandidacyPeriod()) {
-            throw new DomainException(
-                    "error.DegreeChangeCandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
-                    executionInterval.getName());
-        }
     }
 
     private void checkParameters(final DegreeChangeCandidacyProcess candidacyProcess) {
