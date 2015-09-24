@@ -65,8 +65,8 @@ import com.google.common.base.Predicates;
         accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
         bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingDegreeChangeCandidacyProcess", module = "academicAdministration",
-        formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards({ @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+        formBeanClass = DegreeChangeCandidacyProcessDA.DegreeChangeCandidacyProcessForm.class)
+@Forwards({ @Forward(name = "intro", path = "/candidacy/degreeChange/mainCandidacyProcess.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
         @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
         @Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
@@ -76,6 +76,18 @@ import com.google.common.base.Predicates;
         @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
         @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
+
+    static public class DegreeChangeCandidacyProcessForm extends CandidacyProcessForm {
+        private String selectedProcessId;
+
+        public String getSelectedProcessId() {
+            return selectedProcessId;
+        }
+
+        public void setSelectedProcessId(String selectedProcessId) {
+            this.selectedProcessId = selectedProcessId;
+        }
+    }
 
     private static final int MAX_GRADE_VALUE = 20;
 
@@ -95,9 +107,24 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval) {
-        return executionInterval.hasDegreeChangeCandidacyPeriod() ? executionInterval.getDegreeChangeCandidacyPeriod()
-                .getDegreeChangeCandidacyProcess() : null;
+    protected DegreeChangeCandidacyProcess getCandidacyProcess(HttpServletRequest request,
+            final ExecutionInterval executionInterval) {
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
+        if (selectedProcessId != null) {
+            List<DegreeChangeCandidacyPeriod> candidacyPeriods = getCandidacyPeriods(executionInterval);
+            for (final DegreeChangeCandidacyPeriod candidacyPeriod : candidacyPeriods) {
+                if (candidacyPeriod.getDegreeChangeCandidacyProcess().getExternalId().equals(selectedProcessId)) {
+                    return candidacyPeriod.getDegreeChangeCandidacyProcess();
+                }
+            }
+        }
+        return null;
+    }
+
+    private List<DegreeChangeCandidacyPeriod> getCandidacyPeriods(final ExecutionInterval executionInterval) {
+        List<DegreeChangeCandidacyPeriod> candidacyPeriods =
+                (List<DegreeChangeCandidacyPeriod>) executionInterval.getCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
+        return candidacyPeriods;
     }
 
     @Override
@@ -136,11 +163,13 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
             HttpServletResponse response) {
         setCandidacyProcessInformation(request, getProcess(request));
         setCandidacyProcessInformation(form, getProcess(request));
+        request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
         return introForward(mapping);
     }
 
     protected void setCandidacyProcessInformation(final ActionForm actionForm, final CandidacyProcess process) {
-        final CandidacyProcessForm form = (CandidacyProcessForm) actionForm;
+        final DegreeChangeCandidacyProcessForm form = (DegreeChangeCandidacyProcessForm) actionForm;
+        form.setSelectedProcessId(process.getExternalId());
         form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
@@ -150,14 +179,59 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
             final List<ExecutionInterval> executionIntervals =
                     ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
             if (executionIntervals.size() == 1) {
-                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.iterator().next()));
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
+                final List<DegreeChangeCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    final DegreeChangeCandidacyProcess process = candidacyProcesses.iterator().next();
+                    setCandidacyProcessInformation(request, process);
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+                    chooseDegreeBean.setCandidacyProcess(process);
+                    return;
+                }
             } else {
                 request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
                 request.setAttribute("executionIntervals", executionIntervals);
             }
         } else {
-            setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
+            final ExecutionInterval executionInterval = getExecutionInterval(request);
+            final DegreeChangeCandidacyProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
+
+            if (candidacyProcess != null) {
+                setCandidacyProcessInformation(request, candidacyProcess);
+                setCandidacyProcessInformation(actionForm, getProcess(request));
+            } else {
+                final List<DegreeChangeCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    final DegreeChangeCandidacyProcess process = candidacyProcesses.iterator().next();
+                    setCandidacyProcessInformation(request, process);
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+                    chooseDegreeBean.setCandidacyProcess(process);
+                    return;
+                }
+
+                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+                request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
+            }
+            request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
         }
+    }
+
+    private List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
+        return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+    }
+
+    protected List<DegreeChangeCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+        final List<DegreeChangeCandidacyProcess> result = new ArrayList<DegreeChangeCandidacyProcess>();
+        for (final DegreeChangeCandidacyPeriod period : getCandidacyPeriods(executionInterval)) {
+            result.add(period.getDegreeChangeCandidacyProcess());
+        }
+        return result;
     }
 
     public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
