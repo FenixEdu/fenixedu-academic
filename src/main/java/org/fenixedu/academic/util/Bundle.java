@@ -41,7 +41,7 @@ public class Bundle {
     public static final String PEDAGOGICAL = "resources.PedagogicalCouncilResources";
     public static final String PERSONAL = "resources.PersonalInformationResources";
     public static final String PHD = "resources.PhdResources";
-    public static final String RENDERER = "resources.RendererResources";
+    public static final String RENDERER = "resources.AcademicRendererResources";
     public static final String RESEARCHER = "resources.ResearcherResources";
     public static final String RESOURCE_ALLOCATION = "resources.ResourceAllocationManagerResources";
     public static final String RESOURCE_MANAGER = "resources.ResourceManagerResources";
