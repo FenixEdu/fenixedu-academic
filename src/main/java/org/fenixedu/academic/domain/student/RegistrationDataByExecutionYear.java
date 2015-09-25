@@ -70,11 +70,6 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
                 throw new DomainException("error.RegistrationDataByExecutionYear.reingressionDate.required");
             }
 
-            if (!getExecutionYear().containsDate(reingressionDate)) {
-                throw new DomainException(
-                        "error.RegistrationDataByExecutionYear.reingressionDate.must.be.contained.in.executionYear",
-                        getExecutionYear().getName());
-            }
         }
     }
 
