@@ -61,8 +61,8 @@ import com.google.common.base.Predicates;
         accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
         bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "academicAdministration",
-        formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards({ @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+        formBeanClass = DegreeCandidacyForGraduatedPersonProcessDA.DegreeCandidacyForGraduatedPersonProcessForm.class)
+@Forwards({ @Forward(name = "intro", path = "/candidacy/graduatedPerson/mainCandidacyProcess.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
         @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
         @Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
@@ -72,6 +72,18 @@ import com.google.common.base.Predicates;
         @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
         @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcessDA {
+
+    static public class DegreeCandidacyForGraduatedPersonProcessForm extends CandidacyProcessForm {
+        private String selectedProcessId;
+
+        public String getSelectedProcessId() {
+            return selectedProcessId;
+        }
+
+        public void setSelectedProcessId(String selectedProcessId) {
+            this.selectedProcessId = selectedProcessId;
+        }
+    }
 
     @Override
     protected Class getProcessType() {
@@ -94,9 +106,25 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     @Override
-    protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval) {
-        return executionInterval.hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() ? executionInterval
-                .getDegreeCandidacyForGraduatedPersonCandidacyPeriod().getDegreeCandidacyForGraduatedPersonProcess() : null;
+    protected DegreeCandidacyForGraduatedPersonProcess getCandidacyProcess(HttpServletRequest request,
+            final ExecutionInterval executionInterval) {
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
+        if (selectedProcessId != null) {
+            List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods = getCandidacyPeriods(executionInterval);
+            for (final DegreeCandidacyForGraduatedPersonCandidacyPeriod candidacyPeriod : candidacyPeriods) {
+                if (candidacyPeriod.getDegreeCandidacyForGraduatedPersonProcess().getExternalId().equals(selectedProcessId)) {
+                    return candidacyPeriod.getDegreeCandidacyForGraduatedPersonProcess();
+                }
+            }
+        }
+        return null;
+    }
+
+    private List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> getCandidacyPeriods(final ExecutionInterval executionInterval) {
+        List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods =
+                (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) executionInterval
+                        .getCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
+        return candidacyPeriods;
     }
 
     @Override
@@ -116,11 +144,13 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
             HttpServletResponse response) {
         setCandidacyProcessInformation(request, getProcess(request));
         setCandidacyProcessInformation(form, getProcess(request));
+        request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
         return introForward(mapping);
     }
 
     protected void setCandidacyProcessInformation(final ActionForm actionForm, final CandidacyProcess process) {
-        final CandidacyProcessForm form = (CandidacyProcessForm) actionForm;
+        final DegreeCandidacyForGraduatedPersonProcessForm form = (DegreeCandidacyForGraduatedPersonProcessForm) actionForm;
+        form.setSelectedProcessId(process.getExternalId());
         form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
@@ -144,14 +174,61 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
             final List<ExecutionInterval> executionIntervals =
                     ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
             if (executionIntervals.size() == 1) {
-                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.iterator().next()));
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
+                final List<DegreeCandidacyForGraduatedPersonProcess> candidacyProcesses =
+                        getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    final DegreeCandidacyForGraduatedPersonProcess process = candidacyProcesses.iterator().next();
+                    setCandidacyProcessInformation(request, process);
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+                    chooseDegreeBean.setCandidacyProcess(process);
+                    return;
+                }
             } else {
                 request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
                 request.setAttribute("executionIntervals", executionIntervals);
             }
         } else {
-            setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
+            final ExecutionInterval executionInterval = getExecutionInterval(request);
+            final DegreeCandidacyForGraduatedPersonProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
+
+            if (candidacyProcess != null) {
+                setCandidacyProcessInformation(request, candidacyProcess);
+                setCandidacyProcessInformation(actionForm, getProcess(request));
+            } else {
+                final List<DegreeCandidacyForGraduatedPersonProcess> candidacyProcesses =
+                        getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    final DegreeCandidacyForGraduatedPersonProcess process = candidacyProcesses.iterator().next();
+                    setCandidacyProcessInformation(request, process);
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+                    chooseDegreeBean.setCandidacyProcess(process);
+                    return;
+                }
+
+                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+                request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
+            }
+            request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
         }
+    }
+
+    private List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
+        return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+    }
+
+    protected List<DegreeCandidacyForGraduatedPersonProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+        final List<DegreeCandidacyForGraduatedPersonProcess> result = new ArrayList<DegreeCandidacyForGraduatedPersonProcess>();
+        for (final DegreeCandidacyForGraduatedPersonCandidacyPeriod period : getCandidacyPeriods(executionInterval)) {
+            result.add(period.getDegreeCandidacyForGraduatedPersonProcess());
+        }
+        return result;
     }
 
     public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
