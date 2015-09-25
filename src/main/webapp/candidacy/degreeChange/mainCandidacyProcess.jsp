@@ -134,12 +134,7 @@
 			<tr>
 				<td> </td>
 				<td><html:submit><bean:message key="label.choose"/> </html:submit></td>
-			</tr>
-			
-			<p/>		
-			<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="SecondCycleChooseDegreeBean.selectDegree" >
-				<fr:destination name="postback" path="<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>"/>
-			</fr:edit>				
+			</tr>			
 			
 		</table>
 	</html:form>

@@ -39,7 +39,6 @@ public class DegreeCandidacyForGraduatedPersonCandidacyPeriod extends DegreeCand
     private void init(final DegreeCandidacyForGraduatedPersonProcess candidacyProcess, final ExecutionInterval executionInterval,
             final DateTime start, final DateTime end) {
         checkParameters(candidacyProcess);
-        checkIfCanCreate(executionInterval);
         super.init(executionInterval, start, end);
         addCandidacyProcesses(candidacyProcess);
     }
@@ -47,14 +46,6 @@ public class DegreeCandidacyForGraduatedPersonCandidacyPeriod extends DegreeCand
     private void checkParameters(final DegreeCandidacyForGraduatedPersonProcess candidacyProcess) {
         if (candidacyProcess == null) {
             throw new DomainException("error.DegreeCandidacyForGraduatedPersonCandidacyPeriod.invalid.candidacy.process");
-        }
-    }
-
-    private void checkIfCanCreate(final ExecutionInterval executionInterval) {
-        if (executionInterval.hasDegreeCandidacyForGraduatedPersonCandidacyPeriod()) {
-            throw new DomainException(
-                    "error.DegreeCandidacyForGraduatedPersonCandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
-                    executionInterval.getName());
         }
     }
 
