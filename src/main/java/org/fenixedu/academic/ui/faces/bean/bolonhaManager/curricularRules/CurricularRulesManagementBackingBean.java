@@ -23,6 +23,7 @@ package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.component.UISelectItems;
@@ -79,6 +80,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private UISelectItems curricularRuleTypeItems;
     private UISelectItems degreeModuleItems;
     private UISelectItems courseGroupItems;
+    private UISelectItems degreeTypeItems;
     private UISelectItems degreeItems;
     private UISelectItems departmentUnitItems;
     private UISelectItems beginExecutionPeriodItemsForRule;
@@ -469,8 +471,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     static private DegreeType getDegreeType(final String input) {
-        return StringUtils.isBlank(input) || input.equals(NO_SELECTION_STRING) ? null : DegreeType.matching(
-                i -> input.equals(i.getCode())).orElse(null);
+        return StringUtils.isBlank(input) || input.equals(NO_SELECTION_STRING) ? null : FenixFramework
+                .<DegreeType> getDomainObject(input);
     }
 
     public String getSelectedDegreeType() {
@@ -520,6 +522,27 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public void setSelectedDepartmentUnitID(String selectedDepartmentUnitID) {
         getViewState().setAttribute("selectedDepartmentUnitID", selectedDepartmentUnitID);
+    }
+
+    public UISelectItems getDegreeTypeItems() {
+        if (degreeTypeItems == null) {
+            degreeTypeItems = new UISelectItems();
+
+            final List<SelectItem> value = new ArrayList<SelectItem>();
+            value.add(new SelectItem(NO_SELECTION_STRING, getSchoolAcronym()));
+            for (Iterator<DegreeType> iterator = DegreeType.all().sorted().iterator(); iterator.hasNext();) {
+                final DegreeType degreeType = iterator.next();
+                value.add(new SelectItem(degreeType.getExternalId(), degreeType.getName().getContent()));
+            }
+
+            degreeTypeItems.setValue(value);
+        }
+        
+        return degreeTypeItems;
+    }
+    
+    public void setDegreeTypeItems(final UISelectItems input) {
+        this.degreeTypeItems = input;
     }
 
     public UISelectItems getDegreeItems() {
