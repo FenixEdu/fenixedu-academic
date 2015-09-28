@@ -183,7 +183,8 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                     final HtmlTableRow htmlTableRow = table.createRow();
                     HtmlTableCell cellName = htmlTableRow.createCell();
                     cellName.setClasses(getCurricularCourseNameClasses());
-                    cellName.setBody(generateCurricularCourseNameComponent(curricularCourse));
+                    cellName.setBody(generateCurricularCourseNameComponent(curricularCourse,
+                            this.bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod()));
 
                     // Year
                     final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -216,32 +217,32 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
             }
         }
 
-        private HtmlBlockContainer generateCurricularCourseNameComponent(final CurricularCourse curricularCourse) {
-            final ExecutionSemester executionSemester = this.bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod();
+    }
 
-            final HtmlBlockContainer container = new HtmlBlockContainer();
-            container.addChild(new HtmlText(curricularCourse.getCode() + " - "
-                    + curricularCourse.getNameI18N(executionSemester).getContent()));
+    static public HtmlBlockContainer generateCurricularCourseNameComponent(final CurricularCourse curricularCourse,
+            final ExecutionSemester executionSemester) {
 
+        final HtmlBlockContainer container = new HtmlBlockContainer();
+        container.addChild(new HtmlText(curricularCourse.getCode() + " - "
+                + curricularCourse.getNameI18N(executionSemester).getContent()));
+
+        if (curricularCourse.getCompetenceCourse() != null) {
+
+            String description = "";
             if (curricularCourse.getCompetenceCourse() != null) {
-
-                String description = "";
-                if (curricularCourse.getCompetenceCourse() != null) {
-                    final DepartmentUnit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
-                    if (unit != null) {
-                        description = unit.getName();
-                    }
-                }
-
-                if (StringUtils.isNotBlank(description)) {
-                    final HtmlText descriptionText = new HtmlText("\n" + description, false, true);
-                    descriptionText.setStyle("font-style: italic;");
-                    container.addChild(descriptionText);
+                final DepartmentUnit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
+                if (unit != null) {
+                    description = unit.getName();
                 }
             }
-            return container;
-        }
 
+            if (StringUtils.isNotBlank(description)) {
+                final HtmlText descriptionText = new HtmlText("\n" + description, false, true);
+                descriptionText.setStyle("font-style: italic;");
+                container.addChild(descriptionText);
+            }
+        }
+        return container;
     }
 
     @SuppressWarnings("serial")

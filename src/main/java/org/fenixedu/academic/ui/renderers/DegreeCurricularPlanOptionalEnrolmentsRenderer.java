@@ -26,6 +26,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean;
+import org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentInputRenderer;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -178,20 +179,21 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
         }
 
         private void generateCurricularCourses(HtmlBlockContainer blockContainer, List<Context> contexts, int depth) {
+
             final HtmlTable table = new HtmlTable();
             blockContainer.addChild(table);
             table.setClasses(getTablesClasses());
             table.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
 
-            for (Context context : contexts) {
+            for (final Context context : contexts) {
                 final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-
                 if (!curricularCourse.isOptionalCurricularCourse()) {
 
                     final HtmlTableRow htmlTableRow = table.createRow();
                     HtmlTableCell cellName = htmlTableRow.createCell();
                     cellName.setClasses(getCurricularCourseNameClasses());
-                    cellName.setBody(new HtmlText(curricularCourse.getName(getExecutionSemester())));
+                    cellName.setBody(BolonhaStudentOptionalEnrollmentInputRenderer.generateCurricularCourseNameComponent(
+                            curricularCourse, this.studentOptionalEnrolmentBean.getExecutionPeriod()));
 
                     // Year
                     final HtmlTableCell yearCell = htmlTableRow.createCell();
