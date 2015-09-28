@@ -76,4 +76,9 @@ public class MobilePhoneBean extends PartyContactBean {
         }
         return super.getValidationMessageKey();
     }
+
+    @Override
+    public boolean isToBeValidated() {
+        return MobilePhone.requiresValidation();
+    }
 }

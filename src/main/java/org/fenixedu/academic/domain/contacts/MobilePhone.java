@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.joda.time.DateTime;
 
 public class MobilePhone extends MobilePhone_Base {
@@ -147,4 +148,12 @@ public class MobilePhone extends MobilePhone_Base {
         logRefuseAux(person, "label.partyContacts.MobilePhone");
     }
 
+    @Override
+    public boolean isToBeValidated() {
+        return requiresValidation();
+    }
+
+    public static boolean requiresValidation() {
+        return PhoneValidationUtils.getInstance().shouldRun();
+    }
 }

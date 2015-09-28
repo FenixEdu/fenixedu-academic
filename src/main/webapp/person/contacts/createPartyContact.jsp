@@ -19,7 +19,6 @@
 
 --%>
 <%@page import="org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils"%>
-<%@page import="org.fenixedu.academic.ui.struts.action.person.PartyContactsManagementDispatchAction"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -33,9 +32,9 @@
 <%
 PartyContactBean partyContact = (PartyContactBean) request.getAttribute("partyContact");
 request.setAttribute("isPhone", (partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean) && PhoneValidationUtils.getInstance().shouldRun());
-request.setAttribute("hideValidationWarning", !PartyContactsManagementDispatchAction.isToBeValidated(partyContact));
 request.setAttribute("isEmail", partyContact instanceof EmailAddressBean);
 request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddressBean);
+request.setAttribute("hideValidationWarning", !partyContact.isToBeValidated());
 %>
 
 

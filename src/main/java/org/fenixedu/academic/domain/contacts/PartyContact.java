@@ -551,4 +551,7 @@ public abstract class PartyContact extends PartyContact_Base {
         return ContactRoot.getInstance().getPartyContactsSet().stream().filter((type)::isInstance).collect(Collectors.toSet());
     }
 
+    public boolean isToBeValidated() {
+        return true;
+    }
 }

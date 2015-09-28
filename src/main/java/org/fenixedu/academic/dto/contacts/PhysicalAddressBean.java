@@ -180,4 +180,9 @@ public class PhysicalAddressBean extends PartyContactBean {
     public String getPresentationValue() {
         return getAddress();
     }
+
+    @Override
+    public boolean isToBeValidated() {
+        return PhysicalAddress.requiresValidation();
+    }
 }
