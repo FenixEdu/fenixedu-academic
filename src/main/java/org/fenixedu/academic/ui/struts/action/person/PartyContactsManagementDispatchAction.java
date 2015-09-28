@@ -85,11 +85,11 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public boolean editContact(PartyContactBean contact) {
-        return EditPartyContact.run(contact, isToBeValidated(contact));
+        return EditPartyContact.run(contact, contact.isToBeValidated());
     }
 
     public PartyContact createContact(PartyContactBean contact) {
-        return CreatePartyContact.run(contact, isToBeValidated(contact));
+        return CreatePartyContact.run(contact, contact.isToBeValidated());
     }
 
     public ActionForward postbackSetElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -223,7 +223,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response, PartyContact partyContact) {
-        if (partyContact == null || !isToBeValidated(partyContact)) {
+        if (partyContact == null || !partyContact.isToBeValidated()) {
             return backToShowInformation(mapping, actionForm, request, response);
         }
         final PartyContactValidation partyContactValidation = partyContact.getPartyContactValidation();
@@ -365,15 +365,4 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");
     }
-
-    private boolean isToBeValidated(PartyContactBean contact) {
-        return !(contact instanceof WebAddressBean || ((contact instanceof MobilePhoneBean || contact instanceof PhoneBean) && !PhoneValidationUtils
-                .getInstance().shouldRun()));
-    }
-
-    protected boolean isToBeValidated(PartyContact contact) {
-        return !(contact instanceof WebAddress || ((contact instanceof MobilePhone || contact instanceof Phone) && !PhoneValidationUtils
-                .getInstance().shouldRun()));
-    }
-
 }

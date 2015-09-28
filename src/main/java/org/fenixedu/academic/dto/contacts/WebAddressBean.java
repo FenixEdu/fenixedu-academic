@@ -67,4 +67,9 @@ public class WebAddressBean extends PartyContactBean {
     public boolean isValueChanged() {
         return !((WebAddress) getContact()).getUrl().equals(getValue());
     }
+
+    @Override
+    public boolean isToBeValidated() {
+        return false;
+    }
 }

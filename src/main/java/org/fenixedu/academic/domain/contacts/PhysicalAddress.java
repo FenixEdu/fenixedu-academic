@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.contacts;
 import java.util.Comparator;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -193,4 +194,12 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         logRefuseAux(person, "label.partyContacts.PhysicalAddress");
     }
 
+    @Override
+    public boolean isToBeValidated() {
+        return requiresValidation();
+    }
+
+    public static boolean requiresValidation() {
+        return FenixEduAcademicConfiguration.getPhysicalAddressRequiresValidation();
+    }
 }

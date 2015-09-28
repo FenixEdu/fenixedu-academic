@@ -79,4 +79,9 @@ public class PhoneBean extends PartyContactBean {
     public boolean isValueChanged() {
         return !getValue().equals(((Phone) getContact()).getNumber());
     }
+
+    @Override
+    public boolean isToBeValidated() {
+        return Phone.requiresValidation();
+    }
 }

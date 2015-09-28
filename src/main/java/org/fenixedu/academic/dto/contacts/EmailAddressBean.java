@@ -70,4 +70,5 @@ public class EmailAddressBean extends PartyContactBean {
         return EmailAddress.createEmailAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
                 getVisibleToStudents(), getVisibleToStaff());
     }
+
 }

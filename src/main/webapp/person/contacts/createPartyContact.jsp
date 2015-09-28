@@ -32,9 +32,9 @@
 <%
 PartyContactBean partyContact = (PartyContactBean) request.getAttribute("partyContact");
 request.setAttribute("isPhone", (partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean) && PhoneValidationUtils.getInstance().shouldRun());
-request.setAttribute("hideValidationWarning", (partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean) && !PhoneValidationUtils.getInstance().shouldRun());
 request.setAttribute("isEmail", partyContact instanceof EmailAddressBean);
 request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddressBean);
+request.setAttribute("hideValidationWarning", !partyContact.isToBeValidated());
 %>
 
 
