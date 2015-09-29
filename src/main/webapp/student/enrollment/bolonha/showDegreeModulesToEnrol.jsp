@@ -47,11 +47,13 @@
 		</li>
 		<li>
 			<bean:define id="studentCurricularPlan" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan" type="org.fenixedu.academic.domain.StudentCurricularPlan" />
-			<bean:define id="siteUrl" name="studentCurricularPlan" property="degree.siteUrl" type="java.lang.String" />
-			
-			<html:link href="<%= siteUrl %>" styleClass="externallink" target="_blank">
-				<bean:message bundle="STUDENT_RESOURCES"  key="label.viewDegreeCurricularPlan"/>
-			</html:link>
+			<logic:present name="studentCurricularPlan" property="degree.siteUrl">
+				<bean:define id="siteUrl" name="studentCurricularPlan" property="degree.siteUrl" type="java.lang.String" />
+				
+				<html:link href="<%= siteUrl %>" styleClass="externallink" target="_blank">
+					<bean:message bundle="STUDENT_RESOURCES"  key="label.viewDegreeCurricularPlan"/>
+				</html:link>
+			</logic:present>
 		</li>
 		<li>
 			<html:link action="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.externalId" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
