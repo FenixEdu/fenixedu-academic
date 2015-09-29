@@ -20,6 +20,8 @@ package org.fenixedu.academic.ui.renderers;
 
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -65,7 +67,7 @@ public class GradeInputRenderer extends InputRenderer {
                 HtmlMenu menu = new HtmlMenu();
                 menu.setName(slot.getKey().toString() + "_scale");
 
-                menu.createDefaultOption(RenderUtils.getResourceString("renderers.menu.default.title"));
+                menu.createDefaultOption(BundleUtil.getString(Bundle.RENDERER, "renderers.menu.default.title"));
                 for (GradeScale scale : GradeScale.values()) {
                     menu.createOption(RenderUtils.getEnumString(scale)).setValue(scale.getName());
                 }

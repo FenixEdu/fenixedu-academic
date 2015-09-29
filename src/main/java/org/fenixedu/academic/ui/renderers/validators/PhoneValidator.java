@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.ui.renderers.validators;
 
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.PhoneUtil;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
@@ -41,7 +43,7 @@ public class PhoneValidator extends HtmlValidator {
 
     @Override
     public String getErrorMessage() {
-        return RenderUtils.getResourceString("renderers.validator.phone.number");
+        return BundleUtil.getString(Bundle.RENDERER, "renderers.validator.phone.number");
     }
 
 }

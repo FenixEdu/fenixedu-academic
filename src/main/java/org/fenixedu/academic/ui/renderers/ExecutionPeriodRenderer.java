@@ -19,6 +19,8 @@
 package org.fenixedu.academic.ui.renderers;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -37,7 +39,8 @@ public class ExecutionPeriodRenderer extends OutputRenderer {
                 ExecutionSemester executionSemester = (ExecutionSemester) object;
                 StringBuilder text = new StringBuilder();
                 text.append(executionSemester.getExecutionYear().getYear()).append(", ");
-                text.append(executionSemester.getSemester()).append(RenderUtils.getResourceString("label.semester.short"));
+                text.append(executionSemester.getSemester())
+                        .append(BundleUtil.getString(Bundle.RENDERER, "label.semester.short"));
                 return new HtmlText(text.toString());
             }
         };

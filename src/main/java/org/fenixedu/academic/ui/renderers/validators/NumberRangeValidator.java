@@ -19,6 +19,8 @@
 package org.fenixedu.academic.ui.renderers.validators;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
@@ -92,7 +94,7 @@ public class NumberRangeValidator extends HtmlValidator {
     @Override
     public String getErrorMessage() {
         if (!isNumber) {
-            return RenderUtils.getResourceString("renderers.validator.number.integer");
+            return BundleUtil.getString(Bundle.RENDERER, "renderers.validator.number.integer");
         }
 
         if (lowerBound != null && upperBound != null) {
