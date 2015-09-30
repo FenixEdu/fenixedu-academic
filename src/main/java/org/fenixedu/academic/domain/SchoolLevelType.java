@@ -65,10 +65,6 @@ public enum SchoolLevelType implements IPresentableEnum {
     },
 
     TECHNICAL_SPECIALIZATION(true, true, false) {
-        @Override
-        public boolean isHigherEducation() {
-            return true;
-        }
 
         @Override
         public List<String> getEquivalentDegreeClassifications() {
