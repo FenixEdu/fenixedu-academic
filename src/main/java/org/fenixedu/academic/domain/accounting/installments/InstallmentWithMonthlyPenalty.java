@@ -63,12 +63,7 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
             }
         }
 
-        if (maxMonthsToApplyPenalty == null) {
-            throw new DomainException(
-                    "error.accounting.installments.InstallmentWithMonthlyPenalty.maxMonthsToApplyPenalty.cannot.be.null");
-        }
-
-        if (maxMonthsToApplyPenalty <= 0) {
+        if (maxMonthsToApplyPenalty != null && maxMonthsToApplyPenalty <= 0) {
             throw new DomainException(
                     "error.accounting.installments.InstallmentWithMonthlyPenalty.maxMonthsToApplyPenalty.must.be.greater.than.zero");
         }
@@ -94,7 +89,11 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     protected int getNumberOfMonthsToChargePenalty(DateTime when) {
         final Period period = new Period(getWhenStartToApplyPenalty().withDayOfMonth(1).toDateMidnight(), when.toDateMidnight());
         final int numberOfMonths = (period.getYears() * 12) + (period.getMonths() + 1);
-        return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
+        if (getMaxMonthsToApplyPenalty() == null) {
+            return numberOfMonths;
+        } else {
+            return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
+        }
     }
 
     @Override
