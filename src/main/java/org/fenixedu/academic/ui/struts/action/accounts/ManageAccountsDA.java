@@ -120,7 +120,10 @@ public class ManageAccountsDA extends FenixDispatchAction {
     @Atomic(mode = TxMode.WRITE)
     private Person createAccount(final PersonBean bean) {
         final Person person = new Person(bean);
-        person.getPhysicalAddresses().forEach(a -> a.setValid());
+        if (person.getUser() == null) {
+            person.setUser(new User(person.getProfile()));
+        }
+        person.getAllPendingPartyContacts().forEach(partyContact -> partyContact.setValid());
         return person;
     }
 
