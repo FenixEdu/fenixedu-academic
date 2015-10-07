@@ -671,7 +671,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         boolean mustGetByInitialDate = false;
 
         for (final DegreeCurricularPlan degreeCurricularPlan : this.getActiveDegreeCurricularPlans()) {
-            final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+            ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+            if (executionDegree == null) {
+                continue;
+            }
+
             if (mostRecentExecutionDegree == null) {
                 mostRecentExecutionDegree = executionDegree;
             } else {
