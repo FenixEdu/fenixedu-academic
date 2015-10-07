@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentEnrollApp;
-import org.fenixedu.academic.ui.struts.action.student.enrollment.bolonha.BolonhaStudentEnrollmentDispatchAction.ChooseEnrolmentSemester;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -63,23 +62,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             request.setAttribute("student", student);
             return mapping.findForward("choosePersonalDataAuthorizationChoice");
         }
-        ChooseEnrolmentSemester chooseSemester = new ChooseEnrolmentSemester();
-        List<ExecutionSemester> semesters = chooseSemester.getSemestersForCourses();
-        ExecutionSemester executionSemester = null;
-        if (semesters.size() == 1) {
-            executionSemester = semesters.get(0);
-        } else if (semesters.size() < 1) {
-            executionSemester = ExecutionSemester.readActualExecutionSemester();
-        } else {
-            request.setAttribute("chooseSemester", chooseSemester);
-            return mapping.findForward("chooseSemester");
-        }
 
-        return forwardToRegistration(mapping, request, student, executionSemester);
-    }
-
-    private ActionForward forwardToRegistration(ActionMapping mapping, HttpServletRequest request, final Student student,
-            ExecutionSemester executionSemester) {
+        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         request.setAttribute("executionSemester", executionSemester);
         final List<Registration> registrationsToEnrol = getRegistrationsToEnrolByStudent(request);
         if (registrationsToEnrol.size() == 1) {
@@ -92,13 +76,6 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             request.setAttribute("registrationsToChooseSecondCycle", getRegistrationsToChooseSecondCycle(student));
             return mapping.findForward("chooseRegistration");
         }
-    }
-
-    public ActionForward chooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        ChooseEnrolmentSemester chooseSemester = getRenderedObject("chooseSemester");
-        return forwardToRegistration(mapping, request, getLoggedStudent(request), chooseSemester.getChosenSemester());
     }
 
     // TODO: refactor this method

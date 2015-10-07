@@ -27,7 +27,6 @@
 
 	<h2><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses" /></h2>
 
-
 	<bean:define id="periodSemester" name="bolonhaStudentEnrollmentBean" property="executionPeriod.semester" />
 	<bean:define id="executionYearName" name="bolonhaStudentEnrollmentBean" property="executionPeriod.executionYear.year" />
 
@@ -95,13 +94,7 @@
 	<fr:form action="/bolonhaStudentEnrollment.do">
 		<input type="hidden" name="method" />
 		
-		<p class="mtop15 mbottom025">
-			<bean:message bundle="APPLICATION_RESOURCES"  key="label.saveChanges.message"/>:
-		</p>
-		<p class="mtop025 mbottom1">
-			<button type="submit" class="btn btn-primary" onclick="submitForm(this);"><bean:message bundle="APPLICATION_RESOURCES"  key="label.save"/></button>
-		</p>
-		
+		<%@include file="semesterPicker.jsp" %>
 		
 		<fr:edit id="bolonhaStudentEnrolments" name="bolonhaStudentEnrollmentBean">
 			<fr:layout name="bolonha-student-enrolment">
@@ -116,12 +109,7 @@
 			</fr:layout>
 		</fr:edit>
 		
-		
-		<p class="mtop15 mbottom05"><bean:message bundle="APPLICATION_RESOURCES"  key="label.saveChanges.message"/>:</p>
-		<p class="mtop05 mbottom1">
-			<button type="submit" class="btn btn-primary" onclick="submitForm(this);"><bean:message bundle="APPLICATION_RESOURCES"  key="label.save"/></button>
-		</p>
-	
+		<%@include file="semesterPicker.jsp" %>
 	</fr:form>
 
 
@@ -154,11 +142,6 @@
 </table>
 
 <script>
-function submitForm(btn) {
-	btn.form.method.value = 'enrolInDegreeModules';
-	$(btn).addClass('disabled');
-	$(btn).html('${portal.message('resources.ApplicationResources', 'label.saving')}');
-}
 (function () {
 	$('table').removeClass('table');
 })();

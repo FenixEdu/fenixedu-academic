@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.student.enrollment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +49,6 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentEnrollApp;
-import org.fenixedu.academic.ui.struts.action.student.enrollment.bolonha.BolonhaStudentEnrollmentDispatchAction.ChooseEnrolmentSemester;
 import org.fenixedu.academic.ui.struts.config.FenixDomainExceptionHandler;
 import org.fenixedu.academic.ui.struts.config.FenixErrorExceptionHandler;
 import org.fenixedu.academic.util.ExecutionDegreesFormat;
@@ -70,7 +70,6 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "showEnrollmentPage",
                 path = "/student/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment"),
         @Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp"),
-        @Forward(name = "chooseSemester", path = "/student/enrollment/shifts/chooseSemester.jsp"),
         @Forward(name = "showShiftsEnrollment", path = "/student/enrollment/showShiftsEnrollment.jsp"),
         @Forward(name = "prepareEnrollmentViewWarning", path = "/student/enrollment/prepareEnrollmentViewWarning.jsp"),
         @Forward(name = "selectCourses", path = "/student/enrollment/showCoursesByDegree.jsp"),
@@ -92,24 +91,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
 
         final Student student = getUserView(request).getPerson().getStudent();
 
-        ChooseEnrolmentSemester chooseSemester = new ChooseEnrolmentSemester();
-        List<ExecutionSemester> semesters = chooseSemester.getSemestersForClasses();
-        ExecutionSemester executionSemester = null;
-        if (semesters.size() == 1) {
-            executionSemester = semesters.get(0);
-        } else if (semesters.size() < 1) {
-            executionSemester = ExecutionSemester.readActualExecutionSemester();
-        } else {
-            request.setAttribute("chooseSemester", chooseSemester);
-            return mapping.findForward("chooseSemester");
-        }
-
-        request.setAttribute("executionSemesterID", executionSemester.getExternalId());
-        return chooseRegistration(mapping, form, request, response, student);
-    }
-
-    private ActionForward chooseRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, final Student student) {
         final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
         if (toEnrol.size() == 1) {
             request.setAttribute("registrationOID", toEnrol.iterator().next().getExternalId());
@@ -118,14 +99,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
             request.setAttribute("toEnrol", toEnrol);
             return mapping.findForward("chooseRegistration");
         }
-    }
-
-    public ActionForward chooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        ChooseEnrolmentSemester chooseSemester = getRenderedObject("chooseSemester");
-        request.setAttribute("executionSemesterID", chooseSemester.getChosenSemester().getExternalId());
-        return chooseRegistration(mapping, form, request, response, getLoggedPerson(request).getStudent());
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
@@ -149,6 +122,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         String executionSemesterID = (String) getFromRequest(request, "executionSemesterID");
         if (!StringUtils.isEmpty(executionSemesterID)) {
             request.setAttribute("executionSemesterID", executionSemesterID);
+        } else {
+            request.setAttribute("executionSemesterID", ExecutionSemester.readActualExecutionSemester().getExternalId());
         }
         if (getAndSetRegistration(request) == null) {
             addActionMessage(request, "errors.impossible.operation");
@@ -257,7 +232,19 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         request.setAttribute("studentShifts", studentShifts);
         sortStudentShifts(studentShifts);
 
+        addSelectableSemesters(request, registration);
         return mapping.findForward("showShiftsEnrollment");
+    }
+
+    private void addSelectableSemesters(HttpServletRequest request, Registration registration) {
+        List<ExecutionSemester> openedEnrolmentPeriodsSemesters =
+                registration.getLastDegreeCurricularPlan().getEnrolmentPeriodsSet().stream()
+                        .filter(ep -> ep.isValid() && ep.isForClasses()).map(ep -> ep.getExecutionPeriod())
+                        .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).distinct().collect(Collectors.toList());
+        if (openedEnrolmentPeriodsSemesters.size() > 1) {
+            //We only add this collection to the request if more than one period (the currently being edited) has opened enrolments periods 
+            request.setAttribute("openedEnrolmentPeriodsSemesters", openedEnrolmentPeriodsSemesters);
+        }
     }
 
     private void sortStudentShifts(List<Shift> studentShifts) {
