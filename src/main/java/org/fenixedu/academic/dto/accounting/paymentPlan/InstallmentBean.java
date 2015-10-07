@@ -167,8 +167,7 @@ public class InstallmentBean implements Serializable {
             return result;
         }
 
-        return result && this.montlyPenaltyPercentage != null && this.whenToStartApplyPenalty != null
-                && this.maxMonthsToApplyPenalty != null;
+        return result && this.montlyPenaltyPercentage != null && this.whenToStartApplyPenalty != null;
 
     }
 
