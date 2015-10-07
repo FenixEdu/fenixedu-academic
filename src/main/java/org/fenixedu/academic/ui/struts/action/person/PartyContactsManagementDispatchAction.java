@@ -30,8 +30,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonInformationLog;
+import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactValidation;
+import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -50,6 +52,7 @@ import org.fenixedu.academic.service.services.contacts.DeletePartyContact;
 import org.fenixedu.academic.service.services.contacts.EditPartyContact;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.academic.ui.struts.action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -82,11 +85,11 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public boolean editContact(PartyContactBean contact) {
-        return EditPartyContact.run(contact, !(contact instanceof WebAddressBean));
+        return EditPartyContact.run(contact, isToBeValidated(contact));
     }
 
     public PartyContact createContact(PartyContactBean contact) {
-        return CreatePartyContact.run(contact, !(contact instanceof WebAddressBean));
+        return CreatePartyContact.run(contact, isToBeValidated(contact));
     }
 
     public ActionForward postbackSetElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -220,7 +223,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response, PartyContact partyContact) {
-        if (partyContact == null || partyContact instanceof WebAddress) {
+        if (partyContact == null || !isToBeValidated(partyContact)) {
             return backToShowInformation(mapping, actionForm, request, response);
         }
         final PartyContactValidation partyContactValidation = partyContact.getPartyContactValidation();
@@ -361,6 +364,16 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");
+    }
+
+    private boolean isToBeValidated(PartyContactBean contact) {
+        return !(contact instanceof WebAddressBean || ((contact instanceof MobilePhoneBean || contact instanceof PhoneBean) && !PhoneValidationUtils
+                .getInstance().shouldRun()));
+    }
+
+    protected boolean isToBeValidated(PartyContact contact) {
+        return !(contact instanceof WebAddress || ((contact instanceof MobilePhone || contact instanceof Phone) && !PhoneValidationUtils
+                .getInstance().shouldRun()));
     }
 
 }

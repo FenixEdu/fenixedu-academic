@@ -35,6 +35,9 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "ciist.sms.username")
         public String getCIISTSMSUsername();
 
+        @ConfigurationProperty(key = "ciist.sms.shouldRun")
+        public Boolean getCIISTSMSShouldRun();
+
         @ConfigurationProperty(key = "generic.application.email.confirmation.link",
                 defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=confirmEmail&confirmationCode=")
         public String getGenericApplicationEmailConfirmationLink();

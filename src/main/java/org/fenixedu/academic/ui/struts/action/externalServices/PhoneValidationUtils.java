@@ -34,6 +34,7 @@ import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.fenixedu.bennu.core.rest.SystemResource;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.configuration.ConfigurationProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +66,12 @@ public class PhoneValidationUtils {
 
     public boolean canRun() {
         return TWILIO_CLIENT != null && CIIST_CLIENT != null && !CoreConfiguration.getConfiguration().developmentMode();
+    }
+
+    public boolean shouldRun() {
+        Boolean ciistsmsShouldRun = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSShouldRun();
+        //defaults as true to keep old behaviour
+        return ciistsmsShouldRun != null ? ciistsmsShouldRun : true;
     }
 
     private void initCIISTSMSGateway() {
