@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -179,39 +178,7 @@
 			 --%>
 	
 			<bean:define id="documentRequestCreateBean" name="documentRequestCreateBean" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" />
-	
-			<!-- Detailed -->
-			<% if(!documentRequestCreateBean.getChosenServiceRequestType().isLegacy() && documentRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findDetailedOption().get())) { %>
-				<fr:edit id="detailedEdit" name="documentRequestCreateBean" >
-					<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-						<fr:slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
-					</fr:schema>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
-						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
-					</fr:layout>	
-				</fr:edit>
-			<% } %>
-						
-			<!-- Number of units -->
-			<% if(!documentRequestCreateBean.getChosenServiceRequestType().isLegacy() && documentRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) { %>
-				<fr:edit id="numberOfUnitsEdit" name="documentRequestCreateBean" >
-					<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-						<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" 
-							arg0="${documentRequestCreateBean.chosenServiceRequestType.numberOfUnitsLabel.content}"
-							required="true">
-							<fr:validator name="org.fenixedu.academic.ui.renderers.validators.NumberRangeValidator">
-								<fr:property name="lowerBound" value="1" />
-							</fr:validator>
-						</fr:slot>
-					</fr:schema>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
-						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
-					</fr:layout>	
-				</fr:edit>
-			<% } %>
-						
+							
 		</logic:notEmpty>
 		
 		<p class="mtop15">

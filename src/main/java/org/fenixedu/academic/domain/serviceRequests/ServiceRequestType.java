@@ -65,10 +65,6 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         return getAcademicServiceRequestType() != null;
     }
 
-    public boolean hasOption(final ServiceRequestTypeOption option) {
-        return getServiceRequestTypeOptionsSet().contains(option);
-    }
-
     @Atomic
     public void edit(final String code, final LocalizedString name, final boolean active, final boolean payable,
             final Boolean notifyUponConclusion, final ServiceRequestCategory category, final LocalizedString numberOfUnitsLabel) {
@@ -78,29 +74,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         setPayable(payable);
         setNotifyUponConclusion(notifyUponConclusion);
         setServiceRequestCategory(category);
-        if (hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) {
-            setNumberOfUnitsLabel(numberOfUnitsLabel);
-        } else {
-            setNumberOfUnitsLabel(null);
-        }
-
-        checkRules();
-    }
-
-    public boolean isOptionAssociated(final ServiceRequestTypeOption option) {
-        return getServiceRequestTypeOptionsSet().contains(option);
-    }
-
-    @Atomic
-    public void associateOption(ServiceRequestTypeOption serviceRequestTypeOption) {
-        addServiceRequestTypeOptions(serviceRequestTypeOption);
-
-        checkRules();
-    }
-
-    @Atomic
-    public void removeOption(final ServiceRequestTypeOption option) {
-        removeServiceRequestTypeOptions(option);
+        setNumberOfUnitsLabel(null);
 
         checkRules();
     }
@@ -114,8 +88,6 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         if (!isDeletable()) {
             throw new DomainException("error.ServiceRequestType.delete.not.possible");
         }
-
-        getServiceRequestTypeOptionsSet().clear();
 
         setRootDomainObject(null);
 

@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestCategory;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
-import org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption;
 import org.fenixedu.academic.ui.spring.controller.AcademicAdministrationSpringApplication;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -50,8 +49,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.google.common.collect.Lists;
 
 @SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "label.title.manageServiceRequestTypes",
         accessGroup = "#managers")
@@ -126,8 +123,6 @@ public class ServiceRequestTypeController {
     @RequestMapping(value = "/read/{serviceRequestTypeId}")
     public String read(@PathVariable("serviceRequestTypeId") final ServiceRequestType serviceRequestType, final Model model) {
         model.addAttribute("serviceRequestType", serviceRequestType);
-        model.addAttribute("serviceRequestTypeOptionList",
-                Lists.newArrayList(ServiceRequestTypeOption.findAll().collect(Collectors.toList())));
 
         return "academic/manageservicerequesttypes/servicerequesttype/read";
     }
@@ -163,45 +158,6 @@ public class ServiceRequestTypeController {
 
             return update(serviceRequestType, model);
         }
-    }
-
-    private String redirectToReadRequestType(final ServiceRequestType serviceRequestType, final Model model,
-            RedirectAttributes redirectAttributes) {
-        return redirect(
-                "/academic/manageservicerequesttypes/servicerequesttype/search/view/" + serviceRequestType.getExternalId(),
-                model, redirectAttributes);
-    }
-
-    @RequestMapping(value = "/dissociateoption/{serviceRequestTypeId}/{serviceRequestTypeOptionId}")
-    public String dissociateOption(@PathVariable("serviceRequestTypeId") final ServiceRequestType serviceRequestType,
-            @PathVariable("serviceRequestTypeOptionId") final ServiceRequestTypeOption serviceRequestTypeOption,
-            final Model model, final RedirectAttributes redirectAttributes) {
-
-        try {
-            serviceRequestType.removeOption(serviceRequestTypeOption);
-
-            addInfoMessage(BundleUtil.getString(BUNDLE, "message.ServiceRequestTypeOption.dissociation.success"), model);
-        } catch (DomainException ex) {
-            addErrorMessage(BundleUtil.getString(BUNDLE, ex.getKey()), model);
-        }
-
-        return redirectToReadRequestType(serviceRequestType, model, redirectAttributes);
-    }
-
-    @RequestMapping(value = "/associateoption/{serviceRequestTypeId}/{serviceRequestTypeOptionId}")
-    public String associateOption(@PathVariable("serviceRequestTypeId") final ServiceRequestType serviceRequestType,
-            @PathVariable("serviceRequestTypeOptionId") final ServiceRequestTypeOption serviceRequestTypeOption,
-            final Model model, final RedirectAttributes redirectAttributes) {
-
-        try {
-            serviceRequestType.associateOption(serviceRequestTypeOption);
-
-            addInfoMessage(BundleUtil.getString(BUNDLE, "message.ServiceRequestTypeOption.association.success"), model);
-        } catch (DomainException de) {
-            addErrorMessage(BundleUtil.getString(BUNDLE, de.getKey()), model);
-        }
-
-        return redirectToReadRequestType(serviceRequestType, model, redirectAttributes);
     }
 
     /* --- From Base --- */

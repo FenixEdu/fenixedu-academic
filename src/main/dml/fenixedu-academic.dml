@@ -2741,17 +2741,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	LocalizedString numberOfUnitsLabel;
     }
     
-    class serviceRequests.ServiceRequestTypeOption {
-    	String code;
-    	LocalizedString name;
-    	boolean detailedOption;
-    	boolean numberOfUnitsOption;
-    }
-    
-    class serviceRequests.ServiceRequestTypeOptionBooleanValue {
-    	boolean value;
-    }
-    
     class serviceRequests.documentRequests.DocumentPurposeTypeInstance {
 		String code (REQUIRED);
 		LocalizedString name (REQUIRED);
@@ -12377,56 +12366,6 @@ relation ServiceRequestTypeAcademicServiceRequest {
 	}
 }
 
-relation ServiceRequestTypeOptionBennu {
-	protected .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-
-	public serviceRequests.ServiceRequestTypeOption playsRole serviceRequestTypeOptions {
-		multiplicity *;
-	}
-}
-
-relation ServiceRequestTypeServiceRequestTypeOption {
-	
-	public serviceRequests.ServiceRequestType playsRole serviceRequestTypes {
-		multiplicity *;
-	}
-
-	public serviceRequests.ServiceRequestTypeOption playsRole serviceRequestTypeOptions {
-		multiplicity *;
-	}
-}
-
-relation ServiceRequestTypeOptionBooleanValueBennu {
-	protected .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-
-	protected serviceRequests.ServiceRequestTypeOptionBooleanValue playsRole serviceRequestTypeOptionBooleanValues {
-		multiplicity *;
-	}
-}
-
-relation ServiceRequestTypeOptionBooleanValueServiceRequestTypeOption {
-	public serviceRequests.ServiceRequestTypeOption playsRole serviceRequestTypeOption {
-		multiplicity 1..1;
-	}
-
-	protected serviceRequests.ServiceRequestTypeOptionBooleanValue playsRole serviceRequestTypeOptionBooleanValues {
-		multiplicity *;
-	}
-}
-
-relation ServiceRequestTypeOptionBooleanValueAcademicServiceRequest {
-	public serviceRequests.AcademicServiceRequest playsRole academicServiceRequest {
-		multiplicity 0..1;
-	}
-	
-	public serviceRequests.ServiceRequestTypeOptionBooleanValue playsRole serviceRequestTypeOptionBooleanValues {
-		multiplicity *;
-	}
-}
 
 relation EnrolmentEvaluationEctsConversionTable {
     EnrolmentEvaluation playsRole enrolmentEvaluation {

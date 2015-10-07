@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -117,33 +116,7 @@
 	</logic:present>
 	
 	<bean:define id="documentRequestCreateBean" name="documentRequestCreateBean" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" />
-	
-	<!-- Detailed -->
-	<% if(!documentRequestCreateBean.getChosenServiceRequestType().isLegacy() && documentRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findDetailedOption().get())) { %>
-		<fr:view name="documentRequestCreateBean" >
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-				<fr:slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
-			</fr:schema>
-			<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:view>
-	<% } %>
-				
-	<!-- Number of units -->
-	<% if(!documentRequestCreateBean.getChosenServiceRequestType().isLegacy() && documentRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) { %>
-		<fr:view name="documentRequestCreateBean" >
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-				<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" arg0="${documentRequestCreateBean.chosenServiceRequestType.numberOfUnitsLabel.content}"/>
-			</fr:schema>
-			<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
-					<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:view>
-	<% } %>
-	
+		
 	<p class="mtop15">
 		<html:submit><bean:message key="button.confirm" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</p>

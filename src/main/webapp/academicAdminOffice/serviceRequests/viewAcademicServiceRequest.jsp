@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -48,21 +47,6 @@
 	</fr:layout>
 </fr:view>
 
-<!-- Detailed -->
-	<fr:view name="academicServiceRequest" >
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-<% if(!academicServiceRequest.getServiceRequestType().isLegacy() && academicServiceRequest.getServiceRequestType().hasOption(ServiceRequestTypeOption.findDetailedOption().get())) { %>
-			<fr:slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
-<% } %>
-<% if(!academicServiceRequest.getServiceRequestType().isLegacy() && academicServiceRequest.getServiceRequestType().hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) { %>
-			<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" arg0="${academicServiceRequest.serviceRequestType.numberOfUnitsLabel.content}"/>
-<% } %>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
-			<fr:property name="rowClasses" value=",tdhl1,,,,,,,,tdhl1"/>
-		</fr:layout>	
-	</fr:view>
 
 <academic:allowed operation="SERVICE_REQUESTS_RECTORAL_SENDING" office="<%= academicServiceRequest.getAdministrativeOffice() %>">
 	<logic:notEmpty name="academicServiceRequest" property="rectorateSubmissionBatch">

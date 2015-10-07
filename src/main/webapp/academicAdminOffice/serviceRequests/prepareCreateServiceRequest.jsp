@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.serviceRequests.ServiceRequestTypeOption"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -105,41 +104,7 @@
 	</logic:equal>
 	
 	<bean:define id="academicServiceRequestCreateBean" name="academicServiceRequestCreateBean" type="org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestCreateBean" />
-	
-	<logic:notEmpty name="academicServiceRequestCreateBean" property="chosenServiceRequestType">
-	<!-- Detailed -->
-	<% if(!academicServiceRequestCreateBean.getChosenServiceRequestType().isLegacy() && academicServiceRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findDetailedOption().get())) { %>
-		<fr:edit id="detailedEdit" name="academicServiceRequestCreateBean" >
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-				<fr:slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
-				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:edit>
-	<% } %>
-				
-	<!-- Number of units -->
-	<% if(!academicServiceRequestCreateBean.getChosenServiceRequestType().isLegacy() && academicServiceRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) { %>
-		<fr:edit id="numberOfUnitsEdit" name="academicServiceRequestCreateBean" >
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-				<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" 
-					arg0="${academicServiceRequestCreateBean.chosenServiceRequestType.numberOfUnitsLabel.content}"
-					required="true">
-					<fr:validator name="org.fenixedu.academic.ui.renderers.validators.NumberRangeValidator">
-						<fr:property name="lowerBound" value="1" />
-					</fr:validator>
-				</fr:slot>
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
-				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
-			</fr:layout>	
-		</fr:edit>
-	<% } %>
-	</logic:notEmpty>
-	
+		
 	<p class="mtop15">
 		<html:submit><bean:message key="button.confirm"/></html:submit>
 		<html:cancel onclick="this.form.method.value='backToViewRegistration'" ><bean:message key="button.cancel"/></html:cancel>
