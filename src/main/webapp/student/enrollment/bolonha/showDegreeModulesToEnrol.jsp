@@ -80,6 +80,17 @@
 		</span>
 		</p>
 	</logic:messagesPresent>
+	
+	<logic:messagesPresent message="true" property="warning" >
+		<div class="warning0" style="padding: 0.5em;">
+		<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.warnings.in.enrolment" />:</strong></p>
+		<ul class="mvert05">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="warning">
+				<li><span><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+		</div>
+	</logic:messagesPresent>
 
 	<logic:messagesPresent message="true" property="error">
 		<div class="error0 mvert1" style="padding: 0.5em;">
