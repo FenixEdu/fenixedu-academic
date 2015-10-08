@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -15,6 +16,16 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import pt.ist.fenixframework.Atomic;
 
 public class ServiceRequestType extends ServiceRequestType_Base {
+
+    static final public Comparator<ServiceRequestType> COMPARE_BY_CATEGORY_THEN_BY_NAME = new Comparator<ServiceRequestType>() {
+
+        @Override
+        public int compare(ServiceRequestType o1, ServiceRequestType o2) {
+            final int c = o1.getServiceRequestCategory().compareTo(o2.getServiceRequestCategory());
+            return c == 0 ? o1.getName().getContent().compareTo(o2.getName().getContent()) : c;
+        }
+
+    };
 
     protected ServiceRequestType() {
         super();
