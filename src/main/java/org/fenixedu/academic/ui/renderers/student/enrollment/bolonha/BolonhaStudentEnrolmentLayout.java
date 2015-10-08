@@ -527,36 +527,17 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         }
     }
 
-    protected void generateGroups(HtmlBlockContainer blockContainer, StudentCurriculumGroupBean studentCurriculumGroupBean,
-            StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester, int depth) {
-        final List<IDegreeModuleToEvaluate> courseGroupsToEnrol =
-                studentCurriculumGroupBean.getCourseGroupsToEnrolSortedByContext();
-        final List<StudentCurriculumGroupBean> curriculumGroups =
-                studentCurriculumGroupBean.getEnrolledCurriculumGroupsSortedByOrder(executionSemester);
+    protected void generateGroups(final HtmlBlockContainer container, final StudentCurriculumGroupBean bean,
+            final StudentCurricularPlan plan, final ExecutionSemester executionSemester, final int depth) {
 
-        while (!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
+        // first enroled
+        for (final StudentCurriculumGroupBean iter : bean.getEnrolledCurriculumGroupsSortedByOrder(executionSemester)) {
+            generateGroup(container, plan, iter, executionSemester, depth + getRenderer().getWidthDecreasePerLevel());
+        }
 
-            if (!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
-                generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
-                        + getRenderer().getWidthDecreasePerLevel());
-                curriculumGroups.remove(0);
-            } else if (curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
-                generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), studentCurricularPlan, depth
-                        + getRenderer().getWidthDecreasePerLevel());
-                courseGroupsToEnrol.remove(0);
-            } else {
-                Context context = courseGroupsToEnrol.iterator().next().getContext();
-                CurriculumGroup curriculumGroup = curriculumGroups.iterator().next().getCurriculumModule();
-                if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
-                    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester,
-                            depth + getRenderer().getWidthDecreasePerLevel());
-                    curriculumGroups.remove(0);
-                } else {
-                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), studentCurricularPlan,
-                            depth + getRenderer().getWidthDecreasePerLevel());
-                    courseGroupsToEnrol.remove(0);
-                }
-            }
+        // then available to enrol
+        for (final IDegreeModuleToEvaluate iter : bean.getCourseGroupsToEnrolSortedByContext()) {
+            generateCourseGroupToEnroll(container, iter, plan, depth + getRenderer().getWidthDecreasePerLevel());
         }
     }
 
