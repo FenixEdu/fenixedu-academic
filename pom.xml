@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.fenixedu</groupId>
         <artifactId>fenix-framework-project</artifactId>
-        <version>2.2.0</version>
+        <version>2.3.0</version>
     </parent>
 
     <artifactId>fenixedu-academic</artifactId>
