@@ -38,8 +38,12 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Curriculum implements Serializable, ICurriculum {
+
+    private static Logger logger = LoggerFactory.getLogger(Curriculum.class);
 
     static private final long serialVersionUID = -8365985725904139675L;
 
@@ -160,7 +164,11 @@ public class Curriculum implements Serializable, ICurriculum {
     };
 
     public static void setCurricularYearCalculator(Supplier<CurricularYearCalculator> calculator) {
-        CURRICULAR_YEAR_CALCULATOR = calculator;
+        if (calculator != null) {
+            CURRICULAR_YEAR_CALCULATOR = calculator;
+        } else {
+            logger.error("Could not set curriculum year calculator strategy to null");
+        }
     }
 
     public static interface CurriculumGradeCalculator {
@@ -240,7 +248,11 @@ public class Curriculum implements Serializable, ICurriculum {
     };
 
     public static void setCurriculumGradeCalculator(Supplier<CurriculumGradeCalculator> calculator) {
-        CURRICULUM_GRADE_CALCULATOR = calculator;
+        if (calculator != null) {
+            CURRICULUM_GRADE_CALCULATOR = calculator;
+        } else {
+            logger.error("Could not set curriculum grade calculator strategy to null");
+        }
     }
 
     private CurriculumModule curriculumModule;
