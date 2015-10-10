@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -50,6 +51,7 @@ import org.fenixedu.academic.domain.log.EnrolmentEvaluationLog;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsDismissal;
@@ -72,6 +74,8 @@ import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 
@@ -82,6 +86,8 @@ import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
  */
 
 public class Enrolment extends Enrolment_Base implements IEnrolment {
+
+    static final public Logger logger = LoggerFactory.getLogger(Enrolment.class);
 
     static final public Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
         @Override
@@ -332,11 +338,69 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public Optional<EnrolmentEvaluation> getEnrolmentEvaluationBySeasonAndState(final EnrolmentEvaluationState state,
             final EvaluationSeason season) {
-        return getEnrolmentEvaluationBySeason(season).filter(e -> e.getEnrolmentEvaluationState().equals(state)).findAny();
+
+        final Supplier<Stream<EnrolmentEvaluation>> supplier =
+                () -> getEnrolmentEvaluationBySeason(season).filter(e -> e.getEnrolmentEvaluationState().equals(state));
+
+        // just to be precocious
+        if (supplier.get().count() > 1) {
+            logger.warn(this + " has more than one " + season + " in state " + state);
+        }
+
+        return supplier.get().findAny();
     }
 
     final public Stream<EnrolmentEvaluation> getEnrolmentEvaluationBySeason(EvaluationSeason season) {
         return getEvaluationsSet().stream().filter(e -> e.getEvaluationSeason().equals(season));
+    }
+
+    public boolean isEvaluatedInSeason(final EvaluationSeason season, final ExecutionSemester semester) {
+        return getEnrolmentEvaluation(season, semester, Boolean.TRUE).isPresent();
+    }
+
+    public boolean isEnroledInSeason(final EvaluationSeason season, final ExecutionSemester semester) {
+        return getTemporaryEvaluation(season, semester).isPresent();
+    }
+
+    final public Optional<EnrolmentEvaluation> getEnrolmentEvaluation(final EvaluationSeason season,
+            final ExecutionSemester semester, final Boolean assertFinal) {
+
+        final Supplier<Stream<EnrolmentEvaluation>> supplier =
+                () -> getEnrolmentEvaluationBySeason(season).filter(i -> !i.isAnnuled()).filter(
+
+                new java.util.function.Predicate<EnrolmentEvaluation>() {
+
+                    @Override
+                    public boolean test(final EnrolmentEvaluation evaluation) {
+
+                        if (evaluation.getEvaluationSeason().isImprovement() && evaluation.getExecutionPeriod() != semester) {
+                            return false;
+                        }
+
+                        if (assertFinal != null) {
+
+                            if (assertFinal && !evaluation.isFinal()) {
+                                return false;
+                            }
+
+                            // testing isFinal is insuficient, other states are final
+                            if (!assertFinal && !evaluation.isTemporary()) {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    }
+                }
+
+                );
+
+        // just to be precocious
+        if (supplier.get().count() > 1) {
+            logger.warn(this + " has more than one " + season + " for " + semester);
+        }
+
+        return supplier.get().findAny();
     }
 
     protected void createEnrolmentEvaluationWithoutGrade() {
@@ -394,15 +458,20 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         this.addAttends(new Attends(registration, executionCourse));
     }
 
-    final public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Person person,
-            final ExecutionSemester executionSemester) {
+    final public EnrolmentEvaluation createTemporaryEvaluationForImprovement(final Person person,
+            final EvaluationSeason evaluationSeason, final ExecutionSemester executionSemester) {
+
+        PREDICATE_IMPROVEMENT.get().fill(evaluationSeason, executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION)
+                .test(this);
+
         final EnrolmentEvaluation enrolmentEvaluation =
-                new EnrolmentEvaluation(this, EvaluationSeason.readImprovementSeason(), EnrolmentEvaluationState.TEMPORARY_OBJ,
-                        person, executionSemester);
+                new EnrolmentEvaluation(this, evaluationSeason, EnrolmentEvaluationState.TEMPORARY_OBJ, person, executionSemester);
         createAttendForImprovement(executionSemester);
-        
+        RegistrationDataByExecutionYear
+                .getOrCreateRegistrationDataByYear(getRegistration(), executionSemester.getExecutionYear());
+
         Signal.emit(ITreasuryBridgeAPI.IMPROVEMENT_ENROLMENT, new DomainObjectEvent<EnrolmentEvaluation>(enrolmentEvaluation));
-        
+
         return enrolmentEvaluation;
     }
 
@@ -454,16 +523,22 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     }
 
-    final public void unEnrollImprovement(final ExecutionSemester executionSemester) throws DomainException {
-        final EnrolmentEvaluation temporaryImprovement = getImprovementEvaluation();
-        if (temporaryImprovement == null) {
-            throw new DomainException("error.enrolment.cant.unenroll.improvement");
+    final public void deleteTemporaryEvaluationForImprovement(final EvaluationSeason season,
+            final ExecutionSemester executionSemester) throws DomainException {
+
+        final EnrolmentEvaluation temporaryImprovement = getTemporaryEvaluation(season, executionSemester).orElse(null);
+        if (temporaryImprovement == null || !temporaryImprovement.isTemporary()) {
+            throw new DomainException("error.enrolment.cant.unenroll");
         }
-        
+
+        if (temporaryImprovement.getMarkSheet() != null && temporaryImprovement.getMarkSheet().isConfirmed()) {
+            throw new DomainException("error.enrolment.impossible.to.delete.evaluation.has.marksheet");
+        }
+
         TreasuryBridgeAPIFactory.implementation().improvementUnrenrolment(temporaryImprovement);
 
         temporaryImprovement.delete();
-        Attends attends = getAttendsFor(executionSemester);
+        final Attends attends = getAttendsFor(executionSemester);
         if (attends != null) {
             attends.delete();
         }
@@ -474,31 +549,117 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         		&& getCurricularCourse().getAssociatedExecutionCoursesSet().contains(executionCourse);
     }
 
-    final public boolean isImprovingInExecutionPeriodFollowingApproval(final ExecutionSemester improvementExecutionPeriod) {
-        final DegreeModule degreeModule = getDegreeModule();
-        if (hasImprovement() || !isApproved() || !degreeModule.hasAnyParentContexts(improvementExecutionPeriod)) {
-            throw new DomainException("Enrolment.is.not.in.improvement.conditions");
-        }
+    static public Supplier<EnrolmentPredicate> PREDICATE_SEASON = () -> new EnrolmentPredicate() {
 
-        final ExecutionSemester enrolmentExecutionPeriod = getExecutionPeriod();
-        if (improvementExecutionPeriod.isBeforeOrEquals(enrolmentExecutionPeriod)) {
-            throw new DomainException("Enrolment.cannot.improve.enrolment.prior.to.its.execution.period");
-        }
+        public boolean test(final Enrolment enrolment) {
 
-        ExecutionSemester enrolmentNextExecutionPeriod = enrolmentExecutionPeriod.getNextExecutionPeriod();
-        if (improvementExecutionPeriod == enrolmentNextExecutionPeriod) {
+            if (enrolment.isEvaluatedInSeason(getEvaluationSeason(), getExecutionSemester())) {
+                throw new DomainException("error.EvaluationSeason.enrolment.evaluated.in.this.season", enrolment.getName()
+                        .getContent(), getEvaluationSeason().getName().getContent());
+            }
+
+            if (getContext() == EnrolmentEvaluationContext.MARK_SHEET_EVALUATION) {
+                if (enrolment.isEnroledInSeason(getEvaluationSeason(), getExecutionSemester())) {
+                    throw new DomainException("error.EvaluationSeason.already.enroled.in.this.season", enrolment.getName()
+                            .getContent(), getEvaluationSeason().getName().getContent());
+                }
+
+                if (enrolment.isApproved() && !getEvaluationSeason().isImprovement()) {
+                    throw new DomainException("error.EvaluationSeason.evaluation.already.approved", enrolment.getName()
+                            .getContent(), getEvaluationSeason().getName().getContent());
+                }
+            }
+
             return true;
         }
 
-        for (ExecutionSemester executionSemester = enrolmentNextExecutionPeriod; executionSemester != null
-                && executionSemester != improvementExecutionPeriod; executionSemester =
-                executionSemester.getNextExecutionPeriod()) {
-            if (degreeModule.hasAnyParentContexts(executionSemester)) {
+    };
+
+    static public Supplier<EnrolmentPredicate> PREDICATE_IMPROVEMENT = () -> new EnrolmentPredicate() {
+
+        @Override
+        public boolean test(final Enrolment enrolment) {
+            final ExecutionSemester improvementSemester = getExecutionSemester();
+
+            final ExecutionSemester enrolmentSemester = enrolment.getExecutionPeriod();
+            if (improvementSemester.isBeforeOrEquals(enrolmentSemester)) {
+                throw new DomainException("error.EnrolmentEvaluation.improvement.semester.must.be.after.or.equal.enrolment",
+                        enrolment.getName().getContent());
+            }
+
+            if (!enrolment.isApproved()) {
+                throw new DomainException(
+                        "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.hasnt.been.approved",
+                        enrolment.getName().getContent());
+            }
+
+            PREDICATE_SEASON.get().fill(getEvaluationSeason(), improvementSemester, getContext()).test(enrolment);
+
+            final DegreeModule degreeModule = enrolment.getDegreeModule();
+            if (!degreeModule.hasAnyParentContexts(improvementSemester)) {
+                throw new DomainException(
+                        "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.has.no.context.in.present.execution.period",
+                        enrolment.getName().getContent(), improvementSemester.getQualifiedName());
+            }
+
+            // ImprovingInExecutionPeriodFollowingApproval
+            final ExecutionSemester nextSemester = enrolmentSemester.getNextExecutionPeriod();
+            if (improvementSemester == nextSemester) {
+                return true;
+            }
+
+            // ImprovingInExecutionPeriodFollowingApproval
+            if (!improvementSemester.isOneYearAfter(enrolmentSemester)) {
+
+                for (ExecutionSemester iter = nextSemester; iter != null && iter != improvementSemester; iter =
+                        iter.getNextExecutionPeriod()) {
+                    if (degreeModule.hasAnyParentContexts(iter)) {
+                        throw new DomainException(
+                                "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.is.not.improving.in.execution.period.following.approval");
+                    }
+                }
+            }
+
+            return true;
+        }
+
+    };
+
+    static abstract public class EnrolmentPredicate implements java.util.function.Predicate<Enrolment> {
+
+        private EvaluationSeason evaluationSeason;
+        private ExecutionSemester executionSemester;
+        private EnrolmentEvaluationContext context;
+
+        public EvaluationSeason getEvaluationSeason() {
+            return evaluationSeason;
+        }
+
+        public ExecutionSemester getExecutionSemester() {
+            return executionSemester;
+        }
+
+        public EnrolmentEvaluationContext getContext() {
+            return context;
+        }
+
+        public EnrolmentPredicate fill(final EvaluationSeason season, final ExecutionSemester semester,
+                final EnrolmentEvaluationContext context) {
+            this.evaluationSeason = season;
+            this.executionSemester = semester;
+            this.context = context;
+            return this;
+        }
+
+        public boolean testExceptionless(final Enrolment input) {
+
+            try {
+                return test(input);
+
+            } catch (final Throwable t) {
                 return false;
             }
         }
-
-        return true;
     }
 
     final public EnrolmentEvaluation createSpecialSeasonEvaluation(final Person person) {
@@ -554,8 +715,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return result;
     }
 
+    /**
+     * @deprecated Please use Enrolment.hasImprovementFor(ExecutionSemester) where possible
+     */
+    @Deprecated
     final public boolean hasImprovement() {
-        return getEnrolmentEvaluationBySeason(EvaluationSeason.readImprovementSeason()).findAny().isPresent();
+        return getEvaluationsSet().stream().filter(i -> i.getEvaluationSeason().isImprovement()).findAny().isPresent();
     }
 
     final public boolean hasImprovementFor(ExecutionSemester executionSemester) {
@@ -961,9 +1126,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return EvaluationConfiguration.getInstance().getFinalEnrolmentEvaluation(this, season);
     }
 
-    final public EnrolmentEvaluation getImprovementEvaluation() {
-        return getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ,
-                EvaluationSeason.readImprovementSeason()).orElse(null);
+    private Optional<EnrolmentEvaluation> getTemporaryEvaluation(final EvaluationSeason season, final ExecutionSemester semester) {
+        return getEnrolmentEvaluation(season, semester, Boolean.FALSE);
     }
 
     @Override
@@ -1107,7 +1271,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Double getEnroledEctsCredits(final ExecutionYear executionYear) {
         return isValid(executionYear) && isEnroled() ? getEctsCredits() : Double.valueOf(0d);
     }
-    
+
     @Override
     final public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
         return isEnroledInExecutionPeriod(curricularCourse, executionSemester) ? this : null;
@@ -1139,14 +1303,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
         return isBolonhaDegree() && !parentAllowAccumulatedEctsCredits() ? 0d : getStudentCurricularPlan()
                 .getAccumulatedEctsCredits(executionSemester, getCurricularCourse());
-    }
-
-    final public boolean isImprovementEnroled() {
-        return isEnrolmentStateApproved() && getImprovementEvaluation() != null;
-    }
-
-    final public boolean canBeImproved() {
-        return isEnrolmentStateApproved() && !hasImprovement();
     }
 
     final public boolean isSpecialSeasonEnroled(final ExecutionYear executionYear) {

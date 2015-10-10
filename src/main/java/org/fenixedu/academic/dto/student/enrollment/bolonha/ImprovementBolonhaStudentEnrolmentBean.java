@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.dto.student.enrollment.bolonha;
 
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -27,21 +28,21 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
+@SuppressWarnings("serial")
 public class ImprovementBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
 
-    static private final long serialVersionUID = 3655858704185977193L;
+    private EvaluationSeason evaluationSeason;
 
     public ImprovementBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester) {
-        super(studentCurricularPlan, executionSemester, createBean(studentCurricularPlan, executionSemester),
+            final ExecutionSemester executionSemester, final EvaluationSeason evaluationSeason) {
+        super(studentCurricularPlan, executionSemester, createBean(studentCurricularPlan, executionSemester, evaluationSeason),
                 CurricularRuleLevel.IMPROVEMENT_ENROLMENT);
+        setEvaluationSeason(evaluationSeason);
     }
 
-    private static ImprovementStudentCurriculumGroupBean createBean(StudentCurricularPlan scp, ExecutionSemester semester) {
-        if (scp.isEmptyDegree()) {
-            return new EmptyDegreeImprovementStudentCurriculumGroupBean(scp.getRoot(), semester);
-        }
-        return new ImprovementStudentCurriculumGroupBean(scp.getRoot(), semester);
+    private static StudentCurriculumGroupBean createBean(final StudentCurricularPlan scp, final ExecutionSemester semester,
+            final EvaluationSeason evaluationSeason) {
+        return ImprovementStudentCurriculumGroupBean.create(scp.getRoot(), semester, evaluationSeason);
     }
 
     @Override
@@ -52,6 +53,14 @@ public class ImprovementBolonhaStudentEnrolmentBean extends BolonhaStudentEnroll
     @Override
     public String getFuncionalityTitle() {
         return BundleUtil.getString(Bundle.ACADEMIC, "label.improvement.enrolment");
+    }
+
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
+    }
+
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
 }

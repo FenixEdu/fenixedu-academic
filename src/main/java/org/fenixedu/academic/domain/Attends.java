@@ -526,7 +526,8 @@ public class Attends extends Attends_Base {
             return StudentAttendsStateType.NOT_ENROLED;
         }
 
-        if (!getEnrolment().getExecutionPeriod().equals(getExecutionPeriod()) && getEnrolment().hasImprovement()) {
+        if (!getEnrolment().getExecutionPeriod().equals(getExecutionPeriod())
+                && getEnrolment().hasImprovementFor(getExecutionPeriod())) {
             return StudentAttendsStateType.IMPROVEMENT;
         }
 

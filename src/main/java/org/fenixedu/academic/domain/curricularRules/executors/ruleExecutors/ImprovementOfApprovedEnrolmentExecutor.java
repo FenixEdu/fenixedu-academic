@@ -19,13 +19,15 @@
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
-import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class ImprovementOfApprovedEnrolmentExecutor extends CurricularRuleExecutor {
 
@@ -44,44 +46,18 @@ public class ImprovementOfApprovedEnrolmentExecutor extends CurricularRuleExecut
     @Override
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-        final ImprovementOfApprovedEnrolment improvementOfApprovedEnrolment = (ImprovementOfApprovedEnrolment) curricularRule;
-        final Enrolment enrolment = improvementOfApprovedEnrolment.getEnrolment();
-        final DegreeModule degreeModule = enrolment.getDegreeModule();
 
-        if (enrolment.hasImprovement()) {
-            return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-                    "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.already.enroled.in.improvement",
-                    degreeModule.getName());
-        }
-
-        if (!enrolment.isApproved()) {
-            return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-                    "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.hasnt.been.approved",
-                    degreeModule.getName());
-        }
-
-        if (!enrolment.isBolonhaDegree()) {
-            return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-        }
-
+        final ImprovementOfApprovedEnrolment rule = (ImprovementOfApprovedEnrolment) curricularRule;
+        final Enrolment enrolment = rule.getEnrolment();
+        final EvaluationSeason evaluationSeason = rule.getEvaluationSeason();
         final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
-        if (!executionSemester.isOneYearAfter(enrolment.getExecutionPeriod())) {
-            if (!degreeModule.hasAnyParentContexts(executionSemester)) {
-                return RuleResult
-                        .createFalse(
-                                sourceDegreeModuleToEvaluate.getDegreeModule(),
-                                "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.has.no.context.in.present.execution.period",
-                                degreeModule.getName(), executionSemester.getQualifiedName());
-            }
-
-            if (!enrolment.isImprovingInExecutionPeriodFollowingApproval(executionSemester)) {
-                return RuleResult
-                        .createFalse(
-                                sourceDegreeModuleToEvaluate.getDegreeModule(),
-                                "curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.is.not.improving.in.execution.period.following.approval",
-                                degreeModule.getName());
-            }
+        try {
+            Enrolment.PREDICATE_IMPROVEMENT.get()
+                    .fill(evaluationSeason, executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION).test(enrolment);
+        } catch (final DomainException e) {
+            return RuleResult.createFalseWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
+                    e.getLocalizedMessage());
         }
 
         return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());

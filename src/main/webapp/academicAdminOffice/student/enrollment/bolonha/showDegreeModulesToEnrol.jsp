@@ -36,9 +36,20 @@
 <p class="mtop15 mbottom025">
 	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.executionPeriod"/>:</strong> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.periodDescription" arg0="<%=periodSemester.toString()%>" arg1="<%=executionYearName.toString()%>" />
 </p>
-<p class="mtop0 mbottom15">
+<p class="mtop0 mbottom025">
 	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.registration"/>:</strong> <bean:write name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan.degreeCurricularPlan.presentationName"/> 
 </p>
+<logic:present name="evaluationSeason">
+	<p class="mtop0 mbottom025">
+		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.evaluationSeason"/>:</strong> <bean:write name="evaluationSeason" /> 
+	</p>
+	<p class="mtop0 mbottom025">
+		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.ects.enrolled"/>:</strong> <bean:write name="enroledEctsCredits" /> 
+	</p>
+	<p class="mtop0 mbottom025">
+		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.ects.improvement"/>:</strong> <bean:write name="enroledImprovementsEctsCredits" /> 
+	</p>
+</logic:present>
 
 <bean:define id="student" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan.registration.student" />
 

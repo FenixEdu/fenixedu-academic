@@ -634,12 +634,12 @@
 
 <schema name="student.show.enrolments" type="org.fenixedu.academic.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="name" key="label.name" />
-	<slot name="degreeModule.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />	
-	<slot name="executionPeriod" layout="format" key="label.semester" >
-		<property name="format" value="${semester}º Sem ${executionYear.year}"/>
-	</slot>
 	<slot name="curriculumGroup.fullPath" key="label.group"/>
-	<slot name="weigth" key="label.ects.credits"/>
+	<slot name="weigthForCurriculum" key="label.set.evaluation.enrolment.weight" />
+	<slot name="ectsCreditsForCurriculum" key="label.ects.credits" />
+	<slot name="creationDateDateTime" key="label.date" layout="no-time" />
+	<slot name="enrollmentState.description" key="label.set.evaluation.enrolment.state" />
+	<slot name="grade" key="label.set.evaluation.grade.value.simple" />
 </schema>
 
 <schema name="student.statutes.current" bundle="ACADEMIC_OFFICE_RESOURCES" 

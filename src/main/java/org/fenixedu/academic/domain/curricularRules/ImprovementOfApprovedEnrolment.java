@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -32,12 +33,14 @@ import org.fenixedu.academic.dto.GenericPair;
 public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent {
 
     private Enrolment toApply;
+    private EvaluationSeason evaluationSeason;
 
-    public ImprovementOfApprovedEnrolment(final Enrolment enrolment) {
-        if (enrolment == null) {
+    public ImprovementOfApprovedEnrolment(final Enrolment enrolment, final EvaluationSeason evaluationSeason) {
+        if (enrolment == null || evaluationSeason == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         } else {
             this.toApply = enrolment;
+            this.evaluationSeason = evaluationSeason;
         }
     }
 
@@ -48,6 +51,10 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
 
     public Enrolment getEnrolment() {
         return toApply;
+    }
+
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
     @Override

@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -54,7 +55,8 @@ public class EnrolmentContext {
 
     private CurricularRuleLevel curricularRuleLevel;
 
-    //private Person responsiblePerson;
+    private EvaluationSeason evaluationSeason;
+
     private final User userView;
 
     public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
@@ -78,6 +80,13 @@ public class EnrolmentContext {
         this.executionSemester = executionSemester;
         this.curriculumModulesToRemove = curriculumModulesToRemove;
         this.curricularRuleLevel = curricularRuleLevel;
+    }
+
+    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+            final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
+            final CurricularRuleLevel curricularRuleLevel, final EvaluationSeason evaluationSeason) {
+        this(studentCurricularPlan, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
+        setEvaluationSeason(evaluationSeason);
     }
 
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate() {
@@ -133,6 +142,14 @@ public class EnrolmentContext {
 
     public void setCurricularRuleLevel(CurricularRuleLevel curricularRuleLevel) {
         this.curricularRuleLevel = curricularRuleLevel;
+    }
+
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
+    }
+
+    public void setEvaluationSeason(final EvaluationSeason input) {
+        this.evaluationSeason = input;
     }
 
     public Person getResponsiblePerson() {

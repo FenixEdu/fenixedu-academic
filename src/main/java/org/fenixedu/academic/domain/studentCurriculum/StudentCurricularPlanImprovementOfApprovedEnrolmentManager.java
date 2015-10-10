@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
@@ -35,10 +36,7 @@ import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
-import org.fenixedu.bennu.signals.DomainObjectEvent;
-import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.LocalDate;
 
 public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends StudentCurricularPlanEnrolment {
@@ -73,7 +71,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
         for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
             if (curriculumModule instanceof Enrolment) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                enrolment.unEnrollImprovement(getExecutionSemester());
+                enrolment.deleteTemporaryEvaluationForImprovement(getEvaluationSeason(), getExecutionSemester());
             } else {
                 throw new DomainException(
                         "StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
@@ -99,8 +97,8 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
                 if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
                     final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-                    result.put(degreeModuleToEvaluate,
-                            Collections.<ICurricularRule> singleton(new ImprovementOfApprovedEnrolment(enrolment)));
+                    result.put(degreeModuleToEvaluate, Collections
+                            .<ICurricularRule> singleton(new ImprovementOfApprovedEnrolment(enrolment, getEvaluationSeason())));
 
                 } else {
                     throw new DomainException(
@@ -115,7 +113,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
         Collection<Enrolment> toCreate = new HashSet<Enrolment>();
-        
+
         for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
 
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
@@ -136,8 +134,16 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
         if (!toCreate.isEmpty()) {
             getStudentCurricularPlan().createEnrolmentEvaluationForImprovement(toCreate, getResponsiblePerson(),
-                    getExecutionSemester());
+                    getExecutionSemester(), getEvaluationSeason());
         }
+    }
+
+    public EnrolmentContext getEnrolmentContext() {
+        return (EnrolmentContext) enrolmentContext;
+    }
+
+    public EvaluationSeason getEvaluationSeason() {
+        return getEnrolmentContext().getEvaluationSeason();
     }
 
     @Override

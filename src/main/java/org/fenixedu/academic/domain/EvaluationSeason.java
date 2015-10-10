@@ -56,20 +56,56 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
         return getSpecialAuthorization();
     }
 
+    /**
+     * @deprecated Hazardous behaviour.
+     *             Random EvaluationSeason may be returned if multiple EvaluationSeasons are created with this property
+     */
+    @Deprecated
     public static EvaluationSeason readNormalSeason() {
         return all().filter(EvaluationSeason::isNormal).findAny().orElse(null);
     }
 
+    public static Stream<EvaluationSeason> readNormalSeasons() {
+        return all().filter(EvaluationSeason::isNormal);
+    }
+
+    /**
+     * @deprecated Hazardous behaviour.
+     *             Random EvaluationSeason may be returned if multiple EvaluationSeasons are created with this property
+     */
+    @Deprecated
     public static EvaluationSeason readSpecialSeason() {
         return all().filter(EvaluationSeason::isSpecial).findAny().orElse(null);
     }
 
+    public static Stream<EvaluationSeason> readSpecialSeasons() {
+        return all().filter(EvaluationSeason::isSpecial);
+    }
+
+    /**
+     * @deprecated Hazardous behaviour.
+     *             Random EvaluationSeason may be returned if multiple EvaluationSeasons are created with this property
+     */
+    @Deprecated
     public static EvaluationSeason readImprovementSeason() {
         return all().filter(EvaluationSeason::isImprovement).findAny().orElse(null);
     }
 
+    public static Stream<EvaluationSeason> readImprovementSeasons() {
+        return all().filter(EvaluationSeason::isImprovement);
+    }
+
+    /**
+     * @deprecated Hazardous behaviour.
+     *             Random EvaluationSeason may be returned if multiple EvaluationSeasons are created with this property
+     */
+    @Deprecated
     public static EvaluationSeason readSpecialAuthorization() {
         return all().filter(EvaluationSeason::isSpecialAuthorization).findAny().orElse(null);
+    }
+
+    public static Stream<EvaluationSeason> readSpecialAuthorizations() {
+        return all().filter(EvaluationSeason::isSpecialAuthorization);
     }
 
     public static Stream<EvaluationSeason> all() {
@@ -99,4 +135,5 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
     public int compareTo(EvaluationSeason o) {
         return getExternalId().compareTo(o.getExternalId());
     }
+
 }

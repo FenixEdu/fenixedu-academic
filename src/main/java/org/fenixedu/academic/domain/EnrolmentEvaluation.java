@@ -303,21 +303,23 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
     public boolean isTemporary() {
-        return getEnrolmentEvaluationState() != null
-                && getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ);
+        return EnrolmentEvaluationState.TEMPORARY_OBJ.equals(getEnrolmentEvaluationState());
     }
 
     public boolean isFinal() {
-        return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ)
-                || getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ);
+        return EnrolmentEvaluationState.FINAL_OBJ.equals(getEnrolmentEvaluationState()) || isRectification();
     }
 
     public boolean isRectification() {
-        return this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ);
+        return EnrolmentEvaluationState.RECTIFICATION_OBJ.equals(getEnrolmentEvaluationState());
     }
 
     public boolean isRectified() {
-        return this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ);
+        return EnrolmentEvaluationState.RECTIFIED_OBJ.equals(getEnrolmentEvaluationState());
+    }
+
+    public boolean isAnnuled() {
+        return EnrolmentEvaluationState.ANNULED_OBJ.equals(getEnrolmentEvaluationState());
     }
 
     public void delete() {
@@ -437,13 +439,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
     public boolean isPayable() {
-        final IImprovementTreasuryEvent event = TreasuryBridgeAPIFactory.implementation().getImprovementTaxTreasuryEvent(getRegistration(), getExecutionYear());
-        
+        final IImprovementTreasuryEvent event =
+                TreasuryBridgeAPIFactory.implementation().getImprovementTaxTreasuryEvent(getRegistration(), getExecutionYear());
+
         return event != null && event.isWithDebitEntry(this);
     }
 
     public boolean isPayed() {
-        final IImprovementTreasuryEvent event = TreasuryBridgeAPIFactory.implementation().getImprovementTaxTreasuryEvent(getRegistration(), getExecutionYear());
+        final IImprovementTreasuryEvent event =
+                TreasuryBridgeAPIFactory.implementation().getImprovementTaxTreasuryEvent(getRegistration(), getExecutionYear());
 
         return event != null && event.isPayed(this);
     }

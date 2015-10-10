@@ -121,6 +121,8 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
+import com.google.common.collect.Sets;
+
 /**
  * @author David Santos in Jun 24, 2004
  */
@@ -1690,13 +1692,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     // Improvements
     final public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate, final Person person,
-            final ExecutionSemester executionSemester) {
+            final ExecutionSemester executionSemester, final EvaluationSeason evaluationSeason) {
 
         final Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
 
         for (final Enrolment enrolment : toCreate) {
-            created.add(enrolment.createEnrolmentEvaluationForImprovement(person, executionSemester));
+            created.add(enrolment.createTemporaryEvaluationForImprovement(person, evaluationSeason, executionSemester));
         }
+
+// qubExtension, removed, using ITreasuryBridgeAPI instead in enrolment.createTemporaryEvaluationForImprovement
+//        if (isToPayImprovementOfApprovedEnrolments()) {
+//            new ImprovementOfApprovedEnrolmentEvent(this.getDegree().getAdministrativeOffice(), getPerson(), created);
+//        }
     }
 
     private boolean isToPayImprovementOfApprovedEnrolments() {
@@ -1704,23 +1711,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return !protocol.isMilitaryAgreement();
     }
 
-    final public List<Enrolment> getEnroledImprovements() {
-        final List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
-        for (final Enrolment enrolment : getEnrolmentsSet()) {
-            if (enrolment.isImprovementEnroled()) {
-                enroledImprovements.add(enrolment);
-            }
-        }
-        return enroledImprovements;
-    }
+    public Set<EnrolmentEvaluation> getEnroledImprovements(final ExecutionSemester input) {
+        final Set<EnrolmentEvaluation> result = Sets.newHashSet();
 
-    public List<Enrolment> getEnroledImprovements(final ExecutionSemester executionSemester) {
-        final List<Enrolment> result = new ArrayList<Enrolment>();
         for (final Enrolment enrolment : getEnrolmentsSet()) {
-            if (enrolment.hasImprovementFor(executionSemester)) {
-                result.add(enrolment);
+            for (final EnrolmentEvaluation evaluation : enrolment.getEvaluationsSet()) {
+                final EvaluationSeason season = evaluation.getEvaluationSeason();
+
+                if (season.isImprovement() && enrolment.isEnroledInSeason(season, input)) {
+                    result.add(evaluation);
+                }
             }
         }
+
         return result;
     }
 
@@ -1761,11 +1764,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public RuleResult enrol(final ExecutionSemester executionSemester,
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel) {
+
+        check(this, StudentCurricularPlanPredicates.ENROL);
+
+        return enrol(executionSemester, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel,
+                (EvaluationSeason) null);
+    }
+
+    @Atomic
+    final public RuleResult enrol(final ExecutionSemester executionSemester,
+            final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
+            final CurricularRuleLevel curricularRuleLevel, final EvaluationSeason season) {
+
         check(this, StudentCurricularPlanPredicates.ENROL);
 
         final EnrolmentContext enrolmentContext =
                 new EnrolmentContext(this, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
-                        curricularRuleLevel);
+                        curricularRuleLevel, season);
 
         return org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
                 .manage();
