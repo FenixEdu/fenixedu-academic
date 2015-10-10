@@ -138,6 +138,7 @@ public class Registration extends Registration_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(Registration.class);
 
+    @Deprecated
     static private final java.util.function.Predicate<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = DegreeType.oneOf(
             DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree, DegreeType::isBolonhaMasterDegree,
             DegreeType::isAdvancedSpecializationDiploma);
@@ -3027,10 +3028,10 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isEnrolmentByStudentAllowed() {
-        return isActive() && getRegistrationProtocol().isEnrolmentByStudentAllowed()
-                && isEnrolmentByStudentAllowed(getDegreeType());
+        return isActive() && getRegistrationProtocol().isEnrolmentByStudentAllowed();
     }
 
+    @Deprecated
     public boolean isEnrolmentByStudentAllowed(DegreeType type) {
         return DEGREE_TYPES_TO_ENROL_BY_STUDENT.test(type);
     }

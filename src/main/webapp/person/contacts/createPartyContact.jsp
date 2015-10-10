@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -30,11 +31,11 @@
 
 <%
 PartyContactBean partyContact = (PartyContactBean) request.getAttribute("partyContact");
-request.setAttribute("isPhone", partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean);
+request.setAttribute("isPhone", (partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean) && PhoneValidationUtils.getInstance().shouldRun());
+request.setAttribute("hideValidationWarning", (partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean) && !PhoneValidationUtils.getInstance().shouldRun());
 request.setAttribute("isEmail", partyContact instanceof EmailAddressBean);
 request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddressBean);
 %>
-
 
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -42,6 +43,8 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
     </p>
 </html:messages>
 
+
+<logic:notEqual name="hideValidationWarning" value="true">
 <table class="mvert1 tdtop">
 		<tbody>
 			<tr>
@@ -49,6 +52,9 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
 				<!--   <div style="padding: 0 2em;">-->
                     <div class="infoop2">
                         <logic:equal name="isPhone" value="true">
+                        	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.Phone"/>
+						</logic:equal>
+						<logic:equal name="isPhoneNoValidation" value="true">
                         	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.Phone"/>
 						</logic:equal>
 						<logic:equal name="isEmail" value="true">
@@ -62,6 +68,7 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
             </tr>
         </tbody>
 </table>
+</logic:notEqual>
 
 <logic:equal name="isPhone" value="true">
 	<bean:define id="confirm">

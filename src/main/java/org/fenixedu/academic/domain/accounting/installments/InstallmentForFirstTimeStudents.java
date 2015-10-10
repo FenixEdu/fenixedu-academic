@@ -61,14 +61,9 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
 
     private void checkParameters(final Integer maxMonthsToApplyPenalty, final Integer numberOfDaysToStartApplyingPenalty) {
 
-        if (maxMonthsToApplyPenalty == null) {
+        if (maxMonthsToApplyPenalty != null && maxMonthsToApplyPenalty <= 0) {
             throw new DomainException(
-                    "error.accounting.installments.InstallmentForFirstTimeStudents.maxMonthsToApplyPenalty.cannot.be.null");
-        }
-
-        if (maxMonthsToApplyPenalty <= 0) {
-            throw new DomainException(
-                    "error.accounting.installments.InstallmentForFirstTimeStudents.maxMonthsToApplyPenalty.cannot.be.null");
+                    "error.accounting.installments.InstallmentForFirstTimeStudents.maxMonthsToApplyPenalty.must.be.greater.than.zero");
         }
 
         if (numberOfDaysToStartApplyingPenalty == null) {
@@ -107,7 +102,11 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
     private int getNumberOfMonthsToChargePenalty(final Event event, final DateTime when) {
         final Period period = new Period(getWhenStartToApplyPenalty(event, when), when.toDateMidnight());
         final int numberOfMonths = (period.getYears() * 12) + (period.getMonths() + 1);
-        return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
+        if (getMaxMonthsToApplyPenalty() == null) {
+            return numberOfMonths;
+        } else {
+            return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
+        }
     }
 
     @Override

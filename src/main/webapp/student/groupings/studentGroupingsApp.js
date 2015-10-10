@@ -53,7 +53,7 @@ app.controller("GroupingsCtrl", ['$scope', '$rootScope', '$http',
     $scope.currentPerson = {
       id: window.BennuPortal.id,
       username: window.BennuPortal.username,
-      name: window.BennuPortal.name,
+      name: window.BennuPortal.displayName,
       email: window.BennuPortal.email,
       enrolled: true
     };
@@ -188,7 +188,7 @@ app.controller("StudentGroupCtrl", ['$scope', '$rootScope', '$http', '$routePara
     $scope.currentPerson = {
       id: window.BennuPortal.id,
       username: window.BennuPortal.username,
-      name: window.BennuPortal.name,
+      name: window.BennuPortal.displayName,
       email: window.BennuPortal.email,
       enrolled: true
     };

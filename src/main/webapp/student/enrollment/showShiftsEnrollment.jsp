@@ -80,6 +80,23 @@
 	</logic:notPresent>
 
 
+	<logic:present name="openedEnrolmentPeriodsSemesters">		
+		<ul class="nav nav-tabs">
+			<logic:iterate id="period" name="openedEnrolmentPeriodsSemesters">				
+				<logic:equal name="executionSemesterID" value="${period.externalId}">
+					<li role="presentation" class="active"><a href="#">${period.qualifiedName}</a></li>
+				</logic:equal>
+				<logic:notEqual name="executionSemesterID" value="${period.externalId}">
+					<li role="presentation">							
+						<html:link action="studentShiftEnrollmentManager.do?method=prepareShiftEnrollment&registrationOID=${registration.externalId}&executionSemesterID=${period.externalId}">
+							${period.qualifiedName}
+						</html:link>
+					</li>
+				</logic:notEqual>
+			</logic:iterate>	
+		</ul>			
+	</logic:present>		
+
 	<div style="background: #fafafa; border: 1px solid #ccc; padding: 0.5em 1em;">
 
 	<logic:present name="studentShifts">
