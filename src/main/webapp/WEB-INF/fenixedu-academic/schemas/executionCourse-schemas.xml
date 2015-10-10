@@ -221,7 +221,7 @@
 	<slot name="shift" key="label.shift" layout="menu-select-postback" 
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ListShiftsToSummariesManagementProvider" />				
-		<property name="eachLayout"	value="shift-plain" />
+		<property name="format"	value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>	
 </schema>
@@ -371,7 +371,7 @@
 	</slot>
 	<slot name="shift" layout="menu-select-postback">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ListShiftsToShowSummariesProvider" />				
-		<property name="eachLayout" value="shift-plain" />
+		<property name="format"	value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 		<property name="defaultText" value="label.summaries.all" />
 		<property name="key" value="true"/>
@@ -406,7 +406,7 @@
 	<slot name="date" validator="org.fenixedu.academic.ui.renderers.validators.DateTimeValidator"/>
 	<slot name="lessonInstancePrettyPrint" key="label.lesson" />
 	<slot name="lesson.shift.shiftTypesPrettyPrint" key="label.type"/>
-	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
+	<slot name="lesson.shift.presentationName" key="label.shift"/>
 	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>		
 </schema>
 <schema name="EditPossibleNextSummaryLessonAndDates" type="org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
@@ -448,7 +448,7 @@
 	<slot name="date.year" key="labe.summary.year"/>
 	<slot name="lessonInstancePrettyPrint" key="label.lesson" />		
 	<slot name="shiftTypesPrettyPrint" key="label.type"/>
-	<slot name="shift" key="label.shift" layout="shift-plain"/>
+	<slot name="shift.presentationName" key="label.shift"/>
 	<slot name="shift.classesPrettyPrint" key="label.classes"/>			
 	<slot name="writtenSummary" key="label.summary"/>
 </schema>
