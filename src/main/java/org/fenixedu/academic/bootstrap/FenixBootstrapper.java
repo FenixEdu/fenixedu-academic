@@ -393,23 +393,25 @@ public class FenixBootstrapper {
             } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_REQUEST) {
                 ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
                         academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
-                        DocumentRequestType.DIPLOMA_REQUEST, true, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+                        DocumentRequestType.DIPLOMA_REQUEST, true, Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
                 ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
                         academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
-                        DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+                        DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true, Boolean.FALSE, Boolean.FALSE,
+                        ServiceRequestCategory.SERVICES);
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.REGISTRY_DIPLOMA_REQUEST) {
                 ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
                         academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
-                        DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+                        DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true, Boolean.FALSE, Boolean.FALSE,
+                        ServiceRequestCategory.SERVICES);
                 continue;
             }
 
             ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
                     academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType, null, true, Boolean.FALSE,
-                    ServiceRequestCategory.SERVICES);
+                    Boolean.FALSE, ServiceRequestCategory.SERVICES);
         }
 
         for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
@@ -427,7 +429,7 @@ public class FenixBootstrapper {
                     documentRequestType.name(),
                     BundleUtil.getLocalizedString("resources.EnumerationResources",
                             "DocumentRequestType." + documentRequestType.name()), false, AcademicServiceRequestType.DOCUMENT,
-                    documentRequestType, true, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+                    documentRequestType, true, Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
         }
     }
 
