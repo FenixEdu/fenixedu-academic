@@ -18,58 +18,70 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA.DegreesMergeBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+import com.google.common.collect.Lists;
 
 public class DestinationExecutionCoursesProvider implements DataProvider {
 
     @Override
-    public Object provide(Object source, Object currentValue) {
+    @SuppressWarnings("serial")
+    public Converter getConverter() {
 
-        final DegreesMergeBean degreeBean = (DegreesMergeBean) source;
+        return new BiDirectionalConverter() {
 
-        Degree destinationDegree = degreeBean.getDestinationDegree();
-
-        List<ExecutionCourse> destinationExecutionCourses =
-                destinationDegree.getExecutionCourses(degreeBean.getAcademicInterval());
-
-        Collections.sort(destinationExecutionCourses, DomainObjectUtil.COMPARATOR_BY_ID);
-
-        removeDuplicates(destinationExecutionCourses);
-
-        Collections.sort(destinationExecutionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-
-        return destinationExecutionCourses;
-    }
-
-    public static void removeDuplicates(final List<ExecutionCourse> beanList) {
-        if (beanList.isEmpty()) {
-            return;
-        }
-
-        final Iterator<ExecutionCourse> iter = beanList.iterator();
-        ExecutionCourse prev = iter.next();
-        while (iter.hasNext()) {
-            final ExecutionCourse curr = iter.next();
-            if (curr.equals(prev)) {
-                iter.remove();
+            @Override
+            @SuppressWarnings("rawtypes")
+            public Object convert(final Class type, final Object value) {
+                final ExecutionCourseBean result = new ExecutionCourseBean();
+                result.setDestinationExecutionCourse((ExecutionCourse) new DomainObjectKeyConverter().convert(type, value));
+                return result;
             }
-            prev = curr;
-        }
+
+            @Override
+            public String deserialize(final Object object) {
+                String result = "";
+
+                if (object != null && object instanceof ExecutionCourseBean) {
+                    final ExecutionCourseBean bean = (ExecutionCourseBean) object;
+
+                    if (bean.getDestinationExecutionCourse() != null) {
+                        result = bean.getDestinationExecutionCourse().toString();
+                    }
+                }
+
+                return result;
+            }
+        };
     }
 
     @Override
-    public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+    public Object provide(final Object source, final Object currentValue) {
+        final List<ExecutionCourseBean> result = Lists.newLinkedList();
+
+        final DegreesMergeBean bean = (DegreesMergeBean) source;
+        final Degree degree = bean.getDestinationDegree();
+
+        for (final ExecutionCourse iter : SourceExecutionCoursesProvider.getExecutionCourses(degree, bean.getAcademicInterval())) {
+
+            final ExecutionCourseBean resultBean = new ExecutionCourseBean();
+            resultBean.setDegree(degree);
+            resultBean.setDestinationExecutionCourse(iter);
+
+            result.add(resultBean);
+        }
+
+        return result;
     }
+
 }

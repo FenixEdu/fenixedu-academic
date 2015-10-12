@@ -66,13 +66,13 @@
 
 	<fr:edit id="degreeBean" name="degreeBean">
 		<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">				
-			<fr:slot name="sourceExecutionCourse" layout="menu-select" key="label.mergedegrees.mergecourses.source" required="true">
+			<fr:slot name="source" layout="menu-select" key="label.mergedegrees.mergecourses.source" required="true">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.SourceExecutionCoursesProvider"/>
-				<fr:property name="format" value="${nome}" />
+				<fr:property name="format" value="${sourcePresentationName}" />
 			</fr:slot>
-			<fr:slot name="destinationExecutionCourse" layout="menu-select" key="label.mergedegrees.mergecourses.destination" required="true">
+			<fr:slot name="destination" layout="menu-select" key="label.mergedegrees.mergecourses.destination" required="true">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DestinationExecutionCoursesProvider"/>
-				<fr:property name="format" value="${nome}"/>
+				<fr:property name="format" value="${destinationPresentationName}" />
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">

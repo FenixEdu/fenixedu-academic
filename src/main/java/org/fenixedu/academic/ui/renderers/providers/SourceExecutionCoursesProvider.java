@@ -18,57 +18,80 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA.DegreesMergeBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class SourceExecutionCoursesProvider implements DataProvider {
 
     @Override
-    public Object provide(Object source, Object currentValue) {
+    @SuppressWarnings("serial")
+    public Converter getConverter() {
 
-        final DegreesMergeBean degreeBean = (DegreesMergeBean) source;
+        return new BiDirectionalConverter() {
 
-        Degree sourceDegree = degreeBean.getSourceDegree();
-
-        List<ExecutionCourse> sourceExecutionCourses = sourceDegree.getExecutionCourses(degreeBean.getAcademicInterval());
-
-        Collections.sort(sourceExecutionCourses, DomainObjectUtil.COMPARATOR_BY_ID);
-
-        removeDuplicates(sourceExecutionCourses);
-
-        Collections.sort(sourceExecutionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-
-        return sourceExecutionCourses;
-    }
-
-    public static void removeDuplicates(final List<ExecutionCourse> beanList) {
-        if (beanList.isEmpty()) {
-            return;
-        }
-
-        final Iterator<ExecutionCourse> iter = beanList.iterator();
-        ExecutionCourse prev = iter.next();
-        while (iter.hasNext()) {
-            final ExecutionCourse curr = iter.next();
-            if (curr.equals(prev)) {
-                iter.remove();
+            @Override
+            @SuppressWarnings("rawtypes")
+            public Object convert(final Class type, final Object value) {
+                final ExecutionCourseBean result = new ExecutionCourseBean();
+                result.setSourceExecutionCourse((ExecutionCourse) new DomainObjectKeyConverter().convert(type, value));
+                return result;
             }
-            prev = curr;
-        }
+
+            @Override
+            public String deserialize(final Object object) {
+                String result = "";
+
+                if (object != null && object instanceof ExecutionCourseBean) {
+                    final ExecutionCourseBean bean = (ExecutionCourseBean) object;
+
+                    if (bean.getSourceExecutionCourse() != null) {
+                        result = bean.getSourceExecutionCourse().toString();
+                    }
+                }
+
+                return result;
+            }
+        };
     }
 
     @Override
-    public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+    public Object provide(final Object source, final Object currentValue) {
+        final List<ExecutionCourseBean> result = Lists.newLinkedList();
+
+        final DegreesMergeBean bean = (DegreesMergeBean) source;
+        final Degree degree = bean.getSourceDegree();
+
+        for (final ExecutionCourse iter : getExecutionCourses(degree, bean.getAcademicInterval())) {
+
+            final ExecutionCourseBean resultBean = new ExecutionCourseBean();
+            resultBean.setDegree(degree);
+            resultBean.setSourceExecutionCourse(iter);
+
+            result.add(resultBean);
+        }
+
+        return result;
     }
+
+    static protected Set<ExecutionCourse> getExecutionCourses(final Degree degree, final AcademicInterval academicInterval) {
+        final Set<ExecutionCourse> result = Sets.newTreeSet(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+        result.addAll(degree.getExecutionCourses(academicInterval));
+
+        return result;
+    }
+
 }

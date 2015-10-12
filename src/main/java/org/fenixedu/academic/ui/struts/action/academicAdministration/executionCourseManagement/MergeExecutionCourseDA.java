@@ -116,17 +116,14 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
         DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
         RenderUtils.invalidateViewState();
 
-        ExecutionCourse sourceExecutionCourse = degreeBean.getSourceExecutionCourse();
-        ExecutionCourse destinationExecutionCourse = degreeBean.getDestinationExecutionCourse();
+        final ExecutionCourse sourceExecutionCourse = degreeBean.getSource().getSourceExecutionCourse();
+        final ExecutionCourse destinationExecutionCourse = degreeBean.getDestination().getDestinationExecutionCourse();
 
         Boolean error = false;
 
-        String sourceName = sourceExecutionCourse.getName() + " [" + sourceExecutionCourse.getDegreePresentationString() + "]";
-        String destinationName =
-                destinationExecutionCourse.getName() + " [" + destinationExecutionCourse.getDegreePresentationString() + "]";
-        String periodName =
-                destinationExecutionCourse.getExecutionPeriod().getName() + " "
-                        + destinationExecutionCourse.getExecutionPeriod().getYear();
+        final String sourceName = degreeBean.getSource().getSourcePresentationName();
+        final String destinationName = degreeBean.getDestination().getDestinationPresentationName();
+        final String periodName = destinationExecutionCourse.getExecutionPeriod().getQualifiedName();
 
         try {
             MergeExecutionCourses.merge(destinationExecutionCourse, sourceExecutionCourse);
@@ -145,34 +142,33 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("sucess");
     }
 
+    @SuppressWarnings("serial")
     public static class DegreesMergeBean implements Serializable {
-
-        private static final long serialVersionUID = -5030417665530169855L;
 
         private Degree sourceDegree;
 
         private Degree destinationDegree;
 
-        private ExecutionCourse sourceExecutionCourse;
+        private ExecutionCourseBean source;
 
-        private ExecutionCourse destinationExecutionCourse;
+        private ExecutionCourseBean destination;
 
         private AcademicInterval academicInterval;
 
-        public ExecutionCourse getSourceExecutionCourse() {
-            return sourceExecutionCourse;
+        public ExecutionCourseBean getSource() {
+            return source;
         }
 
-        public void setSourceExecutionCourse(ExecutionCourse sourceExecutionCourse) {
-            this.sourceExecutionCourse = sourceExecutionCourse;
+        public void setSource(final ExecutionCourseBean input) {
+            this.source = input;
         }
 
-        public ExecutionCourse getDestinationExecutionCourse() {
-            return destinationExecutionCourse;
+        public ExecutionCourseBean getDestination() {
+            return destination;
         }
 
-        public void setDestinationExecutionCourse(ExecutionCourse destinationExecutionCourse) {
-            this.destinationExecutionCourse = destinationExecutionCourse;
+        public void setDestination(final ExecutionCourseBean input) {
+            this.destination = input;
         }
 
         public AcademicInterval getAcademicInterval() {
