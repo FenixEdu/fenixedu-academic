@@ -171,7 +171,6 @@
 				
 				<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="APPLICATION_RESOURCES">
 					<fr:slot name="givenNames" key="label.given.name" >
-						<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcess.getPersonalFieldsFromStork().getTypes().contains(StorkAttributeType.STORK_NAME)) %>" />
 							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 							<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 								<fr:property name="type" value="character"/>
@@ -181,7 +180,6 @@
 						<fr:property name="maxlength" value="100"/>		
 					</fr:slot>
 					<fr:slot name="familyNames" key="label.family.name" >
-						<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcess.getPersonalFieldsFromStork().getTypes().contains(StorkAttributeType.STORK_NAME)) %>" />
 						<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 						<fr:validator name="org.fenixedu.academic.ui.renderers.validators.TextLengthValidator">
 							<fr:property name="type" value="character"/>
