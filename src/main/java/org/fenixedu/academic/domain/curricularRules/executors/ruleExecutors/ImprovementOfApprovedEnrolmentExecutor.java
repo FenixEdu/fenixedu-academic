@@ -53,7 +53,7 @@ public class ImprovementOfApprovedEnrolmentExecutor extends CurricularRuleExecut
         final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
         try {
-            Enrolment.PREDICATE_IMPROVEMENT.get()
+            Enrolment.getPredicateImprovement()
                     .fill(evaluationSeason, executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION).test(enrolment);
         } catch (final DomainException e) {
             return RuleResult.createFalseWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),

@@ -461,7 +461,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public EnrolmentEvaluation createTemporaryEvaluationForImprovement(final Person person,
             final EvaluationSeason evaluationSeason, final ExecutionSemester executionSemester) {
 
-        PREDICATE_IMPROVEMENT.get().fill(evaluationSeason, executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION)
+        getPredicateImprovement().fill(evaluationSeason, executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION)
                 .test(this);
 
         final EnrolmentEvaluation enrolmentEvaluation =
@@ -549,7 +549,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         		&& getCurricularCourse().getAssociatedExecutionCoursesSet().contains(executionCourse);
     }
 
-    static public Supplier<EnrolmentPredicate> PREDICATE_SEASON = () -> new EnrolmentPredicate() {
+    public static EnrolmentPredicate getPredicateSeason() {
+        return PREDICATE_SEASON.get();
+    }
+
+    public static void setPredicateSeason(final Supplier<EnrolmentPredicate> input) {
+        if (input != null && input.get() != null) {
+            PREDICATE_SEASON = input;
+        } else {
+            logger.error("Could not set PREDICATE_SEASON to null");
+        }
+    }
+
+    static private Supplier<EnrolmentPredicate> PREDICATE_SEASON = () -> new EnrolmentPredicate() {
 
         public boolean test(final Enrolment enrolment) {
 
@@ -575,7 +587,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     };
 
-    static public Supplier<EnrolmentPredicate> PREDICATE_IMPROVEMENT = () -> new EnrolmentPredicate() {
+    public static EnrolmentPredicate getPredicateImprovement() {
+        return PREDICATE_IMPROVEMENT.get();
+    }
+
+    public static void setPredicateImprovement(final Supplier<EnrolmentPredicate> input) {
+        if (input != null && input.get() != null) {
+            PREDICATE_IMPROVEMENT = input;
+        } else {
+            logger.error("Could not set PREDICATE_IMPROVEMENT to null");
+        }
+    }
+
+    static private Supplier<EnrolmentPredicate> PREDICATE_IMPROVEMENT = () -> new EnrolmentPredicate() {
 
         @Override
         public boolean test(final Enrolment enrolment) {
@@ -593,7 +617,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                         enrolment.getName().getContent());
             }
 
-            PREDICATE_SEASON.get().fill(getEvaluationSeason(), improvementSemester, getContext()).test(enrolment);
+            getPredicateSeason().fill(getEvaluationSeason(), improvementSemester, getContext()).test(enrolment);
 
             final DegreeModule degreeModule = enrolment.getDegreeModule();
             if (!degreeModule.hasAnyParentContexts(improvementSemester)) {

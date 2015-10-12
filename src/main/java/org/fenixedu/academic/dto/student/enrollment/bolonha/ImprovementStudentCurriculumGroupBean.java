@@ -82,7 +82,7 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
                     if (curriculumModule.isEnrolment()) {
                         final Enrolment enrolment = (Enrolment) curriculumModule;
 
-                        if (Enrolment.PREDICATE_IMPROVEMENT.get()
+                        if (Enrolment.getPredicateImprovement()
                                 .fill(getEvaluationSeason(), executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION)
                                 .testExceptionless(enrolment)) {
 
