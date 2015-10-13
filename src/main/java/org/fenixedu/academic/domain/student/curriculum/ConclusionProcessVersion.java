@@ -32,11 +32,14 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
+    public static final String CREATE_SIGNAL = "academic.conclusion.process.version.create.signal";
 
     static final private Comparator<ConclusionProcessVersion> COMPARATOR_BY_CREATION_DATE_TIME =
             new Comparator<ConclusionProcessVersion>() {
@@ -82,6 +85,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setIngressionYear(ingressionYear);
         super.setConclusionYear(conclusionYear);
         super.setActive(true);
+        Signal.emit(ConclusionProcessVersion.CREATE_SIGNAL, new DomainObjectEvent<ConclusionProcessVersion>(this));
     }
 
     protected void update(final Person responsible, final Grade finalGrade, final Grade rawGrade, final Grade descriptiveGrade,
