@@ -300,15 +300,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
                         + ".error.public.candidacies.fill.personal.information.and.institution.id.contributorNumber");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
-
-            if (!StringUtils.isEmpty(bean.getPersonNumber())) {
-                // person must fill ist userid
-                addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                        + ".error.public.candidacies.fill.personal.information.and.institution.id.userId.missing");
-                return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
-            } else {
-                fillExternalPrecedentInformation(mapping, form, request, response);
-            }
+            fillExternalPrecedentInformation(mapping, form, request, response);
         }
 
         IndividualCandidacyDocumentFile photoDocumentFile =
