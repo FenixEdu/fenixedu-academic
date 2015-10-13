@@ -84,14 +84,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             throw new DomainException("error.program.conclusion.empty");
         }
 
-        if (getRegistration().isBolonha() && !getRegistration().getDegreeType().isAdvancedFormationDiploma()
-                && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
-            final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
-            if (registryRequest == null) {
-                throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
-            } 
-        }
-
         checkForDuplicate(bean.getProgramConclusion());
     }
 
@@ -178,6 +170,13 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
             }
 
+            if (getRegistration().isBolonha() && !getRegistration().getDegreeType().isAdvancedFormationDiploma()
+                    && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
+                final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
+                if (registryRequest == null) {
+                    throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
+                } 
+            }
 
             if (!getRegistration().getDegreeType().isAdvancedFormationDiploma()
                     && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
