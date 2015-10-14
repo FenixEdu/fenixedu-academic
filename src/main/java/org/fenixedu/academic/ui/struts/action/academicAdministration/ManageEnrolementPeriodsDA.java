@@ -278,6 +278,17 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
                         DegreeCurricularPlan dcp = execution.getDegreeCurricularPlan();
                         addIfNotUsedInPeriod(possible, dcp);
                     }
+                    //add curricular plans that still need improvement period and that have transitioned the year before to a new one 
+                    if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_IMPROVEMENT_OF_APPROVED_ENROLMENT.equals(type)
+                            && semester.getPreviousExecutionPeriod().getExecutionYear() != semester.getExecutionYear()) {
+                        for (ExecutionDegree execution : semester.getPreviousExecutionPeriod().getExecutionYear()
+                                .getExecutionDegreesByType(degreeType)) {
+                            DegreeCurricularPlan dcp = execution.getDegreeCurricularPlan();
+                            if (!possible.contains(dcp)) {
+                                addIfNotUsedInPeriod(possible, dcp);
+                            }
+                        }
+                    }
                 } else {
                     for (DegreeCurricularPlan dcp : DegreeCurricularPlan.readPreBolonhaDegreeCurricularPlans()) {
                         addIfNotUsedInPeriod(possible, dcp);
