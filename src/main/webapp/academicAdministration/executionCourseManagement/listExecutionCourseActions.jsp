@@ -23,7 +23,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="org.fenixedu.academic.domain.degree.DegreeType"%>
 <%@page import="org.fenixedu.academic.domain.AcademicProgram"%>
 <%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>

@@ -211,6 +211,9 @@
 						<h3 class="panel-title">
 							<a data-toggle="collapse" data-parent="#cursos_acc" data-target="#collapse${degreeType.externalId}" href="#">
 								<bean:write name="degreeType" property="name.content" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+								<logic:present name="degreeType" property="shortName">
+									(<bean:write name="degreeType" property="shortName.content"/>)
+								</logic:present>
 							</a>
 						</h3>
 					</div>

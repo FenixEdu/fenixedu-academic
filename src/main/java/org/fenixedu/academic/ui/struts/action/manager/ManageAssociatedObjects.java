@@ -275,6 +275,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         private static final long serialVersionUID = 387599179531038042L;
 
         private LocalizedString name;
+        private LocalizedString shortName;
         private DegreeType selected;
         private boolean empty;
         private boolean bolonha = true;
@@ -291,6 +292,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         public DegreeTypeBean(DegreeType type) {
             this.selected = type;
             this.name = type.getName();
+            this.shortName = type.getShortName();
             this.empty = type.getEmpty();
             this.bolonha = type.getBolonha();
             this.degree = type.getDegreeType();
@@ -307,6 +309,14 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
         public void setName(LocalizedString name) {
             this.name = name;
+        }
+
+        public LocalizedString getShortName() {
+            return shortName;
+        }
+
+        public void setShortName(LocalizedString shortName) {
+            this.shortName = shortName;
         }
 
         public DegreeType getSelected() {
@@ -415,6 +425,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             atomic(() -> {
                 DegreeType type = bean.getSelected() == null ? new DegreeType(bean.getName()) : bean.getSelected();
                 type.setName(bean.getName());
+                type.setShortName(bean.getShortName());
                 type.setEmpty(bean.isEmpty());
                 type.setBolonha(bean.isBolonha());
                 type.setDegreeType(bean.isDegree());

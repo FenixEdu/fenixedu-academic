@@ -49,16 +49,16 @@
 		</fr:slot>
 		<logic:present name="bean" property="roleType">
 			<logic:equal name="bean" property="roleType" value="STUDENT">
-				<fr:slot name="degreeType" layout="menu-postback" key="label.degree.type">
-					<fr:property name="excludedValues" value="EMPTY"/>
+				<fr:slot name="degreeType" layout="menu-select-postback" key="label.degree.type">
 					<fr:property name="destination" value="postback" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreeTypeProvider" />
+					<fr:property name="format" value="\${name.content}"/>
 					<fr:destination name="postback"
 						path="/findPerson.do?method=postback" />
 				</fr:slot>
 				<logic:present name="bean" property="degreeType">
 					<fr:slot name="degree" layout="menu-select-postback" key="label.degree.name">
-						<fr:property name="providerClass"
-							value="org.fenixedu.academic.ui.renderers.providers.person.PersonSearchDegreeProvider" />
+						<fr:property name="from" value="possibleDegrees" />
 						<fr:destination name="postback"
 							path="/findPerson.do?method=postback" />
 						<fr:property name="destination" value="postback" />
@@ -66,8 +66,6 @@
 					</fr:slot>
 				</logic:present>
 			</logic:equal>
-
-
 			<logic:equal name="bean" property="roleType" value="TEACHER">
 				<fr:slot name="department" layout="menu-select-postback" key="label.teacher.finalWork.department">
 					<fr:property name="providerClass"
