@@ -36,9 +36,9 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
+import org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -47,8 +47,9 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingDegreeChangeCandidacyProcess", module = "coordinator",
-        formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class, functionality = DegreeCoordinatorIndex.class)
-@Forwards(@Forward(name = "intro", path = "/coordinator/candidacy/mainCandidacyProcess.jsp"))
+        formBeanClass = DegreeChangeCandidacyProcessDA.DegreeChangeCandidacyProcessForm.class,
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards(@Forward(name = "intro", path = "/coordinator/candidacy/degreeChange/mainCandidacyProcess.jsp"))
 public class DegreeChangeCandidacyProcessDA extends
         org.fenixedu.academic.ui.struts.action.candidacy.degreeChange.DegreeChangeCandidacyProcessDA {
 
@@ -114,17 +115,62 @@ public class DegreeChangeCandidacyProcessDA extends
     }
 
     @Override
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        setCandidacyProcessInformation(request, getProcess(request));
+        setCandidacyProcessInformation(form, getProcess(request));
+        request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
+        return introForward(mapping);
+    }
+
+    private void setCandidacyProcessInformation(final ActionForm actionForm, final DegreeChangeCandidacyProcess process) {
+        final DegreeChangeCandidacyProcessForm form = (DegreeChangeCandidacyProcessForm) actionForm;
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
+    }
+
+    @Override
     protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         if (!hasExecutionInterval(request)) {
             final List<ExecutionInterval> executionIntervals = readExecutionIntervalFilteredByCoordinatorTeam(request);
+            request.setAttribute("executionIntervals", executionIntervals);
+
             if (executionIntervals.size() == 1) {
-                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.iterator().next()));
-            } else {
-                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-                request.setAttribute("executionIntervals", executionIntervals);
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
+                final List<DegreeChangeCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    return;
+                }
             }
+
+            request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+            request.setAttribute("executionIntervals", executionIntervals);
+
         } else {
-            setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
+            final ExecutionInterval executionInterval = getExecutionInterval(request);
+            final DegreeChangeCandidacyProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
+
+            if (candidacyProcess != null) {
+                setCandidacyProcessInformation(request, candidacyProcess);
+                setCandidacyProcessInformation(actionForm, getProcess(request));
+            } else {
+                final List<DegreeChangeCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    return;
+                }
+
+                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+                request.setAttribute("executionIntervals", readExecutionIntervalFilteredByCoordinatorTeam(request));
+            }
+            request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
         }
     }
 
