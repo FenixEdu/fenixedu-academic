@@ -197,7 +197,13 @@
 			<% if(!documentRequestCreateBean.getChosenServiceRequestType().isLegacy() && documentRequestCreateBean.getChosenServiceRequestType().hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) { %>
 				<fr:edit id="numberOfUnitsEdit" name="documentRequestCreateBean" >
 					<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
-						<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" arg0="${documentRequestCreateBean.chosenServiceRequestType.numberOfUnitsLabel.content}"/>
+						<fr:slot name="numberOfUnits" key="label.documentRequestsManagement.searchDocumentRequests.numberOfUnits.custom" 
+							arg0="${documentRequestCreateBean.chosenServiceRequestType.numberOfUnitsLabel.content}"
+							required="true">
+							<fr:validator name="org.fenixedu.academic.ui.renderers.validators.NumberRangeValidator">
+								<fr:property name="lowerBound" value="1" />
+							</fr:validator>
+						</fr:slot>
 					</fr:schema>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
