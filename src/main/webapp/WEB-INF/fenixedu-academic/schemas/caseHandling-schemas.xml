@@ -555,7 +555,6 @@
         <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.Over23IndividualCandidacySelectedDegreesProvider" />
         <property name="format" value="${presentationName}" />
     </slot>
-    <slot name="name" key="label.name" />
 </schema>
 
 <schema name="Over23IndividualCandidacyResultBean.manage.all.students" type="org.fenixedu.academic.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
