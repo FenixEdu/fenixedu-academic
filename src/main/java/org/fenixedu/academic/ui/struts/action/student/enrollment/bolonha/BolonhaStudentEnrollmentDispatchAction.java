@@ -55,7 +55,6 @@ import org.joda.time.format.PeriodFormatterBuilder;
         @Forward(name = "chooseCycleCourseGroupToEnrol", path = "/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"),
         @Forward(name = "welcome", path = "/student/enrollment/welcome.jsp"),
         @Forward(name = "chooseSemester", path = "/student/enrollment/chooseSemester.jsp"),
-        @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp"),
         @Forward(name = "welcome-dea-degree", path = "/student/phdStudentEnrolment.do?method=showWelcome"),
         @Forward(name = "showEnrollmentInstructions", path = "/student/enrollment/bolonha/showEnrollmentInstructions.jsp"),
         @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp") })
@@ -74,7 +73,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
                 openedEnrolmentPeriodsSemesters =
                         registration.getLastDegreeCurricularPlan().getEnrolmentPeriodsSet().stream()
                                 .filter(ep -> ep.isValid() && ep.isForCurricularCourses()).map(ep -> ep.getExecutionPeriod())
-                                .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).collect(Collectors.toList());
+                                .distinct().sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR)
+                                .collect(Collectors.toList());
             }
             if (openedEnrolmentPeriodsSemesters.size() > 1) {
                 request.setAttribute("openedEnrolmentPeriodsSemesters", openedEnrolmentPeriodsSemesters);

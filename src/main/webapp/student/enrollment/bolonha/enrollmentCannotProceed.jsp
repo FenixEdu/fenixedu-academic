@@ -43,7 +43,7 @@
         </dl>
     </div>
     <div class="col-sm-2">
-       <a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registration.externalId}">
+       <a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registration.externalId}&executionSemesterID=<%= request.getParameter("executionSemesterID") %>">
             <span class="glyphicon glyphicon-refresh"></span> ${fr:message('resources.ApplicationResources', 'button.update')}
         </a>
     </div>

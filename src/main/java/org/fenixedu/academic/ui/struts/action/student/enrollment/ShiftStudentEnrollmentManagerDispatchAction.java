@@ -239,7 +239,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
     private void addSelectableSemesters(HttpServletRequest request, Registration registration) {
         List<ExecutionSemester> openedEnrolmentPeriodsSemesters =
                 registration.getLastDegreeCurricularPlan().getEnrolmentPeriodsSet().stream()
-                        .filter(ep -> ep.isValid() && ep.isForClasses()).map(ep -> ep.getExecutionPeriod())
+                        .filter(ep -> ep.isValid() && ep.isForClasses()).map(ep -> ep.getExecutionPeriod()).distinct()
                         .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).collect(Collectors.toList());
         if (openedEnrolmentPeriodsSemesters.size() > 1) {
             request.setAttribute("openedEnrolmentPeriodsSemesters", openedEnrolmentPeriodsSemesters);
