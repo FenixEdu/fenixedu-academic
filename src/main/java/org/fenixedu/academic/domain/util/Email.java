@@ -41,6 +41,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
+import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -201,7 +202,8 @@ public class Email extends Email_Base {
         public String getMessageID() throws MessagingException {
             if (fenixMessageId == null) {
                 final String externalId = getExternalId();
-                fenixMessageId = externalId + "." + new DateTime().getMillis() + "@fenix";
+                final String instituitionEmailDomain = Installation.getInstance().getInstituitionEmailDomain();
+                fenixMessageId = "<" + externalId + "." + new DateTime().getMillis() + "@" + instituitionEmailDomain + ">";
             }
             return fenixMessageId;
         }
