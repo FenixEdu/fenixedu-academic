@@ -33,7 +33,8 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     protected ServiceRequestType(final String code, final LocalizedString name, final boolean active, final boolean payable,
-            final Boolean notifyUponConclusion, final Boolean printable, final ServiceRequestCategory category) {
+            final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
+            final ServiceRequestCategory category) {
         this();
 
         super.setCode(code);
@@ -42,6 +43,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         setPayable(payable);
         setNotifyUponConclusion(notifyUponConclusion);
         setPrintable(printable);
+        setRequestedOnline(requestedOnline);
         setServiceRequestCategory(category);
 
         checkRules();
@@ -49,9 +51,9 @@ public class ServiceRequestType extends ServiceRequestType_Base {
 
     protected ServiceRequestType(final String code, final LocalizedString name, final boolean active,
             final AcademicServiceRequestType academicServiceRequestType, final DocumentRequestType documentRequestType,
-            final boolean payable, final Boolean notifyUponConclusion, final Boolean printable,
+            final boolean payable, final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
             final ServiceRequestCategory category) {
-        this(code, name, active, payable, notifyUponConclusion, printable, category);
+        this(code, name, active, payable, notifyUponConclusion, printable, requestedOnline, category);
         setAcademicServiceRequestType(academicServiceRequestType);
         setDocumentRequestType(documentRequestType);
 
@@ -78,20 +80,25 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         return (getPrintable() == null) ? false : getPrintable();
     }
 
+    public boolean isRequestedOnline() {
+        return (getRequestedOnline() == null) ? false : getRequestedOnline();
+    }
+
     public boolean isLegacy() {
         return getAcademicServiceRequestType() != null;
     }
 
     @Atomic
     public void edit(final String code, final LocalizedString name, final boolean active, final boolean payable,
-            final Boolean notifyUponConclusion, final Boolean printable, final ServiceRequestCategory category,
-            final LocalizedString numberOfUnitsLabel) {
+            final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
+            final ServiceRequestCategory category, final LocalizedString numberOfUnitsLabel) {
         setCode(code);
         setName(name);
         setActive(active);
         setPayable(payable);
         setNotifyUponConclusion(notifyUponConclusion);
         setPrintable(printable);
+        setRequestedOnline(requestedOnline);
         setServiceRequestCategory(category);
         setNumberOfUnitsLabel(null);
 
@@ -176,18 +183,18 @@ public class ServiceRequestType extends ServiceRequestType_Base {
 
     @Atomic
     public static ServiceRequestType create(final String code, final LocalizedString name, final boolean active,
-            final boolean payable, final Boolean notifyUponConclusion, final Boolean printable,
+            final boolean payable, final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
             final ServiceRequestCategory category) {
-        return new ServiceRequestType(code, name, active, payable, notifyUponConclusion, printable, category);
+        return new ServiceRequestType(code, name, active, payable, notifyUponConclusion, printable, requestedOnline, category);
     }
 
     @Atomic
     public static ServiceRequestType createLegacy(final String code, final LocalizedString name, final boolean active,
             final AcademicServiceRequestType academicServiceRequestType, final DocumentRequestType documentRequestType,
-            final boolean payable, final Boolean notifyUponConclusion, final Boolean printable,
+            final boolean payable, final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
             final ServiceRequestCategory category) {
         return new ServiceRequestType(code, name, active, academicServiceRequestType, documentRequestType, payable,
-                notifyUponConclusion, printable, category);
+                notifyUponConclusion, printable, requestedOnline, category);
     }
 
     public String getRichName() {
