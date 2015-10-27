@@ -498,7 +498,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         return getSituationByType(AcademicServiceRequestSituationType.CONCLUDED);
     }
 
-    final public AcademicServiceRequestSituation getSituationByType(final AcademicServiceRequestSituationType type) {
+    public AcademicServiceRequestSituation getSituationByType(final AcademicServiceRequestSituationType type) {
         for (final AcademicServiceRequestSituation situation : getAcademicServiceRequestSituationsSet()) {
             if (situation.getAcademicServiceRequestSituationType().equals(type)) {
                 return situation;
