@@ -198,7 +198,7 @@ public class Registration extends Registration_Base {
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
             final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear) {
         this(person, null, protocol, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
-        createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
+        createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
     }
 
     public static Registration createRegistrationWithCustomStudentNumber(final Person person,
@@ -211,7 +211,7 @@ public class Registration extends Registration_Base {
         registration.setRequestedChangeDegree(false);
         registration.setRequestedChangeBranch(false);
         registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
-        registration.createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
+        registration.createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
         registration.setStudentCandidacyInformation(studentCandidacy);
 
         return registration;
@@ -274,10 +274,18 @@ public class Registration extends Registration_Base {
         }
     }
 
-    private void createStudentCurricularPlan(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final CycleType cycleType, final ExecutionYear executionYear) {
+    public StudentCurricularPlan createStudentCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionYear executionYear) {
+
+        return createStudentCurricularPlan(degreeCurricularPlan, executionYear, (CycleType) null);
+    }
+
+    private StudentCurricularPlan createStudentCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionYear executionYear, final CycleType cycleType) {
+
         final YearMonthDay startDay;
         final ExecutionSemester executionSemester;
+
         if (executionYear == null || executionYear.isCurrent()) {
             startDay = new YearMonthDay();
             executionSemester = ExecutionSemester.readActualExecutionSemester();
@@ -286,9 +294,8 @@ public class Registration extends Registration_Base {
             executionSemester = executionYear.getFirstExecutionPeriod();
         }
 
-        final StudentCurricularPlan scp =
-                StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, startDay, executionSemester,
-                        cycleType);
+        return StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, startDay, executionSemester,
+                cycleType);
 
     }
 

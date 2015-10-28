@@ -311,6 +311,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     @Override
     public void delete() {
+        getChildCurriculumGroups().forEach(CurriculumGroup::deleteRecursiveEmptyChildGroups);
         setParentStudentCurricularPlan(null);
         super.delete();
     }
