@@ -104,7 +104,8 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
     @Override
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response, PartyContact partyContact) {
-        if (partyContact instanceof PhysicalAddress || partyContact instanceof WebAddress) {
+        if (partyContact == null || !isToBeValidated(partyContact) || partyContact instanceof PhysicalAddress
+                || partyContact instanceof WebAddress) {
             if (partyContact.getPartyContactValidation() != null) {
                 partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
             }
