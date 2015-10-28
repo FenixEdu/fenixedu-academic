@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.studentCurriculum;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -311,7 +312,12 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     @Override
     public void delete() {
-        getChildCurriculumGroups().forEach(CurriculumGroup::deleteRecursiveEmptyChildGroups);
+
+        // Let's try to clean an already enrolment-free StudentCurricularPlan
+        for (final Iterator<CurriculumGroup> iterator = getChildCurriculumGroups().iterator(); iterator.hasNext();) {
+            iterator.next().deleteRecursiveEmptyChildGroups();
+        }
+
         setParentStudentCurricularPlan(null);
         super.delete();
     }

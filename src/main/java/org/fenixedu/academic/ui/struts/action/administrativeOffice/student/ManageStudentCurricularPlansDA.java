@@ -44,11 +44,15 @@ import pt.ist.fenixframework.Atomic;
 
 @Mapping(path = "/manageStudentCurricularPlans", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
+
         @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
+
         @Forward(name = "create",
                 path = "/academicAdminOffice/student/registration/manageStudentCurricularPlans/createStudentCurricularPlan.jsp"),
+
         @Forward(name = "edit",
                 path = "/academicAdminOffice/student/registration/manageStudentCurricularPlans/editStudentCurricularPlan.jsp")
+
 })
 public class ManageStudentCurricularPlansDA extends FenixDispatchAction {
 
