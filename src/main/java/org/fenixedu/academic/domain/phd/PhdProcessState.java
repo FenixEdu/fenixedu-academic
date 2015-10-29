@@ -39,7 +39,7 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
     static final public Comparator<PhdProcessState> COMPARATOR_BY_DATE = new Comparator<PhdProcessState>() {
         @Override
         public int compare(PhdProcessState o1, PhdProcessState o2) {
-            int result = o1.getWhenCreated().compareTo(o2.getWhenCreated());
+            int result = o1.getStateDate().compareTo(o2.getStateDate());
             return result != 0 ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };

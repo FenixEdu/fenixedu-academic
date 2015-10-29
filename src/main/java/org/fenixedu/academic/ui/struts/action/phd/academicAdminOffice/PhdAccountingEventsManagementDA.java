@@ -19,7 +19,7 @@
 package org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice;
 
 import java.io.Serializable;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -119,23 +119,14 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
             }
 
             PhdIndividualProgramProcess process = getProcess(request);
-
-            TreeSet<PhdProgramProcessState> orderdStates =
-                    new TreeSet<PhdProgramProcessState>(new Comparator<PhdProgramProcessState>() {
-
-                        @Override
-                        public int compare(PhdProgramProcessState o1, PhdProgramProcessState o2) {
-                            return o1.getStateDate().compareTo(o2.getStateDate());
-                        }
-                    });
-
-            orderdStates.addAll(process.getStates());
-
             int lastOpenYear = new DateTime().getYear();
 
             int year = renderedObject.getYear();
             boolean yearWithinWorkingDevelopmentPeriod = false;
-            for (PhdProgramProcessState state : process.getStates()) {
+            TreeSet<PhdProgramProcessState> orderedStates =
+                    new TreeSet<PhdProgramProcessState>(Collections.reverseOrder(PhdProgramProcessState.COMPARATOR_BY_DATE));
+            orderedStates.addAll(process.getStatesSet());
+            for (PhdProgramProcessState state : orderedStates) {
                 if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
                     if (state.getStateDate().getYear() <= year && year <= lastOpenYear) {
                         yearWithinWorkingDevelopmentPeriod = true;
