@@ -27,7 +27,6 @@
 package org.fenixedu.academic.ui.spring.manageservicerequesttypes;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,13 +106,14 @@ public class ServiceRequestTypeController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@RequestParam(value = "code", required = true) java.lang.String code, @RequestParam(value = "name",
             required = true) LocalizedString name, @RequestParam(value = "active", required = true) final boolean active,
-            @RequestParam(value = "payable", required = true) final boolean payable, 
-            @RequestParam(value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, 
-            Model model,
+            @RequestParam(value = "payable", required = true) final boolean payable, @RequestParam(
+                    value = "notifyUponConclusion", required = true) final Boolean notifyUponConclusion, @RequestParam(
+                    value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, Model model,
             RedirectAttributes redirectAttributes) {
         try {
 
-            final ServiceRequestType serviceRequestType = ServiceRequestType.create(code, name, active, payable, category);
+            final ServiceRequestType serviceRequestType =
+                    ServiceRequestType.create(code, name, active, payable, notifyUponConclusion, category);
 
             return redirect("/academic/manageservicerequesttypes/servicerequesttype/read/" + serviceRequestType.getExternalId(),
                     model, redirectAttributes);
@@ -146,15 +146,15 @@ public class ServiceRequestTypeController {
             @RequestParam(value = "name", required = true) LocalizedString name,
             @RequestParam(value = "active", required = true) final boolean active, @RequestParam(value = "payable",
                     required = true) final boolean payable,
-            @RequestParam(value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, 
-            @RequestParam(value = "numberOfUnitsLabel", required = false) final LocalizedString numberOfUnitsLabel,
-            Model model,
+            @RequestParam(value = "notifyUponConclusion", required = true) final Boolean notifyUponConclusion, @RequestParam(
+                    value = "serviceRequestCategory", required = true) final ServiceRequestCategory category, @RequestParam(
+                    value = "numberOfUnitsLabel", required = false) final LocalizedString numberOfUnitsLabel, Model model,
             RedirectAttributes redirectAttributes) {
 
         model.addAttribute("serviceRequestType", serviceRequestType);
 
         try {
-            serviceRequestType.edit(code, name, active, payable, category, numberOfUnitsLabel);
+            serviceRequestType.edit(code, name, active, payable, notifyUponConclusion, category, numberOfUnitsLabel);
 
             return redirect("/academic/manageservicerequesttypes/servicerequesttype/read/" + serviceRequestType.getExternalId(),
                     model, redirectAttributes);

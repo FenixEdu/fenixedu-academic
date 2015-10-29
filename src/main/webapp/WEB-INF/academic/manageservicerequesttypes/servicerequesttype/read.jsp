@@ -144,6 +144,18 @@ ${portal.toolkit()}
 							</c:if>
 						</td>
 					</tr>
+                    <tr>
+                        <th scope="row" class="col-xs-3"><spring:message
+                                code="label.ServiceRequestType.notifyUponConclusion" /></th>
+                        <td>
+                            <c:if test="${serviceRequestType.notifyUponConclusion}">
+                                <spring:message code="label.true" />
+                            </c:if>
+                            <c:if test="${not serviceRequestType.notifyUponConclusion}">
+                                <spring:message code="label.false" />
+                            </c:if>
+                        </td>
+                    </tr>
 					<tr>
 						<th scope="row" class="col-xs-3"><spring:message
 								code="label.ServiceRequestType.serviceRequestCategory" /></th>

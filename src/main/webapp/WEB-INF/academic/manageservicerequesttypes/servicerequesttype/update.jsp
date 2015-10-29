@@ -116,6 +116,19 @@ ${portal.toolkit()}
 					</script>	
 				</div>
 			</div>
+            <div class="form-group row">
+                <div class="col-sm-2 control-label"><spring:message code="label.ServiceRequestType.notifyUponConclusion"/></div>             
+                
+                <div class="col-sm-2">
+                    <select id="serviceRequestType_notifyUponConclusion" name="notifyUponConclusion" class="form-control">
+                        <option value="false"><spring:message code="label.no"/></option>
+                        <option value="true"><spring:message code="label.yes"/></option>                
+                    </select>
+                    <script>
+                        $("#serviceRequestType_notifyUponConclusion").val('<c:out value='${not empty param.notifyUponConclusion ? param.notifyUponConclusion : serviceRequestType.notifyUponConclusion }'/>');
+                    </script>   
+                </div>
+            </div>
 			<div class="form-group row">
 				<div class="col-sm-2 control-label"><spring:message code="label.ServiceRequestType.serviceRequestCategory"/></div> 
 				
