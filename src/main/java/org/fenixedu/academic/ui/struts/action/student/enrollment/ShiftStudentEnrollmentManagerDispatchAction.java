@@ -34,8 +34,11 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan;
+import org.fenixedu.academic.domain.EnrolmentPeriod;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClassesCandidate;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -245,10 +248,15 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
     }
 
     private void addSelectableSemesters(HttpServletRequest request, Registration registration) {
+
+        DegreeCurricularPlan lastDegreeCurricularPlan = registration.getLastDegreeCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(lastDegreeCurricularPlan);
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         List<ExecutionSemester> openedEnrolmentPeriodsSemesters =
-                registration.getLastDegreeCurricularPlan().getEnrolmentPeriodsSet().stream()
-                        .filter(ep -> ep.isValid() && ep.isForClasses()).map(ep -> ep.getExecutionPeriod()).distinct()
-                        .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).collect(Collectors.toList());
+                lastDegreeCurricularPlan.getEnrolmentPeriodsSet().stream()
+                        .filter(ep -> isValidPeriodForUser(ep, studentCurricularPlan, currentExecutionYear))
+                        .map(ep -> ep.getExecutionPeriod()).distinct().sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR)
+                        .collect(Collectors.toList());
         if (openedEnrolmentPeriodsSemesters.size() > 1) {
             request.setAttribute("openedEnrolmentPeriodsSemesters", openedEnrolmentPeriodsSemesters);
         }
@@ -347,6 +355,25 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         }
 
         return start(mapping, form, request, response);
+    }
+
+    private boolean isValidPeriodForUser(EnrolmentPeriod ep, StudentCurricularPlan studentCurricularPlan,
+            ExecutionYear currentExecutionYear) {
+        // Coditions to be valid:
+        // 1 - period has to be valid
+        //     AND
+        //          a - Student is candidate AND period is for candidate
+        //            OR
+        //          b - Period is for curricular courses (implicitly assuming student is not candidate)
+
+        if (ep.isValid()) {
+            if (studentCurricularPlan.isInCandidateEnrolmentProcess(currentExecutionYear)) {
+                return ep instanceof EnrolmentPeriodInClassesCandidate;
+            } else {
+                return ep.isForClasses();
+            }
+        }
+        return false;
     }
 
 }

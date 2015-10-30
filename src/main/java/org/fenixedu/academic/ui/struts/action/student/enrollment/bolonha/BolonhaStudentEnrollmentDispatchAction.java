@@ -29,7 +29,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.EnrolmentPeriod;
+import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesCandidate;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.student.Registration;
@@ -71,12 +75,16 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
                 (BolonhaStudentEnrollmentBean) request.getAttribute("bolonhaStudentEnrollmentBean");
         if (bolonhaStudentEnrollmentBean != null) {
             Registration registration = bolonhaStudentEnrollmentBean.getRegistration();
+
             List<ExecutionSemester> openedEnrolmentPeriodsSemesters = Collections.EMPTY_LIST;
             if (registration != null) {
+                ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+                DegreeCurricularPlan lastDegreeCurricularPlan = registration.getLastDegreeCurricularPlan();
+                StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(lastDegreeCurricularPlan);
                 openedEnrolmentPeriodsSemesters =
-                        registration.getLastDegreeCurricularPlan().getEnrolmentPeriodsSet().stream()
-                                .filter(ep -> ep.isValid() && ep.isForCurricularCourses()).map(ep -> ep.getExecutionPeriod())
-                                .distinct().sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR)
+                        lastDegreeCurricularPlan.getEnrolmentPeriodsSet().stream()
+                                .filter(ep -> isValidPeriodForUser(ep, studentCurricularPlan, currentExecutionYear))
+                                .map(ep -> ep.getExecutionPeriod()).distinct().sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR)
                                 .collect(Collectors.toList());
             }
             if (openedEnrolmentPeriodsSemesters.size() > 1) {
@@ -175,5 +183,24 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
     @Override
     protected String getAction() {
         return "";
+    }
+
+    private boolean isValidPeriodForUser(EnrolmentPeriod ep, StudentCurricularPlan studentCurricularPlan,
+            ExecutionYear currentExecutionYear) {
+        // Coditions to be valid:
+        // 1 - period has to be valid
+        //     AND
+        //          a - Student is candidate AND period is for candidate
+        //            OR
+        //          b - Period is for curricular courses (implicitly assuming student is not candidate)
+
+        if (ep.isValid()) {
+            if (studentCurricularPlan.isInCandidateEnrolmentProcess(currentExecutionYear)) {
+                return ep instanceof EnrolmentPeriodInCurricularCoursesCandidate;
+            } else {
+                return ep.isForCurricularCourses();
+            }
+        }
+        return false;
     }
 }
