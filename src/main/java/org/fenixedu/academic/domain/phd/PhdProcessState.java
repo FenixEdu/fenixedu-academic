@@ -60,11 +60,11 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
             throw new DomainException("error.PhdProcessState.invalid.stateDate", args1);
         }
 
+        setStateDate(stateDate);
         checkStateDate(stateDate, type);
 
         setPerson(person);
         setRemarks(remarks);
-        setStateDate(stateDate);
     }
 
     private void checkStateDate(DateTime stateDate, final PhdProcessStateType type) {
