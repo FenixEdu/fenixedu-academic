@@ -207,6 +207,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
             request.setAttribute("shiftsToEnrolFromUnenroledExecutionCourses",
                     getShiftsToEnrolByEnroledState(shiftsToEnrol, false));
 
+            keepInRequest(request, "executionSemesterID");
+
             final List<Shift> studentShifts = registration.getShiftsFor(executionSemester);
             request.setAttribute("studentShifts", studentShifts);
             sortStudentShifts(studentShifts);
