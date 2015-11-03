@@ -79,7 +79,11 @@
 		
 		<p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
 		
-		<p class="mbottom025 warning0"><bean:message key="message.warning.urgent.request" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+		<p class="mbottom025 warning0">
+			<bean:message key="label.student.serviceRequests.info1" bundle="STUDENT_RESOURCES"/><br/>
+			<bean:message key="label.student.serviceRequests.info2" bundle="STUDENT_RESOURCES"/><br/>
+			<bean:message key="label.student.serviceRequests.info3" bundle="STUDENT_RESOURCES"/>
+		</p>
 		
 		<fr:edit id="documentRequestTypeEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">
 			<fr:destination name="documentRequestTypeChosenPostBack" path="/documentRequest.do?method=documentRequestTypeChosenPostBack"/>

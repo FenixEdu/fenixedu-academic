@@ -7,7 +7,9 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
@@ -53,7 +55,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     public boolean isPayable() {
         return getPayable();
     }
-    
+
     public boolean isLegacy() {
         return getAcademicServiceRequestType() != null;
     }
@@ -70,10 +72,10 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         setActive(active);
         setPayable(payable);
         setServiceRequestCategory(category);
-        if(hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) {
+        if (hasOption(ServiceRequestTypeOption.findNumberOfUnitsOption().get())) {
             setNumberOfUnitsLabel(numberOfUnitsLabel);
         } else {
-            setNumberOfUnitsLabel(null);            
+            setNumberOfUnitsLabel(null);
         }
 
         checkRules();
@@ -124,7 +126,9 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     public static ServiceRequestType findUnique(final AcademicServiceRequestType academicServiceRequestType) {
-        return findAll().filter(x -> x.getAcademicServiceRequestType() != null && x.getAcademicServiceRequestType().equals(academicServiceRequestType))
+        return findAll()
+                .filter(x -> x.getAcademicServiceRequestType() != null
+                        && x.getAcademicServiceRequestType().equals(academicServiceRequestType))
                 .filter(x -> x.getDocumentRequestType() == null).findFirst().orElse(null);
     }
 
@@ -148,11 +152,11 @@ public class ServiceRequestType extends ServiceRequestType_Base {
             return findUnique(academicServiceRequest.getAcademicServiceRequestType());
         }
     }
-    
+
     public static Stream<ServiceRequestType> findByCode(final String code) {
         return findAll().filter(l -> l.getCode().equalsIgnoreCase(code));
     }
-    
+
     public static Optional<ServiceRequestType> findUniqueByCode(final String code) {
         return findByCode(code).findFirst();
     }
@@ -184,6 +188,16 @@ public class ServiceRequestType extends ServiceRequestType_Base {
             final AcademicServiceRequestType academicServiceRequestType, final DocumentRequestType documentRequestType,
             final boolean payable, final ServiceRequestCategory category) {
         return new ServiceRequestType(code, name, active, academicServiceRequestType, documentRequestType, payable, category);
+    }
+
+    public String getRichName() {
+        return getName().getContent()
+                + " ("
+                + BundleUtil
+                        .getString(
+                                Bundle.STUDENT,
+                                (isPayable() ? "label.student.serviceRequestTypes.withFees" : "label.student.serviceRequestTypes.noFees"))
+                + ")";
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.fenixedu.academic.domain.serviceRequests.ServiceRequestCategory;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -50,8 +51,14 @@ public class ServiceRequestTypeProvider implements DataProvider {
             final Predicate<ServiceRequestType> isStudentRequestable =
                     srt -> srt.getDocumentRequestType() != null && srt.getDocumentRequestType().isStudentRequestable();
             final Predicate<ServiceRequestType> hasNoCharges = srt -> !srt.getPayable();
-            return ServiceRequestType.findActive().filter(hasNoCharges.or(isStudentRequestable))
-                    .sorted(Comparator.comparing(ServiceRequestType::getName)).collect(Collectors.toList());
+            final Predicate<ServiceRequestType> isDeclaration =
+                    srt -> srt.getServiceRequestCategory() == ServiceRequestCategory.DECLARATIONS;
+            final Predicate<ServiceRequestType> isCertificate =
+                    srt -> srt.getServiceRequestCategory() == ServiceRequestCategory.CERTIFICATES;
+
+            return ServiceRequestType.findActive().filter(isDeclaration.or(isCertificate))
+                    .filter(hasNoCharges.or(isStudentRequestable)).sorted(Comparator.comparing(ServiceRequestType::getName))
+                    .collect(Collectors.toList());
         }
     }
 
