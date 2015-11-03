@@ -168,8 +168,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                 request.setAttribute("toEditScheduleRegistrations", registrations);
             } else {
                 request.setAttribute("registrations", registrations);
-                request.setAttribute("timeTableExecutionSemester", executionInterval);
             }
+            request.setAttribute("timeTableExecutionSemester", executionInterval);
 
         }
 

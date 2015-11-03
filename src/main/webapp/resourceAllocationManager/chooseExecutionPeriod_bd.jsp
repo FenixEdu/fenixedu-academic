@@ -96,6 +96,7 @@
 <br/>
 
 <logic:present name="toEditScheduleRegistrations">
+	<bean:define name="timeTableExecutionSemester" id="timeTableExecutionSemester" type="org.fenixedu.academic.domain.ExecutionSemester"/> 
 	<logic:empty name="toEditScheduleRegistrations">
 		<p><span class="error">
 			<bean:message key="message.no.student.schedule.found" bundle="APPLICATION_RESOURCES"/>
@@ -103,7 +104,7 @@
 	</logic:empty>
 	<logic:notEmpty name="toEditScheduleRegistrations">
 		<logic:iterate id="registration" name="toEditScheduleRegistrations">
-			<html:link page="/studentShiftEnrollmentManager.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="externalId">
+			<html:link page="<%= "/studentShiftEnrollmentManager.do?method=prepare&executionSemesterID=" + timeTableExecutionSemester.getExternalId() %>" paramId="registrationOID" paramName="registration" paramProperty="externalId">
 				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degreeNameWithDegreeCurricularPlanName"/>
 			</html:link>
 			<br/>
@@ -112,13 +113,13 @@
 </logic:present>
 
 <logic:present name="registrations">
+	<bean:define name="timeTableExecutionSemester" id="timeTableExecutionSemester" type="org.fenixedu.academic.domain.ExecutionSemester"/> 
 	<logic:empty name="registrations">
 		<p><span class="error">
 			<bean:message key="message.no.student.schedule.found" bundle="APPLICATION_RESOURCES"/>
 		</span></p>
 	</logic:empty>
 	<logic:notEmpty name="registrations">
-		<bean:define name="timeTableExecutionSemester" id="timeTableExecutionSemester" type="org.fenixedu.academic.domain.ExecutionSemester"/> 
 		<logic:iterate id="registration" name="registrations">
 			<html:link page="<%= "/chooseExecutionPeriod.do?method=chooseStudentById&executionSemesterId=" + timeTableExecutionSemester.getExternalId() %>" paramId="registrationId" paramName="registration" paramProperty="externalId">
 				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degreeNameWithDegreeCurricularPlanName"/>

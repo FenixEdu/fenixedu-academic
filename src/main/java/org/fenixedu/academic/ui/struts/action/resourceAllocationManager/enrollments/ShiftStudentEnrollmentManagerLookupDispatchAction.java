@@ -170,6 +170,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDisp
             HttpServletResponse response) throws FenixServiceException {
 
         checkParameter(request);
+        keepInRequest(request, "executionSemesterID");
         final String classIdSelected = readClassSelected(request);
 
         final Registration registration = getAndSetRegistration(request);
