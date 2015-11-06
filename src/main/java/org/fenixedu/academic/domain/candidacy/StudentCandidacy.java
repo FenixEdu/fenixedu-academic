@@ -250,4 +250,8 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public ExecutionYear getExecutionYear() {
         return getExecutionDegree().getExecutionYear();
     }
+
+    public boolean isFirstCycleCandidacy() {
+        return false;
+    }
 }
