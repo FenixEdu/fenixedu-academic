@@ -27,7 +27,9 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
+import org.fenixedu.academic.domain.curricularRules.AssertUniqueCurricularCourseEnrolmentForPeriod;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -76,9 +78,11 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
     @Override
     protected void addEnroled() {
-        for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan().getDegreeModulesToEvaluate(
-                getExecutionSemester())) {
-            enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
+        for (final ExecutionSemester semester : enrolmentContext.getExecutionSemestersToEvaluate()) {
+            for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan().getDegreeModulesToEvaluate(
+                    semester)) {
+                enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
+            }
         }
     }
 
@@ -108,6 +112,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
     protected void addRuntimeRules(final Set<ICurricularRule> curricularRules, final CurricularCourse curricularCourse) {
         curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(curricularCourse));
+        curricularRules.add(new AssertUniqueCurricularCourseEnrolmentForPeriod(curricularCourse));
     }
 
     @Override

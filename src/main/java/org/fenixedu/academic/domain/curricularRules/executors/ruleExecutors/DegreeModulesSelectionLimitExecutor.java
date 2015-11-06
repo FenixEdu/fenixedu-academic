@@ -18,7 +18,8 @@
  */
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import java.util.List;
+
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -36,10 +37,22 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 
         int numberOfDegreeModulesToEnrol = countNumberOfDegreeModulesToEnrol(enrolmentContext, courseGroup);
         int numberOfApprovedEnrolments = curriculumGroup.getNumberOfApprovedChildCurriculumLines();
-        int numberOfEnrolments = curriculumGroup.getNumberOfChildEnrolments(enrolmentContext.getExecutionPeriod());
+        int numberOfEnrolments = countNumberOfChildEnrolments(enrolmentContext, curriculumGroup);
         int numberOfChildCurriculumGroups = curriculumGroup.getNumberOfChildCurriculumGroupsWithCourseGroup();
 
         return numberOfApprovedEnrolments + numberOfEnrolments + numberOfDegreeModulesToEnrol + numberOfChildCurriculumGroups;
+    }
+
+    private int countNumberOfChildEnrolments(final EnrolmentContext enrolmentContext, final CurriculumGroup curriculumGroup) {
+        return enrolmentContext.isToEvaluateRulesByYear() ? curriculumGroup.getNumberOfChildEnrolments(enrolmentContext
+                .getExecutionYear()) : curriculumGroup.getNumberOfChildEnrolments(enrolmentContext.getExecutionPeriod());
+    }
+
+    private int countPreviousPeriodNumberOfChildEnrolments(final EnrolmentContext enrolmentContext,
+            final CurriculumGroup curriculumGroup) {
+        return enrolmentContext.isToEvaluateRulesByYear() ? curriculumGroup.getNumberOfChildEnrolments(enrolmentContext
+                .getExecutionYear().getPreviousExecutionYear()) : curriculumGroup.getNumberOfChildEnrolments(enrolmentContext
+                .getExecutionPeriod().getPreviousExecutionPeriod());
     }
 
     private RuleResult createFalseRuleResult(final DegreeModulesSelectionLimit rule,
@@ -72,12 +85,18 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 
     private int countNumberOfDegreeModulesToEnrol(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
         int result = 0;
-        for (final Context context : courseGroup.getValidChildContexts(enrolmentContext.getExecutionPeriod())) {
+        for (final Context context : getValidChildContexts(enrolmentContext, courseGroup)) {
             if (isEnrolling(enrolmentContext, context.getChildDegreeModule())) {
                 result++;
             }
         }
         return result;
+    }
+
+    private List<Context> getValidChildContexts(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
+        return enrolmentContext.isToEvaluateRulesByYear() ? courseGroup
+                .getValidChildContexts(enrolmentContext.getExecutionYear()) : courseGroup.getValidChildContexts(enrolmentContext
+                .getExecutionPeriod());
     }
 
     @Override
@@ -108,8 +127,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
                 }
             }
 
-            final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
-            total += curriculumGroup.getNumberOfChildEnrolments(executionSemester.getPreviousExecutionPeriod());
+            total += countPreviousPeriodNumberOfChildEnrolments(enrolmentContext, curriculumGroup);
 
             return rule.numberOfDegreeModulesExceedMaximum(total) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY,
                     sourceDegreeModuleToEvaluate.getDegreeModule()) : RuleResult.createTrue(sourceDegreeModuleToEvaluate

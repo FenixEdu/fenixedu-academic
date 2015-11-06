@@ -66,10 +66,17 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
                     creditsLimitInExternalCycle, totalCredits, totalCreditsInPreviousCycle);
         }
 
-        final Double totalEctsWithEnroledEctsCreditsFromPreviousPeriod =
-                totalCredits
-                        + externalCurriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod()
-                                .getPreviousExecutionPeriod());
+        final Double previousPeriodEnroledEcts;
+        if (enrolmentContext.isToEvaluateRulesByYear()) {
+            previousPeriodEnroledEcts =
+                    externalCurriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionYear().getPreviousExecutionYear());
+        } else {
+            previousPeriodEnroledEcts =
+                    externalCurriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod()
+                            .getPreviousExecutionPeriod());
+        }
+
+        final Double totalEctsWithEnroledEctsCreditsFromPreviousPeriod = totalCredits + previousPeriodEnroledEcts;
         if (creditsLimitInExternalCycle.creditsExceedMaximumInExternalCycle(totalEctsWithEnroledEctsCreditsFromPreviousPeriod,
                 totalCreditsInPreviousCycle)) {
             return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule(),
@@ -110,7 +117,7 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
             if (externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())
-                    && (isEnrolingInSemester(enrolmentContext, degreeModuleToEvaluate))) {
+                    && (isEnrolingOrIsEnroled(enrolmentContext, degreeModuleToEvaluate))) {
                 return true;
             }
         }
@@ -203,16 +210,28 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
             if (degreeModuleToEvaluate.isDissertation()
                     && externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())
-                    && isEnrolingInSemester(enrolmentContext, degreeModuleToEvaluate)) {
+                    && isEnrolingOrIsEnroled(enrolmentContext, degreeModuleToEvaluate)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isEnrolingInSemester(final EnrolmentContext enrolmentContext,
+    private boolean isEnrolingOrIsEnroled(final EnrolmentContext enrolmentContext,
             final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
-        return degreeModuleToEvaluate.isEnroling() || isEnroledIn(degreeModuleToEvaluate, enrolmentContext.getExecutionPeriod());
+
+        if (degreeModuleToEvaluate.isEnroling()) {
+            return true;
+        }
+
+        for (final ExecutionSemester executionSemester : enrolmentContext.getExecutionSemestersToEvaluate()) {
+            if (isEnroledIn(degreeModuleToEvaluate, executionSemester)) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
     private RuleResult createRuleResultForMaxCreditsExceededInExternalCycle(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,

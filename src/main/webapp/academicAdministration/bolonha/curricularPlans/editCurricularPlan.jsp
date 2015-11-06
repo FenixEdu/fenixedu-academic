@@ -85,6 +85,13 @@
 		<h:message for="durationTypeName" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 
+		<h:outputText value="<p><label>#{scouncilBundle['curricularRulesValidation']}:</label>" escape="false"/>
+		<h:selectOneMenu id="curricularRuleValidationTypeName" value="#{DegreeCurricularPlanManagement.curricularRuleValidationTypeName}" required="true">
+			<f:selectItems value="#{DegreeCurricularPlanManagement.curricularRuleValidationTypes}" />
+		</h:selectOneMenu>
+		<h:message for="curricularRuleValidationTypeName" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
+		<h:outputText value="</p>" escape="false"/>
+
 			
 		<h:outputText value="</fieldset></div>" escape="false"/>
 

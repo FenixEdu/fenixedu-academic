@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
+import org.fenixedu.academic.domain.curricularRules.AssertUniqueCurricularCourseEnrolmentForPeriod;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimitInExternalCycle;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
@@ -78,6 +79,9 @@ public class CurricularRuleExecutorFactory {
                 new MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor());
         executors.put(PhdValidCurricularCoursesRule.class, new PhdValidCurricularCoursesExecutor());
         executors.put(SeniorStatuteSpecialSeasonEnrolmentScope.class, new SeniorStatuteSpecialSeasonEnrolmentScopeExecutor());
+        executors.put(AssertUniqueCurricularCourseEnrolmentForPeriod.class,
+                new AssertUniqueCurricularCourseEnrolmentForPeriodExecutor());
+
     }
 
     public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {

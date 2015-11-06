@@ -48,6 +48,14 @@ public class RestrictionNotEnroledDegreeModuleExecutor extends CurricularRuleExe
             return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
         }
 
+        if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule())) {
+            return RuleResult
+                    .createImpossible(
+                            sourceDegreeModuleToEvaluate.getDegreeModule(),
+                            "curricularRules.ruleExecutors.RestrictionNotEnroledDegreeModuleExecutor.student.is.enroled.in.precendenceDegreeModule",
+                            rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
+        }
+
         return RuleResult
                 .createFalse(
                         sourceDegreeModuleToEvaluate.getDegreeModule(),

@@ -22,10 +22,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -178,6 +182,22 @@ public class EnrolmentContext {
 
     public boolean isPhdDegree() {
         return studentCurricularPlan.getDegreeType().isAdvancedSpecializationDiploma();
+    }
+
+    public boolean isToEvaluateRulesByYear() {
+        return getStudentCurricularPlan().getDegreeCurricularPlan().getCurricularRuleValidationType() == CurricularRuleValidationType.YEAR;
+    }
+
+    public ExecutionYear getExecutionYear() {
+        return getExecutionPeriod().getExecutionYear();
+    }
+
+    public SortedSet<ExecutionSemester> getExecutionSemestersToEvaluate() {
+        final SortedSet<ExecutionSemester> result = new TreeSet<>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        result.addAll(isToEvaluateRulesByYear() ? getExecutionYear().getExecutionPeriodsSet() : Collections
+                .singleton(getExecutionPeriod()));
+
+        return result;
     }
 
     @SuppressWarnings("unchecked")

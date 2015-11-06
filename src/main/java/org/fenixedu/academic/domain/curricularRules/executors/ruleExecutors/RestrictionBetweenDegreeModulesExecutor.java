@@ -97,11 +97,9 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
                 return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
             }
 
-            final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
             ectsCredits =
                     Double.valueOf(ectsCredits.doubleValue()
-                            + curriculumModule.getEnroledEctsCredits(executionSemester.getPreviousExecutionPeriod())
-                                    .doubleValue());
+                            + calculatePreviousPeriodEnroledEctsCredits(enrolmentContext, curriculumModule).doubleValue());
 
             if (rule.allowCredits(ectsCredits)) {
                 return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
@@ -118,6 +116,13 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
         return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
                 "curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.student.has.not.precedence.degreeModule",
                 rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
+    }
+
+    protected Double calculatePreviousPeriodEnroledEctsCredits(final EnrolmentContext enrolmentContext,
+            final CurriculumModule curriculumModule) {
+        return enrolmentContext.isToEvaluateRulesByYear() ? curriculumModule.getEnroledEctsCredits(enrolmentContext
+                .getExecutionYear().getPreviousExecutionYear()) : curriculumModule.getEnroledEctsCredits(enrolmentContext
+                .getExecutionPeriod().getPreviousExecutionPeriod());
     }
 
     private RuleResult createFalseRuleResultWithInvalidEcts(final RestrictionBetweenDegreeModules rule,

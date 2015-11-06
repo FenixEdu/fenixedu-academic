@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,8 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -52,6 +55,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -69,6 +73,41 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     private String newGroupMember;
     private String durationTypeName;
     private List<SelectItem> durationTypes = null;
+    private String curricularRuleValidationTypeName;
+    private List<SelectItem> curricularRuleValidationTypes = null;
+
+    public String getCurricularRuleValidationTypeName() {
+        if (curricularRuleValidationTypeName == null) {
+            final CurricularRuleValidationType validationType =
+                    getDcp() != null ? getDcp().getCurricularRuleValidationType() : null;
+            curricularRuleValidationTypeName =
+                    validationType != null ? validationType.getName() : CurricularRuleValidationType.SEMESTER.getName();
+        }
+
+        return curricularRuleValidationTypeName;
+    }
+
+    public void setCurricularRuleValidationTypeName(String curricularRuleValidationTypeName) {
+        this.curricularRuleValidationTypeName = curricularRuleValidationTypeName;
+    }
+
+    public CurricularRuleValidationType getCurricularRuleValidationType() {
+        return CurricularRuleValidationType.valueOf(getCurricularRuleValidationTypeName());
+    }
+
+    public List<SelectItem> getCurricularRuleValidationTypes() {
+        return (curricularRuleValidationTypes == null) ? (curricularRuleValidationTypes = readCurricularRuleValidationTypes()) : curricularRuleValidationTypes;
+    }
+
+    private List<SelectItem> readCurricularRuleValidationTypes() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        final List<CurricularRuleValidationType> entries =
+                new ArrayList<CurricularRuleValidationType>(Arrays.asList(CurricularRuleValidationType.values()));
+        for (CurricularRuleValidationType entry : entries) {
+            result.add(new SelectItem(entry.name(), entry.getDescription(I18N.getLocale())));
+        }
+        return result;
+    }
 
     public String getAction() {
         return getAndHoldStringParameter("action");
@@ -329,9 +368,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
         try {
 
-            EditDegreeCurricularPlan.run(getDcp(), getName(), CurricularStage.valueOf(getCurricularStage()),
-                    DegreeCurricularPlanState.valueOf(getState()), (GradeScale) null, getExecutionYear(), getDuration(),
-                    getApplyPreviousYearsEnrolmentRule());
+            editCurricularPlanService();
             addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeCurricularPlan.edited"));
 
         } catch (final IllegalDataAccessException e) {
@@ -346,6 +383,15 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         }
 
         return "curricularPlansManagement";
+    }
+
+    @Atomic
+    protected void editCurricularPlanService() throws FenixServiceException {
+        EditDegreeCurricularPlan.run(getDcp(), getName(), CurricularStage.valueOf(getCurricularStage()),
+                DegreeCurricularPlanState.valueOf(getState()), (GradeScale) null, getExecutionYear(), getDuration(),
+                getApplyPreviousYearsEnrolmentRule());
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(getDcpId());
+        degreeCurricularPlan.setCurricularRuleValidationType(getCurricularRuleValidationType());
     }
 
     public String deleteCurricularPlan() {

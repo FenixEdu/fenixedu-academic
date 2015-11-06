@@ -36,6 +36,12 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
 
         final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
         final DegreeModule exclusiveDegreeModule = exclusiveness.getExclusiveDegreeModule();
+
+        if (exclusiveDegreeModule.isLeaf()
+                && enrolmentContext.getStudentCurricularPlan().isApproved((CurricularCourse) exclusiveDegreeModule)) {
+            return RuleResult.createFalse(degreeModuleToVerify);
+        }
+
         final IDegreeModuleToEvaluate degreeModuleToEvaluate =
                 getDegreeModuleToEvaluate(enrolmentContext, exclusiveDegreeModule, rootOrCycleCourseGroup);
 

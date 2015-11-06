@@ -58,7 +58,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
                 final Double ectsCredits =
                         curriculumModule.getAprovedEctsCredits()
-                                + curriculumModule.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod())
+                                + calculateEnroledEctsCredits(enrolmentContext, curriculumModule)
                                 + calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, curriculumModule);
 
                 if (rule.creditsExceedMaximum(ectsCredits)) {
@@ -76,6 +76,18 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
             }
         }
 
+    }
+
+    private Double calculateEnroledEctsCredits(EnrolmentContext enrolmentContext, final CurriculumModule curriculumModule) {
+        return enrolmentContext.isToEvaluateRulesByYear() ? curriculumModule.getEnroledEctsCredits(enrolmentContext
+                .getExecutionYear()) : curriculumModule.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod());
+    }
+
+    private Double calculatePreviousPeriodEnroledEctsCredits(EnrolmentContext enrolmentContext,
+            final CurriculumModule curriculumModule) {
+        return enrolmentContext.isToEvaluateRulesByYear() ? curriculumModule.getEnroledEctsCredits(enrolmentContext
+                .getExecutionYear().getPreviousExecutionYear()) : curriculumModule.getEnroledEctsCredits(enrolmentContext
+                .getExecutionPeriod().getPreviousExecutionPeriod());
     }
 
     private RuleResult evaluateIfCanEnrolToOptionalDegreeModule(final EnrolmentContext enrolmentContext, final CreditsLimit rule,
@@ -143,10 +155,10 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
                 final EnroledCurriculumModuleWrapper moduleEnroledWrapper =
                         (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
                 final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
-                final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
                 Double ectsCredits =
-                        curriculumModule.getAprovedEctsCredits() + curriculumModule.getEnroledEctsCredits(executionSemester)
+                        curriculumModule.getAprovedEctsCredits()
+                                + calculateEnroledEctsCredits(enrolmentContext, curriculumModule)
                                 + calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, curriculumModule);
 
                 if (rule.creditsExceedMaximum(ectsCredits)) {
@@ -159,8 +171,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
                 ectsCredits =
                         Double.valueOf(ectsCredits.doubleValue()
-                                + curriculumModule.getEnroledEctsCredits(executionSemester.getPreviousExecutionPeriod())
-                                        .doubleValue());
+                                + calculatePreviousPeriodEnroledEctsCredits(enrolmentContext, curriculumModule).doubleValue());
 
                 // TODO: remove duplicated ects from anual CurricularCourses
 

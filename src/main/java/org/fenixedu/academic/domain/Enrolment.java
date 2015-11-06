@@ -1097,6 +1097,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
+    final public Double getEnroledEctsCredits(final ExecutionYear executionYear) {
+        return isValid(executionYear) && isEnroled() ? getEctsCredits() : Double.valueOf(0d);
+    }
+    
+    @Override
     final public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
         return isEnroledInExecutionPeriod(curricularCourse, executionSemester) ? this : null;
     }

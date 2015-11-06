@@ -43,6 +43,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
@@ -144,11 +145,11 @@ public class CurriculumGroup extends CurriculumGroup_Base {
             if (!canCreateGroupOrChilds(iter, executionInterval)) {
                 continue;
             }
-            
+
             CurriculumGroupFactory.createGroup(this, iter, executionInterval);
         }
     }
-    
+
     private boolean canCreateGroupOrChilds(final CourseGroup courseGroup, final ExecutionSemester executionInterval) {
 
         for (final CurricularRule iter : courseGroup.getCurricularRules(executionInterval)) {
@@ -332,14 +333,41 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getDegreeModulesFor(executionSemester)) {
             if (context.getChildDegreeModule().isLeaf()) {
+
                 CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-                if (!this.getStudentCurricularPlan().isApproved(curricularCourse, executionSemester)
-                        && !this.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionSemester)) {
-                    result.add(context);
+
+                if (getDegreeCurricularPlanOfStudent().getCurricularRuleValidationType() == CurricularRuleValidationType.YEAR) {
+
+                    if (!getStudentCurricularPlan().isApproved(curricularCourse, executionSemester)
+                            && !getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
+                                    executionSemester.getExecutionYear())
+                            && !hasEnrolmentForSemester(curricularCourse, executionSemester)
+                            && (!curricularCourse.isAnual(executionSemester.getExecutionYear()) || context.getCurricularPeriod()
+                                    .getChildOrder().intValue() == executionSemester.getSemester().intValue())) {
+                        result.add(context);
+                    }
+
+                } else {
+
+                    if (!this.getStudentCurricularPlan().isApproved(curricularCourse, executionSemester)
+                            && !this.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionSemester)) {
+                        result.add(context);
+                    }
                 }
+
             }
         }
         return result;
+    }
+
+    private boolean hasEnrolmentForSemester(CurricularCourse curricularCourse, ExecutionSemester executionPeriod) {
+        for (final Enrolment enrolment : getStudentCurricularPlan().getEnrolments(curricularCourse)) {
+            if (enrolment.isValid(executionPeriod)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public List<Context> getCourseGroupContextsToEnrol(ExecutionSemester executionSemester) {
@@ -740,6 +768,16 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
+    final public Double getEnroledEctsCredits(final ExecutionYear executionYear) {
+        //NOTE: this method cannot be implemented iterating over semesters, because annual curricular courses would be accounted twice (they are valid on both semesters)
+        BigDecimal bigDecimal = BigDecimal.ZERO;
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getEnroledEctsCredits(executionYear)));
+        }
+        return Double.valueOf(bigDecimal.doubleValue());
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public Double getCreditsConcluded(ExecutionYear executionYear) {
         final CreditsLimit creditsLimit =
@@ -834,6 +872,21 @@ public class CurriculumGroup extends CurriculumGroup_Base {
             if (curriculumModule instanceof Enrolment) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
                 if (enrolment.isValid(executionSemester) && enrolment.isEnroled()) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    final public int getNumberOfChildEnrolments(final ExecutionYear executionYear) {
+        //NOTE: this method cannot be implemented iterating over semesters, because annual curricular courses would be 
+        //accounted twice (they are valid on both semesters)
+        int result = 0;
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            if (curriculumModule instanceof Enrolment) {
+                final Enrolment enrolment = (Enrolment) curriculumModule;
+                if (enrolment.isValid(executionYear) && enrolment.isEnroled()) {
                     result++;
                 }
             }

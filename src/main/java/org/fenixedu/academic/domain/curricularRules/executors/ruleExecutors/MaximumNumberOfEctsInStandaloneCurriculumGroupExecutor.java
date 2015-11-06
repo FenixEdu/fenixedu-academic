@@ -60,9 +60,29 @@ public class MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor extends Curr
     private double calculateTotalEctsCredits(final EnrolmentContext enrolmentContext) {
         double accumulated = 0d;
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-            accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(enrolmentContext.getExecutionPeriod());
+            accumulated += calculateAccumulatedEctsCredits(degreeModuleToEvaluate, enrolmentContext);
         }
         return accumulated;
+    }
+
+    /*
+     * Accumulated ECTS as domain logic is a legacy behavior and this kind of specific methods should not live on domain space, 
+     * they should be specific to curricular rules to allow greater flexibility / specialization by institutions.
+     * 
+     * The current implementation of accumulation factor is hardcoded and set to 1, check MaximumNumberOfCreditsForEnrolmentPeriod rule for details.
+     * 
+     * New code should not depend on domain provided methods for this purpose.
+     * 
+     */
+    protected double calculateAccumulatedEctsCredits(final IDegreeModuleToEvaluate degreeModuleToEvaluate,
+            EnrolmentContext enrolmentContext) {
+
+        if (enrolmentContext.isToEvaluateRulesByYear()) {
+            return degreeModuleToEvaluate.getEctsCredits();
+        }
+
+        // method call is kept because it returns the ects share for a specific semester (keep this in mind when refactoring to remove accumulated ects credits logic) 
+        return degreeModuleToEvaluate.getAccumulatedEctsCredits(enrolmentContext.getExecutionPeriod());
     }
 
     private double calculateApprovedEcts(final EnrolmentContext enrolmentContext) {

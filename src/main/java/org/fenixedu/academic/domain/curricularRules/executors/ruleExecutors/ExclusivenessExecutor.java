@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 import java.util.Collection;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -47,15 +46,15 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
         if (degreeModule.isLeaf()) {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-            final ExecutionSemester previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 
             if (isApproved(enrolmentContext, curricularCourse)
-                    || hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+                    || hasPreviousPeriodEnrolmentWithEnroledState(enrolmentContext, curricularCourse)
+                    || isEnroled(enrolmentContext, curricularCourse)) {
 
-                if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(),
-                        enrolmentContext.getExecutionPeriod())) {
+                if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule())) {
                     return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
                 }
+
                 return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
             }
         }
@@ -65,6 +64,18 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
         }
 
         return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    protected boolean hasPreviousPeriodEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext,
+            final CurricularCourse curricularCourse) {
+
+        if (enrolmentContext.isToEvaluateRulesByYear()) {
+            return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, enrolmentContext.getExecutionYear()
+                    .getPreviousExecutionYear());
+        }
+
+        return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod()
+                .getPreviousExecutionPeriod());
     }
 
     private RuleResult createFalseRuleResult(final Exclusiveness rule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
@@ -95,15 +106,13 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
 
             if (isApproved(enrolmentContext, curricularCourse)) {
-                if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(),
-                        enrolmentContext.getExecutionPeriod())) {
+                if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule())) {
                     return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
                 }
                 return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
             }
 
-            final ExecutionSemester previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
-            if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
+            if (hasPreviousPeriodEnrolmentWithEnroledState(enrolmentContext, curricularCourse)) {
                 return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
             }
         }

@@ -72,6 +72,7 @@ enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState        
 enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
 enum org.fenixedu.academic.domain.contacts.PartyContactType                                                            as PartyContactType;
 enum org.fenixedu.academic.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
+enum org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType                                         as CurricularRuleValidationType;
 enum org.fenixedu.academic.domain.curriculum.CurricularCourseType                                                      as CurricularCourseType;
 enum org.fenixedu.academic.domain.curriculum.EnrollmentCondition                                                       as EnrollmentCondition;
 enum org.fenixedu.academic.domain.curriculum.EnrollmentState                                                           as EnrollmentState;
@@ -585,6 +586,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Integer numerusClausus;
         DegreeCurricularPlanState state;
         Boolean applyPreviousYearsEnrolmentRule;
+        CurricularRuleValidationType curricularRuleValidationType;
     }
     
         class EmptyDegreeCurricularPlan extends DegreeCurricularPlan;

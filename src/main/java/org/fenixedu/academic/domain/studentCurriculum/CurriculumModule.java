@@ -313,11 +313,23 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         return getCreditsConcluded(getApprovedCurriculumLinesLastExecutionYear());
     }
 
+    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+            if (hasEnrolmentWithEnroledState(curricularCourse, executionSemester)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     abstract public Double getEctsCredits();
 
     abstract public Double getAprovedEctsCredits();
 
     abstract public Double getEnroledEctsCredits(final ExecutionSemester executionSemester);
+
+    abstract public Double getEnroledEctsCredits(final ExecutionYear executionYear);
 
     abstract public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester);
 
