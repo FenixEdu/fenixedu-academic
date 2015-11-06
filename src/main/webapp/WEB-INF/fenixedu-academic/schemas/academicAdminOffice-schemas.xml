@@ -439,6 +439,9 @@
 </schema>
 
 <schema name="student.registrationsToList" type="org.fenixedu.academic.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="registrationYear" key="label.registrationYear">
+		<property name="format" value="${qualifiedName}" />
+	</slot>
 	<slot name="startDate" layout="null-as-label" key="label.startDate" >
         <property name="label" value="-"/>	
 	</slot>
@@ -533,10 +536,15 @@
 
 <schema name="student.manageRegistrationStartDates" 
 	type="org.fenixedu.academic.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
+
+	<slot name="registrationYear" key="label.registrationYear" layout="menu-select" required="true">
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="format" value="${qualifiedName}" />
+	</slot>
 	<slot name="startDate" key="label.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="homologationDate" key="label.homologationDate" />
 	<slot name="studiesStartDate" key="label.studiesStartDate" />
-	<setter signature="editStartDates(startDate, homologationDate, studiesStartDate)" />
+	<setter signature="editStartDates(registrationYear, startDate, homologationDate, studiesStartDate)" />
 </schema>
 
 <schema name="student.createRegistrationStartDates" 
