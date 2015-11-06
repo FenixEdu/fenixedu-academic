@@ -21,7 +21,9 @@ package org.fenixedu.academic.domain.enrolmentPeriods;
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClassesMobility;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClassesCandidate;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
+import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesCandidate;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import org.fenixedu.academic.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
@@ -95,6 +97,22 @@ public enum EnrolmentPeriodType {
         @Override
         protected Class<? extends EnrolmentPeriod> getClassFor() {
             return EnrolmentPeriodInClassesMobility.class;
+        }
+    };
+
+    ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_CANDIDATE {
+
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInCurricularCoursesCandidate.class;
+        }
+    },
+
+    ENROLMENT_PERIOD_IN_CLASSES_CANDIDATE {
+
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInClassesCandidate.class;
         }
     };
 

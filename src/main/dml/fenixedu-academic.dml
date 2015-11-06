@@ -705,11 +705,17 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
         class EnrolmentPeriodInClasses extends EnrolmentPeriod {
         }
-        
+
         class EnrolmentPeriodInClassesMobility extends EnrolmentPeriod {
         }
 
+        class EnrolmentPeriodInClassesCandidate extends EnrolmentPeriod {
+        }
+
         class EnrolmentPeriodInCurricularCourses extends EnrolmentPeriod {
+        }
+
+        class EnrolmentPeriodInCurricularCoursesCandidate extends EnrolmentPeriod {
         }
 
         class EnrolmentPeriodInCurricularCoursesSpecialSeason extends EnrolmentPeriod {

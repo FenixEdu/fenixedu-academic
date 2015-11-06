@@ -21,7 +21,10 @@ package org.fenixedu.academic.domain.studentCurriculum;
 import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult.createFalse;
 import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult.createTrue;
 
+import java.util.function.Predicate;
+
 import org.fenixedu.academic.domain.EnrolmentPeriod;
+import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesCandidate;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.student.Registration;
@@ -155,6 +158,11 @@ public class StudentCurricularPlanEnrolmentPreConditions {
                         .getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason());
             }
 
+        } else if (scp.isInCandidateEnrolmentProcess(semester.getExecutionYear())) {
+            Predicate<EnrolmentPeriod> predicate = ep -> ep instanceof EnrolmentPeriodInCurricularCoursesCandidate;
+            if (!scp.getDegreeCurricularPlan().getValidEnrolmentPeriod(predicate, semester).isPresent()) {
+                return outOfPeriodResult("normal", scp.getDegreeCurricularPlan().getNextEnrolmentPeriod());
+            }
         } else if (!scp.getDegreeCurricularPlan().getActiveCurricularCourseEnrolmentPeriod(semester).isPresent()) {
             return outOfPeriodResult("normal", scp.getDegreeCurricularPlan().getNextEnrolmentPeriod());
         }
