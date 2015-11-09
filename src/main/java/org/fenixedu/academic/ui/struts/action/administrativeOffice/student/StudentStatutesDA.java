@@ -51,7 +51,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
     public static class CreateStudentStatuteFactory extends ManageStudentStatuteBean implements FactoryExecutor {
 
-        public CreateStudentStatuteFactory(Student student) {
+        public CreateStudentStatuteFactory(final Student student) {
             super(student);
         }
 
@@ -59,10 +59,13 @@ public class StudentStatutesDA extends FenixDispatchAction {
         public Object execute() {
             if (getStatuteType().isSeniorStatute()) {
                 return new SeniorStatute(getStudent(), getRegistration(), getStatuteType(), getBeginExecutionPeriod(),
-                        getEndExecutionPeriod(), getBeginDate(), getEndDate(), getComment());
+                        getEndExecutionPeriod(), getBeginDate(), getEndDate());
+            } else if (getStatuteType().isAppliedOnRegistration()) {
+                return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod(),
+                        getBeginDate(), getEndDate(), getComment(), getRegistration());
             } else {
                 return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod(),
-                        getBeginDate(), getEndDate(), getComment());
+                        getBeginDate(), getEndDate(), getComment(), null);
             }
         }
     }
@@ -71,7 +74,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
         StudentStatute studentStatute;
 
-        public DeleteStudentStatuteFactory(StudentStatute studentStatute) {
+        public DeleteStudentStatuteFactory(final StudentStatute studentStatute) {
             this.studentStatute = studentStatute;
         }
 
@@ -83,8 +86,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
 
         final Student student = getDomainObject(request, "studentId");
         request.setAttribute("student", student);
@@ -94,8 +97,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
         return mapping.findForward("manageStatutes");
     }
 
-    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ActionForward invalid(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
         final Student student = FenixFramework.getDomainObject(request.getParameter("studentOID"));
         request.setAttribute("student", student);
         request.setAttribute("schemaName", request.getParameter("schemaName"));
@@ -104,8 +107,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
         return mapping.findForward("manageStatutes");
     }
 
-    public ActionForward invalidEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ActionForward invalidEdit(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
 
         keepInRequest(request, "statuteId");
         keepInRequest(request, "schemaName");
@@ -114,8 +117,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
         return mapping.findForward("editStatute");
     }
 
-    public ActionForward seniorStatutePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ActionForward seniorStatutePostBack(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
 
         final CreateStudentStatuteFactory oldManageStatuteBean = getRenderedObject();
         final Student student = oldManageStatuteBean.getStudent();
@@ -128,7 +131,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
         request.setAttribute("student", student);
         request.setAttribute("manageStatuteBean", manageStatuteBean);
 
-        if (manageStatuteBean.getStatuteType().isSeniorStatute()) {
+        if (manageStatuteBean.getStatuteType() != null && (manageStatuteBean.getStatuteType().isSeniorStatute()
+                || manageStatuteBean.getStatuteType().isAppliedOnRegistration())) {
             request.setAttribute("schemaName", "student.createSeniorStatute");
         } else {
             request.setAttribute("schemaName", "student.createStatutes");
@@ -137,8 +141,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
         return mapping.findForward("manageStatutes");
     }
 
-    public ActionForward addNewStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+    public ActionForward addNewStatute(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) throws FenixServiceException {
 
         try {
             // add new statute
@@ -156,8 +160,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
     }
 
-    public ActionForward deleteStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+    public ActionForward deleteStatute(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) throws FenixServiceException {
 
         final StudentStatute studentStatute = getDomainObject(request, "statuteId");
         final Student student = studentStatute.getStudent();
@@ -177,8 +181,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
     }
 
-    public ActionForward prepareEditStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+    public ActionForward prepareEditStatute(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws FenixServiceException {
 
         StudentStatute studentStatute = getDomainObject(request, "statuteId");
         Student student = studentStatute.getStudent();
@@ -204,8 +208,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
         return mapping.findForward("editStatute");
     }
 
-    public ActionForward editStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+    public ActionForward editStatute(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) throws FenixServiceException {
         final ManageStudentStatuteBean manageStatuteBean = getRenderedObject();
         StudentStatute studentStatute = getDomainObject(request, "statuteId");
 

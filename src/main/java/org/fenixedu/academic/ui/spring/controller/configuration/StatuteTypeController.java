@@ -81,14 +81,17 @@ public class StatuteTypeController {
             @RequestParam(required = false) boolean workingStudentStatute,
             @RequestParam(required = false) boolean associativeLeaderStatute,
             @RequestParam(required = false) boolean specialSeasonGrantedByRequest,
-            @RequestParam(required = false) boolean grantOwnerStatute, @RequestParam(required = false) boolean seniorStatute,
-            @RequestParam(required = false) boolean handicappedStatute, Model model) throws Exception {
+            @RequestParam(required = false) boolean grantOwnerStatute, 
+            @RequestParam(required = false) boolean seniorStatute,
+            @RequestParam(required = false) boolean handicappedStatute, 
+            @RequestParam(required = false) boolean appliedOnRegistration,
+            Model model) throws Exception {
 
         try {
             StatuteType statuteType =
                     atomic(() -> new StatuteType(code, name, workingStudentStatute, associativeLeaderStatute,
                             specialSeasonGrantedByRequest, grantOwnerStatute, seniorStatute, handicappedStatute, active,
-                            explicitCreation, visible, specialSeasonGranted));
+                            explicitCreation, visible, specialSeasonGranted, appliedOnRegistration));
             return "redirect:/academic/configuration/statutes/" + statuteType.getExternalId();
         } catch (DomainException ex) {
             ControllerHelper.addErrorMessage(ex.getLocalizedMessage(), model);
@@ -109,8 +112,11 @@ public class StatuteTypeController {
             @RequestParam(required = false) boolean workingStudentStatute,
             @RequestParam(required = false) boolean associativeLeaderStatute,
             @RequestParam(required = false) boolean specialSeasonGrantedByRequest,
-            @RequestParam(required = false) boolean grantOwnerStatute, @RequestParam(required = false) boolean seniorStatute,
-            @RequestParam(required = false) boolean handicappedStatute, Model model, RedirectAttributes redirectAttributes) {
+            @RequestParam(required = false) boolean grantOwnerStatute, 
+            @RequestParam(required = false) boolean seniorStatute,
+            @RequestParam(required = false) boolean handicappedStatute, 
+            @RequestParam(required = false) boolean appliedOnRegistration,
+            Model model, RedirectAttributes redirectAttributes) {
 
         try {
             atomic(() -> {
@@ -126,6 +132,7 @@ public class StatuteTypeController {
                 statuteType.setGrantOwnerStatute(grantOwnerStatute);
                 statuteType.setSeniorStatute(seniorStatute);
                 statuteType.setHandicappedStatute(handicappedStatute);
+                statuteType.setAppliedOnRegistration(appliedOnRegistration);
             });
             return "redirect:/academic/configuration/statutes/" + statuteType.getExternalId();
         } catch (DomainException ex) {

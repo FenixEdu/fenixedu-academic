@@ -42,7 +42,7 @@ public class StatuteType extends StatuteType_Base {
 
     public StatuteType(String code, LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
             boolean specialSeasonGrantedByRequest, boolean grantOwnerStatute, boolean seniorStatute, boolean handicappedStatute,
-            boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
+            boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted, final boolean appliedOnRegistration) {
         this();
         setCode(code);
         setName(name);
@@ -57,6 +57,7 @@ public class StatuteType extends StatuteType_Base {
         setExplicitCreation(explicitCreation);
         setVisible(visible);
         setSpecialSeasonGranted(specialSeasonGranted);
+        setAppliedOnRegistration(appliedOnRegistration);
 
         checkRules();
     }
@@ -107,6 +108,10 @@ public class StatuteType extends StatuteType_Base {
 
     public boolean isHandicappedStatute() {
         return getHandicappedStatute();
+    }
+    
+    public boolean isAppliedOnRegistration() {
+        return getAppliedOnRegistration();
     }
 
     @Deprecated
