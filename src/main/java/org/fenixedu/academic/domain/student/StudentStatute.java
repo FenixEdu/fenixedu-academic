@@ -44,21 +44,24 @@ public class StudentStatute extends StudentStatute_Base {
         setCreationDate(new DateTime());
     }
 
+    @Deprecated
     public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
             final ExecutionSemester endExecutionPeriod) {
         this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod.getBeginLocalDate(),
                 endExecutionPeriod.getEndLocalDate(), "", null);
     }
 
+    @Deprecated
+    public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
+            final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate) {
+        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginDate, endDate, "", null);
+    }
+
+    @Deprecated
     public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
             final ExecutionSemester endExecutionPeriod, final String comment) {
         this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod.getBeginLocalDate(),
                 endExecutionPeriod.getEndLocalDate(), comment, null);
-    }
-
-    public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate) {
-        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginDate, endDate, "", null);
     }
 
     public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
@@ -218,7 +221,7 @@ public class StudentStatute extends StudentStatute_Base {
 
     }
 
-    private boolean overlapsWith(final StatuteType statuteType, final ExecutionSemester statuteBegin,
+    public boolean overlapsWith(final StatuteType statuteType, final ExecutionSemester statuteBegin,
             final ExecutionSemester statuteEnd, final Registration registration) {
 
         if (statuteType != getType()) {
