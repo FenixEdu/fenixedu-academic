@@ -451,6 +451,14 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void checkRulesToDelete() {
     }
 
+    public void cloneAttributes(AcademicServiceRequest original) {
+        setRootDomainObject(original.getRootDomainObject());
+        super.setAdministrativeOffice(original.getAdministrativeOffice());
+        setAcademicServiceRequestYear(original.getAcademicServiceRequestYear());
+        super.setServiceRequestNumber(original.getServiceRequestNumber());
+        setRequestDate(original.getRequestDate());
+    }
+
     @Override
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
         throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
