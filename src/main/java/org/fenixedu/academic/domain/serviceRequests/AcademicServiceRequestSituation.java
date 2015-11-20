@@ -23,12 +23,8 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
-import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.signals.DomainObjectEvent;
-import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.DateTime;
 
 public class AcademicServiceRequestSituation extends AcademicServiceRequestSituation_Base {
@@ -49,7 +45,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
                     }
 
                     int comparationResult = leftDate.compareTo(rightDate);
-                    return -((comparationResult == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(
+                    return -(comparationResult == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(
                             leftAcademicServiceRequestSituation, rightAcademicServiceRequestSituation) : comparationResult);
                 }
             };
@@ -73,7 +69,8 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
         super.setAcademicServiceRequest(academicServiceRequest);
         super.setAcademicServiceRequestSituationType(academicServiceRequestBean.getAcademicServiceRequestSituationType());
         super.setCreator(academicServiceRequestBean.getResponsible());
-        super.setJustification(academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification() : null);
+        super.setJustification(
+                academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification() : null);
         super.setSituationDate(academicServiceRequestBean.getFinalSituationDate());
     }
 
@@ -114,10 +111,10 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
         }
     }
 
-    @Override
-    public void setAcademicServiceRequest(AcademicServiceRequest academicServiceRequest) {
-        throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.academicServiceRequest");
-    }
+//    @Override
+//    public void setAcademicServiceRequest(AcademicServiceRequest academicServiceRequest) {
+//        throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.academicServiceRequest");
+//    }
 
     @Override
     public void setCreator(Person reponsible) {
@@ -195,17 +192,18 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
             final AcademicServiceRequestBean academicServiceRequestBean) {
 
         AcademicServiceRequestSituation situation = null;
-        
+
         switch (academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
         case SENT_TO_EXTERNAL_ENTITY:
-            situation = new SentToExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+            situation =
+                    new SentToExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
         case RECEIVED_FROM_EXTERNAL_ENTITY:
             situation = new ReceivedFromExternalEntityAcademicServiceRequestSituation(academicServiceRequest,
                     academicServiceRequestBean);
         default:
             situation = new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
         }
-        
+
         return situation;
     }
 
