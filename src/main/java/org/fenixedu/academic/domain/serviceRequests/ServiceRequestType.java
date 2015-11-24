@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -21,6 +22,12 @@ public class ServiceRequestType extends ServiceRequestType_Base {
 
         @Override
         public int compare(ServiceRequestType o1, ServiceRequestType o2) {
+            if (o1.getServiceRequestCategory() == null) {
+                return -1;
+            }
+            if (o2.getServiceRequestCategory() == null) {
+                return 1;
+            }
             final int c = o1.getServiceRequestCategory().compareTo(o2.getServiceRequestCategory());
             return c == 0 ? o1.getName().getContent().compareTo(o2.getName().getContent()) : c;
         }
@@ -61,7 +68,18 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     private void checkRules() {
-
+        if (getCode().trim().isEmpty()) {
+            throw new DomainException("error.ServiceRequestType.code.empty");
+        }
+        if (getName().isEmpty()) {
+            throw new DomainException("error.ServiceRequestType.name.empty");
+        }
+        if (getServiceRequestCategory() == null) {
+            throw new DomainException("error.ServiceRequestType.category.empty");
+        }
+        if (findByCode(getCode()).count() > 1) {
+            throw new DomainException("error.ServiceRequestType.code.duplicated");
+        }
     }
 
     public boolean isActive() {
@@ -73,15 +91,15 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     public boolean isToNotifyUponConclusion() {
-        return (getNotifyUponConclusion() == null) ? false : getNotifyUponConclusion();
+        return getNotifyUponConclusion() == null ? false : getNotifyUponConclusion();
     }
 
     public boolean isPrintable() {
-        return (getPrintable() == null) ? false : getPrintable();
+        return getPrintable() == null ? false : getPrintable();
     }
 
     public boolean isRequestedOnline() {
-        return (getRequestedOnline() == null) ? false : getRequestedOnline();
+        return getRequestedOnline() == null ? false : getRequestedOnline();
     }
 
     public boolean isLegacy() {
@@ -105,15 +123,18 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         checkRules();
     }
 
-    public boolean isDeletable() {
-        return true;
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        if (getAcademicServiceRequestsSet().size() != 1) {
+            blockers.add(
+                    BundleUtil.getString(Bundle.APPLICATION, "error.ServiceRequestType.academicServiceRequestsSet.not.empty"));
+        }
+        super.checkForDeletionBlockers(blockers);
     }
 
     @Atomic
     public void delete() {
-        if (!isDeletable()) {
-            throw new DomainException("error.ServiceRequestType.delete.not.possible");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         setRootDomainObject(null);
 
@@ -138,9 +159,8 @@ public class ServiceRequestType extends ServiceRequestType_Base {
 
     public static ServiceRequestType findUnique(final AcademicServiceRequestType academicServiceRequestType,
             final DocumentRequestType documentRequestType) {
-        return findAll()
-                .filter(s -> s.getAcademicServiceRequestType() == academicServiceRequestType
-                        && s.getDocumentRequestType() == documentRequestType).findFirst().orElse(null);
+        return findAll().filter(s -> s.getAcademicServiceRequestType() == academicServiceRequestType
+                && s.getDocumentRequestType() == documentRequestType).findFirst().orElse(null);
     }
 
     public static ServiceRequestType findUnique(final AcademicServiceRequest academicServiceRequest) {
@@ -198,12 +218,9 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     }
 
     public String getRichName() {
-        return getName().getContent()
-                + " ("
-                + BundleUtil
-                        .getString(
-                                Bundle.STUDENT,
-                                (isPayable() ? "label.student.serviceRequestTypes.withFees" : "label.student.serviceRequestTypes.noFees"))
+        return getName().getContent() + " ("
+                + BundleUtil.getString(Bundle.STUDENT,
+                        isPayable() ? "label.student.serviceRequestTypes.withFees" : "label.student.serviceRequestTypes.noFees")
                 + ")";
     }
 
