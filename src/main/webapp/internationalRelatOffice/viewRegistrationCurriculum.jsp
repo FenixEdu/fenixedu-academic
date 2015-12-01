@@ -102,7 +102,7 @@
 <%
 	final ICurriculum curriculum = registrationCurriculumBean.getCurriculum(executionYear);
 	request.setAttribute("curriculum", curriculum);	
-
+	request.setAttribute("rawGrade", curriculum.getRawGrade());
 	request.setAttribute("weightedAverage", curriculum.getRawGrade().getValue());
 	request.setAttribute("sumEctsCredits", curriculum.getSumEctsCredits());
 	request.setAttribute("curricularYear", curriculum.getCurricularYear());
@@ -119,6 +119,25 @@
 
 <logic:equal name="curriculum" property="empty" value="false">
 
+	<logic:empty name="executionYear">
+    	<div class="panel panel-default" style="margin-top: 10px">
+  			<div class="panel-heading">
+    			<h3 class="panel-title"><strong><bean:message key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h3>
+  			</div>
+  			<div class="panel-body">
+				<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="true">
+					<p><b><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></b></p>
+					<p><bean:write name="registrationCurriculumBean" property="finalGrade.value"/></p>
+					<p><b><bean:message key="conclusion.date" bundle="ACADEMIC_OFFICE_RESOURCES"/></b></p>
+					<p><bean:write name="registrationCurriculumBean" property="conclusionDate"/></p>
+				</logic:equal>
+				<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="false">
+					<div class="alert alert-warning" role="alert"><bean:message key="registration.not.submitted.to.conclusion.process" bundle="ACADEMIC_OFFICE_RESOURCES"/></div>
+				</logic:equal>
+			</div>
+		</div>
+	</logic:empty>
+	
     <table class="tstyle4 thlight tdcenter mtop15">
         <tr>
             <th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
