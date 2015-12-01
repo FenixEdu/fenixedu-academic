@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -199,7 +198,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight thcenter"/>
 
-				<fr:property name="linkFormat(view)" value="${downloadUrl}"/>
+				<fr:property name="linkFormat(view)" value="\${downloadUrl}"/>
 				<fr:property name="key(view)" value="label.view"/>
 				<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
 				<fr:property name="order(view)" value="0" />
