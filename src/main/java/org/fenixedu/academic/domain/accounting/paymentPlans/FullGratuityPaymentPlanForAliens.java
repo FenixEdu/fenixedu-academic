@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.paymentPlanRules.FirstTimeInstitutionStudentsPaymentPlanRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsAlienRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
@@ -51,8 +50,7 @@ public class FullGratuityPaymentPlanForAliens extends FullGratuityPaymentPlanFor
     @Override
     protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
         return Arrays.asList(PaymentPlanRuleFactory.create(IsAlienRule.class),
-                PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class),
-                PaymentPlanRuleFactory.create(FirstTimeInstitutionStudentsPaymentPlanRule.class));
+                PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class));
     }
 
     @Override
