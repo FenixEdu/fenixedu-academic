@@ -58,7 +58,7 @@ import org.joda.time.DateTimeFieldType;
 
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/viewRoom", module = "publico", formBean = "indexForm", functionality = FindSpacesDA.class)
+@Mapping(path = "/viewRoom", module = "publico", formBean = "indexForm", functionality = FindSpacesDA.class, validate = false)
 @Forwards(@Forward(name = "roomViewer", path = "/publico/viewRoom_bd.jsp"))
 public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
