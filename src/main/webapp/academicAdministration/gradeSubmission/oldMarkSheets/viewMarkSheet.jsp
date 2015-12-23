@@ -36,7 +36,7 @@
 </logic:messagesPresent>
 
 <html:form action="/oldMarkSheetManagement.do">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="print"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printMarkSheets"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" property="epID" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dID" property="dID" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dcpID" property="dcpID" />
