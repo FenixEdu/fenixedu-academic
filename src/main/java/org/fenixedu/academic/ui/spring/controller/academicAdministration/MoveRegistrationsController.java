@@ -78,7 +78,9 @@ public class MoveRegistrationsController extends StrutsFunctionalityController {
         source.getGuidesSet().forEach(g -> g.setPerson(target));
         source.getReceiptsSet().forEach(r -> r.setPerson(target));
         if (target.getPartySocialSecurityNumber() == null) {
-            source.getPartySocialSecurityNumber().setParty(target);
+            if (source.getPartySocialSecurityNumber() != null) {
+                source.getPartySocialSecurityNumber().setParty(target);
+            }
         }
         source.getPaymentCodesSet().forEach(c -> c.setPerson(target));
 
