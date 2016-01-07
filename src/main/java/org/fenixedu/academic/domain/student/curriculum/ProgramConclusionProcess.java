@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.student.curriculum;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -25,6 +29,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
@@ -63,10 +68,22 @@ public class ProgramConclusionProcess extends ProgramConclusionProcess_Base {
 
     @Override
     protected void addSpecificVersionInfo() {
-        Enrolment dissertationEnrolment = getRegistration().getDissertationEnrolment();
+        Enrolment dissertationEnrolment = getDissertationEnrolment();
         if (dissertationEnrolment != null) {
             getLastVersion().setDissertationEnrolment(dissertationEnrolment);
         }
+    }
+
+    private Enrolment getDissertationEnrolment() {
+        Stream<Enrolment> enrolments = getGroup().getEnrolmentsSet().stream().filter(Enrolment::isDissertation);
+
+        List<Dismissal> dismissalsList = new ArrayList<>();
+        getGroup().collectDismissals(dismissalsList);
+
+        Stream<Enrolment> dismissals =
+                dismissalsList.stream().flatMap(d -> d.getSourceIEnrolments().stream())
+                        .filter(e -> e.isEnrolment() && ((Enrolment) e).isDissertation()).map(ie -> (Enrolment) ie);
+        return Stream.concat(enrolments, dismissals).max(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID).orElse(null);
     }
 
     @Override
