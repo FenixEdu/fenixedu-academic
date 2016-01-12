@@ -609,6 +609,7 @@ public class Thesis extends Thesis_Base {
     }
 
     // (SUBMITTED | APPROVED) -> DRAFT
+    @Atomic
     public void rejectProposal(String rejectionComment) {
         check(this, ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator);
         if (getState() != ThesisState.SUBMITTED && getState() != ThesisState.APPROVED) {
