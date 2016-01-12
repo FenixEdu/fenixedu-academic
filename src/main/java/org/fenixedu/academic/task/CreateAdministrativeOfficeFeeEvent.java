@@ -34,6 +34,7 @@ import org.fenixedu.bennu.scheduler.annotation.Task;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
+@Deprecated
 @Task(englishTitle = "CreateAdministrativeOfficeFeeEvent", readOnly = true)
 public class CreateAdministrativeOfficeFeeEvent extends CronTask {
     private int AdministrativeOfficeFee_TOTAL_CREATED = 0;
