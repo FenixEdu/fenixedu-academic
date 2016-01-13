@@ -111,16 +111,12 @@
 			<fr:property name="columnClasses" value=",,,acenter"/>
 			<fr:property name="conditionalColumnClass(whenCreated)" value="unread"/>
 			<fr:property name="useCssIfNot(whenCreated)" value="readed"/>
-			<fr:property name="column(whenCreated)" value="0"/>
 			<fr:property name="conditionalColumnClass(process)" value="unread"/>
 			<fr:property name="useCssIfNot(process)" value="readed"/>
-			<fr:property name="column(process)" value="1"/>
 			<fr:property name="conditionalColumnClass(subject)" value="unreadSubject"/>
 			<fr:property name="useCssIfNot(subject)" value="readed"/>
-			<fr:property name="column(subject)" value="2"/>
 			<fr:property name="conditionalColumnClass(readed)" value="unread"/>
 			<fr:property name="useCssIfNot(readed)" value="readed"/>
-			<fr:property name="column(readed)" value="3"/>
 		</fr:layout>
 	</fr:view>	
 </logic:notEmpty>
