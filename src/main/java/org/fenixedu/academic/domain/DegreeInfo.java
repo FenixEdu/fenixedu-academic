@@ -87,7 +87,7 @@ public class DegreeInfo extends DegreeInfo_Base {
             return;
         }
 
-        if (hasName() && !canEdit()) {
+        if (hasName() && !isEditable(this)) {
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.DegreeInfo.can.only.change.name.for.future.execution.years");
         }
@@ -100,32 +100,6 @@ public class DegreeInfo extends DegreeInfo_Base {
 
     private boolean hasSameName(final LocalizedString name) {
         return hasName() && getName().equals(name);
-    }
-
-    public boolean canEdit() {
-        final DegreeCurricularPlan firstDegreeCurricularPlan = getDegree().getFirstDegreeCurricularPlan();
-        final DegreeCurricularPlan lastActiveDegreeCurricularPlan = getDegree().getLastActiveDegreeCurricularPlan();
-        if (firstDegreeCurricularPlan == null) {
-            return true;
-        }
-        ExecutionYear firstExecutionYear =
-                ExecutionYear.readByDateTime(firstDegreeCurricularPlan.getInitialDateYearMonthDay().toDateTimeAtMidnight());
-        if (getExecutionYear().isBefore(firstExecutionYear)) {
-            return true;
-        }
-        if (lastActiveDegreeCurricularPlan == null) {
-            return true;
-        }
-        if (lastActiveDegreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
-            return true;
-        }
-        if (getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
-            return true;
-        }
-        if (getExecutionYear().isCurrent()) {
-            return true;
-        }
-        return false;
     }
 
     protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
@@ -306,5 +280,36 @@ public class DegreeInfo extends DegreeInfo_Base {
 
     public AcademicInterval getAcademicInterval() {
         return getExecutionYear().getAcademicInterval();
+    }
+
+    /*
+     * #dsimoes @13JAN2016
+     * Any change to the name are now allowed.
+     */
+    public static boolean isEditable(DegreeInfo dinfo) {
+        return true;
+//        final DegreeCurricularPlan firstDegreeCurricularPlan = dinfo.getDegree().getFirstDegreeCurricularPlan();
+//        final DegreeCurricularPlan lastActiveDegreeCurricularPlan = dinfo.getDegree().getLastActiveDegreeCurricularPlan();
+//        if (firstDegreeCurricularPlan == null) {
+//            return true;
+//        }
+//        ExecutionYear firstExecutionYear =
+//                ExecutionYear.readByDateTime(firstDegreeCurricularPlan.getInitialDateYearMonthDay().toDateTimeAtMidnight());
+//        if (dinfo.getExecutionYear().isBefore(firstExecutionYear)) {
+//            return true;
+//        }
+//        if (lastActiveDegreeCurricularPlan == null) {
+//            return true;
+//        }
+//        if (lastActiveDegreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
+//            return true;
+//        }
+//        if (dinfo.getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
+//            return true;
+//        }
+//        if (dinfo.getExecutionYear().isCurrent()) {
+//            return true;
+//        }
+//        return false;
     }
 }

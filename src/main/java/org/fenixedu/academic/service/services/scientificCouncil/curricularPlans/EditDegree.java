@@ -41,7 +41,11 @@ public class EditDegree {
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear, String code,
             String ministryCode) throws FenixServiceException {
 
-        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
+        /*
+         * #dsimoes @13JAN2016
+         * Any AcademicOffice staff should be able to correct/update degree info data
+         */
+        //check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (externalId == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
         }

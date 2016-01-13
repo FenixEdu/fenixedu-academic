@@ -463,30 +463,12 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return degreeInfo;
     }
 
+    /*
+     * #dsimoes @13JAN2016
+     * Avoiding replicated logic.
+     */
     public boolean isAbleToEditName() {
-        final DegreeCurricularPlan firstDegreeCurricularPlan = getDegree().getFirstDegreeCurricularPlan();
-        final DegreeCurricularPlan lastActiveDegreeCurricularPlan = getDegree().getLastActiveDegreeCurricularPlan();
-        if (firstDegreeCurricularPlan == null) {
-            return true;
-        }
-        ExecutionYear firstExecutionYear =
-                ExecutionYear.readByDateTime(firstDegreeCurricularPlan.getInitialDateYearMonthDay().toDateTimeAtMidnight());
-        if (getSelectedExecutionYear().isBefore(firstExecutionYear)) {
-            return true;
-        }
-        if (lastActiveDegreeCurricularPlan == null) {
-            return true;
-        }
-        if (lastActiveDegreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
-            return true;
-        }
-        if (getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
-            return true;
-        }
-        if (getSelectedExecutionYear().isCurrent()) {
-            return true;
-        }
-        return false;
+        return DegreeInfo.isEditable(getDegreeInfo(getSelectedExecutionYear()));
     }
 
     public OfficialPublicationBean getOfficialPublicationBean() {
