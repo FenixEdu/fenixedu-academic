@@ -26,6 +26,7 @@ import java.util.HashSet;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.Registration;
@@ -61,6 +62,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private String observations;
 
+    private StudentCurricularPlan studentCurricularPlan;
+
     public RegistrationConclusionBean(final Registration registration) {
         setRegistration(registration);
     }
@@ -81,7 +84,22 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         setProgramConclusion(programConclusion);
     }
 
+    public RegistrationConclusionBean(final StudentCurricularPlan studentCurricularPlan,
+            final ProgramConclusion programConclusion) {
+        setStudentCurricularPlan(studentCurricularPlan);
+        setRegistration(studentCurricularPlan.getRegistration());
+        setProgramConclusion(programConclusion);
+    }
+
     public CurriculumGroup getCurriculumGroup() {
+        if (getProgramConclusion() == null) {
+            return null;
+        }
+
+        if (getStudentCurricularPlan() != null && getProgramConclusion().groupFor(studentCurricularPlan).isPresent()) {
+            return getProgramConclusion().groupFor(studentCurricularPlan).get();
+        }
+
         return getProgramConclusion() == null ? null : getProgramConclusion().groupFor(getRegistration()).orElse(null);
     }
 
@@ -186,7 +204,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         if (isConclusionProcessed()) {
             return getCurriculumGroup().getConclusionYear();
         }
-        return calculateConclusionYear();
+        
+        return getCalculatedConclusionYear();
     }
 
     public ExecutionYear calculateConclusionYear() {
@@ -214,7 +233,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
             return getCurriculumGroup().getCreditsConcluded();
         }
 
-        return calculateCredits();
+        return getCurriculumGroup().calculateCreditsConcluded();
     }
 
     public double calculateCredits() {
@@ -268,8 +287,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public boolean getCanBeConclusionProcessed() {
-        return (!isConclusionProcessed() || (isConclusionProcessed() && getRegistration().canRepeatConclusionProcess(
-                AccessControl.getPerson())))
+        return (!isConclusionProcessed()
+                || (isConclusionProcessed() && getRegistration().canRepeatConclusionProcess(AccessControl.getPerson())))
                 && isConcluded();
     }
 
@@ -373,4 +392,11 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         this.observations = observations;
     }
 
+    public StudentCurricularPlan getStudentCurricularPlan() {
+        return studentCurricularPlan;
+    }
+
+    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+        this.studentCurricularPlan = studentCurricularPlan;
+    }
 }
