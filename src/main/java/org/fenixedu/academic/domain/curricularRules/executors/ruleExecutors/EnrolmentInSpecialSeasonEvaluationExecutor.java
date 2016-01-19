@@ -19,12 +19,15 @@
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
-import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleExecutor {
 
@@ -35,32 +38,29 @@ public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleEx
     }
 
     @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-        final EnrolmentInSpecialSeasonEvaluation enrolmentInSpecialSeasonEvaluation =
-                (EnrolmentInSpecialSeasonEvaluation) curricularRule;
-        final Enrolment enrolment = enrolmentInSpecialSeasonEvaluation.getEnrolment();
-        final DegreeModule degreeModule = enrolment.getDegreeModule();
-
-        if (enrolment.hasSpecialSeasonInExecutionYear()) {
-            return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-                    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.already.enroled.in.special.season",
-                    degreeModule.getName(), enrolment.getExecutionYear().getYear());
-        }
-
-        if (enrolment.isApproved()) {
-            return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-                    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.degree.module.has.been.approved",
-                    degreeModule.getName());
-        }
-
-        return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
-
-    @Override
     protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
         return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+
+        final EnrolmentInSpecialSeasonEvaluation rule = (EnrolmentInSpecialSeasonEvaluation) curricularRule;
+        final Enrolment enrolment = rule.getEnrolment();
+        final EvaluationSeason evaluationSeason = rule.getEvaluationSeason();
+        final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+
+        try {
+            Enrolment.getPredicateSpecialSeason()
+                    .fill(evaluationSeason, executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION).test(enrolment);
+        } catch (final DomainException e) {
+            return RuleResult.createFalseWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
+                    e.getLocalizedMessage());
+        }
+
+        return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
     @Override

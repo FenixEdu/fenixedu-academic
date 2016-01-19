@@ -71,7 +71,7 @@
 			<html:link action='<%= url5 %>'><bean:message key="label.course.improvementEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>		
 		<li>
-			<bean:define id="url6">/specialSeasonBolonhaStudentEnrollment.do?method=checkPermission&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
+			<bean:define id="url6">/specialSeasonBolonhaStudentEnrollment.do?method=prepareChooseEvaluationSeason&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url6 %>'><bean:message key="label.course.specialSeasonEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<br />			
@@ -169,11 +169,23 @@
 	
 	<p class="mtop2 mbottom0"><strong><bean:message key="label.student.specialSeason.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/>: </strong></p>
 	<logic:notEmpty name="studentSpecialSeasonEnrolments">
-		<fr:view name="studentSpecialSeasonEnrolments" schema="student.show.enrolments">
+		<fr:view name="studentSpecialSeasonEnrolments">
+			<fr:schema type="org.fenixedu.academic.domain.EnrolmentEvaluation" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:slot name="enrolment.name" key="label.name" />
+				<fr:slot name="enrolment.curriculumGroup.fullPath" key="label.group"/>
+				<fr:slot name="enrolment.weigthForCurriculum" key="label.set.evaluation.enrolment.weight" />
+				<fr:slot name="enrolment.ectsCreditsForCurriculum" key="label.ects.credits" />
+				<fr:slot name="enrollmentStateByGrade.description" key="label.set.evaluation.enrolment.state"/>
+				<fr:slot name="grade" key="label.set.evaluation.grade.value.simple"/>
+				<fr:slot name="evaluationSeason" key="label.evaluationSeason">
+					<fr:property name="format" value="${name.content}" />
+				</fr:slot>
+			</fr:schema>
+		
 			<fr:layout name="tabular">	 
 				<fr:property name="classes" value="tstyle2"/>
-		      	<fr:property name="columnClasses" value=",smalltxt color888,acenter,acenter,nowrap smalltxt,nowrap smalltxt,acenter"/>
-				<fr:property name="sortBy" value="name"/>
+		      	<fr:property name="columnClasses" value=",smalltxt color888,acenter,acenter,smalltxt,nowrap smalltxt, acenter smalltxt"/>
+				<fr:property name="sortBy" value="enrolment.name"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

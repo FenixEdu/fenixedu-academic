@@ -32,7 +32,6 @@
 	<!ENTITY execution SYSTEM "/fenixedu-academic/schemas/execution-schemas.xml">
 	<!ENTITY prices SYSTEM "/fenixedu-academic/schemas/prices-schemas.xml">
 	<!ENTITY serviceRequests SYSTEM "/fenixedu-academic/schemas/serviceRequests-schemas.xml">
-    <!ENTITY degreeAdminOffice SYSTEM "/fenixedu-academic/schemas/degreeAdministrativeOffice-schemas.xml">    
     <!ENTITY executionCourse SYSTEM "/fenixedu-academic/schemas/executionCourse-schemas.xml"> 
 	<!ENTITY academicAdminOffice SYSTEM "/fenixedu-academic/schemas/academicAdminOffice-schemas.xml">	
     <!ENTITY site SYSTEM "/fenixedu-academic/schemas/site-schemas.xml">
@@ -608,7 +607,6 @@
 	&execution;
 	&prices;
 	&serviceRequests;
-    &degreeAdminOffice;
     &executionCourse;
 	&academicAdminOffice;
     &site;

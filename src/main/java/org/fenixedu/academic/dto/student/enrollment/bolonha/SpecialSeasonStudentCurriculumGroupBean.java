@@ -18,178 +18,133 @@
  */
 package org.fenixedu.academic.dto.student.enrollment.bolonha;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
+import java.util.Set;
 
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
-import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
-import org.fenixedu.academic.util.predicates.InlinePredicate;
-import org.fenixedu.bennu.core.security.Authenticate;
 
-public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
+@SuppressWarnings("serial")
+public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
 
-    private static final long serialVersionUID = 8504847305104217989L;
+    private EvaluationSeason evaluationSeason;
 
-    public SpecialSeasonStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup,
-            final ExecutionSemester executionSemester) {
-        super(curriculumGroup, executionSemester, null);
+    protected SpecialSeasonStudentCurriculumGroupBean(final EvaluationSeason evaluationSeason) {
+        setEvaluationSeason(evaluationSeason);
     }
 
-    @Override
-    protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group, ExecutionSemester executionSemester) {
-        return Collections.emptyList();
-    }
+    public StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
+        return new StudentCurriculumGroupBean(curriculumGroup, executionSemester, null) {
 
-    @Override
-    protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
-            ExecutionSemester executionSemester) {
-        List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
-        for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
-            if (curriculumModule.isEnrolment()) {
-                Enrolment enrolment = (Enrolment) curriculumModule;
-                if (enrolment.isSpecialSeasonEnroled(executionSemester)) {
-                    result.add(new StudentCurriculumEnrolmentBean(enrolment));
-                }
+            @Override
+            protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group,
+                    ExecutionSemester executionSemester) {
+                return Collections.emptyList();
             }
-        }
 
-        return result;
-    }
+            @Override
+            protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
+                    ExecutionSemester executionSemester) {
 
-    @Override
-    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-            ExecutionSemester executionSemester) {
+                List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
+                for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
+                    if (curriculumModule.isEnrolment()) {
+                        Enrolment enrolment = (Enrolment) curriculumModule;
 
-        final Collection<Enrolment> specialSeasonEnrolments = group.getSpecialSeasonEnrolments(executionSemester);
-        final Predicate<Enrolment> alreadyHasSpecialSeasonEnrolment =
-                new InlinePredicate<Enrolment, Collection<Enrolment>>(specialSeasonEnrolments) {
+                        if (enrolment.isEnroledInSeason(getEvaluationSeason(), executionSemester)) {
+                            result.add(new StudentCurriculumEnrolmentBean(enrolment));
+                        }
+                    }
+                }
 
-                    @Override
-                    public boolean test(Enrolment enrolment) {
-                        for (final Enrolment specialSeasonEnrolment : getValue()) {
-                            if (specialSeasonEnrolment.getDegreeModule().equals(enrolment.getDegreeModule())) {
-                                return true;
+                return result;
+            }
+
+            @Override
+            protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
+                    ExecutionSemester executionSemester) {
+
+                final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
+
+                for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
+                    if (curriculumModule.isEnrolment()) {
+                        final Enrolment enrolment = (Enrolment) curriculumModule;
+
+                        if (Enrolment.getPredicateSpecialSeason()
+                                .fill(getEvaluationSeason(), executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION)
+                                .testExceptionless(enrolment)) {
+
+                            if (enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+                                result.add(new NoCourseGroupEnroledCurriculumModuleWrapper(enrolment,
+                                        enrolment.getExecutionPeriod()));
+                            } else {
+                                result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
                             }
                         }
-                        return false;
                     }
-                };
-
-        final Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
-        boolean isServices =
-                AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(Authenticate.getUser());
-
-        for (final CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
-            if (curriculumModule.isEnrolment()) {
-
-                final Enrolment enrolment = (Enrolment) curriculumModule;
-
-                if (!considerThisEnrolmentGeneralRule(enrolment, executionSemester, alreadyHasSpecialSeasonEnrolment)) {
-                    continue;
                 }
 
-                if (considerThisEnrolmentNormalEnrolments(enrolment)
-                        || considerThisEnrolmentPropaedeuticEnrolments(enrolment, isServices)
-                        || considerThisEnrolmentExtraCurricularEnrolments(enrolment, isServices)
-                        || considerThisEnrolmentStandaloneEnrolments(enrolment, isServices)) {
+                return result;
+            }
 
-                    if (enrolmentsMap.get(enrolment.getCurricularCourse()) != null) {
-                        Enrolment enrolmentMap = enrolmentsMap.get(enrolment.getCurricularCourse());
-                        if (enrolment.getExecutionPeriod().isAfter(enrolmentMap.getExecutionPeriod())) {
-                            enrolmentsMap.put(enrolment.getCurricularCourse(), enrolment);
+            @Override
+            protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
+                    ExecutionSemester executionSemester, int[] curricularYears) {
+
+                final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
+                
+                final Set<CurriculumGroup> curriculumGroupsToEnrolmentProcess = parentGroup.getCurriculumGroupsToEnrolmentProcess();
+                if (!parentGroup.isNoCourseGroupCurriculumGroup()) {
+                    for (final NoCourseGroupCurriculumGroup curriculumGroup : parentGroup.getNoCourseGroupCurriculumGroups()) {
+                        if (curriculumGroup.isVisible()) {
+                            curriculumGroupsToEnrolmentProcess.add(curriculumGroup);
                         }
-                    } else {
-                        enrolmentsMap.put(enrolment.getCurricularCourse(), enrolment);
                     }
-
-                }
-            }
-        }
-
-        final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
-        for (Enrolment enrolment : enrolmentsMap.values()) {
-            if (enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
-                result.add(new NoCourseGroupEnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
-            } else {
-                result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
-            }
-        }
-
-        return result;
-    }
-
-    @Override
-    protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-            ExecutionSemester executionSemester, int[] curricularYears) {
-
-        final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
-        for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
-            result.add(new SpecialSeasonStudentCurriculumGroupBean(curriculumGroup, executionSemester));
-        }
-
-        if (!parentGroup.isNoCourseGroupCurriculumGroup()) {
-            for (final NoCourseGroupCurriculumGroup curriculumGroup : parentGroup.getNoCourseGroupCurriculumGroups()) {
-
-                if (!curriculumGroup.isVisible()) {
-                    continue;
                 }
 
-                result.add(new SpecialSeasonStudentCurriculumGroupBean(curriculumGroup, executionSemester));
+                for (final CurriculumGroup curriculumGroup : curriculumGroupsToEnrolmentProcess) {
+                    result.add(create(curriculumGroup, executionSemester));
+                }
+
+                return result;
             }
-        }
 
-        return result;
-    }
-
-    @Override
-    public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
-        final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
-        Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_EXECUTION_PERIOD);
-        return result;
-    }
-
-    @Override
-    public boolean isToBeDisabled() {
-        return true;
-    }
-
-    private boolean considerThisEnrolmentGeneralRule(Enrolment enrolment, ExecutionSemester executionSemester,
-            Predicate<Enrolment> alreadyHasSpecialSeasonEnrolment) {
-        return enrolment.canBeSpecialSeasonEnroled(executionSemester) && !alreadyHasSpecialSeasonEnrolment.test(enrolment);
-    }
-
-    private boolean considerThisEnrolmentNormalEnrolments(Enrolment enrolment) {
-        if (enrolment.isBolonhaDegree() && !enrolment.isExtraCurricular() && !enrolment.isPropaedeutic()
-                && !enrolment.isStandalone()) {
-            if (enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()) {
-                return false;
+            @Override
+            public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
+                final List<IDegreeModuleToEvaluate> result =
+                        new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
+                Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_EXECUTION_PERIOD);
+                return result;
             }
-        }
-        return !enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup() || enrolment.isPropaedeutic();
+
+            @Override
+            public boolean isToBeDisabled() {
+                return true;
+            }
+        };
     }
 
-    private boolean considerThisEnrolmentPropaedeuticEnrolments(Enrolment enrolment, boolean isServices) {
-        return enrolment.isPropaedeutic() && isServices;
+    public static StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup,
+            final ExecutionSemester executionSemester, final EvaluationSeason evaluationSeason) {
+        return new SpecialSeasonStudentCurriculumGroupBean(evaluationSeason).create(curriculumGroup, executionSemester);
     }
 
-    private boolean considerThisEnrolmentExtraCurricularEnrolments(Enrolment enrolment, boolean isServices) {
-        return enrolment.isExtraCurricular() && isServices;
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
     }
 
-    private boolean considerThisEnrolmentStandaloneEnrolments(Enrolment enrolment, boolean isServices) {
-        return enrolment.isStandalone() && isServices;
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
+
 }

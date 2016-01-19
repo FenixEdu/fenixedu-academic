@@ -48,6 +48,9 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "domain.academic.enrolments.AllowStudentToCreateRegistrationForAffinityCycle",
                 defaultValue = "true")
         public Boolean getEnrolmentsAllowStudentToCreateRegistrationForAffinityCycle();
+        
+        @ConfigurationProperty(key = "domain.academic.enrolments.SpecialSeasonEvaluationsInduceEnrolmentVariables", defaultValue = "true")
+        public Boolean getEnrolmentsInSpecialSeasonEvaluationsInduceEnrolmentVariables();
 
         @ConfigurationProperty(
                 key = "default.social.security.number",

@@ -47,9 +47,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     static final public Comparator<CurriculumLine> COMPARATOR_BY_APPROVEMENT_DATE_AND_ID = new Comparator<CurriculumLine>() {
         @Override
         public int compare(CurriculumLine o1, CurriculumLine o2) {
-            int result =
-                    (o1.getApprovementDate() != null && o2.getApprovementDate() != null) ? o1.getApprovementDate().compareTo(
-                            o2.getApprovementDate()) : 0;
+            int result = (o1.getApprovementDate() != null && o2.getApprovementDate() != null) ? o1.getApprovementDate()
+                    .compareTo(o2.getApprovementDate()) : 0;
             return result == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : result;
         }
     };
@@ -145,7 +144,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
+            final ExecutionSemester executionSemester) {
         return false;
     }
 
@@ -197,16 +197,6 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     @Override
     public Dismissal getDismissal(final CurricularCourse curricularCourse) {
         return null;
-    }
-
-    @Override
-    public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear) {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionSemester executionSemester) {
-        return Collections.emptySet();
     }
 
     @Override

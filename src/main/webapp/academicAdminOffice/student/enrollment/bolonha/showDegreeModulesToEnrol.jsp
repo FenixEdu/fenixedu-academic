@@ -47,7 +47,7 @@
 		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.ects.enrolled"/>:</strong> <bean:write name="enroledEctsCredits" /> 
 	</p>
 	<p class="mtop0 mbottom025">
-		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.ects.improvement"/>:</strong> <bean:write name="enroledImprovementsEctsCredits" /> 
+		<strong><bean:write name="label.ects.extra"/>:</strong> <bean:write name="enroledExtraEctsCredits" /> 
 	</p>
 </logic:present>
 

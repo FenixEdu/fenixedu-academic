@@ -197,14 +197,15 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
-        final Set<ICurricularRule> result =
-                getCurriculumGroup() != null ? getCurriculumGroup().getCurricularRules(executionSemester) : new HashSet<ICurricularRule>();
+        final Set<ICurricularRule> result = getCurriculumGroup() != null ? getCurriculumGroup()
+                .getCurricularRules(executionSemester) : new HashSet<ICurricularRule>();
         result.addAll(getDegreeModule().getCurricularRules(executionSemester));
 
         return result;
     }
 
-    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
+            final ExecutionYear executionYear) {
         return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(),
                 executionYear);
     }
@@ -347,7 +348,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public ExecutionYear getIEnrolmentsLastExecutionYear();
 
-    abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester);
+    abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse,
+            final ExecutionSemester executionSemester);
 
     abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionSemester executionSemester);
 
@@ -356,10 +358,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     abstract public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse);
 
     abstract public Dismissal getDismissal(final CurricularCourse curricularCourse);
-
-    abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear);
-
-    abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionSemester executionSemester);
 
     abstract public void collectDismissals(final List<Dismissal> result);
 

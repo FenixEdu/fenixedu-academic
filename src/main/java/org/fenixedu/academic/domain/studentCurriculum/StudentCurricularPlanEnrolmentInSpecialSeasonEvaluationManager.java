@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
@@ -55,21 +56,27 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void assertEnrolmentPreConditions() {
-        if (!getRegistration().hasStateType(getExecutionYear(), RegistrationStateType.REGISTERED)) {
+        if (isResponsiblePersonManager()) {
+            return;
+        }
+
+        if (!hasRegistrationInValidState()) {
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
         }
 
         super.assertEnrolmentPreConditions();
     }
 
+    private boolean hasRegistrationInValidState() {
+        return getRegistration().hasStateType(getExecutionYear(), RegistrationStateType.REGISTERED);
+    }
+
     @Override
     protected void checkDebts() {
-        boolean isAcademicalActsBlocked = TreasuryBridgeAPIFactory
-                .implementation()
-                .isAcademicalActsBlocked(
-                        getPerson(),
-                        getExecutionYear().getEndLocalDate().isBefore(new LocalDate()) ? getExecutionYear().getEndLocalDate() : new LocalDate());
-        
+        boolean isAcademicalActsBlocked =
+                TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(getPerson(), getExecutionYear()
+                        .getEndLocalDate().isBefore(new LocalDate()) ? getExecutionYear().getEndLocalDate() : new LocalDate());
+
         if (isAcademicalActsBlocked) {
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
@@ -92,17 +99,12 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
             throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
         }
 
-        if (!hasSpecialSeasonStatute()) {
-            throw new DomainException("error.StudentCurricularPlan.student.has.no.special.season.statute");
-        }
-
         if (getCurricularRuleLevel() != CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
             throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
         }
 
-        final EnrolmentPreConditionResult result =
-                StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriodsForSpecialSeason(getStudentCurricularPlan(),
-                        getExecutionSemester());
+        final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions
+                .checkEnrolmentPeriodsForSpecialSeason(getStudentCurricularPlan(), getExecutionSemester());
 
         if (!result.isValid()) {
             throw new DomainException(result.message(), result.args());
@@ -124,7 +126,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
         return registrations;
     }
 
-    public boolean isRegistrationEnrolmentByStudentAllowed(final Registration registration) {
+    static private boolean isRegistrationEnrolmentByStudentAllowed(final Registration registration) {
         return registration.getRegistrationProtocol().isEnrolmentByStudentAllowed();
     }
 
@@ -138,7 +140,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
         for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
             if (curriculumModule instanceof Enrolment) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                enrolment.deleteSpecialSeasonEvaluation();
+                enrolment.deleteTemporaryEvaluationForSpecialSeason(getEvaluationSeason());
             } else {
                 throw new DomainException(
                         "StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
@@ -148,9 +150,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void addEnroled() {
-        for (final Enrolment enrolment : getStudentCurricularPlan().getSpecialSeasonEnrolments(getExecutionYear())) {
-            enrolmentContext.addDegreeModuleToEvaluate(new EnroledCurriculumModuleWrapper(enrolment, getExecutionSemester()));
-        }
+        // Nothing...
     }
 
     @Override
@@ -169,7 +169,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
                     final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
                     if (!enrolment.hasSpecialSeason()) {
-                        curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment));
+                        curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment, getEvaluationSeason()));
                     }
 
                     curricularRules.add(new MaximumNumberOfECTSInSpecialSeasonEvaluation());
@@ -192,6 +192,8 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
+        Collection<Enrolment> toCreate = new HashSet<Enrolment>();
+
         for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
 
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
@@ -201,10 +203,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
                     if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
                         final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-
-                        if (!enrolment.hasSpecialSeason()) {
-                            enrolment.createSpecialSeasonEvaluation(getResponsiblePerson());
-                        }
+                        toCreate.add(enrolment);
                     } else {
                         throw new DomainException(
                                 "StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
@@ -212,22 +211,19 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
                 }
             }
         }
+
+        if (!toCreate.isEmpty()) {
+            getStudentCurricularPlan().createEnrolmentEvaluationForSpecialSeason(toCreate, getResponsiblePerson(),
+                    getEvaluationSeason());
+        }
     }
 
-    private boolean hasSpecialSeasonStatute() {
-        Collection<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutesSet();
-        for (StudentStatute statute : statutes) {
-            if (!statute.getType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(getRegistration())) {
-                continue;
-            }
-            if (!statute.isValidInExecutionPeriod(getExecutionSemester())) {
-                continue;
-            }
+    public EnrolmentContext getEnrolmentContext() {
+        return (EnrolmentContext) enrolmentContext;
+    }
 
-            return true;
-
-        }
-        return false;
+    public EvaluationSeason getEvaluationSeason() {
+        return getEnrolmentContext().getEvaluationSeason();
     }
 
     private boolean isEnrolingAsSenior(Enrolment enrolment) {

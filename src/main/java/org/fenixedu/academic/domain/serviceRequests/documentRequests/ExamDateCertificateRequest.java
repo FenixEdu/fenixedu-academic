@@ -47,9 +47,8 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
     private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
         for (final Exam exam : bean.getExams()) {
-            if (exam.isForSeason(Season.SPECIAL_SEASON_OBJ)
-                    && !getEnrolmentFor(bean.getEnrolments(), exam).isSpecialSeasonEnroled(
-                            bean.getExecutionPeriod().getExecutionYear())) {
+            if (exam.isForSeason(Season.SPECIAL_SEASON_OBJ) && !getEnrolmentFor(bean.getEnrolments(), exam)
+                    .hasSpecialSeasonInExecutionYear(bean.getExecutionPeriod().getExecutionYear())) {
 
                 throw new DomainExceptionWithLabelFormatter(
                         "error.serviceRequests.documentRequests.ExamDateCertificateRequest.special.season.exam.requires.student.to.be.enroled",

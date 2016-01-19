@@ -43,19 +43,21 @@ import org.fenixedu.academic.dto.student.enrollment.bolonha.ImprovementBolonhaSt
 import org.fenixedu.academic.dto.student.enrollment.bolonha.ImprovementChooseEvaluationSeasonBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
 import com.google.common.collect.Sets;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @Mapping(path = "/improvementBolonhaStudentEnrollment", module = "academicAdministration",
         formBean = "bolonhaStudentEnrollmentForm", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "chooseEvaluationSeason",
-                path = "/academicAdminOffice/student/enrollment/bolonha/chooseEvaluationSeasonForImprovement.jsp"),
+                path = "/academicAdminOffice/student/enrollment/bolonha/chooseEvaluationSeason.jsp"),
         @Forward(name = "showDegreeModulesToEnrol",
                 path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp") })
 public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {
@@ -94,7 +96,8 @@ public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends Aca
     }
 
     @Override
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         ChooseEvaluationSeasonBean chooseEvaluationSeasonBean = getRenderedObject("chooseEvaluationSeasonBean");
 
         return prepareShowDegreeModulesToEnrol(mapping, form, request, response, getStudentCurricularPlan(request),
@@ -119,12 +122,13 @@ public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends Aca
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
             final EvaluationSeason evaluationSeason) {
-        request.setAttribute("bolonhaStudentEnrollmentBean", new ImprovementBolonhaStudentEnrolmentBean(studentCurricularPlan,
-                executionSemester, evaluationSeason));
+        request.setAttribute("bolonhaStudentEnrollmentBean",
+                new ImprovementBolonhaStudentEnrolmentBean(studentCurricularPlan, executionSemester, evaluationSeason));
         request.setAttribute("evaluationSeason", evaluationSeason.getName().getContent());
         request.setAttribute("enroledEctsCredits", getEnroledEctsCredits(studentCurricularPlan, executionSemester));
-        request.setAttribute("enroledImprovementsEctsCredits",
+        request.setAttribute("enroledExtraEctsCredits",
                 getEnroledImprovementsEctsCredits(studentCurricularPlan, executionSemester));
+        request.setAttribute("label.ects.extra", BundleUtil.getString(Bundle.ACADEMIC, "label.ects.improvement"));
 
         addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
 
@@ -157,7 +161,7 @@ public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends Aca
         return result;
     }
 
-    private static boolean isEnrolmentByYear(final StudentCurricularPlan plan) {
+    static private boolean isEnrolmentByYear(final StudentCurricularPlan plan) {
         return plan.getDegreeCurricularPlan().getCurricularRuleValidationType() == CurricularRuleValidationType.YEAR;
     }
 
@@ -174,12 +178,10 @@ public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends Aca
                 (ImprovementBolonhaStudentEnrolmentBean) getBolonhaStudentEnrollmentBeanFromViewState();
         try {
             StudentCurricularPlan studentCurricularPlan = bolonhaStudentEnrollmentBean.getStudentCurricularPlan();
-            final RuleResult ruleResults =
-                    studentCurricularPlan.enrol(bolonhaStudentEnrollmentBean.getExecutionPeriod(),
-                            new HashSet<IDegreeModuleToEvaluate>(bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate()),
-                            bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-                            bolonhaStudentEnrollmentBean.getCurricularRuleLevel(),
-                            bolonhaStudentEnrollmentBean.getEvaluationSeason());
+            final RuleResult ruleResults = studentCurricularPlan.enrol(bolonhaStudentEnrollmentBean.getExecutionPeriod(),
+                    new HashSet<IDegreeModuleToEvaluate>(bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate()),
+                    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+                    bolonhaStudentEnrollmentBean.getCurricularRuleLevel(), bolonhaStudentEnrollmentBean.getEvaluationSeason());
 
             if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
                     || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {

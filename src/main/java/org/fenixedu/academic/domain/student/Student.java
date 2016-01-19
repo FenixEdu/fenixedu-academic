@@ -60,12 +60,14 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.predicate.StudentPredicates;
 import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -127,11 +129,8 @@ public class Student extends Student_Base {
 
     public static Student readStudentByNumber(final Integer number) {
         for (final StudentNumber sn : Bennu.getInstance().getStudentNumbersSet()) {
-            if (sn.getNumber().equals(number)) {
-                return sn.getStudent();
-            }
-        }
-        return null;
+        return Bennu.getInstance().getStudentNumbersSet().stream().filter(sn -> sn.getNumber().equals(number))
+                .map(StudentNumber::getStudent).findAny().orElse(null);
     }
 
     public String getName() {
@@ -238,7 +237,9 @@ public class Student extends Student_Base {
     }
 
     public Registration getLastActiveRegistration() {
-        return getActiveRegistrationStream().sorted(Registration.COMPARATOR_BY_START_DATE.reversed()).findFirst().orElse(null);
+        List<Registration> activeRegistrations = getActiveRegistrations();
+        return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
+                Registration.COMPARATOR_BY_START_DATE);
     }
 
     public Registration getLastConcludedRegistration() {
@@ -746,8 +747,8 @@ public class Student extends Student_Base {
     }
 
     /**
-     * -&gt; Temporary overrides due migrations - Filter 'InTransition'
-     * registrations &gt; Do not use this method to add new registrations directly
+     * -> Temporary overrides due migrations - Filter 'InTransition'
+     * registrations -> Do not use this method to add new registrations directly
      * (use {@link addRegistrations} method)
      */
     @Override

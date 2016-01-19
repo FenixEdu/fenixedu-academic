@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.dto.student.enrollment.bolonha;
 
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -27,14 +28,21 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
+@SuppressWarnings("serial")
 public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
 
-    private static final long serialVersionUID = -7472651937511355140L;
+    private EvaluationSeason evaluationSeason;
 
     public SpecialSeasonBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester) {
-        super(studentCurricularPlan, executionSemester, new SpecialSeasonStudentCurriculumGroupBean(
-                studentCurricularPlan.getRoot(), executionSemester), CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT);
+            final ExecutionSemester executionSemester, final EvaluationSeason evaluationSeason) {
+        super(studentCurricularPlan, executionSemester, createBean(studentCurricularPlan, executionSemester, evaluationSeason),
+                CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT);
+        setEvaluationSeason(evaluationSeason);
+    }
+
+    private static StudentCurriculumGroupBean createBean(final StudentCurricularPlan scp, final ExecutionSemester semester,
+            final EvaluationSeason evaluationSeason) {
+        return SpecialSeasonStudentCurriculumGroupBean.create(scp.getRoot(), semester, evaluationSeason);
     }
 
     @Override
@@ -45,6 +53,14 @@ public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnro
     @Override
     public String getFuncionalityTitle() {
         return BundleUtil.getString(Bundle.ACADEMIC, "label.special.season.enrolment");
+    }
+
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
+    }
+
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
 }
