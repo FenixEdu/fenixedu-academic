@@ -138,7 +138,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
         request.setAttribute("enroledEctsCredits", getEnroledEctsCredits(studentCurricularPlan, executionSemester));
         request.setAttribute("enroledExtraEctsCredits",
                 getEnroledSpecialSeasonEctsCredits(studentCurricularPlan, executionSemester));
-        request.setAttribute("label.ects.extra", BundleUtil.getString(Bundle.ACADEMIC, "label.ects.special"));
+        request.setAttribute("label.ects.extra", BundleUtil.getString(Bundle.ACADEMIC, "label.ects.special.season"));
 
         addDebtsWarningMessagesForExecutionInterval(studentCurricularPlan.getRegistration().getStudent(),
                 executionSemester.getExecutionYear(), request);
