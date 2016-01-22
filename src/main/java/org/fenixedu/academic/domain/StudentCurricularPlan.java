@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -1644,8 +1645,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             for (final EnrolmentEvaluation evaluation : enrolment.getEvaluationsSet()) {
                 final EvaluationSeason season = evaluation.getEvaluationSeason();
 
-                if (season.isSpecial() && enrolment.isEnroledInSeason(season, input)) {
-                    result.add(evaluation);
+                if (season.isSpecial()) {
+                    final Optional<EnrolmentEvaluation> search = enrolment.getEnrolmentEvaluation(season, input, (Boolean) null);
+                    if (search.isPresent() && search.get() == evaluation) {
+                        result.add(evaluation);
+                    }
                 }
             }
         }
