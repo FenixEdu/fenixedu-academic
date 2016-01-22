@@ -841,6 +841,11 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return builder.toString();
     }
 
+    /**
+     *
+     * @deprecated Use getInterval instead.
+     */
+    @Deprecated
     public Interval getDurationInterval() {
         return new Interval(getBeginningDateTime(), getEndDateTime());
     }

@@ -20,7 +20,6 @@ package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -44,7 +43,6 @@ import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.LocalTime;
 import org.joda.time.YearMonthDay;
 
 public class StudentPortalBean implements Serializable {
@@ -241,32 +239,19 @@ public class StudentPortalBean implements Serializable {
                 this.realization = "-";
             }
 
-            private DateTime toDateTime(Calendar date, Calendar time) {
-                if (date == null || time == null) {
-                    return new DateTime((Calendar) null);
-                }
-                return new DateTime(date.getTimeInMillis()).withFields(new LocalTime(time.getTimeInMillis()));
-            }
-
             public void setEnrolment(WrittenEvaluation writtenEvaluation) {
-                final Calendar endDay = writtenEvaluation.getEnrollmentEndDay();
 
-                this.enrolmentPast = new DateTime(endDay).isBeforeNow();
+                DateTime beginDateTime = writtenEvaluation.getEnrolmentPeriodStart();
+                DateTime endDateTime = writtenEvaluation.getEnrolmentPeriodEnd();
 
-                final Calendar beginDay = writtenEvaluation.getEnrollmentBeginDay();
+                this.enrolmentPast = endDateTime == null ? false : endDateTime.isBeforeNow();
 
-                final Calendar beginTime = writtenEvaluation.getEnrollmentBeginTime();
-                final Calendar endTime = writtenEvaluation.getEnrollmentEndTime();
-
-                final DateTime beginDateTime = toDateTime(beginDay, beginTime);
-                final DateTime endDateTime = toDateTime(endDay, endTime);
-
-                Interval interval = new Interval(beginDateTime, endDateTime);
-
-                this.enrolmentElapsing = interval.containsNow();
+                this.enrolmentElapsing = false;
 
                 if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
                         && writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
+                    this.enrolmentElapsing = new Interval(beginDateTime, endDateTime).containsNow();
+
                     this.enrolment =
                             writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " "
                                     + BundleUtil.getString(Bundle.STUDENT, "message.out.until") + " "
