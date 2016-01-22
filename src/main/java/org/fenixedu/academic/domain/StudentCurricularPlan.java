@@ -1703,8 +1703,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             for (final EnrolmentEvaluation evaluation : enrolment.getEvaluationsSet()) {
                 final EvaluationSeason season = evaluation.getEvaluationSeason();
 
-                if (season.isImprovement() && enrolment.isEnroledInSeason(season, input)) {
-                    result.add(evaluation);
+                if (season.isImprovement()) {
+                    final Optional<EnrolmentEvaluation> search = enrolment.getEnrolmentEvaluation(season, input, (Boolean) null);
+                    if (search.isPresent() && search.get() == evaluation) {
+                        result.add(evaluation);
+                    }
                 }
             }
         }
