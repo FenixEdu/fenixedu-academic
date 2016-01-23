@@ -69,15 +69,15 @@ ${portal.toolkit()}
                 <h4><spring:message code="label.student.registrationManagement.personalData" /></h4>
                 <dl class="dl-horizontal">
                     <dt><spring:message code="label.student.registrationManagement.personalData.name" /></dt>
-                    <dd>${bean.target.name}</dd>
+                    <dd><c:out value="${bean.target.name}"/></dd>
                     <dt><spring:message code="label.student.registrationManagement.personalData.idNumber" /></dt>
-                    <dd>${bean.target.person.documentIdNumber} (<spring:message code="IDDocumentType.${bean.target.person.idDocumentType}" />)</dd>
+                    <dd><c:out value="${bean.target.person.documentIdNumber}"/> (<spring:message code="IDDocumentType.${bean.target.person.idDocumentType}" />)</dd>
                     <dt><spring:message code="label.student.registrationManagement.personalData.taxNumber" /></dt>
-                    <dd><c:choose><c:when test="${not empty bean.target.person.socialSecurityNumber}">${bean.target.person.socialSecurityNumber}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                    <dd><c:choose><c:when test="${not empty bean.target.person.socialSecurityNumber}"><c:out value="${bean.target.person.socialSecurityNumber}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                     <dt><spring:message code="label.student.registrationManagement.personalData.birthdate" /></dt>
-                    <dd><c:choose><c:when test="${not empty bean.target.person.dateOfBirthYearMonthDay}">${bean.target.person.dateOfBirthYearMonthDay}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                    <dd><c:choose><c:when test="${not empty bean.target.person.dateOfBirthYearMonthDay}"><c:out value="${bean.target.person.dateOfBirthYearMonthDay}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                     <dt><spring:message code="label.student.registrationManagement.personalData.nationality" /></dt>
-                    <dd><c:choose><c:when test="${not empty bean.target.person.country}">${bean.target.person.country.nationality}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                    <dd><c:choose><c:when test="${not empty bean.target.person.country}"><c:out value="${bean.target.person.country.nationality}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                 </dl>
             </div>
         </div>
@@ -97,14 +97,41 @@ ${portal.toolkit()}
             <tbody>
                 <c:forEach var="registration" items="${bean.target.person.student.registrationsSet}">
                     <tr>
-                        <td>${registration.startDate}</td>
-                        <td>${registration.number}</td>
-                        <td>${registration.degreeNameWithDescription}</td>
+                        <td><c:out value="${registration.startDate}"/></td>
+                        <td><c:out value="${registration.number}"/></td>
+                        <td><c:out value="${registration.degreeNameWithDescription}"/></td>
                         <td><spring:message code="RegistrationStateType.${registration.activeStateType}" /></td>
-                        <td>${registration.registrationProtocol.description.content}</td>
-                        <td>${registration.numberEnroledCurricularCoursesInCurrentYear}</td>
+                        <td><c:out value="${registration.registrationProtocol.description.content}"/></td>
+                        <td><c:out value="${registration.numberEnroledCurricularCoursesInCurrentYear}"/></td>
                         <td>
                             <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/student.do?method=visualizeRegistration&amp;registrationID='.concat(registration.externalId))}">
+                                <spring:message code="link.student.registrationManagement.viewCurriculum" />
+                            </a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        <h4><spring:message code="label.student.registrationManagement.phds" /></h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><spring:message code="label.student.registrationManagement.phd.year" /></th>
+                    <th><spring:message code="label.student.registrationManagement.phd.processNumber" /></th>
+                    <th><spring:message code="label.student.registrationManagement.phd.phdProgram" /></th>
+                    <th><spring:message code="label.student.registrationManagement.phd.state" /></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="phd" items="${bean.target.person.phdIndividualProgramProcessesSet}">
+                    <tr>
+                        <td><c:out value="${phd.executionYear.name}"/></td>
+                        <td><c:out value="${phd.processNumber}"/></td>
+                        <td><c:out value="${phd.phdProgram.name}"/></td>
+                        <td><c:out value="${phd.activeState.localizedName}"/></td>
+                        <td>
+                            <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/phdIndividualProgramProcess.do?method=viewProcess&processId='.concat(phd.externalId))}">
                                 <spring:message code="link.student.registrationManagement.viewCurriculum" />
                             </a>
                         </td>
@@ -147,15 +174,15 @@ ${portal.toolkit()}
                     <h4><spring:message code="label.student.registrationManagement.personalData" /></h4>
                     <dl class="dl-horizontal">
                         <dt><spring:message code="label.student.registrationManagement.personalData.name" /></dt>
-                        <dd>${similar.name}</dd>
+                        <dd><c:out value="${similar.name}"/></dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.idNumber" /></dt>
-                        <dd>${similar.person.documentIdNumber} (<spring:message code="IDDocumentType.${similar.person.idDocumentType}" />)</dd>
+                        <dd><c:out value="${similar.person.documentIdNumber}"/> (<spring:message code="IDDocumentType.${similar.person.idDocumentType}" />)</dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.taxNumber" /></dt>
-                        <dd><c:choose><c:when test="${not empty similar.person.socialSecurityNumber}">${similar.person.socialSecurityNumber}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                        <dd><c:choose><c:when test="${not empty similar.person.socialSecurityNumber}"><c:out value="${similar.person.socialSecurityNumber}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.birthdate" /></dt>
-                        <dd><c:choose><c:when test="${not empty similar.person.dateOfBirthYearMonthDay}">${similar.person.dateOfBirthYearMonthDay}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                        <dd><c:choose><c:when test="${not empty similar.person.dateOfBirthYearMonthDay}"><c:out value="${similar.person.dateOfBirthYearMonthDay}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.nationality" /></dt>
-                        <dd><c:choose><c:when test="${not empty similar.person.country}">${similar.person.country.nationality}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                        <dd><c:choose><c:when test="${not empty similar.person.country}"><c:out value="${similar.person.country.nationality}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                     </dl>
                 </div>
             </div>
@@ -176,12 +203,12 @@ ${portal.toolkit()}
                     <tbody>
                         <c:forEach var="registration" items="${similar.person.student.registrationsSet}">
                             <tr>
-                                <td>${registration.startDate}</td>
-                                <td>${registration.number}</td>
-                                <td>${registration.degreeNameWithDescription}</td>
+                                <td><c:out value="${registration.startDate}"/></td>
+                                <td><c:out value="${registration.number}"/></td>
+                                <td><c:out value="${registration.degreeNameWithDescription}"/></td>
                                 <td><spring:message code="RegistrationStateType.${registration.activeStateType}" /></td>
-                                <td>${registration.registrationProtocol.description.content}</td>
-                                <td>${registration.numberEnroledCurricularCoursesInCurrentYear}</td>
+                                <td><c:out value="${registration.registrationProtocol.description.content}"/></td>
+                                <td><c:out value="${registration.numberEnroledCurricularCoursesInCurrentYear}"/></td>
                                 <td>
                                     <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/student.do?method=visualizeRegistration&amp;registrationID='.concat(registration.externalId))}">
                                         <spring:message code="link.student.registrationManagement.viewCurriculum" />
@@ -194,6 +221,38 @@ ${portal.toolkit()}
             </c:if>
             <c:if test="${empty similar.person.student.registrationsSet}">
                 <spring:message code="label.student.registrationManagement.noRegistrations" />
+            </c:if>
+            <h4><spring:message code="label.student.registrationManagement.phds" /></h4>
+            <c:if test="${not empty similar.person.phdIndividualProgramProcessesSet}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><spring:message code="label.student.registrationManagement.phd.year" /></th>
+                            <th><spring:message code="label.student.registrationManagement.phd.processNumber" /></th>
+                            <th><spring:message code="label.student.registrationManagement.phd.phdProgram" /></th>
+                            <th><spring:message code="label.student.registrationManagement.phd.state" /></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="phd" items="${similar.person.phdIndividualProgramProcessesSet}">
+                            <tr>
+                                <td><c:out value="${phd.executionYear.name}"/></td>
+                                <td><c:out value="${phd.processNumber}"/></td>
+                                <td><c:out value="${phd.phdProgram.name}"/></td>
+                                <td><c:out value="${phd.activeState.localizedName}"/></td>
+                                <td>
+                                    <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/phdIndividualProgramProcess.do?method=viewProcess&processId='.concat(phd.externalId))}">
+                                        <spring:message code="link.student.registrationManagement.viewCurriculum" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${empty similar.person.phdIndividualProgramProcessesSet}">
+                <spring:message code="label.student.registrationManagement.noPhds" />
             </c:if>
         </div>
     </div>
@@ -242,15 +301,15 @@ ${portal.toolkit()}
                     <h4><spring:message code="label.student.registrationManagement.personalData" /></h4>
                     <dl class="dl-horizontal">
                         <dt><spring:message code="label.student.registrationManagement.personalData.name" /></dt>
-                        <dd>${bean.searched.name}</dd>
+                        <dd><c:out value="${bean.searched.name}"/></dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.idNumber" /></dt>
-                        <dd>${bean.searched.person.documentIdNumber} (<spring:message code="IDDocumentType.${bean.searched.person.idDocumentType}" />)</dd>
+                        <dd><c:out value="${bean.searched.person.documentIdNumber}"/> (<spring:message code="IDDocumentType.${bean.searched.person.idDocumentType}" />)</dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.taxNumber" /></dt>
-                        <dd><c:choose><c:when test="${not empty bean.searched.person.socialSecurityNumber}">${bean.searched.person.socialSecurityNumber}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                        <dd><c:choose><c:when test="${not empty bean.searched.person.socialSecurityNumber}"><c:out value="${bean.searched.person.socialSecurityNumber}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.birthdate" /></dt>
-                        <dd><c:choose><c:when test="${not empty bean.searched.person.dateOfBirthYearMonthDay}">${bean.searched.person.dateOfBirthYearMonthDay}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                        <dd><c:choose><c:when test="${not empty bean.searched.person.dateOfBirthYearMonthDay}/"><c:out value="${bean.searched.person.dateOfBirthYearMonthDay}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                         <dt><spring:message code="label.student.registrationManagement.personalData.nationality" /></dt>
-                        <dd><c:choose><c:when test="${not empty bean.searched.person.country}">${bean.searched.person.country.nationality}</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
+                        <dd><c:choose><c:when test="${not empty bean.searched.person.country}"><c:out value="${bean.searched.person.country.nationality}"/></c:when><c:otherwise>&nbsp;</c:otherwise></c:choose></dd>
                     </dl>
                 </div>
             </div>
@@ -271,12 +330,12 @@ ${portal.toolkit()}
                     <tbody>
                         <c:forEach var="registration" items="${bean.searched.person.student.registrationsSet}">
                             <tr>
-                                <td>${registration.startDate}</td>
-                                <td>${registration.number}</td>
-                                <td>${registration.degreeNameWithDescription}</td>
+                                <td><c:out value="${registration.startDate}"/></td>
+                                <td><c:out value="${registration.number}"/></td>
+                                <td><c:out value="${registration.degreeNameWithDescription}"/></td>
                                 <td><spring:message code="RegistrationStateType.${registration.activeStateType}" /></td>
-                                <td>${registration.registrationProtocol.description.content}</td>
-                                <td>${registration.numberEnroledCurricularCoursesInCurrentYear}</td>
+                                <td><c:out value="${registration.registrationProtocol.description.content}"/></td>
+                                <td><c:out value="${registration.numberEnroledCurricularCoursesInCurrentYear}"/></td>
                                 <td>
                                     <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/student.do?method=visualizeRegistration&amp;registrationID='.concat(registration.externalId))}">
                                         <spring:message code="link.student.registrationManagement.viewCurriculum" />
@@ -289,6 +348,38 @@ ${portal.toolkit()}
             </c:if>
             <c:if test="${empty bean.searched.person.student.registrationsSet}">
                 <spring:message code="label.student.registrationManagement.noRegistrations" />
+            </c:if>
+            <h4><spring:message code="label.student.registrationManagement.phds" /></h4>
+            <c:if test="${not empty bean.searched.person.phdIndividualProgramProcessesSet}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><spring:message code="label.student.registrationManagement.phd.year" /></th>
+                            <th><spring:message code="label.student.registrationManagement.phd.processNumber" /></th>
+                            <th><spring:message code="label.student.registrationManagement.phd.phdProgram" /></th>
+                            <th><spring:message code="label.student.registrationManagement.phd.state" /></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="phd" items="${bean.searched.person.phdIndividualProgramProcessesSet}">
+                            <tr>
+                                <td><c:out value="${phd.executionYear.name}"/></td>
+                                <td><c:out value="${phd.processNumber}"/></td>
+                                <td><c:out value="${phd.phdProgram.name}"/></td>
+                                <td><c:out value="${phd.activeState.localizedName}"/></td>
+                                <td>
+                                    <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/phdIndividualProgramProcess.do?method=viewProcess&processId='.concat(phd.externalId))}">
+                                        <spring:message code="link.student.registrationManagement.viewCurriculum" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${empty bean.searched.person.phdIndividualProgramProcessesSet}">
+                <spring:message code="label.student.registrationManagement.noPhds" />
             </c:if>
         </div>
     </div>

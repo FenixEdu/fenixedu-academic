@@ -77,7 +77,9 @@ public class MoveRegistrationParameters {
     }
 
     private static boolean barelyCompatibleStudent(User user, User target) {
-        return user.getPerson().getStudent() != null && !user.getPerson().getStudent().getRegistrationsSet().isEmpty()
+        return user.getPerson().getStudent() != null
+                && (!user.getPerson().getStudent().getRegistrationsSet().isEmpty() || !user.getPerson()
+                        .getPhdIndividualProgramProcessesSet().isEmpty())
                 && user.getPerson().getDateOfBirthYearMonthDay() != null
                 && user.getPerson().getDateOfBirthYearMonthDay().equals(target.getPerson().getDateOfBirthYearMonthDay());
     }
