@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import java.util.function.Predicate;
-
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -30,7 +28,6 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.SpecializationDeg
 import org.fenixedu.academic.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -40,17 +37,6 @@ import org.fenixedu.academic.util.InvocationResult;
 import pt.ist.fenixframework.Atomic;
 
 public class AccountingEventsManager {
-
-    private final Predicate<DegreeType> acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent = DegreeType.oneOf(
-            DegreeType::isPreBolonhaDegree, DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree,
-            DegreeType::isIntegratedMasterDegree, DegreeType::isEmpty);
-
-    private final Predicate<DegreeType> acceptedDegreeTypesForGratuityEvent = DegreeType.oneOf(DegreeType::isPreBolonhaDegree,
-            DegreeType::isBolonhaDegree, DegreeType::isBolonhaMasterDegree, DegreeType::isIntegratedMasterDegree,
-            DegreeType::isAdvancedFormationDiploma, DegreeType::isSpecializationDegree);
-
-    private final Predicate<DegreeType> acceptedDegreeTypesForInsuranceEvent = DegreeType.oneOf(
-            DegreeType::isAdvancedFormationDiploma, DegreeType::isSpecializationDegree);
 
     public InvocationResult createStandaloneEnrolmentGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
@@ -200,13 +186,6 @@ public class AccountingEventsManager {
         if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
                 registration) && studentCurricularPlan.getDegree().canCreateGratuityEvent()) {
 
-            if (!acceptedDegreeTypesForGratuityEvent.test(studentCurricularPlan.getDegreeType())) {
-                result.addMessage(Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.cannot.create.gratuity.event.for.degree.type",
-                        studentCurricularPlan.getDegree().getPresentationName());
-                return result;
-            }
-
             result.setSuccess(true);
 
         } else {
@@ -276,15 +255,6 @@ public class AccountingEventsManager {
 
         if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
                 registration)) {
-            if (!acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent.test(studentCurricularPlan.getDegreeType())) {
-                result.addMessage(
-                        Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.cannot.create.administrativeoffice.fee.and.insurance.event.for.degree.type",
-                        studentCurricularPlan.getDegree().getPresentationName());
-
-                return result;
-            }
-
             result.setSuccess(true);
 
         } else {
@@ -354,13 +324,6 @@ public class AccountingEventsManager {
 
         if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
                 registration)) {
-            if (!acceptedDegreeTypesForInsuranceEvent.test(studentCurricularPlan.getDegreeType())) {
-                result.addMessage(Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.cannot.create.insurance.event.for.degree.type",
-                        studentCurricularPlan.getDegree().getPresentationName());
-
-                return result;
-            }
 
             result.setSuccess(true);
 

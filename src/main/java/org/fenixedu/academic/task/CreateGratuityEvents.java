@@ -32,6 +32,7 @@ import org.fenixedu.commons.i18n.I18N;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
+@Deprecated
 @Task(englishTitle = "CreateGratuityEvents", readOnly = true)
 public class CreateGratuityEvents extends CronTask {
 

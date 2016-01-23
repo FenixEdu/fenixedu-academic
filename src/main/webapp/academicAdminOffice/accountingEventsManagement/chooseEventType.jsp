@@ -87,14 +87,6 @@
 				<bean:message  key="label.accountingEvents.management.createEvents.createInsuranceEvent" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
 		</li>
-		
-		<logic:equal name="studentCurricularPlan" property="degreeType.dfa" value="true">
-			<li>
-				<html:link action="<%= "/accountingEventsManagement.do?method=chooseEventType&amp;scpID=" + scpID.toString() + "&amp;eventType=" + EventType.DFA_REGISTRATION  %>">
-					<bean:message key="label.accountingEvents.management.createEvents.createDfaRegistration" bundle="ACADEMIC_OFFICE_RESOURCES" />
-				</html:link>
-			</li>
-		</logic:equal>
 	</logic:equal>
 	
 	<li>

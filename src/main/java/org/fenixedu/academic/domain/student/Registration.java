@@ -1542,7 +1542,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isSecondCycleInternalCandidacyIngression() {
-        return getIngressionType().isInternal2ndCycleAccess();
+        return getIngressionType() != null ? getIngressionType().isInternal2ndCycleAccess() : false;
     }
 
     @Override

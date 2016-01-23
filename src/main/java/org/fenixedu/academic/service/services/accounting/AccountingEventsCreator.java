@@ -59,6 +59,7 @@ public class AccountingEventsCreator {
     }
 
     @Atomic
+    @Deprecated
     static public void createDfaRegistrationEvent(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
         check(AcademicPredicates.MANAGE_ACCOUNTING_EVENTS);

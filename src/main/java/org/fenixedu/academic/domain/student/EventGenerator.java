@@ -22,15 +22,11 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
-import org.fenixedu.academic.domain.accounting.events.dfa.DfaRegistrationEvent;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 
 public class EventGenerator {
 
     public static void generateNecessaryEvents(StudentCurricularPlan studentCurricularPlan, Person person,
             ExecutionYear executionYear) {
-
-        final AdministrativeOffice administrativeOffice = studentCurricularPlan.getDegree().getAdministrativeOffice();
 
         if (studentCurricularPlan.getDegree().getDegreeType().isAdvancedFormationDiploma()) {
 
@@ -40,11 +36,8 @@ public class EventGenerator {
 
             accountingEventsManager.createGratuityEvent(studentCurricularPlan, executionYearToCreateEvents, false);
 
-            new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
-
-            accountingEventsManager.createInsuranceEvent(studentCurricularPlan, executionYearToCreateEvents, false);
-
+            accountingEventsManager.createAdministrativeOfficeFeeAndInsuranceEvent(studentCurricularPlan,
+                    executionYearToCreateEvents);
         }
-
     }
 }
