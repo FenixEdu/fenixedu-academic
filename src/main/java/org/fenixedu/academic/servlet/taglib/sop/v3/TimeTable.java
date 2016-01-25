@@ -115,6 +115,10 @@ public class TimeTable {
 
         int dayIndex = getDayIndex(infoShowOccupation.getDiaSemana());
 
+        if (dayIndex < 0) {
+            return;
+        }
+
         DayColumn dayColumn = (DayColumn) this.days.get(dayIndex);
 
         int startIndex =
