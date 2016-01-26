@@ -18,9 +18,9 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -36,25 +36,20 @@ public class ExecutionDegreeForExecutionPeriodAcademicAdminProvider implements D
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
-
         final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
         final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
         if (executionPeriod != null) {
             final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-            executionDegrees.addAll(executionYear.getExecutionDegreesSet());
-        }
 
-        TreeSet<ExecutionDegree> result =
-                new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-
-        // ist150958: eliminate degrees for which there are no permissions
-        for (ExecutionDegree executionDegree : executionDegrees) {
-            if (AcademicPredicates.MANAGE_EXECUTION_COURSES.evaluate(executionDegree.getDegree())) {
-                result.add(executionDegree);
-            }
+            return executionYear
+                    .getExecutionDegreesSet()
+                    .stream()
+                    .filter(ed -> AcademicPredicates.MANAGE_EXECUTION_COURSES.evaluate(ed.getDegree()))
+                    .sorted(Comparator.comparing(ExecutionDegree::getDegreeType).thenComparing(ExecutionDegree::getDegreeName)
+                            .thenComparing(ExecutionDegree::getExternalId)).collect(Collectors.toList());
+        } else {
+            return Collections.emptySet();
         }
-        return result;
     }
 
     @Override
