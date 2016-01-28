@@ -532,9 +532,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public void deleteTemporaryEvaluationForImprovement(final EvaluationSeason season,
-            final ExecutionSemester executionSemester) throws DomainException {
+            final ExecutionSemester improvementSemester) throws DomainException {
 
-        final EnrolmentEvaluation temporaryImprovement = getTemporaryEvaluation(season, executionSemester).orElse(null);
+        final EnrolmentEvaluation temporaryImprovement = getTemporaryEvaluation(season, improvementSemester).orElse(null);
         if (temporaryImprovement == null || !temporaryImprovement.isTemporary()) {
             throw new DomainException("error.enrolment.cant.unenroll");
         }
@@ -546,9 +546,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         TreasuryBridgeAPIFactory.implementation().improvementUnrenrolment(temporaryImprovement);
 
         temporaryImprovement.delete();
-        final Attends attends = getAttendsFor(executionSemester);
-        if (attends != null) {
-            attends.delete();
+
+        // improvement may be on the same semester, in which case we don't want to remove the Attends
+        if (getExecutionPeriod() != improvementSemester) {
+            final Attends attends = getAttendsFor(improvementSemester);
+            if (attends != null) {
+                attends.delete();
+            }
         }
     }
 
