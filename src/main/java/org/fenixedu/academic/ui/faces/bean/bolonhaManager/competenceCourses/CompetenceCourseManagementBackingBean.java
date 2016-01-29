@@ -376,8 +376,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String getRegime() {
         if (getViewState().getAttribute("regime") == null) {
             if (getCompetenceCourse() != null) {
-                ExecutionYear executionYear = getExecutionYear();
-                setRegime(getCompetenceCourse().getRegime(getAssociatedExecutionPeriod()).getName());
+                RegimeType regime = getCompetenceCourse().getRegime(getAssociatedExecutionPeriod());
+                setRegime(regime != null ? regime.getName() : "");
             } else {
                 setRegime("SEMESTRIAL");
             }

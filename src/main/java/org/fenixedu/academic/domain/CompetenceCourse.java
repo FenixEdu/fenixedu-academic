@@ -461,7 +461,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public boolean isBasic(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
-        return information != null ? information.getBasic() : null;
+        return information != null ? information.getBasic() : false;
     }
 
     public boolean isBasic() {
@@ -497,7 +497,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public Collection<CompetenceCourseLoad> getCompetenceCourseLoads(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
-        return information != null ? information.getCompetenceCourseLoadsSet() : null;
+        return information != null ? information.getCompetenceCourseLoadsSet() : Collections.emptyList();
     }
 
     public Collection<CompetenceCourseLoad> getCompetenceCourseLoads() {
