@@ -548,7 +548,11 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {
-        fillSpreadSheetEmptyCells(spreadsheet);
+        spreadsheet.addCell(EMPTY);
+        spreadsheet.addCell(EMPTY);
+        spreadsheet.addCell(EMPTY);
+        spreadsheet.addCell(EMPTY);
+        spreadsheet.addCell(EMPTY);
     }
 
     private void fillSpreadSheetBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration,
@@ -567,6 +571,10 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
         spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : EMPTY);
 
+        ExecutionYear conclusionYear = registrationConclusionBean.getCurriculumGroup().getConclusionYear();
+
+        spreadsheet.addCell(conclusionYear != null ? conclusionYear.getName() : EMPTY);
+
         spreadsheet.addCell(registrationConclusionBean.getRawGrade().getValue());
 
         spreadsheet.addCell(BundleUtil.getString(Bundle.APPLICATION,
@@ -576,6 +584,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private void fillSpreadSheetEmptyCells(StyledExcelSpreadsheet spreadsheet) {
+        spreadsheet.addCell(EMPTY);
         spreadsheet.addCell(EMPTY);
         spreadsheet.addCell(EMPTY);
         spreadsheet.addCell(EMPTY);
@@ -617,6 +626,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
                 spreadsheet.addHeader(getResourceMessage("label.firstCycle.concluded"));
                 spreadsheet.addHeader(getResourceMessage("label.firstCycle.conclusionDate"));
+                spreadsheet.addHeader(getResourceMessage("label.firstCycle.conclusionYear"));
                 spreadsheet.addHeader(getResourceMessage("label.firstCycle.average"));
                 spreadsheet.addHeader(getResourceMessage("label.firstCycle.hasConclusionProcess"));
                 spreadsheet.addHeader(getResourceMessage("label.firstCycle.ects"));
@@ -624,6 +634,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
                 spreadsheet.addHeader(getResourceMessage("label.secondCycle.concluded"));
                 spreadsheet.addHeader(getResourceMessage("label.secondCycle.conclusionDate"));
+                spreadsheet.addHeader(getResourceMessage("label.secondCycle.conclusionYear"));
                 spreadsheet.addHeader(getResourceMessage("label.secondCycle.average"));
                 spreadsheet.addHeader(getResourceMessage("label.secondCycle.hasConclusionProcess"));
                 spreadsheet.addHeader(getResourceMessage("label.secondCycle.ects"));
@@ -631,6 +642,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
                 spreadsheet.addHeader(getResourceMessage("label.thirdCycle.concluded"));
                 spreadsheet.addHeader(getResourceMessage("label.thirdCycle.conclusionDate"));
+                spreadsheet.addHeader(getResourceMessage("label.thirdCycle.conclusionYear"));
                 spreadsheet.addHeader(getResourceMessage("label.thirdCycle.average"));
                 spreadsheet.addHeader(getResourceMessage("label.thirdCycle.hasConclusionProcess"));
                 spreadsheet.addHeader(getResourceMessage("label.thirdCycle.ects"));
