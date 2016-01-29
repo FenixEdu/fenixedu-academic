@@ -90,8 +90,8 @@ public class AlumniNotificationService {
             case PASSWORD_REQUEST:
                 body +=
                         MessageFormat.format(BundleUtil.getString(Bundle.MANAGER, "alumni.identity.request.password.request"),
-                                request.getAlumni().getLoginUsername(), request.getExternalId(), request.getRequestToken()
-                                        .toString());
+                                request.getAlumni().getLoginUsername(), CoreConfiguration.getConfiguration().casServerUrl()
+                                        .replace("/cas", ""), request.getExternalId(), request.getRequestToken().toString());
                 break;
             case STUDENT_NUMBER_RECOVERY:
                 body +=
