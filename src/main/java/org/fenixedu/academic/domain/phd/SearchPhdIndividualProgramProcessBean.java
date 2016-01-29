@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.phd;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.InlinePredicate;
+import org.fenixedu.commons.StringNormalizer;
 
 public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
@@ -260,10 +262,13 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
         }
 
         if (!StringUtils.isEmpty(getName())) {
-            result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(getName()) {
+            result.add(new InlinePredicate<PhdIndividualProgramProcess, String[]>(
+                    StringNormalizer.normalizeAndRemoveAccents(getName().toLowerCase().trim()).split("\\s+")) {
                 @Override
                 public boolean test(PhdIndividualProgramProcess toEval) {
-                    return Person.findPerson(getValue()).contains(toEval.getPerson());
+                    String normalizedName = StringNormalizer
+                            .normalizeAndRemoveAccents(toEval.getPerson().getProfile().getFullName().toLowerCase().trim());
+                    return Arrays.stream(getValue()).allMatch(normalizedName::contains);
                 }
             });
             return result;
