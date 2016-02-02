@@ -98,10 +98,20 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         PartyContactBean contact = getRenderedObject("edit-contact");
         RenderUtils.invalidateViewState();
         if (contact.getVisibleToPublic().booleanValue()) {
-            contact.setVisibleToPublic(new Boolean(contact.getVisibleToStudents().booleanValue()
-                    && contact.getVisibleToStaff().booleanValue()));
+            contact.setVisibleToPublic(
+                    new Boolean(contact.getVisibleToStudents().booleanValue() && contact.getVisibleToStaff().booleanValue()));
         }
         contact.setVisibleToManagement(Boolean.TRUE);
+        request.setAttribute("partyContact", contact);
+        request.setAttribute("partyContactClass", contact.getContactName());
+        return backToEditOrCreate(mapping, actionForm, request, response);
+    }
+
+    public ActionForward postbackSelectCountry(ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        PartyContactBean contact = getRenderedObject("edit-contact");
+        RenderUtils.invalidateViewState();
+
         request.setAttribute("partyContact", contact);
         request.setAttribute("partyContactClass", contact.getContactName());
         return backToEditOrCreate(mapping, actionForm, request, response);

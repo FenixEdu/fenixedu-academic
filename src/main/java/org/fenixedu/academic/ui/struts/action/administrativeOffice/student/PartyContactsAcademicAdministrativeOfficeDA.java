@@ -77,6 +77,13 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
         request.setAttribute("student", getStudent(request));
         return super.postbackSetElements(mapping, actionForm, request, response);
     }
+    
+    @Override
+    public ActionForward postbackSelectCountry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("student", getStudent(request));
+        return super.postbackSelectCountry(mapping, actionForm, request, response);
+    }
 
     @Override
     public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
