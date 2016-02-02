@@ -77,6 +77,23 @@ public class StudentDA extends StudentRegistrationDA {
         request.setAttribute("personBean", new PersonBeanFactoryEditor(student.getPerson()));
         return mapping.findForward("editPersonalData");
     }
+    
+    public ActionForward editPersonalDataPostback(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        getAndSetStudent(request);
+
+        request.setAttribute("personBean", getRenderedObject());
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("editPersonalData");
+    }
+
+    public ActionForward editPersonalDataInvalid(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        getAndSetStudent(request);
+
+        request.setAttribute("personBean", getRenderedObject());
+        return mapping.findForward("editPersonalData");
+    }
 
     public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {

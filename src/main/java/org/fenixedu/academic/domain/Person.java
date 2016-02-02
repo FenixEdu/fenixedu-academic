@@ -511,6 +511,18 @@ public class Person extends Person_Base {
         setCountryOfBirth(personBean.getCountryOfBirth());
         setNameOfMother(personBean.getMotherName());
         setNameOfFather(personBean.getFatherName());
+        
+        if(getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class) != null) {
+            getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class).setValue("");
+        }
+        
+        if(getPersonIdentificationDocumentExtraInfo(IdentificationDocumentSeriesNumber.class) != null) {
+            getPersonIdentificationDocumentExtraInfo(IdentificationDocumentSeriesNumber.class).setValue("");
+        }
+        
+        if(getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
+            setIdentificationDocumentSeriesNumber(personBean.getIdentificationDocumentSeriesNumber());
+        }
     }
 
     /**

@@ -18,6 +18,8 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.domain.person.IDDocumentType"%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -47,15 +49,26 @@
 		</fr:layout>
 	</fr:edit>
 	
+	<bean:define id="personBean" name="personBean" type="org.fenixedu.academic.dto.person.PersonBean" />
+	
 	<h3 class="mbottom025"><bean:message key="label.identification" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<fr:edit id="personDocumentId" name="personBean" >
 		<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
-			<fr:slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-postback">
 				<fr:property name="excludedValues" value="CITIZEN_CARD" />
+				<fr:property name="destination" value="idDocumentTypePostback" />
 			</fr:slot>
 			<fr:slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-			<fr:slot name="identificationDocumentSeriesNumber" key="label.identificationCheckDigit">
- 				<fr:property name="readOnly" value="${personBean.idDocumentType.name ne 'IDENTITY_CARD'}" />
+			<fr:slot name="identificationDocumentSeriesNumber" key="label.PersonBean.identificationDocumentSeriesNumber">
+				<% if(personBean.getIdDocumentType() == IDDocumentType.IDENTITY_CARD) { %>
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+				<% } %>
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+					<fr:property name="regexp" value="(\d)|(\d[A-Z][A-Z]\d)" />
+					<fr:property name="message" value="error.identificationDocumentSeriesNumber.invalidFormat" />
+					<fr:property name="key" value="true" />
+					<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+				</fr:validator>
 			</fr:slot>
 			<fr:slot name="documentIdEmissionLocation" />
 			<fr:slot name="documentIdEmissionDate" >
@@ -71,6 +84,9 @@
 			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		</fr:layout>
+		
+		<fr:destination name="invalid" path='<%= "/student.do?method=editPersonalDataInvalid&studentID=" + studentID %>'/>
+		<fr:destination name="idDocumentTypePostback" path='<%= "/student.do?method=editPersonalDataPostback&studentID=" + studentID %>' />
 	</fr:edit>
 	
 	<h3 class="mbottom025"><bean:message key="label.person.title.filiation" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>

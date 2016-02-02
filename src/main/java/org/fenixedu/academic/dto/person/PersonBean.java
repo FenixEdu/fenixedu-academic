@@ -39,6 +39,8 @@ import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.MaritalStatus;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.base.Strings;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
@@ -142,6 +144,8 @@ public class PersonBean implements Serializable {
     private String emailConfirmation;
 
     private String eidentifier;
+    
+    private String identificationDocumentSeriesNumber;
 
     public PersonBean() {
         super();
@@ -286,6 +290,12 @@ public class PersonBean implements Serializable {
         setHomepageAvailable(person.getAvailableWebSite());
 
         setPerson(person);
+        
+        setIdentificationDocumentSeriesNumber(person.getIdentificationDocumentSeriesNumberValue());
+        
+        if(Strings.isNullOrEmpty(getIdentificationDocumentSeriesNumber())) {
+            setIdentificationDocumentSeriesNumber(person.getIdentificationDocumentExtraDigitValue());
+        }
     }
 
     public String getAddress() {
@@ -709,6 +719,14 @@ public class PersonBean implements Serializable {
 
     public Person save() {
         return save(getPerson());
+    }
+    
+    public String getIdentificationDocumentSeriesNumber() {
+        return identificationDocumentSeriesNumber;
+    }
+    
+    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
+        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
     @Atomic(mode = TxMode.WRITE)
