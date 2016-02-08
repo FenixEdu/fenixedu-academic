@@ -112,7 +112,7 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cuj
 
 <bean:define id="registrationOid" name="registration" property="externalId" />
 
-<fr:form action="<%= "/phdStudentEnrolment.do?method=prepare&registrationOid=" + registrationOid.toString() %>">
+<fr:form action="/phdStudentEnrolment.do?method=prepare&registrationOid=${registrationOid}&executionSemesterID=${executionSemester.externalId}">
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message  key="label.continue" bundle="PHD_RESOURCES"/></html:submit>
 	</p>
