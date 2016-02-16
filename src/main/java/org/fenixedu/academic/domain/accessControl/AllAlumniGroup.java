@@ -86,7 +86,8 @@ public class AllAlumniGroup extends GroupStrategy {
         return user != null
                 && user.getPerson() != null
                 && user.getPerson().getStudent() != null
-                && (user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
+                && (user.getPerson().getStudent().getAlumni() != null
+                        || user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
                         || user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED) || isAlumni(user
                         .getPerson().getStudent()));
     }
