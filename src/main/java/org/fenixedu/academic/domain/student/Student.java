@@ -277,6 +277,10 @@ public class Student extends Student_Base {
     @Deprecated
     public boolean hasSpecialSeasonEnrolments(ExecutionYear executionYear) {
         for (Registration registration : getRegistrationsSet()) {
+            if(registration.getStudentCurricularPlan(executionSemester) == null) {
+                continue;
+            }
+
             if ((executionYear.isAfter(registration.getStartExecutionYear()))
                     && (registration.getStudentCurricularPlan(executionYear).isEnroledInSpecialSeason(executionYear))) {
                 return true;
