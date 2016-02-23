@@ -69,6 +69,7 @@ public class CompetenceCoursePredicates {
         }
     };
 
+    @Deprecated
     public static final AccessControlPredicate<CompetenceCourse> editCurricularStagePredicate =
             new AccessControlPredicate<CompetenceCourse>() {
 
