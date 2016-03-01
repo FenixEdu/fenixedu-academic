@@ -18,9 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.manager.payments;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -106,45 +104,6 @@ public class CandidacyProcessPaymentCodesManagementDA extends FenixDispatchActio
         return mapping.findForward("create");
     }
 
-    private final static Map<PaymentCodeType, Money> MINIMUM_MONEY_MAP = new HashMap<PaymentCodeType, Money>();
-    private final static Map<PaymentCodeType, Money> MAXIMUM_MONEY_MAP = new HashMap<PaymentCodeType, Money>();
-
-    static {
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.EXTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS, new Money(
-                "140.00"));
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.INTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS, new Money(
-                "50.00"));
-
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.EXTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.INTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("50.00"));
-
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.EXTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.INTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS, new Money("50.00"));
-
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("100.00"));
-
-        MINIMUM_MONEY_MAP.put(PaymentCodeType.OVER_23_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
-
-        /* Maximum */
-
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.EXTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS, new Money(
-                "140.00"));
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.INTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS, new Money(
-                "50.00"));
-
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.EXTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.INTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("50.00"));
-
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.EXTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.INTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS, new Money("50.00"));
-
-        //so that students can apply and pay for more than one degree
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("3500.00"));
-
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.OVER_23_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
-
-    }
-
     public ActionForward createPaymentCodesInvalid(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
 
@@ -160,8 +119,7 @@ public class CandidacyProcessPaymentCodesManagementDA extends FenixDispatchActio
 
         List<IndividualCandidacyPaymentCode> paymentCodes =
                 IndividualCandidacyPaymentCode.createPaymentCodes(bean.getType(), bean.getBeginDate(), bean.getEndDate(),
-                        MINIMUM_MONEY_MAP.get(bean.getType()), MAXIMUM_MONEY_MAP.get(bean.getType()),
-                        bean.getNumberOfPaymentCodes());
+                        new Money(bean.getMinAmount()), new Money(bean.getMaxAmount()), bean.getNumberOfPaymentCodes());
 
         request.setAttribute("newPaymentCodes", paymentCodes);
 

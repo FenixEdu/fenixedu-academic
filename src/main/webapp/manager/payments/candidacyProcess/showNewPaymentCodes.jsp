@@ -32,11 +32,11 @@
 	<fr:view name="newPaymentCodes">
 	
 		<fr:schema type="org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" bundle="MANAGER_RESOURCES" >
-			<fr:slot name="code" />
+			<fr:slot name="code" key="label.manager.code"/>
 			<fr:slot name="startDate" />
 			<fr:slot name="endDate" />
-			<fr:slot name="minAmount" />
-			<fr:slot name="maxAmount" />
+			<fr:slot name="minAmount" key="label.org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean.minAmount"/>
+			<fr:slot name="maxAmount" key="label.org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean.maxAmount"/>
 			<fr:slot name="type" />
 		</fr:schema>
 		
