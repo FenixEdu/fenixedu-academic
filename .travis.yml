@@ -9,3 +9,17 @@ sudo: false
 
 # TODO: Remove the Strict Quote Escaping Flag once ACDM-472 is resolved
 script: mvn test -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false jspc:compile -B
+
+env:
+  global:
+   - secure: "S89XqIokNHDmhhiMdyBKqbwGco17wRiHmVEP7iVNy4yb3stWLPjUCO7ye9CJCx7xEBg1fpNWVuKqncG8UszdlfVAM0EQ6iJoS5ZUI0oTKzcxl1W+TQm8kALZHUdbfxir9SovB3tI8Rol7Mbt+DaW07Q2KH5l+1MG3q6fzySgfIg="
+
+addons:
+  coverity_scan:
+    project:
+      name: "FenixEdu/fenixedu-academic"
+      description: "Build submitted via Travis CI"
+    notification_email: buildbot@fenixedu.org
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: coverity_scan
