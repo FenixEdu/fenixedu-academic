@@ -195,6 +195,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     @Override
     public void delete() {
         setRegistration(null);
+        setIngressionType(null);
         setExecutionDegree(null);
         setSchoolTimeDistrictSubDivisionOfResidence(null);
         setCountryOfResidence(null);

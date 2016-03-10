@@ -56,4 +56,11 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
     public String getUsername() {
         return getPerson() != null ? getPerson().getUsername() : StringUtils.EMPTY;
     }
+    
+    @Override
+    public void delete() {
+        setRegistration(null);
+        
+        super.delete();
+    }
 }

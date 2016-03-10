@@ -360,6 +360,9 @@ public class Registration extends Registration_Base {
         for (; !getRegistrationStateLogsSet().isEmpty(); getRegistrationStateLogsSet().iterator().next().delete()) {
             ;
         }
+        for (; !getRegistrationStateLogSet().isEmpty(); getRegistrationStateLogSet().iterator().next().delete()) {
+            ;
+        }
 
         if (getRegistrationNumber() != null) {
             getRegistrationNumber().delete();
@@ -379,7 +382,8 @@ public class Registration extends Registration_Base {
         setRegistrationYear(null);
         setDegree(null);
         setStudent(null);
-        setRegistrationProtocol(null);
+        super.setRegistrationProtocol(null);
+        super.setIngressionType(null);
         setRootDomainObject(null);
 
         getDestinyRegistrationsSet().clear();
