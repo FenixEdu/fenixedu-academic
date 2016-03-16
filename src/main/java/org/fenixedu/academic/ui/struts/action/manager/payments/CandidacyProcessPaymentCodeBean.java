@@ -29,6 +29,8 @@ public class CandidacyProcessPaymentCodeBean implements Serializable {
     private LocalDate beginDate;
     private LocalDate endDate;
     private Integer numberOfPaymentCodes;
+    private Double minAmount;
+    private Double maxAmount;
 
     public CandidacyProcessPaymentCodeBean() {
 
@@ -68,6 +70,22 @@ public class CandidacyProcessPaymentCodeBean implements Serializable {
 
     public void setNumberOfPaymentCodes(Integer numberOfPaymentCodes) {
         this.numberOfPaymentCodes = numberOfPaymentCodes;
+    }
+
+    public Double getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(Double minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public Double getMaxAmount() {
+        return maxAmount;
+    }
+
+    public void setMaxAmount(Double maxAmount) {
+        this.maxAmount = maxAmount;
     }
 
 }

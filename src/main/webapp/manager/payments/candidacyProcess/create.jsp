@@ -38,6 +38,8 @@
 			<fr:schema type="org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean" bundle="MANAGER_RESOURCES">
 				<fr:slot name="beginDate" required="true" />
 				<fr:slot name="endDate" required="true" />
+				<fr:slot name="minAmount" required="true" />
+				<fr:slot name="maxAmount" required="true" />
 				<fr:slot name="numberOfPaymentCodes" required="true" />
 			</fr:schema>
 			
