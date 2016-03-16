@@ -4580,6 +4580,7 @@ class accessControl.PersistentTeacherGroup extends .org.fenixedu.bennu.core.doma
 class accessControl.PersistentScientificCommissionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentCoordinatorGroup extends accessControl.FenixPredicateGroup {
+    Boolean responsible;
 }
 
 class accessControl.PersistentAcademicOperationGroup extends accessControl.FenixPredicateGroup {

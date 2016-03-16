@@ -25,7 +25,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -50,30 +49,38 @@ public class CoordinatorGroup extends FenixGroup {
     @GroupArgument
     private Degree degree;
 
+    @GroupArgument
+    private Boolean responsible;
+
     private CoordinatorGroup() {
         super();
     }
 
-    private CoordinatorGroup(DegreeType degreeType, Degree degree) {
+    private CoordinatorGroup(DegreeType degreeType, Degree degree, Boolean isResponsible) {
         this();
         this.degreeType = degreeType;
         this.degree = degree;
+        this.responsible = isResponsible;
     }
 
     public static CoordinatorGroup get() {
-        return new CoordinatorGroup(null, null);
+        return new CoordinatorGroup(null, null, null);
     }
 
     public static CoordinatorGroup get(DegreeType degreeType) {
-        return new CoordinatorGroup(degreeType, null);
+        return new CoordinatorGroup(degreeType, null, null);
     }
 
     public static CoordinatorGroup get(Degree degree) {
-        return new CoordinatorGroup(null, degree);
+        return new CoordinatorGroup(null, degree, null);
     }
 
     public static CoordinatorGroup get(DegreeType degreeType, Degree degree) {
-        return new CoordinatorGroup(degreeType, degree);
+        return new CoordinatorGroup(degreeType, degree, null);
+    }
+
+    public static CoordinatorGroup get(DegreeType degreeType, Degree degree, Boolean isResponsible) {
+        return new CoordinatorGroup(degreeType, degree, isResponsible);
     }
 
     @Override
@@ -85,6 +92,9 @@ public class CoordinatorGroup extends FenixGroup {
         }
         if (degree != null) {
             parts.add(degree.getPresentationName());
+        }
+        if (responsible != null) {
+            parts.add(responsible.toString());
         }
         if (!parts.isEmpty()) {
             connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.default");
@@ -98,31 +108,32 @@ public class CoordinatorGroup extends FenixGroup {
         if (degreeType != null) {
             ExecutionYear year = ExecutionYear.readCurrentExecutionYear();
             for (final ExecutionDegree executionDegree : year.getExecutionDegreesSet()) {
-                final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-                final Degree degree = degreeCurricularPlan.getDegree();
-                if (degree.getDegreeType().equals(degreeType)) {
+                if (degreeType.equals(executionDegree.getDegreeType())) {
                     for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                        User user = coordinator.getPerson().getUser();
-                        if (user != null) {
-                            users.add(user);
+                        if (responsible == null || responsible.equals(coordinator.isResponsible())) {
+                            User user = coordinator.getPerson().getUser();
+                            if (user != null) {
+                                users.add(user);
+                            }
                         }
                     }
                 }
             }
-//            for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
-//                users.addAll(getCoordinators(degree));
-//            }
         }
+
         if (degree != null) {
-            users.addAll(getCoordinators(degree));
+            users.addAll(getCoordinators(degree, responsible));
         }
+
         if (degree == null && degreeType == null) {
             final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
             for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
                 for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                    User user = coordinator.getPerson().getUser();
-                    if (user != null) {
-                        users.add(user);
+                    if (responsible == null || responsible.equals(coordinator.isResponsible())) {
+                        User user = coordinator.getPerson().getUser();
+                        if (user != null) {
+                            users.add(user);
+                        }
                     }
                 }
             }
@@ -135,12 +146,14 @@ public class CoordinatorGroup extends FenixGroup {
         return getMembers();
     }
 
-    private static Set<User> getCoordinators(Degree degree) {
+    private static Set<User> getCoordinators(Degree degree, Boolean isResponsible) {
         Set<User> users = new HashSet<>();
         for (Coordinator coordinator : degree.getCurrentCoordinators()) {
-            User user = coordinator.getPerson().getUser();
-            if (user != null) {
-                users.add(user);
+            if (isResponsible == null || isResponsible.equals(coordinator.isResponsible())) {
+                User user = coordinator.getPerson().getUser();
+                if (user != null) {
+                    users.add(user);
+                }
             }
         }
         return users;
@@ -160,6 +173,9 @@ public class CoordinatorGroup extends FenixGroup {
                 if (degree != null && !executionDegree.getDegree().equals(degree)) {
                     continue;
                 }
+                if (responsible != null && !responsible.equals(coordinator.isResponsible())) {
+                    continue;
+                }
                 return true;
             }
         }
@@ -173,21 +189,23 @@ public class CoordinatorGroup extends FenixGroup {
 
     @Override
     public PersistentGroup toPersistentGroup() {
-        return PersistentCoordinatorGroup.getInstance(degreeType, degree);
+        return PersistentCoordinatorGroup.getInstance(degreeType, degree, responsible);
     }
 
     @Override
     public boolean equals(Object object) {
         if (object instanceof CoordinatorGroup) {
             CoordinatorGroup other = (CoordinatorGroup) object;
-            return Objects.equal(degreeType, other.degreeType) && Objects.equal(degree, other.degree);
+            return Objects.equal(degreeType, other.degreeType) 
+ && Objects.equal(degree, other.degree)
+                    && Objects.equal(responsible, other.responsible);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(degreeType, degree);
+        return Objects.hashCode(degreeType, degree, responsible);
     }
 
 }

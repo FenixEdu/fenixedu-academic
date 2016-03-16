@@ -27,9 +27,15 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.bennu.core.groups.Group;
 
 public class PersistentCoordinatorGroup extends PersistentCoordinatorGroup_Base {
+
     protected PersistentCoordinatorGroup(DegreeType degreeType, Degree degree) {
+        this(degreeType, degree, null);
+    }
+
+    protected PersistentCoordinatorGroup(DegreeType degreeType, Degree degree, Boolean responsible) {
         super();
         setDegreeType(degreeType);
+        setResponsible(responsible);
         setDegree(degree);
         if (degree != null) {
             setRootForFenixPredicate(null);
@@ -38,7 +44,7 @@ public class PersistentCoordinatorGroup extends PersistentCoordinatorGroup_Base 
 
     @Override
     public Group toGroup() {
-        return CoordinatorGroup.get(getDegreeType(), getDegree());
+        return CoordinatorGroup.get(getDegreeType(), getDegree(), getResponsible());
     }
 
     @Override
@@ -48,18 +54,23 @@ public class PersistentCoordinatorGroup extends PersistentCoordinatorGroup_Base 
     }
 
     public static PersistentCoordinatorGroup getInstance() {
-        return getInstance(null, null);
+        return getInstance(null, null, null);
     }
 
     public static PersistentCoordinatorGroup getInstance(DegreeType degreeType, Degree degree) {
-        return singleton(() -> select(degreeType, degree), () -> new PersistentCoordinatorGroup(degreeType, degree));
+        return getInstance(degreeType, degree, null);
     }
 
-    private static Optional<PersistentCoordinatorGroup> select(final DegreeType degreeType, final Degree degree) {
+    public static PersistentCoordinatorGroup getInstance(DegreeType degreeType, Degree degree, Boolean responsible) {
+        return singleton(() -> select(degreeType, degree, responsible),
+                () -> new PersistentCoordinatorGroup(degreeType, degree, responsible));
+    }
+
+    private static Optional<PersistentCoordinatorGroup> select(final DegreeType degreeType, final Degree degree,
+            Boolean responsible) {
         Stream<PersistentCoordinatorGroup> stream =
                 degree != null ? degree.getCoordinatorGroupSet().stream() : filter(PersistentCoordinatorGroup.class);
-        return stream.filter(
-                group -> Objects.equals(group.getDegreeType(), degreeType) && Objects.equals(group.getDegree(), degree))
-                .findAny();
+        return stream.filter(group -> Objects.equals(group.getDegreeType(), degreeType)
+                && Objects.equals(group.getDegree(), degree) && Objects.equals(group.getResponsible(), responsible)).findAny();
     }
 }
