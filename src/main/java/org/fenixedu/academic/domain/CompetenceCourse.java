@@ -375,10 +375,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionSemester executionSemester) {
-        if (!isBolonha()) {
-            return null;
-        }
-
         if (executionSemester == null) {
             return getMostRecentCompetenceCourseInformation();
         }
@@ -400,10 +396,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourseInformation findCompetenceCourseInformationForExecutionYear(final ExecutionYear executionYear) {
-        if (!isBolonha()) {
-            return null;
-        }
-
         if (executionYear == null) {
             return getMostRecentCompetenceCourseInformation();
         }
