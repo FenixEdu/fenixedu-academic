@@ -25,6 +25,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,8 @@ import org.slf4j.LoggerFactory;
 public class DegreeInfo extends DegreeInfo_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeInfo.class);
+
+    public static final String DEGREE_INFO_CREATION_EVENT = "DEGREE_INFO_CREATION_EVENT";
 
     public static Comparator<DegreeInfo> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<DegreeInfo>() {
         @Override
@@ -46,7 +50,7 @@ public class DegreeInfo extends DegreeInfo_Base {
         }
     };
 
-    protected DegreeInfo(Degree degree, ExecutionYear executionYear) {
+    public DegreeInfo(Degree degree, ExecutionYear executionYear) {
         super();
         setRootDomainObject(Bennu.getInstance());
 
@@ -63,6 +67,8 @@ public class DegreeInfo extends DegreeInfo_Base {
 
         new DegreeInfoCandidacy(this);
         new DegreeInfoFuture(this);
+        Signal.emit(DEGREE_INFO_CREATION_EVENT, new DomainObjectEvent<DegreeInfo>(this));
+
     }
 
     protected DegreeInfo() {
@@ -102,7 +108,7 @@ public class DegreeInfo extends DegreeInfo_Base {
         return hasName() && getName().equals(name);
     }
 
-    protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
+    public DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
         this(degreeInfo.getDegree(), executionYear);
 
         setName(degreeInfo.getName());
