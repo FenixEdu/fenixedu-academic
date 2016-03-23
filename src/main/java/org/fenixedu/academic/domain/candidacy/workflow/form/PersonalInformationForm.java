@@ -22,9 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.GrantOwnerType;
+import org.fenixedu.academic.domain.IdentificationDocumentExtraDigit;
+import org.fenixedu.academic.domain.IdentificationDocumentSeriesNumber;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.ProfessionType;
 import org.fenixedu.academic.domain.ProfessionalSituationConditionType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.PartySocialSecurityNumber;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -131,9 +134,20 @@ public class PersonalInformationForm extends Form {
 
     private void validateIdDocument(List<LabelFormatter> result) {
         if (getIdDocumentType().equals(IDDocumentType.IDENTITY_CARD)) {
-            if (Strings.isNullOrEmpty(getIdentificationDocumentSeriesNumber())
-                    || !getIdentificationDocumentSeriesNumber().matches("[0-9]|([0-9][a-zA-Z][a-zA-Z][0-9])")) {
+            if (Strings.isNullOrEmpty(getIdentificationDocumentSeriesNumber())) {
                 result.add(new LabelFormatter().appendLabel("error.firstTimeStudent.invalidFormat", Bundle.CANDIDATE));
+            } else if (getIdentificationDocumentSeriesNumber().length() == 1) {
+                try {
+                    IdentificationDocumentExtraDigit.validate(getDocumentIdNumber(), getIdentificationDocumentSeriesNumber());
+                } catch (DomainException de) {
+                    result.add(new LabelFormatter().appendLabel(de.getMessage(), Bundle.APPLICATION));
+                }
+            } else {
+                try {
+                    IdentificationDocumentSeriesNumber.validate(getDocumentIdNumber(), getIdentificationDocumentSeriesNumber());
+                } catch (DomainException de) {
+                    result.add(new LabelFormatter().appendLabel(de.getMessage(), Bundle.APPLICATION));
+                }
             }
         }
     }

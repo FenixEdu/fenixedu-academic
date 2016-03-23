@@ -29,11 +29,40 @@ public class IdentificationDocumentExtraDigit extends IdentificationDocumentExtr
 
     public IdentificationDocumentExtraDigit(final Person person, final String identificationDocumentExtraDigit) {
         setPerson(person);
+        setValue(identificationDocumentExtraDigit);
+    }
+
+    public static void validate(final String documentId, final String identificationDocumentExtraDigit) {
         if (identificationDocumentExtraDigit == null || identificationDocumentExtraDigit.isEmpty()
                 || identificationDocumentExtraDigit.length() != 1 || !StringUtils.isNumeric(identificationDocumentExtraDigit)) {
             throw new DomainException("label.identificationDocumentExtraDigit.invalid.format");
         }
-        setValue(identificationDocumentExtraDigit);
+        if (!isValidBI(documentId + identificationDocumentExtraDigit)) {
+            throw new DomainException("label.identificationDocumentExtraDigit.invalid");
+        }
     }
 
+    @Override
+    public void setValue(String value) {
+        validate(getPerson().getDocumentIdNumber(), value);
+        super.setValue(value);
+    }
+
+    private static boolean isValidBI(final String num) {
+        final int l = num.length();
+        if (l == 9) {
+            int sum = 0;
+            for (int i = 1; i <= l; sum += toInt(num.charAt(l - i)) * i++) {
+                if (!Character.isDigit(num.charAt(l - i))) {
+                    return false;
+                }
+            }
+            return sum % 11 == 0;
+        }
+        return l == 8 && isValidBI("0" + num);
+    }
+
+    private static int toInt(final char c) {
+        return Character.isDigit(c) ? Character.getNumericValue(c) : ((int) c) - ((int) 'A') + 10;
+    }
 }
