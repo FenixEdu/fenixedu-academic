@@ -23,6 +23,8 @@ package org.fenixedu.academic.service.services.bolonhaManager;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
+import java.util.Objects;
+
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CompetenceCourseType;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -50,30 +52,32 @@ public class CreateCompetenceCourse {
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }
-        checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim());
-        final CompetenceCourse competenceCourse =
-                new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel, type, CurricularStage.DRAFT, unit,
-                        startSemester);
+        checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim(), code);
+        final CompetenceCourse competenceCourse = new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel,
+                type, CurricularStage.DRAFT, unit, startSemester);
         competenceCourse.setCode(code);
 
         return competenceCourse;
     }
 
-    private static void checkIfCanCreateCompetenceCourse(final String name, final String nameEn) throws FenixServiceException {
+    private static void checkIfCanCreateCompetenceCourse(final String name, final String nameEn, String code)
+            throws FenixServiceException {
 
         final String normalizedName = StringFormatter.normalize(name);
         final String normalizedNameEn = StringFormatter.normalize(nameEn);
 
         for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
 
+            final boolean sameCode = Objects.equals(code, competenceCourse.getCode());
+
             if (StringFormatter.normalize(competenceCourse.getName()) != null) {
-                if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
+                if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName) && sameCode) {
                     throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameName",
                             competenceCourse.getDepartmentUnit().getName());
                 }
             }
             if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
-                if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
+                if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn) && sameCode) {
                     throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameNameEn",
                             competenceCourse.getDepartmentUnit().getName());
                 }

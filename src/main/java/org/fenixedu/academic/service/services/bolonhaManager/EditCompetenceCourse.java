@@ -21,6 +21,8 @@
  */
 package org.fenixedu.academic.service.services.bolonhaManager;
 
+import java.util.Objects;
+
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CompetenceCourseType;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -38,17 +40,17 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EditCompetenceCourse {
 
-    protected void run(String competenceCourseID, String objectives, String program, String evaluationMethod,
-            String objectivesEn, String programEn, String evaluationMethodEn) throws FenixServiceException {
+    protected void run(String competenceCourseID, String objectives, String program, String evaluationMethod, String objectivesEn,
+            String programEn, String evaluationMethodEn) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.edit(objectives, program, evaluationMethod, objectivesEn, programEn, evaluationMethodEn);
     }
 
     protected void run(String competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, String code)
-            throws FenixServiceException {
+                    throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
-        checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim());
+        checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim(), code);
         competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, type, curricularStage);
         competenceCourse.setCode(code);
     }
@@ -101,20 +103,25 @@ public class EditCompetenceCourse {
     }
 
     private void checkIfCanEditCompetenceCourse(final CompetenceCourse competenceCourseToEdit, final String name,
-            final String nameEn) throws FenixServiceException {
+            final String nameEn, String code) throws FenixServiceException {
         final String normalizedName = StringFormatter.normalize(name);
         final String normalizedNameEn = StringFormatter.normalize(nameEn);
 
         for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
+
+
             if (competenceCourse != competenceCourseToEdit) {
+                
+                final boolean sameCode = Objects.equals(code, competenceCourse.getCode());
+                
                 if (StringFormatter.normalize(competenceCourse.getName()) != null) {
-                    if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
+                    if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName) && sameCode) {
                         throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameName",
                                 competenceCourse.getDepartmentUnit().getName());
                     }
                 }
                 if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
-                    if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
+                    if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn) && sameCode) {
                         throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameNameEn",
                                 competenceCourse.getDepartmentUnit().getName());
                     }
@@ -130,7 +137,7 @@ public class EditCompetenceCourse {
     @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, String objectives, String program,
             String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn)
-            throws FenixServiceException, NotAuthorizedException {
+                    throws FenixServiceException, NotAuthorizedException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(competenceCourseID, objectives, program, evaluationMethod, objectivesEn, programEn,
@@ -163,8 +170,8 @@ public class EditCompetenceCourse {
     }
 
     @Atomic
-    public static void runEditCompetenceCourse(String competenceCourseID, String acronym) throws FenixServiceException,
-            NotAuthorizedException {
+    public static void runEditCompetenceCourse(String competenceCourseID, String acronym)
+            throws FenixServiceException, NotAuthorizedException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(competenceCourseID, acronym);
@@ -197,7 +204,7 @@ public class EditCompetenceCourse {
     @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, Integer bibliographicReferenceID, String year,
             String title, String author, String reference, BibliographicReferenceType valueOf, String url)
-            throws FenixServiceException {
+                    throws FenixServiceException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(competenceCourseID, bibliographicReferenceID, year, title, author, reference, valueOf, url);
