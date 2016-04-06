@@ -162,4 +162,8 @@ public class WebAddress extends WebAddress_Base {
         logDeleteAux(person, "label.partyContacts.WebAddress");
     }
 
+    @Override
+    public boolean isToBeValidated() {
+        return false;
+    }
 }

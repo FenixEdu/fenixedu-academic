@@ -238,4 +238,8 @@ public abstract class PartyContactBean implements Serializable {
     public String getValidationMessageKey() {
         return "label.contact.validation.message." + getContact().getClass().getSimpleName();
     }
+
+    public boolean isToBeValidated() {
+        return true;
+    }
 }
