@@ -43,6 +43,10 @@ public enum ProfessionalSituationConditionType {
 
     STUDENT,
 
+    INTERN,
+
+    GRANT_HOLDER,
+
     //TODO: RAIDES Provider and beans exclude this value.
     //This enum should be refactored to contain an "isActive"
     MILITARY_SERVICE,
