@@ -84,6 +84,7 @@ public class Sender extends Sender_Base {
             removeReplyTos(replyTo);
             replyTo.safeDelete();
         }
+        setMembersGroup(null);
         setRootDomainObject(null);
         deleteDomainObject();
     }
