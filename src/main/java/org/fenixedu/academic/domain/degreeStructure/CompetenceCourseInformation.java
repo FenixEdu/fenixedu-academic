@@ -39,7 +39,6 @@ import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -105,8 +104,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
         this();
         checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel, unit);
-        setName(StringFormatter.prettyPrint(name));
-        setNameEn(StringFormatter.prettyPrint(nameEn));
+        setName(name);
+        setNameEn(nameEn);
         setBasic(basic);
         setRegime(regimeType);
         setCompetenceCourseLevel(competenceCourseLevel);
@@ -146,8 +145,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
             CompetenceCourseGroupUnit unit) {
         checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, unit);
-        setName(StringFormatter.prettyPrint(name));
-        setNameEn(StringFormatter.prettyPrint(nameEn));
+        setName(name);
+        setNameEn(nameEn);
         setBasic(basic);
         setCompetenceCourseLevel(competenceCourseLevel);
         setCompetenceCourseGroupUnit(unit);
@@ -155,8 +154,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
         checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
-        setName(StringFormatter.prettyPrint(name));
-        setNameEn(StringFormatter.prettyPrint(nameEn));
+        setName(name);
+        setNameEn(nameEn);
         setBasic(basic);
         setCompetenceCourseLevel(competenceCourseLevel);
     }

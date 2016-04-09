@@ -77,8 +77,8 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     protected void init(final String name, final String nameEn) {
-        super.setName(StringFormatter.prettyPrint(name));
-        super.setNameEn(StringFormatter.prettyPrint(nameEn));
+        super.setName(name);
+        super.setNameEn(nameEn);
     }
 
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
@@ -118,8 +118,8 @@ public class CourseGroup extends CourseGroup_Base {
             setName(getParentDegreeCurricularPlan().getName());
             setNameEn(getParentDegreeCurricularPlan().getName());
         } else {
-            setName(StringFormatter.prettyPrint(name));
-            setNameEn(StringFormatter.prettyPrint(nameEn));
+            setName(name);
+            setNameEn(nameEn);
         }
 
         this.checkDuplicateBrotherNames(name, nameEn);
