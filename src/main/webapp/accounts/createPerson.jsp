@@ -54,24 +54,33 @@
 		<html:submit onclick="this.form.method.value='showExistentPersonsWithSameMandatoryDetails';"><bean:message key="label.search" bundle="MANAGER_RESOURCES" /></html:submit>
 
 		<logic:notEmpty name="resultPersons">
-			<fr:view name="resultPersons">
-				<fr:schema type="org.fenixedu.academic.domain.Person" bundle="MANAGER_RESOURCES">
-					<fr:slot name="username" layout="link" key="label.name">
-						<fr:property name="linkFormat"
-							value="/accounts/manageAccounts.do?method=viewPerson&amp;personId=\${externalId}" />
-						<fr:property name="useParent" value="true" />
-						<fr:property name="format" value="\${profile.fullName} (\${username})" />
-					</fr:slot>
-					<fr:slot name="documentIdNumber" layout="format">
-						<fr:property name="format" value="\${documentIdNumber} (\${idDocumentType.localizedName})" />
-						<fr:property name="useParent" value="true" />
-					</fr:slot>
-					<fr:slot name="profile.email" key="label.email" />
-					<fr:slot name="dateOfBirth" />
-					<fr:slot name="nationality.localizedName.content" key="label.nationality" />
-				</fr:schema>
-				<fr:layout name="tabular" />
-			</fr:view>
+			<table class="table">
+				<thead>
+					<tr>
+						<th><label><bean:message bundle="MANAGER_RESOURCES" key="label.name"/></label></th>
+						<th><label><bean:message bundle="MANAGER_RESOURCES" key="label.documentIdNumber"/></label></th>
+						<th><label><bean:message bundle="MANAGER_RESOURCES" key="label.email"/></label></th>
+						<th><label><bean:message bundle="MANAGER_RESOURCES" key="label.dateOfBirth"/></label></th>
+						<th><label><bean:message bundle="MANAGER_RESOURCES" key="label.nationality"/></label></th>
+					</tr>
+				</thead>
+				<tbody>
+					<logic:iterate name="resultPersons" id="resultPerson">
+						<tr>
+							<td><a href='/accounts/manageAccounts.do?method=viewPerson&amp;personId=<bean:write name="resultPerson" property="externalId"/>'><bean:write name="resultPerson" property="profile.fullName"/>(<bean:write name="resultPerson" property="username"/>)</a></td>
+							<td><bean:write name="resultPerson" property="documentIdNumber"/> (<bean:write name="resultPerson" property="idDocumentType.localizedName"/>)</td>
+							<td><bean:write name="resultPerson" property="profile.email"/></td>
+							<td><bean:write name="resultPerson" property="dateOfBirthYearMonthDay"/></td>
+							<logic:present name="resultPerson" property="nationality">
+								<td><bean:write name="resultPerson" property="nationality.localizedName"/></td>
+							</logic:present>
+							<logic:notPresent name="resultPerson" property="nationality">
+								<td><bean:write name="resultPerson" property="nationality"/></td>
+							</logic:notPresent>
+						</tr>
+					</logic:iterate>
+				</tbody>
+			</table>
 		</logic:notEmpty>
 		<logic:present name="resultPersons">
 			<html:submit onclick="this.form.method.value='prepareCreatePersonFillInformation';"><bean:message key="link.create.person.because.does.not.exist" bundle="MANAGER_RESOURCES" /></html:submit>
