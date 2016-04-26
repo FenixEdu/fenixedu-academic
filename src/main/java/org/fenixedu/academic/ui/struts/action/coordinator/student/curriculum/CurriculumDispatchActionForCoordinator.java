@@ -18,11 +18,16 @@
  */
 package org.fenixedu.academic.ui.struts.action.coordinator.student.curriculum;
 
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.CurriculumDispatchAction;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewStudentCurriculum", module = "coordinator", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm",
         functionality = DegreeCoordinatorIndex.class)
@@ -34,4 +39,19 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
         @Forward(name = "NotAuthorized", path = "/coordinator/student/notAuthorized_bd.jsp") })
 public class CurriculumDispatchActionForCoordinator extends CurriculumDispatchAction {
 
+    @Override
+    protected Registration getStudentRegistration(Student student, String degreeCurricularPlanId) {
+        Registration registration = null;
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
+        registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
+        if (registration == null) {
+            for (final Registration r : student.getRegistrationsSet()) {
+                if (r.getIngressionType().isIsolatedCurricularUnits()) {
+                    registration = r;
+                    break;
+                }
+            }
+        }
+        return registration;
+    }
 }
