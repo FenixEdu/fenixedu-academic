@@ -1101,15 +1101,6 @@ public class Person extends Person_Base {
         return emailAddress != null && emailAddress.getParty().isPerson() ? (Person) emailAddress.getParty() : null;
     }
 
-    public static Stream<Person> readPeopleByEmailAddress(final String email) {
-        return EmailAddress.findAllActiveAndValid(email)
-                .filter(Objects::nonNull)
-                .map(emailAddress -> emailAddress.getParty())
-                .filter(Objects::nonNull)
-                .filter(party -> party.isPerson())
-                .map(party -> (Person) party);
-    }
-
     public boolean hasEmailAddress(final String email) {
         for (final PartyContact partyContact : getPartyContactsSet()) {
             if (partyContact.isEmailAddress()) {

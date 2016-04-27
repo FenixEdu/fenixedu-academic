@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.UserProfile;
@@ -130,7 +131,12 @@ public class SearchParametersBean implements Serializable {
     private Stream<User> filterEmail(Stream<User> matches) {
         if (!Strings.isNullOrEmpty(email)) {
             if (matches == null) {
-                return Person.readPeopleByEmailAddress(email)
+                return EmailAddress.findAllActiveAndValid(email)
+                        .filter(Objects::nonNull)
+                        .map(EmailAddress::getParty)
+                        .filter(Objects::nonNull)
+                        .filter(party -> party.isPerson())
+                        .map(Person.class::cast)
                         .filter(Objects::nonNull)
                         .map(Person::getUser)
                         .filter(Objects::nonNull);
