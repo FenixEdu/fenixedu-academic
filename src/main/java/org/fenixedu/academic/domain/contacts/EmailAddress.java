@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.contacts;
 
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -167,6 +168,14 @@ public class EmailAddress extends EmailAddress_Base {
             }
         }
         return null;
+    }
+
+    public static Stream<EmailAddress> findAllActiveAndValid(final String emailAddressString) {
+        return ContactRoot.getInstance().getPartyContactsSet().stream()
+                .filter(partyContact -> partyContact.isEmailAddress())
+                .map(partyContact -> (EmailAddress) partyContact)
+                .filter(emailAddress -> emailAddress.hasValue(emailAddressString))
+                .filter(emailAddress -> emailAddress.isActiveAndValid());
     }
 
     @Override

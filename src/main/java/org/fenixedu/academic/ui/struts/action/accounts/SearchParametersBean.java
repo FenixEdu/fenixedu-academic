@@ -130,11 +130,17 @@ public class SearchParametersBean implements Serializable {
     private Stream<User> filterEmail(Stream<User> matches) {
         if (!Strings.isNullOrEmpty(email)) {
             if (matches == null) {
-                return Stream.of(Person.readPersonByEmailAddress(email)).filter(Objects::nonNull).map(Person::getUser)
+                return Person.readPeopleByEmailAddress(email)
+                        .filter(Objects::nonNull)
+                        .map(Person::getUser)
                         .filter(Objects::nonNull);
             } else {
-                return matches.filter(u -> u.getPerson().getEmailAddresses().stream().filter(a -> a.getValue().equals(email))
-                        .findAny().isPresent());
+                return matches
+                        .filter(u -> u.getPerson().getEmailAddresses().stream()
+                                .filter(emailAddress -> emailAddress.getValue().equals(email))
+                                .filter(emailAddress -> emailAddress.isActiveAndValid())
+                                .findAny()
+                                .isPresent());
             }
         }
         return matches;
@@ -153,10 +159,10 @@ public class SearchParametersBean implements Serializable {
     }
 
     private static boolean namesMatch(String query, String name) {
-        List<String> namearts =
+        List<String> nameParts =
                 Arrays.asList(StringNormalizer.normalizeAndRemoveAccents(name).toLowerCase().trim().split("\\s+|-"));
         List<String> queryParts =
                 Arrays.asList(StringNormalizer.normalizeAndRemoveAccents(query).toLowerCase().trim().split("\\s+|-"));
-        return namearts.containsAll(queryParts);
+        return nameParts.containsAll(queryParts);
     }
 }
