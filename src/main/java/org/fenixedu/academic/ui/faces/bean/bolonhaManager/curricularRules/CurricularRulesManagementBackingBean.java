@@ -166,6 +166,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                     if (curricularCourse.isOptionalCurricularCourse()) {
                         curricularRuleTypes.add(curricularRuleType);
                     }
+                } else {
+                    curricularRuleTypes.add(curricularRuleType);
                 }
                 break;
 
