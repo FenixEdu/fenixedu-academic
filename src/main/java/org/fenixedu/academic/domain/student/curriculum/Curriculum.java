@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -43,7 +44,7 @@ import org.slf4j.LoggerFactory;
 
 public class Curriculum implements Serializable, ICurriculum {
 
-    private static Logger logger = LoggerFactory.getLogger(Curriculum.class);
+    static final private Logger logger = LoggerFactory.getLogger(Curriculum.class);
 
     static private final long serialVersionUID = -8365985725904139675L;
 
@@ -110,9 +111,8 @@ public class Curriculum implements Serializable, ICurriculum {
             if (approvedCredits.compareTo(BigDecimal.ZERO) == 0) {
                 curricularYear = Integer.valueOf(1);
             } else {
-                final BigDecimal ectsCreditsCurricularYear =
-                        curriculum.getSumEctsCredits().add(BigDecimal.valueOf(24))
-                                .divide(BigDecimal.valueOf(60), 2 * 2 + 1, RoundingMode.HALF_EVEN).add(BigDecimal.valueOf(1));
+                final BigDecimal ectsCreditsCurricularYear = curriculum.getSumEctsCredits().add(BigDecimal.valueOf(24))
+                        .divide(BigDecimal.valueOf(60), 2 * 2 + 1, RoundingMode.HALF_EVEN).add(BigDecimal.valueOf(1));
                 curricularYear = Math.min(ectsCreditsCurricularYear.intValue(), totalCurricularYears.intValue());
             }
 
@@ -139,9 +139,8 @@ public class Curriculum implements Serializable, ICurriculum {
             if (curriculum.getStudentCurricularPlan().getCycleCurriculumGroups().isEmpty()) {
                 return;
             }
-            CycleCurriculumGroup sgroup =
-                    Collections.min(curriculum.getStudentCurricularPlan().getCycleCurriculumGroups(),
-                            CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+            CycleCurriculumGroup sgroup = Collections.min(curriculum.getStudentCurricularPlan().getCycleCurriculumGroups(),
+                    CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
             CycleType cycleIter = sgroup.getCycleType().getPrevious();
             while (cycleIter != null) {
                 if (curriculum.getStudentCurricularPlan().getDegreeCurricularPlan().getCycleCourseGroup(cycleIter) != null) {
@@ -255,6 +254,30 @@ public class Curriculum implements Serializable, ICurriculum {
         }
     }
 
+    static abstract public class CurriculumEntryPredicate implements Predicate<ICurriculumEntry> {
+    }
+
+    static private Supplier<CurriculumEntryPredicate> CURRICULUM_ENTRY_PREDICATE = () -> new CurriculumEntryPredicate() {
+
+        @Override
+        public boolean test(final ICurriculumEntry input) {
+            // by default, add entry without further filtering
+            return true;
+        }
+    };
+
+    static public CurriculumEntryPredicate getCurriculumEntryPredicate() {
+        return CURRICULUM_ENTRY_PREDICATE.get();
+    }
+
+    static public void setCurriculumEntryPredicate(final Supplier<CurriculumEntryPredicate> input) {
+        if (input != null && input.get() != null) {
+            CURRICULUM_ENTRY_PREDICATE = input;
+        } else {
+            logger.error("Could not set CURRICULUM_ENTRY_PREDICATE to null");
+        }
+    }
+
     private CurriculumModule curriculumModule;
 
     private Boolean bolonhaDegree;
@@ -272,6 +295,8 @@ public class Curriculum implements Serializable, ICurriculum {
     private CurricularYearCalculator curricularYearCalculator = CURRICULAR_YEAR_CALCULATOR.get();
 
     private CurriculumGradeCalculator gradeCalculator = CURRICULUM_GRADE_CALCULATOR.get();
+
+    private CurriculumEntryPredicate curriculumEntryPredicate = CURRICULUM_ENTRY_PREDICATE.get();
 
     static public Curriculum createEmpty(final ExecutionYear executionYear) {
         return Curriculum.createEmpty(null, executionYear);
@@ -310,6 +335,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
         curricularYearCalculator = CURRICULAR_YEAR_CALCULATOR.get();
         gradeCalculator = CURRICULUM_GRADE_CALCULATOR.get();
+        curriculumEntryPredicate = CURRICULUM_ENTRY_PREDICATE.get();
     }
 
     private void addAverageEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
@@ -332,7 +358,9 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private void add(final Set<ICurriculumEntry> entries, final ICurriculumEntry newEntry) {
         if (isBolonha() || !isAlreadyCurricularYearEntry(newEntry)) {
-            entries.add(newEntry);
+            if (getCurriculumEntryPredicate().test(newEntry)) {
+                entries.add(newEntry);
+            }
         }
     }
 
