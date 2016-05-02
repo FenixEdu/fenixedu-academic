@@ -642,7 +642,9 @@
 	type="org.fenixedu.academic.dto.student.StudentStatuteBean">
 	<slot name="description" key="label.statuteType" />
 	<slot name="beginPeriodFormatted" key="label.beginExecutionPeriod" />
-	<slot name="endPeriodFormatted" key="label.endExecutionPeriod" />	
+	<slot name="studentStatute.beginDate" key="label.beginDate" />
+	<slot name="endPeriodFormatted" key="label.endExecutionPeriod" />
+	<slot name="studentStatute.endDate" key="label.endDate" />
 </schema>
 
 <schema name="student.createStatutes" bundle="ACADEMIC_OFFICE_RESOURCES" 
