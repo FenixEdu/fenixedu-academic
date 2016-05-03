@@ -1538,8 +1538,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 || ((gratuitySituationType.equals(GratuitySituationType.CREDITOR) && gratuitySituation.getRemainingValue() < 0.0)
                         || (gratuitySituationType.equals(GratuitySituationType.DEBTOR)
                                 && gratuitySituation.getRemainingValue() > 0.0)
-                || (gratuitySituationType.equals(GratuitySituationType.REGULARIZED)
-                        && gratuitySituation.getRemainingValue() == 0.0)))) {
+                        || (gratuitySituationType.equals(GratuitySituationType.REGULARIZED)
+                                && gratuitySituation.getRemainingValue() == 0.0)))) {
             return gratuitySituation;
         }
         return null;
@@ -1642,13 +1642,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         final Set<EnrolmentEvaluation> result = Sets.newHashSet();
 
         for (final Enrolment enrolment : getEnrolmentsSet()) {
-            for (final EnrolmentEvaluation evaluation : enrolment.getEvaluationsSet()) {
-                final EvaluationSeason season = evaluation.getEvaluationSeason();
+            if (enrolment.isValid(input)) {
 
-                if (season.isSpecial()) {
-                    final Optional<EnrolmentEvaluation> search = enrolment.getEnrolmentEvaluation(season, input, (Boolean) null);
-                    if (search.isPresent() && search.get() == evaluation) {
-                        result.add(evaluation);
+                for (final EnrolmentEvaluation evaluation : enrolment.getEvaluationsSet()) {
+                    final EvaluationSeason season = evaluation.getEvaluationSeason();
+
+                    if (season.isSpecial()) {
+                        final Optional<EnrolmentEvaluation> search =
+                                enrolment.getEnrolmentEvaluation(season, input, (Boolean) null);
+                        if (search.isPresent() && search.get() == evaluation) {
+                            result.add(evaluation);
+                        }
                     }
                 }
             }

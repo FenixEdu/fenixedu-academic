@@ -374,38 +374,32 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Optional<EnrolmentEvaluation> getEnrolmentEvaluation(final EvaluationSeason season,
             final ExecutionSemester semester, final Boolean assertFinal) {
 
-        final Supplier<Stream<EnrolmentEvaluation>> supplier =
-                () -> getEnrolmentEvaluationBySeason(season).filter(i -> !i.isAnnuled()).filter(
+        final Supplier<Stream<EnrolmentEvaluation>> supplier = () -> getEnrolmentEvaluationBySeason(season).filter(evaluation -> {
 
-                        new java.util.function.Predicate<EnrolmentEvaluation>() {
+            if (evaluation.isAnnuled()) {
+                return false;
+            }
 
-                            @Override
-                            public boolean test(final EnrolmentEvaluation evaluation) {
+            if (evaluation.getEvaluationSeason().isImprovement() && evaluation.getExecutionPeriod() != semester) {
+                return false;
+            }
 
-                                if (evaluation.getEvaluationSeason().isImprovement()
-                                        && evaluation.getExecutionPeriod() != semester) {
-                                    return false;
-                                }
+            if (assertFinal != null) {
 
-                                if (assertFinal != null) {
+                if (assertFinal && !evaluation.isFinal()) {
+                    return false;
+                }
 
-                                    if (assertFinal && !evaluation.isFinal()) {
-                                        return false;
-                                    }
+                // testing isFinal is insuficient, other states are final
+                if (!assertFinal && !evaluation.isTemporary()) {
+                    return false;
+                }
+            }
 
-                                    // testing isFinal is insuficient, other states are final
-                                    if (!assertFinal && !evaluation.isTemporary()) {
-                                        return false;
-                                    }
-                                }
+            return true;
+        });
 
-                                return true;
-                            }
-                        }
-
-        );
-
-        // just to be precocious
+        // ugly, but just to be precocious
         if (supplier.get().count() > 1) {
             logger.warn(this + " has more than one " + season + " for " + semester);
         }
