@@ -28,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonInformationLog;
 import org.fenixedu.academic.domain.contacts.MobilePhone;
@@ -366,13 +367,17 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("viewStudentLogChanges");
     }
 
-    private boolean isToBeValidated(PartyContactBean contact) {
-        return !(contact instanceof WebAddressBean || ((contact instanceof MobilePhoneBean || contact instanceof PhoneBean) && !PhoneValidationUtils
+    public static boolean isToBeValidated(PartyContactBean contact) {
+        return !(contact instanceof WebAddressBean
+                || (contact instanceof PhysicalAddressBean && !FenixEduAcademicConfiguration.getConfiguration()
+                        .getPhysicalAddressRequiresValidation()) || ((contact instanceof MobilePhoneBean || contact instanceof PhoneBean) && !PhoneValidationUtils
                 .getInstance().shouldRun()));
     }
 
     protected boolean isToBeValidated(PartyContact contact) {
-        return !(contact instanceof WebAddress || ((contact instanceof MobilePhone || contact instanceof Phone) && !PhoneValidationUtils
+        return !(contact instanceof WebAddress
+                || (contact instanceof PhysicalAddress && !FenixEduAcademicConfiguration.getConfiguration()
+                        .getPhysicalAddressRequiresValidation()) || ((contact instanceof MobilePhone || contact instanceof Phone) && !PhoneValidationUtils
                 .getInstance().shouldRun()));
     }
 

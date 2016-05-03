@@ -59,6 +59,9 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "phd.public.candidacy.submission.link")
         public String getPhdPublicCandidacySubmissionLink();
 
+        @ConfigurationProperty(key = "physicalAddress.requiresValidation", defaultValue = "true")
+        public boolean getPhysicalAddressRequiresValidation();
+
         @ConfigurationProperty(key = "raides.request.info", defaultValue = "false")
         public Boolean getRaidesRequestInfo();
 
