@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -557,15 +557,11 @@ public class SpaceUtils {
                             break;
 
                         case PERSON:
-                            for (Person person : personsToTest) {
-                                Optional<SharedOccupation> personSpace =
-                                        person.getUser().getSharedOccupationSet().stream()
-                                                .filter(so -> so.isActive() && so.getSpaces().contains(space)).findAny();
-                                if (personSpace.isPresent()) {
-                                    toAdd = true;
-                                    break;
-                                }
-                            }
+                            toAdd = personsToTest.stream()
+                                    .map(Person::getUser)
+                                    .filter(Objects::nonNull)
+                                    .anyMatch(u -> u.getSharedOccupationSet().stream()
+                                            .anyMatch(so -> so.isActive() && so.getSpaces().contains(space)));
                             break;
 
                         case EXECUTION_COURSE:
