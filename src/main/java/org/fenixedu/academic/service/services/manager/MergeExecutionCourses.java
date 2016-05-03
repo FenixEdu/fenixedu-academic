@@ -430,8 +430,6 @@ public class MergeExecutionCourses {
         if (executionCourseFrom.getSender() != null) {
             ExecutionCourseSender courseSenderTo = ExecutionCourseSender.newInstance(executionCourseTo);
             courseSenderTo.getMessagesSet().addAll(executionCourseFrom.getSender().getMessagesSet());
-            executionCourseFrom.getSender().getMessagesSet().stream().forEach(m -> m.getRecipientsSet().clear());
-            executionCourseFrom.getSender().delete();
         }
     }
 

@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.util.email;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -54,7 +55,7 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 
     public ExecutionCourseSender(ExecutionCourse executionCourse) {
         super();
-        setCourse(executionCourse);
+        setCourse(Objects.requireNonNull(executionCourse));
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new ExecutionCourseReplyTo());
         addReplyTos(new CurrentUserReplyTo());

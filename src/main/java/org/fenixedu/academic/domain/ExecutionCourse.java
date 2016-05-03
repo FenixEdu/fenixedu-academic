@@ -380,7 +380,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         if (getSender() != null) {
             getSender().getRecipientsSet().clear();
-            setSender(null);
+            getSender().delete();
         }
 
         for (; !getExportGroupingsSet().isEmpty(); getExportGroupingsSet().iterator().next().delete()) {
