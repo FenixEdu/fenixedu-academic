@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -30,7 +27,6 @@ public class RemoveDegreeFromDepartment {
 
     @Atomic
     public static void run(final Department department, final Degree degree) {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         if (department != null && degree != null) {
             department.removeDegrees(degree);
         }
