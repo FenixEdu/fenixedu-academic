@@ -155,6 +155,11 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         return (registrationOID == null || registrationOID.equals("")) ? null : registrationOID;
     }
 
+    protected Registration getStudentRegistration(Student student, String degreeCurricularPlanId) {
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
+        return student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
+    }
+    
     public ActionForward prepareReadByStudentNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         RenderUtils.invalidateViewState();
@@ -166,8 +171,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         Student student = getStudent(actionForm);
         if (student != null) {
             if (!StringUtils.isEmpty(degreeCurricularPlanId)) {
-                DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
-                registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
+                registration = getStudentRegistration(student, degreeCurricularPlanId);
             } else {
                 final Collection<Registration> registrations = student.getRegistrationsSet();
                 if (!registrations.isEmpty()) {
