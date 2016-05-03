@@ -168,6 +168,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setEntryPhase(entryPhase);
         setProjectTutorialCourse(Boolean.FALSE);
         setUnitCreditValue(null);
+
+        ExecutionCourseForum forum = new ExecutionCourseForum();
+        forum.setName(getNameI18N());
+        addForum(forum);
+
         Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
     }
 
