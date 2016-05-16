@@ -119,6 +119,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
             super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement().getGratuityPaymentPlanFor(
                     getStudentCurricularPlan(), getExecutionYear()));
         }
+
+        if (getGratuityPaymentPlan() == null) {
+            throw new DomainException("error.accounting.events.gratuity.paymentPlan.has.to.exist");
+        }
     }
 
     private void ensureServiceAgreement() {
