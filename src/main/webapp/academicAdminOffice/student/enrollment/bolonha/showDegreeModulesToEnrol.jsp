@@ -150,4 +150,9 @@
 </tr>
 </table>
 
-<script>$(function(){$('table').removeClass('table')})</script>
+<script type="text/javascript">
+    $(function() {
+		$('.showinfo3.mvert0').removeClass('table');
+		$('.smalltxt.noborder.table').removeClass('table');
+    });
+</script>

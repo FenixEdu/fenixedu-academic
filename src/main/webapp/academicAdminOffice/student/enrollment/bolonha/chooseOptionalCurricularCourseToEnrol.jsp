@@ -103,9 +103,9 @@
 </fr:context>
 </html:form>
 
-<script>
-$(function() {
-	$('table').removeClass('table');
-	$('form div[class="tstyle4 thlight thright"]').addClass('form-horizontal').removeClass('tstyle4 thlight thright');
-});
+<script type="text/javascript">
+    $(function() {
+		$('.showinfo3.mvert0').removeClass('table');
+		$('.smalltxt.noborder.table').removeClass('table');
+    });
 </script>
