@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
@@ -607,7 +606,7 @@ public abstract class Event extends Event_Base {
     }
 
     private void checkRulesToCancel(final Person responsible) {
-        if (!RoleType.MANAGER.isMember(responsible.getUser()) && !isOpen()) {
+        if (!isOpen()) {
             throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
         }
 
