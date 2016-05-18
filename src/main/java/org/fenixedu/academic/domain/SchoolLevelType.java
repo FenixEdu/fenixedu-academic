@@ -211,7 +211,31 @@ public enum SchoolLevelType implements IPresentableEnum {
         }
     },
 
-    OTHER_SITUATION(false, true, false);
+    OTHER_SITUATION(false, true, false),
+
+    TECHNICAL_PROFESSIONAL_HIGHER_DIPLOMA(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
+
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("T");
+        }
+    },
+
+    POST_DEGREE_SPECIALIZATION(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
+
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("E");
+        }
+    };
 
     private boolean forStudent;
 
