@@ -25,6 +25,8 @@ import java.util.Arrays;
 
 public enum CurricularRuleType {
 
+    CUSTOM,
+
     PRECEDENCY_APPROVED_DEGREE_MODULE,
 
     PRECEDENCY_ENROLED_DEGREE_MODULE,
@@ -42,7 +44,7 @@ public enum CurricularRuleType {
     EXCLUSIVENESS,
 
     ANY_CURRICULAR_COURSE,
-    
+
     ANY_CURRICULAR_COURSE_EXCEPTIONS,
 
     MINIMUM_NUMBER_OF_CREDITS_TO_ENROL,
@@ -80,7 +82,7 @@ public enum CurricularRuleType {
     public boolean isPreventsAutomaticEnrolment() {
         return Arrays.asList(
 
-        CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR
+                CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR
 
         ).contains(this);
     }
