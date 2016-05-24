@@ -18,10 +18,7 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Holiday;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -29,7 +26,6 @@ public class DeleteHoliday {
 
     @Atomic
     public static void run(final Holiday holiday) {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         holiday.delete();
     }
 
