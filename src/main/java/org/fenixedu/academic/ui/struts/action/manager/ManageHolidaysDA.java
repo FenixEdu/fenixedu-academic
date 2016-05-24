@@ -49,6 +49,7 @@ import pt.ist.fenixframework.FenixFramework;
         accessGroup = "#managers")
 @Mapping(module = "manager", path = "/manageHolidays")
 @Forwards(@Forward(name = "showHolidays", path = "/manager/showHolidays.jsp"))
+@Deprecated
 public class ManageHolidaysDA extends FenixDispatchAction {
 
     public static class HolidayFactoryCreator implements Serializable, FactoryExecutor {
