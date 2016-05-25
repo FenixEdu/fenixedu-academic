@@ -300,7 +300,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
         final List<Exam> result = new ArrayList<Exam>();
         for (final String examId : examIds) {
-            result.add((Exam) FenixFramework.getDomainObject(examId));
+            Exam exam = (Exam) FenixFramework.getDomainObject(examId);
+            if (!exam.isExamsMapPublished()) {
+                continue;
+            }
+            result.add(exam);
         }
 
         return result;

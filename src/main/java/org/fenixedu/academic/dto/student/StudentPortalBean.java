@@ -327,7 +327,10 @@ public class StudentPortalBean implements Serializable {
                 if (evaluation.getEvaluationType() == EvaluationType.TEST_TYPE) {
                     addEvaluationAnnouncement(new EvaluationAnnouncement((WrittenTest) evaluation));
                 } else if (evaluation.getEvaluationType() == EvaluationType.EXAM_TYPE) {
-                    addEvaluationAnnouncement(new EvaluationAnnouncement((Exam) evaluation));
+                    Exam exam = (Exam) evaluation;
+                    if (exam.isExamsMapPublished()) {
+                        addEvaluationAnnouncement(new EvaluationAnnouncement(exam));
+                    }
                 }
             }
             for (Grouping grouping : executionCourse.getGroupings()) {
