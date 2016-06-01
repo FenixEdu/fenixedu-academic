@@ -464,6 +464,7 @@
 	<slot name="address" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.address"/>
 	<slot name="email" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.email"/>
 	<slot name="phone" key="label.org.fenixedu.academic.domain.phd.PhdParticipant.phone"/>
+	<slot name="acceptanceLetter" layout="link"/>
 </schema>
 
 <schema name="PhdCandidacyFeedbackRequestElement.PhdProgramGuiding.view" type="org.fenixedu.academic.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
