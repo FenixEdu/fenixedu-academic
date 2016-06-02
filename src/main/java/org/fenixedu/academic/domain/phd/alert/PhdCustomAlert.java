@@ -179,4 +179,9 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         return !getUserDefined().booleanValue();
     }
 
+    @Override
+    public void delete() {
+        this.setTargetGroup(null);
+        super.delete();
+    }
 }
