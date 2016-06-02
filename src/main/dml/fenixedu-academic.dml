@@ -4635,6 +4635,11 @@ public class log.StudentRegistrationTransferLog {
     protected String who;
 }
 
+
+class candidacy.FirstTimeDocumentsConfiguration {
+	protected JsonElement configurationProperties (REQUIRED);	
+}
+
 /*
  * Relations definitions
  * 
@@ -12238,4 +12243,13 @@ relation StudentRegistrationTransferLogTarget {
     protected student.Student playsRole target {
         multiplicity 1..1;
     }
+}
+
+relation BennuFirstTimeDocumentsConfiguration {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	candidacy.FirstTimeDocumentsConfiguration playsRole firstTimeDocumentsConfiguration {
+		multiplicity 0..1;
+	}
 }
