@@ -192,6 +192,9 @@ $(document).ready(function() {
 		</c:when>
 		<c:otherwise>
 			<button class="btn btn-default" id="toggle-courses"><spring:message code="teacher.authorizations.expand.all.courses"/></button>
+			<a class="btn btn-default" href="${baseUrl}/download?department=${search.department.externalId}&period=${search.period.externalId}">
+				<spring:message code="teacher.authorizations.download"/>
+			</a>
 			<table class="table" id="authorizations">
 				<thead>
 					<th><spring:message code="label.photo"/></th>
