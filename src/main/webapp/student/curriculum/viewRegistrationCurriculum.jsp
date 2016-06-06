@@ -43,9 +43,8 @@
 	request.setAttribute("rawGrade", curriculum.getRawGrade());
 	
 	// curricular year
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	request.setAttribute("currentExecutionYear", currentExecutionYear);
-	curriculum = registrationCurriculumBean.getCurriculum(currentExecutionYear);
+	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
+	curriculum = registrationCurriculumBean.getCurriculum(registrationCurriculumBean.getExecutionYear());
 	
 	final BigDecimal sumEctsCredits = curriculum.getSumEctsCredits();
 	request.setAttribute("sumEctsCredits", sumEctsCredits);
