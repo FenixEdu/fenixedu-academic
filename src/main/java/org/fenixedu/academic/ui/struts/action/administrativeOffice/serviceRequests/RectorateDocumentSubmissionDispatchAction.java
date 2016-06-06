@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.IProgramConclusionRequest;
-import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch;
 import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
@@ -274,10 +273,6 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
             RectorateSubmissionBatch target = document.getRectorateSubmissionBatch();
             while (!target.isUnsent()) {
                 target = target.getNextRectorateSubmissionBatch();
-            }
-            if (document.isRegistryDiploma()) {
-                IRegistryDiplomaRequest registry = (IRegistryDiplomaRequest) document;
-                ((AcademicServiceRequest) registry.getDiplomaSupplement()).setRectorateSubmissionBatch(target);
             }
             document.setRectorateSubmissionBatch(target);
         }
