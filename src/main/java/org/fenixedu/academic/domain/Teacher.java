@@ -357,7 +357,9 @@ public class Teacher extends Teacher_Base {
         for (final Professorship professorship : getProfessorshipsSet()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-                return executionCourse.functionsAt(campus);
+                if (executionCourse.functionsAt(campus)) {
+                    return true;
+                }
             }
         }
         return false;
