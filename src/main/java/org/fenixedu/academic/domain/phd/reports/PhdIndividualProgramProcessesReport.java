@@ -47,7 +47,7 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
 
         setHeaders(sheet);
 
-        int i = 1;
+        int i = 2;
         for (PhdIndividualProgramProcess process : processes) {
             if (!process.isAllowedToManageProcess(Authenticate.getUser())) {
                 continue;
@@ -80,6 +80,10 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         Boolean migratedProcess = process.getPhdConfigurationIndividualProgramProcess().isMigratedProcess();
         String studentEmail = process.getPerson().getEmailForSendingEmails();
 
+        DateTime presentationDate = process.getThesisProcess() != null ? process.getThesisProcess().getDiscussionDate() : null;
+        String grade = process.getFinalGrade() != null ? process.getFinalGrade().getLocalizedName() : "";
+
+
         addCellValue(row, onNullEmptyString(processNumber), 0);
         addCellValue(row, onNullEmptyString(studentNumber), 1);
         addCellValue(row, onNullEmptyString(studentName), 2);
@@ -93,6 +97,8 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         addCellValue(row, onNullEmptyString(stateDate), 10);
         addCellValue(row, onNullEmptyString(migratedProcess), 11);
         addCellValue(row, onNullEmptyString(studentEmail), 12);
+        addCellValue(row, onNullEmptyString(presentationDate), 13);
+        addCellValue(row, onNullEmptyString(grade), 14);
     }
 
     @Override
@@ -110,6 +116,8 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         addHeaderCell(sheet, getHeaderInBundle("stateDate"), 10);
         addHeaderCell(sheet, getHeaderInBundle("migrated"), 11);
         addHeaderCell(sheet, getHeaderInBundle("studentEmail"), 12);
+        addHeaderCell(sheet, getHeaderInBundle("discussionDate"), 13);
+        addHeaderCell(sheet, getHeaderInBundle("grade"), 14);
     }
 
     private String getHeaderInBundle(String field) {
