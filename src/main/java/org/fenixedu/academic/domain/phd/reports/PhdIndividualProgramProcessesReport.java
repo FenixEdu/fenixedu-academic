@@ -75,10 +75,10 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
 
         String activeStateName = process.getActiveState().getLocalizedName();
         LocalDate whenStartStudies = process.getWhenStartedStudies();
-        DateTime stateDate =
-                process.getMostRecentState().getStateDate() != null ? process.getMostRecentState().getStateDate() : process
-                        .getMostRecentState().getWhenCreated();
+        DateTime stateDate = process.getMostRecentState().getStateDate() != null ? process.getMostRecentState()
+                .getStateDate() : process.getMostRecentState().getWhenCreated();
         Boolean migratedProcess = process.getPhdConfigurationIndividualProgramProcess().isMigratedProcess();
+        String studentEmail = process.getPerson().getEmailForSendingEmails();
 
         addCellValue(row, onNullEmptyString(processNumber), 0);
         addCellValue(row, onNullEmptyString(studentNumber), 1);
@@ -92,6 +92,7 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         addCellValue(row, onNullEmptyString(activeStateName), 9);
         addCellValue(row, onNullEmptyString(stateDate), 10);
         addCellValue(row, onNullEmptyString(migratedProcess), 11);
+        addCellValue(row, onNullEmptyString(studentEmail), 12);
     }
 
     @Override
@@ -108,6 +109,7 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         addHeaderCell(sheet, getHeaderInBundle("currentState"), 9);
         addHeaderCell(sheet, getHeaderInBundle("stateDate"), 10);
         addHeaderCell(sheet, getHeaderInBundle("migrated"), 11);
+        addHeaderCell(sheet, getHeaderInBundle("studentEmail"), 12);
     }
 
     private String getHeaderInBundle(String field) {
