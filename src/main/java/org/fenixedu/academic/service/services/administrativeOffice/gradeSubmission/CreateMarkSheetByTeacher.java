@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.service.services.administrativeOffice.gradeSubmission;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
+import pt.ist.fenixframework.Atomic;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,19 +42,14 @@ import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.dto.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean;
 import org.fenixedu.academic.dto.teacher.gradeSubmission.MarkSheetTeacherMarkBean;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.Atomic;
 
 public class CreateMarkSheetByTeacher {
 
     @Atomic
     public static List<EnrolmentEvaluation> run(MarkSheetTeacherGradeSubmissionBean submissionBean)
             throws InvalidArgumentsServiceException {
-        check(RolePredicates.TEACHER_PREDICATE);
-
         ExecutionCourse executionCourse = submissionBean.getExecutionCourse();
         Teacher teacher = submissionBean.getResponsibleTeacher();
 
