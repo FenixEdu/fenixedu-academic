@@ -86,12 +86,12 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
     public Collection<ExecutionSemester> getExecutionPeriods() {
         if (executionSemesters == null) {
-            final Registration registration = getStudent();
-
             executionSemesters = new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
-            if (registration != null) {
-                for (final Attends attends : registration.getAssociatedAttendsSet()) {
-                    executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
+            if (getStudent() != null) {
+                for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+                    for (final Attends attends : registration.getAssociatedAttendsSet()) {
+                        executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
+                    }
                 }
             }
         }
@@ -101,8 +101,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     public Collection<ExecutionCourse> getExecutionCourses() {
         final ExecutionSemester executionSemester = getExecutionPeriod();
 
-        if (executionCourses == null
-                || (!executionCourses.isEmpty() && executionSemester != executionCourses.iterator().next().getExecutionPeriod())) {
+        if (executionCourses == null || (!executionCourses.isEmpty()
+                && executionSemester != executionCourses.iterator().next().getExecutionPeriod())) {
             final Registration registration = getStudent();
 
             executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
@@ -141,7 +141,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
             result.add(new SelectItem(registration.getExternalId(), registration.getDegreeNameWithDegreeCurricularPlanName()));
         }
 
-        if (!result.isEmpty()) {
+        if (!result.isEmpty() && registration == null) {
             setRegistrationID(getPerson().getStudent().getLastActiveRegistration().getExternalId());
         }
 
@@ -157,7 +157,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     }
 
     public Registration getStudent() {
-        if (registration == null) {
+        if (registration == null || !registration.getExternalId().equals(getRegistrationID())) {
             for (final Registration activeRegistration : getPerson().getStudent().getActiveRegistrations()) {
                 if (activeRegistration.getExternalId().equals(getRegistrationID())) {
                     registration = activeRegistration;
@@ -320,8 +320,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
             if (executionSemester.getState() != PeriodState.NOT_OPEN) {
                 final ExecutionYear executionYear = executionSemester.getExecutionYear();
-                executionPeriodSelectItems.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getName()
-                        + " " + executionYear.getYear()));
+                executionPeriodSelectItems.add(new SelectItem(executionSemester.getExternalId(),
+                        executionSemester.getName() + " " + executionYear.getYear()));
             }
         }
 
