@@ -136,9 +136,9 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeChildCourseGroups() throws IOException {
         for (Context context : this.courseGroup.getSortedOpenChildContextsWithCourseGroups(this.executionYear)) {
-            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs
-                    + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable, this.executionYear,
-                    this.module, this.currentPage, this.expandable).encodeBegin(facesContext);
+            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1,
+                    this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable,
+                    this.executionYear, this.module, this.currentPage, this.expandable).encodeBegin(facesContext);
         }
     }
 
@@ -213,8 +213,7 @@ public class UICourseGroup extends UIDegreeModule {
 
         if (linkable) {
             writer.startElement("a", this);
-            this.encodeLinkHref(module + "/curricularPlans/courseGroupReport.faces",
-                    "&courseGroupID=" + this.courseGroup.getExternalId(), true);
+            this.encodeLinkHref(module + "/courseGroupReport.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), true);
             appendCodeAndName();
             writer.endElement("a");
         } else {
@@ -258,10 +257,8 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "aleft", null);
 
         String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getExternalId() + "&toOrder=false";
-        String editAndDeleteAditionalParameters =
-                "&courseGroupID=" + this.courseGroup.getExternalId()
-                        + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getExternalId()) : "")
-                        + "&toOrder=false";
+        String editAndDeleteAditionalParameters = "&courseGroupID=" + this.courseGroup.getExternalId()
+                + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getExternalId()) : "") + "&toOrder=false";
 
         if (loggedPersonCanManageDegreeCurricularPlans()) {
             writer.append("(");
