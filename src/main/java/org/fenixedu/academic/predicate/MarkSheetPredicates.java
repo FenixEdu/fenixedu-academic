@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.MarkSheet;
+import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -43,7 +44,7 @@ public class MarkSheetPredicates {
         @Override
         public boolean evaluate(final MarkSheet markSheet) {
             return hasScientificCouncilRole()
-                    || hasTeacherRole()
+                    || hasProfessorshipForMarkSheet(markSheet)
                     || (AcademicPredicates.MANAGE_MARKSHEETS.evaluate(null)
                             && (!markSheet.isRectification() || checkRectification(markSheet.getCurricularCourse().getDegree())) && (!markSheet
                             .isDissertation() || checkDissertation(markSheet.getCurricularCourse().getDegree())));
@@ -85,7 +86,9 @@ public class MarkSheetPredicates {
         return RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE.evaluate(null);
     }
 
-    private static boolean hasTeacherRole() {
-        return RolePredicates.TEACHER_PREDICATE.evaluate(null);
+    private static boolean hasProfessorshipForMarkSheet(MarkSheet markSheet) {
+        Teacher teacher = Authenticate.getUser().getPerson().getTeacher();
+        return teacher != null && markSheet.getCurricularCourse().getExecutionCoursesByExecutionPeriod(markSheet
+                .getExecutionPeriod()).stream().anyMatch(teacher::hasProfessorshipForExecutionCourse);
     }
 }
