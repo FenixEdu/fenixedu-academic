@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.fenixedu.academic.domain.degreeStructure.Context" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -66,19 +66,37 @@
 </logic:empty>
 
 <logic:notEmpty name="results">
-	<fr:view name="results">
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.degreeStructure.Context">
-			<fr:slot name="childDegreeModule.nameI18N" />
-			<fr:slot name="beginExecutionPeriod.executionYear.name" />
-			<fr:slot name="beginExecutionPeriod.name" />
-		</fr:schema>
-		
-		<fr:layout name="tabular">
-
-			<fr:link 	name="edit" 
-						link="<%= String.format("/bolonha/curricularPlans/editCurricularCourse.faces?degreeCurricularPlanID=%s&contextID=${externalId}&curricularCourseID=${childDegreeModule.externalId}&organizeBy=groups&showRules=false&hideCourses=false&action=build&executionYearID=%s", dcpExternalId, executionYearId) %>"
-						label="label.edit,APPLICATION_RESOURCES"/>
-
-		</fr:layout>
-	</fr:view>
+	<table class="tstyle2 thleft tdleft table">
+		<thead>
+			<th scope="col">
+				<bean:message key="label.org.fenixedu.academic.domain.degreeStructure.Context.childDegreeModule.nameI18N" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</th>
+			<th scope="col">
+				<bean:message key="label.org.fenixedu.academic.domain.degreeStructure.Context.beginExecutionPeriod.qualifiedName" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</th>
+			<th scope="col">
+				<bean:message key="label.org.fenixedu.academic.domain.degreeStructure.Context.endExecutionPeriod.qualifiedName" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</th>
+			<th scope="col">
+			</th>
+		</thead>
+		<tbody>
+			<logic:iterate name="results" id="context">
+				<tr>
+					<td><bean:write name="context" property="childDegreeModule.nameI18N"/></td>
+					<td><bean:write name="context" property="beginExecutionPeriod.qualifiedName"/></td>
+					<td>
+						<logic:notEmpty name="context" property="endExecutionPeriod" >
+							<bean:write name="context" property="endExecutionPeriod.qualifiedName"/>
+						</logic:notEmpty>
+					</td>
+					<td>
+						<html:link page="<%="/bolonha/curricularPlans/editCurricularCourse.faces?degreeCurricularPlanID=" + dcpExternalId +"&contextID=" + ((Context) context).getExternalId() + "&curricularCourseID=" + ((Context) context).getChildDegreeModule().getExternalId() + "&executionYearID="+ executionYearId +"&organizeBy=groups&showRules=false&hideCourses=false&action=build" %>">
+							<bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/>
+						</html:link>
+					</td>
+				</tr>
+			</logic:iterate>
+		</tbody>
+	</table>
 </logic:notEmpty>

@@ -18,7 +18,11 @@
  */
 package org.fenixedu.academic.ui.struts.action.academicAdministration.curricularCourses;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +39,7 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import com.google.common.collect.Lists;
 
 @Mapping(path = "/searchCurricularCourses", module = "academicAdministration", functionality = CurricularPlansManagement.class)
 @Forwards({ @Forward(name = "searchCurricularCourses",
@@ -60,7 +64,9 @@ public class SearchCurricularCoursesInDegreeCurricularPlan extends FenixDispatch
         DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "dcpId");
         SearchCurricularCourseBean searchBean = getRenderedObject("searchBean");
 
-        request.setAttribute("results", searchBean.search());
+        List<Context> results = Lists.newArrayList(searchBean.search());
+        Collections.sort(results);
+        request.setAttribute("results", results);
         request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
         request.setAttribute("searchBean", searchBean);
         request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());

@@ -134,7 +134,7 @@
 		</h:outputLink>
 		</p>
 
-		<h:panelGroup rendered="#{empty AcademicAdministrationCurricularCourseManagement.contextID}">
+		<h:panelGroup rendered="#{AcademicAdministrationCurricularCourseManagement.toAddNewContext}">
 			<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
@@ -155,25 +155,27 @@
 			</fc:selectOneMenu>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
-			<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.beginExecutionPeriodID}"
-				rendered="#{AcademicAdministrationCurricularCourseManagement.toAddNewContext}">
+			<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.beginExecutionPeriodID}">
 				<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.beginExecutionPeriodItems}" />
 			</fc:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>
  	
 			<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
-			<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.endExecutionPeriodID}"
-				rendered="#{AcademicAdministrationCurricularCourseManagement.toAddNewContext}">
+			<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.endExecutionPeriodID}">
 				<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.endExecutionPeriodItems}" />
 			</fc:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 			<fc:commandButton alt="#{htmlAltBundle['commandButton.add']}" styleClass="inputbutton" value="#{bolonhaBundle['add']}"
-				action="" actionListener="#{AcademicAdministrationCurricularCourseManagement.addContext}"/>
+				action="#{AcademicAdministrationCurricularCourseManagement.addContext}">
+				<f:param name="toAddNewContext" value="true"/>
+			</fc:commandButton>
 			<h:outputText value=" " escape="false"/>							
 			<fc:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
-				action="#{AcademicAdministrationCurricularCourseManagement.cancel}"/>
+				action="#{AcademicAdministrationCurricularCourseManagement.cancel}">
+				<f:param name="toAddNewContext" value="true"/>
+			</fc:commandButton>
 			<h:outputText value="</p></fieldset>" escape="false"/>
 			<h:outputText value="<br/>" escape="false"/>
 		</h:panelGroup>
@@ -252,9 +254,10 @@
 					<h:outputText value="</p>" escape="false"/>
 					
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-					<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{context.externalId}'/>"/>
 					<fc:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}"
-							action="#{AcademicAdministrationCurricularCourseManagement.editContext}"/>
+							action="#{AcademicAdministrationCurricularCourseManagement.editContext}">
+							<f:param name="contextID" value="#{AcademicAdministrationCurricularCourseManagement.contextID}"/>
+					</fc:commandButton>
 					<h:outputText value=" " escape="false"/>							
 					<fc:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
 							action="#{AcademicAdministrationCurricularCourseManagement.cancel}"/>

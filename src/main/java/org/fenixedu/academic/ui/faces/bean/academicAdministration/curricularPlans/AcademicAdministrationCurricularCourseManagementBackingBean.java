@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
+import org.fenixedu.academic.service.services.bolonhaManager.AddContextToCurricularCourse;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.CreateOldCurricularCourse;
 import org.fenixedu.academic.service.services.manager.EditOldCurricularCourse;
@@ -68,6 +69,8 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
     private String gradeScaleString;
 
     private GradeScale gradeScale;
+
+    private Boolean toAddNewContext;
 
     private CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean = null;
 
@@ -346,11 +349,43 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
     }
 
     public boolean isToAddNewContext() {
-        String isToAdd = getRequestParameter("toAddNewContext");
-        if (isToAdd == null) {
-            return false;
-        } else {
-            return new Boolean(isToAdd);
+        if(toAddNewContext == null) {
+            toAddNewContext = getAndHoldBooleanParameter("toAddNewContext");
+            if(toAddNewContext == null) {
+                toAddNewContext = false;
+            }
         }
+        return toAddNewContext;
+    }
+
+    public void setToAddNewContext(Boolean toAddNewContext) {
+        this.toAddNewContext = toAddNewContext;
+    }
+
+    @Override
+    public String addContext() {
+        try {
+            checkCourseGroup();
+            checkCurricularCourse();
+            checkCurricularSemesterAndYear();
+            AddContextToCurricularCourse.run(getCurricularCourse(), getCourseGroup(), getBeginExecutionPeriodID(),
+                    getFinalEndExecutionPeriodID(), getCurricularYearID(), getCurricularSemesterID());
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "addedNewContextToCurricularCourse"));
+            setToAddNewContext(false);
+            setContextID(null);
+        } catch (FenixActionException | FenixServiceException e) {
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
+        } catch (DomainException e) {
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage(), e.getArgs()));
+        } catch (Exception e) {
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
+        }
+        return "";
+    }
+
+    @Override
+    public String cancel() {
+        setToAddNewContext(false);
+        return super.cancel();
     }
 }

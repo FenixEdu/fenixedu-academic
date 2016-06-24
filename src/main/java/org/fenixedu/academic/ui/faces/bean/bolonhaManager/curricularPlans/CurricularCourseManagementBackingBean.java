@@ -21,6 +21,8 @@
  */
 package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans;
 
+import pt.ist.fenixframework.FenixFramework;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -72,9 +74,8 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
@@ -279,7 +280,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public CourseGroup getCourseGroup() {
-        return (CourseGroup) FenixFramework.getDomainObject(getCourseGroupID());
+        String cg = getCourseGroupID();
+        if(Strings.isNullOrEmpty(cg) || cg.equals("-1")) {
+            return null;
+        }
+        return (CourseGroup) FenixFramework.getDomainObject(cg);
     }
 
     public DepartmentUnit getDepartmentUnit() {
@@ -521,7 +526,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<Context> getCurricularCourseParentContexts() {
-        return getCurricularCourse().getParentContextsByExecutionYear(getExecutionYear());
+        List<Context> contexts = Lists.newArrayList(getCurricularCourse().getParentContextsSet());
+        Collections.sort(contexts);
+        return contexts;
     }
 
     public String createCurricularCourse() {
@@ -603,7 +610,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private void checkCurricularCourse() throws FenixActionException {
+    protected void checkCurricularCourse() throws FenixActionException {
         if (getCurricularCourseID() == null || getCurricularCourseID().equals(this.NO_SELECTION_STRING)) {
             throw new FenixActionException("error.mustChooseACurricularCourse");
         }
@@ -662,14 +669,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             EditContextFromCurricularCourse
                     .run(getCurricularCourse(), getContext(getContextID()), getCourseGroup(), getCurricularYearID(),
                             getCurricularSemesterID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
+            setContextID(""); //XXX not using null prevents getter calls to restore the value though getAndHoldRequestParameter
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
         } catch (DomainException e) {
             addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         } catch (FenixActionException e) {
             addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
-        setContextID(null); // resetContextID
         return "";
     }
 
