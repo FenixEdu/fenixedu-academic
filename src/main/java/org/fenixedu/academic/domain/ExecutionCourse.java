@@ -86,6 +86,7 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
     public static final String CREATED_SIGNAL = "academic.executionCourse.create";
+    public static final String ACRONYM_CHANGED_SIGNAL = "academic.executionCourse.acronym.edit";
 
     public static List<ExecutionCourse> readNotEmptyExecutionCourses() {
         return new ArrayList<ExecutionCourse>(Bennu.getInstance().getExecutionCoursesSet());
@@ -1982,7 +1983,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public void setSigla(String sigla) {
         final String code = sigla.replace(' ', '_').replace('/', '-');
         final String uniqueCode = findUniqueCode(code);
+        if (uniqueCode.equals(this.getSigla())) {
+            return;
+        }
         super.setSigla(uniqueCode);
+        Signal.emit(ExecutionCourse.ACRONYM_CHANGED_SIGNAL, new DomainObjectEvent<>(this));
     }
 
     private String findUniqueCode(final String code) {
