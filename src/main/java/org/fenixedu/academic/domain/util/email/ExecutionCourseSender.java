@@ -22,7 +22,6 @@ import java.util.Comparator;
 import java.util.Objects;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.accessControl.StudentGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherResponsibleOfExecutionCourseGroup;
@@ -34,24 +33,9 @@ import pt.ist.fenixframework.Atomic;
 
 public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 
-    public static Comparator<ExecutionCourseSender> COMPARATOR_BY_EXECUTION_COURSE_SENDER =
-            new Comparator<ExecutionCourseSender>() {
-
-                @Override
-                public int compare(final ExecutionCourseSender executionCourseSender1,
-                        final ExecutionCourseSender executionCourseSender2) {
-                    final ExecutionCourse executionCourse1 = executionCourseSender1.getCourse();
-                    final ExecutionCourse executionCourse2 = executionCourseSender2.getCourse();
-                    final ExecutionSemester executionSemester1 = executionCourse1.getExecutionPeriod();
-                    final ExecutionSemester executionSemester2 = executionCourse2.getExecutionPeriod();
-                    final int p = executionSemester1.compareTo(executionSemester2);
-                    if (p == 0) {
-                        final int n = executionCourse1.getName().compareTo(executionCourse2.getName());
-                        return n == 0 ? executionCourseSender1.hashCode() - executionCourseSender2.hashCode() : n;
-                    }
-                    return p;
-                }
-            };
+    public static Comparator<ExecutionCourseSender> COMPARATOR_BY_EXECUTION_COURSE_SENDER = Comparator.nullsFirst(Comparator
+            .comparing(ExecutionCourseSender::getCourse, ExecutionCourse.EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR
+                    .thenComparing(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR)));
 
     public ExecutionCourseSender(ExecutionCourse executionCourse) {
         super();
@@ -60,18 +44,15 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         addReplyTos(new ExecutionCourseReplyTo());
         addReplyTos(new CurrentUserReplyTo());
         setMembers(TeacherGroup.get(executionCourse));
-        final String labelECTeachers =
-                BundleUtil.getString(Bundle.SITE,
-                        "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseTeachersGroupWithName",
-                        new String[] { executionCourse.getNome() });
-        final String labelECStudents =
-                BundleUtil.getString(Bundle.SITE,
-                        "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseStudentsGroupWithName",
-                        new String[] { executionCourse.getNome() });
-        final String labelECResponsibleTeachers =
-                BundleUtil.getString(Bundle.SITE,
-                        "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
-                        new String[] { executionCourse.getNome() });
+        final String labelECTeachers = BundleUtil
+                .getString(Bundle.SITE, "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseTeachersGroupWithName",
+                        executionCourse.getNome());
+        final String labelECStudents = BundleUtil
+                .getString(Bundle.SITE, "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseStudentsGroupWithName",
+                        executionCourse.getNome());
+        final String labelECResponsibleTeachers = BundleUtil.getString(Bundle.SITE,
+                "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
+                executionCourse.getNome());
         // fixed recipients
         addRecipients(new Recipient(labelECTeachers, TeacherGroup.get(executionCourse)));
         addRecipients(new Recipient(labelECStudents, StudentGroup.get(executionCourse)));
