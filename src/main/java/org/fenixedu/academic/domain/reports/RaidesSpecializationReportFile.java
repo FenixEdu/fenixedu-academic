@@ -30,6 +30,8 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.joda.time.YearMonthDay;
@@ -55,8 +57,11 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
     }
 
     @Override
-    public DegreeType getDegreeType() {
-        return DegreeType.matching(DegreeType::isSpecializationDegree).get();
+    public void setDegreeType(DegreeType type) {
+        if(!type.isSpecializationDegree()) {
+            throw new IllegalArgumentException(BundleUtil.getString(Bundle.GEP,"error.reports.raides.specialization.degree.type"));
+        }
+        super.setDegreeType(type);
     }
 
     @Override
