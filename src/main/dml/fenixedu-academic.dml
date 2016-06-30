@@ -4664,7 +4664,9 @@ class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.
 
 class accessControl.PersistentThesisReadersGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentAlumniGroup extends accessControl.FenixPredicateGroup;
+class accessControl.PersistentAlumniGroup extends accessControl.FenixPredicateGroup {
+    public Boolean registered;
+}
 
 class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPredicateGroup {
 	public Boolean externalAuthorizations (REQUIRED);

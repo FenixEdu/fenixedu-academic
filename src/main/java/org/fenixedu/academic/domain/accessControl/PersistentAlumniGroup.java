@@ -24,8 +24,13 @@ import org.fenixedu.academic.domain.Degree;
 
 public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     protected PersistentAlumniGroup(Degree degree) {
+        this(degree, null);
+    }
+
+    protected PersistentAlumniGroup(Degree degree, Boolean registered) {
         super();
         setDegree(degree);
+        setRegistered(registered);
         if (degree != null) {
             setRootForFenixPredicate(null);
         }
@@ -33,7 +38,7 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
 
     @Override
     public org.fenixedu.bennu.core.groups.Group toGroup() {
-        return AlumniGroup.get(getDegree());
+        return AlumniGroup.get(getDegree(), getRegistered());
     }
 
     @Override
@@ -43,11 +48,16 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     }
 
     public static PersistentAlumniGroup getInstance() {
-        return getInstance(null);
+        return getInstance(null, null);
     }
 
     public static PersistentAlumniGroup getInstance(Degree degree) {
         return singleton(() -> degree == null ? find(PersistentAlumniGroup.class) : Optional.ofNullable(degree.getAlumniGroup()),
-                () -> new PersistentAlumniGroup(degree));
+                () -> new PersistentAlumniGroup(degree, null));
+    }
+
+    public static PersistentAlumniGroup getInstance(Degree degree, Boolean registered) {
+        return singleton(() -> degree == null ? find(PersistentAlumniGroup.class) : Optional.ofNullable(degree.getAlumniGroup()),
+                () -> new PersistentAlumniGroup(degree, registered));
     }
 }
