@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
+import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean.StudentEnrolmentHandler;
 import org.fenixedu.academic.ui.struts.action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
 import org.fenixedu.academic.ui.struts.action.student.enrollment.StudentEnrollmentManagementDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -82,6 +83,13 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
         }
 
         return result;
+    }
+
+    @Override
+    protected void preProcess(BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
+        for (StudentEnrolmentHandler handler : BolonhaStudentEnrollmentBean.getHandlers()) {
+            handler.preProcess(bolonhaStudentEnrollmentBean);
+        }
     }
 
     public ActionForward showWelcome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
