@@ -157,7 +157,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     private PhdCandidacyPeriod getPhdCandidacyPeriod(final PhdProgramPublicCandidacyHashCode hashCode) {
         final DateTime date =
                 (hashCode != null && hashCode.hasCandidacyProcess()) ? hashCode.getPhdProgramCandidacyProcess()
-                        .getCandidacyDate().toDateMidnight().toDateTime() : new DateTime();
+                        .getCandidacyDate().toDateTimeAtCurrentTime() : new DateTime();
 
         return InstitutionPhdCandidacyPeriod.readInstitutionPhdCandidacyPeriodForDate(date);
     }
