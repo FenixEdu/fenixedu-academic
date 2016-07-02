@@ -25,11 +25,11 @@ package org.fenixedu.academic.ui.faces.bean.teacher.evaluation;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.GradeScale;
@@ -160,7 +160,10 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         if (this.associatedProjects == null) {
             final ExecutionCourse executionCourse = FenixFramework.getDomainObject(getExecutionCourseID());
             this.associatedProjects = executionCourse.getAssociatedProjects();
-            Collections.sort(this.associatedProjects, new BeanComparator("begin"));
+            Comparator<Project> comparator =
+                    Comparator.comparing(Project::getProjectBeginDateTime).thenComparing(Project::getProjectEndDateTime)
+                            .thenComparing(Project::getName);
+            Collections.sort(this.associatedProjects, comparator);
         }
         return associatedProjects;
     }
