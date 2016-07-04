@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -44,6 +45,8 @@ public class StudentsSearchBean implements Serializable {
     private String name;
 
     private String username;
+
+    private String socialSecurityNumber;
 
     public Integer getNumber() {
         return number;
@@ -85,6 +88,14 @@ public class StudentsSearchBean implements Serializable {
         this.username = username;
     }
 
+    public String getSocialSecurityNumber() {
+        return socialSecurityNumber;
+    }
+
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
+        this.socialSecurityNumber = socialSecurityNumber;
+    }
+
     public boolean hasSearchParameters() {
         return getNumber() != null || (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null)
                 || !StringUtils.isEmpty(getName()) || !StringUtils.isEmpty(getUsername());
@@ -115,6 +126,11 @@ public class StudentsSearchBean implements Serializable {
             User user = User.findByUsername(getUsername());
             if (user != null && user.getPerson().getStudent() != null) {
                 students.add(user.getPerson().getStudent());
+            }
+        } else if (!StringUtils.isEmpty(getSocialSecurityNumber())) {
+            Party party = Party.readByContributorNumber(getSocialSecurityNumber());
+            if (party != null && party.isPerson() && ((Person) party).getStudent() != null) {
+                students.add(((Person) party).getStudent());
             }
         }
 
