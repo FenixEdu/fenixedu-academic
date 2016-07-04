@@ -3608,7 +3608,7 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     
     class candidacyProcess.mobility.MobilityIndividualApplicationProcess extends candidacyProcess.IndividualCandidacyProcess {
     	Boolean validatedByGri;
-    	Boolean validatedByMobilityCoordinator;
+    	Boolean validatedByMobilityCoordinator (REQUIRED);
     	erasmus.StorkAttributesList personalFieldsFromStork;
     }
         
