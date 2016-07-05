@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.student;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
+import pt.ist.fenixframework.Atomic;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -130,9 +130,9 @@ import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.base.Strings;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class Registration extends Registration_Base {
 
@@ -2283,7 +2283,8 @@ public class Registration extends Registration_Base {
         final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles(executionYear));
 
         if (concludedCycles.isEmpty()) {
-            return getLastStudentCurricularPlan().getFirstOrderedCycleCurriculumGroup().getCycleType();
+            CycleCurriculumGroup cycleGroup = getLastStudentCurricularPlan().getFirstOrderedCycleCurriculumGroup();
+            return cycleGroup != null ? cycleGroup.getCycleType() : null;
         } else {
             CycleType result = null;
             for (CycleType cycleType : concludedCycles) {
