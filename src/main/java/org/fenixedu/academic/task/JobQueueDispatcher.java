@@ -46,7 +46,7 @@ public class JobQueueDispatcher extends CronTask {
         @Override
         public int compare(final QueueJob queueJob1, final QueueJob queueJob2) {
             final Integer fc1 = queueJob1.getFailedCounter();
-            final Integer fc2 = queueJob1.getFailedCounter();
+            final Integer fc2 = queueJob2.getFailedCounter();
             if (fc1 != null && fc2 != null) {
                 final int result = fc1.compareTo(fc2);
                 if (result != 0) {
