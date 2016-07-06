@@ -514,7 +514,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             setEnrolmentCondition(EnrollmentCondition.FINAL);
             setEvaluationSeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason());
             getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ, EvaluationSeason.readSpecialSeason())
-                    .ifPresent(EnrolmentEvaluation::delete);
+                    .ifPresent(
+                            ee -> {
+                                if (ee.getSpecialSeasonEnrolmentEvent() != null) {
+                                    ee.getSpecialSeasonEnrolmentEvent()
+                                            .cancel(Authenticate.getUser().getPerson(),
+                                                    BundleUtil.getString(Bundle.ACADEMIC,
+                                                            "enrolmentEvaluation.cancel.event.disenrolled"));
+                                    ee.setEnrolmentEvaluationState(EnrolmentEvaluationState.ANNULED_OBJ);
+                                } else {
+                                    ee.delete();
+                                }
+                            });
 
             getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.FINAL_OBJ, EvaluationSeason.readSpecialSeason())
                     .ifPresent(e -> setEnrollmentState(e.getEnrollmentStateByGrade()));
@@ -550,7 +561,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public boolean hasSpecialSeason() {
-        return getEnrolmentEvaluationBySeason(EvaluationSeason.readSpecialSeason()).findAny().isPresent();
+        return getEnrolmentEvaluationBySeason(EvaluationSeason.readSpecialSeason()).anyMatch(
+                ee -> !ee.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.ANNULED_OBJ));
     }
 
     final public boolean hasSpecialSeasonInExecutionYear() {
