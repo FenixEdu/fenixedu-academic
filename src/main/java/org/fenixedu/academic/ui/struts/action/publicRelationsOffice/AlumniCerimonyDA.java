@@ -58,9 +58,9 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
 import com.google.common.io.CharStreams;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @StrutsFunctionality(app = PublicRelationsApplication.class, path = "alumni-cerimony",
         titleKey = "label.publicRelationOffice.alumniCerimony.inquiries")
@@ -220,15 +220,14 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
         if (cerimonyInquiry != null) {
             Collection<CerimonyInquiryPerson> requests = cerimonyInquiry.getCerimonyInquiryPersonSet();
 
-            String inquiryName =
-                    (cerimonyInquiry.getDescription() != null ? cerimonyInquiry.getDescription() : "UnnamedInquiry").replaceAll(
-                            " ", "_");
+            String inquiryName = (cerimonyInquiry.getDescription() != null ? cerimonyInquiry.getDescription() : "UnnamedInquiry")
+                    .replaceAll(" ", "_");
             final String filename =
                     BundleUtil.getString(Bundle.ALUMNI, "label.publicRelationOffice.alumniCerimony.inquiry.report") + "_"
                             + inquiryName + "_" + new DateTime().toString("ddMMyyyyHHmmss");
 
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+            response.setHeader("Content-disposition", "attachment; filename=\"" + filename + ".xls\"");
             ServletOutputStream writer = response.getOutputStream();
 
             exportToXls(requests, writer);
