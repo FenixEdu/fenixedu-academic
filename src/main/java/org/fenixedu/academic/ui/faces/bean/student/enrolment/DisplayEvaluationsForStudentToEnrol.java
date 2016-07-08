@@ -154,13 +154,15 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
             for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
                 for (final Exam exam : registration.getEnroledExams(getExecutionPeriod())) {
-                    try {
-                        exam.isInEnrolmentPeriod();
-                        this.enroledEvaluations.add(exam);
-                    } catch (final DomainException e) {
-                        getEvaluationsWithoutEnrolmentPeriod().add(exam);
-                    } finally {
-                        getExecutionCourses().put(exam.getExternalId(), exam.getAttendingExecutionCoursesFor(registration));
+                    if (exam.isExamsMapPublished()) {
+                        try {
+                            exam.isInEnrolmentPeriod();
+                            this.enroledEvaluations.add(exam);
+                        } catch (final DomainException e) {
+                            getEvaluationsWithoutEnrolmentPeriod().add(exam);
+                        } finally {
+                            getExecutionCourses().put(exam.getExternalId(), exam.getAttendingExecutionCoursesFor(registration));
+                        }
                     }
                 }
             }

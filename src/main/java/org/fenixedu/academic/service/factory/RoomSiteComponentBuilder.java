@@ -149,8 +149,9 @@ public class RoomSiteComponentBuilder {
 
                     if (writtenEvaluation instanceof Exam) {
                         final Exam exam = (Exam) writtenEvaluation;
-                        infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
-
+                        if (exam.isExamsMapPublished()) {
+                            infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+                        }
                     } else if (writtenEvaluation instanceof WrittenTest) {
                         final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
                         infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
