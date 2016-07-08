@@ -19,12 +19,20 @@
 package org.fenixedu.academic.domain.accounting.events;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
+import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.domain.User;
 
 public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Base {
 
@@ -36,6 +44,14 @@ public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Bas
             final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
         this();
         init(administrativeOffice, EventType.SPECIAL_SEASON_ENROLMENT, person, enrolmentEvaluations);
+    }
+
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+            SibsTransactionDetailDTO transactionDetail) {
+        return internalProcess(responsibleUser,
+                Collections.singletonList(new EntryDTO(EntryType.SPECIAL_SEASON_ENROLMENT_FEE, this, amountToPay)),
+                transactionDetail);
     }
 
     @Override
