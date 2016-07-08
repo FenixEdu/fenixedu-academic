@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.SpecialSeasonEnrolmentEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
@@ -97,6 +98,8 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money rectorateAmount;
 
+    private Money specialSeasonEnrolmentEventAmount;
+
     public SibsPaymentFileProcessReportDTO() {
         super();
         this.degreeGratuityTotalAmount = Money.ZERO;
@@ -123,6 +126,7 @@ public class SibsPaymentFileProcessReportDTO {
         this.institutionAffiliationEventAmount = Money.ZERO;
         this.phdProgramCandidacyEventAmount = Money.ZERO;
         this.rectorateAmount = Money.ZERO;
+        this.specialSeasonEnrolmentEventAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -302,6 +306,14 @@ public class SibsPaymentFileProcessReportDTO {
         this.residenceAmount = this.residenceAmount.add(money);
     }
 
+    private void addSpecialSeasonEnrolmentEventAmount(final Money amount) {
+        this.specialSeasonEnrolmentEventAmount = this.specialSeasonEnrolmentEventAmount.add(amount);
+    }
+
+    public Money getSpecialSeasonEnrolmentEventAmount() {
+        return specialSeasonEnrolmentEventAmount;
+    }
+
     public void addAmount(final SibsIncommingPaymentFileDetailLine detailLine, final PaymentCode paymentCode) {
         if (paymentCode.isForRectorate()) {
             addAmountForRectorate(detailLine.getAmount());
@@ -342,6 +354,8 @@ public class SibsPaymentFileProcessReportDTO {
             addOver23IndividualCandidacyEventAmount(detailLine.getAmount());
         } else if (event instanceof PhdProgramCandidacyEvent) {
             addPhdProgramCandidacyEventAmount(detailLine.getAmount());
+        } else if (event instanceof SpecialSeasonEnrolmentEvent) {
+            addSpecialSeasonEnrolmentEventAmount(detailLine.getAmount());
         } else {
             throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
         }

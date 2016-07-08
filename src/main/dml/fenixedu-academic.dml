@@ -1912,6 +1912,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Money institutionAffiliationEventAmount;
         Money phdProgramCandidacyEventAmount;
         Money rectorateAmount;
+        Money specialSeasonEnrolmentEventAmount;
         DateTime whenProcessed;
         YearMonthDay whenProcessedBySibs;
     }

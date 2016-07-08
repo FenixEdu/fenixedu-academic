@@ -155,6 +155,7 @@ public class ExportSibsPaymentsReport extends FenixDispatchAction {
                         addCell(getString("label.reports.institutionAffiliation"), line.getInstitutionAffiliationEventAmount());
                         addCell(getString("label.reports.phdProgramCandidacy"), line.getPhdProgramCandidacyEventAmount());
                         addCell(getString("label.reports.rectorate"), line.getRectorateAmount());
+                        addCell(getString("label.reports.specialSeason"), line.getSpecialSeasonEnrolmentEventAmount());
                         addCell(getString("label.reports.totrans"), line.getTransactionsTotalAmount());
                         addCell(getString("label.reports.totarif"), line.getTotalCost());
                     }
