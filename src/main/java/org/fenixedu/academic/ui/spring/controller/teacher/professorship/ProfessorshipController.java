@@ -187,7 +187,6 @@ public class ProfessorshipController {
         search.setPeriod(period);
         response.setHeader("Content-Disposition", "filename=" + professorshipService.getCsvFilename(search));
         professorshipService.dumpCSV(search, response.getOutputStream());
-        System.out.println("I WAS HERE");
         response.flushBuffer();
     }
 }
