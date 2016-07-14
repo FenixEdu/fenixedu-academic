@@ -157,7 +157,6 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
             if (getRegistryCode() == null) {
                 getRegistryDiplomaRequest().getRegistryCode().addDocumentRequest(this);
-                getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
             }
 
             if (getLastGeneratedDocument() == null) {
