@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -61,7 +62,9 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsDismissal;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
+import org.fenixedu.academic.domain.studentCurriculum.EctsAndWeightProviderRegistry;
 import org.fenixedu.academic.domain.studentCurriculum.EnrolmentWrapper;
 import org.fenixedu.academic.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.InternalEnrolmentWrapper;
@@ -374,7 +377,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Optional<EnrolmentEvaluation> getEnrolmentEvaluation(final EvaluationSeason season,
             final ExecutionSemester semester, final Boolean assertFinal) {
 
-        final Supplier<Stream<EnrolmentEvaluation>> supplier = () -> getEnrolmentEvaluationBySeason(season).filter(evaluation -> {
+        final Supplier<Stream<EnrolmentEvaluation>> supplier = () -> getEnrolmentEvaluationBySeason(season).filter(evaluation ->
+        {
 
             if (evaluation.isAnnuled()) {
                 return false;
@@ -1348,11 +1352,25 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Double getWeigth() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider = EctsAndWeightProviderRegistry.getWeightProvider(Enrolment.class);
+        if (provider != null) {
+            BigDecimal providedValue = provider.apply(this);
+            return providedValue != null ? providedValue.doubleValue() : null;
+        }
+
         return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0) : getWeigthForCurriculum().doubleValue();
     }
 
     @Override
     final public BigDecimal getWeigthForCurriculum() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider =
+                EctsAndWeightProviderRegistry.getWeightForCurriculumProvider(Enrolment.class);
+        if (provider != null) {
+            return provider.apply(this);
+        }
+
         final Double d;
         if (super.getWeigth() == null || super.getWeigth() == 0d) {
             final CurricularCourse curricularCourse = getCurricularCourse();
@@ -1375,11 +1393,25 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Double getEctsCredits() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider = EctsAndWeightProviderRegistry.getEctsProvider(Enrolment.class);
+        if (provider != null) {
+            final BigDecimal providedValue = provider.apply(this);
+            return providedValue != null ? providedValue.doubleValue() : null;
+        }
+
         return getEctsCreditsForCurriculum().doubleValue();
     }
 
     @Override
     final public BigDecimal getEctsCreditsForCurriculum() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider =
+                EctsAndWeightProviderRegistry.getEctsForCurriculumProvider(Enrolment.class);
+        if (provider != null) {
+            return provider.apply(this);
+        }
+
         return BigDecimal.valueOf(getCurricularCourse().getEctsCredits(getExecutionPeriod()));
     }
 

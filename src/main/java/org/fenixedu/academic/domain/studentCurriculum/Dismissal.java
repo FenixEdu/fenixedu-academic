@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -81,8 +82,9 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
             final CurricularCourse curricularCourse) {
         if (!(curriculumGroup instanceof NoCourseGroupCurriculumGroup)) {
             if (!curriculumGroup.getCurricularCoursesToDismissal(credits.getExecutionPeriod()).contains(curricularCourse)) {
-                throw new DomainException("error.dismissal.invalid.curricular.course.to.dismissal", curriculumGroup.getName()
-                        .getContent(), curricularCourse.getName(), credits.getExecutionPeriod().getQualifiedName());
+                throw new DomainException("error.dismissal.invalid.curricular.course.to.dismissal",
+                        curriculumGroup.getName().getContent(), curricularCourse.getName(),
+                        credits.getExecutionPeriod().getQualifiedName());
             }
         }
     }
@@ -172,14 +174,28 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public Double getEctsCredits() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider = EctsAndWeightProviderRegistry.getEctsProvider(Dismissal.class);
+        if (provider != null) {
+            final BigDecimal providedValue = provider.apply(this);
+            return providedValue != null ? providedValue.doubleValue() : null;
+        }
+
         // FIXME must migrate Dismissal with optional curricular courses to
         // OptionalDismissal
-        return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits(
-                getExecutionPeriod());
+        return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse()
+                .getEctsCredits(getExecutionPeriod());
     }
 
     @Override
     final public BigDecimal getEctsCreditsForCurriculum() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider =
+                EctsAndWeightProviderRegistry.getEctsForCurriculumProvider(Dismissal.class);
+        if (provider != null) {
+            return provider.apply(this);
+        }
+
         return BigDecimal.valueOf(getEctsCredits());
     }
 
@@ -222,8 +238,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     protected boolean hasSameDegreeModules(final Dismissal dismissal) {
-        return (getDegreeModule() == dismissal.getDegreeModule() || getCurricularCourse().isEquivalent(
-                dismissal.getCurricularCourse()));
+        return (getDegreeModule() == dismissal.getDegreeModule()
+                || getCurricularCourse().isEquivalent(dismissal.getCurricularCourse()));
     }
 
     protected boolean hasSameSourceIEnrolments(final Collection<IEnrolment> ienrolments, final Dismissal dismissal) {
@@ -311,11 +327,25 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     public Double getWeigth() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider = EctsAndWeightProviderRegistry.getWeightProvider(Dismissal.class);
+        if (provider != null) {
+            final BigDecimal providedValue = provider.apply(this);
+            return providedValue != null ? providedValue.doubleValue() : null;
+        }
+
         return getCredits().isEquivalence() ? getEctsCredits() : null;
     }
 
     @Override
     final public BigDecimal getWeigthForCurriculum() {
+
+        final Function<ICurriculumEntry, BigDecimal> provider =
+                EctsAndWeightProviderRegistry.getWeightForCurriculumProvider(Dismissal.class);
+        if (provider != null) {
+            return provider.apply(this);
+        }
+
         return BigDecimal.valueOf(getWeigth());
     }
 
