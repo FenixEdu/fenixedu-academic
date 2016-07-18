@@ -39,6 +39,7 @@ public class PeriodState extends FenixUtil {
 
     private final String stateCode;
 
+    @Deprecated
     public PeriodState(String stateCode) {
         this.stateCode = stateCode;
     }
@@ -47,6 +48,7 @@ public class PeriodState extends FenixUtil {
         return stateCode;
     }
 
+    @Deprecated
     public PeriodState(PeriodState executionPeriodState) {
         this.stateCode = executionPeriodState.getStateCode();
     }
@@ -54,7 +56,7 @@ public class PeriodState extends FenixUtil {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof PeriodState) {
-            PeriodState executionPeriodState = (PeriodState) obj;
+            final PeriodState executionPeriodState = (PeriodState) obj;
             return executionPeriodState.getStateCode().equals(stateCode);
         }
         return false;

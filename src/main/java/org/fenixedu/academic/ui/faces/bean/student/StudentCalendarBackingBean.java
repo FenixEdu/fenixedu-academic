@@ -318,7 +318,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
 
         for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
-            if (executionSemester.getState() != PeriodState.NOT_OPEN) {
+            if (!executionSemester.getState().equals(PeriodState.NOT_OPEN)) {
                 final ExecutionYear executionYear = executionSemester.getExecutionYear();
                 executionPeriodSelectItems.add(new SelectItem(executionSemester.getExternalId(),
                         executionSemester.getName() + " " + executionYear.getYear()));
