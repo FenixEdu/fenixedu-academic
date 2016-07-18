@@ -59,7 +59,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
     @EntryPoint
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         List<ExecutionSemester> periods = new ArrayList<>(Bennu.getInstance().getExecutionPeriodsSet());
         Collections.sort(periods);
         request.setAttribute("periods", periods);
@@ -72,7 +73,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
         final String year = request.getParameter("year");
         final Integer semester = new Integer(request.getParameter("semester"));
         final String periodStateToSet = request.getParameter("periodState");
-        final PeriodState periodState = new PeriodState(periodStateToSet);
+        final PeriodState periodState = PeriodState.valueOf(periodStateToSet);
 
         try {
             AlterExecutionPeriodState.run(year, semester, periodState);
