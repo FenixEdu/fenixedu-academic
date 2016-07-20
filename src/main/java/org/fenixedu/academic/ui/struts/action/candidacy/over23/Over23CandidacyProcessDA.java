@@ -136,7 +136,9 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
-                    chooseDegreeBean.setCandidacyProcess(process);
+                    if(chooseDegreeBean != null) {                        
+                        chooseDegreeBean.setCandidacyProcess(process);
+                    }
                     return;
                 }
 
