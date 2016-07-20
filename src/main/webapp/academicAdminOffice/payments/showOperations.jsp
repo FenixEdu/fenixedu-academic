@@ -60,6 +60,9 @@
 		<li><html:link action="<%="/payments.do?method=showEvents&amp;personId=" + personId %>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currentEvents" />
 		</html:link></li>
+		<li><html:link action="<%="/payments.do?method=showExternalEvents&amp;personId=" + personId %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.external" />
+		</html:link></li>
 		<li><html:link
 			action="<%="/receipts.do?method=showPaymentsWithoutReceipt&amp;personId=" + personId %>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" />

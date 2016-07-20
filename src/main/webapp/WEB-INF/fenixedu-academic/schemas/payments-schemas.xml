@@ -396,6 +396,13 @@
 	<slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.reason" />
 </schema>
 
+<schema name="ExternalScholarshipGratuityExemption.view" type="org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption" bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.description" />
+	<slot name="partyDescription" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption.party.description" />
+	<slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.reason" />
+	<slot name="value" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption.value"/>
+</schema>
+
 <schema name="PercentageGratuityExemption.view" type="org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption"  extends="GratuityExemption.view" bundle="APPLICATION_RESOURCES">
 	<slot name="formattedPercentage" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption.percentage" />
 </schema>

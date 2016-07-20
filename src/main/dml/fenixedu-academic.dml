@@ -65,6 +65,7 @@ enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificat
 enum org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemptionJustificationType                      as CandidacyExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustificationType     as ExternalScholarshipGratuityExemptionJustificationType;
 enum org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
 enum org.fenixedu.academic.domain.branch.BranchType                                                                    as OldBranchType;
 enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
@@ -4474,7 +4475,41 @@ class phd.debts.PhdGratuityPaymentPeriod  {
 	Partial lastPayment;
 }
 
+
+class accounting.events.gratuity.ExternalScholarshipGratuityExemption extends accounting.Exemption {
+    Money value;
+}
+
+class accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustification extends accounting.events.ExemptionJustification {
+    ExternalScholarshipGratuityExemptionJustificationType externalScholarshipGratuityExemptionJustificationType;
+}
+
+class accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent extends accounting.Event {
+}
+
+relation  ExternalScholarshipGratuityExemptionExternalScholarshipGratuityContributionEvent {
+    accounting.events.gratuity.ExternalScholarshipGratuityExemption playsRole ExternalScholarshipGratuityExemption;
+    accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent playsRole externalScholarshipGratuityContributionEvent;
+}
+
+relation ExternalScholarshipGratuityExemptionParty {
+    accounting.events.gratuity.ExternalScholarshipGratuityExemption playsRole ExternalScholarshipGratuityExemption{
+        multiplicity *;
+    }
+    organizationalStructure.Party playsRole party;
+}
+
+class accounting.events.gratuity.GratuityContributionFile extends .org.fenixedu.bennu.io.domain.GenericFile  {
+}
+
+relation ExternalScholarshipGratuityExemptionGratuityContributionFile {
+    accounting.events.gratuity.ExternalScholarshipGratuityExemption playsRole exemption;
+    accounting.events.gratuity.GratuityContributionFile playsRole document;
+}
+
 class phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent extends accounting.Event {}
+
+class accounting.events.gratuity.ExternalScholarshipGratuityContributionPR extends accounting.PostingRule {}
 
 class phd.debts.ExternalScholarshipPhdGratuityContribuitionPR extends accounting.PostingRule {}
 

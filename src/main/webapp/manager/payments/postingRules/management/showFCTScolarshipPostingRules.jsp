@@ -26,17 +26,22 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<h2><bean:message key="label.payments.postingRules.degreeCurricularPlan.rulesFor"
-	bundle="MANAGER_RESOURCES" /> Bolsas da FCT</h2>
-<br />
+<h2>
+	<bean:message key="label.payments.postingRules.external.entity.scholarship.rules" bundle="MANAGER_RESOURCES" />
+</h2>
+<br/>
+<h3>
+	<bean:message key="label.payments.postingRules.external.entity.scholarship.rules.phd" bundle="MANAGER_RESOURCES" />
+</h3>
+<br/>
 
-<html:link
-	action="/phdPostingRules.do?method=prepareAddFCTPostingRule">
-	<bean:message key="label.create.fct.scolarship.pr" bundle="MANAGER_RESOURCES"/>
+<html:link action="/phdPostingRules.do?method=prepareAddFCTPostingRule">
+	<bean:message key="label.create.pr" bundle="MANAGER_RESOURCES"/>
 </html:link>
 <br/>
-<fr:view name="list" >
-	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.FctScholarshipPhdGratuityContribuitionPR">
+<fr:view name="phdList" >
+	<fr:schema bundle="MANAGER_RESOURCES"
+			   type="org.fenixedu.academic.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionPR">
 		<fr:slot name="startDate"></fr:slot>
 		<fr:slot name="endDate"></fr:slot>
 	</fr:schema>
@@ -47,6 +52,36 @@
 		<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
 		
 		<fr:property name="linkFormat(delete)" value="/postingRules.do?method=deleteFCTScolarshipPostingRule&amp;postingRule=${externalId}" />
+		<fr:property name="key(delete)" value="label.delete" />
+		<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
+	</fr:layout>
+</fr:view>
+<br/>
+
+
+<h3>
+	<bean:message key="label.payments.postingRules.external.entity.scholarship.rules.other" bundle="MANAGER_RESOURCES" />
+</h3>
+<br/>
+
+<html:link action="/postingRules.do?method=prepareAddExternalScholarshipPostingRule">
+	<bean:message key="label.create.pr" bundle="MANAGER_RESOURCES"/>
+</html:link>
+<br/>
+<fr:view name="othersList" >
+	<fr:schema bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityContributionPR">
+		<fr:slot name="startDate"></fr:slot>
+		<fr:slot name="endDate"></fr:slot>
+	</fr:schema>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
+		<fr:property name="linkFormat(edit)"
+					 value="/postingRules.do?method=prepareEditExternalScholarshipPostingRule&amp;postingRule=${externalId}" />
+		<fr:property name="key(edit)" value="label.edit" />
+		<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
+
+		<fr:property name="linkFormat(delete)"
+					 value="/postingRules.do?method=deleteExternalScholarshipPostingRule&amp;postingRule=${externalId}" />
 		<fr:property name="key(delete)" value="label.delete" />
 		<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
 	</fr:layout>

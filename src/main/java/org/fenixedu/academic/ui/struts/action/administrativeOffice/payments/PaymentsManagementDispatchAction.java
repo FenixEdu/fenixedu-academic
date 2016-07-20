@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,27 +36,39 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.fenixedu.academic.domain.accounting.Receipt;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
+import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.PaymentsManagementDTO;
 import org.fenixedu.academic.dto.accounting.SelectableEntryBean;
 import org.fenixedu.academic.service.services.accounting.CreatePaymentsForEvents;
 import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.payments.ExternalScholarshipManagementDebtsDA.AmountBean;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/payments", module = "academicAdministration", formBeanClass = FenixActionForm.class,
         functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "showOperations", path = "/academicAdminOffice/payments/showOperations.jsp"),
+        @Forward(name = "showContribution", path = "/academicAdminOffice/payments/showContribution.jsp"),
+        @Forward(name = "showExternalEvents", path = "/academicAdminOffice/payments/showExternalEvents.jsp"),
         @Forward(name = "showEvents", path = "/academicAdminOffice/payments/showEvents.jsp"),
         @Forward(name = "showEventsWithPayments", path = "/academicAdminOffice/payments/showEventsWithPayments.jsp"),
         @Forward(name = "showPaymentsForEvent", path = "/academicAdminOffice/payments/showPaymentsForEvent.jsp"),
@@ -88,6 +101,64 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         }
 
         return mapping.findForward("showEvents");
+    }
+
+    public ActionForward showExternalEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+            Person person = getPerson(request);
+            Set<Event> events = person.getGratuityEvents().stream().map(GratuityEvent::getExternalScholarshipGratuityExemption)
+                    .filter(e -> e != null)
+                    .map(ExternalScholarshipGratuityExemption::getExternalScholarshipGratuityContributionEvent)
+                    .filter(Event::isOpen).collect(Collectors.toSet());
+
+            request.setAttribute("events", events);
+            request.setAttribute("person", person);
+        return mapping.findForward("showExternalEvents");
+    }
+
+    public ActionForward prepareLiquidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+
+        String eventId = request.getParameter("eventId");
+        ExternalScholarshipGratuityContributionEvent event = FenixFramework.getDomainObject(eventId == null ? (String) request
+                .getAttribute("eventId") : eventId);
+        ExternalScholarshipGratuityExemption exemption = event.getExternalScholarshipGratuityExemption();
+
+        request.setAttribute("event", event);
+        request.setAttribute("person", exemption.getEvent().getPerson());
+        AmountBean bean = new AmountBean();
+        bean.setValue(event.getAmountToPay());
+        request.setAttribute("bean", bean);
+        return mapping.findForward("showContribution");
+    }
+
+    @Atomic
+    public ActionForward liquidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        String eventId = request.getParameter("externalId");
+        ExternalScholarshipGratuityContributionEvent event = FenixFramework.getDomainObject(eventId == null ? (String) request
+                        .getAttribute("externalId") : eventId);
+
+        AmountBean bean = getRenderedObject("bean");
+        List<EntryDTO> list = new ArrayList<EntryDTO>();
+        list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
+        event.process(Authenticate.getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(), PaymentMode.CASH));
+
+        request.setAttribute("personId", event.getExternalScholarshipGratuityExemption().getEvent().getPerson().getExternalId());
+
+        return showExternalEvents(mapping, form, request, response);
+    }
+
+    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
+        String eventId = request.getParameter("externalId");
+        ExternalScholarshipGratuityContributionEvent event = FenixFramework.getDomainObject(eventId == null ? (String) request
+                .getAttribute("externalId") : eventId);
+
+        request.setAttribute("personId", event.getExternalScholarshipGratuityExemption().getEvent().getPerson().getExternalId());
+        return showExternalEvents(mapping, form, request, response);
     }
 
     protected List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries, final Collection<Entry> entriesToSelect) {

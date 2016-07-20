@@ -57,6 +57,6 @@
 <p>
 	<html:link
 		action="/postingRules.do?method=showFCTScolarshipPostingRules">
-		Bolsas da FCT
+		<bean:message key="label.payments.postingRules.external.entity.scholarship" bundle="MANAGER_RESOURCES" />
 	</html:link></td>	
 </p>

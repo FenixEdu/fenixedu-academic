@@ -66,6 +66,7 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
 	</html:link>
 </logic:notEmpty>
+
 <logic:empty name="event" property="gratuityExemption">
 	<p>
 		<em>
@@ -76,6 +77,17 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.create"/>
 	</html:link>
 </logic:empty>
+
+<logic:notEmpty name="event" property="externalScholarshipGratuityExemption">
+	<p class="mtop2 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.external.scholarship.exemption"/></strong></p>
+	<bean:define id="externalScholarshipGratuityExemption" name="event" property="externalScholarshipGratuityExemption" />
+	<bean:define id="gratuityExemptionClassName" name="externalScholarshipGratuityExemption" property="class.simpleName"></bean:define>
+	<fr:view name="externalScholarshipGratuityExemption" schema="ExternalScholarshipGratuityExemption.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
 
 
 <logic:equal name="hasPaymentPlan" value="true">

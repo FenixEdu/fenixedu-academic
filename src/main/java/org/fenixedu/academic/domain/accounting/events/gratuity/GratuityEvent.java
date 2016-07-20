@@ -187,6 +187,15 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return false;
     }
 
+    public boolean hasExternalScholarshipGratuityExemption() {
+        return getExemptionsSet().stream().anyMatch(e->e instanceof ExternalScholarshipGratuityExemption);
+    }
+
+    public ExternalScholarshipGratuityExemption getExternalScholarshipGratuityExemption() {
+        return (ExternalScholarshipGratuityExemption) getExemptionsSet().stream().filter(e->e instanceof ExternalScholarshipGratuityExemption).findFirst().orElse
+                (null);
+    }
+
     public GratuityExemption getGratuityExemption() {
         for (final Exemption exemption : getExemptionsSet()) {
             if (exemption instanceof GratuityExemption) {
@@ -214,7 +223,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     public BigDecimal calculateDiscountPercentage(final Money amount) {
-        return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount) : BigDecimal.ZERO;
+        ExternalScholarshipGratuityExemption scholarship = getExternalScholarshipGratuityExemption();
+        GratuityExemption exemption = getGratuityExemption();
+        BigDecimal percentage = exemption != null ? exemption.calculateDiscountPercentage(amount) : BigDecimal.ZERO;
+        return percentage.add(scholarship != null ? scholarship.calculateDiscountPercentage(amount) : BigDecimal.ZERO);
     }
 
     @Override
@@ -245,6 +257,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
         return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
     }
+
+
+    @Override
+    public boolean isTransferable() { return isOpen() && !hasExternalScholarshipGratuityExemption(); }
 
     @Override
     public boolean isInState(final EventState eventState) {

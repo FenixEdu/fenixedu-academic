@@ -28,6 +28,15 @@
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events" /></h2>
 
+
+<logic:messagesPresent message="true">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+
 <p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 <fr:view name="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 	<fr:layout name="tabular">
@@ -86,6 +95,12 @@
 			<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES" />
 			<fr:property name="order(cancel)" value="5" />
 			<fr:property name="visibleIfNot(cancel)" value="cancelled" />
+
+			<fr:property name="linkFormat(transfer)" value="/paymentsManagement.do?method=prepareTransferDebt&amp;eventId=${externalId}" />
+			<fr:property name="key(transfer)" value="label.transfer.debt" />
+			<fr:property name="bundle(transfer)" value="ACADEMIC_OFFICE_RESOURCES" />
+			<fr:property name="order(transfer)" value="3" />
+			<fr:property name="visibleIf(transfer)" value="transferable" />
 
 		</fr:layout>
 	</fr:view>

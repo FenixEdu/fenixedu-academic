@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.struts.action.academicAdministration.payments;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +34,12 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Discount;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Receipt;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustificationType;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
+import org.fenixedu.academic.dto.TransferDebtBean;
 import org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean;
 import org.fenixedu.academic.dto.accounting.CancelEventBean;
 import org.fenixedu.academic.dto.accounting.DepositAmountBean;
@@ -51,8 +56,11 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPaymentsApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -64,6 +72,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 @Mapping(path = "/paymentsManagement", module = "academicAdministration")
 @Forwards({
         @Forward(name = "searchPersons", path = "/academicAdministration/payments/events/searchPersons.jsp"),
+        @Forward(name = "transferDebt", path = "/academicAdministration/payments/events/transferDebt.jsp"),
         @Forward(name = "showEvents", path = "/academicAdministration/payments/events/showEvents.jsp"),
         @Forward(name = "editCancelEventJustification",
                 path = "/academicAdministration/payments/events/editCancelEventJustification.jsp"),
@@ -214,12 +223,72 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
     }
 
+    public ActionForward prepareTransferDebt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        Event event = getEvent(request);
+
+        System.out.println("" + event.getExternalId());
+
+        TransferDebtBean transferDebtBean = getRenderedObject();
+        if (transferDebtBean == null) {
+            transferDebtBean = new TransferDebtBean();
+            transferDebtBean.setEvent(event);
+        }
+
+        request.setAttribute("transferDebtBean", transferDebtBean);
+        request.setAttribute("entryDTOs", event.calculateEntries());
+
+        return mapping.findForward("transferDebt");
+
+    }
+
+    public ActionForward transferDebt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        TransferDebtBean transferDebtBean = getRenderedObject();
+        if(!Bennu.getInstance().getExternalScholarshipProviderSet().stream().anyMatch(p->p == transferDebtBean.getCreditor())) {
+            addActionMessage(request, "error.events.transfer.unauthorized.entity");
+            request.setAttribute("transferDebtBean", transferDebtBean);
+            request.setAttribute("entryDTOs", transferDebtBean.getEvent().calculateEntries());
+            return mapping.findForward("transferDebt");
+        }
+        if(!(transferDebtBean.getEvent() instanceof  GratuityEvent)) {
+            addActionMessage(request, "error.events.transfer.unallowed.event");
+            request.setAttribute("person",transferDebtBean.getEvent().getPerson());
+            return mapping.findForward("showEvents");
+        }
+        GratuityEvent event = (GratuityEvent) transferDebtBean.getEvent();
+
+        Money value = event.getAmountToPay();
+        atomic(() -> new ExternalScholarshipGratuityExemption(Authenticate.getUser().getPerson(), event, value,
+                ExternalScholarshipGratuityExemptionJustificationType.THIRD_PARTY_CONTRIBUTION, transferDebtBean.getReason(),
+                transferDebtBean.getCreditor(), transferDebtBean.getFileName(), transferDebtBean.getFile()));
+
+        request.setAttribute("person", event.getPerson());
+        return mapping.findForward("showEvents");
+    }
+
     protected Person getPerson(HttpServletRequest request) {
         return getDomainObject(request, "personId");
     }
 
     private Event getEvent(HttpServletRequest request) {
         return getDomainObject(request, "eventId");
+    }
+
+    public ActionForward showExternalEvents(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        Person person = getPerson(request);
+
+        request.setAttribute("person", person);
+        request.setAttribute("events", person.getGratuityEvents().stream().map(GratuityEvent::getExternalScholarshipGratuityExemption).filter(Objects::isNull)
+                .map(ExternalScholarshipGratuityExemption::getExternalScholarshipGratuityContributionEvent)
+                .collect(Collectors.toSet()));
+
+        return mapping.findForward("showExternalEvents");
+
     }
 
     public ActionForward prepareTransferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,

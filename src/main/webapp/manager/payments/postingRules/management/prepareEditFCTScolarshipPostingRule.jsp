@@ -25,10 +25,11 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<h2><bean:message key="label.edit.fct.scolarship.pr" bundle="MANAGER_RESOURCES"/></h2>
+<h2><bean:message key="${phd ? 'label.edit.pr.external.entity.scholarship.phd':'label.edit.pr.external.entity.scholarship'}" bundle="MANAGER_RESOURCES"/></h2>
 <br />
 
-<fr:edit id="bean" name="bean" action="/phdPostingRules.do?method=editFCTScolarshipPostingRule">
+<fr:edit id="bean" name="bean" action="${phd ? '/phdPostingRules.do?method=editFCTScolarshipPostingRule' :
+'/postingRules.do?method=editExternalScholarshipPostingRule'}">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright" />
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />

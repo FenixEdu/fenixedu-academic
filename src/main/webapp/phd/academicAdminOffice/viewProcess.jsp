@@ -185,7 +185,7 @@
 			</logic:present>
 			<li>
 				<html:link action="/fctDebts.do?method=viewDebtsForProcess" target="_blank" paramId="processId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.fct" />
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.external" />
 				</html:link>
 			</li>
 			<br/>
