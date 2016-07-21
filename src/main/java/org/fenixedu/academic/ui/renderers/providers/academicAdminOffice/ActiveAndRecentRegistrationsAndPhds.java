@@ -78,10 +78,12 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
                                 programConclusion -> {
                                     RegistrationConclusionBean conclusionBean =
                                             new RegistrationConclusionBean(concludedRegistration, programConclusion);
+                                    if(conclusionBean.isConcluded()) {
+                                        ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
 
-                                    ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
-                                    if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
-                                        phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(concludedRegistration));
+                                        if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
+                                            phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(concludedRegistration));
+                                        }
                                     }
                                 });
             }
