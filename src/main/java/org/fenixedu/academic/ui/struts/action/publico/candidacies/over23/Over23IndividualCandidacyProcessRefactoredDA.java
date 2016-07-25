@@ -286,10 +286,12 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
+            // person does not exist (neither by document Id nor by contributor number)
+
             if (!StringUtils.isEmpty(bean.getPersonNumber())) {
-                // person must fill ist userid
+                // userid field was filled
                 addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                        + ".error.public.candidacies.fill.personal.information.and.institution.id.userId.missing");
+                        + ".error.public.candidacies.fill.personal.information.and.institution.id.userId.wrongIdorNewPerson");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             } else {
                 request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
