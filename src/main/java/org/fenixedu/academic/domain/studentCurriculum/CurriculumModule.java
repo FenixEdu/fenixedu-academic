@@ -286,7 +286,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         return getLastApprovement().getExecutionYear();
     }
 
-    final protected boolean wasCreated(final DateTime when) {
+    final public boolean wasCreated(final DateTime when) {
         return getCreationDateDateTime() == null || getCreationDateDateTime().isBefore(when);
     }
 

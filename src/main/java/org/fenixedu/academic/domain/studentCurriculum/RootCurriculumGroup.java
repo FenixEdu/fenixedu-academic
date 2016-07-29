@@ -39,8 +39,6 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.curriculum.Curriculum;
-import org.joda.time.DateTime;
 
 /**
  * 
@@ -285,31 +283,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
         return cycleCurriculumGroup != null && cycleCurriculumGroup.isConcluded(executionYear).value();
     }
 
-    /**
-     * Only the DegreeType's CycleTypes should be inspected.
-     * CycleCurriculumGroups of other CycleType might exist and shouldn't be
-     * taken into account.
-     * 
-     */
-    @Override
-    public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
-        final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
-        if (!wasCreated(when)) {
-            return curriculum;
-        }
-
-        final DegreeType degreeType = getDegreeType();
-        if (degreeType.hasAnyCycleTypes()) {
-            for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGroups()) {
-                curriculum.add(cycleCurriculumGroup.getCurriculum(when, executionYear));
-            }
-        } else {
-            curriculum.add(super.getCurriculum(when, executionYear));
-        }
-
-        return curriculum;
-    }
-
     @Override
     public void delete() {
 
@@ -338,7 +311,8 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     }
 
     @Override
-    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
+            final ExecutionYear executionYear) {
         return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, null, executionYear);
     }
 

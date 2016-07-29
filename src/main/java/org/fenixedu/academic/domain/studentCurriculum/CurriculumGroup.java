@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
@@ -66,8 +67,12 @@ import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(CurriculumGroup.class);
 
     static final public Comparator<CurriculumGroup> COMPARATOR_BY_CHILD_ORDER_AND_ID = new Comparator<CurriculumGroup>() {
         @Override
@@ -1051,16 +1056,42 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
-        final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
-        if (!wasCreated(when)) {
+        return getCurriculumSupplier().get(this, when, executionYear);
+    }
+
+    static public interface CurriculumSupplier {
+
+        public Curriculum get(final CurriculumGroup curriculumGroup, final DateTime when, final ExecutionYear executionYear);
+    }
+
+    static private Supplier<CurriculumSupplier> CURRICULUM_SUPPLIER = () -> new CurriculumSupplier() {
+
+        @Override
+        public Curriculum get(final CurriculumGroup curriculumGroup, final DateTime when, final ExecutionYear executionYear) {
+
+            final Curriculum curriculum = Curriculum.createEmpty(curriculumGroup, executionYear);
+            if (!curriculumGroup.wasCreated(when)) {
+                return curriculum;
+            }
+
+            for (final CurriculumModule curriculumModule : curriculumGroup.getCurriculumModulesSet()) {
+                curriculum.add(curriculumModule.getCurriculum(when, executionYear));
+            }
+
             return curriculum;
         }
+    };
 
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            curriculum.add(curriculumModule.getCurriculum(when, executionYear));
+    static public CurriculumSupplier getCurriculumSupplier() {
+        return CURRICULUM_SUPPLIER.get();
+    }
+
+    static public void setCurriculumSupplier(final Supplier<CurriculumSupplier> input) {
+        if (input != null && input.get() != null) {
+            CURRICULUM_SUPPLIER = input;
+        } else {
+            logger.error("Could not set CURRICULUM_SUPPLIER to null");
         }
-
-        return curriculum;
     }
 
     @Override
