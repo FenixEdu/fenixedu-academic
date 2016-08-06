@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -171,9 +172,13 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
                     }
                 }
             }
-            ChangeThesisPerson.run(degreeCurricularPlan, thesis,
-                    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
-
+            try {
+                ChangeThesisPerson.run(degreeCurricularPlan, thesis,
+                        new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
+            } catch (DomainException e) {
+                addActionMessage("error", request, e.getKey(), e.getArgs());
+                return mapping.findForward("select-person");
+            }
             return editProposal(mapping, actionForm, request, response);
         }
     }

@@ -1509,7 +1509,11 @@ public class Thesis extends Thesis_Base {
 
     public void setOrientator(Person person) {
         check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
-        setParticipation(person, ThesisParticipationType.ORIENTATOR);
+        if (getPresident() == null || getPresident().getPerson().equals(person)) {
+            setParticipation(person, ThesisParticipationType.ORIENTATOR);
+        } else {
+            throw new DomainException("thesis.condition.president.not.orientator");
+        }
 
         if (!isCreditsDistributionNeeded()) {
             setCoorientatorCreditsDistribution(null);
@@ -1518,7 +1522,11 @@ public class Thesis extends Thesis_Base {
 
     public void setCoorientator(Person person) {
         check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
-        setParticipation(person, ThesisParticipationType.COORIENTATOR);
+        if (getPresident() == null || getPresident().getPerson().equals(person)) {
+            setParticipation(person, ThesisParticipationType.COORIENTATOR);
+        } else {
+            throw new DomainException("thesis.condition.president.not.orientator");
+        }
 
         if (!isCreditsDistributionNeeded()) {
             setCoorientatorCreditsDistribution(null);
@@ -1527,7 +1535,11 @@ public class Thesis extends Thesis_Base {
 
     public void setPresident(Person person) {
         check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
-        setParticipation(person, ThesisParticipationType.PRESIDENT);
+        if (getOrientation().stream().noneMatch(participant -> participant.getPerson().equals(person))) {
+            setParticipation(person, ThesisParticipationType.PRESIDENT);
+        } else {
+            throw new DomainException("thesis.condition.president.not.orientator");
+        }
     }
 
     public void setCreator(Person person) {
