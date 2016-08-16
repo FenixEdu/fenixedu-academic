@@ -31,7 +31,8 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
 public class EvaluationConfiguration extends EvaluationConfiguration_Base {
-    private EvaluationConfiguration() {
+    
+    protected EvaluationConfiguration() {
         super();
         setRoot(Bennu.getInstance());
     }
