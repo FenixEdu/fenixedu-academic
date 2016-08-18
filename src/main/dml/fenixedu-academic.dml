@@ -7140,7 +7140,9 @@ relation ExecutionCourseSummary {
 }
 
 relation ExecutionCourseSender {
-    ExecutionCourse playsRole course;
+    ExecutionCourse playsRole course {
+        multiplicity 1..1;
+    }
     util.email.ExecutionCourseSender playsRole sender;
 }
 
