@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -288,7 +289,34 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, boolean withTemporaryEnrolments) {
         return !isConcluded(courseGroup, enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments)
                 && !isExclusiveWithExisting(courseGroup, enrolmentContext)
-                && !hasRuleBypassingPreviousYearsEnrolmentCurricularRule(courseGroup, enrolmentContext);
+                && !hasRuleBypassingPreviousYearsEnrolmentCurricularRule(courseGroup, enrolmentContext)
+                && !isConcludedByModules(courseGroup, enrolmentContext);
+    }
+
+    private boolean isConcludedByModules(CourseGroup courseGroup, EnrolmentContext enrolmentContext) {
+
+        final CurriculumGroup curriculumGroup = enrolmentContext.getStudentCurricularPlan().findCurriculumGroupFor(courseGroup);
+
+        if (curriculumGroup == null) {
+            return false;
+        }
+
+        final DegreeModulesSelectionLimit degreeModulesSelectionLimit =
+                (DegreeModulesSelectionLimit) curriculumGroup.getMostRecentActiveCurricularRule(
+                        CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, enrolmentContext.getExecutionYear());
+
+        if (degreeModulesSelectionLimit == null) {
+            return false;
+        }
+
+        final int minModulesToApprove = degreeModulesSelectionLimit.getMinimumLimit();
+        final int approvedModules = curriculumGroup.getCurriculumModulesSet().stream()
+                .filter(x -> x.isConcluded(enrolmentContext.getExecutionYear()).value()).collect(Collectors.toSet()).size();
+        final int enroledModules = enrolmentContext.getDegreeModulesToEvaluate().stream()
+                .filter(x -> x.isLeaf() && x.getCurriculumGroup() == curriculumGroup).collect(Collectors.toSet()).size();
+
+        return approvedModules + enroledModules >= minModulesToApprove;
+
     }
 
     private boolean isExclusiveWithExisting(CourseGroup courseGroup, EnrolmentContext enrolmentContext) {
