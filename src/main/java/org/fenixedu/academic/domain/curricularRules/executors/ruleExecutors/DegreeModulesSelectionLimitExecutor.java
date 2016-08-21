@@ -18,13 +18,16 @@
  */
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
@@ -84,13 +87,14 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
     }
 
     private int countNumberOfDegreeModulesToEnrol(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
-        int result = 0;
+        final Set<DegreeModule> result = new HashSet<>();
         for (final Context context : getValidChildContexts(enrolmentContext, courseGroup)) {
             if (isEnrolling(enrolmentContext, context.getChildDegreeModule())) {
-                result++;
+                result.add(context.getChildDegreeModule());
             }
         }
-        return result;
+
+        return result.size();
     }
 
     private List<Context> getValidChildContexts(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
