@@ -52,7 +52,7 @@ public class MessageTask extends CronTask {
             deletedCounter += sender.deleteOldMessages();
         }
         if (deletedCounter > 0) {
-            taskLog("Deleted %s old messages using a sender threshold of %d\n", deletedCounter,
+            getLogger().info("Deleted {} old messages using a sender threshold of {}\n", deletedCounter,
                     Message.NUMBER_OF_SENT_EMAILS_TO_STAY);
         }
     }
@@ -67,7 +67,7 @@ public class MessageTask extends CronTask {
             dispatchCounter++;
         }
         if (dispatchCounter > 0) {
-            taskLog("Dispatched %d messages\n", dispatchCounter);
+            getLogger().info("Dispatched {} messages\n", dispatchCounter);
         }
     }
 }
