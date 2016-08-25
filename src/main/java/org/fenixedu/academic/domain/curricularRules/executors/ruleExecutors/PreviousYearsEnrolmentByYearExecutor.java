@@ -27,10 +27,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -68,9 +68,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
         final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule =
                 (PreviousYearsEnrolmentCurricularRule) curricularRule;
-        final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear =
-                getCurricularCoursesToEnrolByYear(previousYearsEnrolmentCurricularRule, enrolmentContext,
-                        sourceDegreeModuleToEvaluate, false);
+        final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
+                previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate, false);
 
 //        printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
 
@@ -173,7 +172,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
     private void collectChildCourseGroupsCurricularCoursesToEnrol(final Map<Integer, Set<CurricularCourse>> result,
             final CourseGroup courseGroup, final EnrolmentContext enrolmentContext,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final boolean withTemporaryEnrolments) {
-        for (final DegreeModule childDegreeModule : courseGroup.getChildDegreeModulesValidOn(enrolmentContext.getExecutionYear())) {
+        for (final DegreeModule childDegreeModule : courseGroup
+                .getChildDegreeModulesValidOn(enrolmentContext.getExecutionYear())) {
             if (childDegreeModule.isCourseGroup()) {
                 collectCourseGroupCurricularCoursesToEnrol(result, (CourseGroup) childDegreeModule, enrolmentContext,
                         sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
@@ -181,7 +181,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         }
     }
 
-    private Set<DegreeModule> getSelectedChildDegreeModules(final CourseGroup courseGroup, final EnrolmentContext enrolmentContext) {
+    private Set<DegreeModule> getSelectedChildDegreeModules(final CourseGroup courseGroup,
+            final EnrolmentContext enrolmentContext) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
 
         for (final DegreeModule degreeModule : courseGroup.getChildDegreeModulesValidOn(enrolmentContext.getExecutionYear())) {
@@ -290,7 +291,29 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         return !isConcluded(courseGroup, enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments)
                 && !isExclusiveWithExisting(courseGroup, enrolmentContext)
                 && !hasRuleBypassingPreviousYearsEnrolmentCurricularRule(courseGroup, enrolmentContext)
-                && !isConcludedByModules(courseGroup, enrolmentContext);
+                && !isConcludedByModules(courseGroup, enrolmentContext)
+                && !getSkipCollectCurricularCoursesPredicate().skip(courseGroup, enrolmentContext);
+    }
+
+    static public interface SkipCollectCurricularCoursesPredicate {
+        public boolean skip(final CourseGroup courseGroup, final EnrolmentContext enrolmentContext);
+    }
+
+    static private SkipCollectCurricularCoursesPredicate SKIP_COLLECT_CURRICULAR_COURSES_PREDICATE =
+            (courseGroup, enrolmentContext) -> {
+                return false;
+            };
+
+    static public SkipCollectCurricularCoursesPredicate getSkipCollectCurricularCoursesPredicate() {
+        return SKIP_COLLECT_CURRICULAR_COURSES_PREDICATE;
+    }
+
+    static public void setSkipCollectCurricularCoursesPredicate(final SkipCollectCurricularCoursesPredicate input) {
+        if (input != null) {
+            SKIP_COLLECT_CURRICULAR_COURSES_PREDICATE = input;
+        } else {
+            System.out.println("Could not set SKIP_COLLECT_CURRICULAR_COURSES_PREDICATE to null");
+        }
     }
 
     private boolean isConcludedByModules(CourseGroup courseGroup, EnrolmentContext enrolmentContext) {
@@ -328,13 +351,13 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
         return false;
     }
-    
+
     static private boolean hasRuleBypassingPreviousYearsEnrolmentCurricularRule(final CourseGroup courseGroup,
             final EnrolmentContext enrolmentContext) {
 
         final List<CurricularRuleType> bypassing = Arrays.asList(new CurricularRuleType[] {
 
-        CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR
+                CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR
 
         });
 
@@ -434,9 +457,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
     private boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
             final boolean withTemporaryEnrolments) {
         if (withTemporaryEnrolments) {
-            return isEnroled(enrolmentContext, curricularCourse)
-                    || isEnroled(enrolmentContext, curricularCourse, enrolmentContext.getExecutionYear()
-                            .getPreviousExecutionYear());
+            return isEnroled(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse,
+                    enrolmentContext.getExecutionYear().getPreviousExecutionYear());
         }
 
         return isEnroled(enrolmentContext, curricularCourse);
@@ -447,9 +469,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
         RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
         for (final ICurricularRule curricularRule : curricularCourse.getCurricularRules(enrolmentContext.getExecutionPeriod())) {
-            result =
-                    result.and(curricularRule.verify(getVerifyRuleLevel(enrolmentContext), enrolmentContext, curricularCourse,
-                            (CourseGroup) sourceDegreeModuleToEvaluate.getDegreeModule()));
+            result = result.and(curricularRule.verify(getVerifyRuleLevel(enrolmentContext), enrolmentContext, curricularCourse,
+                    (CourseGroup) sourceDegreeModuleToEvaluate.getDegreeModule()));
         }
 
         return result.isTrue();
@@ -457,7 +478,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
     }
 
     private VerifyRuleLevel getVerifyRuleLevel(final EnrolmentContext enrolmentContext) {
-        return enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT ? VerifyRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY : VerifyRuleLevel.ENROLMENT_WITH_RULES;
+        return enrolmentContext
+                .getCurricularRuleLevel() == CurricularRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT ? VerifyRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY : VerifyRuleLevel.ENROLMENT_WITH_RULES;
     }
 
     private SortedSet<Context> getChildCurricularCoursesContextsToEvaluate(final CourseGroup courseGroup,
@@ -567,9 +589,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
         final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule =
                 (PreviousYearsEnrolmentCurricularRule) curricularRule;
-        final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear =
-                getCurricularCoursesToEnrolByYear(previousYearsEnrolmentCurricularRule, enrolmentContext,
-                        sourceDegreeModuleToEvaluate, false);
+        final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
+                previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate, false);
         final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYearWithTemporaries =
                 getCurricularCoursesToEnrolByYear(previousYearsEnrolmentCurricularRule, enrolmentContext,
                         sourceDegreeModuleToEvaluate, true);
@@ -611,11 +632,10 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
                 } else {
                     if (isAnyPreviousYearCurricularCoursesTemporary(curricularCoursesToEnrolByYear,
-                            curricularCoursesToEnrolByYearWithTemporaries, degreeModuleToEvaluate.getContext()
-                                    .getCurricularYear())) {
-                        result =
-                                result.and(RuleResult.createTrue(EnrolmentResultType.TEMPORARY,
-                                        degreeModuleToEvaluate.getDegreeModule()));
+                            curricularCoursesToEnrolByYearWithTemporaries,
+                            degreeModuleToEvaluate.getContext().getCurricularYear())) {
+                        result = result.and(
+                                RuleResult.createTrue(EnrolmentResultType.TEMPORARY, degreeModuleToEvaluate.getDegreeModule()));
 
                     }
                 }
@@ -637,15 +657,15 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
                 continue;
             }
 
-            if ((curricularCoursesToEnrolByYearWithTemporaries.containsKey(previousYear) && !curricularCoursesToEnrolByYear
-                    .containsKey(previousYear))
-                    || (!curricularCoursesToEnrolByYearWithTemporaries.containsKey(previousYear) && curricularCoursesToEnrolByYear
-                            .containsKey(previousYear))) {
+            if ((curricularCoursesToEnrolByYearWithTemporaries.containsKey(previousYear)
+                    && !curricularCoursesToEnrolByYear.containsKey(previousYear))
+                    || (!curricularCoursesToEnrolByYearWithTemporaries.containsKey(previousYear)
+                            && curricularCoursesToEnrolByYear.containsKey(previousYear))) {
                 return true;
             }
 
-            if (curricularCoursesToEnrolByYear.get(previousYear).size() != curricularCoursesToEnrolByYearWithTemporaries.get(
-                    previousYear).size()) {
+            if (curricularCoursesToEnrolByYear.get(previousYear).size() != curricularCoursesToEnrolByYearWithTemporaries
+                    .get(previousYear).size()) {
                 return true;
             }
         }
@@ -685,8 +705,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
                             degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
                 }
 
-                if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYear, degreeModuleToEvaluate
-                        .getContext().getCurricularYear())) {
+                if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYear,
+                        degreeModuleToEvaluate.getContext().getCurricularYear())) {
 
                     if (degreeModuleToEvaluate.isEnroled()) {
                         result = result.and(createImpossibleRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
@@ -700,8 +720,8 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         return result;
     }
 
-    private boolean hasCurricularCoursesToEnrolInPreviousYears(
-            Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear, Integer curricularYear) {
+    private boolean hasCurricularCoursesToEnrolInPreviousYears(Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear,
+            Integer curricularYear) {
         for (int i = curricularYear; i > 0; i--) {
             final int previousYear = i - 1;
 
