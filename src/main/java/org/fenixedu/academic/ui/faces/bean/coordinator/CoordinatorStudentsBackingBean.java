@@ -270,12 +270,12 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans.keySet()) {
             if (studentCurricularPlan.getRegistration() == null) {
                 registrationState = null;
-            }
-            if (studentCurricularPlan.getRegistration().getLastRegistrationState(getExecutionYear()) == null) {
+            } else if (studentCurricularPlan.getRegistration().getLastRegistrationState(getExecutionYear()) == null) {
                 registrationState = null;
+            } else {
+                registrationState =
+                        studentCurricularPlan.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType();
             }
-            registrationState =
-                    studentCurricularPlan.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType();
             studentCurricularPlans.put(studentCurricularPlan, registrationState);
         }
 
