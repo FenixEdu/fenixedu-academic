@@ -21,6 +21,7 @@ package org.fenixedu.academic.servlet;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -44,6 +45,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.candidacy.CandidacySummaryFile;
+import org.fenixedu.academic.domain.candidacy.FirstTimeDocumentsConfiguration;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -69,6 +71,9 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfCopyFields;
 import com.lowagie.text.pdf.PdfReader;
@@ -124,9 +129,14 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 renderer.setDocument(doc, "");
                 renderer.layout();
 
-                // create the pdf
+                StringWriter sw = new StringWriter();
+                renderer.exportText(sw);
+
                 ByteArrayOutputStream pdfStream = new ByteArrayOutputStream();
-                renderer.createPDF(pdfStream);
+                if (!Strings.isNullOrEmpty(sw.toString())) {
+                    // create the pdf
+                    renderer.createPDF(pdfStream);
+                };
 
                 // concatenate with other docs
                 final Person person = (Person) request.getAttribute("person");
@@ -154,7 +164,9 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     @Atomic
     private void associateSummaryFile(byte[] pdfByteArray, String studentNumber, StudentCandidacy studentCandidacy) {
-        studentCandidacy.setSummaryFile(new CandidacySummaryFile(studentNumber + ".pdf", pdfByteArray, studentCandidacy));
+        if (pdfByteArray.length > 0) {
+            studentCandidacy.setSummaryFile(new CandidacySummaryFile(studentNumber + ".pdf", pdfByteArray, studentCandidacy));
+        }
     }
 
     private String clean(String dirtyHtml) {
@@ -224,18 +236,44 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
         ByteArrayOutputStream concatenatedPdf = new ByteArrayOutputStream();
         PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
 
-        try {
-            copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person)));
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+        //if no documents are added there is nothing to close
+        boolean isToClose = false;
+        if (!FirstTimeDocumentsConfiguration.getInstance().isToExclude("adminProcessSheet")) {
+            try {
+                copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person)));
+                isToClose = true;
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
         }
-        copy.addDocument(new PdfReader(originalDoc));
+        if (originalDoc.length > 0) {
+            copy.addDocument(new PdfReader(originalDoc));
+            isToClose = true;
+        }
         for (PdfFiller pdfFiller : pdfFillersSet) {
-            copy.addDocument(new PdfReader(pdfFiller.getFilledPdf(person).toByteArray()));
+            if (!isPdfFillerToExclude(pdfFiller.getClass().getName())) {
+                copy.addDocument(new PdfReader(pdfFiller.getFilledPdf(person).toByteArray()));
+                isToClose = true;
+            }
         }
-        copy.close();
+        if (isToClose) {
+            copy.close();
+        }
 
         return concatenatedPdf;
+    }
+
+    public static boolean isPdfFillerToExclude(String filterClass) {
+        JsonArray filters =
+                FirstTimeDocumentsConfiguration.getInstance().getConfigurationProperties().getAsJsonArray("classFilters");
+        if (filters != null) {
+            for (JsonElement jsonElement : filters) {
+                if (jsonElement.getAsString().equals(filterClass)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static void registerFiller(PdfFiller pdfFiller) {

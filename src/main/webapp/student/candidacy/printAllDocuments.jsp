@@ -28,6 +28,7 @@
 <%@page import="org.joda.time.LocalDate"%>
 <%@page import="org.fenixedu.academic.domain.candidacy.MeasurementTestRoom"%>
 <%@page import="java.util.Locale"%>
+<%@page import="org.fenixedu.academic.domain.candidacy.FirstTimeDocumentsConfiguration"%>
 <%@page import="org.fenixedu.academic.domain.student.Registration"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
 
 <html:xhtml/>
@@ -40,24 +41,30 @@
 
 <body>
 
-<div>
-	<jsp:include page="printRegistrationDeclaration.jsp" />
-</div>
+
+<% if(!FirstTimeDocumentsConfiguration.getInstance().isToExclude("registrationDeclaration")) { %>
+    <div style="page-break-after: always">
+        <jsp:include page="printRegistrationDeclaration.jsp" />
+    </div>
+<% } %>
 
 <logic:notEmpty name="candidacy" property="registration.measurementTestRoom">
-	<div style="page-break-before: always;">
+	<div style="page-break-after: always;">
 		<jsp:include page="printMeasurementTestDate.jsp" />
 	</div>
 </logic:notEmpty>
 
-<div style="page-break-before: always;">
-	<jsp:include page="/commons/student/timeTable/classTimeTable.jsp" />
-</div>
+<% if(!FirstTimeDocumentsConfiguration.getInstance().isToExclude("timeTable")) { %>
+    <div style="page-break-after: always;">
+    	<jsp:include page="/commons/student/timeTable/classTimeTable.jsp" />
+    </div>
+<% } %>
 
-<div style="page-break-before: always;">
-	<jsp:include page="printGratuityPaymentCodes.jsp" />
-</div>
-
+<% if(!FirstTimeDocumentsConfiguration.getInstance().isToExclude("gratuityPaymentCodes")) { %>
+    <div>
+    	<jsp:include page="printGratuityPaymentCodes.jsp" />
+    </div>
+<% } %>
 
 
 <style media="all">
