@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.person.PersonBean;
-import org.fenixedu.bennu.core.domain.User;
 
 public class IndividualCandidacyExternalPersonDetails extends IndividualCandidacyExternalPersonDetails_Base {
     public IndividualCandidacyExternalPersonDetails(IndividualCandidacy candidacy, IndividualCandidacyProcessBean bean) {
@@ -79,11 +78,8 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
             Person person = Person.readByDocumentIdNumberAndIdDocumentType(getDocumentIdNumber(), getIdDocumentType());
             if (person != null) {
                 setPerson(person);
-                if (person.getUser() == null) {
-                    person.setUser(new User(person.getProfile()));
-                }
             } else {
-                setPerson(new Person(this));
+                setPerson(new Person(this, false));
             }
         }
         setInternalized(Boolean.TRUE);

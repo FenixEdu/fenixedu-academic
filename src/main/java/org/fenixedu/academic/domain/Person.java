@@ -97,6 +97,7 @@ import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
@@ -283,16 +284,19 @@ public class Person extends Person_Base {
     }
 
     /**
-     * Creates a new Person and its correspondent {@link UserProfile} and {@link User}, using the data provided in the personal
-     * details.
+     * Creates a new Person and its correspondent {@link UserProfile} and optionally a {@link User}, using the data provided in
+     * the personal details.
      * 
      * @param candidacyPersonalDetails
      *            The personal details containing information about the person to be created.
+     * @param createUser true if a user is to be created, false otherwise.
      */
-    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails) {
+    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails, boolean createUser) {
         this(new UserProfile(candidacyPersonalDetails.getGivenNames(), candidacyPersonalDetails.getFamilyNames(), null,
                 candidacyPersonalDetails.getEmail(), Locale.getDefault()));
-        setUser(new User(getProfile()));
+        if (createUser) {
+            setUser(new User(getProfile()));
+        }
 
         this.setCountry(candidacyPersonalDetails.getCountry());
         this.setDateOfBirthYearMonthDay(candidacyPersonalDetails.getDateOfBirthYearMonthDay());
@@ -308,6 +312,30 @@ public class Person extends Person_Base {
         PhysicalAddress.createPhysicalAddress(this, physicalAddressData, PartyContactType.PERSONAL, true);
         Phone.createPhone(this, candidacyPersonalDetails.getTelephoneContact(), PartyContactType.PERSONAL, true);
         EmailAddress.createEmailAddress(this, candidacyPersonalDetails.getEmail(), PartyContactType.PERSONAL, true);
+    }
+
+    /**
+     * Creates a new Person and its correspondent {@link UserProfile} and {@link User}, using the data provided in the personal
+     * details.
+     * 
+     * @param candidacyPersonalDetails
+     *            The personal details containing information about the person to be created.
+     */
+    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails) {
+        this(candidacyPersonalDetails, true);
+    }
+
+    public void ensureOpenUserAccount() {
+        if (getUser() == null) {
+            setUser(new User(getProfile()));
+        }
+        UserLoginPeriod.createOpenPeriod(getUser());
+    }
+
+    public void ensureUserAccount() {
+        if (getUser() == null) {
+            setUser(new User(getProfile()));
+        }
     }
 
     public Person editPersonalInformation(final PersonBean personBean) {

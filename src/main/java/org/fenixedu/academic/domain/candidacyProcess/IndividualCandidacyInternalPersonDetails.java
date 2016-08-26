@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.person.MaritalStatus;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.contacts.PendingPartyContactBean;
 import org.fenixedu.academic.dto.person.PersonBean;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
 public class IndividualCandidacyInternalPersonDetails extends IndividualCandidacyInternalPersonDetails_Base {
@@ -51,9 +50,6 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public void ensurePersonInternalization() {
-        if (getPerson().getUser() == null) {
-            getPerson().setUser(new User(getPerson().getProfile()));
-        }
     }
 
     @Override

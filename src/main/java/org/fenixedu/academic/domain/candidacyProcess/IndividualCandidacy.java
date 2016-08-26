@@ -370,7 +370,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
             selectedPerson.edit(this.getPersonalDetails());
             this.setPersonalDetails(new IndividualCandidacyInternalPersonDetails(this, selectedPerson));
         } else {
-            selectedPerson = new Person(this.getPersonalDetails());
+            selectedPerson = new Person(this.getPersonalDetails(), false);
             this.setPersonalDetails(new IndividualCandidacyInternalPersonDetails(this, selectedPerson));
         }
 

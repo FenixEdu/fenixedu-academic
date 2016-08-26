@@ -98,12 +98,10 @@
 		type="org.fenixedu.academic.domain.candidacy.Candidacy" bundle="ADMIN_OFFICE_RESOURCES">
 	<slot name="person.name" key="label.name"/>
 	<slot name="person.documentIdNumber" key="label.identificationNumber"/>		
-	<slot name="person.idDocumentType" key="label.idDocumentType"/>	
-	<slot name="person.username" key="label.username"/>				
+	<slot name="person.idDocumentType" key="label.idDocumentType"/>
 </schema>
 <schema name="candidacy.show.candidacyWithUsername" extends="candidacy.show.candidady"
 		type="org.fenixedu.academic.domain.candidacy.Candidacy" bundle="ADMIN_OFFICE_RESOURCES">
-	<remove name="person.username" />
 	<slot name="person.username" key="label.username"/>				
 </schema>
 <schema name="candidacy.show.list.candidady"
