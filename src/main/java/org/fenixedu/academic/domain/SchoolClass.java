@@ -195,4 +195,29 @@ public class SchoolClass extends SchoolClass_Base {
         return getExecutionPeriod().getAcademicInterval();
     }
 
+    public String getName() {
+        final Object editablePartOfName = getEditablePartOfName();
+        if (editablePartOfName != null && StringUtils.isNotBlank((String) editablePartOfName)) {
+            return (String) editablePartOfName;
+        }
+        return getNome();
+    }
+
+    public void setName(final String name) {
+        if (StringUtils.isBlank(name)) {
+            throw new DomainException("error.SchoolClass.empty.name");
+        }
+        // super.setNome(name.trim()); 
+        // for we will store name as the old way, in order to mantain compatibility to getEditablePartOfName() method across the solution
+        setNome(name);
+    }
+
+    public Integer getCurricularYear() {
+        return getAnoCurricular();
+    }
+
+    public void setCurricularYear(final Integer curricularYear) {
+        setAnoCurricular(curricularYear);
+    }
+
 }
