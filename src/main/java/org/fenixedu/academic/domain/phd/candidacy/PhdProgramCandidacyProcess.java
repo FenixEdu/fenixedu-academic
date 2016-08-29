@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.caseHandling.StartActivity;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.phd.PhdCandidacyProcessState;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -78,7 +77,6 @@ import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
@@ -447,13 +445,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
                 getPerson().getStudent().getPersonalIngressionDataByExecutionYear(executionYear);
         personalIngressionData.addPrecedentDegreesInformations(precedentDegreeInformation);
         precedentDegreeInformation.setPhdIndividualProgramProcess(getIndividualProgramProcess());
-
-        if (person.getUser() == null) {
-            person.setUser(new User(person.getProfile()));
-        }
-        UserLoginPeriod.createOpenPeriod(person.getUser());
-
-        RoleType.grant(RoleType.RESEARCHER, person.getUser());
 
         if (person.getPersonalPhoto() == null) {
             final Photograph photograph = person.getPersonalPhotoEvenIfPending();

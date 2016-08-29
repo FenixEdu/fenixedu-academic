@@ -66,7 +66,6 @@ import org.fenixedu.academic.predicate.StudentPredicates;
 import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -1204,7 +1203,7 @@ public class Student extends Student_Base {
 
     public void updateStudentRole() {
         if (shouldHaveStudentRole()) {
-            UserLoginPeriod.createOpenPeriod(getPerson().getUser());
+            getPerson().ensureOpenUserAccount();
         }
     }
 
