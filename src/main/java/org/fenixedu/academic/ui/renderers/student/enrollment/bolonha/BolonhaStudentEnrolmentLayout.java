@@ -119,15 +119,16 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         container.addChild(hiddenEnrollments);
         container.addChild(hiddenDegreeModulesToEvaluate);
 
-        generateGroup(container, getBolonhaStudentEnrollmentBean().getStudentCurricularPlan(), getBolonhaStudentEnrollmentBean()
-                .getRootStudentCurriculumGroupBean(), getBolonhaStudentEnrollmentBean().getExecutionPeriod(), 0);
+        generateGroup(container, getBolonhaStudentEnrollmentBean().getDegreeModulesToEvaluate(),
+                getBolonhaStudentEnrollmentBean().getStudentCurricularPlan(), getBolonhaStudentEnrollmentBean()
+                        .getRootStudentCurriculumGroupBean(), getBolonhaStudentEnrollmentBean().getExecutionPeriod(), 0);
 
         return container;
     }
 
-    protected void generateGroup(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan,
-            final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionSemester executionSemester,
-            final int depth) {
+    protected void generateGroup(final HtmlBlockContainer blockContainer, List<IDegreeModuleToEvaluate> degreeModulesToSelect,
+            final StudentCurricularPlan studentCurricularPlan, final StudentCurriculumGroupBean studentCurriculumGroupBean,
+            final ExecutionSemester executionSemester, final int depth) {
 
         final HtmlTable groupTable = createGroupTable(blockContainer, depth);
         addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionSemester);
@@ -140,9 +141,10 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
             final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
             generateEnrolments(studentCurriculumGroupBean, coursesTable);
-            generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean);
+            generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean, degreeModulesToSelect);
 
-            generateGroups(blockContainer, studentCurriculumGroupBean, studentCurricularPlan, executionSemester, depth);
+            generateGroups(blockContainer, degreeModulesToSelect, studentCurriculumGroupBean, studentCurricularPlan,
+                    executionSemester, depth);
         }
 
         if (studentCurriculumGroupBean.isRoot()) {
@@ -330,7 +332,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         return coursesTable;
     }
 
-    protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean) {
+    protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean,
+            List<IDegreeModuleToEvaluate> degreeModulesToSelect) {
         final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
 
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
@@ -373,6 +376,9 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 checkBoxCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
 
                 HtmlCheckBox checkBox = new HtmlCheckBox(false);
+                if (degreeModulesToSelect.contains(degreeModuleToEvaluate)) {
+                    checkBox.setChecked(true);
+                }
                 checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
                 checkBox.setUserValue(degreeModuleToEvaluate.getKey());
                 getDegreeModulesToEvaluateController().addCheckBox(checkBox);
@@ -527,12 +533,14 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         }
     }
 
-    protected void generateGroups(final HtmlBlockContainer container, final StudentCurriculumGroupBean bean,
-            final StudentCurricularPlan plan, final ExecutionSemester executionSemester, final int depth) {
+    protected void generateGroups(final HtmlBlockContainer container, List<IDegreeModuleToEvaluate> degreeModulesToSelect,
+            final StudentCurriculumGroupBean bean, final StudentCurricularPlan plan, final ExecutionSemester executionSemester,
+            final int depth) {
 
         // first enroled
         for (final StudentCurriculumGroupBean iter : bean.getEnrolledCurriculumGroupsSortedByOrder(executionSemester)) {
-            generateGroup(container, plan, iter, executionSemester, depth + getRenderer().getWidthDecreasePerLevel());
+            generateGroup(container, degreeModulesToSelect, plan, iter, executionSemester, depth
+                    + getRenderer().getWidthDecreasePerLevel());
         }
 
         // then available to enrol

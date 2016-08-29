@@ -21,6 +21,7 @@ package org.fenixedu.academic.dto.student.enrollment.bolonha;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -58,6 +59,21 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     private CycleType cycleTypeToEnrol;
 
     private LocalDate endStageDate;
+
+    @FunctionalInterface
+    public static interface StudentEnrolmentHandler {
+        public void preProcess(BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean);
+    }
+
+    private static final ConcurrentLinkedQueue<StudentEnrolmentHandler> handlers = new ConcurrentLinkedQueue<>();
+
+    public static void registerStudentEnrolmentHandler(StudentEnrolmentHandler handler) {
+        handlers.add(handler);
+    }
+
+    public static ConcurrentLinkedQueue<StudentEnrolmentHandler> getHandlers() {
+        return handlers;
+    }
 
     public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionSemester executionSemester, final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {

@@ -78,12 +78,14 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
     }
 
     @Override
-    protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean) {
+    protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean,
+            List<IDegreeModuleToEvaluate> degreeModulesToSelect) {
         final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
-        generateCurricularCoursesToEnrol(groupTable, coursesToEvaluate);
+        generateCurricularCoursesToEnrol(groupTable, coursesToEvaluate, degreeModulesToSelect);
     }
 
-    private void generateCurricularCoursesToEnrol(HtmlTable groupTable, final List<IDegreeModuleToEvaluate> coursesToEvaluate) {
+    private void generateCurricularCoursesToEnrol(HtmlTable groupTable, final List<IDegreeModuleToEvaluate> coursesToEvaluate,
+            final List<IDegreeModuleToEvaluate> degreeModulesToSelect) {
         ErasmusBolonhaStudentEnrollmentBean bean = (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
 
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
@@ -132,6 +134,9 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
                 checkBoxCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
 
                 HtmlCheckBox checkBox = new HtmlCheckBox(false);
+                if (degreeModulesToSelect.contains(degreeModuleToEvaluate)) {
+                    checkBox.setChecked(true);
+                }
                 checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
                 checkBox.setUserValue(degreeModuleToEvaluate.getKey());
                 getDegreeModulesToEvaluateController().addCheckBox(checkBox);
@@ -218,8 +223,9 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
         container.addChild(hiddenDegreeModulesToEvaluate);
         container.addChild(hiddenExtraCurricularEnrollments);
 
-        generateGroup(container, getBolonhaStudentEnrollmentBean().getStudentCurricularPlan(), getBolonhaStudentEnrollmentBean()
-                .getRootStudentCurriculumGroupBean(), getBolonhaStudentEnrollmentBean().getExecutionPeriod(), 0);
+        generateGroup(container, getBolonhaStudentEnrollmentBean().getDegreeModulesToEvaluate(),
+                getBolonhaStudentEnrollmentBean().getStudentCurricularPlan(), getBolonhaStudentEnrollmentBean()
+                        .getRootStudentCurriculumGroupBean(), getBolonhaStudentEnrollmentBean().getExecutionPeriod(), 0);
 
         HtmlTable groupTable = createGroupTable(container, 0);
 

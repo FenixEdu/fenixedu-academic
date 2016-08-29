@@ -73,10 +73,17 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
             HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan,
             final ExecutionSemester executionSemester) {
 
-        request.setAttribute("bolonhaStudentEnrollmentBean",
-                createStudentEnrolmentBean(form, studentCurricularPlan, executionSemester));
+        BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean =
+                createStudentEnrolmentBean(form, studentCurricularPlan, executionSemester);
+
+        preProcess(bolonhaStudentEnrollmentBean);
+
+        request.setAttribute("bolonhaStudentEnrollmentBean", bolonhaStudentEnrollmentBean);
 
         return mapping.findForward("showDegreeModulesToEnrol");
+    }
+
+    protected void preProcess(BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
     }
 
     protected BolonhaStudentEnrollmentBean createStudentEnrolmentBean(ActionForm form,
