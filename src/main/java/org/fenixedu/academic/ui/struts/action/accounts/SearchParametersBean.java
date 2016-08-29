@@ -90,15 +90,15 @@ public class SearchParametersBean implements Serializable {
     }
 
     public Collection<Person> search() {
-        Stream<User> matches = filterSocialSecurityNumber(filterEmail(filterDocumentIdNumber(filterName(filterUsername(null)))));
-        return matches == null ? Collections.emptySet() : matches.map(u -> u.getPerson()).filter(Objects::nonNull)
-                .collect(Collectors.toSet());
+        Stream<Person> matches =
+                filterSocialSecurityNumber(filterEmail(filterDocumentIdNumber(filterName(filterUsername(null)))));
+        return matches == null ? Collections.emptySet() : matches.collect(Collectors.toSet());
     }
 
-    private Stream<User> filterUsername(Stream<User> matches) {
+    private Stream<Person> filterUsername(Stream<Person> matches) {
         if (!Strings.isNullOrEmpty(username)) {
             if (matches == null) {
-                return Stream.of(User.findByUsername(username)).filter(Objects::nonNull);
+                return Stream.of(User.findByUsername(username)).filter(Objects::nonNull).map(User::getPerson);
             } else {
                 return matches.filter(p -> Objects.equals(p.getUsername(), username));
             }
@@ -106,59 +106,50 @@ public class SearchParametersBean implements Serializable {
         return matches;
     }
 
-    private Stream<User> filterName(Stream<User> matches) {
+    private Stream<Person> filterName(Stream<Person> matches) {
         if (!Strings.isNullOrEmpty(name)) {
             if (matches == null) {
-                return UserProfile.searchByName(name, Integer.MAX_VALUE).map(UserProfile::getUser).filter(Objects::nonNull);
+                return UserProfile.searchByName(name, Integer.MAX_VALUE).map(UserProfile::getPerson).filter(Objects::nonNull);
             } else {
-                return matches.filter(u -> namesMatch(name, u.getProfile().getFullName()));
+                return matches.filter(p -> namesMatch(name, p.getProfile().getFullName()));
             }
         }
         return matches;
     }
 
-    private Stream<User> filterDocumentIdNumber(Stream<User> matches) {
+    private Stream<Person> filterDocumentIdNumber(Stream<Person> matches) {
         if (!Strings.isNullOrEmpty(documentIdNumber)) {
             if (matches == null) {
-                return Person.findPersonByDocumentID(documentIdNumber).stream().map(Person::getUser).filter(Objects::nonNull);
+                return Person.findPersonByDocumentID(documentIdNumber).stream().filter(Objects::nonNull);
             } else {
-                return matches.filter(u -> Objects.equals(u.getPerson().getDocumentIdNumber(), documentIdNumber));
+                return matches.filter(p -> Objects.equals(p.getDocumentIdNumber(), documentIdNumber));
             }
         }
         return matches;
     }
 
-    private Stream<User> filterEmail(Stream<User> matches) {
+    private Stream<Person> filterEmail(Stream<Person> matches) {
         if (!Strings.isNullOrEmpty(email)) {
             if (matches == null) {
-                return EmailAddress.findAllActiveAndValid(email)
-                        .filter(Objects::nonNull)
-                        .map(EmailAddress::getParty)
-                        .filter(Objects::nonNull)
-                        .filter(party -> party.isPerson())
-                        .map(Person.class::cast)
-                        .filter(Objects::nonNull)
-                        .map(Person::getUser)
-                        .filter(Objects::nonNull);
+                return EmailAddress.findAllActiveAndValid(email).filter(Objects::nonNull).map(EmailAddress::getParty)
+                        .filter(Objects::nonNull).filter(party -> party.isPerson()).map(Person.class::cast)
+                        .filter(Objects::nonNull).filter(Objects::nonNull);
             } else {
-                return matches
-                        .filter(u -> u.getPerson().getEmailAddresses().stream()
-                                .filter(emailAddress -> emailAddress.getValue().equals(email))
-                                .filter(emailAddress -> emailAddress.isActiveAndValid())
-                                .findAny()
-                                .isPresent());
+                return matches.filter(p -> p.getEmailAddresses().stream()
+                        .filter(emailAddress -> emailAddress.getValue().equals(email))
+                        .filter(emailAddress -> emailAddress.isActiveAndValid()).findAny().isPresent());
             }
         }
         return matches;
     }
 
-    private Stream<User> filterSocialSecurityNumber(Stream<User> matches) {
+    private Stream<Person> filterSocialSecurityNumber(Stream<Person> matches) {
         if (!Strings.isNullOrEmpty(socialSecurityNumber)) {
             if (matches == null) {
                 return Stream.of(Party.readByContributorNumber(socialSecurityNumber)).filter(Objects::nonNull)
-                        .filter(p -> p instanceof Person).map(p -> (Person) p).map(Person::getUser).filter(Objects::nonNull);
+                        .filter(p -> p instanceof Person).map(p -> (Person) p).filter(Objects::nonNull);
             } else {
-                return matches.filter(u -> Objects.equals(u.getPerson().getSocialSecurityNumber(), socialSecurityNumber));
+                return matches.filter(p -> Objects.equals(p.getSocialSecurityNumber(), socialSecurityNumber));
             }
         }
         return matches;
