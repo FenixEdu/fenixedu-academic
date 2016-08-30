@@ -169,8 +169,8 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
             generateCurricularCourses(blockContainer, childCurricularCourseContexts, depth + getWidthDecreasePerLevel());
 
             for (Context context : childCourseGroupContexts) {
-                generateCourseGroup(blockContainer, (CourseGroup) context.getChildDegreeModule(), depth
-                        + getWidthDecreasePerLevel());
+                generateCourseGroup(blockContainer, (CourseGroup) context.getChildDegreeModule(),
+                        depth + getWidthDecreasePerLevel());
             }
         }
 
@@ -214,7 +214,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                     linkTableCell.setClasses(getCurricularCourseLinkClasses());
 
                     final HtmlActionLink actionLink = new HtmlActionLink();
-                    final String name = "curricularCourseEnrolLink" + curricularCourse.getExternalId();
+                    final String name = "contextEnrolLink" + context.getExternalId();
                     actionLink.setText(BundleUtil.getString(Bundle.ACADEMIC, "link.option.enrol.curricular.course"));
                     actionLink.setName(name);
                     actionLink.setOnClick(String.format(
@@ -222,7 +222,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                             		+ " var els=document.getElementsByName('" + name + "');"
                             		+ " for (var i=0;i<els.length;els[i++].value = '" + name + "');"
                             		+ "", getMethodName()));
-                    actionLink.setController(new UpdateSelectedCurricularCourseController(curricularCourse));
+                    actionLink.setController(new UpdateSelectedCurricularCourseController(context));
                     linkTableCell.setBody(actionLink);
                 }
             }
@@ -232,10 +232,10 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
     static private class UpdateSelectedCurricularCourseController extends HtmlActionLinkController {
 
         static private final long serialVersionUID = 1L;
-        private final CurricularCourse curricularCourse;
+        private final Context context;
 
-        public UpdateSelectedCurricularCourseController(final CurricularCourse curricularCourse) {
-            this.curricularCourse = curricularCourse;
+        public UpdateSelectedCurricularCourseController(final Context context) {
+            this.context = context;
         }
 
         @Override
@@ -246,7 +246,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
         @Override
         public void linkPressed(IViewState viewState, HtmlActionLink link) {
             ((StudentOptionalEnrolmentBean) viewState.getMetaObject().getObject())
-                    .setSelectedCurricularCourse(this.curricularCourse);
+                    .setSelectedCurricularCourse((CurricularCourse) this.context.getChildDegreeModule());
         }
 
     }
