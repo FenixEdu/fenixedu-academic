@@ -224,7 +224,8 @@
     
     <p class="mtop05">
         <logic:notEmpty name="thesis" property="extendedAbstract">
-            <html:link page="/thesisSubmission.do?method=removeAbstract">
+            <html:link page="/thesisSubmission.do?method=removeAbstract"
+               paramId="thesisId" paramName="thesis" paramProperty="externalId">
                 <bean:message key="link.student.thesis.file.remove"/>
             </html:link>,
         </logic:notEmpty>
