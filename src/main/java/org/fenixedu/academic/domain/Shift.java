@@ -131,7 +131,8 @@ public class Shift extends Shift_Base {
     }
     
     public boolean isCustomName() {
-        return StringUtils.isNotBlank(getNome()) && !getNome().matches(getExecutionCourse().getSigla() + "[a-zA-Z]+[0-9]+");
+        final String cleanSigla = getExecutionCourse().getSigla().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)");
+        return StringUtils.isNotBlank(getNome()) && !getNome().matches(cleanSigla + "[a-zA-Z]+[0-9]+");
     }
 
     @Override
