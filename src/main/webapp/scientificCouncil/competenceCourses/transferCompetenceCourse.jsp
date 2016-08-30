@@ -40,7 +40,7 @@
 		
 		<h:outputText value="<p>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.executionSemesterID}"
-			onchange="submit()">
+			onchange="submit()" valueChangeListener="#{CompetenceCourseManagement.onChangeExecutionSemester}">
 			<f:selectItems binding="#{CompetenceCourseManagement.executionSemesterItems}"/>
 		</fc:selectOneMenu>
 		<h:outputText value="<p/>" escape="false"/>

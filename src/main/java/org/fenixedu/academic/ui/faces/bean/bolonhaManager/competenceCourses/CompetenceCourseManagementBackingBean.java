@@ -1033,6 +1033,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.departmentUnitItems = departmentUnitItems;
     }
 
+    public void onChangeExecutionSemester(ValueChangeEvent event) {
+        setExecutionSemesterID((String) event.getNewValue());
+        getDepartmentUnitItems().setValue(readDepartmentUnitLabels());
+        getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels(null));
+        getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels(null));
+    }
+
     public void onChangeDepartmentUnit(ValueChangeEvent event) {
         setTransferToDepartmentUnitID((String) event.getNewValue());
         getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels((String) event.getNewValue()));
