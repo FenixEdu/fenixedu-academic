@@ -35,6 +35,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -2641,6 +2642,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public Set<BranchCurriculumGroup> getMinorBranchCurriculumGroups() {
         return getRoot().getMinorBranchCurriculumGroups();
+    }
+
+    public String getMajorBranchNames() {
+        return getMajorBranchCurriculumGroups().stream().map(b -> b.getName().getContent()).collect(Collectors.joining(","));
+    }
+
+    public String getMinorBranchNames() {
+        return getMinorBranchCurriculumGroups().stream().map(b -> b.getName().getContent()).collect(Collectors.joining(","));
     }
 
     public Double getApprovedEctsCredits() {
