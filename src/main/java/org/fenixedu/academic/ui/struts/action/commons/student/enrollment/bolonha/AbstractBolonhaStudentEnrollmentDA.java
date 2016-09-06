@@ -133,6 +133,14 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
         } catch (DomainException de) {
             addActionMessage("error", request, de.getLocalizedMessage(), false);
             return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
+
+        } catch (RuntimeException re) {
+            if(re.getCause() instanceof  DomainException) {
+                addActionMessage("error", request, re.getCause().getLocalizedMessage(), false);
+                return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
+            } else {
+                throw re;
+            }
         }
 
         RenderUtils.invalidateViewState();
