@@ -103,6 +103,17 @@
 	</slot>
 </schema>
 
+<schema name="contacts.Institutional.WebAddress.manage"
+	type="org.fenixedu.academic.dto.contacts.WebAddressBean"
+	extends="contacts.WebAddress.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="value">
+		<property name="readOnly" value="true" />
+	</slot>
+</schema>
+
 <schema name="contacts.PhysicalAddress.manage"
 	type="org.fenixedu.academic.dto.contacts.PhysicalAddressBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="contacts.PartyContact.manage" >
