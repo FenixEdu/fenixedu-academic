@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -28,9 +29,10 @@
 <bean:define id="contactType" name="partyContact" property="type.name" />
 <%
 PartyContactBean partyContact = (PartyContactBean) request.getAttribute("partyContact");
-request.setAttribute("isPhone", partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean);
+request.setAttribute("isPhone", (partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean) && PhoneValidationUtils.getInstance().shouldRun());
 request.setAttribute("isEmail", partyContact instanceof EmailAddressBean);
 request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddressBean);
+request.setAttribute("hideValidationWarning", !partyContact.isToBeValidated());
 %>
 
 
@@ -40,6 +42,8 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
     <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
     </p>
 </html:messages>
+
+<logic:notEqual name="hideValidationWarning" value="true">
 <table class="mvert1 tdtop">
 		<tbody>
 			<tr>
@@ -60,6 +64,7 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
             </tr>
         </tbody>
 </table>
+</logic:notEqual>
 
 <logic:equal name="isPhone" value="true">
 	<bean:define id="confirm">
