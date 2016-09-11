@@ -48,18 +48,17 @@ public class IdentificationDocumentExtraDigit extends IdentificationDocumentExtr
         super.setValue(value);
     }
 
+    final static int[] factor = new int[] { 9, 8, 7, 6, 5, 4, 3, 2 };
     private static boolean isValidBI(final String num) {
         final int l = num.length();
         if (l == 9) {
             int sum = 0;
-            for (int i = 1; i <= l; sum += toInt(num.charAt(l - i)) * i++) {
-                if (!Character.isDigit(num.charAt(l - i))) {
-                    return false;
-                }
-            }
-            return sum % 11 == 0;
+            for (int i = 0; i < l - 1; sum += toInt(num.charAt(i)) * factor[i++]);
+            int checkDigit = toInt(num.charAt(l - 1));
+            final int mod = sum % 11;
+            return mod == 0 || mod == 1 ? checkDigit == 0 : checkDigit == 11 - mod;
         }
-        return l == 8 && isValidBI("0" + num);
+        return l < 9 && isValidBI("0" + num);
     }
 
     private static int toInt(final char c) {
