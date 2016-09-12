@@ -49,9 +49,10 @@ public class CandidateApplication extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        if (getUserView(request).getPerson().getCandidaciesSet().size() == 1) {
-            final Candidacy candidacy = getUserView(request).getPerson().getCandidaciesSet().iterator().next();
-
+        Candidacy candidacy =
+                getUserView(request).getPerson().getCandidaciesSet().stream().filter(Candidacy::isActive)
+                        .filter(c -> !c.isConcluded()).findFirst().get();
+        if (candidacy != null) {
             if (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy) {
                 request.setAttribute("candidacyID", candidacy.getExternalId());
                 final CandidacySituation activeCandidacySituation = candidacy.getActiveCandidacySituation();
@@ -63,8 +64,8 @@ public class CandidateApplication extends FenixAction {
                     return mapping.findForward("showCandidacyDetails");
                 }
             }
-
         }
+
         return mapping.findForward("showWelcome");
     }
 
