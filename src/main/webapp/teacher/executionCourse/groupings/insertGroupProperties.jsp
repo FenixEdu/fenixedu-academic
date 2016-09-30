@@ -100,7 +100,7 @@
 				title="yyyy-MM-dd hh:mm">
 				<form:input type="datetime" class="form-control"
 					path="enrolmentBeginDay" placeholder="yyyy-MM-dd hh:mm"
-					pattern="([0-2][0-9]{3})\-([0-1][0-9])\-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3])\:([0-5][0-9])"  required="required"/>
+					pattern="([0-2][0-9]{3})-([0-1][0-9])-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"  required="required"/>
 			</div>
 
 			<form:label path="enrolmentEndDay" class="col-sm-2 control-label">
@@ -110,7 +110,7 @@
 				title="yyyy-MM-dd hh:mm">
 				<form:input type="datetime" class="form-control"
 					path="enrolmentEndDay" placeholder="yyyy-MM-dd hh:mm"
-					pattern="([0-2][0-9]{3})\-([0-1][0-9])\-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3])\:([0-5][0-9])"  required="required"/>
+					pattern="([0-2][0-9]{3})-([0-1][0-9])-([0-3][0-9]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])"  required="required"/>
 			</div>
 
 		</div>
