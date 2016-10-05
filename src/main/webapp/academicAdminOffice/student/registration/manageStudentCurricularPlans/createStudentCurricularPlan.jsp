@@ -41,19 +41,27 @@
 </p>
 
 <logic:messagesPresent message="true" property="success">
-	<ul class="nobullet list6">
-		<html:messages id="messages" message="true" property="success"
-			bundle="ACADEMIC_OFFICE_RESOURCES">
-			<li><span class="success0"><bean:write name="messages" /></span></li>
-		</html:messages>
-	</ul>
+    <div class="success0" style="padding: 0.5em;">
+        <html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="success">
+            <span><bean:write name="messages" /></span>
+        </html:messages>
+    </div>
 </logic:messagesPresent>
-<logic:messagesPresent>
-	<ul class="nobullet list6">
-		<html:messages id="messages" bundle="ACADEMIC_OFFICE_RESOURCES">
-			<li><span class="error0"><bean:write name="messages" /></span></li>
-		</html:messages>
-	</ul>
+
+<logic:messagesPresent message="true" property="warning" >
+    <div class="warning0" style="padding: 0.5em;">
+        <html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="warning">
+            <span><bean:write name="messages" /></span>
+        </html:messages>
+    </div>
+</logic:messagesPresent>
+
+<logic:messagesPresent message="true" property="error">
+    <div class="error0" style="padding: 0.5em;">
+        <html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
+            <span><bean:write name="messages" /></span>
+        </html:messages>
+    </div>
 </logic:messagesPresent>
 
 <bean:define id="registrationId" name="studentCurricularPlanBean" property="registration.externalId" />

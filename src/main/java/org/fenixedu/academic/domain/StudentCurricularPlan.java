@@ -292,6 +292,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (startDate == null) {
             throw new DomainException("error.studentCurricularPlan.startDate.cannot.be.null");
         }
+
+        if (registration.getStudentCurricularPlan(degreeCurricularPlan) != null) {
+            throw new DomainException("error.registrationAlreadyHasSCPWithGivenDCP");
+        }
     }
 
     public void delete() throws DomainException {

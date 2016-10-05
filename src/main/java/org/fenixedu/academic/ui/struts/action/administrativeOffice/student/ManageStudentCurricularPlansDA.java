@@ -45,7 +45,8 @@ import pt.ist.fenixframework.Atomic;
 @Mapping(path = "/manageStudentCurricularPlans", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
 
-        @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
+        @Forward(name = "viewRegistrationDetails",
+                path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
 
         @Forward(name = "create",
                 path = "/academicAdminOffice/student/registration/manageStudentCurricularPlans/createStudentCurricularPlan.jsp"),
@@ -154,14 +155,15 @@ public class ManageStudentCurricularPlansDA extends FenixDispatchAction {
         return mapping.findForward("create");
     }
 
-    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final StudentCurricularPlanBean bean = getRenderedObject("studentCurricularPlanBean");
 
         try {
             createService(bean);
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
             request.setAttribute("studentCurricularPlanBean", bean);
 
             return mapping.findForward("create");
@@ -178,7 +180,8 @@ public class ManageStudentCurricularPlansDA extends FenixDispatchAction {
                 ExecutionInterval.assertExecutionIntervalType(ExecutionYear.class, bean.getExecutionInterval()));
     }
 
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
         final Registration registration = studentCurricularPlan.getRegistration();
@@ -186,7 +189,7 @@ public class ManageStudentCurricularPlansDA extends FenixDispatchAction {
         try {
             deleteService(studentCurricularPlan);
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
         }
 
         request.setAttribute("registrationId", registration.getExternalId());
@@ -224,7 +227,7 @@ public class ManageStudentCurricularPlansDA extends FenixDispatchAction {
         try {
             editService(bean);
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
             request.setAttribute("studentCurricularPlanBean", bean);
 
             return mapping.findForward("edit");
