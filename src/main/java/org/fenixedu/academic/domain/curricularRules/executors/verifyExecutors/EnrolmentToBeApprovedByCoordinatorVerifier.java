@@ -18,10 +18,6 @@
  */
 package org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors;
 
-import java.util.stream.Collectors;
-
-import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
-import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -33,13 +29,6 @@ public class EnrolmentToBeApprovedByCoordinatorVerifier extends VerifyRuleExecut
     @Override
     protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
             DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-
-        if (AcademicAccessRule
-                .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
-                        enrolmentContext.getResponsiblePerson().getUser()).collect(Collectors.toSet())
-                .contains(enrolmentContext.getStudentCurricularPlan().getDegree())) {
-            return RuleResult.createTrue(degreeModuleToVerify);
-        }
 
         return RuleResult.createFalse(degreeModuleToVerify);
     }
