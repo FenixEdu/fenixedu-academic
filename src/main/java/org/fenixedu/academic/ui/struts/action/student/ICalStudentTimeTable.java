@@ -126,11 +126,10 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
         SecretKeySpec skeySpec = new SecretKeySpec(user.getPrivateKey().getPrivateKey(), "AES");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
 
-        byte[] encrypted =
-                cipher.doFinal(("This is for " + to + " calendar ##" + "1.6180339##Sistema Fenix##"
-                        + user.getPrivateKey().getPrivateKeyCreation().toString() + "##" + reg.getExternalId() + "##"
-                        + user.getPrivateKey().getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar")
-                        .getBytes(StandardCharsets.UTF_8));
+        byte[] encrypted = cipher.doFinal(("This is for " + to + " calendar ##" + "1.6180339##Sistema Fenix##"
+                + user.getPrivateKey().getPrivateKeyCreation().withMillisOfSecond(0).toString() + "##" + reg.getExternalId()
+                + "##" + user.getPrivateKey().getPrivateKeyValidity().withMillisOfSecond(0).toString() + "##" + "## This is for "
+                + to + " calendar").getBytes(StandardCharsets.UTF_8));
 
         return Hashing.sha1().hashBytes(encrypted).toString();
     }
