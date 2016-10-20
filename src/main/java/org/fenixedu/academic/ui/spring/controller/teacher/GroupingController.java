@@ -142,14 +142,15 @@ public class GroupingController extends ExecutionCourseController {
             errors.add("error.groupProperties.ideal.maximum");
         }
 
-
-        Integer maxStudentGroupsOnShift = groupingWithSameName.getStudentGroupsSet().stream()
+        if(groupingWithSameName != null && !groupingWithSameName.getStudentGroupsSet().isEmpty()) {
+            Integer maxStudentGroupsOnShift = groupingWithSameName.getStudentGroupsSet().stream()
                 .filter(studentGroup -> !studentGroup.wasDeleted())
                 .collect(Collectors.groupingBy(studentGroup -> studentGroup.getShift(), Collectors.counting()))
-                .values().stream().max(Comparator.naturalOrder()).get().intValue();
+                .values().stream().max(Comparator.naturalOrder()).orElseGet(()->new Long(0)).intValue();
 
-        if( smallerThan(projectGroup.getMaxGroupNumber(), maxStudentGroupsOnShift)){
-            errors.add("error.groupProperties.many.shift.groups");
+            if( smallerThan(projectGroup.getMaxGroupNumber(), maxStudentGroupsOnShift)){
+                errors.add("error.groupProperties.many.shift.groups");
+            }
         }
 
         if (smallerThan(projectGroup.getIdealGroupCapacity(), projectGroup.getMinimumGroupCapacity())) {
