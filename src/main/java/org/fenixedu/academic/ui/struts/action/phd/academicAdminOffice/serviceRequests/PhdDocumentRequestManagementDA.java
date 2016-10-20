@@ -18,15 +18,21 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.serviceRequests;
 
+import java.io.IOException;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -75,6 +81,28 @@ public class PhdDocumentRequestManagementDA extends PhdAcademicServiceRequestsMa
         RenderUtils.invalidateViewState("phd-academic-service-request-create-bean-choose-document-type");
 
         return mapping.findForward("createNewDocumentRequest");
+    }
+
+    public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, FenixServiceException {
+        final IDocumentRequest documentRequest = getPhdAcademicServiceRequest(request);
+        try {
+            byte[] data = documentRequest.generateDocument();
+
+            response.setContentLength(data.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName() + ".pdf");
+
+            final ServletOutputStream writer = response.getOutputStream();
+            writer.write(data);
+            writer.flush();
+            writer.close();
+
+            response.flushBuffer();
+            return null;
+        } catch (DomainException e) {
+            throw e;
+        }
     }
 
 }
