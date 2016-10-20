@@ -418,6 +418,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         removeFinalEvaluations();
         getAssociatedCurricularCoursesSet().clear();
         getNonAffiliatedTeachersSet().clear();
+        getTeacherGroupSet().clear();
         setExecutionPeriod(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
@@ -468,10 +469,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION,
                     "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
         }
-        if (!getTeacherGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
-        }
+
     }
 
     private void removeFinalEvaluations() {
