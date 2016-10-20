@@ -42,7 +42,10 @@ public class DegreeDesignation extends DegreeDesignation_Base {
 
         List<DegreeClassification> possibleClassifications = new ArrayList<DegreeClassification>();
         for (String code : schoolLevel.getEquivalentDegreeClassifications()) {
-            possibleClassifications.add(DegreeClassification.readByCode(code));
+            final DegreeClassification degreeClassification = DegreeClassification.readByCode(code);
+            if (degreeClassification != null) {
+                possibleClassifications.add(degreeClassification);
+            }
         }
 
         List<DegreeDesignation> possibleDesignations = new ArrayList<DegreeDesignation>();
