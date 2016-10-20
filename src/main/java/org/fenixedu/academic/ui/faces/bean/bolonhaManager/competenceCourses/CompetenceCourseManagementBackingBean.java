@@ -1144,7 +1144,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (ScientificAreaUnit) FenixFramework.getDomainObject(transferToScientificAreaUnitID);
     }
 
-    @Atomic
     public String transferCompetenceCourse() {
         check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         try {
@@ -1153,9 +1152,12 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
                 addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.transferingCompetenceCourse"));
                 return "competenceCoursesManagement";
             }
-            getCompetenceCourse().transfer((CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo(),
-                    getExecutionSemester(), BundleUtil.getString(Bundle.SCIENTIFIC, "transfer.done.by.scientific.council"),
-                    AccessControl.getPerson());
+
+            FenixFramework.atomic(() -> {
+                getCompetenceCourse().transfer((CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo(),
+                        getExecutionSemester(), BundleUtil.getString(Bundle.SCIENTIFIC, "transfer.done.by.scientific.council"),
+                        AccessControl.getPerson());
+            });
 
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
