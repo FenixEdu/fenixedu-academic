@@ -50,6 +50,7 @@ import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -261,6 +262,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public void delete() {
         super.delete();
+        getCurriculumLineLogsSet().forEach(CurriculumLineLog::delete);
         setUniversity(null);
         setDegreeCurricularPlan(null);
         setCompetenceCourse(null);

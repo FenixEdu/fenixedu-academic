@@ -49,6 +49,10 @@
                         <fr:property name="key(processing)" value="processing"/>
                         <fr:property name="visibleIf(processing)" value="processingSituationAccepted"/>
                         <fr:property name="visibleIfNot(processing)" value="piggyBackedOnRegistry"/>
+                        
+                        <fr:property name="linkFormat(reprint)" value="/phdDocumentRequestManagement.do?method=printDocument&amp;phdAcademicServiceRequestId=${externalId}"/>
+                        <fr:property name="key(reprint)" value="reprint"/>
+                        <fr:property name="visibleIf(reprint)" value="rePrintPossible"/>
 
                         <fr:property name="linkFormat(send)" value="/phdAcademicServiceRequestManagement.do?method=prepareSend&amp;phdAcademicServiceRequestId=${externalId}"/>
                         <fr:property name="key(send)" value="label.send"/>
