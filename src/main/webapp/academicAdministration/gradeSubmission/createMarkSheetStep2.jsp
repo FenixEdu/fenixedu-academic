@@ -23,6 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
 
@@ -70,9 +71,15 @@
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</strong></p>
-	
+
+	<c:set var="schema" value="markSheet.create.step.two" />
+	<c:if test="${edit.getEvaluationSeason().isSpecialAuthorization()}">
+		<c:set var="schema"
+			value="markSheet.create.step.two.specialAuthorization" />
+	</c:if>
+
 	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
-			 schema="markSheet.create.step.two" layout="tabular-editable">
+			 schema="${schema}" layout="tabular-editable">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

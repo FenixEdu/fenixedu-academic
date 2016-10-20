@@ -130,6 +130,9 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
                 markSheetEnrolmentEvaluationBean.setEnrolment(enrolment);
                 markSheetEnrolmentEvaluationBean.setEvaluationDate(createBean.getEvaluationDate());
 
+                final Integer currentGrade = enrolment.getFinalGrade();
+                markSheetEnrolmentEvaluationBean.setCurrentGrade(currentGrade == null ? "-" : currentGrade.toString());
+
                 if (enrolment.isImpossible()) {
                     impossibleEnrolmentEvaluationBeans.add(markSheetEnrolmentEvaluationBean);
                 } else {
