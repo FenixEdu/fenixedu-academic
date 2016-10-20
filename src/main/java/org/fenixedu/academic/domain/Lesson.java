@@ -691,7 +691,13 @@ public class Lesson extends Lesson_Base {
             }
 
         } else {
-            YearMonthDay nextPossibleDate = hasAnyLessonInstances() ? getFirstLessonInstance().getDay() : getLessonStartDay();
+            YearMonthDay nextPossibleDate;
+            if (hasAnyLessonInstances()) {
+                nextPossibleDate = getFirstLessonInstance().getDay();
+            } else {
+                SortedSet<YearMonthDay> validLessonDates = getAllValidLessonDatesWithoutInstancesDates(getLessonStartDay(), getLessonEndDay());
+                nextPossibleDate = validLessonDates.size() > 0 ? validLessonDates.first() : null;
+            }
             return isTimeValidToInsertSummary(now, nextPossibleDate) ? nextPossibleDate : null;
         }
 

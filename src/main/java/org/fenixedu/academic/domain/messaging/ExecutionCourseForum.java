@@ -63,4 +63,10 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
         ExecutionCourse executionCourse = getExecutionCourse();
         return TeacherGroup.get(executionCourse).or(StudentGroup.get(executionCourse));
     }
+
+    @Override
+    public void delete() {
+        setExecutionCourse(null);
+        super.delete();
+    }
 }
