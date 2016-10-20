@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -143,4 +146,8 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
         return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
     }
 
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+        return Collections.singleton(EntryType.GRATUITY_FEE);
+    }
 }

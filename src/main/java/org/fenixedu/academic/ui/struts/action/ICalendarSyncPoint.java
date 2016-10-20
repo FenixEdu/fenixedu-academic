@@ -235,8 +235,8 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     @SuppressWarnings("deprecation")
     private void returnError(HttpServletResponse httpServletResponse, String error) throws IOException {
-        httpServletResponse.setStatus(500, error);
-        httpServletResponse.getWriter().write("");
+        httpServletResponse.setStatus(500);
+        httpServletResponse.getWriter().write(error);
     }
 
     private void encodeAndTransmitResponse(HttpServletResponse httpServletResponse, Calendar calendar) throws Exception {
