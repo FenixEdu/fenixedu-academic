@@ -68,6 +68,8 @@ public class PersonBean implements Serializable {
 
     private IDDocumentType idDocumentType;
 
+    private String identificationDocumentSeriesNumber;
+
     private String documentIdEmissionLocation;
 
     private YearMonthDay documentIdEmissionDate;
@@ -280,7 +282,19 @@ public class PersonBean implements Serializable {
         setEmailAvailable(person.getAvailableEmail());
         setHomepageAvailable(person.getAvailableWebSite());
 
+        initIdentificationDocumentSeriesNumber(person);
+
         setPerson(person);
+    }
+
+    private void initIdentificationDocumentSeriesNumber(Person person) {
+        String seriesNumber = person.getIdentificationDocumentSeriesNumberValue();
+        String extraDigit = person.getIdentificationDocumentExtraDigitValue();
+        if (seriesNumber != null) {
+            setIdentificationDocumentSeriesNumber(seriesNumber);
+        } else if (extraDigit != null) {
+            setIdentificationDocumentSeriesNumber(extraDigit);
+        }
     }
 
     public String getAddress() {
@@ -414,6 +428,14 @@ public class PersonBean implements Serializable {
 
     public void setDocumentIdNumber(String documentIdNumber) {
         this.documentIdNumber = documentIdNumber;
+    }
+
+    public String getIdentificationDocumentSeriesNumber() {
+        return identificationDocumentSeriesNumber;
+    }
+
+    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
+        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
     public String getEmail() {
@@ -708,6 +730,7 @@ public class PersonBean implements Serializable {
 
         // identification
         person.setIdentification(this.getDocumentIdNumber(), this.getIdDocumentType());
+        person.setIdentificationDocumentSeriesNumber(getIdentificationDocumentSeriesNumber());
         person.setEmissionLocationOfDocumentId(this.getDocumentIdEmissionLocation());
         person.setEmissionDateOfDocumentIdYearMonthDay(this.getDocumentIdEmissionDate());
         person.setExpirationDateOfDocumentIdYearMonthDay(this.getDocumentIdExpirationDate());

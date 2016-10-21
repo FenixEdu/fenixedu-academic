@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -67,7 +66,25 @@
 	</fr:edit>
 	
 	<h3 class="mtop1 mbottom025"><bean:message key="label.identification" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<fr:edit id="personIdentification" name="personBean" schema="student.documentId-edit" >
+	<fr:edit id="personIdentification" name="personBean" >
+		<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
+			<fr:slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="excludedValues" value="CITIZEN_CARD" />
+			</fr:slot>
+			<fr:slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+			<fr:slot name="identificationDocumentSeriesNumber" key="label.identificationCheckDigit">
+ 				<fr:property name="readOnly" value="${personBean.idDocumentType.name ne 'IDENTITY_CARD'}" />
+			</fr:slot>
+			<fr:slot name="documentIdEmissionLocation" />
+			<fr:slot name="documentIdEmissionDate" >
+				<fr:property name="size" value="12"/>
+				<fr:property name="maxLength" value="10"/>
+			</fr:slot>
+			<fr:slot name="documentIdExpirationDate" >
+				<fr:property name="size" value="12"/>
+				<fr:property name="maxLength" value="10"/>
+			</fr:slot>
+		</fr:schema>
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>

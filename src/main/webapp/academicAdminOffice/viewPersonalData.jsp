@@ -41,7 +41,25 @@
 </fr:view>
 
 <h3 class="mbottom025"><bean:message key="label.identification" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-<fr:view name="personBean" schema="student.documentId-edit" >
+<fr:view name="personBean">
+	<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
+		<fr:slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:property name="excludedValues" value="CITIZEN_CARD" />
+		</fr:slot>
+		<fr:slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<logic:equal name="personBean" property="idDocumentType" value="IDENTITY_CARD">
+			<fr:slot name="identificationDocumentSeriesNumber" key="label.identificationCheckDigit" />
+		</logic:equal>
+		<fr:slot name="documentIdEmissionLocation" />
+		<fr:slot name="documentIdEmissionDate" >
+			<fr:property name="size" value="12"/>
+			<fr:property name="maxLength" value="10"/>
+		</fr:slot>
+		<fr:slot name="documentIdExpirationDate" >
+			<fr:property name="size" value="12"/>
+			<fr:property name="maxLength" value="10"/>
+		</fr:slot>
+	</fr:schema>
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
         <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
