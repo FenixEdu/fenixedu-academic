@@ -48,6 +48,8 @@ public interface IAcademicTreasuryEvent {
     public boolean isBlockingAcademicalActs(final LocalDate when);
 
     public BigDecimal getAmountToPay();
+    
+    public BigDecimal getInterestsAmountToPay();
 
     public BigDecimal getRemainingAmountToPay();
 
