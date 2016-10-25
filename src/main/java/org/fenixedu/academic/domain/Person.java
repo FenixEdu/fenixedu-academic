@@ -442,6 +442,7 @@ public class Person extends Person_Base {
 
         // identification
         setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
+        setIdentificationDocumentSeriesNumber(personBean.getIdentificationDocumentSeriesNumber());
         setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
         setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
         setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
