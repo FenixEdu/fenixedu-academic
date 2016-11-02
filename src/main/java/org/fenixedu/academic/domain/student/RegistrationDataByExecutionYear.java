@@ -18,11 +18,14 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 /**
@@ -54,14 +57,12 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
     }
 
     protected void checkRules() {
-        Optional<RegistrationDataByExecutionYear> result =
-                getRegistration()
-                        .getRegistrationDataByExecutionYearSet()
-                        .stream()
-                        .filter(registrationDataByExecutionYear -> registrationDataByExecutionYear.getExecutionYear() == getExecutionYear()
-                                && registrationDataByExecutionYear != this).findAny();
+        Optional<RegistrationDataByExecutionYear> result = getRegistration().getRegistrationDataByExecutionYearSet().stream()
+                .filter(registrationDataByExecutionYear -> registrationDataByExecutionYear
+                        .getExecutionYear() == getExecutionYear() && registrationDataByExecutionYear != this)
+                .findAny();
         if (result.isPresent()) {
-            throw new DomainException("error.RegistrationDatByExecutionYear.executionYearShouldBeUnique");
+            throw new DomainException("error.RegistrationDataByExecutionYear.executionYearShouldBeUnique");
         }
 
         if (isReingression()) {
@@ -78,20 +79,28 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
     }
 
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setExecutionYear(null);
         setRegistration(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (isReingression()) {
+            blockers.add(BundleUtil.getString(Bundle.ACADEMIC,
+                    "error.RegistrationDataByExecutionYear.impossible.delete.found.Reingression",
+                    getExecutionYear().getQualifiedName()));
+        }
+    }
+
     public static RegistrationDataByExecutionYear getOrCreateRegistrationDataByYear(final Registration registration,
             final ExecutionYear executionYear) {
-        final Optional<RegistrationDataByExecutionYear> result =
-                registration
-                        .getRegistrationDataByExecutionYearSet()
-                        .stream()
-                        .filter(registrationDataByExecutionYear -> registrationDataByExecutionYear.getExecutionYear() == executionYear)
-                        .findAny();
+        final Optional<RegistrationDataByExecutionYear> result = registration.getRegistrationDataByExecutionYearSet().stream()
+                .filter(registrationDataByExecutionYear -> registrationDataByExecutionYear.getExecutionYear() == executionYear)
+                .findAny();
 
         return result.isPresent() ? result.get() : new RegistrationDataByExecutionYear(registration, executionYear);
     }
