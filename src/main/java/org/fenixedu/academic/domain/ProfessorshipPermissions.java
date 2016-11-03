@@ -97,4 +97,14 @@ public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
         Signal.emit(PROFESSORSHIP_PERMISSIONS_CHANGED,new DomainObjectEvent<>(this));
     }
 
+    @Override
+    public void setAnnouncements(boolean announcements) {
+        super.setSections(announcements);
+    }
+
+    @Deprecated
+    @Override
+    public boolean getAnnouncements() {
+        return super.getSections();
+    }
 }
