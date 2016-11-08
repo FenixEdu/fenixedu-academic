@@ -35,6 +35,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -44,6 +46,8 @@ public class Professorship extends Professorship_Base {
 
     public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
             Collator.getInstance());
+
+    public static final String PROFESSORSHIP_CREATED = "academic.professorship.created";
 
     public Professorship() {
         super();
@@ -77,6 +81,7 @@ public class Professorship extends Professorship_Base {
             executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
         }
 
+        Signal.emit(PROFESSORSHIP_CREATED,new DomainObjectEvent<>(professorShip));
         ProfessorshipManagementLog.createLog(professorShip.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.professorship.added", professorShip.getPerson().getPresentationName(), professorShip
                         .getExecutionCourse().getNome(), professorShip.getExecutionCourse().getDegreePresentationString());

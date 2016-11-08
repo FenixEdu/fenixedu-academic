@@ -20,8 +20,12 @@ package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
+
+    public static final String PROFESSORSHIP_PERMISSIONS_CHANGED = "academic.professorship.permissions.change";
 
     public ProfessorshipPermissions(final Professorship professorship) {
         super();
@@ -87,4 +91,20 @@ public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
                 .getPerson().getPresentationName(), ec.getNome(), ec.getDegreePresentationString());
     }
 
+    @Override
+    public void setSections(boolean sections) {
+        super.setSections(sections);
+        Signal.emit(PROFESSORSHIP_PERMISSIONS_CHANGED,new DomainObjectEvent<>(this));
+    }
+
+    @Override
+    public void setAnnouncements(boolean announcements) {
+        super.setSections(announcements);
+    }
+
+    @Deprecated
+    @Override
+    public boolean getAnnouncements() {
+        return super.getSections();
+    }
 }
