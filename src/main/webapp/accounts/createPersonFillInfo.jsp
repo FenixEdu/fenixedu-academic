@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -44,10 +43,11 @@
 	<p><b>a) <bean:message key="label.person.identification.info" bundle="MANAGER_RESOURCES"/></b></p>			
 	<fr:edit nested="true" name="personBean" id="identification">
 		<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="MANAGER_RESOURCES">
-			<fr:slot name="documentIdNumber" required="true" />	
-			<fr:slot name="idDocumentType" required="true" >
+			<fr:slot name="documentIdNumber" required="true" />
+			<fr:slot name="idDocumentType" required="true" >	
 				<fr:property name="excludedValues" value="CITIZEN_CARD" />
 			</fr:slot>
+			<fr:slot name="identificationDocumentSeriesNumber" />
 			<fr:slot name="documentIdEmissionLocation" />
 			<fr:slot name="documentIdEmissionDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 			<fr:slot name="documentIdExpirationDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>

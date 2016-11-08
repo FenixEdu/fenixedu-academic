@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -99,6 +98,9 @@
 								</fr:slot>
 								<fr:slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 									<fr:property name="size" value="20"/>
+								</fr:slot>
+								<fr:slot name="identificationDocumentSeriesNumber">
+									<fr:property name="readOnly" value="${candidacyBean.personBean.idDocumentType.name ne 'IDENTITY_CARD'}" />
 								</fr:slot>
 								<fr:slot name="documentIdEmissionLocation">
 									<fr:property name="size" value="20"/>
