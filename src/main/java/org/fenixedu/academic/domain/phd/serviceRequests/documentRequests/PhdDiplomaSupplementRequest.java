@@ -101,12 +101,12 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public boolean isToPrint() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return true;
+        return false;
     }
 
     @Override

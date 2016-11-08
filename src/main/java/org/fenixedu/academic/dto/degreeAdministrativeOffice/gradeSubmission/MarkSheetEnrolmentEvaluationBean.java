@@ -43,6 +43,15 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     private Enrolment enrolment;
     private String bookReference;
     private String page;
+    private String currentGrade;
+
+    public String getCurrentGrade() {
+        return currentGrade;
+    }
+
+    public void setCurrentGrade(String currentGrade) {
+        this.currentGrade = currentGrade;
+    }
 
     // used to edit
     private EnrolmentEvaluation enrolmentEvaluation;

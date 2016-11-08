@@ -35,9 +35,15 @@ app.filter('attendsFilter', function() {
                 	}
                 }
             }
-        	if(filters.noShift.value){
-    			return true;
-        	}
+            if(filters.noShift.value) {
+               if( Object.keys(attendee.shifts).filter(function (shiftName) {
+                    if (Object.keys(attendee.shifts[shiftName]).length == 0) {
+                        return true;
+                    }
+                }).length>0) {
+                   return true;
+               }
+            }
             return false;
     	}
     	var curricularPlanCheck = function(attendee){

@@ -18,11 +18,7 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
@@ -144,6 +140,17 @@ public class GroupingController extends ExecutionCourseController {
 
         if (smallerThan(projectGroup.getMaximumGroupCapacity(), projectGroup.getIdealGroupCapacity())) {
             errors.add("error.groupProperties.ideal.maximum");
+        }
+
+        if(groupingWithSameName != null && !groupingWithSameName.getStudentGroupsSet().isEmpty()) {
+            Integer maxStudentGroupsOnShift = groupingWithSameName.getStudentGroupsSet().stream()
+                .filter(studentGroup -> !studentGroup.wasDeleted())
+                .collect(Collectors.groupingBy(studentGroup -> studentGroup.getShift(), Collectors.counting()))
+                .values().stream().max(Comparator.naturalOrder()).orElseGet(()->new Long(0)).intValue();
+
+            if( smallerThan(projectGroup.getMaxGroupNumber(), maxStudentGroupsOnShift)){
+                errors.add("error.groupProperties.many.shift.groups");
+            }
         }
 
         if (smallerThan(projectGroup.getIdealGroupCapacity(), projectGroup.getMinimumGroupCapacity())) {

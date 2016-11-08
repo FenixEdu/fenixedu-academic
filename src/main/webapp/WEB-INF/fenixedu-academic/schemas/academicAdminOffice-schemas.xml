@@ -123,7 +123,8 @@
 	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="CITIZEN_CARD" />
 	</slot>
-	<slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identificationDocumentSeriesNumber" key="label.identificationCheckDigit"/>
 	<slot name="documentIdEmissionLocation" />
 	<slot name="documentIdEmissionDate" >
 		<property name="size" value="12"/>
