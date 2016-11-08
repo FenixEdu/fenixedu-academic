@@ -38,6 +38,7 @@ import org.fenixedu.academic.dto.InfoCurricularYear;
 import org.fenixedu.academic.dto.InfoExecutionDegree;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoLessonInstance;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
 import org.fenixedu.academic.dto.InfoShowOccupation;
 import org.fenixedu.academic.servlet.taglib.sop.v3.colorPickers.ClassTimeTableColorPicker;
 import org.fenixedu.academic.servlet.taglib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
@@ -242,7 +243,7 @@ public final class RenderTimeTableTag extends TagSupport {
 
             InfoShowOccupation elem = iterator.next();
 
-            if (elem instanceof InfoLesson || elem instanceof InfoLessonInstance) {
+            if (elem instanceof InfoLesson || elem instanceof InfoLessonInstance || elem instanceof InfoLessonInstanceAggregation) {
                 SubtitleEntry subtitleEntry =
                         new SubtitleEntry(elem.getInfoShift().getInfoDisciplinaExecucao().getSigla(), elem.getInfoShift()
                                 .getInfoDisciplinaExecucao().getNome());

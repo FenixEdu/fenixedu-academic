@@ -80,6 +80,9 @@
 			<fr:slot name="gender" />
 			<fr:slot name="idDocumentType" />
 			<fr:slot name="documentIdNumber" />
+			<logic:equal name="chosenCandidate" property="idDocumentType" value="IDENTITY_CARD">
+				<fr:slot name="identificationDocumentSeriesNumber" />
+			</logic:equal>
 			<fr:slot name="emissionLocationOfDocumentId" />
 			<fr:slot name="socialSecurityNumber" />
 		   	<fr:slot name="dateOfBirth" />
