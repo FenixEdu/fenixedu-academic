@@ -214,6 +214,16 @@ public class Person extends Person_Base {
         setIdentification(documentIdNumber, idDocumentType);
     }
 
+    public void setGivenNames(String newGivenNames) {
+        UserProfile profile = getProfile();
+        profile.changeName(newGivenNames, profile.getFamilyNames(), profile.getDisplayName());
+    }
+
+    public void setFamilyNames(String newFamilyNames) {
+        UserProfile profile = getProfile();
+        profile.changeName(profile.getGivenNames(), newFamilyNames, profile.getDisplayName());
+    }
+
     private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
             final IDDocumentType documentType) {
         final Person person = readByDocumentIdNumberAndIdDocumentType(documentIDNumber, documentType);
@@ -1492,6 +1502,17 @@ public class Person extends Person_Base {
     public static Person findByUsername(final String username) {
         final User user = User.findByUsername(username);
         return user == null ? null : user.getPerson();
+    }
+
+    public String getIdentificationDocumentSeriesNumber() {
+        String seriesNumber = getIdentificationDocumentSeriesNumberValue();
+        String extraDigit = getIdentificationDocumentExtraDigitValue();
+        if (seriesNumber != null) {
+            return seriesNumber;
+        } else if (extraDigit != null) {
+            return extraDigit;
+        }
+        return "";
     }
 
     public String getIdentificationDocumentExtraDigitValue() {

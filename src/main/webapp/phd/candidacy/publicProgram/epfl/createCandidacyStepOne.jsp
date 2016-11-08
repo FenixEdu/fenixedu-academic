@@ -81,6 +81,9 @@
 					<fr:slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="size" value="20"/>
 					</fr:slot>
+					<fr:slot name="identificationDocumentSeriesNumber">
+						<fr:property name="readOnly" value="${candidacyBean.personBean.idDocumentType.name ne 'IDENTITY_CARD'}" />
+					</fr:slot>
 					<fr:slot name="documentIdEmissionLocation">
 						<fr:property name="size" value="20"/>
 						<fr:property name="maxLength" value="50"/>
