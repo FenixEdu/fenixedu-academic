@@ -122,7 +122,8 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
 
         byte[] contents = readStreamContents();
 
-        if (contents == null) {
+        // We should not be creating a document if the type is undefined
+        if (contents == null || type == null) {
             return null;
         }
 
