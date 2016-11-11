@@ -50,18 +50,10 @@
 	
 	<!-- Filter -->
 	<filter>
-	    <filter-name>ManagerFilter</filter-name>
-	    <filter-class>org.fenixedu.academic.servlet.ManagerFilter</filter-class>
-	</filter>
-	<filter>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<filter-class>org.fenixedu.academic.servlet.ProcessCandidacyPrintAllDocumentsFilter</filter-class>
 	</filter>
 	<!-- Filter Mapping -->
-	<filter-mapping>
-		<filter-name>ManagerFilter</filter-name>
-		<url-pattern>/manager/*</url-pattern>
-	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<url-pattern>/student/firstTimeCandidacyDocuments.do</url-pattern>
