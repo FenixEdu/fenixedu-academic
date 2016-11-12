@@ -28,6 +28,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class StudentStatuteTypeProvider implements DataProvider {
 
+
     @Override
     public Object provide(Object source, Object currentValue) {
         return StatuteType.readAll().collect(Collectors.toList());
@@ -37,5 +38,4 @@ public class StudentStatuteTypeProvider implements DataProvider {
     public Converter getConverter() {
         return new DomainObjectKeyArrayConverter();
     }
-    
 }

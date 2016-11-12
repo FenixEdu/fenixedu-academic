@@ -27,14 +27,21 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.TreeSet;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.Option;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -60,9 +67,11 @@ import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.StatuteType;
+import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.academicAdministration.SearchStudentsByDegreeParametersBean;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
@@ -80,6 +89,7 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
 
+import org.xhtmlrenderer.pdf.SplitterTest;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
@@ -146,93 +156,90 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         final Degree chosenDegree = searchbean.getDegree();
         final DegreeType chosenDegreeType = searchbean.getDegreeType();
         final ExecutionYear executionYear = searchbean.getExecutionYear();
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            if (chosenDegreeType != null && degreeCurricularPlan.getDegreeType() != chosenDegreeType) {
-                continue;
-            }
-            if (chosenDegree != null && degreeCurricularPlan.getDegree() != chosenDegree) {
-                continue;
-            }
-            if (!degreeCurricularPlan.getDegreeType().isEmpty()) {
-                if (!searchbean.getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType())) {
-                    continue;
-                }
-                if (!searchbean.getAdministratedDegrees().contains(degreeCurricularPlan.getDegree())) {
-                    continue;
-                }
-            }
-            degreeCurricularPlan.getRegistrations(executionYear, registrations);
+        Stream<DegreeCurricularPlan> stream = executionYear.getExecutionDegreesSet().stream().map
+                (ExecutionDegree::getDegreeCurricularPlan);
+
+
+        if (chosenDegreeType != null) {
+            stream = stream.filter(dcp -> dcp.getDegreeType() == chosenDegreeType);
         }
+
+        if (chosenDegree != null) {
+            stream = stream.filter(dcp -> dcp.getDegree() == chosenDegree);
+        }
+
+
+        stream = stream.filter(dcp -> (!dcp.getDegreeType().isEmpty() && searchbean
+                .getAdministratedDegreeTypes()
+                .contains(dcp.getDegreeType())) || (dcp.getDegreeType()
+                .isEmpty() && searchbean.getAdministratedDegrees().contains(dcp.getDegree())));
+
+
+        stream.forEach(dcp -> {
+            dcp.getRegistrations(executionYear, registrations);
+        });
+
         DegreeCurricularPlan emptyDegreeCurricularPlan = DegreeCurricularPlan.readEmptyDegreeCurricularPlan();
         if (chosenDegreeType == null || emptyDegreeCurricularPlan.getDegreeType() == chosenDegreeType) {
             emptyDegreeCurricularPlan.getRegistrations(executionYear, registrations);
         }
         return filterResults(searchbean, registrations, executionYear);
+
     }
 
     private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchBean,
             final Set<Registration> registrations, final ExecutionYear executionYear) {
         final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
-        for (final Registration registration : registrations) {
-            if (searchBean.hasAnyRegistrationProtocol()
-                    && !searchBean.getRegistrationProtocols().contains(registration.getRegistrationProtocol())) {
-                continue;
-            }
+        Stream<Registration> registrationStream = registrations.stream();
 
-            if (searchBean.hasAnyStudentStatuteType() && !hasStudentStatuteType(searchBean, registration)) {
-                continue;
-            }
+        registrationStream = registrationStream.filter(r -> r.getLastRegistrationState(executionYear) != null);
 
-            final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
-            if (lastRegistrationState == null) {
-                continue;
-            }
-            if (searchBean.hasAnyRegistrationStateTypes()
-                    && !searchBean.getRegistrationStateTypes().contains(lastRegistrationState.getStateType())) {
-                continue;
-            }
+        if (searchBean.hasAnyRegistrationProtocol()) {
+            registrationStream = registrationStream.filter(r -> searchBean.getRegistrationProtocols().contains(r
+                    .getRegistrationProtocol()));
+        }
 
-            if ((searchBean.isIngressedInChosenYear()) && (registration.getIngressionYear() != executionYear)) {
-                continue;
-            }
+        if (searchBean.hasAnyStudentStatuteType()) {
+            registrationStream = registrationStream.filter(r -> hasStudentStatuteType(searchBean, r));
+        }
 
-            if (searchBean.isConcludedInChosenYear()) {
-                Stream<ProgramConclusion> conclusions =
-                        ProgramConclusion.conclusionsFor(registration).filter(ProgramConclusion::isTerminal);
+        if (searchBean.hasAnyRegistrationStateTypes()) {
+            registrationStream = registrationStream.filter(r -> searchBean.getRegistrationStateTypes().contains(r
+                    .getLastRegistrationState(executionYear).getStateType()));
+        }
 
-                if (conclusions.allMatch(programConclusion -> {
-                    RegistrationConclusionBean conclusionBean = new RegistrationConclusionBean(registration, programConclusion);
-                    return conclusionBean.getCurriculumGroup() == null || !conclusionBean.isConcluded()
-                            || conclusionBean.getConclusionYear() != executionYear;
-                })) {
-                    continue;
-                }
-            }
+        if (searchBean.isIngressedInChosenYear()) {
+            registrationStream = registrationStream.filter(r -> r.getIngressionYear() == executionYear);
+        }
 
-            if (searchBean.getActiveEnrolments() && !registration.hasAnyEnrolmentsIn(executionYear)) {
-                continue;
-            }
-
-            if (searchBean.getStandaloneEnrolments() && !registration.hasAnyStandaloneEnrolmentsIn(executionYear)) {
-                continue;
-            }
-
-            if ((searchBean.getRegime() != null) && (registration.getRegimeType(executionYear) != searchBean.getRegime())) {
-                continue;
-            }
-
-            if ((searchBean.getNationality() != null) && (registration.getPerson().getCountry() != searchBean.getNationality())) {
-                continue;
-            }
-
-            if ((searchBean.getIngressionType() != null) && (registration.getIngressionType() != searchBean.getIngressionType())) {
-                continue;
-            }
-
-            result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType(),
+        if (searchBean.hasAnyProgramConclusion()) {
+            registrationStream = registrationStream.filter(r -> hasProgramConclusion(r, searchBean
+                            .isIncludeConcludedWithoutConclusionProcess(), searchBean
+                            .getProgramConclusions(),
                     executionYear));
         }
+        if (searchBean.getActiveEnrolments()) {
+            registrationStream = registrationStream.filter(r -> r.hasAnyEnrolmentsIn(executionYear));
+        }
+
+        if (searchBean.getStandaloneEnrolments()) {
+            registrationStream = registrationStream.filter(r -> r.hasAnyStandaloneEnrolmentsIn(executionYear));
+        }
+
+        if (searchBean.getRegime() != null) {
+            registrationStream = registrationStream.filter(r -> r.getRegimeType(executionYear) == searchBean.getRegime());
+        }
+
+        if (searchBean.getNationality() != null) {
+            registrationStream = registrationStream.filter(r -> r.getPerson().getCountry() == searchBean.getNationality());
+        }
+
+        if (searchBean.getIngressionType() != null) {
+            registrationStream = registrationStream.filter(r -> r.getIngressionType() == searchBean.getIngressionType());
+        }
+
+        registrationStream.forEach(r -> result.add(new RegistrationWithStateForExecutionYearBean(r, r.getLastStateType(), executionYear)));
+
         return result;
     }
 
@@ -240,6 +247,20 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             final Registration registration) {
         return CollectionUtils.containsAny(searchBean.getStudentStatuteTypes(), registration.getStudent()
                 .getStatutesTypesValidOnAnyExecutionSemesterFor(searchBean.getExecutionYear()));
+    }
+
+
+    private static boolean hasProgramConclusion(final Registration registration, boolean includeConcludedWithoutConclusionProcess, final List<ProgramConclusion>
+            programConclusions, ExecutionYear executionYear) {
+        return programConclusions.stream().anyMatch(pc ->
+                pc.groupFor(registration).filter(curriculumGroup -> {
+                    if (includeConcludedWithoutConclusionProcess) {
+                        if (curriculumGroup.isConcluded() && curriculumGroup.calculateConclusionYear() == executionYear) {
+                            return true;
+                        }
+                    }
+                    return curriculumGroup.getConclusionYear() == executionYear;
+                }).isPresent());
     }
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -297,10 +318,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addHeader(getResourceMessage("label.ingressedInChosenYear"));
         }
         spreadsheet.newHeaderRow();
-        if (searchBean.isConcludedInChosenYear()) {
-            spreadsheet.addHeader(getResourceMessage("label.concludedInChosenYear"));
-        }
-        spreadsheet.newHeaderRow();
         if (searchBean.getActiveEnrolments()) {
             spreadsheet.addHeader(getResourceMessage("label.activeEnrolments.capitalized"));
         }
@@ -341,6 +358,13 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addHeader(getResourceMessage("label.statutes") + ":");
             for (StatuteType statute : searchBean.getStudentStatuteTypes()) {
                 spreadsheet.addHeader(statute.getName().getContent());
+            }
+        }
+        spreadsheet.newHeaderRow();
+        if (searchBean.hasAnyProgramConclusion()) {
+            spreadsheet.addHeader(getResourceMessage("label.programConclusions") + ":");
+            for (ProgramConclusion programConclusion : searchBean.getProgramConclusions()) {
+                spreadsheet.addHeader(programConclusion.getName().getContent() + "-" + programConclusion.getDescription().getContent());
             }
         }
     }

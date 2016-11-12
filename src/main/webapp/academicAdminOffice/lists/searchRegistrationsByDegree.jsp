@@ -74,9 +74,9 @@
 				<fr:property name="sortBy" value="localizedName" />
 			</fr:slot>
 			<fr:slot name="ingressedInChosenYear" key="label.ingressedInChosenYear" />
-			<fr:slot name="concludedInChosenYear" key="label.concludedInChosenYear" />
 			<fr:slot name="activeEnrolments" key="label.activeEnrolments.capitalized" />
 			<fr:slot name="standaloneEnrolments" key="label.withStandaloneEnrolments" />
+			<fr:slot name="includeConcludedWithoutConclusionProcess" key="label.includeConcludedWithoutConclusionProcess" />
 		</fr:schema>
 		<fr:destination name="postBack" path="/studentsListByDegree.do?method=postBack" />
 		<fr:destination name="invalid" path="/studentsListByDegree.do?method=prepareByDegree" />
@@ -108,6 +108,13 @@
 					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple.StudentStatuteTypeProvider" />
 				<fr:property name="classes" value="list2" />
 				<fr:property name="eachSchema" value="StatuteType.view.name.only"/>
+				<fr:property name="eachLayout" value="values"/>
+			</fr:slot>
+			<fr:slot name="programConclusions" key="label.programConclusions" layout="option-select">
+				<fr:property name="providerClass"
+					value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.multiple.ProgramConclusionProvider" />
+				<fr:property name="classes" value="list2" />
+ 				<fr:property name="eachSchema" value="ProgramConclusion.view.name.only"/>
 				<fr:property name="eachLayout" value="values"/>
 			</fr:slot>
 		</fr:schema>
