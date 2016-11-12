@@ -26,6 +26,7 @@ import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
 import org.fenixedu.academic.domain.student.StatuteType;
@@ -44,10 +45,10 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
     private List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
 
     private List<StatuteType> statuteTypes = new ArrayList<StatuteType>();
+    
+    private List<ProgramConclusion> programConclusions = new ArrayList<ProgramConclusion>();
 
     private boolean ingressedInChosenYear = false;
-
-    private boolean concludedInChosenYear = false;
 
     private boolean activeEnrolments = false;
 
@@ -111,8 +112,20 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
     public boolean hasAnyStudentStatuteType() {
         return this.statuteTypes != null && !this.statuteTypes.isEmpty();
     }
+    
+    public boolean hasAnyProgramConclusion() {
+    	return this.programConclusions != null && !this.programConclusions.isEmpty();
+    }
+    
+    public List<ProgramConclusion> getProgramConclusions() {
+		return programConclusions;
+	}
 
-    public boolean getActiveEnrolments() {
+	public void setProgramConclusions(List<ProgramConclusion> programConclusions) {
+		this.programConclusions = programConclusions;
+	}
+
+	public boolean getActiveEnrolments() {
         return activeEnrolments;
     }
 
@@ -150,14 +163,6 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     public boolean isIngressedInChosenYear() {
         return ingressedInChosenYear;
-    }
-
-    public void setConcludedInChosenYear(boolean concludedInChosenYear) {
-        this.concludedInChosenYear = concludedInChosenYear;
-    }
-
-    public boolean isConcludedInChosenYear() {
-        return concludedInChosenYear;
     }
 
 }
