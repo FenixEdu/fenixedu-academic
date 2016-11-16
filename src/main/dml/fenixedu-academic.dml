@@ -1044,6 +1044,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     class Mark  {
         String mark;
         String publishedMark;
+        // qubExtension
+        DateTime enrolmentDate;
+        DateTime gradeDate;
     }
 
         class FinalMark extends Mark {
