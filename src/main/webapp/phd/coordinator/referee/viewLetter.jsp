@@ -26,8 +26,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(COORDINATOR)">
-
 <%-- ### Title #### --%>
 <h2><bean:message key="title.phd.referee.letters" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
@@ -69,5 +67,3 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop10" />
 	</fr:layout>
 </fr:view>
-
-</logic:present>

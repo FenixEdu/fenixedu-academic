@@ -26,9 +26,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<logic:present role="role(PEDAGOGICAL_COUNCIL)">
+<h2><bean:message key="link.summaries.control"/></h2>
 
-	<h2><bean:message key="link.summaries.control"/></h2>
-			
-	<jsp:include page="../../directiveCouncil/summariesControl/listTeachersSummariesControlCore.jsp"/>
-</logic:present>
+<jsp:include page="../../directiveCouncil/summariesControl/listTeachersSummariesControlCore.jsp"/>

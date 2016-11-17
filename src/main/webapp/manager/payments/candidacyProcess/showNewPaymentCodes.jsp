@@ -24,25 +24,20 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<logic:present role="role(MANAGER)">
+<h2>Referências criadas</h2>
 
+<fr:view name="newPaymentCodes">
 
-	<h2>Referências criadas</h2>
-	
-	<fr:view name="newPaymentCodes">
-	
-		<fr:schema type="org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" bundle="MANAGER_RESOURCES" >
-			<fr:slot name="code" key="label.manager.code"/>
-			<fr:slot name="startDate" />
-			<fr:slot name="endDate" />
-			<fr:slot name="minAmount" key="label.org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean.minAmount"/>
-			<fr:slot name="maxAmount" key="label.org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean.maxAmount"/>
-			<fr:slot name="type" />
-		</fr:schema>
-		
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1" />
-		</fr:layout>
-	</fr:view>
+	<fr:schema type="org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" bundle="MANAGER_RESOURCES" >
+		<fr:slot name="code" key="label.manager.code"/>
+		<fr:slot name="startDate" />
+		<fr:slot name="endDate" />
+		<fr:slot name="minAmount" key="label.org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean.minAmount"/>
+		<fr:slot name="maxAmount" key="label.org.fenixedu.academic.ui.struts.action.manager.payments.CandidacyProcessPaymentCodeBean.maxAmount"/>
+		<fr:slot name="type" />
+	</fr:schema>
 
-</logic:present>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle1" />
+	</fr:layout>
+</fr:view>

@@ -26,8 +26,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(COORDINATOR)">
-
 <%-- ### Title #### --%>
 <h2><bean:message key="title.phd.guidance.documents.management" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
@@ -44,5 +42,3 @@
 <%--  ### End of Error Messages  ### --%>
 
 <jsp:include page="/phd/guidance/uploadGuidanceDocument.jsp" />
-
-</logic:present>

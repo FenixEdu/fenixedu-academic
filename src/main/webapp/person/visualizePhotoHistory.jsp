@@ -28,7 +28,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(PERSON)">
 <bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 
 <h2><bean:message key="label.person.title.photoHistory"/></h2>
@@ -86,8 +85,6 @@
 		
 	</logic:notEmpty>
 	
-</logic:present>
-
 </logic:present>
 
 <script type="text/javascript" language="javascript">

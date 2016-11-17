@@ -26,9 +26,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/phd" prefix="phd" %>
 
 <%@page import="org.fenixedu.academic.domain.phd.candidacy.activities.RejectCandidacyProcess"%>
-<%@page import="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
-
-<logic:present role="role(COORDINATOR)">
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.candidacy.manageCandidacyReview" bundle="PHD_RESOURCES" /></h2>
@@ -184,6 +181,3 @@
 
 
 <%--  ### End of Operation Area  ### --%>
-
-
-</logic:present>

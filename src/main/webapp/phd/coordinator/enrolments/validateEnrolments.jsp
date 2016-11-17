@@ -23,13 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="org.fenixedu.academic.domain.Enrolment"%>
 <%@page import="org.fenixedu.academic.domain.phd.ManageEnrolmentsBean" %>
-<%@page import="org.fenixedu.academic.ui.struts.action.phd.coordinator.providers.PhdManageEnrolmentsExecutionSemestersProvider"%>
 <%@page import="org.fenixedu.academic.ui.struts.action.phd.coordinator.providers.ExistingEnrolmentsToValidate"%>
-<%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
-
-<logic:present role="role(COORDINATOR)">
 
 <h2><bean:message key="label.phd.validate.enrolments" bundle="PHD_RESOURCES" /></h2>
 
@@ -118,5 +113,3 @@
 	</logic:empty>
 
 </fr:form>
-
-</logic:present>

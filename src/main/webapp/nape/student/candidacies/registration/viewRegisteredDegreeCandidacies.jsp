@@ -25,10 +25,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(NAPE)">
-
 <h2><bean:message key="label.registeredDegreeCandidacies.first.time.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <jsp:include page="/academicAdminOffice/student/candidacies/registration/viewRegisteredDegreeCandidacies_bd.jsp" />
-
-</logic:present>

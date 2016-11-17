@@ -29,8 +29,6 @@
 
 <h2><bean:message key="documents.management.title" bundle="MANAGER_RESOURCES" /></h2>
 
-<logic:present role="role(MANAGER)">
-
 <logic:present name="photographs">
 
         <logic:iterate id="datedRejection" name="photographs">
@@ -50,7 +48,5 @@
 					</logic:iterate>
                 </div>
         </logic:iterate>
-
-</logic:present>
 
 </logic:present>

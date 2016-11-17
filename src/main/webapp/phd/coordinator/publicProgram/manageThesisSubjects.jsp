@@ -25,9 +25,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<logic:present role="role(COORDINATOR)">
-
 <h2><bean:message key="label.phd.focusAreas" bundle="PHD_RESOURCES" /></h2>
 
 <bean:define id="focusArea" name="focusArea" type="org.fenixedu.academic.domain.phd.PhdProgramFocusArea"/>
@@ -100,5 +97,3 @@
 		<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</p>
 </fr:form>
-
-</logic:present>

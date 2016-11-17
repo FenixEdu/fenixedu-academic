@@ -26,8 +26,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(MANAGER)">
-
 <h2><bean:message key="title.personal.ingression.data.viewer.student.raides.data.view" bundle="GEP_RESOURCES" /></h2>
 
 <p><strong><bean:message key="message.personal.ingression.data.viewer.search.student.with.criteria" bundle="GEP_RESOURCES" /></strong></p>
@@ -77,7 +75,5 @@
 					
 		</fr:layout>
 	</logic:notEmpty>
-
-</logic:present>
 
 </logic:present>

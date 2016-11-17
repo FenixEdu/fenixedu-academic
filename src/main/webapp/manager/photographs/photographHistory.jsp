@@ -29,8 +29,6 @@
 
 <h2>Histórico de Fotografias<!-- bean:message key="documents.management.title" bundle="MANAGER_RESOURCES" / --></h2>
 
-<logic:present role="role(MANAGER)">
-
 <fr:form action="/photographs/history.do?method=historyFilter">
     <h3>Foto</h3>
     <fr:edit id="historyFilter" name="filter" schema="photographs.filter.main">
@@ -82,6 +80,4 @@
 		</logic:iterate>
 		
 	</logic:iterate>
-</logic:present>
-
 </logic:present>

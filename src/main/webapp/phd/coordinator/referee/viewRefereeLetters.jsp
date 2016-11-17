@@ -27,8 +27,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(COORDINATOR)">
-
 <%-- ### Title #### --%>
 <h2><bean:message key="title.phd.referee.letters" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
@@ -62,5 +60,3 @@
 			link="<%= "/phdIndividualProgramProcess.do?method=viewLetter&amp;refereeId=${externalId}&amp;processId=" + processId %>" />
 	</fr:layout>
 </fr:view>
-
-</logic:present>

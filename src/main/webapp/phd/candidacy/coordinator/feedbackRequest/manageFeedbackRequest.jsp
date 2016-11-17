@@ -31,8 +31,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(COORDINATOR)">
-
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manage.candidacy.feedback.request" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
@@ -159,5 +157,3 @@
 <%--  ################################### --%>
 
 </logic:notEmpty>
-
-</logic:present>

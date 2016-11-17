@@ -26,9 +26,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<logic:present role="role(PEDAGOGICAL_COUNCIL)">
+<h2><bean:message key="label.evaluationMethodControl" bundle="APPLICATION_RESOURCES"/></h2>
 
-	<h2><bean:message key="label.evaluationMethodControl" bundle="APPLICATION_RESOURCES"/></h2>
-		
-	<jsp:include page="../../directiveCouncil/evaluationMethodControlCore.jsp"/>
-</logic:present>
+<jsp:include page="../../directiveCouncil/evaluationMethodControlCore.jsp"/>

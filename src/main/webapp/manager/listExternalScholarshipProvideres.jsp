@@ -25,9 +25,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<logic:present role="role(MANAGER)">
-
 <h2>Listar Entidades</h2>
 <logic:notEmpty name="externalScholarshipProviders">
 <table class="tstyle1">
@@ -61,5 +58,4 @@
 </table>
 </logic:notEmpty>
 <html:link action="externalScholarshipProvider.do?method=add">Adicionar Entidade</html:link>
-</logic:present>
 

@@ -27,67 +27,64 @@
 
 <h2><bean:message key="logins.time.intervals.management.title" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="(role(MANAGER) | role(OPERATOR))">
+<logic:messagesPresent message="true">
+	<p>
+	<span class="error0"><!-- Error messages go here -->
+		<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
+			<bean:write name="message"/>
+		</html:messages>
+	</span>
+	<p>
+</logic:messagesPresent>
 
-	<logic:messagesPresent message="true">
-		<p>
-		<span class="error0"><!-- Error messages go here -->
-			<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
-				<bean:write name="message"/>
-			</html:messages>
-		</span>
-		<p>
-	</logic:messagesPresent>	
+<logic:notEmpty name="person">
 
-	<logic:notEmpty name="person">
-	
-		<p class="infoop2">
-			<b><bean:message key="label.name" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="person" property="name"/><br/>
-			<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="person" property="user.username"/>
-		</p>
-	
-		<ul class="mvert15 list5">
-			<li>	
-				<html:link page="/loginsManagement.do?method=prepareSearchPerson">
-					<bean:message key="label.return" bundle="MANAGER_RESOURCES"/>
-				</html:link>
-			</li>
-		</ul>
-		
-		<p><html:link page="/loginsManagement.do?method=prepareCreateLoginTimeInterval" paramId="userID" paramName="person" paramProperty="user.externalId">
-			<bean:message key="label.create.new.login.period" bundle="MANAGER_RESOURCES"/>
-		</html:link></p>
-		
-		<p>	
-			<bean:define id="loginPeriods" name="person" property="user.loginValiditySet" />
-			<logic:notEmpty name="loginPeriods">							
-				<fr:view name="loginPeriods">
-					<fr:schema type="org.fenixedu.bennu.core.domain.UserLoginPeriod" bundle="MANAGER_RESOURCES">
-						<fr:slot name="beginDate" />
-						<fr:slot name="endDate" />
-					</fr:schema>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
-						<fr:property name="columnClasses" value="aleft,,,,"/>   		
-						
-						<fr:property name="link(edit)" value="/loginsManagement.do?method=prepareEditLoginTimeInterval"/>
-			            <fr:property name="param(edit)" value="externalId/periodID"/>
-				        <fr:property name="key(edit)" value="link.edit"/>
-			            <fr:property name="bundle(edit)" value="MANAGER_RESOURCES"/>
-			            <fr:property name="visibleIfNot(edit)" value="closed" />
-			            <fr:property name="order(edit)" value="0"/>
-			            
-						<fr:property name="link(delete)" value="/loginsManagement.do?method=deleteLoginTimeInterval"/>
-			            <fr:property name="param(delete)" value="externalId/periodID"/>
-				        <fr:property name="key(delete)" value="link.delete"/>
-			            <fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
-			            <fr:property name="visibleIfNot(delete)" value="started" />
-			            <fr:property name="order(delete)" value="1"/>	
-						
-					</fr:layout>			
-				</fr:view>				
-			</logic:notEmpty>			
-		</p>	
-	
-	</logic:notEmpty>
-</logic:present>
+	<p class="infoop2">
+		<b><bean:message key="label.name" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="person" property="name"/><br/>
+		<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="person" property="user.username"/>
+	</p>
+
+	<ul class="mvert15 list5">
+		<li>
+			<html:link page="/loginsManagement.do?method=prepareSearchPerson">
+				<bean:message key="label.return" bundle="MANAGER_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
+
+	<p><html:link page="/loginsManagement.do?method=prepareCreateLoginTimeInterval" paramId="userID" paramName="person" paramProperty="user.externalId">
+		<bean:message key="label.create.new.login.period" bundle="MANAGER_RESOURCES"/>
+	</html:link></p>
+
+	<p>
+		<bean:define id="loginPeriods" name="person" property="user.loginValiditySet" />
+		<logic:notEmpty name="loginPeriods">
+			<fr:view name="loginPeriods">
+				<fr:schema type="org.fenixedu.bennu.core.domain.UserLoginPeriod" bundle="MANAGER_RESOURCES">
+					<fr:slot name="beginDate" />
+					<fr:slot name="endDate" />
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+					<fr:property name="columnClasses" value="aleft,,,,"/>
+
+					<fr:property name="link(edit)" value="/loginsManagement.do?method=prepareEditLoginTimeInterval"/>
+					<fr:property name="param(edit)" value="externalId/periodID"/>
+					<fr:property name="key(edit)" value="link.edit"/>
+					<fr:property name="bundle(edit)" value="MANAGER_RESOURCES"/>
+					<fr:property name="visibleIfNot(edit)" value="closed" />
+					<fr:property name="order(edit)" value="0"/>
+
+					<fr:property name="link(delete)" value="/loginsManagement.do?method=deleteLoginTimeInterval"/>
+					<fr:property name="param(delete)" value="externalId/periodID"/>
+					<fr:property name="key(delete)" value="link.delete"/>
+					<fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
+					<fr:property name="visibleIfNot(delete)" value="started" />
+					<fr:property name="order(delete)" value="1"/>
+
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+	</p>
+
+</logic:notEmpty>
