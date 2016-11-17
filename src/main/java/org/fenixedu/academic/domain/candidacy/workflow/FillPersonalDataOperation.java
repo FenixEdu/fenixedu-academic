@@ -41,6 +41,7 @@ import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.PersonalIngressionData;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
@@ -351,8 +352,10 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         person.setSocialSecurityNumber(getPersonalInformationForm().getSocialSecurityNumber());
         person.setIdDocumentType(getPersonalInformationForm().getIdDocumentType());
         person.setMaritalStatus(getPersonalInformationForm().getMaritalStatus());
-        person.setIdentificationDocumentSeriesNumber(getPersonalInformationForm().getIdentificationDocumentSeriesNumber());
-        person.setIdentificationDocumentExtraDigit(getPersonalInformationForm().getIdentificationDocumentExtraDigit());
+        if (person.getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
+        	person.setIdentificationDocumentSeriesNumber(getPersonalInformationForm().getIdentificationDocumentSeriesNumber());
+        	person.setIdentificationDocumentExtraDigit(getPersonalInformationForm().getIdentificationDocumentExtraDigit());        	
+        }
     }
 
     private PersonalIngressionData getOrCreatePersonalIngressionData(StudentCandidacy studentCandidacy) {
