@@ -145,6 +145,7 @@ public class GroupingController extends ExecutionCourseController {
         if(groupingWithSameName != null && !groupingWithSameName.getStudentGroupsSet().isEmpty()) {
             Integer maxStudentGroupsOnShift = groupingWithSameName.getStudentGroupsSet().stream()
                 .filter(studentGroup -> !studentGroup.wasDeleted())
+                .filter(studentGroup -> studentGroup.getShift() != null)
                 .collect(Collectors.groupingBy(studentGroup -> studentGroup.getShift(), Collectors.counting()))
                 .values().stream().max(Comparator.naturalOrder()).orElseGet(()->new Long(0)).intValue();
 
