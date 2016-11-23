@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.PeriodState;
 
@@ -32,8 +29,6 @@ public class AlterExecutionPeriodState {
 
     @Atomic
     public static void run(final String year, final Integer semester, final PeriodState periodState) throws FenixServiceException {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
         final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
         if (executionSemester == null) {

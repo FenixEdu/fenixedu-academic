@@ -2982,8 +2982,6 @@ public class Registration extends Registration_Base {
     }
 
     public void transitToBolonha(final Person person, final DateTime when) {
-        check(this, RegistrationPredicates.TRANSIT_TO_BOLONHA);
-
         if (!isActive()) {
             throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
         }

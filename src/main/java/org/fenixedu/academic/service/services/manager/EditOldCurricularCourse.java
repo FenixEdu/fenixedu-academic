@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -37,8 +34,6 @@ public class EditOldCurricularCourse {
             final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
             final Double credits, final Double ectsCredits, final Double theoreticalHours, final Double labHours,
             final Double praticalHours, final Double theoPratHours, final GradeScale gradeScale) throws FenixServiceException {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
         if (curricularCourse == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");

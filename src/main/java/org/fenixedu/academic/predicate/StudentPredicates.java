@@ -24,6 +24,7 @@ import org.fenixedu.academic.domain.student.Student;
 
 public class StudentPredicates {
 
+    @Deprecated
     public static final AccessControlPredicate<Student> checkIfLoggedPersonIsStudentOwnerOrManager =
             new AccessControlPredicate<Student>() {
                 @Override

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.candidacy.degree;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +26,6 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
@@ -93,7 +90,6 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
     }
 
     public void changeExecutionDegree(final ExecutionDegree executionDegree) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setExecutionDegree(executionDegree);
     }
 

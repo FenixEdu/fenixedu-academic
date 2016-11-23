@@ -18,13 +18,10 @@
  */
 package org.fenixedu.academic.service.services.coordinator;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.List;
 
 import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -34,8 +31,6 @@ public class ResponsibleCoordinators {
 
     @Atomic
     public static void run(String executionDegreeId, List<String> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");

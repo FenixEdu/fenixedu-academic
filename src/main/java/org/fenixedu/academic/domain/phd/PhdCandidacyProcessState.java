@@ -30,8 +30,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
-import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.DateTime;
 
 public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
@@ -119,7 +117,6 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
     }
 
     static public PhdCandidacyProcessState create(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type) {
-        AccessControl.check(RolePredicates.MANAGER_PREDICATE);
         final PhdCandidacyProcessState result = new PhdCandidacyProcessState();
 
         result.check(process, type);

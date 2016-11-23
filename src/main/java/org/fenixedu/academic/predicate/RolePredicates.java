@@ -55,6 +55,7 @@ public class RolePredicates {
         };
     };
 
+    @Deprecated
     public static final AccessControlPredicate<Object> MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE =
             new AccessControlPredicate<Object>() {
                 @Override
@@ -64,6 +65,7 @@ public class RolePredicates {
                 };
             };
 
+    @Deprecated
     public static final AccessControlPredicate<Object> MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
@@ -71,6 +73,7 @@ public class RolePredicates {
         };
     };
 
+    @Deprecated
     public static final AccessControlPredicate<Object> MANAGER_OR_OPERATOR_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
@@ -86,6 +89,7 @@ public class RolePredicates {
                 };
             };
 
+    @Deprecated
     public static final AccessControlPredicate<Object> OPERATOR_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {

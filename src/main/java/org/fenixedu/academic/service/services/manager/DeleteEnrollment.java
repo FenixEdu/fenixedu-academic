@@ -22,14 +22,11 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
 
 import pt.ist.fenixframework.Atomic;
@@ -42,7 +39,6 @@ public class DeleteEnrollment {
 
     @Atomic
     public static void run(final Integer studentNumber, final DegreeType degreeType, final String enrollmentId) {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
             final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);
             if (enrollment != null) {

@@ -18,14 +18,11 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -62,7 +59,6 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
 
     @Override
     public void setPercentage(BigDecimal percentage) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setPercentage(percentage);
         final DateTime now = new DateTime();
         getGratuityEvent().forceChangeState(EventState.OPEN, now);

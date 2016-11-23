@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,7 +37,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.commons.ReadExecutionPeriods;
 import org.fenixedu.academic.util.Month;
 import org.fenixedu.academic.util.PeriodState;
@@ -107,7 +104,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public void editPeriod(YearMonthDay begin, YearMonthDay end) throws DomainException {
-        check(this, RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         if (begin == null || end == null || end.isBefore(begin)) {
             throw new DomainException("error.ExecutionPeriod.invalid.dates");
         }

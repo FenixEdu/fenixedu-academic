@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.manager.executionDegreesManagement;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.spaces.domain.Space;
 
@@ -34,8 +31,6 @@ public class EditExecutionDegree {
     @Atomic
     public static void run(String executionDegreeID, String executionYearID, String campusID, Boolean publishedExamMap)
             throws FenixServiceException {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
@@ -27,7 +25,6 @@ import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -85,12 +82,6 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
             throw new DomainException(
                     "error.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.installment.cannot.be.null");
         }
-    }
-
-    @Override
-    public void setInstallment(Installment installment) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-        super.setInstallment(installment);
     }
 
     @Override

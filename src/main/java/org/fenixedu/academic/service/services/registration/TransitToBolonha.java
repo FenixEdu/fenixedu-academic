@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.registration;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -31,7 +28,6 @@ public class TransitToBolonha {
 
     @Atomic
     public static void run(final Person person, final Registration sourceRegistrationForTransition, final DateTime dateTime) {
-        check(RolePredicates.MANAGER_PREDICATE);
         sourceRegistrationForTransition.transitToBolonha(person, dateTime);
     }
 

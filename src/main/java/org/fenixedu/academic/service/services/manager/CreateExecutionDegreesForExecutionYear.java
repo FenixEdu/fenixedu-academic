@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,7 +26,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;
@@ -40,8 +37,6 @@ public class CreateExecutionDegreesForExecutionYear {
     public static List<DegreeCurricularPlan> run(final String[] degreeCurricularPlansIDs,
             final String[] bolonhaDegreeCurricularPlansIDs, final String executionYearID, final String campusName,
             final Boolean publishedExamMap) {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         final Space campus = readCampusByName(campusName);
 

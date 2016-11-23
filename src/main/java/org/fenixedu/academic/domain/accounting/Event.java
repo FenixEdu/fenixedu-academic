@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +39,6 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
@@ -232,12 +229,6 @@ public abstract class Event extends Event_Base {
     @Override
     public void setResponsibleForCancel(Person responsible) {
         throw new DomainException("error.accounting.Event.cannot.modify.employeeResponsibleForCancel");
-    }
-
-    @Override
-    public void setEventStateDate(DateTime eventStateDate) {
-        check(this, AcademicPredicates.MANAGE_PAYMENTS);
-        super.setEventStateDate(eventStateDate);
     }
 
     protected boolean canCloseEvent(DateTime whenRegistered) {
@@ -763,7 +754,6 @@ public abstract class Event extends Event_Base {
     }
 
     public final void forceChangeState(EventState state, DateTime when) {
-        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         changeState(state, when);
     }
 
@@ -832,7 +822,6 @@ public abstract class Event extends Event_Base {
     }
 
     public void rollbackCompletly() {
-        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         while (!getNonAdjustingTransactions().isEmpty()) {
             getNonAdjustingTransactions().iterator().next().delete();
         }
@@ -845,7 +834,6 @@ public abstract class Event extends Event_Base {
     }
 
     public Set<AccountingEventPaymentCode> getExistingPaymentCodes() {
-        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         return Collections.unmodifiableSet(super.getPaymentCodesSet());
     }
 

@@ -56,7 +56,6 @@ import org.fenixedu.academic.domain.student.curriculum.ProgramConclusionProcess;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.CycleCurriculumGroupPredicates;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.ResultCollection;
@@ -159,7 +158,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     public void deleteRecursive() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         for (final CurriculumModule child : getCurriculumModulesSet()) {
             child.deleteRecursive();
         }

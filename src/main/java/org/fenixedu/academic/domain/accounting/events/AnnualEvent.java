@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +33,6 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -89,7 +86,6 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     @Override
     protected void disconnect() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setExecutionYear(null);
         super.disconnect();
     }

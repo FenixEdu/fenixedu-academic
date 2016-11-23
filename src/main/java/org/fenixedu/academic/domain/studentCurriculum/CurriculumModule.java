@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -46,7 +44,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
@@ -86,7 +83,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public void deleteRecursive() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         delete();
     }
 

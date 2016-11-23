@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Date;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -27,7 +25,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
 import org.joda.time.YearMonthDay;
@@ -41,8 +38,6 @@ public class CreateStudentCurricularPlan {
     public static void run(final Integer studentNumber, final DegreeType degreeType,
             final StudentCurricularPlanState studentCurricularPlanState, final String degreeCurricularPlanId, final Date startDate)
             throws FenixServiceException {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (registration == null) {
             throw new NonExistingServiceException("exception.student.does.not.exist");

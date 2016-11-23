@@ -24,8 +24,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -105,10 +103,6 @@ public class Account extends Account_Base {
     }
 
     public void transferEntry(Entry entry) {
-        if (!RoleType.MANAGER.isMember(AccessControl.getPerson().getUser())) {
-            throw new DomainException("permission.denied");
-        }
-
         super.addEntries(entry);
     }
 

@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.accounting.CreditNoteEntryDTO;
 import org.fenixedu.academic.predicate.AcademicPredicates;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -329,15 +328,12 @@ public class Receipt extends Receipt_Base {
     }
 
     public void deleteReceiptPrintVersions() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         for (; !getReceiptsVersionsSet().isEmpty(); getReceiptsVersionsSet().iterator().next().delete()) {
             ;
         }
     }
 
     public void delete() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         deleteReceiptPrintVersions();
@@ -402,8 +398,6 @@ public class Receipt extends Receipt_Base {
     }
 
     public void changeStateAndEntries(final ReceiptState state, final Set<Entry> newEntries) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-
         super.setState(state);
 
         super.getEntriesSet().clear();

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.dfa;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.CandidacyPeriodInDegreeCurricularPlan;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -36,7 +34,6 @@ import org.fenixedu.academic.domain.candidacy.DFACandidacy;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.util.workflow.StateMachine;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.DateTime;
@@ -146,7 +143,6 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     @Override
     protected void disconnect() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setCandidacy(null);
         super.disconnect();
     }

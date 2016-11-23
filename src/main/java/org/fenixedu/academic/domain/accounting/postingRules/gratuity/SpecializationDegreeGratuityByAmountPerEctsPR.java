@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -28,7 +26,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -81,14 +78,12 @@ public class SpecializationDegreeGratuityByAmountPerEctsPR extends Specializatio
 
     public SpecializationDegreeGratuityByAmountPerEctsPR edit(Money specializationDegreeTotalAmount,
             Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         return edit(new DateTime(), specializationDegreeTotalAmount, specializationDegreeAmountPerEctsCredit,
                 partialAcceptedPercentage);
     }
 
     public SpecializationDegreeGratuityByAmountPerEctsPR edit(DateTime startDate, Money specializationDegreeTotalAmount,
             Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         deactivate(startDate);
 
         return new SpecializationDegreeGratuityByAmountPerEctsPR(startDate, null, getServiceAgreementTemplate(),

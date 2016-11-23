@@ -23,8 +23,6 @@ import java.util.List;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
-import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.DateTime;
 
 public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
@@ -78,7 +76,6 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
     }
 
     static public PhdCandidacyFeedbackState create(PhdCandidacyFeedbackRequestProcess process, PhdCandidacyFeedbackStateType type) {
-        AccessControl.check(RolePredicates.MANAGER_PREDICATE);
         final PhdCandidacyFeedbackState result = new PhdCandidacyFeedbackState();
 
         result.check(process, type);

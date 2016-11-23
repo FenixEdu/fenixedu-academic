@@ -18,15 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting.paymentCodes;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -92,12 +89,6 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
             throw new DomainException("error.accounting.paymentCodes.InstallmentPaymentCode.student.cannot.be.null");
         }
 
-    }
-
-    @Override
-    public void setInstallment(Installment installment) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-        super.setInstallment(installment);
     }
 
     @Override

@@ -18,15 +18,11 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
-import org.fenixedu.academic.predicate.RolePredicates;
-
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -35,8 +31,6 @@ public class TransferEnrollments {
     @Atomic
     public static void run(final String destinationStudentCurricularPlanId, final String[] enrollmentIDsToTransfer,
             final String destinationCurriculumGroupID) {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         if (!StringUtils.isEmpty(destinationCurriculumGroupID)) {
 
             CurriculumGroup curriculumGroup = (CurriculumGroup) FenixFramework.getDomainObject(destinationCurriculumGroupID);
