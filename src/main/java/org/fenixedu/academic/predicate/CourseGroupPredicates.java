@@ -48,9 +48,8 @@ public class CourseGroupPredicates {
 
                     User user = Authenticate.getUser();
                     if (RoleType.SCIENTIFIC_COUNCIL.isMember(user)
-                            || RoleType.MANAGER.isMember(user)
                             || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS)
-                                    .isMember(user) || RoleType.OPERATOR.isMember(user)) {
+                            .isMember(user)) {
                         return true;
                     }
 

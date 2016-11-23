@@ -46,10 +46,6 @@ public class CompetenceCoursePredicates {
 
             Person person = AccessControl.getPerson();
 
-            if (RoleType.MANAGER.isMember(person.getUser())) {
-                return true;
-            }
-
             boolean isDegreeCurricularPlansMember = false;
             isDegreeCurricularPlansMember = isMemberOfDegreeCurricularPlansGroup(person);
 
