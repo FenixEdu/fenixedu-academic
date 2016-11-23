@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.PaymentPlan;
 import org.fenixedu.academic.domain.accounting.PostingRule;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityContributionPR;
 import org.fenixedu.academic.domain.accounting.installments.InstallmentService;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
@@ -904,13 +905,18 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     public ActionForward showFCTScolarshipPostingRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        List<PostingRule> list = new ArrayList<PostingRule>();
+        List<PostingRule> phdList = new ArrayList<PostingRule>();
+        List<PostingRule> othersList = new ArrayList<PostingRule>();
         for (PostingRule postingRule : Bennu.getInstance().getPostingRulesSet()) {
             if (postingRule instanceof ExternalScholarshipPhdGratuityContribuitionPR) {
-                list.add(postingRule);
+                phdList.add(postingRule);
+            }
+            if (postingRule instanceof ExternalScholarshipGratuityContributionPR) {
+                othersList.add(postingRule);
             }
         }
-        request.setAttribute("list", list);
+        request.setAttribute("phdList", phdList);
+        request.setAttribute("othersList", othersList);
         return mapping.findForward("showFCTScolarshipPostingRules");
     }
 
@@ -1150,6 +1156,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
             HttpServletResponse response) {
         FctScolarshipPostingRuleBean bean = new FctScolarshipPostingRuleBean();
         request.setAttribute("bean", bean);
+        request.setAttribute("phd", true);
         return mapping.findForward("prepareAddFCTPostingRule");
     }
 
@@ -1179,6 +1186,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         bean.setEndDate(postingRule.getEndDate());
         bean.setExternalId(postingRule.getExternalId());
         request.setAttribute("bean", bean);
+        request.setAttribute("phd", true);
         return mapping.findForward("prepareEditFCTScolarshipPostingRule");
     }
 
@@ -1205,6 +1213,63 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         return showFCTScolarshipPostingRules(mapping, form, request, response);
     }
+
+    @Atomic
+    public void createExternalScholarshipPostingRule(FctScolarshipPostingRuleBean bean) {
+        ExternalScholarshipGratuityContributionPR postingRule =
+                new ExternalScholarshipGratuityContributionPR(bean.getStartDate(), bean.getEndDate(), AdministrativeOffice
+                        .readMasterDegreeAdministrativeOffice().getServiceAgreementTemplate());
+        postingRule.setRootDomainObject(Bennu.getInstance());
+    }
+
+    public ActionForward prepareAddExternalScholarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        FctScolarshipPostingRuleBean bean = new FctScolarshipPostingRuleBean();
+        request.setAttribute("bean", bean);
+        request.setAttribute("phd", false);
+        return mapping.findForward("prepareAddFCTPostingRule");
+    }
+
+    public ActionForward addExternalScholarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        FctScolarshipPostingRuleBean bean = getRenderedObject("bean");
+        createExternalScholarshipPostingRule(bean);
+        return showFCTScolarshipPostingRules(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditExternalScholarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        ExternalScholarshipGratuityContributionPR postingRule = FenixFramework.getDomainObject(request.getParameter("postingRule"));
+        FctScolarshipPostingRuleBean bean = new FctScolarshipPostingRuleBean();
+
+        bean.setStartDate(postingRule.getStartDate());
+        bean.setEndDate(postingRule.getEndDate());
+        bean.setExternalId(postingRule.getExternalId());
+        request.setAttribute("bean", bean);
+        request.setAttribute("phd", false);
+        return mapping.findForward("prepareEditFCTScolarshipPostingRule");
+    }
+
+    @Atomic
+    public ActionForward editExternalScholarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        FctScolarshipPostingRuleBean bean = getRenderedObject("bean");
+        ExternalScholarshipGratuityContributionPR postingRule = FenixFramework.getDomainObject(bean.getExternalId());
+
+        postingRule.setStartDate(bean.getStartDate());
+        postingRule.setEndDate(bean.getEndDate());
+
+        return showFCTScolarshipPostingRules(mapping, form, request, response);
+    }
+
+    @Atomic
+    public ActionForward deleteExternalScholarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ExternalScholarshipGratuityContributionPR postingRule = FenixFramework.getDomainObject(request.getParameter("postingRule"));
+        postingRule.delete();
+
+        return showFCTScolarshipPostingRules(mapping, form, request, response);
+    }
+
 
     public ActionForward prepareEditInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {

@@ -1098,6 +1098,8 @@ public abstract class Event extends Event_Base {
         return false;
     }
 
+    public boolean isTransferable() { return false; }
+
     public abstract Unit getOwnerUnit();
 
     public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {

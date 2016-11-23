@@ -40,7 +40,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-@StrutsFunctionality(app = ManagerStudentsApp.class, path = "scholarship-provider", titleKey = "label.scolarships.fct")
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "scholarship-provider", titleKey = "label.scolarships.external")
 @Mapping(path = "/externalScholarshipProvider", module = "manager")
 @Forwards({ @Forward(name = "list", path = "/manager/listExternalScholarshipProvideres.jsp"),
         @Forward(name = "add", path = "/manager/addExternalScholarshipProvideres.jsp") })

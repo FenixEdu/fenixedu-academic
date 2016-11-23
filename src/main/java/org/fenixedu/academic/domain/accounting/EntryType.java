@@ -120,6 +120,8 @@ public enum EntryType {
 
     EXTERNAL_SCOLARSHIP_PAYMENT,
 
+    EXTERNAL_CONTRIBUTION_PAYMENT,
+
     DUPLICATE_REQUEST_FEE;
 
     public String getName() {
