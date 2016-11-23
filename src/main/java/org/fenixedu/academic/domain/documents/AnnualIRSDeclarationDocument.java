@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.documents;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
@@ -39,11 +37,6 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
     @Override
     public Person getAddressee() {
         return (Person) super.getAddressee();
-    }
-
-    @Override
-    public boolean isAccessible(User user) {
-        return super.isAccessible(user) || RoleType.MANAGER.isMember(user);
     }
 
     private void checkRulesToCreate(Person addressee, Integer year) {

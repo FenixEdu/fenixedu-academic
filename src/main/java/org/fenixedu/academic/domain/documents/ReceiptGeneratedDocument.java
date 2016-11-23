@@ -21,9 +21,7 @@ package org.fenixedu.academic.domain.documents;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Receipt;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -35,11 +33,6 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
         super();
         setSource(source);
         init(GeneratedDocumentType.RECEIPT, addressee, operator, filename, content);
-    }
-
-    @Override
-    public boolean isAccessible(User user) {
-        return super.isAccessible(user) || RoleType.MANAGER.isMember(user);
     }
 
     @Override
