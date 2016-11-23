@@ -24,9 +24,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<logic:present role="role(COORDINATOR)">
-
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manageInactiveProcesses" bundle="PHD_RESOURCES" /></h2>
 
@@ -46,6 +43,3 @@
 
 
 <jsp:include page="/phd/common/viewInactiveProcesses.jsp"/>
-
-
-</logic:present>

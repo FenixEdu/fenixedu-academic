@@ -20,14 +20,11 @@
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType"%>
 <%@page import="org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<logic:present role="role(COORDINATOR)">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
@@ -111,5 +108,3 @@
 <%--  ### Buttons (e.g. Submit)  ### --%>
 
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
-
-</logic:present>

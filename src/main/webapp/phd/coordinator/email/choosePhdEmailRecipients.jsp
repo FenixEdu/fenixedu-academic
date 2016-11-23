@@ -31,9 +31,6 @@
 <%@page import="pt.ist.fenixframework.DomainObject"%>
 <%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" %>
 
-<logic:present role="role(COORDINATOR)">
-
-
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manage.emails" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
@@ -250,5 +247,3 @@
 <p><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /></html:submit></p>
 
 </fr:form>
-
-</logic:present>

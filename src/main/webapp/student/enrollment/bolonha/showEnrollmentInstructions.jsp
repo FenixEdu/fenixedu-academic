@@ -24,8 +24,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<logic:present role="role(STUDENT)">
-
 <h2><bean:message key="label.enrollment.courses.instructions"/></h2>
 
 <h3 class="mtop15 separator2"><bean:message key="label.introduction"/></h3>
@@ -63,6 +61,4 @@
 
 <p class="mbottom05"><bean:message key="message.instructions.registrations"/></p>
 <p class="mbottom05"><bean:message key="message.instructions.registrations.change"/></p>
-
-</logic:present>
 

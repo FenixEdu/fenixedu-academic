@@ -25,8 +25,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(COORDINATOR)">
-
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
@@ -61,5 +59,3 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 	<jsp:include page="/phd/thesis/juryReporterFeedbackUploadForm.jsp" />
 <%--  ### End of Operation Area  ### --%>
-
-</logic:present>

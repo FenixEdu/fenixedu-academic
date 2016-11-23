@@ -28,8 +28,6 @@
 <%@page import="org.fenixedu.academic.domain.phd.ManageEnrolmentsBean" %>
 <%@page import="org.fenixedu.academic.ui.struts.action.phd.coordinator.providers.PhdManageEnrolmentsExecutionSemestersProvider"%>
 
-<logic:present role="role(COORDINATOR)">
-
 <h2><bean:message key="label.phd.manage.enrolments" bundle="PHD_RESOURCES" /></h2>
 
 
@@ -125,6 +123,3 @@
 		<fr:property name="sortBy" value="name=asc" />
 	</fr:layout>
 </fr:view>
-
-
-</logic:present>

@@ -26,10 +26,7 @@
 
 <%@page import="org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
-<%@page import="org.fenixedu.academic.domain.phd.thesis.activities.SubmitJuryElementsDocuments"%>
 <html:xhtml/>
-
-<logic:present role="role(COORDINATOR)">
 
 <bean:define id="process" name="process" />
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
@@ -116,5 +113,3 @@
 <%--  ### Buttons (e.g. Submit)  ### --%>
 
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
-
-</logic:present>

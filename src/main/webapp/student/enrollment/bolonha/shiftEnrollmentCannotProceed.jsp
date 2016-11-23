@@ -24,19 +24,13 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
+<h2><bean:message key="title.student.shift.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 
-<logic:present role="role(STUDENT)">
-
-    <h2><bean:message key="title.student.shift.enrollment" bundle="STUDENT_RESOURCES"/></h2>
-    
-	<logic:messagesPresent message="true">
-		<ul class="mtop15 mbottom1 nobullet list2">
-			<html:messages id="messages" message="true" bundle="STUDENT_RESOURCES">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
-			</html:messages>
-		</ul>
-	</logic:messagesPresent>
-    
-   
-</logic:present>
+<logic:messagesPresent message="true">
+	<ul class="mtop15 mbottom1 nobullet list2">
+		<html:messages id="messages" message="true" bundle="STUDENT_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
 

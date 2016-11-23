@@ -28,8 +28,6 @@
 <%@page import="org.fenixedu.academic.domain.phd.ManageEnrolmentsBean"%>
 <%@page import="org.fenixedu.academic.ui.struts.action.phd.coordinator.providers.CurricularCourseDegreeExecutionSemesterProvider"%>
 
-<logic:present role="role(COORDINATOR)">
-
 <h2><bean:message key="label.phd.manage.enrolments" bundle="PHD_RESOURCES" /></h2>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
@@ -96,5 +94,3 @@
 <logic:empty name="manageEnrolmentsBean" property="remainingEnrolments">
 	<em><bean:message key="label.phd.no.enrolments.found" bundle="PHD_RESOURCES" /></em>
 </logic:empty>
-
-</logic:present>

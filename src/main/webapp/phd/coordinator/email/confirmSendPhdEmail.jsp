@@ -29,9 +29,6 @@
 <%@page import="org.fenixedu.academic.domain.phd.email.PhdProgramEmailBean" %>
 <%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" %>
 
-<logic:present role="role(COORDINATOR)">
-
-
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manage.emails" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
@@ -136,6 +133,4 @@
 		</html:submit>
 	</p>
 
-</fr:form> 
-
-</logic:present>
+</fr:form>

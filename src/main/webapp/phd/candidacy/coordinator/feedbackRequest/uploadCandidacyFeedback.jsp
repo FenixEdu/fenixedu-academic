@@ -29,8 +29,6 @@
 
 <html:xhtml/>
 
-<logic:present role="role(COORDINATOR)">
-
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
@@ -126,5 +124,3 @@
 </logic:equal>
 
 <%--  ### End of Operation Area  ### --%>
-
-</logic:present>

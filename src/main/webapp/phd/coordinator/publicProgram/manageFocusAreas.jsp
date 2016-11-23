@@ -25,9 +25,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<logic:present role="role(COORDINATOR)">
-
 <h2><bean:message key="label.phd.focusAreas" bundle="PHD_RESOURCES" /></h2>
 
 <fr:view name="focusAreas">
@@ -42,5 +39,3 @@
 		<fr:property name="bundle(thesisSubjects)" value="PHD_RESOURCES"/>
 	</fr:layout>
 </fr:view>
-
-</logic:present>

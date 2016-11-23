@@ -25,9 +25,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <%@page import="org.fenixedu.academic.domain.phd.PhdProgram"%>
-<%@page import="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" %>
-
-<logic:present role="role(COORDINATOR)">
 
 <h2><bean:message key="label.phd.manage.enrolments" bundle="PHD_RESOURCES" /></h2>
 
@@ -63,5 +60,3 @@
 	
 	<fr:view name="rendererConfig" />
 </logic:notEmpty>
-
-</logic:present>

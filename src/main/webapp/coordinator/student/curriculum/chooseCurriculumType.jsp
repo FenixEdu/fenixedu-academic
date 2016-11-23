@@ -30,35 +30,30 @@
 
 <span class="error0"><!-- Error messages go here --><html:errors /></span>
 
+<bean:define id="studentNumber" name="student" property="number" />
+<bean:define id="studentId" name="student" property="externalId" />
+<bean:define id="executionDegreeId" name="viewStudentCurriculumForm"
+	property="executionDegreeId" />
+<bean:define id="degreeCurricularPlanId"
+	name="viewStudentCurriculumForm" property="degreeCurricularPlanId" />
 
-<logic:present role="role(COORDINATOR)">
-
-	<bean:define id="studentNumber" name="student" property="number" />
-	<bean:define id="studentId" name="student" property="externalId" />
-	<bean:define id="executionDegreeId" name="viewStudentCurriculumForm"
-		property="executionDegreeId" />
-	<bean:define id="degreeCurricularPlanId"
-		name="viewStudentCurriculumForm" property="degreeCurricularPlanId" />
-
-	<ul>
-		<li>
-			<html:link
-				action="<%="/viewStudentCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString()%>">
-				<bean:message key="label.preBolonha" bundle="APPLICATION_RESOURCES" />
-			</html:link>
-		</li>
-		<li>
-			<html:link
-				action="<%="/bolonhaTransitionManagement.do?method=prepare&studentId=" + studentId.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString() %>">
-				<bean:message key="label.bolonha" bundle="APPLICATION_RESOURCES" />
-			</html:link>
-		</li>
-		<li>
-			<html:link
-				action="<%="/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString() %>">
-				<bean:message key="label.equivalency.plan.applied.to.student" bundle="APPLICATION_RESOURCES" />
-			</html:link>
-		</li>
-	</ul>
-
-</logic:present>
+<ul>
+	<li>
+		<html:link
+			action="<%="/viewStudentCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString()%>">
+			<bean:message key="label.preBolonha" bundle="APPLICATION_RESOURCES" />
+		</html:link>
+	</li>
+	<li>
+		<html:link
+			action="<%="/bolonhaTransitionManagement.do?method=prepare&studentId=" + studentId.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString() %>">
+			<bean:message key="label.bolonha" bundle="APPLICATION_RESOURCES" />
+		</html:link>
+	</li>
+	<li>
+		<html:link
+			action="<%="/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString() %>">
+			<bean:message key="label.equivalency.plan.applied.to.student" bundle="APPLICATION_RESOURCES" />
+		</html:link>
+	</li>
+</ul>
