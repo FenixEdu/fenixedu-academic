@@ -695,8 +695,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 evaluationTypeDistinguisher = "3";
             }
 
-            return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluation.getEvaluationDate())
-                    + evaluation.getExternalId();
+            return evaluation.getEvaluationDate() != null ? DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd",
+                    evaluation.getEvaluationDate()) + evaluation.getExternalId() : evaluationTypeDistinguisher;
         }
     };
 
