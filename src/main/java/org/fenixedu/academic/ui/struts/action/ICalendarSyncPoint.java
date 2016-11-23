@@ -77,16 +77,19 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         List<EventBean> allEvents = new ArrayList<EventBean>();
         ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 
-        for (Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
-            for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
-                for (Lesson lesson : shift.getAssociatedLessonsSet()) {
-                    allEvents.addAll(lesson.getAllLessonsEvents());
-                }
-            }
+        if (user.getPerson().getStudent() != null) {
 
-            for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
-                for (Lesson lesson : shift.getAssociatedLessonsSet()) {
-                    allEvents.addAll(lesson.getAllLessonsEvents());
+            for (Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
+                for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
+                    for (Lesson lesson : shift.getAssociatedLessonsSet()) {
+                        allEvents.addAll(lesson.getAllLessonsEvents());
+                    }
+                }
+
+                for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
+                    for (Lesson lesson : shift.getAssociatedLessonsSet()) {
+                        allEvents.addAll(lesson.getAllLessonsEvents());
+                    }
                 }
             }
         }
