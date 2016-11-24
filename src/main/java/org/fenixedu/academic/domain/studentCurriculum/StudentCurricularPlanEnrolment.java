@@ -96,11 +96,6 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     protected void assertEnrolmentPreConditions() {
-
-        if (isResponsiblePersonManager()) {
-            return;
-        }
-
         checkDebts();
 
         if (isResponsiblePersonAllowedToEnrolStudents() || isResponsibleInternationalRelationOffice()) {
@@ -349,6 +344,7 @@ abstract public class StudentCurricularPlanEnrolment {
         return enrolmentContext.isEnrolmentWithoutRules();
     }
 
+    @Deprecated
     protected boolean isResponsiblePersonManager() {
         return RoleType.MANAGER.isMember(getResponsiblePerson().getUser());
     }

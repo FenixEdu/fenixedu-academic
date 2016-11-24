@@ -24,7 +24,6 @@ package org.fenixedu.academic.predicate;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 
 /**
@@ -39,8 +38,7 @@ public class RegistrationStatePredicates {
                 public boolean evaluate(RegistrationState c) {
                     final Person person = AccessControl.getPerson();
                     return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, c
-                            .getRegistration().getDegree(), person.getUser())
-                            || RoleType.MANAGER.isMember(person.getUser());
+                            .getRegistration().getDegree(), person.getUser());
                 }
             };
 

@@ -374,8 +374,8 @@ public class SpaceUtils {
     };
 
     public static boolean personIsSpacesAdministrator(Person person) {
-        return (RoleType.MANAGER.isMember(person.getUser()) || RoleType.SPACE_MANAGER_SUPER_USER.isMember(person.getUser()))
-                && RoleType.SPACE_MANAGER.isMember(person.getUser());
+        return (RoleType.SPACE_MANAGER_SUPER_USER.isMember(person.getUser())) && RoleType.SPACE_MANAGER
+                .isMember(person.getUser());
     }
 
     public static Space getSpaceBuilding(Space space) {

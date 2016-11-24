@@ -26,6 +26,7 @@ import org.fenixedu.bennu.core.security.Authenticate;
 
 public class RegistrationPredicates {
 
+    @Deprecated
     public static final AccessControlPredicate<Registration> TRANSIT_TO_BOLONHA = new AccessControlPredicate<Registration>() {
         @Override
         public boolean evaluate(final Registration registration) {
@@ -38,10 +39,6 @@ public class RegistrationPredicates {
 
                 @Override
                 public boolean evaluate(final Registration registration) {
-                    if (RoleType.MANAGER.isMember(AccessControl.getPerson().getUser())) {
-                        return true;
-                    }
-
                     return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_CONCLUSION,
                             registration.getDegree(), Authenticate.getUser());
                 }

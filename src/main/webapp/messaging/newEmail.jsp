@@ -75,8 +75,7 @@
 				<fr:property name="rows" value="10"/>
 			</fr:slot>
 			<%
-				if (RoleType.MANAGER.isMember(Authenticate.getUser())
-						|| RoleType.HTML_CAPABLE_SENDER.isMember(Authenticate.getUser())) {
+				if (RoleType.HTML_CAPABLE_SENDER.isMember(Authenticate.getUser())) {
 			%>
 					<fr:slot name="htmlMessage" bundle="MESSAGING_RESOURCES" key="label.email.message.html.content" layout="longText">
 						<fr:property name="columns" value="80"/>

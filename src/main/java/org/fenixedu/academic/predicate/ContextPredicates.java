@@ -51,8 +51,7 @@ public class ContextPredicates {
                         return true;
                     }
 
-                    if (AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS).isMember(user)
-                            || RoleType.MANAGER.isMember(user) || RoleType.OPERATOR.isMember(user)) {
+                    if (AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS).isMember(user)) {
                         return true;
                     }
 

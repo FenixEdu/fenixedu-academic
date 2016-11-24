@@ -39,7 +39,6 @@ public class StudentCurricularPlanPredicates {
                     return RoleType.STUDENT.isMember(person.getUser())
                             || hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS,
                                     studentCurricularPlan.getDegree())
-                            || RoleType.MANAGER.isMember(person.getUser())
                             || RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(person.getUser())
                             /*
                              * used in PhdIndividualProgramProcess enrolments management
@@ -54,10 +53,6 @@ public class StudentCurricularPlanPredicates {
                 @Override
                 public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
-
-                    if (RoleType.MANAGER.isMember(person.getUser())) {
-                        return true;
-                    }
 
                     if (!studentCurricularPlan.isConclusionProcessed()) {
                         return RoleType.STUDENT.isMember(person.getUser())
@@ -81,8 +76,7 @@ public class StudentCurricularPlanPredicates {
                 @Override
                 public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
-                    return hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS, studentCurricularPlan.getDegree())
-                            || RoleType.MANAGER.isMember(person.getUser());
+                    return hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS, studentCurricularPlan.getDegree());
                 }
             };
 
@@ -92,10 +86,6 @@ public class StudentCurricularPlanPredicates {
                 @Override
                 public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
                     final Person person = AccessControl.getPerson();
-
-                    if (RoleType.MANAGER.isMember(person.getUser())) {
-                        return true;
-                    }
 
                     return hasAuthorization(person, AcademicOperationType.MOVE_CURRICULUM_LINES_WITHOUT_RULES,
                             studentCurricularPlan.getDegree());
