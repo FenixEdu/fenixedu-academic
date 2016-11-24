@@ -31,7 +31,6 @@ import java.util.Set;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.util.workflow.IState;
@@ -157,16 +156,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
         setStateDate(stateDate != null ? stateDate : new DateTime());
         setRegistration(registration);
-        setResponsiblePerson(selectPerson(responsiblePerson));
-    }
-
-    private Person selectPerson(final Person responsiblePerson) {
-        if (responsiblePerson != null) {
-            return RoleType.MANAGER.isMember(responsiblePerson.getUser()) ? null : responsiblePerson;
-        } else {
-            final Person loggedPerson = AccessControl.getPerson();
-            return (loggedPerson == null) ? null : (RoleType.MANAGER.isMember(loggedPerson.getUser()) ? null : loggedPerson);
-        }
+        setResponsiblePerson(responsiblePerson != null ? responsiblePerson : AccessControl.getPerson());
     }
 
     protected void init(Registration registration) {
