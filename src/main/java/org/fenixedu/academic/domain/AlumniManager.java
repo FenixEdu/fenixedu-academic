@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain;
 import java.util.Collection;
 import java.util.UUID;
 
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -102,7 +103,7 @@ public class AlumniManager {
             if (!student.getRegistrationsSet().isEmpty()) {
 
                 for (Registration registration : student.getRegistrationsSet()) {
-                    if (registration.isConcluded()) {
+                    if (registration.isConcluded() || ProgramConclusion.conclusionsFor(registration).findAny().isPresent()) {
                         return;
                     }
                 }
