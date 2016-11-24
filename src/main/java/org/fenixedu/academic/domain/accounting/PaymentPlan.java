@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,7 +33,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRuleManager;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -375,7 +372,6 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
 
     public void delete() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         if (!getGratuityEventsWithPaymentPlanSet().isEmpty()) {
             throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
         }

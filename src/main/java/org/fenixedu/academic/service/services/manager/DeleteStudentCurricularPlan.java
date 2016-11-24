@@ -1,4 +1,5 @@
 /**
+/**
  * Copyright © 2002 Instituto Superior Técnico
  *
  * This file is part of FenixEdu Academic.
@@ -22,13 +23,10 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
 
@@ -43,7 +41,6 @@ public class DeleteStudentCurricularPlan {
 
     @Atomic
     public static void run(final String studentCurricularPlanId) throws DomainException, NonExistingServiceException {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         final StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(studentCurricularPlanId);
 
         if (studentCurricularPlan != null) {

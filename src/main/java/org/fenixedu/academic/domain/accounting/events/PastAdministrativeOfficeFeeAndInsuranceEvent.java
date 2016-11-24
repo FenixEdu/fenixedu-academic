@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Collections;
 import java.util.Set;
 
@@ -29,7 +27,6 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
 
 public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministrativeOfficeFeeAndInsuranceEvent_Base {
@@ -56,15 +53,6 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.pastAdministrativeOfficeFeeAndInsuranceAmount.cannot.be.null.and.must.be.greather.than.zero");
         }
-    }
-
-    @Override
-    public void setPastAdministrativeOfficeFeeAndInsuranceAmount(Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-        super.setPastAdministrativeOfficeFeeAndInsuranceAmount(pastAdministrativeOfficeFeeAndInsuranceAmount);
-        // throw new DomainException(
-        // "error.org.fenixedu.academic.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.cannot.modify.pastAdministrativeOfficeFeeAndInsuranceAmount"
-        // );
     }
 
     @Override

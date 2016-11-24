@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.PhotoType;
 import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.dto.person.PhotographUploadBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.ExcepcaoInexistente;
 import org.fenixedu.academic.util.ContentType;
 
@@ -46,7 +45,6 @@ public class StorePersonalPhoto {
 
     @Atomic
     public static void run(byte[] contents, ContentType contentType, String personUsername) throws ExcepcaoInexistente {
-        check(RolePredicates.OPERATOR_PREDICATE);
         Person person = Person.readPersonByUsername(personUsername);
 
         if (person == null) {

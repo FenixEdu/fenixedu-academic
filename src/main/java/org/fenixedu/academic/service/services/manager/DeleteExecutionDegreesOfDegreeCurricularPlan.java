@@ -18,13 +18,10 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -34,7 +31,6 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan {
 
     @Atomic
     public static List<String> run(List<String> executionDegreesIds) throws FenixServiceException {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
 
         for (final String executionDegreeId : executionDegreesIds) {

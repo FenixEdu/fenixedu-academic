@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.accounting.gratuity.paymentPlan;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,15 +37,12 @@ import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlanF
 import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
 import org.fenixedu.academic.dto.accounting.paymentPlan.PaymentPlanBean;
-import org.fenixedu.academic.predicate.RolePredicates;
-
 import pt.ist.fenixframework.Atomic;
 
 public class GratuityPaymentPlanManager {
 
     @Atomic
     public static void create(final PaymentPlanBean paymentPlanBean) {
-        check(RolePredicates.MANAGER_PREDICATE);
         for (final DegreeCurricularPlan degreeCurricularPlan : paymentPlanBean.getDegreeCurricularPlans()) {
             createInstallments(makePaymentPlan(paymentPlanBean, degreeCurricularPlan), paymentPlanBean.getInstallments());
         }
@@ -139,7 +134,6 @@ public class GratuityPaymentPlanManager {
 
     @Atomic
     public static void delete(final PaymentPlan paymentPlan) {
-        check(RolePredicates.MANAGER_PREDICATE);
         paymentPlan.delete();
     }
 

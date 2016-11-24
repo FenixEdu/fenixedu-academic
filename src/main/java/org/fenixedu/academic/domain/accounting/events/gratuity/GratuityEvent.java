@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 
 import org.fenixedu.academic.domain.Degree;
@@ -38,7 +36,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
@@ -146,12 +143,6 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return getStudentCurricularPlan().getRegistration();
     }
 
-    @Override
-    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-        super.setStudentCurricularPlan(studentCurricularPlan);
-    }
-
     public boolean isCompleteEnrolmentModel() {
         return getRegistration().isCompleteEnrolmentModel(getExecutionYear());
     }
@@ -231,7 +222,6 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     @Override
     protected void disconnect() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setStudentCurricularPlan(null);
         super.disconnect();
     }

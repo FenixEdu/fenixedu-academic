@@ -22,8 +22,6 @@
  */
 package org.fenixedu.academic.service.services.manager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +29,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.InfoStudentCurricularPlan;
-import org.fenixedu.academic.predicate.RolePredicates;
-
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -43,8 +39,6 @@ public class ReadStudentCurricularInformation {
 
     @Atomic
     public static List run(final Integer studentNumber, final DegreeType degreeType) {
-        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
-
         final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 
         for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {

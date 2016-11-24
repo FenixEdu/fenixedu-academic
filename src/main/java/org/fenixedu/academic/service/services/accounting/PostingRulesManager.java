@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.accounting;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -42,7 +40,6 @@ import org.fenixedu.academic.dto.accounting.postingRule.CreateDFAGratuityPosting
 import org.fenixedu.academic.dto.accounting.postingRule.CreateGratuityPostingRuleBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.service.services.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -54,8 +51,6 @@ public class PostingRulesManager {
 
     @Atomic
     static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
-
         if (bean.getRule() == GratuityWithPaymentPlanPR.class) {
 
             for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
@@ -84,7 +79,6 @@ public class PostingRulesManager {
 
     @Atomic
     static public void createStandaloneGraduationGratuityPostingRule(final CreateStandaloneEnrolmentGratuityPRBean bean) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
 
         if (bean.getRule() == StandaloneEnrolmentGratuityPR.class) {
             for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
@@ -115,7 +109,6 @@ public class PostingRulesManager {
 
     @Atomic
     static public void createDFAGratuityPostingRule(final CreateDFAGratuityPostingRuleBean bean) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
         if (bean.getRule() == DFAGratuityByAmountPerEctsPR.class) {
             new DFAGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
                     bean.getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
@@ -129,7 +122,6 @@ public class PostingRulesManager {
 
     @Atomic
     static public void createSpecializationDegreeGratuityPostingRule(final CreateSpecializationDegreeGratuityPostingRuleBean bean) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
         if (bean.getRule() == SpecializationDegreeGratuityByAmountPerEctsPR.class) {
             new SpecializationDegreeGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
                     bean.getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
@@ -140,8 +132,6 @@ public class PostingRulesManager {
 
     @Atomic
     static public void deleteDEAPostingRule(final PostingRule postingRule) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
-
         for (PaymentPlan paymentPlan : postingRule.getServiceAgreementTemplate().getPaymentPlansSet()) {
             paymentPlan.delete();
         }
@@ -151,13 +141,11 @@ public class PostingRulesManager {
 
     @Atomic
     static public void deletePostingRule(final PostingRule postingRule) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
         postingRule.delete();
     }
 
     @Atomic
     public static void createDEAGratuityPostingRule(PaymentPlanBean paymentPlanBean) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
         CreateGratuityPostingRuleBean createGratuityPostingRuleBean = new CreateGratuityPostingRuleBean();
         createGratuityPostingRuleBean.setExecutionYear(paymentPlanBean.getExecutionYear());
         createGratuityPostingRuleBean.setDegreeCurricularPlans(paymentPlanBean.getDegreeCurricularPlans());
@@ -184,8 +172,6 @@ public class PostingRulesManager {
     @Atomic
     public static void createDEAStandaloneGratuityPostingRule(StandaloneInstallmentBean bean,
             DegreeCurricularPlan degreeCurricularPlan) {
-        check(AcademicPredicates.MANAGE_PAYMENTS);
-
         DegreeCurricularPlanServiceAgreementTemplate dcpSAT = degreeCurricularPlan.getServiceAgreementTemplate();
         if (dcpSAT != null) {
             YearMonthDay startDate = bean.getStartDate();

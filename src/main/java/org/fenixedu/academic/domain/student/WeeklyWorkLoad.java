@@ -18,10 +18,7 @@
  */
 package org.fenixedu.academic.domain.student;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -74,7 +71,6 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
     }
 
     public void delete() {
-        check(this, RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE);
         setAttends(null);
         setRootDomainObject(null);
 

@@ -757,7 +757,6 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getTransitionRegistrations() {
-        check(this, StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager);
         final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()) {
@@ -781,7 +780,6 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getTransitedRegistrations() {
-        check(this, StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager);
         List<Registration> result = new ArrayList<Registration>();
         for (Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransited()) {

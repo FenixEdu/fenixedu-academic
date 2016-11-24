@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,7 +30,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -217,12 +214,6 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     @Override
-    public void setStartDate(DateTime startDate) {
-        check(this, AcademicPredicates.MANAGE_PAYMENTS);
-        super.setStartDate(startDate);
-    }
-
-    @Override
     public void setEndDate(DateTime endDate) {
         if (hasEndDate()) {
             throw new DomainException("error.accounting.PostingRule.endDate.is.already.set");
@@ -240,7 +231,6 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public void delete() {
-        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         super.setServiceAgreementTemplate(null);
 

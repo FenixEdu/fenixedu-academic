@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Collections;
 import java.util.Set;
 
@@ -29,7 +27,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
 
 public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
@@ -65,12 +62,6 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
                     "error.org.fenixedu.academic.domain.accounting.events.gratuity.PastDegreeGratuityEvent.pastDegreeGratuityAmount.cannot.be.null.and.must.be.greather.than.zero");
         }
 
-    }
-
-    @Override
-    public void setPastDegreeGratuityAmount(Money pastDegreeGratuityAmount) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-        super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
     }
 
     @Override

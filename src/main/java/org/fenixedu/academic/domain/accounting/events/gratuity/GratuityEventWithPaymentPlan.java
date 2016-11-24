@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,7 +53,6 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
@@ -494,7 +491,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     @Override
     protected void disconnect() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         if (hasCustomGratuityPaymentPlan()) {
             ((CustomGratuityPaymentPlan) super.getGratuityPaymentPlan()).delete();
         }

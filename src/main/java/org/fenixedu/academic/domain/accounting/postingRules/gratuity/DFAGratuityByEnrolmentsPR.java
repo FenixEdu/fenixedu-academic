@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -28,7 +26,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -79,14 +76,11 @@ public class DFAGratuityByEnrolmentsPR extends DFAGratuityByEnrolmentsPR_Base {
     }
 
     public DFAGratuityByEnrolmentsPR edit(Money dfaTotalAmount, Money dfaAmountPerEnrolment, BigDecimal partialAcceptedPercentage) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         return edit(new DateTime(), dfaTotalAmount, dfaAmountPerEnrolment, partialAcceptedPercentage);
     }
 
     public DFAGratuityByEnrolmentsPR edit(DateTime startDate, Money dfaTotalAmount, Money dfaAmountPerEnrolment,
             BigDecimal partialAcceptedPercentage) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-
         deactivate(startDate);
 
         return new DFAGratuityByEnrolmentsPR(startDate, null, getServiceAgreementTemplate(), dfaTotalAmount,

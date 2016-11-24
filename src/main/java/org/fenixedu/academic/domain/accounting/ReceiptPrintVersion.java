@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -72,7 +69,6 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
     }
 
     void delete() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setPerson(null);
         super.setReceipt(null);
         setRootDomainObject(null);

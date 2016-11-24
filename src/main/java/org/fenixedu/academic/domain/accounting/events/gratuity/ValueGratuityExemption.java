@@ -18,15 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -63,7 +60,6 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 
     @Override
     public void setValue(Money value) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setValue(value);
         final DateTime now = new DateTime();
         getGratuityEvent().forceChangeState(EventState.OPEN, now);

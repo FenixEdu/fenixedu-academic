@@ -18,10 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -78,7 +75,6 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
     }
 
     void delete() {
-        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setTransaction(null);
         setRootDomainObject(null);
         super.deleteDomainObject();

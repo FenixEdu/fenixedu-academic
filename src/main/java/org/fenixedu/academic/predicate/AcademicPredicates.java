@@ -81,6 +81,7 @@ public class AcademicPredicates {
         };
     };
 
+    @Deprecated
     public static final AccessControlPredicate<Object> MANAGE_PAYMENTS = new AccessControlPredicate<Object>() {
 
         @Override
