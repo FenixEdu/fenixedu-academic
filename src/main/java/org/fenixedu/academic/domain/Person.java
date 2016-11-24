@@ -1504,13 +1504,19 @@ public class Person extends Person_Base {
         return user == null ? null : user.getPerson();
     }
 
+    /**
+     * This method gets the identification document series number.
+     * The value is ignored if the document is not an identity card.
+     */
     public String getIdentificationDocumentSeriesNumber() {
-        String seriesNumber = getIdentificationDocumentSeriesNumberValue();
-        String extraDigit = getIdentificationDocumentExtraDigitValue();
-        if (seriesNumber != null) {
-            return seriesNumber;
-        } else if (extraDigit != null) {
-            return extraDigit;
+        if (getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
+        	String seriesNumber = getIdentificationDocumentSeriesNumberValue();
+        	String extraDigit = getIdentificationDocumentExtraDigitValue();
+        	if (seriesNumber != null) {
+        		return seriesNumber;
+        	} else if (extraDigit != null) {
+        		return extraDigit;
+        	}
         }
         return "";
     }
@@ -1539,7 +1545,7 @@ public class Person extends Person_Base {
     }
 
     public void setIdentificationDocumentSeriesNumber(final String identificationDocumentSeriesNumber) {
-        if (!StringUtils.isEmpty(identificationDocumentSeriesNumber)) {
+        if (!StringUtils.isEmpty(identificationDocumentSeriesNumber) && getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
             if (identificationDocumentSeriesNumber.trim().length() == 1) {
                 final PersonIdentificationDocumentExtraInfo personIdentificationDocumentExtraInfo =
                         getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class);

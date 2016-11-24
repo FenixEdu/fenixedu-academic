@@ -259,6 +259,7 @@ public class PersonBean implements Serializable {
         setDocumentIdExpirationDate(person.getExpirationDateOfDocumentIdYearMonthDay());
         setDocumentIdNumber(person.getDocumentIdNumber());
         setIdDocumentType(person.getIdDocumentType());
+        setIdentificationDocumentSeriesNumber(person.getIdentificationDocumentSeriesNumber());
         setSocialSecurityNumber(person.getSocialSecurityNumber());
 
         if (person.hasDefaultPhysicalAddress()) {
@@ -282,19 +283,7 @@ public class PersonBean implements Serializable {
         setEmailAvailable(person.getAvailableEmail());
         setHomepageAvailable(person.getAvailableWebSite());
 
-        initIdentificationDocumentSeriesNumber(person);
-
         setPerson(person);
-    }
-
-    private void initIdentificationDocumentSeriesNumber(Person person) {
-        String seriesNumber = person.getIdentificationDocumentSeriesNumberValue();
-        String extraDigit = person.getIdentificationDocumentExtraDigitValue();
-        if (seriesNumber != null) {
-            setIdentificationDocumentSeriesNumber(seriesNumber);
-        } else if (extraDigit != null) {
-            setIdentificationDocumentSeriesNumber(extraDigit);
-        }
     }
 
     public String getAddress() {
