@@ -50,7 +50,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
     @Override
     protected void assertEnrolmentPreConditions() {
-        if (!isResponsiblePersonManager() && !getRegistration().isRegistered(getExecutionSemester())) {
+        if (!getRegistration().isRegistered(getExecutionSemester())) {
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
         }
 

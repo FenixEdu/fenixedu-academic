@@ -44,10 +44,6 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
     @Override
     protected void assertEnrolmentPreConditions() {
-        if (isResponsiblePersonManager()) {
-            return;
-        }
-
         if (!hasRegistrationInValidState()) {
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
         }

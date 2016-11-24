@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -40,7 +39,6 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.InfoExecutionYear;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
 import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionYear;
 import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
@@ -289,8 +287,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         final List<InfoExecutionYear> notClosedInfoExecutionYears = ReadNotClosedExecutionYears.run();
 
         for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
-            Person loggedPerson = AccessControl.getPerson();
-            if (RoleType.MANAGER.isMember(loggedPerson.getUser()) || notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
+            if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
                 result.add(new SelectItem(notClosedInfoExecutionYear.getExternalId(), notClosedInfoExecutionYear.getYear()));
             }
         }

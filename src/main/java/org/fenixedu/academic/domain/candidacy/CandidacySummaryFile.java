@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.domain.User;
 
 public class CandidacySummaryFile extends CandidacySummaryFile_Base {
@@ -31,9 +30,6 @@ public class CandidacySummaryFile extends CandidacySummaryFile_Base {
 
     @Override
     public boolean isAccessible(User user) {
-        if (RoleType.MANAGER.isMember(user)) {
-            return true;
-        }
         User candidate = getStudentCandidacy().getPerson().getUser();
         if (candidate != null && candidate.equals(user)) {
             return true;

@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.documents;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -33,11 +31,6 @@ public class GeneratedDocumentWithoutSource extends GeneratedDocumentWithoutSour
             byte[] content) {
         super();
         init(type, addressee, operator, filename, content);
-    }
-
-    @Override
-    public boolean isAccessible(User user) {
-        return super.isAccessible(user) || RoleType.MANAGER.isMember(user);
     }
 
     @Atomic
