@@ -621,14 +621,14 @@
 						<fr:schema bundle="CANDIDATE_RESOURCES" type="org.fenixedu.academic.domain.period.GenericApplicationPeriod">
 							<fr:slot name="telephoneContact" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            						<fr:property name="regexp" value="(\+?\d{4,15})?"/>
+            						<fr:property name="regexp" value="(\+?\d{4,14})?"/>
             						<fr:property name="message" value="error.phone.invalidFormat"/>
             						<fr:property name="key" value="true"/>
             						<fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
             						<fr:property name="isKey" value="true"/>
 								</fr:validator>			 	
-								<fr:property name="size" value="15" />
-								<fr:property name="maxLength" value="15" />
+								<fr:property name="size" value="14" />
+								<fr:property name="maxLength" value="14" />
 							</fr:slot>
 						</fr:schema>
 						<fr:layout name="flow">
