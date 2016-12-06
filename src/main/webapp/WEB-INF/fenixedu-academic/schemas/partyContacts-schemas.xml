@@ -123,14 +123,8 @@
 		<property name="size" value="50" />
 	</slot>
 	<slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="areaCode">
-		<property name="size" value="10" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-			<property name="regexp" value="\d{4}-\d{3}" />
-			<property name="message" value="error.areaCode.invalidFormat" />
-			<property name="key" value="true" />
-			<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
-		</validator>
+	<slot name="areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="12" />
 	</slot>
 	<slot name="areaOfAreaCode"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
