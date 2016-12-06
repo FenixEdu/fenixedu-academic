@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
@@ -263,6 +264,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public void edit(String name, CurricularStage curricularStage, DegreeCurricularPlanState state, GradeScale gradeScale,
             ExecutionYear beginExecutionYear) {
+
+        if (curricularStage.equals(CurricularStage.APPROVED) && !getAllCoursesGroups().stream()
+                .map(CourseGroup::getProgramConclusion).anyMatch(Objects::nonNull)) {
+            throw new DomainException("error.degreeCurricularPlan.missing.program.conclusion");
+        }
 
         if (isApproved()
                 && (name != null && !getName().equals(name) || gradeScale != null && !getGradeScale().equals(gradeScale))) {
