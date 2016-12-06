@@ -80,6 +80,8 @@ public class CandidacyProcessPaymentCodesManagementDA extends FenixDispatchActio
                 IndividualCandidacyPaymentCode.getAvailablePaymentCodes(
                         PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS, new YearMonthDay()).size();
 
+        Integer phdSize = IndividualCandidacyPaymentCode.getAvailablePaymentCodes(PaymentCodeType.PHD_PROGRAM_CANDIDACY_PROCESS, new YearMonthDay()).size();
+        
         request.setAttribute("over23Size", over23Size);
         request.setAttribute("externalDegreeCandidacyForGraduatedPersonSize", externalDegreeCandidacyForGraduatedPersonSize);
         request.setAttribute("internalDegreeCandidacyForGraduatedPersonSize", internalDegreeCandidacyForGraduatedPersonSize);
@@ -88,6 +90,7 @@ public class CandidacyProcessPaymentCodesManagementDA extends FenixDispatchActio
         request.setAttribute("externalDegreeTransferSize", externalDegreeTransferSize);
         request.setAttribute("internalDegreeTransferSize", internalDegreeTransferSize);
         request.setAttribute("secondCycleSize", secondCycleSize);
+        request.setAttribute("phdSize", phdSize);
 
         return mapping.findForward("index");
     }
