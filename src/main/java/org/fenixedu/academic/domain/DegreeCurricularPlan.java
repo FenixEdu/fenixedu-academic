@@ -1052,7 +1052,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     /**
      * Used to create a CurricularCourse to non box structure
+     * @deprecated Curricular courses should no longer be created without a competence.
      */
+    @Deprecated
     public CurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
             CurricularStage curricularStage) {
         return new CurricularCourse(this, name, code, acronym, enrolmentAllowed, curricularStage);

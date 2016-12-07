@@ -209,7 +209,12 @@ public class CurricularCourse extends CurricularCourse_Base {
     /**
      * - This method is used to edit a 'special' curricular course that will
      * represent any curricular course according to a rule
+     * @deprecated This method sets attributes that are no longer used in regular CurricularCourse objects.
+     * Use
+     * {@link org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse#edit(String, String, CurricularStage) edit}
+     * instead.
      */
+    @Deprecated
     public void edit(String name, String nameEn, CurricularStage curricularStage) {
         setName(name);
         setNameEn(nameEn);
@@ -218,6 +223,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     /**
      * - Edit Pre-Bolonha CurricularCourse
+     * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
+     * appropriate
+     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     * object.
      */
     public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits,
             Integer enrolmentWeigth, Integer minimumValueForAcumulatedEnrollments, Integer maximumValueForAcumulatedEnrollments,
@@ -759,8 +768,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getProblemsHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getProblemsHours(
-                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getProblemsHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
     }
 
     final public double getLaboratorialHours() {
@@ -776,8 +785,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getLaboratorialHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getLaboratorialHours(
-                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getLaboratorialHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(),
+                        executionSemester) : 0.0d;
     }
 
     final public Double getSeminaryHours() {
@@ -793,8 +803,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getSeminaryHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getSeminaryHours(
-                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getSeminaryHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
     }
 
     final public double getFieldWorkHours() {
@@ -810,8 +820,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getFieldWorkHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getFieldWorkHours(
-                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getFieldWorkHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
     }
 
     final public double getTrainingPeriodHours() {
@@ -827,8 +837,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getTrainingPeriodHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getTrainingPeriodHours(
-                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getTrainingPeriodHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(),
+                        executionSemester) : 0.0d;
     }
 
     final public double getTutorialOrientationHours() {
@@ -843,10 +854,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getTutorialOrientationHours((CurricularPeriod) null, executionSemester);
     }
 
-    final public Double getTutorialOrientationHours(final CurricularPeriod curricularPeriod,
-            final ExecutionSemester executionSemester) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getTutorialOrientationHours(
-                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
+    final public Double getTutorialOrientationHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getTutorialOrientationHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(),
+                        executionSemester) : 0.0d;
     }
 
     final public double getAutonomousWorkHours() {
@@ -862,13 +873,14 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getAutonomousWorkHours(final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getAutonomousWorkHours(
-                curricularPeriod.getChildOrder(), executionYear) : 0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getAutonomousWorkHours(curricularPeriod.getChildOrder(), executionYear) : 0d;
     }
 
     final public Double getAutonomousWorkHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getAutonomousWorkHours(
-                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getAutonomousWorkHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(),
+                        executionSemester) : 0.0d;
     }
 
     final public double getContactLoad() {
@@ -888,22 +900,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getContactLoad(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        if (isBolonhaDegree()) {
-            return getCompetenceCourse() != null ? getCompetenceCourse().getContactLoad(
-                    curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
-        } else {
-            return getContactLoadForPreBolonha();
-        }
-    }
-
-    private Double getContactLoadForPreBolonha() {
-        final Double theoreticalHours = getTheoreticalHours() == null ? 0d : getTheoreticalHours();
-        final Double theoPratHours = getTheoPratHours() == null ? 0d : getTheoPratHours();
-        final Double praticalHours = getPraticalHours() == null ? 0d : getPraticalHours();
-        final Double labHours = getLabHours() == null ? 0d : getLabHours();
-        return CompetenceCourseLoad.NUMBER_OF_WEEKS
-                * (theoreticalHours.doubleValue() + theoPratHours.doubleValue() + praticalHours.doubleValue() + labHours
-                        .doubleValue());
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getContactLoad(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
     }
 
     final public double getTotalLoad() {
@@ -923,12 +921,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getTotalLoad(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        if (isBolonhaDegree()) {
-            return getCompetenceCourse() != null ? getCompetenceCourse().getTotalLoad(
-                    curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
-        } else {
-            return getAutonomousWorkHours() + getContactLoadForPreBolonha();
-        }
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getTotalLoad(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
     }
 
     @Override
@@ -945,13 +939,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getLabHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        if (isBolonhaDegree()) {
-            return getCompetenceCourse() != null ? getCompetenceCourse().getLaboratorialHours(
-                    curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
-        } else {
-            final Double labHours = super.getLabHours();
-            return labHours == null ? 0.0d : labHours;
-        }
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getLaboratorialHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(),
+                        executionSemester) : 0.0d;
     }
 
     @Override
@@ -968,13 +958,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getTheoreticalHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
-        if (isBolonhaDegree()) {
-            return getCompetenceCourse() != null ? getCompetenceCourse().getTheoreticalHours(
-                    curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
-        } else {
-            final Double theoreticalHours = super.getTheoreticalHours();
-            return theoreticalHours == null ? 0.0d : theoreticalHours;
-        }
+        return getCompetenceCourse() != null ? getCompetenceCourse()
+                .getTheoreticalHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(),
+                        executionSemester) : 0.0d;
     }
 
     @Override
@@ -991,7 +977,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     final public Double getCredits() {
-        return isBolonhaDegree() ? getEctsCredits() : super.getCredits();
+        return getEctsCredits();
     }
 
     @Override
@@ -1020,20 +1006,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Double getEctsCredits(final Integer order, final ExecutionSemester executionSemester) {
-        if (isBolonhaDegree()) {
-            if (getCompetenceCourse() != null) {
-                return getCompetenceCourse().getEctsCredits(order, executionSemester);
-            } else if (isOptionalCurricularCourse()) {
-                return Double.valueOf(0.0);
-            }
-        } else {
-            final Double credits = getCredits();
-            if (getDegreeType().isMasterDegree() && credits != null) {
-                return credits;
-            }
-            return super.getEctsCredits();
+        if (getCompetenceCourse() != null) {
+            return getCompetenceCourse().getEctsCredits(order, executionSemester);
+        } else if (isOptionalCurricularCourse()) {
+            return 0.0d;
         }
-
         throw new DomainException("CurricularCourse.with.no.ects.credits");
     }
 
@@ -1055,27 +1032,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getWeight() {
-        if (isBolonhaDegree()) {
-            return getEctsCredits();
-        }
-
-        if (getDegreeType().isMasterDegree()) {
-            return getCredits();
-        }
-
-        return super.getWeigth();
+        return getEctsCredits();
     }
 
     final public Double getWeight(ExecutionSemester semester) {
-        if (isBolonhaDegree()) {
-            return getEctsCredits(semester);
-        }
-
-        if (getDegreeType().isMasterDegree()) {
-            return getCredits();
-        }
-
-        return super.getWeigth();
+        return getEctsCredits(semester);
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
@@ -1308,9 +1269,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public String getName(ExecutionSemester period) {
-        final String superName = super.getName();
-        return ((superName == null || superName.length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse().getName(
-                period) : superName;
+        return getCompetenceCourse() != null ? getCompetenceCourse().getName(period) : null;
     }
 
     @Override
@@ -1320,9 +1279,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public String getNameEn(ExecutionSemester period) {
-        final String superNameEn = super.getNameEn();
-        return ((superNameEn == null || superNameEn.length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse()
-                .getNameEn(period) : superNameEn;
+        return getCompetenceCourse() != null ? getCompetenceCourse().getNameEn(period) : null;
     }
 
     @Override
@@ -1331,8 +1288,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getAcronym(ExecutionSemester period) {
-        return (super.getAcronym() == null || super.getAcronym().length() == 0) && getCompetenceCourse() != null ? getCompetenceCourse()
-                .getAcronym(period) : super.getAcronym();
+        return getCompetenceCourse() != null ? getCompetenceCourse().getAcronym(period) : null;
     }
 
     @Override
@@ -1349,8 +1305,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Boolean getBasic(ExecutionSemester period) {
-        return ((super.getBasic() == null) && getCompetenceCourse() != null) ? getCompetenceCourse().isBasic(period) : super
-                .getBasic();
+        return getCompetenceCourse() != null && getCompetenceCourse().isBasic(period);
     }
 
     @Override
@@ -1359,7 +1314,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectives(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectives(period);
         }
         Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
@@ -1370,7 +1325,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectives() {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectives();
         }
         Curriculum curriculum = findLatestCurriculum();
@@ -1381,7 +1336,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectivesEn(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectivesEn(period);
         }
         Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
@@ -1392,7 +1347,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectivesEn() {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectivesEn();
         }
         Curriculum curriculum = findLatestCurriculum();
@@ -1403,7 +1358,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectivesI18N(period);
         }
         Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
@@ -1414,7 +1369,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getProgram(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgram(period);
         }
         Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
@@ -1425,7 +1380,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getProgram() {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgram();
         }
         Curriculum curriculum = findLatestCurriculum();
@@ -1436,7 +1391,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getProgramEn(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgramEn(period);
         }
         Curriculum curriculum = findLatestCurriculum();
@@ -1447,7 +1402,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getProgramEn() {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgramEn();
         }
         Curriculum curriculum = findLatestCurriculum();
@@ -1458,7 +1413,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public MultiLanguageString getProgramI18N(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
+        if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgramI18N(period);
         }
         Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
@@ -1510,9 +1465,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public MultiLanguageString getEvaluationMethodI18N(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
-            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getEvaluationMethod(period)).with(
-                    MultiLanguageString.en, getCompetenceCourse().getEvaluationMethodEn(period));
+        if (getCompetenceCourse() != null) {
+            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getEvaluationMethod(period))
+                    .with(MultiLanguageString.en, getCompetenceCourse().getEvaluationMethodEn(period));
         }
         List<ExecutionCourse> courses = getExecutionCoursesByExecutionPeriod(period);
         if (courses.isEmpty()) {
@@ -1582,23 +1537,14 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean isAnual() {
-        if (!isBolonhaDegree()) {
-            return getRegimeType() == RegimeType.ANUAL;
-        }
         return getCompetenceCourse() != null && getCompetenceCourse().isAnual();
     }
 
     public boolean isAnual(final ExecutionYear executionYear) {
-        if (!isBolonhaDegree()) {
-            return getRegimeType() == RegimeType.ANUAL;
-        }
         return getCompetenceCourse() != null && getCompetenceCourse().isAnual(executionYear);
     }
 
     public boolean isSemestrial(final ExecutionYear executionYear) {
-        if (!isBolonhaDegree()) {
-            return getRegimeType() == RegimeType.SEMESTRIAL;
-        }
         return getCompetenceCourse() != null && getCompetenceCourse().isSemestrial(executionYear);
     }
 
@@ -2196,10 +2142,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public String getCode() {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getCode();
-        }
-        return super.getCode();
+       return getCompetenceCourse() != null ? getCompetenceCourse().getCode() : null;
     }
 
     public void setWeight(final BigDecimal input) {

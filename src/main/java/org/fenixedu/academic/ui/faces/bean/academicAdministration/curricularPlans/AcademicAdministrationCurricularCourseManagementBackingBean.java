@@ -217,6 +217,12 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
     }
 
+    /**
+     * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
+     * appropriate
+     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     * object.
+     */
     @Deprecated
     public String createOldCurricularCourse() {
         try {
@@ -247,6 +253,13 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         return "buildCurricularPlan";
     }
 
+
+     /**
+     * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
+     * appropriate
+     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     * object.
+     */
     @Deprecated
     public String editOldCurricularCourse() {
         try {
