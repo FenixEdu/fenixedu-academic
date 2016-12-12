@@ -121,7 +121,7 @@
 								</fr:slot>
 								<fr:slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 									<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.CountryProvider"/>
-									<fr:property name="format" value="${countryNationality}" />
+									<fr:property name="format" value="\${countryNationality}" />
 									<fr:property name="sortBy" value="countryNationality"/>
 								</fr:slot>
 								<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -134,7 +134,7 @@
 									<fr:property name="size" value="20"/>
 								</fr:slot>
 							    <fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-									<fr:property name="format" value="${localizedName}"/>
+									<fr:property name="format" value="\${localizedName}"/>
 									<fr:property name="sortBy" value="localizedName=asc" />
 									<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 								</fr:slot>

@@ -78,13 +78,13 @@
 	<fr:edit nested="true" name="personBean" id="filiation">
 		<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="MANAGER_RESOURCES">
 			<fr:slot name="countryOfBirth" layout="menu-select"> 
-				<fr:property name="format" value="${name}"/>
+				<fr:property name="format" value="\${name}"/>
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>
 			<fr:slot name="nationality" layout="menu-select"> 
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/> 
-				<fr:property name="format" value="${nationality}"/>
+				<fr:property name="format" value="\${nationality}"/>
 				<fr:property name="sortBy" value="nationality=asc" />
 			</fr:slot>
 			<fr:slot name="dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
@@ -119,7 +119,7 @@
 	<fr:edit nested="true" name="personBean" id="residence">
 		<fr:schema type="org.fenixedu.academic.dto.person.PersonBean" bundle="MANAGER_RESOURCES">
 			<fr:slot name="countryOfResidence" layout="menu-select" > 
-				<fr:property name="format" value="${name}"/>
+				<fr:property name="format" value="\${name}"/>
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>
