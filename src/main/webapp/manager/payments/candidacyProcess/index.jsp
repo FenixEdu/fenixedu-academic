@@ -67,4 +67,9 @@
 		<bean:write name="secondCycleSize" /> -
 		<html:link action="/candidacyPaymentCodes.do?method=prepareCreatePaymentCodes&type=SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS" >Criar Referências</html:link>
 	</li>
+	<li>
+		<bean:message key="label.phd" bundle="PHD_RESOURCES"/> -
+		<bean:write name="phdSize" /> -
+		<html:link action="/candidacyPaymentCodes.do?method=prepareCreatePaymentCodes&type=PHD_PROGRAM_CANDIDACY_PROCESS" >Criar Referências</html:link>
+	</li>
 </ul>
