@@ -142,17 +142,12 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
 
     @Override
     public byte[] generateDocument() {
-        try {
-            final List<AdministrativeOfficeDocument> documents =
-                    AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
-            final AdministrativeOfficeDocument[] array = {};
-            byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
-            DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
-            return data;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new DomainException("error.documentRequest.errorGeneratingDocument");
-        }
+        final List<AdministrativeOfficeDocument> documents =
+                AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
+        final AdministrativeOfficeDocument[] array = {};
+        byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
+        DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
+        return data;
     }
 
     @Override
