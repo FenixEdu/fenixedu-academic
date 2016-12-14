@@ -1317,7 +1317,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
             throw new DomainException("error.program.conclusion.empty");
         }
 
-        if (!isConcluded()) {
+        if (!getConclusionProcessEnabler().isAllowed(this)) {
             throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
         }
 
@@ -1326,6 +1326,32 @@ public class CurriculumGroup extends CurriculumGroup_Base {
             super.getConclusionProcess().update(bean);
         } else {
             super.setConclusionProcess(new ProgramConclusionProcess(bean));
+        }
+    }
+
+    static public interface ConclusionProcessEnabler {
+
+        public boolean isAllowed(final CurriculumGroup curriculumGroup);
+    }
+
+    static private Supplier<ConclusionProcessEnabler> CONCLUSION_PROCESS_ENABLER = () -> new ConclusionProcessEnabler() {
+
+        @Override
+        public boolean isAllowed(final CurriculumGroup curriculumGroup) {
+
+            return curriculumGroup != null && curriculumGroup.isConcluded();
+        }
+    };
+
+    static public ConclusionProcessEnabler getConclusionProcessEnabler() {
+        return CONCLUSION_PROCESS_ENABLER.get();
+    }
+
+    static public void setConclusionProcessEnabler(final Supplier<ConclusionProcessEnabler> input) {
+        if (input != null && input.get() != null) {
+            CONCLUSION_PROCESS_ENABLER = input;
+        } else {
+            logger.error("Could not set CONCLUSION_PROCESS_ENABLER to null");
         }
     }
 
