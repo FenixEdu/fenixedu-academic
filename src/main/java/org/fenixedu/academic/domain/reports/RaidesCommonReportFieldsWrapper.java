@@ -59,6 +59,7 @@ public class RaidesCommonReportFieldsWrapper {
         spreadsheet.setHeader("Data de conclusão");
         spreadsheet.setHeader("Data de início");
         spreadsheet.setHeader("número aluno");
+        spreadsheet.setHeader("nome de utilizador");
         spreadsheet.setHeader("tipo identificação");
         spreadsheet.setHeader("número identificação");
         spreadsheet.setHeader("digitos controlo");
@@ -170,6 +171,9 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Nº de aluno
         row.setCell(registration.getNumber());
+
+        // Nome de Utilizador
+        row.setCell(registration.getPerson().getUsername());
 
         // Tipo Identificação
         row.setCell(graduate.getIdDocumentType().getLocalizedName());
