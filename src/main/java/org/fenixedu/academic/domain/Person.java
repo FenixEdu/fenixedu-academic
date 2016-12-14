@@ -365,6 +365,7 @@ public class Person extends Person_Base {
         setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
         setDefaultPhoneNumber(personBean.getPhone());
         setDefaultEmailAddressValue(personBean.getEmail(), true);
+        setDefaultMobilePhoneNumber(personBean.getMobile());
         return this;
     }
 
