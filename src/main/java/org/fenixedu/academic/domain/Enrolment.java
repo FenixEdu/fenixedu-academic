@@ -62,7 +62,6 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsDismissal;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
-import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.EctsAndWeightProviderRegistry;
 import org.fenixedu.academic.domain.studentCurriculum.EnrolmentWrapper;
@@ -356,7 +355,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         // just to be precocious
         if (supplier.get().count() > 1) {
-            logger.warn(this + " has more than one " + season + " in state " + state);
+            logger.warn("Multiple Evaluations for pair Season<->STATE! [REG {}] [SCP {}] [{}] [{}] [{}]",
+                    getRegistration().getNumber(), getStudentCurricularPlan().getName(), print("").toString().replace("/n", ""),
+                    season == null ? "" : season.getName().getContent(), state == null ? "" : state.toString());
+
         }
 
         return supplier.get().findAny();
@@ -377,8 +379,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Optional<EnrolmentEvaluation> getEnrolmentEvaluation(final EvaluationSeason season,
             final ExecutionSemester semester, final Boolean assertFinal) {
 
-        final Supplier<Stream<EnrolmentEvaluation>> supplier = () -> getEnrolmentEvaluationBySeason(season).filter(evaluation ->
-        {
+        final Supplier<Stream<EnrolmentEvaluation>> supplier = () -> getEnrolmentEvaluationBySeason(season).filter(evaluation -> {
 
             if (evaluation.isAnnuled()) {
                 return false;
@@ -405,7 +406,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         // ugly, but just to be precocious
         if (supplier.get().count() > 1) {
-            logger.warn(this + " has more than one " + season + " for " + semester);
+            logger.warn("Multiple Evaluations for pair Season<->SEMESTER! [REG {}] [SCP {}] [{}] [{}] [{}]",
+                    getRegistration().getNumber(), getStudentCurricularPlan().getName(), print("").toString().replace("/n", ""),
+                    season == null ? "" : season.getName().getContent(), semester == null ? "" : semester.getQualifiedName());
         }
 
         return supplier.get().findAny();
