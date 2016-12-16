@@ -228,7 +228,9 @@ public class PersonBean implements Serializable {
                 setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
             }
 
-            setMobile(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : person.getPendingMobilePhones().get(0).getNumber());
+            setMobile(
+                    person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : person.getPendingMobilePhones()
+                            .stream().map(MobilePhone::getNumber).findFirst().orElse(null));
             setWebAddress(person.hasDefaultWebAddress() ? person.getDefaultWebAddress().getUrl() : null);
             setEmailAvailable(person.getAvailableEmail());
             setHomepageAvailable(person.getAvailableWebSite());
