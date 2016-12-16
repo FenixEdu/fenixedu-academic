@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.alumni.CerimonyInquiry;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentCerimonyInquiryGroup extends PersistentCerimonyInquiryGroup_Base {
     protected PersistentCerimonyInquiryGroup(CerimonyInquiry cerimonyInquiry) {
@@ -35,9 +39,8 @@ public class PersistentCerimonyInquiryGroup extends PersistentCerimonyInquiryGro
     }
 
     @Override
-    protected void gc() {
-        setCerimonyInquiry(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentCerimonyInquiryGroupCerimonyInquiry());
     }
 
     public static PersistentCerimonyInquiryGroup getInstance(CerimonyInquiry cerimonyInquiry) {

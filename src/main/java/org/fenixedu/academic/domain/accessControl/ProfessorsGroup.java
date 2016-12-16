@@ -19,8 +19,7 @@
 package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -33,9 +32,9 @@ public final class ProfessorsGroup extends FenixGroupStrategy {
     private static final long serialVersionUID = -7099165263747393201L;
 
     @Override
-    public Set<User> getMembers() {
-        return Bennu.getInstance().getProfessorshipsSet().stream().map( input -> input.getPerson().getUser())
-                .filter(Objects::nonNull).collect(Collectors.toSet());
+    public Stream<User> getMembers() {
+        return Bennu.getInstance().getProfessorshipsSet().stream().map(input -> input.getPerson().getUser())
+                .filter(Objects::nonNull);
     }
 
     @Override
@@ -44,7 +43,7 @@ public final class ProfessorsGroup extends FenixGroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

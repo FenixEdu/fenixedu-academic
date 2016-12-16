@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
@@ -46,7 +45,7 @@ public class AlumniNotificationService {
     }
 
     private static List<Recipient> getAlumniRecipients(Alumni alumni) {
-        return Collections.singletonList(Recipient.newInstance(UserGroup.of(alumni.getStudent().getPerson().getUser())));
+        return Collections.singletonList(Recipient.newInstance(alumni.getStudent().getPerson().getUser().groupOf()));
     }
 
     protected static void sendPublicAccessMail(final Alumni alumni, final String alumniEmail) {
@@ -90,8 +89,8 @@ public class AlumniNotificationService {
             case PASSWORD_REQUEST:
                 body +=
                         MessageFormat.format(BundleUtil.getString(Bundle.MANAGER, "alumni.identity.request.password.request"),
-                                request.getAlumni().getLoginUsername(), CoreConfiguration.getConfiguration().casServerUrl()
-                                        .replace("/cas", ""), request.getExternalId(), request.getRequestToken().toString());
+                                request.getAlumni().getLoginUsername(), "https://id.tecnico.ulisboa.pt", request.getExternalId(),
+                                request.getRequestToken().toString());
                 break;
             case STUDENT_NUMBER_RECOVERY:
                 body +=

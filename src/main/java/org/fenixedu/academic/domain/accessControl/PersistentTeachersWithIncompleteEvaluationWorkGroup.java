@@ -18,12 +18,17 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
+
+import com.google.common.collect.Sets;
 
 public abstract class PersistentTeachersWithIncompleteEvaluationWorkGroup extends
         PersistentTeachersWithIncompleteEvaluationWorkGroup_Base {
@@ -37,10 +42,9 @@ public abstract class PersistentTeachersWithIncompleteEvaluationWorkGroup extend
     }
 
     @Override
-    protected void gc() {
-        setPeriod(null);
-        setDegreeCurricularPlan(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Sets.newHashSet(getRelationPersistentTeachersWithIncompleteEvaluationWorkGroupPeriod(),
+                getRelationPersistentTeachersWithIncompleteEvaluationWorkGroupDegreeCurricularPlan());
     }
 
     protected static <T extends PersistentTeachersWithIncompleteEvaluationWorkGroup> T singleton(Class<T> type,

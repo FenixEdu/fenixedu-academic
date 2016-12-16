@@ -41,6 +41,7 @@ import org.fenixedu.academic.ui.struts.action.messaging.MessagingApplication.Mes
 import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -90,7 +91,7 @@ public class ViewSentEmailsDA extends FenixDispatchAction {
         request.setAttribute("sendersGroupsCourses", sendersGroupsCourses);
 
         final Person person = AccessControl.getPerson();
-        if (person != null && RoleType.MANAGER.isMember(person.getUser())) {
+        if (person != null && Group.managers().isMember(person.getUser())) {
             SearchSendersBean searchSendersBean = getRenderedObject("searchSendersBean");
             if (searchSendersBean == null) {
                 searchSendersBean = new SearchSendersBean();

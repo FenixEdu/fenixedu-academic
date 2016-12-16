@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.util.Bundle;
@@ -41,15 +39,15 @@ public class AllCoordinatorsGroup extends GroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers() {
-        return Stream.concat(
-                Bennu.getInstance().getCoordinatorsSet().stream().map(coordinator -> coordinator.getPerson().getUser()),
-                Bennu.getInstance().getScientificCommissionsSet().stream().map(commission -> commission.getPerson().getUser()))
-                .collect(Collectors.toSet());
+    public Stream<User> getMembers() {
+        return Stream
+                .concat(Bennu.getInstance().getCoordinatorsSet().stream().map(coordinator -> coordinator.getPerson().getUser()),
+                        Bennu.getInstance().getScientificCommissionsSet().stream()
+                                .map(commission -> commission.getPerson().getUser()));
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

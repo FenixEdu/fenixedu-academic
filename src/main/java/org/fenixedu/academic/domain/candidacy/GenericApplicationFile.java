@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain.candidacy;
 
 import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
+import org.fenixedu.bennu.io.servlet.FileDownloadServlet;
 
 public class GenericApplicationFile extends GenericApplicationFile_Base {
 

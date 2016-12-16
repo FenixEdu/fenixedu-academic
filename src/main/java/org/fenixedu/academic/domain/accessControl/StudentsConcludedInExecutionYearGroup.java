@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.accessControl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -65,7 +66,7 @@ public class StudentsConcludedInExecutionYearGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         Set<User> users = new HashSet<User>();
         for (Registration registration : degree.getRegistrationsSet()) {
             if (registration.hasConcluded()) {
@@ -80,11 +81,11 @@ public class StudentsConcludedInExecutionYearGroup extends FenixGroup {
                 }
             }
         }
-        return users;
+        return users.stream();
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

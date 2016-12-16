@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.accessControl.ScientificCommissionGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.DynamicGroup;
-import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.io.servlet.FileDownloadServlet;
 
 public class ThesisFile extends ThesisFile_Base {
 
@@ -55,7 +55,7 @@ public class ThesisFile extends ThesisFile_Base {
                 }
             }
         }
-        return DynamicGroup.get("scientificCouncil").or(ScientificCommissionGroup.get(getThesis().getDegree())).isMember(user)
+        return Group.dynamic("scientificCouncil").or(ScientificCommissionGroup.get(getThesis().getDegree())).isMember(user)
                 || getThesisMembers().contains(user);
     }
 

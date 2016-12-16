@@ -18,9 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.Degree;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     protected PersistentAlumniGroup(Degree degree) {
@@ -37,9 +42,11 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     }
 
     @Override
-    protected void gc() {
-        setDegree(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        Set<Relation<?, ?>> set = new HashSet<>();
+        set.add(getRelationPersistentAlumniGroupDegree());
+        set.addAll(super.getContextRelations());
+        return set;
     }
 
     public static PersistentAlumniGroup getInstance() {

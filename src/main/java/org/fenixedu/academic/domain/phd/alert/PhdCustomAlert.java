@@ -35,8 +35,6 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
-import com.google.common.collect.ImmutableSet;
-
 public class PhdCustomAlert extends PhdCustomAlert_Base {
 
     protected PhdCustomAlert() {
@@ -94,9 +92,8 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         return getTargetGroup().toGroup();
     }
 
-    protected ImmutableSet<Person> getTargetPeople() {
-        return getTargetAccessGroup().getMembers().stream().map(User::getPerson)
-                .collect(Collectors.collectingAndThen(Collectors.toSet(), ImmutableSet::copyOf));
+    protected Set<Person> getTargetPeople() {
+        return getTargetAccessGroup().getMembers().map(User::getPerson).collect(Collectors.toSet());
     }
 
     @Override
@@ -143,15 +140,10 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     public String getTargetGroupInText() {
         Group targetGroup = getTargetAccessGroup();
 
-        Set<User> elements = targetGroup.getMembers();
-
         StringBuilder builder = new StringBuilder();
-
-        for (User user : elements) {
-            builder.append(user.getPerson().getName()).append(" (").append(user.getPerson().getEmailForSendingEmails())
-                    .append(")\n");
-        }
-
+        targetGroup.getMembers().forEach(
+                user -> builder.append(user.getPerson().getName()).append(" (")
+                        .append(user.getPerson().getEmailForSendingEmails()).append(")\n"));
         return builder.toString();
     }
 

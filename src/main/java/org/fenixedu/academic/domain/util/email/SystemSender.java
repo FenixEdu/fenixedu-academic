@@ -19,10 +19,8 @@
 package org.fenixedu.academic.domain.util.email;
 
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -31,7 +29,7 @@ public class SystemSender extends SystemSender_Base {
 
     public SystemSender() {
         super();
-        setMembers(RoleType.MANAGER.actualGroup());
+        setMembers(Group.managers());
         setFromAddress(Sender.getNoreplyMail());
         setSystemRootDomainObject(getRootDomainObject());
         setFromName(createFromName());
@@ -41,20 +39,19 @@ public class SystemSender extends SystemSender_Base {
         return String.format("%s (%s)", Unit.getInstitutionAcronym(), "Sistema Fénix");
     }
 
-    public Recipient getRoleRecipient(RoleType roleType) {
-        final Group roleGroup = roleType.actualGroup();
+    public Recipient getGroupRecipient(Group group) {
         for (Recipient recipient : getRecipientsSet()) {
             final Group members = recipient.getMembers();
-            if (roleGroup.equals(members)) {
+            if (group.equals(members)) {
                 return recipient;
             }
         }
-        return createRoleRecipient(roleGroup);
+        return createGroupRecipient(group);
     }
 
     @Atomic(mode = TxMode.WRITE)
-    private Recipient createRoleRecipient(Group roleGroup) {
-        final Recipient recipient = new Recipient(roleGroup);
+    private Recipient createGroupRecipient(Group group) {
+        final Recipient recipient = new Recipient(group);
         addRecipients(recipient);
         return recipient;
     }
@@ -62,7 +59,7 @@ public class SystemSender extends SystemSender_Base {
     public Group getOptOutGroup() {
         PersistentGroup optOutGroup = super.getOptOutPersistentGroup();
         if (optOutGroup == null) {
-            return NobodyGroup.get();
+            return Group.nobody();
         }
         return optOutGroup.toGroup();
     }

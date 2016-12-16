@@ -61,7 +61,7 @@ public class CreateAdministrativeOfficeFeeEvent extends CronTask {
             }
         } catch (Exception e) {
             taskLog("Exception on student curricular plan with oid : %s\n", scp.getExternalId());
-            e.printStackTrace(getTaskLogWriter());
+            e.printStackTrace();
         }
     }
 
@@ -76,7 +76,7 @@ public class CreateAdministrativeOfficeFeeEvent extends CronTask {
             }
         } catch (Exception e) {
             taskLog("Exception on person with oid : %s\n", person.getExternalId());
-            e.printStackTrace(getTaskLogWriter());
+            e.printStackTrace();
         }
     }
 

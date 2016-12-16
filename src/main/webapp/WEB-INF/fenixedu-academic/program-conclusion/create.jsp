@@ -38,7 +38,7 @@ ${portal.toolkit()}
 
 <section>
 	<form:form role="form" method="POST" class="form-horizontal" action="${actionUrl}">
-	
+		${csrf.field()}
 		<div class="form-group">
 			<label for="name" class="col-sm-1 control-label"><spring:message code="label.name" /></label>
 			<div class="col-sm-11">

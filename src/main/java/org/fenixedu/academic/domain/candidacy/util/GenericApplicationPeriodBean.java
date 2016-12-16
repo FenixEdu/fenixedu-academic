@@ -21,9 +21,8 @@ package org.fenixedu.academic.domain.candidacy.util;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.MultiLanguageString;
-import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
@@ -75,8 +74,7 @@ public class GenericApplicationPeriodBean implements Serializable {
 
     @Atomic
     public void createNewPeriod() {
-        final User userView = Authenticate.getUser();
-        if (userView != null && RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
+        if (Group.managers().isMember(Authenticate.getUser())) {
             if (title != null && title.hasContent() && start != null && end != null) {
                 new GenericApplicationPeriod(title, description, start, end);
             }

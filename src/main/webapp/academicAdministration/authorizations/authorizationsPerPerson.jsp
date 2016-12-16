@@ -46,6 +46,7 @@
 			
 				<logic:equal value="false" name="authorizationsBean" property="hasNewObject">
 					<fr:form action="/authorizations.do?method=addNewAuthorization">
+						${csrf.field()}
 						<fr:edit id="authorizationsBean" name="authorizationsBean" visible="false" />
 						<html:submit value="Criar nova Autorização"/>
 					</fr:form>
@@ -67,7 +68,7 @@
 				
 				<div class="edit-authorizations">
 				<fr:form action="/authorizations.do">
-				
+				${csrf.field()}
 				<html:hidden property="method" value="manageOperation"/>
 
 				<fr:edit id="authorizationsBean" name="authorizationsBean" visible="false" />

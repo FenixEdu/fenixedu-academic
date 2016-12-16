@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 @Deprecated
 public class PersistentStudentGroupGroup extends PersistentStudentGroupGroup_Base {
@@ -36,9 +40,8 @@ public class PersistentStudentGroupGroup extends PersistentStudentGroupGroup_Bas
     }
 
     @Override
-    protected void gc() {
-        setStudentGroup(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationStudentGroupStudentGroupGroup());
     }
 
     public static PersistentStudentGroupGroup getInstance(final StudentGroup studentGroup) {

@@ -185,6 +185,7 @@ $(document).ready(function() {
 							</td>
 							<td>
 								<form:form class="revoke" role="form" method="POST" action="${revokeUrl}/${auth.externalId}/revoke" modelAttribute="search">
+									${csrf.field()}
 									<input type="hidden" name="department" value="${search.department == null ? null : search.department.externalId}"/>
 									<input type="hidden" name="period" value="${search.period.externalId}"/>
 									<button type="submit" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-remove-sign"></i> <spring:message code="teacher.authorizations.revoke" /></button>

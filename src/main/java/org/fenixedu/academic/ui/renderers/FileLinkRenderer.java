@@ -20,7 +20,7 @@ package org.fenixedu.academic.ui.renderers;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.io.domain.GenericFile;
-import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
+import org.fenixedu.bennu.io.servlet.FileDownloadServlet;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;

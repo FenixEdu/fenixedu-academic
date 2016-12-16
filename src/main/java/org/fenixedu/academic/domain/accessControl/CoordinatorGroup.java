@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.Degree;
@@ -103,7 +104,7 @@ public class CoordinatorGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         Set<User> users = new HashSet<>();
         if (degreeType != null) {
             ExecutionYear year = ExecutionYear.readCurrentExecutionYear();
@@ -138,11 +139,11 @@ public class CoordinatorGroup extends FenixGroup {
                 }
             }
         }
-        return users;
+        return users.stream();
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

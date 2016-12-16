@@ -25,10 +25,10 @@ import java.util.TreeSet;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.candidacy.GenericApplication;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -103,9 +103,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
 
     public boolean isCurrentUserAllowedToMange() {
         final User userView = Authenticate.getUser();
-        return userView != null
-                && (RoleType.MANAGER.isMember(userView.getPerson().getUser()) || getManagerSet().contains(
-                        userView.getPerson().getUser()));
+        return userView != null && (Group.managers().isMember(userView) || getManagerSet().contains(userView));
     }
 
 }

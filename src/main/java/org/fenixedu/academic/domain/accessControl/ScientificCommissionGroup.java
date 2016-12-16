@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ScientificCommission;
@@ -57,19 +56,13 @@ public class ScientificCommissionGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
-        Set<User> users = new HashSet<>();
-        for (ScientificCommission member : degree.getCurrentScientificCommissionMembers()) {
-            User user = member.getPerson().getUser();
-            if (user != null) {
-                users.add(user);
-            }
-        }
-        return users;
+    public Stream<User> getMembers() {
+        return degree.getCurrentScientificCommissionMembers().stream().map(member -> member.getPerson().getUser())
+                .filter(user -> user != null);
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 
