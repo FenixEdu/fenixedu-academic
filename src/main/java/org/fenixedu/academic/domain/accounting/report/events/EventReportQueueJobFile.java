@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.accounting.report.events;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
+import org.fenixedu.bennu.io.servlet.FileDownloadServlet;
 
 public class EventReportQueueJobFile extends EventReportQueueJobFile_Base {
 

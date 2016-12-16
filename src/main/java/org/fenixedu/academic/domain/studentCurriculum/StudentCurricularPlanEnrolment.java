@@ -49,6 +49,7 @@ import org.fenixedu.academic.domain.phd.enrolments.PhdStudentCurricularPlanEnrol
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
+import org.fenixedu.bennu.core.groups.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -346,7 +347,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
     @Deprecated
     protected boolean isResponsiblePersonManager() {
-        return RoleType.MANAGER.isMember(getResponsiblePerson().getUser());
+        return Group.managers().isMember(getResponsiblePerson().getUser());
     }
 
     // Old AcademicAdminOffice role check

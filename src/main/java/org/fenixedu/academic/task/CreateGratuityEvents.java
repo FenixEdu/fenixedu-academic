@@ -68,7 +68,7 @@ public class CreateGratuityEvents extends CronTask {
             }
         } catch (Exception e) {
             taskLog("Exception on student curricular plan with oid : %s\n", studentCurricularPlan.getExternalId());
-            e.printStackTrace(getTaskLogWriter());
+            e.printStackTrace();
         }
     }
 

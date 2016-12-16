@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.util.Bundle;
@@ -41,14 +40,13 @@ public class ExternalSupervisorGroup extends GroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return Bennu.getInstance().getRegistrationProtocolsSet().stream()
-                .<Person> flatMap(protocol -> protocol.getSupervisorsSet().stream()).map(Person::getUser)
-                .collect(Collectors.toSet());
+                .flatMap(protocol -> protocol.getSupervisorsSet().stream()).map(Person::getUser);
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

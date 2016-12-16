@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Accountability;
@@ -97,15 +98,15 @@ public class UnitGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return getMembers(new DateTime());
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         Set<User> users = new HashSet<>();
         collect(users, unit, when);
-        return users;
+        return users.stream();
     }
 
     private void collect(Set<User> users, Unit unit, DateTime when) {

@@ -39,11 +39,11 @@ import org.fenixedu.academic.domain.candidacy.util.GenericApplicationUploadBean;
 import org.fenixedu.academic.domain.candidacy.util.GenericApplicationUserBean;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.publico.PublicApplication.PublicCandidaciesApp;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -76,7 +76,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         request.setAttribute("periods", periods);
 
         final User userView = Authenticate.getUser();
-        if (userView != null && RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
+        if (userView != null && Group.managers().isMember(userView)) {
             final GenericApplicationPeriodBean genericApplicationPeriodBean = new GenericApplicationPeriodBean();
             request.setAttribute("genericApplicationPeriodBean", genericApplicationPeriodBean);
         }

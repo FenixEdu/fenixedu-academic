@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.candidacy;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
+import org.fenixedu.bennu.io.servlet.FileDownloadServlet;
 
 public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
 

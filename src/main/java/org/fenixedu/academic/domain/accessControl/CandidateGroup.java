@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
@@ -43,13 +42,13 @@ public class CandidateGroup extends GroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return Bennu.getInstance().getCandidaciesSet().stream().filter(this::isActive)
-                .map(candidacy -> candidacy.getPerson().getUser()).collect(Collectors.toSet());
+                .map(candidacy -> candidacy.getPerson().getUser());
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

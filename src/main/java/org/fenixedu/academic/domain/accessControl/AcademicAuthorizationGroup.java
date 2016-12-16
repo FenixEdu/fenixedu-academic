@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
@@ -90,7 +91,7 @@ public class AcademicAuthorizationGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         if (scope != null) {
             return AcademicAccessRule.getMembers(r -> scope.contains(r.getOperation()));
         }
@@ -98,7 +99,7 @@ public class AcademicAuthorizationGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         if (scope != null) {
             return AcademicAccessRule.getMembers(r -> scope.contains(r.getOperation()), when);
         }

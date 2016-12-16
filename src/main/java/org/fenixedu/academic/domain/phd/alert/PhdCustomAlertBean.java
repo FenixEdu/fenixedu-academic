@@ -25,7 +25,6 @@ import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
 
@@ -133,7 +132,7 @@ public class PhdCustomAlertBean implements Serializable {
         case MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS:
             return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
         case ONLY_FOR_ME:
-            return UserGroup.of(Authenticate.getUser());
+            return Authenticate.getUser().groupOf();
 
         default:
             throw new RuntimeException("Target group type not supported");

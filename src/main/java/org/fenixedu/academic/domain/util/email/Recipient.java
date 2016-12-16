@@ -30,9 +30,7 @@ import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -59,7 +57,7 @@ public class Recipient extends Recipient_Base {
     }
 
     public Recipient(final Collection<Person> persons) {
-        this(UserGroup.of(Person.convertToUsers(persons)));
+        this(Person.convertToUserGroup(persons));
     }
 
     public Recipient(final String toName, final Group members) {
@@ -101,7 +99,7 @@ public class Recipient extends Recipient_Base {
     }
 
     public void addDestinationEmailAddresses(final Set<String> emailAddresses) {
-        for (final User user : getMembers().getMembers()) {
+        getMembers().getMembers().forEach(user -> {
             final EmailAddress emailAddress = user.getPerson().getEmailAddressForSendingEmails();
             if (emailAddress != null) {
                 final String value = emailAddress.getValue();
@@ -109,7 +107,7 @@ public class Recipient extends Recipient_Base {
                     emailAddresses.add(value);
                 }
             }
-        }
+        });
     }
 
     @Override
@@ -174,14 +172,10 @@ public class Recipient extends Recipient_Base {
         StringBuilder builder = new StringBuilder();
         Group membersGroup = getMembers();
 
-        Set<User> elements = membersGroup.getMembers();
-
-        for (User user : elements) {
-            builder.append(user.getPerson().getName()).append(" (").append(user.getPerson().getEmailForSendingEmails())
-                    .append(")").append("\n");
-        }
+        membersGroup.getMembers().forEach(
+                user -> builder.append(user.getPerson().getName()).append(" (")
+                        .append(user.getPerson().getEmailForSendingEmails()).append(")").append("\n"));
 
         return builder.toString();
     }
-
 }

@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentScientificCommissionGroup extends PersistentScientificCommissionGroup_Base {
     protected PersistentScientificCommissionGroup(Degree degree) {
@@ -35,9 +39,8 @@ public class PersistentScientificCommissionGroup extends PersistentScientificCom
     }
 
     @Override
-    protected void gc() {
-        setDegree(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentScientificCommissionGroupDegree());
     }
 
     public static PersistentScientificCommissionGroup getInstance(Degree degree) {

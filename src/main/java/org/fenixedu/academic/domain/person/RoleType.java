@@ -52,6 +52,10 @@ public enum RoleType implements IPresentableEnum {
 
     COORDINATOR("allCoordinators"),
 
+    /**
+     * @deprecated Use {@link Group#managers()} instead
+     */
+    @Deprecated
     MANAGER("#managers"),
 
     /**

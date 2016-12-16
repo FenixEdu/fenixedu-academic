@@ -18,9 +18,13 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.Grouping;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentGroupingGroup extends PersistentGroupingGroup_Base {
     protected PersistentGroupingGroup(Grouping grouping) {
@@ -34,9 +38,8 @@ public class PersistentGroupingGroup extends PersistentGroupingGroup_Base {
     }
 
     @Override
-    protected void gc() {
-        setGrouping(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentGroupingGroupGrouping());
     }
 
     public static PersistentGroupingGroup getInstance(Grouping grouping) {

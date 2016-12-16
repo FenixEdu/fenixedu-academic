@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
@@ -54,7 +53,7 @@ public class NotifyStudentGroup {
                 BundleUtil.getString(Bundle.GLOBAL, "label.group", new String[] { submission.getStudentGroup().getGroupNumber()
                         .toString() });
         Sender sender = ExecutionCourseSender.newInstance(course);
-        Recipient recipient = new Recipient(groupName, UserGroup.of(Person.convertToUsers(recievers)));
+        Recipient recipient = new Recipient(groupName, Person.convertToUserGroup(recievers));
         new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(),
                 submission.getTeacherObservation(), "");
     }

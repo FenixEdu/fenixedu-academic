@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public abstract class FenixPredicateGroup extends FenixPredicateGroup_Base {
     public FenixPredicateGroup() {
@@ -30,9 +34,8 @@ public abstract class FenixPredicateGroup extends FenixPredicateGroup_Base {
     }
 
     @Override
-    protected void gc() {
-        setRootForFenixPredicate(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationFenixPredicateGroupBennu());
     }
 
     protected static <T extends FenixPredicateGroup> Stream<T> filter(Class<T> type) {

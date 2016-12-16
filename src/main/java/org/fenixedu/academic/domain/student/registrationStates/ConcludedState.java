@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.workflow.IState;
 import org.fenixedu.academic.domain.util.workflow.StateBean;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.joda.time.DateTime;
 
 /**
@@ -45,7 +44,7 @@ public class ConcludedState extends ConcludedState_Base {
         }
 
         init(registration, person, dateTime);
-        UserLoginPeriod.createOpenPeriod(registration.getPerson().getUser());
+        registration.getPerson().getUser().openLoginPeriod();
     }
 
     @Override

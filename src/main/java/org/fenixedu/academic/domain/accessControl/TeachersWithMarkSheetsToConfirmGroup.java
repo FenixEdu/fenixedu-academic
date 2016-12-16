@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.accessControl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -78,7 +79,7 @@ public class TeachersWithMarkSheetsToConfirmGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         Set<User> users = new HashSet<>();
         for (MarkSheet markSheet : period.getMarkSheetsToConfirm(degreeCurricularPlan)) {
             if (markSheet.getResponsibleTeacher().getPerson() != null) {
@@ -88,17 +89,17 @@ public class TeachersWithMarkSheetsToConfirmGroup extends FenixGroup {
                 }
             }
         }
-        return users;
+        return users.stream();
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 
     @Override
     public boolean isMember(User user) {
-        return user != null && getMembers().contains(user);
+        return user != null && getMembers().anyMatch(u -> u == user);
     }
 
     @Override

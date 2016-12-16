@@ -24,7 +24,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 @Deprecated
 public abstract class File extends File_Base {
@@ -48,7 +47,7 @@ public abstract class File extends File_Base {
     }
 
     public Group getPermittedGroup() {
-        return getAccessGroup() != null ? getAccessGroup().toGroup() : NobodyGroup.get();
+        return getAccessGroup() != null ? getAccessGroup().toGroup() : Group.nobody();
     }
 
     public void setPermittedGroup(Group group) {

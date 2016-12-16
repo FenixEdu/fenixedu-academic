@@ -18,10 +18,8 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Stream;
 
-import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Grouping;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -57,25 +55,19 @@ public class GroupingGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
-        Set<User> users = new HashSet<>();
-        for (Attends attend : grouping.getAttendsSet()) {
-            User user = attend.getRegistration().getStudent().getPerson().getUser();
-            if (user != null) {
-                users.add(user);
-            }
-        }
-        return users;
+    public Stream<User> getMembers() {
+        return grouping.getAttendsSet().stream().map(att -> att.getRegistration().getStudent().getPerson().getUser())
+                .filter(u -> u != null);
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 
     @Override
     public boolean isMember(User user) {
-        return user != null && getMembers().contains(user);
+        return getMembers().anyMatch(u -> u == user);
     }
 
     @Override

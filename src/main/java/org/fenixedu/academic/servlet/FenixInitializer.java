@@ -32,8 +32,8 @@ import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
+import org.fenixedu.bennu.core.api.SystemResource;
 import org.fenixedu.bennu.core.rest.Healthcheck;
-import org.fenixedu.bennu.core.rest.SystemResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

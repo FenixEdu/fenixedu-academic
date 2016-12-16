@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 @Deprecated
 public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuidingsAndAssistantsOfPhdGroup_Base {
@@ -36,9 +40,8 @@ public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuiding
     }
 
     @Override
-    protected void gc() {
-        setPhdIndividualProgramProcess(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentGuidingsAndAssistantsOfPhdGroupPhdIndividualProgramProcess());
     }
 
     public static PersistentGuidingsAndAssistantsOfPhdGroup getInstance(

@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.Degree;
@@ -171,18 +171,18 @@ public class StudentGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         if (executionCourse != null) {
             if (degree == null && degreeType == null && campus == null) {
-                return registrationsToUsers(getCourseBasedRegistrations(executionCourse));
+                return registrationsToUsers(getCourseBasedRegistrations(executionCourse).stream());
             } else {
                 return registrationsToUsers(Sets.intersection(getCourseBasedRegistrations(executionCourse),
-                        getDegreeBasedRegistrations()));
+                        getDegreeBasedRegistrations()).stream());
             }
         } else if (campus != null) {
             return registrationsToUsers(getCampusBasedRegistrations());
         } else {
-            return registrationsToUsers(getDegreeBasedRegistrations());
+            return registrationsToUsers(getDegreeBasedRegistrations().stream());
         }
     }
 
@@ -254,13 +254,13 @@ public class StudentGroup extends FenixGroup {
 
     private static Stream<Registration> getRegistrations(DegreeType type) {
         Set<Registration> registrations = new HashSet<>();
-        for (User user : RoleType.STUDENT.actualGroup().getMembers()) {
+        RoleType.STUDENT.actualGroup().getMembers().forEach(user -> {
             user.getPerson().getStudentsSet().forEach(reg -> {
                 if (reg.getDegreeType() == type && reg.isActive()) {
                     registrations.add(reg);
                 }
             });
-        }
+        });
         return registrations.stream();
     }
 
@@ -278,21 +278,14 @@ public class StudentGroup extends FenixGroup {
 
     private static Stream<Registration> getRegistrations() {
         Set<Registration> registrations = new HashSet<>();
-        for (User user : RoleType.STUDENT.actualGroup().getMembers()) {
+        RoleType.STUDENT.actualGroup().getMembers().forEach(user -> {
             registrations.addAll(user.getPerson().getStudent().getActiveRegistrations());
-        }
+        });
         return registrations.stream();
     }
 
-    private static Set<User> registrationsToUsers(Set<Registration> registrations) {
-        Set<User> users = new HashSet<>();
-        for (Registration registration : registrations) {
-            User user = registration.getPerson().getUser();
-            if (user != null) {
-                users.add(user);
-            }
-        }
-        return users;
+    private static Stream<User> registrationsToUsers(Stream<Registration> registrations) {
+        return registrations.map(reg -> reg.getPerson().getUser()).filter(o -> o != null);
     }
 
     private static Set<Registration> getCourseBasedRegistrations(ExecutionCourse executionCourse) {
@@ -303,7 +296,7 @@ public class StudentGroup extends FenixGroup {
         return registrations;
     }
 
-    private Set<Registration> getCampusBasedRegistrations() {
+    private Stream<Registration> getCampusBasedRegistrations() {
         Set<Registration> registrations = new HashSet<>();
         for (final ExecutionDegree executionDegree : ExecutionYear.readCurrentExecutionYear().getExecutionDegreesSet()) {
             if (executionDegree.getCampus().equals(campus)) {
@@ -316,11 +309,11 @@ public class StudentGroup extends FenixGroup {
                 }
             }
         }
-        return registrations;
+        return registrations.stream();
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

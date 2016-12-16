@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
@@ -44,17 +42,17 @@ public class ActiveStudentsGroup extends GroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers() {
-        return Stream
-                .concat(Bennu.getInstance().getPhdProgramsSet().stream()
+    public Stream<User> getMembers() {
+        return Stream.concat(
+                Bennu.getInstance().getPhdProgramsSet().stream()
                         .flatMap(program -> program.getIndividualProgramProcessesSet().stream())
                         .filter(PhdIndividualProgramProcess::isProcessActive).map(PhdIndividualProgramProcess::getPerson),
-                        Bennu.getInstance().getStudentsSet().stream().filter(Student::hasActiveRegistrations)
-                                .map(Student::getPerson)).map(Person::getUser).collect(Collectors.toSet());
+                Bennu.getInstance().getStudentsSet().stream().filter(Student::hasActiveRegistrations).map(Student::getPerson))
+                .map(Person::getUser);
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

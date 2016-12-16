@@ -21,6 +21,7 @@ package org.fenixedu.academic.predicate;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class StudentPredicates {
 
@@ -30,7 +31,7 @@ public class StudentPredicates {
                 @Override
                 public boolean evaluate(Student student) {
                     final Person person = AccessControl.getPerson();
-                    return person.getStudent() == student || RoleType.MANAGER.isMember(person.getUser());
+                    return person.getStudent() == student || Group.managers().isMember(person.getUser());
                 }
             };
 

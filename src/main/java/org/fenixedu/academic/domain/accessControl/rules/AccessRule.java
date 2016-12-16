@@ -24,7 +24,6 @@ import java.util.Set;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
@@ -100,7 +99,7 @@ public abstract class AccessRule extends AccessRule_Base {
         Objects.requireNonNull(whoCanAccess);
         Objects.requireNonNull(whatCanAffect);
         revoke();
-        if (!whoCanAccess.equals(NobodyGroup.get())) {
+        if (!whoCanAccess.equals(Group.nobody())) {
             return operation.grant(whoCanAccess, whatCanAffect);
         }
         return Optional.empty();

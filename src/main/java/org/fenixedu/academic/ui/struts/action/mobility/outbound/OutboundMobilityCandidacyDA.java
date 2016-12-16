@@ -21,8 +21,6 @@ package org.fenixedu.academic.ui.struts.action.mobility.outbound;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -49,8 +47,6 @@ import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdm
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UnionGroup;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -449,7 +445,9 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final String toGroupName =
                 BundleUtil.getString(Bundle.ACADEMIC, "label.send.email.to.candidates.group.to.name",
                         mobilityGroup.getDescription(), period.getExecutionInterval().getName());
-        final Group group = UnionGroup.of(getCandidateGroups(mobilityGroup, period));
+        final Group group =
+                Group.users(period.getOutboundMobilityCandidacySubmissionSet().stream()
+                        .filter(s -> s.hasContestInGroup(mobilityGroup)).map(s -> s.getRegistration().getPerson().getUser()));
 
         final Recipient recipient = Recipient.newInstance(toGroupName, group);
         final EmailBean bean = new EmailBean();
@@ -466,17 +464,6 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         request.setAttribute("emailBean", bean);
 
         return mapping.findForward("sendEmail");
-    }
-
-    private Set<Group> getCandidateGroups(final OutboundMobilityCandidacyContestGroup mobilityGroup,
-            final OutboundMobilityCandidacyPeriod period) {
-        final Set<Group> groups = new HashSet<Group>();
-        for (final OutboundMobilityCandidacySubmission submission : period.getOutboundMobilityCandidacySubmissionSet()) {
-            if (submission.hasContestInGroup(mobilityGroup)) {
-                groups.add(UserGroup.of(submission.getRegistration().getPerson().getUser()));
-            }
-        }
-        return groups;
     }
 
     public ActionForward deleteOption(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,

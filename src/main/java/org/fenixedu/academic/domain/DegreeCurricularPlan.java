@@ -77,8 +77,6 @@ import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -204,7 +202,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         createDefaultCourseGroups();
 
-        setCurricularPlanMembersGroup(UserGroup.of(creator.getUser()));
+        setCurricularPlanMembersGroup(creator.getUser().groupOf());
         setDegreeStructure(curricularPeriod);
         setState(DegreeCurricularPlanState.ACTIVE);
 
@@ -1164,7 +1162,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Group getCurricularPlanMembersGroup() {
-        return getMembersGroup() != null ? getMembersGroup().toGroup() : NobodyGroup.get();
+        return getMembersGroup() != null ? getMembersGroup().toGroup() : Group.nobody();
     }
 
     public void setCurricularPlanMembersGroup(Group group) {
