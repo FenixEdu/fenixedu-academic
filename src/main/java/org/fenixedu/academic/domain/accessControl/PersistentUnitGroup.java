@@ -18,11 +18,15 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentUnitGroup extends PersistentUnitGroup_Base {
     protected PersistentUnitGroup(Unit unit, AccountabilityTypeEnum relationType, boolean includeSubUnits) {
@@ -38,9 +42,8 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
     }
 
     @Override
-    protected void gc() {
-        setUnit(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentUnitGroupUnit());
     }
 
     public static PersistentUnitGroup getInstance(final Unit unit, final AccountabilityTypeEnum relationType,

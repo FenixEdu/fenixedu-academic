@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.accessControl;
 
 import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Professorship;
@@ -59,16 +59,13 @@ public class TeacherResponsibleOfExecutionCourseGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
-        Set<User> users = new HashSet<>();
-        for (Professorship professorship : executionCourse.responsibleFors()) {
-            users.add(professorship.getPerson().getUser());
-        }
-        return users;
+    public Stream<User> getMembers() {
+        return executionCourse.getProfessorshipsSet().stream().filter(Professorship::getResponsibleFor)
+                .map(professorship -> professorship.getPerson().getUser());
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

@@ -40,7 +40,7 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -177,8 +177,8 @@ public class AuthorizationsManagementBean implements Serializable {
         if (operation != null) {
             SortedSet<User> members = new TreeSet<>(User.COMPARATOR_BY_NAME);
             members.addAll(AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(operation))
-                    .map(r -> r.getWhoCanAccess()).reduce((result, group) -> result.or(group)).orElseGet(NobodyGroup::get)
-                    .getMembers());
+                    .map(r -> r.getWhoCanAccess()).reduce((result, group) -> result.or(group)).orElseGet(Group::nobody)
+                    .getMembers().collect(Collectors.toSet()));
             return members;
         }
         return Collections.emptySet();

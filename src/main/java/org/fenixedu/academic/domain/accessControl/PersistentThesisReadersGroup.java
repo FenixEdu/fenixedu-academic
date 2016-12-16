@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 @Deprecated
 public class PersistentThesisReadersGroup extends PersistentThesisReadersGroup_Base {
@@ -36,9 +40,8 @@ public class PersistentThesisReadersGroup extends PersistentThesisReadersGroup_B
     }
 
     @Override
-    protected void gc() {
-        setThesis(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentThesisReadersGroupThesis());
     }
 
     public static PersistentThesisReadersGroup getInstance(Thesis thesis) {

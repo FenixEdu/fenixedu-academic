@@ -120,7 +120,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
         }
 
         request.setAttribute("chartData", createJsonArray(registrationsByDay));
-        request.setAttribute("statistics1", RoleType.ALUMNI.actualGroup().getMembers().size());
+        request.setAttribute("statistics1", RoleType.ALUMNI.actualGroup().getMembers().distinct().count());
         request.setAttribute("statistics2", totalAlumniCount);
         request.setAttribute("statistics3", newAlumniCount);
         request.setAttribute("statistics4", registeredAlumniCount);

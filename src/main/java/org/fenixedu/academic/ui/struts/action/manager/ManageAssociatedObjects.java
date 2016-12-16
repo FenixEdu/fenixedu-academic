@@ -444,7 +444,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     @Atomic
     private void createDepartment(AssociatedObjectsBean bean) {
         Department department = new Department();
-        department.setCompetenceCourseMembersGroup(RoleType.MANAGER.actualGroup());
+        department.setCompetenceCourseMembersGroup(Group.managers());
         department.setActive(bean.isActive());
         department.setCode(bean.getCode());
         department.setName(bean.getName());
@@ -636,7 +636,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             d.setName(bean.getName());
             d.setRealName(bean.getRealName());
             d.setRealNameEn(bean.getRealNameEn());
-            d.setCompetenceCourseMembersGroup(Group.parse(bean.getUsername()));
+            d.setCompetenceCourseMembersGroup(User.findByUsername(bean.getUsername()).groupOf());
         });
 
         return list(mapping, form, request, response);

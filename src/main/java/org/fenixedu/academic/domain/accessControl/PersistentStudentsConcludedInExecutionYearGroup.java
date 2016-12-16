@@ -18,11 +18,16 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
+
+import com.google.common.collect.Sets;
 
 public class PersistentStudentsConcludedInExecutionYearGroup extends PersistentStudentsConcludedInExecutionYearGroup_Base {
     protected PersistentStudentsConcludedInExecutionYearGroup(Degree degree, ExecutionYear conclusionYear) {
@@ -37,10 +42,9 @@ public class PersistentStudentsConcludedInExecutionYearGroup extends PersistentS
     }
 
     @Override
-    protected void gc() {
-        setDegree(null);
-        setConclusionYear(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Sets.newHashSet(getRelationPersistentStudentsConcludedInExecutionYearGroupDegrees(),
+                getRelationPersistentStudentsConcludedInExecutionYearExecutionYear());
     }
 
     public static PersistentStudentsConcludedInExecutionYearGroup getInstance(Degree degree, ExecutionYear conclusionYear) {

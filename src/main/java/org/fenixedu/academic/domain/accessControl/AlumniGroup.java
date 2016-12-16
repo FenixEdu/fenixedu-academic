@@ -18,10 +18,8 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Stream;
 
-import org.fenixedu.academic.domain.Alumni;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.util.Bundle;
@@ -66,24 +64,14 @@ public class AlumniGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return getMembers(DateTime.now());
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
-        //TODO: time specific is just using Alumni.getRegisteredWhen() date?
-        Set<User> users = new HashSet<>();
-        for (final Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
-            User user = alumni.getStudent().getPerson().getUser();
-            if (user != null) {
-                if (degree != null && !isMember(user, when)) {
-                    continue;
-                }
-                users.add(user);
-            }
-        }
-        return users;
+    public Stream<User> getMembers(DateTime when) {
+        return Bennu.getInstance().getAlumnisSet().stream().map(alumni -> alumni.getStudent().getPerson().getUser())
+                .filter(u -> u != null).filter(u -> degree == null || isMember(u, when));
     }
 
     @Override

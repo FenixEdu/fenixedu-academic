@@ -20,14 +20,14 @@ package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-import org.fenixedu.bennu.core.groups.AnyoneGroup;
-import org.fenixedu.bennu.core.groups.LoggedGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
@@ -59,24 +59,24 @@ public class ThesisReadersGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return getMembers(new DateTime());
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         if (thesis.isEvaluated()
                 && (thesis.getDocumentsAvailableAfter() == null || thesis.getDocumentsAvailableAfter().isBeforeNow())) {
             if (thesis.getVisibility() != null) {
                 switch (thesis.getVisibility()) {
                 case INTRANET:
-                    return LoggedGroup.get().getMembers(when);
+                    return Group.logged().getMembers(when);
                 case PUBLIC:
-                    return AnyoneGroup.get().getMembers(when);
+                    return Group.anyone().getMembers(when);
                 }
             }
         }
-        return getThesisMembers();
+        return getThesisMembers().stream();
     }
 
     @Override
@@ -91,9 +91,9 @@ public class ThesisReadersGroup extends FenixGroup {
             if (thesis.getVisibility() != null) {
                 switch (thesis.getVisibility()) {
                 case INTRANET:
-                    return LoggedGroup.get().isMember(user, when);
+                    return Group.logged().isMember(user, when);
                 case PUBLIC:
-                    return AnyoneGroup.get().isMember(user, when);
+                    return Group.anyone().isMember(user, when);
                 }
             }
         }

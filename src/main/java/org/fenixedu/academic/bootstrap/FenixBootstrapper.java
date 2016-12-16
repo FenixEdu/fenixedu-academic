@@ -66,6 +66,7 @@ import org.fenixedu.bennu.core.bootstrap.annotations.Field;
 import org.fenixedu.bennu.core.bootstrap.annotations.Section;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper;
@@ -268,7 +269,7 @@ public class FenixBootstrapper {
         }
 
         private org.fenixedu.bennu.core.groups.Group getCompetenceCourseMembersGroup() {
-            return RoleType.TEACHER.actualGroup().or(RoleType.MANAGER.actualGroup());
+            return RoleType.TEACHER.actualGroup().or(Group.managers());
         }
 
         private String getDepartmentName(final int i) {

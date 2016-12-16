@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -73,7 +72,7 @@ public class AlumniMailSendToBean implements Serializable {
 
     @Atomic
     public void createRecipientGroup(Sender sender) {
-        Group group = NobodyGroup.get();
+        Group group = Group.nobody();
         for (Degree degree : getDegrees()) {
             group = group.or(StudentsConcludedInExecutionYearGroup.get(degree, getEndExecutionYear()));
         }

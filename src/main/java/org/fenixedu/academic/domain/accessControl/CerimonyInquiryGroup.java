@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.alumni.CerimonyInquiry;
 import org.fenixedu.academic.domain.alumni.CerimonyInquiryPerson;
@@ -57,19 +56,12 @@ public class CerimonyInquiryGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
-        Set<User> users = new HashSet<User>();
-        for (final CerimonyInquiryPerson cerimonyInquiryPerson : cerimonyInquiry.getCerimonyInquiryPersonSet()) {
-            User user = cerimonyInquiryPerson.getPerson().getUser();
-            if (user != null) {
-                users.add(user);
-            }
-        }
-        return users;
+    public Stream<User> getMembers() {
+        return cerimonyInquiry.getCerimonyInquiryPersonSet().stream().map(p -> p.getPerson().getUser()).filter(u -> u != null);
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -28,6 +29,10 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
+
+import com.google.common.collect.Sets;
 
 public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
     protected PersistentTeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
@@ -46,13 +51,10 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
     }
 
     @Override
-    protected void gc() {
-        setDegree(null);
-        setExecutionCourse(null);
-        setCampus(null);
-        setDepartment(null);
-        setExecutionYear(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Sets.newHashSet(getRelationPersistentTeacherGroupExecutionCourse(), getRelationPersistentTeacherGroupDegree(),
+                getRelationPersistentTeacherGroupDepartment(), getRelationPersistentTeacherGroupExecutionYear(),
+                getRelationPersistentTeacherGroupCampus());
     }
 
     public static PersistentTeacherGroup getInstance(Degree degree) {

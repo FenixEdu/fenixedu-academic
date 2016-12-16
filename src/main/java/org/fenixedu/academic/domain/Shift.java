@@ -47,7 +47,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.WeekDay;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.Duration;
 
@@ -522,7 +521,7 @@ public class Shift extends Shift_Base {
 
         ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
         Collection<Recipient> recipients =
-                Collections.singletonList(new Recipient(UserGroup.of(registration.getPerson().getUser())));
+                Collections.singletonList(new Recipient(registration.getPerson().getUser().groupOf()));
         final String subject = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.subject");
         final String body = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.body", getNome());
 

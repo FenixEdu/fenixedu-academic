@@ -96,7 +96,7 @@ public class Sender extends Sender_Base {
     public static boolean hasAvailableSender() {
         final User userView = Authenticate.getUser();
         if (userView != null) {
-            if (RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
+            if (Group.managers().isMember(userView)) {
                 return true;
             }
 
@@ -123,8 +123,7 @@ public class Sender extends Sender_Base {
 
         final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
-            if (sender.getMembers().isMember(userView)
-                    || (userView != null && RoleType.MANAGER.isMember(userView.getPerson().getUser()))) {
+            if (sender.getMembers().isMember(userView) || (userView != null && Group.managers().isMember(userView))) {
                 senders.add(sender);
             }
         }

@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.Student;
@@ -65,7 +64,7 @@ public class AllAlumniGroup extends GroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return Bennu
                 .getInstance()
                 .getStudentsSet()
@@ -73,11 +72,11 @@ public class AllAlumniGroup extends GroupStrategy {
                 .filter(student -> student.getAlumni() != null
                         || student.hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
                         || student.hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED) || isAlumni(student))
-                .map(student -> student.getPerson().getUser()).collect(Collectors.toSet());
+                .map(student -> student.getPerson().getUser());
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

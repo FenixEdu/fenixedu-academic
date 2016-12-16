@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.accessControl;
 
 import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
@@ -46,7 +46,7 @@ public class RoleGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return roleType.actualGroup().getMembers();
     }
 
@@ -54,7 +54,7 @@ public class RoleGroup extends FenixGroup {
      * Time Machine method not available
      */
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

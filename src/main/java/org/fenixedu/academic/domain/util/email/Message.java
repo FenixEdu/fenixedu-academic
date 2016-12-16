@@ -314,11 +314,11 @@ public class Message extends Message_Base {
     }
 
     public int getPossibleRecipientsCount() {
-        return (int) getRecipientsSet().stream().flatMap(r -> r.getMembers().getMembers().stream()).distinct().count();
+        return (int) getRecipientsSet().stream().flatMap(r -> r.getMembers().getMembers()).distinct().count();
     }
 
     public int getRecipientsWithEmailCount() {
-        return (int) getRecipientsSet().stream().flatMap(r -> r.getMembers().getMembers().stream()).distinct()
+        return (int) getRecipientsSet().stream().flatMap(r -> r.getMembers().getMembers()).distinct()
                 .filter(u -> u.getPerson().getEmailAddressForSendingEmails() != null).count();
     }
 

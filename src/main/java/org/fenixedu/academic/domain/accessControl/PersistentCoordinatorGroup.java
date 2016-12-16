@@ -18,13 +18,18 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentCoordinatorGroup extends PersistentCoordinatorGroup_Base {
 
@@ -48,9 +53,12 @@ public class PersistentCoordinatorGroup extends PersistentCoordinatorGroup_Base 
     }
 
     @Override
-    protected void gc() {
-        setDegree(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        Set<Relation<?, ?>> set = new HashSet<>();
+        set.add(getRelationPersistentCoordinatorGroupDegree());
+        set.add(getRelationPersistentCoordinatorGroupDegreeType());
+        set.addAll(super.getContextRelations());
+        return set;
     }
 
     public static PersistentCoordinatorGroup getInstance() {

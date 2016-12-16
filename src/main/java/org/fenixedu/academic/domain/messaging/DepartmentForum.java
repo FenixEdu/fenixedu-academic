@@ -21,9 +21,7 @@ package org.fenixedu.academic.domain.messaging;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Person;
@@ -31,8 +29,6 @@ import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UnionGroup;
-import org.fenixedu.bennu.core.groups.UserGroup;
 
 public class DepartmentForum extends DepartmentForum_Base {
 
@@ -52,7 +48,7 @@ public class DepartmentForum extends DepartmentForum_Base {
 
     @Override
     public Group getAdminGroup() {
-        return UserGroup.of(Person.convertToUsers(getDepartmentManagers()));
+        return Person.convertToUserGroup(getDepartmentManagers());
     }
 
     @Override
@@ -66,11 +62,9 @@ public class DepartmentForum extends DepartmentForum_Base {
     }
 
     public Group getDepartmentForumGroup() {
-        Set<Group> groups = new HashSet<Group>();
         Department department = getDepartment();
-        groups.add(UnitGroup.recursiveWorkers(department.getDepartmentUnit()));
-        groups.add(UserGroup.of(Person.convertToUsers(getPersonsFromTeachers(department))));
-        return UnionGroup.of(groups);
+        return UnitGroup.recursiveWorkers(department.getDepartmentUnit()).or(
+                Person.convertToUserGroup(getPersonsFromTeachers(department)));
     }
 
     private Collection<Person> getDepartmentManagers() {

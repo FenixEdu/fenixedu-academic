@@ -271,9 +271,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
-            for (User user : curricularPlanMembersGroup.getMembers()) {
-                result.add(user.getPerson().getName() + " (" + user.getUsername() + ")");
-            }
+            curricularPlanMembersGroup.getMembers().forEach(
+                    user -> result.add(user.getPerson().getName() + " (" + user.getUsername() + ")"));
         }
 
         return result;

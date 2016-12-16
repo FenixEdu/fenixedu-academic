@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -36,8 +37,7 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -227,16 +227,9 @@ public class SearchDegreeStudentsGroup implements Serializable {
         return elements;
     }
 
-    public org.fenixedu.bennu.core.groups.Group getUserGroup() {
-        Set<User> users = new HashSet<>();
+    public Group getUserGroup() {
         final Map<StudentCurricularPlan, RegistrationStateType> students = searchStudentCurricularPlans(null, null);
-        for (StudentCurricularPlan student : students.keySet()) {
-            User user = student.getPerson().getUser();
-            if (user != null) {
-                users.add(user);
-            }
-        }
-        return UserGroup.of(users);
+        return Group.users(students.keySet().stream().map(scp -> scp.getPerson().getUser()).filter(Objects::nonNull));
     }
 
     private Comparator<StudentCurricularPlan> determineComparatorKind() {

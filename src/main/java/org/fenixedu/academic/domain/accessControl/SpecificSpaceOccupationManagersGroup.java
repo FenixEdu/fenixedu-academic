@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.space.SpaceUtils;
@@ -34,9 +33,9 @@ public class SpecificSpaceOccupationManagersGroup extends FenixGroupStrategy {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return SpaceUtils.allocatableSpaces().map(s -> s.getOccupationsGroupWithChainOfResponsability()).filter(g -> g != null)
-                .flatMap(g -> g.getMembers().stream()).collect(Collectors.toSet());
+                .flatMap(g -> g.getMembers());
     }
 
     @Override
@@ -48,7 +47,7 @@ public class SpecificSpaceOccupationManagersGroup extends FenixGroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

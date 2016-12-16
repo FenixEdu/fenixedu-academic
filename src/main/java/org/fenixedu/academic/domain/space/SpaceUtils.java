@@ -164,7 +164,7 @@ public class SpaceUtils {
         }
 
         final Group lessonGroup = space.getOccupationsGroupWithChainOfResponsability();
-        if (lessonGroup != null && lessonGroup.getMembers().size() > 0 && (user == null || lessonGroup.isMember(user))) {
+        if (lessonGroup != null && lessonGroup.getMembers().findAny().isPresent() && (user == null || lessonGroup.isMember(user))) {
             return true;
         }
         return false;
