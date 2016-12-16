@@ -33,9 +33,7 @@ import org.fenixedu.academic.domain.OccupationPeriodReference;
 import org.fenixedu.academic.domain.OccupationPeriodType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 
 /**
@@ -135,12 +133,7 @@ public class PeriodsManagementBean implements Serializable {
 
     public OccupationPeriodBean getBeanById(String idStr) {
         final int id = Integer.parseInt(idStr);
-        return Iterables.find(getPeriods(), new Predicate<OccupationPeriodBean>() {
-            @Override
-            public boolean apply(OccupationPeriodBean bean) {
-                return bean.getId() == id;
-            }
-        });
+        return getPeriods().stream().filter(bean -> bean.getId() == id).findFirst().orElse(null);
     }
 
     public void removePeriod(String parameter) {

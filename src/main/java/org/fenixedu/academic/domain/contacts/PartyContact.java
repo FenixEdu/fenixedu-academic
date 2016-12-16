@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonInformationLog;
@@ -34,9 +35,6 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 
 public abstract class PartyContact extends PartyContact_Base {
 
@@ -526,6 +524,6 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
-        return Sets.<PartyContact> newHashSet(Iterables.filter(ContactRoot.getInstance().getPartyContactsSet(), type));
+        return ContactRoot.getInstance().getPartyContactsSet().stream().filter((type)::isInstance).collect(Collectors.toSet());
     }
 }

@@ -25,8 +25,6 @@ import pt.ist.fenixWebFramework.renderers.StringInputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlFormComponent;
 
-import com.google.common.base.Predicate;
-
 public class PersonUsernameStringInputRenderer extends StringInputRenderer {
 
     @Override
@@ -36,12 +34,8 @@ public class PersonUsernameStringInputRenderer extends StringInputRenderer {
         String username = (person != null) ? person.getUsername() : null;
 
         final HtmlComponent container = super.createTextField(username, type);
-        final HtmlFormComponent formComponent = (HtmlFormComponent) container.getChild(new Predicate<HtmlComponent>() {
-            @Override
-            public boolean apply(HtmlComponent input) {
-                return input instanceof HtmlFormComponent;
-            }
-        });
+        final HtmlFormComponent formComponent = (HtmlFormComponent) container.getChild(
+                input -> input instanceof HtmlFormComponent);
         formComponent.setConverter(new PersonUsernameConverter());
 
         return formComponent;

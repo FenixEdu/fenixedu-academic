@@ -34,9 +34,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
-
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
 
     protected IndividualCandidacyPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
@@ -116,16 +113,9 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
     }
 
     protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
-        Set<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes =
-                Sets.newHashSet(Iterables.filter(Bennu.getInstance().getPaymentCodesSet(), IndividualCandidacyPaymentCode.class));
-
-        for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodes) {
-            if (paymentCode.isAvailableForReuse()) {
-                return paymentCode;
-            }
-        }
-
-        return null;
+        return (IndividualCandidacyPaymentCode) Bennu.getInstance().getPaymentCodesSet().stream()
+                .filter((IndividualCandidacyPaymentCode.class)::isInstance).filter(PaymentCode::isAvailableForReuse).findFirst()
+                .orElse(null);
     }
 
     @Override

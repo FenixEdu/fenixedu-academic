@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedSet;
 
+import java.util.stream.Collectors;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +58,6 @@ import org.fenixedu.commons.spreadsheet.SpreadsheetXLSExporter;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.Collections2;
 
 @StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "second-cycle", titleKey = "label.candidacy.secondCycle",
         accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
@@ -429,7 +429,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     private Collection<IndividualCandidacyProcess> getChildsWithMissingRequiredDocuments(SecondCycleCandidacyProcess process) {
 
-        return Collections2.filter(process.getChildsWithMissingRequiredDocuments(), CAN_EXECUTE_ACTIVITY_PREDICATE);
+        return process.getChildsWithMissingRequiredDocuments().stream().filter(CAN_EXECUTE_ACTIVITY_PREDICATE::apply).collect(
+                Collectors.toList());
     }
 
 }

@@ -18,17 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicates;
-import com.google.common.collect.FluentIterable;
 
 @GroupOperator("professors")
 public final class ProfessorsGroup extends FenixGroupStrategy {
@@ -37,12 +34,8 @@ public final class ProfessorsGroup extends FenixGroupStrategy {
 
     @Override
     public Set<User> getMembers() {
-        return FluentIterable.from(Bennu.getInstance().getProfessorshipsSet()).transform(new Function<Professorship, User>() {
-            @Override
-            public User apply(Professorship input) {
-                return input.getPerson().getUser();
-            }
-        }).filter(Predicates.notNull()).toSet();
+        return Bennu.getInstance().getProfessorshipsSet().stream().map( input -> input.getPerson().getUser())
+                .filter(Objects::nonNull).collect(Collectors.toSet());
     }
 
     @Override

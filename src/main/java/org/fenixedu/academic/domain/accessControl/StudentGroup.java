@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.Degree;
@@ -48,8 +50,6 @@ import org.joda.time.DateTime;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Sets;
 
 @GroupOperator("student")
@@ -187,7 +187,7 @@ public class StudentGroup extends FenixGroup {
     }
 
     private Set<Registration> getDegreeBasedRegistrations() {
-        FluentIterable<Registration> registrations;
+        Stream<Registration> registrations;
         if (degreeType != null) {
             registrations = getRegistrations(degreeType);
         } else if (degree != null) {
@@ -199,77 +199,60 @@ public class StudentGroup extends FenixGroup {
         registrations = filterDegree(registrations, degree);
         registrations = filterCycle(registrations, cycle, getExecutionYear());
         registrations = filterCurricularYear(registrations, curricularYear, getExecutionYear());
-        return registrations.toSet();
+        return registrations.collect(Collectors.toSet());
     }
 
-    private FluentIterable<Registration> filterDegreeType(FluentIterable<Registration> registrations, final DegreeType degreeType) {
+    private Stream<Registration> filterDegreeType(Stream<Registration> registrations, final DegreeType degreeType) {
         if (degreeType == null) {
             return registrations;
         }
-        return registrations.filter(new Predicate<Registration>() {
-            @Override
-            public boolean apply(Registration registration) {
-                return registration.getDegreeType().equals(degreeType);
-            }
-        });
+        return registrations.filter(registration -> registration.getDegreeType().equals(degreeType));
     }
 
-    private FluentIterable<Registration> filterDegree(FluentIterable<Registration> registrations, final Degree degree) {
+    private Stream<Registration> filterDegree(Stream<Registration> registrations, final Degree degree) {
         if (degree == null) {
             return registrations;
         }
-        return registrations.filter(new Predicate<Registration>() {
-            @Override
-            public boolean apply(Registration registration) {
-                if (registration.getActiveStudentCurricularPlan() != null) {
-                    return registration.getActiveStudentCurricularPlan().getDegree().equals(degree);
-                }
-                return false;
+        return registrations.filter(registration -> {
+            if (registration.getActiveStudentCurricularPlan() != null) {
+                return registration.getActiveStudentCurricularPlan().getDegree().equals(degree);
             }
+            return false;
         });
     }
 
-    private static FluentIterable<Registration> filterCycle(FluentIterable<Registration> registrations,
+    private static Stream<Registration> filterCycle(Stream<Registration> registrations,
             final CycleType cycleType, final ExecutionYear executionYear) {
         if (cycleType == null) {
             return registrations;
         }
-        return registrations.filter(getPredicateForActiveRegistrationsThatHaveAtLeastOneEnrolment(cycleType, executionYear));
+        return registrations
+                .filter(registration -> isActiveRegistrationsWithAtLeastOneEnrolment(registration, cycleType, executionYear));
     }
 
-    private static Predicate<Registration> getPredicateForActiveRegistrationsThatHaveAtLeastOneEnrolment(
-            final CycleType cycleType, final ExecutionYear executionYear) {
-        return new Predicate<Registration>() {
-            @Override
-            public boolean apply(Registration registration) {
-                StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(executionYear);
-                if (studentCurricularPlan != null && !studentCurricularPlan.hasConcludedCycle(cycleType, executionYear)) {
-                    CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(cycleType);
-                    if (cycleCurriculumGroup != null
-                            && cycleCurriculumGroup.isConcluded(executionYear).equals(ConclusionValue.NOT_CONCLUDED)
-                            && cycleCurriculumGroup.hasAnyEnrolments()) {
-                        return true;
-                    }
-                }
-                return false;
+    private static boolean isActiveRegistrationsWithAtLeastOneEnrolment(Registration registration, final CycleType cycleType,
+            final ExecutionYear executionYear) {
+        StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(executionYear);
+        if (studentCurricularPlan != null && !studentCurricularPlan.hasConcludedCycle(cycleType, executionYear)) {
+            CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(cycleType);
+            if (cycleCurriculumGroup != null
+                    && cycleCurriculumGroup.isConcluded(executionYear).equals(ConclusionValue.NOT_CONCLUDED)
+                    && cycleCurriculumGroup.hasAnyEnrolments()) {
+                return true;
             }
-        };
+        }
+        return false;
     }
 
-    private static FluentIterable<Registration> filterCurricularYear(FluentIterable<Registration> registrations,
+    private static Stream<Registration> filterCurricularYear(Stream<Registration> registrations,
             final CurricularYear curricularYear, final ExecutionYear executionYear) {
         if (curricularYear == null) {
             return registrations;
         }
-        return registrations.filter(new Predicate<Registration>() {
-            @Override
-            public boolean apply(Registration registration) {
-                return registration.getCurricularYear(executionYear) == curricularYear.getYear();
-            }
-        });
+        return registrations.filter(registration -> registration.getCurricularYear(executionYear) == curricularYear.getYear());
     }
 
-    private static FluentIterable<Registration> getRegistrations(DegreeType type) {
+    private static Stream<Registration> getRegistrations(DegreeType type) {
         Set<Registration> registrations = new HashSet<>();
         for (User user : RoleType.STUDENT.actualGroup().getMembers()) {
             user.getPerson().getStudentsSet().forEach(reg -> {
@@ -278,10 +261,10 @@ public class StudentGroup extends FenixGroup {
                 }
             });
         }
-        return FluentIterable.from(registrations);
+        return registrations.stream();
     }
 
-    private static FluentIterable<Registration> getRegistrations(Degree degree) {
+    private static Stream<Registration> getRegistrations(Degree degree) {
         Set<Registration> registrations = new HashSet<>();
         for (DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
             for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
@@ -290,15 +273,15 @@ public class StudentGroup extends FenixGroup {
                 }
             }
         }
-        return FluentIterable.from(registrations);
+        return registrations.stream();
     }
 
-    private static FluentIterable<Registration> getRegistrations() {
+    private static Stream<Registration> getRegistrations() {
         Set<Registration> registrations = new HashSet<>();
         for (User user : RoleType.STUDENT.actualGroup().getMembers()) {
             registrations.addAll(user.getPerson().getStudent().getActiveRegistrations());
         }
-        return FluentIterable.from(registrations);
+        return registrations.stream();
     }
 
     private static Set<User> registrationsToUsers(Set<Registration> registrations) {
@@ -361,9 +344,7 @@ public class StudentGroup extends FenixGroup {
                         && !registration.getActiveStudentCurricularPlan().getDegree().equals(degree)) {
                     continue;
                 }
-                if (cycle != null
-                        && !getPredicateForActiveRegistrationsThatHaveAtLeastOneEnrolment(cycle, executionYear).apply(
-                                registration)) {
+                if (cycle != null && !isActiveRegistrationsWithAtLeastOneEnrolment(registration, cycle, executionYear)) {
                     continue;
                 }
                 if (campus != null && registration.getCampus() != campus) {

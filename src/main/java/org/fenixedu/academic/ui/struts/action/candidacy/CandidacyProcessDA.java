@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import java.util.stream.Collectors;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -64,7 +64,6 @@ import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.Collections2;
 
 /**
  * INFO: when extending this class pay attention to the following aspects
@@ -206,20 +205,10 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     private static final Predicate<IndividualCandidacyProcess> IS_CANDIDACY_CANCELED_PREDICATE =
-            new Predicate<IndividualCandidacyProcess>() {
-                @Override
-                public boolean apply(IndividualCandidacyProcess process) {
-                    return !process.isCandidacyCancelled();
-                }
-            };
+            process -> !process.isCandidacyCancelled();
 
     protected static final Predicate<IndividualCandidacyProcess> CAN_EXECUTE_ACTIVITY_PREDICATE =
-            new Predicate<IndividualCandidacyProcess>() {
-                @Override
-                public boolean apply(IndividualCandidacyProcess process) {
-                    return process.canExecuteActivity(Authenticate.getUser());
-                }
-            };
+            process -> process.canExecuteActivity(Authenticate.getUser());
 
     protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
             HttpServletRequest request) {
@@ -236,23 +225,13 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
             predicate = Predicates.and(IS_CANDIDACY_CANCELED_PREDICATE, predicate);
         }
 
-        return Collections2.filter(process.getChildProcessesSet(), predicate);
+        return process.getChildProcessesSet().stream().filter(predicate::apply).collect(Collectors.toList());
 
     }
 
     private List<PublicCandidacyHashCode> getIndividualCandidacyHashCodesNotBounded() {
-        List<PublicCandidacyHashCode> publicCandidacyHashCodeList =
-                new ArrayList<PublicCandidacyHashCode>(CollectionUtils.select(Bennu.getInstance().getCandidacyHashCodesSet(),
-                        new org.apache.commons.collections.Predicate() {
-
-                            @Override
-                            public boolean evaluate(Object arg0) {
-                                final PublicCandidacyHashCode hashCode = (PublicCandidacyHashCode) arg0;
-                                return hashCode.isFromDegreeOffice() && !hashCode.hasCandidacyProcess();
-                            }
-                        }));
-
-        return publicCandidacyHashCodeList;
+        return Bennu.getInstance().getCandidacyHashCodesSet().stream()
+                .filter(c -> c.isFromDegreeOffice() && !c.hasCandidacyProcess()).collect(Collectors.toList());
     }
 
     abstract protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval);

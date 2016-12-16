@@ -37,9 +37,6 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-
 public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvider {
 
     @Override
@@ -73,13 +70,8 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                         Authenticate.getUser()).collect(Collectors.toSet());
 
-        return Collections2.filter(result, new Predicate<CurriculumGroup>() {
-            @Override
-            public boolean apply(CurriculumGroup group) {
-
-                return programs.contains(group.getDegreeCurricularPlanOfStudent().getDegree());
-            }
-        });
+        return result.stream().filter(group -> programs.contains(group.getDegreeCurricularPlanOfStudent().getDegree()))
+                .collect(Collectors.toList());
     }
 
     private boolean isConcluded(final Student student, final CycleCurriculumGroup cycle) {

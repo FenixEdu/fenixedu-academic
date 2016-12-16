@@ -20,14 +20,10 @@ package org.fenixedu.academic.domain.util.icalendar;
 
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
-
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableSet;
 
 public class EvaluationEventBean extends EventBean {
 
@@ -48,15 +44,8 @@ public class EvaluationEventBean extends EventBean {
 
     @Override
     public String getTitle() {
-        final ImmutableSet<String> acronyms =
-                FluentIterable.from(getCourses()).transform(new Function<ExecutionCourse, String>() {
-
-                    @Override
-                    public String apply(ExecutionCourse input) {
-                        return input.getSigla();
-                    }
-                }).toSet();
-        return super.getTitle() + " : " + Joiner.on("; ").join(acronyms);
+        return super.getTitle() + " : " + getCourses().stream().map(ExecutionCourse::getSigla)
+                .collect(Collectors.joining("; "));
     }
 
     @Override

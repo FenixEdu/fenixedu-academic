@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -32,9 +33,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
-
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 
 abstract public class CandidacyProcess extends CandidacyProcess_Base {
 
@@ -215,6 +213,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     private static <T extends CandidacyProcess> Set<T> getAllInstancesOf(final Class<? extends T> type) {
-        return Sets.<T> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), type));
+        return Bennu.getInstance().getProcessesSet().stream().filter((type)::isInstance).map(p -> (T) p)
+                .collect(Collectors.toSet());
     }
 }

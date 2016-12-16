@@ -20,12 +20,9 @@ package org.fenixedu.academic.domain.util.icalendar;
 
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
-
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 
 public class EventBean {
     private DateTime begin;
@@ -79,13 +76,7 @@ public class EventBean {
     }
 
     public String getLocation() {
-        return rooms == null ? "Fenix" : Joiner.on("; ").join(FluentIterable.from(rooms).transform(new Function<Space, String>() {
-
-            @Override
-            public String apply(Space input) {
-                return input.getName();
-            }
-        }).toSet());
+        return rooms == null ? "Fenix" : rooms.stream().map(Space::getName).collect(Collectors.joining("; "));
     }
 
     public String getUrl() {

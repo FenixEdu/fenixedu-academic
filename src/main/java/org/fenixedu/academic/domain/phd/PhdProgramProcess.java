@@ -217,12 +217,8 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
      */
     abstract protected boolean isAllowedToManageProcess(User userView);
 
-    public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE = new Predicate<PhdProgramProcess>() {
-        @Override
-        public boolean apply(PhdProgramProcess process) {
-            return process.isAllowedToManageProcess(Authenticate.getUser());
-        }
-    };
+    public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE =
+            process -> process.isAllowedToManageProcess(Authenticate.getUser());
 
     public boolean isProcessCandidacy() {
         return false;

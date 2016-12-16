@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -64,9 +65,7 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
-import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
-import com.google.common.collect.FluentIterable;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
     public static final String CREATED_SIGNAL = "academic.degree.create";
@@ -430,13 +429,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         if (academicInterval == null) {
             return getInternalExecutionDegrees();
         }
-        return FluentIterable.from(getInternalExecutionDegrees()).filter(new Predicate<ExecutionDegree>() {
-
-            @Override
-            public boolean apply(ExecutionDegree input) {
-                return academicInterval.equals(input.getAcademicInterval());
-            }
-        }).toList();
+        return getInternalExecutionDegrees().stream().filter(input -> academicInterval.equals(input.getAcademicInterval()))
+                .collect(Collectors.toList());
     }
 
     public List<ExecutionDegree> getExecutionDegreesForExecutionYear(final ExecutionYear executionYear) {
@@ -839,7 +833,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    public static List<Degree> readAllMatching(java.util.function.Predicate<DegreeType> predicate) {
+    public static List<Degree> readAllMatching(Predicate<DegreeType> predicate) {
         return DegreeType.all().filter(predicate).flatMap(type -> type.getDegreeSet().stream()).collect(Collectors.toList());
     }
 

@@ -49,7 +49,6 @@ import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessW
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean.PrecedentDegreeType;
 import org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess.SendEmailForApplicationSubmission;
 import org.fenixedu.academic.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
-import org.fenixedu.academic.domain.caseHandling.Process;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
@@ -67,9 +66,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 
 public abstract class RefactoredIndividualCandidacyProcessPublicDA extends IndividualCandidacyProcessDA {
 
@@ -146,16 +142,10 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected CandidacyProcess getCurrentOpenParentProcess() {
-        Set<Process> degreeChangeCandidacyProcesses =
-                Sets.<Process> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), getParentProcessType()));
-
-        for (Process candidacyProcess : degreeChangeCandidacyProcesses) {
-            if (candidacyProcess instanceof CandidacyProcess && ((CandidacyProcess) candidacyProcess).hasOpenCandidacyPeriod()) {
-                return (CandidacyProcess) candidacyProcess;
-            }
-        }
-
-        return null;
+        return Bennu.getInstance().getProcessesSet().stream().filter((getParentProcessType())::isInstance)
+                .filter(CandidacyProcess.class::isInstance).map(p -> (CandidacyProcess) p)
+                .filter(CandidacyProcess::hasOpenCandidacyPeriod)
+                .findFirst().orElse(null);
     }
 
     public ActionForward bindEmailWithHashCodeAndSendMailWithLink(ActionMapping mapping, ActionForm form,

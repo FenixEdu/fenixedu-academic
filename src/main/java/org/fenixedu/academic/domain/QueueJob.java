@@ -18,18 +18,15 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 public abstract class QueueJob extends QueueJob_Base {
     public static enum Priority {
@@ -77,13 +74,12 @@ public abstract class QueueJob extends QueueJob_Base {
 
     public static List<QueueJob> getAllJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize,
             Comparator<QueueJob> comparator) {
-        List<QueueJob> jobs = Lists.<QueueJob> newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
-        Collections.sort(jobs, comparator);
-        return jobs.size() > maxSize ? jobs.subList(0, maxSize) : jobs;
+        return Bennu.getInstance().getQueueJobSet().stream().filter((type)::isInstance).sorted(comparator).limit(maxSize)
+                .collect(Collectors.toList());
     }
 
     public static List<QueueJob> getUndoneJobsForClass(final Class<? extends QueueJob> type) {
-        return Lists.<QueueJob> newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobUndoneSet(), type));
+        return Bennu.getInstance().getQueueJobUndoneSet().stream().filter((type)::isInstance).collect(Collectors.toList());
     }
 
     public Priority getPriority() {

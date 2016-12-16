@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.fenixedu.academic.domain.CurricularYearList;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -47,11 +49,9 @@ import org.joda.time.format.DateTimeFormatter;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
@@ -310,25 +310,20 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
     }
 
     private Iterable<Interval> extractIntervals(String parameter) {
-        Iterable<Interval> intervals = Iterables.transform(SPLITTER.split(parameter), new Function<String, Interval>() {
+        Iterable<Interval> intervals = StreamSupport.stream(SPLITTER.split(parameter).spliterator(), false).map(string -> {
 
-            @Override
-            public Interval apply(String string) {
+            String[] dates = string.split(",");
 
-                String[] dates = string.split(",");
-
-                if (dates.length != 2) {
-                    throw new RuntimeException("Error while recreating intervals, '" + string + "' cannot be parsed!");
-                }
-
-                LocalDate start = FORMATTER.parseDateTime(dates[0]).toLocalDate();
-                LocalDate end = FORMATTER.parseDateTime(dates[1]).toLocalDate();
-
-                return IntervalTools.getInterval(start, end);
-
+            if (dates.length != 2) {
+                throw new RuntimeException("Error while recreating intervals, '" + string + "' cannot be parsed!");
             }
 
-        });
+            LocalDate start = FORMATTER.parseDateTime(dates[0]).toLocalDate();
+            LocalDate end = FORMATTER.parseDateTime(dates[1]).toLocalDate();
+
+            return IntervalTools.getInterval(start, end);
+
+        }).collect(Collectors.toList());
 
         Iterator<Interval> iter = intervals.iterator();
 

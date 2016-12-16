@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.RandomStringUtils;
@@ -46,9 +47,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
-
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 
 abstract public class IndividualCandidacyProcess extends IndividualCandidacyProcess_Base {
 
@@ -433,7 +431,8 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     private static Set<IndividualCandidacyProcess> getAllInstancesOf(final Class<? extends IndividualCandidacyProcess> type) {
-        return Sets.<IndividualCandidacyProcess> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), type));
+        return Bennu.getInstance().getProcessesSet().stream().filter((type)::isInstance).map(p -> (IndividualCandidacyProcess) p)
+                .collect(Collectors.toSet());
     }
 
 }

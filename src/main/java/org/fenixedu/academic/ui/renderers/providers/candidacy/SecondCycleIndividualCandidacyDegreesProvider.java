@@ -37,9 +37,6 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-
 public class SecondCycleIndividualCandidacyDegreesProvider implements DataProvider {
 
     @Override
@@ -49,12 +46,7 @@ public class SecondCycleIndividualCandidacyDegreesProvider implements DataProvid
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES,
                         Authenticate.getUser()).collect(Collectors.toSet());
 
-        return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
-            @Override
-            public boolean apply(Degree degree) {
-                return programs.contains(degree);
-            }
-        });
+        return getDegrees(source).stream().filter(degree -> programs.contains(degree)).collect(Collectors.toList());
     }
 
     private Collection<Degree> getDegrees(Object source) {

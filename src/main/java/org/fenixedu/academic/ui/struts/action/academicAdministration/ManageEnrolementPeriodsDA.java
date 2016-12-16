@@ -71,10 +71,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Iterables;
-
 @StrutsFunctionality(app = AcademicAdminExecutionsApp.class, path = "manage-enrolment-periods",
         titleKey = "title.manage.enrolement.period", accessGroup = "academic(MANAGE_ENROLMENT_PERIODS)")
 @Mapping(module = "academicAdministration", path = "/manageEnrolementPeriods",
@@ -353,14 +349,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         }
 
         public String getPeriodOids() {
-            Function<EnrolmentPeriod, String> f = new Function<EnrolmentPeriod, String>() {
-                @Override
-                public String apply(EnrolmentPeriod period) {
-                    return period.getExternalId();
-                }
-            };
-
-            return Joiner.on(':').join(Iterables.transform(periods, f));
+            return periods.stream().map(EnrolmentPeriod::getExternalId).collect(Collectors.joining(":"));
         }
 
         @Override

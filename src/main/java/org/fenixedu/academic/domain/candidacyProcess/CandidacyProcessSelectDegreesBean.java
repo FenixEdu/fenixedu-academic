@@ -32,9 +32,6 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-
 public class CandidacyProcessSelectDegreesBean implements Serializable {
 
     private static final long serialVersionUID = -3289144446453054775L;
@@ -66,12 +63,7 @@ public class CandidacyProcessSelectDegreesBean implements Serializable {
         final Set<AcademicProgram> programs =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_CANDIDACY_PROCESSES,
                         Authenticate.getUser()).collect(Collectors.toSet());
-        return Collections2.filter(degrees, new Predicate<Degree>() {
-            @Override
-            public boolean apply(Degree degree) {
-                return programs.contains(degree);
-            }
-        });
+        return degrees.stream().filter(degree -> programs.contains(degree)).collect(Collectors.toList());
     }
 
 }

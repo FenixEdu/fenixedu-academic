@@ -18,11 +18,10 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.google.common.base.Function;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
@@ -55,21 +54,8 @@ public class CurricularYearList {
         return buffer.toString();
     }
 
-    private static Splitter SPLITTER = Splitter.on(',');
-
     public static CurricularYearList internalize(String data) {
-
-        Iterable<Integer> years = Iterables.transform(SPLITTER.split(data), new Function<String, Integer>() {
-
-            @Override
-            public Integer apply(String str) {
-                return Integer.parseInt(str);
-            }
-
-        });
-
-        return new CurricularYearList(years);
-
+        return new CurricularYearList(Arrays.stream(data.split(",")).map(Integer::parseInt).collect(Collectors.toList()));
     }
 
     public List<Integer> getYears() {
