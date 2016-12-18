@@ -99,6 +99,16 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
     public void setCountry(Country country) {
         this.setNationality(country);
     }
+    
+    @Override 
+    public Country getFiscalCountry() {
+        throw new RuntimeException("not implemented");
+    }
+    
+    @Override
+    public void setFiscalCountry(final Country fiscalCountry) {
+        throw new RuntimeException("not implemented");
+    }
 
     @Override
     public String getSocialSecurityNumber() {

@@ -115,6 +115,10 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
 
     public abstract void setCountry(Country country);
 
+    public abstract Country getFiscalCountry();
+    
+    public abstract void setFiscalCountry(final Country fiscalCountry);
+    
     /**
      * Return the Social Security Number
      * 

@@ -104,11 +104,10 @@ public class RegisterAlumniData extends AlumniNotificationService {
         final Alumni alumni = new AlumniManager().checkAlumniIdentity(bean.getDocumentIdNumber(), bean.getContactEmail());
         if (!alumni.hasAnyPendingIdentityRequests()) {
 
-            AlumniIdentityCheckRequest identityRequest =
-                    new AlumniIdentityCheckRequest(bean.getContactEmail(), bean.getDocumentIdNumber(), bean.getFullName(),
-                            bean.getDateOfBirthYearMonthDay(), bean.getDistrictOfBirth(), bean.getDistrictSubdivisionOfBirth(),
-                            bean.getParishOfBirth(), bean.getSocialSecurityNumber(), bean.getNameOfFather(),
-                            bean.getNameOfMother(), bean.getRequestType());
+            AlumniIdentityCheckRequest identityRequest = new AlumniIdentityCheckRequest(bean.getContactEmail(),
+                    bean.getDocumentIdNumber(), bean.getFullName(), bean.getDateOfBirthYearMonthDay(), bean.getDistrictOfBirth(),
+                    bean.getDistrictSubdivisionOfBirth(), bean.getParishOfBirth(), bean.getFiscalCountry(),
+                    bean.getSocialSecurityNumber(), bean.getNameOfFather(), bean.getNameOfMother(), bean.getRequestType());
 
             identityRequest.setAlumni(alumni);
             if (identityRequest.isValid()) {
@@ -137,11 +136,11 @@ public class RegisterAlumniData extends AlumniNotificationService {
                 email = personalEmail.getValue();
             }
 
-            AlumniIdentityCheckRequest identityRequest =
-                    new AlumniIdentityCheckRequest(email, bean.getAlumni().getStudent().getPerson().getDocumentIdNumber(),
-                            bean.getFullName(), bean.getDateOfBirthYearMonthDay(), bean.getDistrictOfBirth(),
-                            bean.getDistrictSubdivisionOfBirth(), bean.getParishOfBirth(), bean.getSocialSecurityNumber(),
-                            bean.getNameOfFather(), bean.getNameOfMother(), bean.getRequestType());
+            AlumniIdentityCheckRequest identityRequest = new AlumniIdentityCheckRequest(email,
+                    bean.getAlumni().getStudent().getPerson().getDocumentIdNumber(), bean.getFullName(),
+                    bean.getDateOfBirthYearMonthDay(), bean.getDistrictOfBirth(), bean.getDistrictSubdivisionOfBirth(),
+                    bean.getParishOfBirth(), bean.getFiscalCountry(), bean.getSocialSecurityNumber(), bean.getNameOfFather(),
+                    bean.getNameOfMother(), bean.getRequestType());
 
             identityRequest.setAlumni(bean.getAlumni());
             if (identityRequest.isValid()) {
@@ -180,9 +179,8 @@ public class RegisterAlumniData extends AlumniNotificationService {
 
         final AlumniAddressBean addressBean = alumniBean.getAddressBean();
         if (alumniBean.getCurrentPhysicalAddress() == null) {
-            PhysicalAddress.createPhysicalAddress(person,
-                    new PhysicalAddressData(addressBean.getAddress(), addressBean.getAreaCode(), addressBean.getAreaOfAreaCode(),
-                            null), PartyContactType.PERSONAL, false);
+            PhysicalAddress.createPhysicalAddress(person, new PhysicalAddressData(addressBean.getAddress(),
+                    addressBean.getAreaCode(), addressBean.getAreaOfAreaCode(), null), PartyContactType.PERSONAL, false);
         } else {
             PhysicalAddress address = alumniBean.getCurrentPhysicalAddress();
             address.setAddress(addressBean.getAddress());

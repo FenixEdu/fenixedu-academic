@@ -7823,6 +7823,16 @@ relation PartyPartySocialSecurityNumber {
     organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumber;
 }
 
+relation PartyPartySocialSecurityCountry {
+	Country playsRole fiscalCountry {
+		multiplicity 0..1;
+	}
+	
+	organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumbers {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectConclusionProcess {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.curriculum.ConclusionProcess playsRole conclusionProcesses {
@@ -10542,6 +10552,16 @@ relation RootDomainObjectAlumni {
 relation RootDomainObjectAlumniIdentityCheckRequest {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     AlumniIdentityCheckRequest playsRole alumniIdentityRequest {
+        multiplicity *;
+    }
+}
+
+relation AlumniIdentityCheckRequestFiscalCountry {
+	Country playsRole fiscalCountry {
+		multiplicity 0..1;
+	}
+	
+    AlumniIdentityCheckRequest playsRole alumniIdentityRequests {
         multiplicity *;
     }
 }

@@ -20,6 +20,7 @@ package org.fenixedu.academic.dto.alumni;
 
 import java.io.Serializable;
 
+import org.fenixedu.academic.domain.Country;
 import org.joda.time.YearMonthDay;
 
 public class AlumniErrorSendingMailBean implements Serializable {
@@ -28,6 +29,7 @@ public class AlumniErrorSendingMailBean implements Serializable {
     private String documentIdNumber;
     private String fullName;
     private YearMonthDay dateOfBirthYearMonthDay;
+    private Country fiscalCountry;
     private String socialSecurityNumber;
     private String nameOfFather;
     private String nameOfMother;
@@ -67,6 +69,14 @@ public class AlumniErrorSendingMailBean implements Serializable {
 
     public void setDateOfBirthYearMonthDay(YearMonthDay dateOfBirthYearMonthDay) {
         this.dateOfBirthYearMonthDay = dateOfBirthYearMonthDay;
+    }
+    
+    public Country getFiscalCountry() {
+        return fiscalCountry;
+    }
+    
+    public void setFiscalCountry(Country fiscalCountry) {
+        this.fiscalCountry = fiscalCountry;
     }
 
     public String getSocialSecurityNumber() {

@@ -78,6 +78,8 @@ public class PersonBean implements Serializable {
 
     private YearMonthDay documentIdExpirationDate;
 
+    private Country fiscalCountry;
+
     private String socialSecurityNumber;
 
     private ProfessionType professionType;
@@ -173,6 +175,7 @@ public class PersonBean implements Serializable {
         } else {
             initPersonBeanFromPersonalDetails(details);
         }
+
         initPersonBeanFromPersonalDetails(details);
     }
 
@@ -180,7 +183,7 @@ public class PersonBean implements Serializable {
         initPerson(person);
     }
 
-    private void initPersonBeanFromPersonalDetails(IndividualCandidacyPersonalDetails personalDetails) {
+    private void initPersonBeanFromPersonalDetails(final IndividualCandidacyPersonalDetails personalDetails) {
         setGivenNames(personalDetails.getGivenNames());
         setFamilyNames(personalDetails.getFamilyNames());
         setGender(personalDetails.getGender());
@@ -192,6 +195,7 @@ public class PersonBean implements Serializable {
         setDocumentIdExpirationDate(personalDetails.getExpirationDateOfDocumentIdYearMonthDay());
         setDocumentIdNumber(personalDetails.getDocumentIdNumber());
         setIdDocumentType(personalDetails.getIdDocumentType());
+        setFiscalCountry(personalDetails.getFiscalCountry());
         setSocialSecurityNumber(personalDetails.getSocialSecurityNumber());
 
         setAddress(personalDetails.getAddress());
@@ -266,6 +270,7 @@ public class PersonBean implements Serializable {
         setDocumentIdNumber(person.getDocumentIdNumber());
         setIdDocumentType(person.getIdDocumentType());
         setIdentificationDocumentSeriesNumber(person.getIdentificationDocumentSeriesNumber());
+        setFiscalCountry(person.getFiscalCountry());
         setSocialSecurityNumber(person.getSocialSecurityNumber());
 
         if (person.hasDefaultPhysicalAddress()) {
@@ -599,6 +604,14 @@ public class PersonBean implements Serializable {
         this.profession = profession;
     }
 
+    public Country getFiscalCountry() {
+        return fiscalCountry;
+    }
+
+    public void setFiscalCountry(Country fiscalCountry) {
+        this.fiscalCountry = fiscalCountry;
+    }
+
     /*
      * 08/05/2009 - VAT Number and Social Security Number is the same thing
      */
@@ -743,7 +756,7 @@ public class PersonBean implements Serializable {
         person.setEmissionLocationOfDocumentId(this.getDocumentIdEmissionLocation());
         person.setEmissionDateOfDocumentIdYearMonthDay(this.getDocumentIdEmissionDate());
         person.setExpirationDateOfDocumentIdYearMonthDay(this.getDocumentIdExpirationDate());
-        person.setSocialSecurityNumber(this.getSocialSecurityNumber());
+        person.editSocialSecurityNumber(getFiscalCountry(), this.getSocialSecurityNumber());
         person.setEidentifier(this.getEidentifier());
 
         // filiation

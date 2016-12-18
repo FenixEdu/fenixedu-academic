@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.Alumni;
 import org.fenixedu.academic.domain.AlumniRequestType;
+import org.fenixedu.academic.domain.Country;
 import org.joda.time.YearMonthDay;
 
 public class AlumniPasswordBean implements Serializable {
@@ -34,6 +35,7 @@ public class AlumniPasswordBean implements Serializable {
     private String districtOfBirth;
     private String districtSubdivisionOfBirth;
     private String parishOfBirth;
+    private Country fiscalCountry;
     private String socialSecurityNumber;
     private String nameOfFather;
     private String nameOfMother;
@@ -114,6 +116,14 @@ public class AlumniPasswordBean implements Serializable {
 
     public String getParishOfBirth() {
         return parishOfBirth;
+    }
+    
+    public Country getFiscalCountry() {
+        return fiscalCountry;
+    }
+    
+    public void setFiscalCountry(Country fiscalCountry) {
+        this.fiscalCountry = fiscalCountry;
     }
 
     public String getSocialSecurityNumber() {

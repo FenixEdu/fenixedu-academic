@@ -32,7 +32,7 @@ public class ValidateAlumniIdentity extends AlumniNotificationService {
     }
 
     protected void run(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
-        alumniPerson.setSocialSecurityNumber(identityRequest.getSocialSecurityNumber());
+        alumniPerson.editSocialSecurityNumber(identityRequest.getFiscalCountry(), identityRequest.getSocialSecurityNumber());
     }
 
     // Service Invokers migrated from Berserk

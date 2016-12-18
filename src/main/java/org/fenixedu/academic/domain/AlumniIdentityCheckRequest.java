@@ -34,8 +34,8 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 
     public AlumniIdentityCheckRequest(String contactEmail, String documentIdNumber, String fullName,
             YearMonthDay dateOfBirthYearMonthDay, String districtOfBirth, String districtSubdivisionOfBirth,
-            String parishOfBirth, String socialSecurityNumber, String nameOfFather, String nameOfMother,
-            AlumniRequestType requestType) {
+            String parishOfBirth, final Country fiscalCountry, String socialSecurityNumber, String nameOfFather, 
+            String nameOfMother, AlumniRequestType requestType) {
         super();
 
         checkParameters(contactEmail, documentIdNumber, fullName, dateOfBirthYearMonthDay, districtOfBirth,
@@ -48,6 +48,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
         setDistrictOfBirth(districtOfBirth.trim());
         setDistrictSubdivisionOfBirth(districtSubdivisionOfBirth.trim());
         setParishOfBirth(parishOfBirth.trim());
+        setFiscalCountry(fiscalCountry);
         setSocialSecurityNumber(socialSecurityNumber);
         setNameOfFather(nameOfFather.trim());
         setNameOfMother(nameOfMother.trim());
@@ -124,6 +125,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
                 && (!StringUtils.isEmpty(person.getDistrictSubdivisionOfBirth()) && person.getDistrictSubdivisionOfBirth()
                         .equals(getDistrictSubdivisionOfBirth()))
                 && (!StringUtils.isEmpty(person.getParishOfBirth()) && person.getParishOfBirth().equals(getParishOfBirth()))
+                && (person.getFiscalCountry() != null && getFiscalCountry() == person.getFiscalCountry())
                 && (!StringUtils.isEmpty(person.getSocialSecurityNumber()) && person.getSocialSecurityNumber().equals(
                         getSocialSecurityNumber()))
                 && (!StringUtils.isEmpty(person.getNameOfFather()) && person.getNameOfFather().equals(getNameOfFather()))

@@ -451,34 +451,17 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public static Party readByContributorNumber(String contributorNumber) {
         return PartySocialSecurityNumber.readPartyBySocialSecurityNumber(contributorNumber);
     }
-
+    
+    public Country getFiscalCountry() {
+        return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getFiscalCountry() : null;
+    }
+    
     public String getSocialSecurityNumber() {
         return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getSocialSecurityNumber() : null;
     }
 
-    public void setSocialSecurityNumber(String socialSecurityNumber) {
-        socialSecurityNumber = StringUtils.trimToNull(socialSecurityNumber);
-        if (socialSecurityNumber != null && !StringUtils.isBlank(socialSecurityNumber)) {
-            if (getPartySocialSecurityNumber() != null
-                    && socialSecurityNumber.equals(getPartySocialSecurityNumber().getSocialSecurityNumber())) {
-                return;
-            }
-
-            String defaultSocialSecurityNumber =
-                    FenixEduAcademicConfiguration.getConfiguration().getDefaultSocialSecurityNumber();
-            if (defaultSocialSecurityNumber == null || !defaultSocialSecurityNumber.equals(socialSecurityNumber)) {
-                final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
-                if (party != null && party != this) {
-                    throw new DomainException("error.party.existing.contributor.number");
-                }
-            }
-
-            if (getPartySocialSecurityNumber() != null) {
-                getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);
-            } else {
-                new PartySocialSecurityNumber(this, socialSecurityNumber);
-            }
-        }
+    public void editSocialSecurityNumber(final Country fiscalCountry, String socialSecurityNumber) {
+        PartySocialSecurityNumber.editFiscalInformation(this, fiscalCountry, socialSecurityNumber);
     }
 
     public boolean isPerson() {

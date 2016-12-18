@@ -104,6 +104,11 @@
 		<property name="size" value="50" />
 	</slot>
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="fiscalCountry" key="label.fiscalCountry" layout="menu-select">
+			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider" />
+			<property name="format" value="${name} (${code})"/>
+			<property name="sortBy" value="name"/>
+	</slot>
 	<slot name="socialSecurityNumber" />
 	<slot name="professionType" />
 	<slot name="professionalCondition" layout="menu-select">

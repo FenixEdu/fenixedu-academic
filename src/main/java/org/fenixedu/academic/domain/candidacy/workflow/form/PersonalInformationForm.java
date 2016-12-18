@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.candidacy.workflow.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.GrantOwnerType;
 import org.fenixedu.academic.domain.IdentificationDocumentExtraDigit;
 import org.fenixedu.academic.domain.IdentificationDocumentSeriesNumber;
@@ -71,6 +72,8 @@ public class PersonalInformationForm extends Form {
 
     private YearMonthDay documentIdExpirationDate;
 
+    private Country fiscalCountry;
+
     private String socialSecurityNumber;
 
     private ProfessionType professionType;
@@ -93,8 +96,8 @@ public class PersonalInformationForm extends Form {
 
     private PersonalInformationForm(YearMonthDay documentIdEmissionDate, String documentIdEmissionLocation,
             YearMonthDay documentIdExpirationDate, String documentIdNumber, IDDocumentType documentType, Gender gender,
-            MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username,
-            String identificationDocumentExtraDigit, String identificationDocumentSeriesNumber) {
+            MaritalStatus maritalStatus, String name, String profession, final Country fiscalCountry, String socialSecurityNumber,
+            String username, String identificationDocumentExtraDigit, String identificationDocumentSeriesNumber) {
         this();
         this.documentIdEmissionDate = documentIdEmissionDate;
         this.documentIdEmissionLocation = documentIdEmissionLocation;
@@ -105,6 +108,7 @@ public class PersonalInformationForm extends Form {
         this.maritalStatus = maritalStatus;
         this.name = name;
         this.profession = profession;
+        this.fiscalCountry = fiscalCountry;
         this.socialSecurityNumber = socialSecurityNumber;
         this.username = username;
         this.professionType = ProfessionType.OTHER;
@@ -118,8 +122,9 @@ public class PersonalInformationForm extends Form {
         return new PersonalInformationForm(person.getEmissionDateOfDocumentIdYearMonthDay(),
                 person.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(),
                 person.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person.getMaritalStatus(),
-                person.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername(),
-                person.getIdentificationDocumentExtraDigitValue(), person.getIdentificationDocumentSeriesNumberValue());
+                person.getName(), person.getProfession(), person.getFiscalCountry(), person.getSocialSecurityNumber(),
+                person.getUsername(), person.getIdentificationDocumentExtraDigitValue(),
+                person.getIdentificationDocumentSeriesNumberValue());
     }
 
     @Override
@@ -255,6 +260,14 @@ public class PersonalInformationForm extends Form {
 
     public void setProfessionalCondition(ProfessionalSituationConditionType professionalCondition) {
         this.professionalCondition = professionalCondition;
+    }
+    
+    public Country getFiscalCountry() {
+        return fiscalCountry;
+    }
+    
+    public void setFiscalCountry(Country fiscalCountry) {
+        this.fiscalCountry = fiscalCountry;
     }
 
     public String getSocialSecurityNumber() {

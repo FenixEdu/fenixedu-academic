@@ -161,5 +161,7 @@ public interface ITreasuryBridgeAPI {
     public String getRegistrationAccountTreasuryManagementURL(Registration registration);
 
     public void createAcademicDebts(final Registration registration);
-
+    
+    public boolean isValidFiscalNumber(final String fiscalCountryCode, final String fiscalNumber);
+    
 }
