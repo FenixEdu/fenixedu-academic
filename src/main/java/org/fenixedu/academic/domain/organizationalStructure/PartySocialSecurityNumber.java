@@ -36,6 +36,7 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     private PartySocialSecurityNumber(final Party party, final Country fiscalCountry, final String socialSecurityNumber) {
         this();
         super.setParty(party);
+        super.setFiscalCountry(fiscalCountry);
         super.setSocialSecurityNumber(socialSecurityNumber);
 
         checkRules();
