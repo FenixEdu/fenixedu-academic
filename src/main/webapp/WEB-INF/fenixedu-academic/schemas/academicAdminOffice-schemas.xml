@@ -646,6 +646,7 @@
 	<slot name="studentStatute.beginDate" key="label.beginDate" />
 	<slot name="endPeriodFormatted" key="label.endExecutionPeriod" />
 	<slot name="studentStatute.endDate" key="label.endDate" />
+	<slot name="studentStatute.comment" key="label.comment" />
 </schema>
 
 <schema name="student.createStatutes" bundle="ACADEMIC_OFFICE_RESOURCES" 
@@ -672,6 +673,7 @@
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
+	<slot name="comment" key="label.comment"></slot>
 </schema>
 
 <schema name="student.createSeniorStatute" extends="student.createStatutes"

@@ -52,6 +52,8 @@ public class ManageStudentStatuteBean implements Serializable {
 
     private Registration registration;
 
+    private String comment;
+
     public ManageStudentStatuteBean(Student student) {
         super();
         this.student = student;
@@ -122,4 +124,11 @@ public class ManageStudentStatuteBean implements Serializable {
         this.registration = registration;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }

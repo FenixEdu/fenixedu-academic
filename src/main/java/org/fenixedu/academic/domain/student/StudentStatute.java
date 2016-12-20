@@ -45,17 +45,29 @@ public class StudentStatute extends StudentStatute_Base {
     public StudentStatute(Student student, StatuteType statuteType, ExecutionSemester beginExecutionPeriod,
             ExecutionSemester endExecutionPeriod) {
         this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod.getBeginLocalDate(),
-                endExecutionPeriod.getEndLocalDate());
+                endExecutionPeriod.getEndLocalDate(), "");
+    }
+
+    public StudentStatute(Student student, StatuteType statuteType, ExecutionSemester beginExecutionPeriod,
+            ExecutionSemester endExecutionPeriod, String comment) {
+        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod.getBeginLocalDate(),
+                endExecutionPeriod.getEndLocalDate(), comment);
     }
 
     public StudentStatute(Student student, StatuteType statuteType, ExecutionSemester beginExecutionPeriod,
             ExecutionSemester endExecutionPeriod, LocalDate beginDate, LocalDate endDate) {
+        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginDate, endDate, "");
+    }
+
+    public StudentStatute(Student student, StatuteType statuteType, ExecutionSemester beginExecutionPeriod, ExecutionSemester
+                 endExecutionPeriod, LocalDate beginDate, LocalDate endDate, String comment) {
         this();
         setBeginDate(beginDate);
         setEndDate(endDate);
         setBeginExecutionPeriod(beginExecutionPeriod);
         setEndExecutionPeriod(endExecutionPeriod);
         setType(statuteType);
+        setComment(comment);
 
         for (StudentStatute statute : student.getStudentStatutesSet()) {
             if (statute.overlapsWith(this)) {
