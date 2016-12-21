@@ -37,7 +37,9 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.CreditsBean;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.DismissalType;
@@ -72,7 +74,8 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     }
 
     @EntryPoint
-    public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         StudentCurricularPlan scp = getSCP(request);
         request.setAttribute("studentCurricularPlan", scp);
 
@@ -82,7 +85,8 @@ public class StudentDismissalsDA extends FenixDispatchAction {
         return mapping.findForward("manage");
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final DismissalBean dismissalBean = createDismissalBean();
         dismissalBean.setStudentCurricularPlan(getSCP(request));
@@ -107,17 +111,39 @@ public class StudentDismissalsDA extends FenixDispatchAction {
         return externalEnrolments;
     }
 
+    public boolean isAllowedEnrolmentsFromSameCurricularPlan() {
+        return false;
+    }
+
     protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
         final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
 
         for (final StudentCurricularPlan scp : dismissalBean.getStudent().getAllStudentCurricularPlans()) {
 
-            if (scp.equals(dismissalBean.getStudentCurricularPlan())) {
-                continue;
-            }
-
             final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(scp.getDismissalApprovedEnrolments());
             Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
+
+            if (scp.equals(dismissalBean.getStudentCurricularPlan())) {
+
+                // include no course group enrolment of the same plan to insert creditation
+                if (isAllowedEnrolmentsFromSameCurricularPlan()) {
+
+                    final Collection<NoCourseGroupCurriculumGroup> groups = scp.getNoCourseGroupCurriculumGroups();
+
+                    for (final NoCourseGroupCurriculumGroup group : groups) {
+                        for (final CurriculumLine curriculumLine : group.getApprovedCurriculumLines()) {
+                            if (!curriculumLine.isEnrolment()) {
+                                continue;
+                            }
+
+                            enrolments.add(new DismissalBean.SelectedEnrolment((Enrolment) curriculumLine));
+                        }
+                    }
+
+                }
+
+                continue;
+            }
 
             for (final Enrolment enrolment : approvedEnrolments) {
                 enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
@@ -199,9 +225,8 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     private void setCurriculumGroups(DismissalBean dismissalBean) {
         for (SelectedCurricularCourse selectedCurricularCourse : dismissalBean.getDismissals()) {
-            Collection<? extends CurriculumGroup> curricularCoursePossibleGroups =
-                    dismissalBean.getStudentCurricularPlan().getCurricularCoursePossibleGroups(
-                            selectedCurricularCourse.getCurricularCourse());
+            Collection<? extends CurriculumGroup> curricularCoursePossibleGroups = dismissalBean.getStudentCurricularPlan()
+                    .getCurricularCoursePossibleGroups(selectedCurricularCourse.getCurricularCourse());
             if (!curricularCoursePossibleGroups.isEmpty()) {
                 if (curricularCoursePossibleGroups.size() == 1) {
                     selectedCurricularCourse.setCurriculumGroup(curricularCoursePossibleGroups.iterator().next());
@@ -217,12 +242,14 @@ public class StudentDismissalsDA extends FenixDispatchAction {
         }
     }
 
-    public ActionForward stepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward stepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         request.setAttribute("dismissalBean", getRenderedObject());
         return mapping.findForward("chooseDismissalEnrolments");
     }
 
-    public ActionForward stepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward stepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         request.setAttribute("dismissalBean", getRenderedObject());
         return mapping.findForward("chooseEquivalents");
     }

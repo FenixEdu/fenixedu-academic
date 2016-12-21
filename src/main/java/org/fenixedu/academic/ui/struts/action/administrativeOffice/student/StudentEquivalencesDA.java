@@ -42,4 +42,9 @@ public class StudentEquivalencesDA extends StudentDismissalsDA {
         CreateNewEquivalenceDismissal.run(dismissalBean);
     }
 
+    @Override
+    public boolean isAllowedEnrolmentsFromSameCurricularPlan() {
+        return true;
+    }
+
 }
