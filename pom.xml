@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -9,17 +9,49 @@
     </parent>
 
     <artifactId>fenixedu-academic</artifactId>
-    <packaging>jar</packaging>
     <version>5.5.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>FenixEdu Academic</name>
     <url>http://fenixedu.org</url>
     <inceptionYear>2002</inceptionYear>
 
     <properties>
-        <skipTests>true</skipTests>
-
+        <version.org.fenixedu.fenixedu-spaces>1.6.1</version.org.fenixedu.fenixedu-spaces>
         <version.org.fenixedu.bennu>3.4.0</version.org.fenixedu.bennu>
+        <version.org.fenixedu.bennu-signals>1.0.0</version.org.fenixedu.bennu-signals>
+        <version.org.fenixedu.bennu-spring>1.1.0</version.org.fenixedu.bennu-spring>
+        <version.org.fenixedu.bennu-renderers>5.0.0</version.org.fenixedu.bennu-renderers>
+        <version.org.fenixedu.fenixedu-commons>1.1.1</version.org.fenixedu.fenixedu-commons>
+        <version.pt.ist.standards>1.0.3</version.pt.ist.standards>
+        <version.com.google.guava.guava>17.0</version.com.google.guava.guava>
+        <version.joda.time.joda.time>2.3</version.joda.time.joda.time>
+        <version.com.google.code.gson.gson>2.2.4</version.com.google.code.gson.gson>
+        <version.javax.ws.rs.javax.ws.rs.api>2.0</version.javax.ws.rs.javax.ws.rs.api>
+        <version.org.apache.poi.poi>3.11</version.org.apache.poi.poi>
+        <version.taglibs.strings>1.0.1</version.taglibs.strings>
+        <version.com.sun.mail.javax.mail>1.5.1</version.com.sun.mail.javax.mail>
+        <version.javax.faces.jsf-impl>1.1</version.javax.faces.jsf-impl>
+        <version.javax.faces.jsf-api>1.1_01</version.javax.faces.jsf-api>
+        <version.net.sourceforge.htmlcleaner.htmlcleaner>2.2</version.net.sourceforge.htmlcleaner.htmlcleaner>
+        <version.org.xhtmlrenderer.core-renderer>R8</version.org.xhtmlrenderer.core-renderer>
+        <version.pt.ist.tidy>1.0</version.pt.ist.tidy>
+        <version.org.mnode.ical4j.ical4j>1.0.5.2</version.org.mnode.ical4j.ical4j>
+        <version.com.twilio.sdk.twilio-java-sdk>3.3.9</version.com.twilio.sdk.twilio-java-sdk>
+        <version.taglibs.datetime>1.0.1</version.taglibs.datetime>
+        <version.commons-httpclient.commons-httpclient>3.0</version.commons-httpclient.commons-httpclient>
+        <version.org.mathjax.mathjax>2.3</version.org.mathjax.mathjax>
+        <version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
+        <version.commons-collections.commons-collections>3.2.2</version.commons-collections.commons-collections>
+        <version.javax.servlet.jsp.jsp-api>2.1</version.javax.servlet.jsp.jsp-api>
+        <version.com.github.axet.kaptcha>0.0.9</version.com.github.axet.kaptcha>
+        <version.com.googlecode.libphonenumber.libphonenumber>7.0.4</version.com.googlecode.libphonenumber.libphonenumber>
+        <version.commons-validator.commons-validator>1.1.4</version.commons-validator.commons-validator>
+        <version.org.jsoup.jsoup>1.7.3</version.org.jsoup.jsoup>
+        <version.commons-beanutils.commons-beanutils>1.9.2</version.commons-beanutils.commons-beanutils>
+        <version.commons-io.commons-io>2.2</version.commons-io.commons-io>
+        <version.commons-lang.commons-lang>2.6</version.commons-lang.commons-lang>
+        <version.com.lowagie.itext>2.0.8</version.com.lowagie.itext>
     </properties>
 
     <issueManagement>
@@ -41,8 +73,8 @@
     </ciManagement>
 
     <scm>
-        <connection>scm:git:https://github.com/FenixEdu/fenixedu-academic.git</connection>
-        <developerConnection>scm:git:git@github.com:FenixEdu/fenixedu-academic.git</developerConnection>
+        <connection>scm:git:git@github.com:fenixedu/fenixedu-academic.git</connection>
+        <developerConnection>scm:git:git@github.com:fenixedu/fenixedu-academic.git</developerConnection>
         <url>http://fenixedu.org</url>
         <tag>HEAD</tag>
     </scm>
@@ -76,117 +108,12 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>string</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>17.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>1.5.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.fenixedu</groupId>
-            <artifactId>bennu-renderers</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.fenixedu</groupId>
-            <artifactId>bennu-struts</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.fenixedu</groupId>
-            <artifactId>bennu-spring</artifactId>
-            <version>1.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>1.1_01</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.htmlcleaner</groupId>
-            <artifactId>htmlcleaner</artifactId>
-            <version>2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.xhtmlrenderer</groupId>
-            <artifactId>core-renderer</artifactId>
-            <version>R8</version>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>tidy</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mnode.ical4j</groupId>
-            <artifactId>ical4j</artifactId>
-            <version>1.0.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio-java-sdk</artifactId>
-            <version>3.3.9</version>
-        </dependency>
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>datetime</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>standards</artifactId>
-            <version>1.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mathjax</groupId>
-            <artifactId>mathjax</artifactId>
-            <version>2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.imgscalr</groupId>
-            <artifactId>imgscalr-lib</artifactId>
-            <version>4.2</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.fenixedu</groupId>
-            <artifactId>fenixedu-commons</artifactId>
-            <version>1.1.1</version>
+            <artifactId>fenixedu-spaces</artifactId>
+            <version>${version.org.fenixedu.fenixedu-spaces}</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
@@ -200,8 +127,8 @@
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
-            <artifactId>bennu-signals</artifactId>
-            <version>1.0.0</version>
+            <artifactId>bennu-portal</artifactId>
+            <version>${version.org.fenixedu.bennu}</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
@@ -209,24 +136,175 @@
             <version>${version.org.fenixedu.bennu}</version>
         </dependency>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.3</version>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-spring</artifactId>
+            <version>${version.org.fenixedu.bennu-spring}</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
-            <artifactId>fenixedu-spaces</artifactId>
-            <version>1.6.1</version>
+            <artifactId>bennu-signals</artifactId>
+            <version>${version.org.fenixedu.bennu-signals}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-renderers</artifactId>
+            <version>${version.org.fenixedu.bennu-renderers}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-struts</artifactId>
+            <version>${version.org.fenixedu.bennu-renderers}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>fenixedu-commons</artifactId>
+            <version>${version.org.fenixedu.fenixedu-commons}</version>
+        </dependency>
+        <dependency>
+            <groupId>pt.ist</groupId>
+            <artifactId>standards</artifactId>
+            <version>${version.pt.ist.standards}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${version.com.google.guava.guava}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${version.joda.time.joda.time}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${version.com.google.code.gson.gson}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>${version.javax.ws.rs.javax.ws.rs.api}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${version.org.apache.poi.poi}</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>string</artifactId>
+            <version>${version.taglibs.strings}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${version.com.sun.mail.javax.mail}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>${version.javax.faces.jsf-impl}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>${version.javax.faces.jsf-api}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.htmlcleaner</groupId>
+            <artifactId>htmlcleaner</artifactId>
+            <version>${version.net.sourceforge.htmlcleaner.htmlcleaner}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>core-renderer</artifactId>
+            <version>${version.org.xhtmlrenderer.core-renderer}</version>
+        </dependency>
+        <dependency>
+            <groupId>pt.ist</groupId>
+            <artifactId>tidy</artifactId>
+            <version>${version.pt.ist.tidy}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mnode.ical4j</groupId>
+            <artifactId>ical4j</artifactId>
+            <version>${version.org.mnode.ical4j.ical4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio-java-sdk</artifactId>
+            <version>${version.com.twilio.sdk.twilio-java-sdk}</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>datetime</artifactId>
+            <version>${version.taglibs.datetime}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>${version.commons-httpclient.commons-httpclient}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mathjax</groupId>
+            <artifactId>mathjax</artifactId>
+            <version>${version.org.mathjax.mathjax}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>${version.org.imgscalr.imgscalr-lib}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${version.commons-collections.commons-collections}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>${version.javax.servlet.jsp.jsp-api}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.axet</groupId>
             <artifactId>kaptcha</artifactId>
-            <version>0.0.9</version>
+            <version>${version.com.github.axet.kaptcha}</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
-            <version>7.0.4</version>
+            <version>${version.com.googlecode.libphonenumber.libphonenumber}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${version.commons-validator.commons-validator}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${version.org.jsoup.jsoup}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${version.commons-beanutils.commons-beanutils}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${version.commons-io.commons-io}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${version.commons-lang.commons-lang}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>${version.com.lowagie.itext}</version>
         </dependency>
     </dependencies>
 
