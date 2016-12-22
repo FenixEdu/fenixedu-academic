@@ -40,7 +40,6 @@
         <version.com.twilio.sdk.twilio-java-sdk>3.3.9</version.com.twilio.sdk.twilio-java-sdk>
         <version.taglibs.datetime>1.0.1</version.taglibs.datetime>
         <version.commons-httpclient.commons-httpclient>3.0</version.commons-httpclient.commons-httpclient>
-        <version.org.mathjax.mathjax>2.3</version.org.mathjax.mathjax>
         <version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
         <version.commons-collections.commons-collections>3.2.2</version.commons-collections.commons-collections>
         <version.javax.servlet.jsp.jsp-api>2.1</version.javax.servlet.jsp.jsp-api>
@@ -244,11 +243,6 @@
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
             <version>${version.commons-httpclient.commons-httpclient}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mathjax</groupId>
-            <artifactId>mathjax</artifactId>
-            <version>${version.org.mathjax.mathjax}</version>
         </dependency>
         <dependency>
             <groupId>org.imgscalr</groupId>
