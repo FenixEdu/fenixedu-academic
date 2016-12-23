@@ -32,6 +32,7 @@ public interface IAcademicTreasuryTarget extends DomainObject {
     public void handleTotalPayment(final IAcademicTreasuryEvent e);
     
     public default void handleSettlement(final IAcademicTreasuryEvent e) {
+        //TODO: considerar isenções sobre dívidas não facturadas
         if(e.isPayed() && e.isWithDebitEntry()) {
             handleTotalPayment(e);
         }
