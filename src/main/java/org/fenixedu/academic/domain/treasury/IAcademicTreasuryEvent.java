@@ -61,5 +61,7 @@ public interface IAcademicTreasuryEvent {
     public List<IAcademicTreasuryEventPayment> getPaymentsList();
 
     public String formatMoney(BigDecimal moneyValue);
-
+ 
+    public List<IPaymentReferenceCode> getPaymentReferenceCodesList();
+    
 }

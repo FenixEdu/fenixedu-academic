@@ -15,19 +15,23 @@ import org.joda.time.LocalDate;
 public interface ITreasuryBridgeAPI {
 
     // @formatter:off
-    /* ---------------------------------
-     * TREASURY INSTITUTION AND PRODUCTS
-     * ---------------------------------
+    /* -------------------------------------------------
+     * TREASURY INSTITUTION PRODUCTS, PAYMENT CODE POOLS
+     * -------------------------------------------------
      */
     // @formatter:on
 
-    public Set<ITreasuryInstitution> getTreasuryInstitutions();
-    
-    public ITreasuryInstitution getTreasuryInstitutionByFiscalNumber(final String fiscalNumber);
-    
-    public Set<ITreasuryProduct> getProducts(final ITreasuryInstitution treasuryInstitution);
+    public Set<ITreasuryEntity> getTreasuryEntities();
+
+    public ITreasuryEntity getTreasuryEntityByCode(final String code);
+
+    public Set<ITreasuryProduct> getProducts(final ITreasuryEntity treasuryEntity);
 
     public ITreasuryProduct getProductByCode(final String code);
+
+    public List<IPaymentCodePool> getPaymentCodePools(final ITreasuryEntity treasuryEntity);
+
+    public IPaymentCodePool getPaymentCodePoolByCode(final String code);
 
     // @formatter:off
     /* ------------------------
@@ -112,13 +116,13 @@ public interface ITreasuryBridgeAPI {
 
     public IAcademicTreasuryEvent getAcademicTreasuryEventForTarget(final IAcademicTreasuryTarget target);
 
-    public IAcademicTreasuryEvent createDebt(final ITreasuryInstitution treasuryInstitution, final Person person,
-            final ITreasuryProduct product, final IAcademicTreasuryTarget target, final LocalDate entryDate,
-            final LocalDate dueDate, final boolean applyInterestGlobalTax);
+    public IAcademicTreasuryEvent createDebt(final ITreasuryEntity treasuryEntity, final ITreasuryProduct treasuryProduct,
+            final IAcademicTreasuryTarget target, final LocalDate when, final boolean createPaymentCode,
+            final IPaymentCodePool paymentCodePool);
 
-    public IAcademicTreasuryEvent createDebt(final ITreasuryInstitution treasuryInstitution, final Person person,
-            final ITreasuryProduct product, final IAcademicTreasuryTarget target, final BigDecimal amount,
-            final LocalDate dueDate, final boolean applyInterestGlobalTax);
+    public IAcademicTreasuryEvent createDebt(final ITreasuryEntity treasuryEntity, final ITreasuryProduct treasuryProduct,
+            final IAcademicTreasuryTarget target, final BigDecimal amount, final LocalDate when, final LocalDate dueDate,
+            final boolean createPaymentCode, final IPaymentCodePool paymentCodePool);
 
     // @formatter:off
     /* --------------

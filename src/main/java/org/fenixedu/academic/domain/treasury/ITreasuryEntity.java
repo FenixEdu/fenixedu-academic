@@ -1,8 +1,8 @@
 package org.fenixedu.academic.domain.treasury;
 
-public interface ITreasuryInstitution {
+public interface ITreasuryEntity {
     
-    public String getFiscalNumber();
+    public String getCode();
     public String getName();
     
 }
