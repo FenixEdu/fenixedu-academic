@@ -8,12 +8,11 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.DomainObject;
 
-public interface IAcademicTreasuryTarget {
-    
-    public DomainObject getAcademicTreasuryTargetDomainObject();
+public interface IAcademicTreasuryTarget extends DomainObject {
     
     // Required, must not return null
     public Person getAcademicTreasuryTargetPerson();
@@ -27,5 +26,15 @@ public interface IAcademicTreasuryTarget {
     public Degree getAcademicTreasuryTargetDegree();
     
     public Map<String, String> getAcademicTreasuryTargetPropertiesMap();
+    
+    public LocalDate getAcademicTreasuryTargetEventDate();
+    
+    public void handleTotalPayment(final IAcademicTreasuryEvent e);
+    
+    public default void handleSettlement(final IAcademicTreasuryEvent e) {
+        if(e.isPayed() && e.isWithDebitEntry()) {
+            handleTotalPayment(e);
+        }
+    }
     
 }
