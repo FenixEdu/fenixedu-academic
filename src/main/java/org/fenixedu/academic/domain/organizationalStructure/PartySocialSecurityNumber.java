@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.organizationalStructure;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Country;
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -77,6 +78,11 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
         if (!TreasuryBridgeAPIFactory.implementation().isValidFiscalNumber(getFiscalCountry().getCode(),
                 getSocialSecurityNumber())) {
             throw new DomainException("error.PartySocialSecurityNumber.invalid.socialSecurityNumber");
+        }
+
+        if (getParty().isPerson()) {
+            TreasuryBridgeAPIFactory.implementation().updateCustomer((Person) getParty(), getFiscalCountry().getCode(),
+                    getSocialSecurityNumber());
         }
     }
 

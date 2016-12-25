@@ -163,5 +163,7 @@ public interface ITreasuryBridgeAPI {
     public void createAcademicDebts(final Registration registration);
     
     public boolean isValidFiscalNumber(final String fiscalCountryCode, final String fiscalNumber);
+
+    public boolean updateCustomer(final Person person, final String fiscalCountryCode, final String fiscalNumber);
     
 }
