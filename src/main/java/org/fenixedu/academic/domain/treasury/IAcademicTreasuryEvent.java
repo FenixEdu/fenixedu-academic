@@ -30,6 +30,7 @@ public interface IAcademicTreasuryEvent {
      * ---------------------
      */
 
+    //TODO: anil alterar o nome para isCharged
     public boolean isWithDebitEntry();
 
     public boolean isExempted();
@@ -63,5 +64,10 @@ public interface IAcademicTreasuryEvent {
     public String formatMoney(BigDecimal moneyValue);
  
     public List<IPaymentReferenceCode> getPaymentReferenceCodesList();
+    
+    default public boolean isOnlinePaymentsActive() {
+        //TODO: anil
+        return true;
+    }
     
 }
