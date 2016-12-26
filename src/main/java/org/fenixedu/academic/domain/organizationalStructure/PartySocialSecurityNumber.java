@@ -29,7 +29,7 @@ import com.google.common.base.Strings;
 
 public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
 
-    private PartySocialSecurityNumber() {
+    public PartySocialSecurityNumber() {
         super();
         setRootDomainObject(Bennu.getInstance());
     }
