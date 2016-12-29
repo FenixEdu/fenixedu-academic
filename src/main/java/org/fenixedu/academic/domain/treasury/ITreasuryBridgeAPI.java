@@ -118,7 +118,7 @@ public interface ITreasuryBridgeAPI {
 
     public IAcademicTreasuryEvent createDebt(final ITreasuryEntity treasuryEntity, final ITreasuryProduct treasuryProduct,
             final IAcademicTreasuryTarget target, final LocalDate when, final boolean createPaymentCode,
-            final IPaymentCodePool paymentCodePool);
+            final IPaymentCodePool paymentCodePool, final int numberOfUnits, final int numberOfPages);
 
     public IAcademicTreasuryEvent createDebt(final ITreasuryEntity treasuryEntity, final ITreasuryProduct treasuryProduct,
             final IAcademicTreasuryTarget target, final BigDecimal amount, final LocalDate when, final LocalDate dueDate,

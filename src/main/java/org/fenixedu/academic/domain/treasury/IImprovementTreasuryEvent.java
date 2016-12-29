@@ -14,7 +14,7 @@ public interface IImprovementTreasuryEvent extends IAcademicTreasuryEvent {
      * -----------
      */
 
-    public boolean isWithDebitEntry(final EnrolmentEvaluation enrolmentEvaluation);
+    public boolean isCharged(final EnrolmentEvaluation enrolmentEvaluation);
     
     public boolean isExempted(final EnrolmentEvaluation enrolmentEvaluation);
 

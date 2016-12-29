@@ -30,19 +30,16 @@ public interface IAcademicTreasuryEvent {
      * ---------------------
      */
 
-    //TODO: anil alterar o nome para isCharged
-    public boolean isWithDebitEntry();
+    public boolean isCharged();
 
     public boolean isExempted();
 
-    //TODO: anil API deve ser clara para quem utiliza, se apenas se reage ao pagamento quando tem entries e está pago de alguma forma (seja por pagamento, isenção ou nota de crédito) então a semântica deve ser a mesma aqui
     default boolean isPayed() {
-        return getRemainingAmountToPay().compareTo(BigDecimal.ZERO) <= 0;
+        return isCharged() && getRemainingAmountToPay().compareTo(BigDecimal.ZERO) <= 0;
     }
 
-    //TODO: anil API deve ser clara para quem utiliza, se apenas se reage ao pagamento quando tem entries e está pago de alguma forma (seja por pagamento, isenção ou nota de crédito) então a semântica deve ser a mesma aqui
     default boolean isInDebt() {
-        return getRemainingAmountToPay().compareTo(BigDecimal.ZERO) > 0;
+        return isCharged() && getRemainingAmountToPay().compareTo(BigDecimal.ZERO) > 0;
     }
 
     public boolean isDueDateExpired(final LocalDate when);
@@ -67,9 +64,6 @@ public interface IAcademicTreasuryEvent {
 
     public List<IPaymentReferenceCode> getPaymentReferenceCodesList();
 
-    default public boolean isOnlinePaymentsActive() {
-        //TODO: anil
-        return true;
-    }
+    public boolean isOnlinePaymentsActive();
 
 }

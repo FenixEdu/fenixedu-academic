@@ -442,7 +442,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         final IImprovementTreasuryEvent event =
                 TreasuryBridgeAPIFactory.implementation().getImprovementTaxTreasuryEvent(getRegistration(), getExecutionYear());
 
-        return event != null && event.isWithDebitEntry(this);
+        return event != null && event.isCharged(this);
     }
 
     public boolean isPayed() {
