@@ -456,8 +456,16 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getFiscalCountry() : null;
     }
     
+    public void setFiscalCountry(final Country value) {
+        throw new RuntimeException("use editSocialSecurityNumber");
+    }
+    
     public String getSocialSecurityNumber() {
         return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getSocialSecurityNumber() : null;
+    }
+
+    public void setSocialSecurityNumber(final String value) {
+        throw new RuntimeException("use editSocialSecurityNumber");
     }
 
     public void editSocialSecurityNumber(final Country fiscalCountry, String socialSecurityNumber) {
