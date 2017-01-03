@@ -91,6 +91,7 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     }
 
     public void delete() {
+        setFiscalCountry(null);
         setParty(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
