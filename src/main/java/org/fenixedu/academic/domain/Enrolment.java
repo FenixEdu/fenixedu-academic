@@ -353,9 +353,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         final Supplier<Stream<EnrolmentEvaluation>> supplier =
                 () -> getEnrolmentEvaluationBySeason(season).filter(e -> e.getEnrolmentEvaluationState().equals(state));
 
-        // just to be precocious
-        if (supplier.get().count() > 1) {
-            logger.warn("Multiple Evaluations for pair Season<->STATE! [REG {}] [SCP {}] [{}] [{}] [{}]",
+        // performance: avoid count
+        if (logger.isDebugEnabled() && supplier.get().count() > 1) {
+
+            // just to be precocious
+            logger.debug("Multiple Evaluations for pair Season<->STATE! [REG {}] [SCP {}] [{}] [{}] [{}]",
                     getRegistration().getNumber(), getStudentCurricularPlan().getName(), print("").toString().replace("/n", ""),
                     season == null ? "" : season.getName().getContent(), state == null ? "" : state.toString());
 
@@ -404,9 +406,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             return true;
         });
 
-        // ugly, but just to be precocious
-        if (supplier.get().count() > 1) {
-            logger.warn("Multiple Evaluations for pair Season<->SEMESTER! [REG {}] [SCP {}] [{}] [{}] [{}]",
+        // performance: avoid count
+        if (logger.isDebugEnabled() && supplier.get().count() > 1) {
+
+            // just to be precocious
+            logger.debug("Multiple Evaluations for pair Season<->SEMESTER! [REG {}] [SCP {}] [{}] [{}] [{}]",
                     getRegistration().getNumber(), getStudentCurricularPlan().getName(), print("").toString().replace("/n", ""),
                     season == null ? "" : season.getName().getContent(), semester == null ? "" : semester.getQualifiedName());
         }
