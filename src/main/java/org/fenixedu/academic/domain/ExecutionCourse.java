@@ -388,6 +388,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             getSender().getRecipientsSet().clear();
             getSender().delete();
         }
+        if (getEvaluationMethod() != null) {
+            getEvaluationMethod().delete();
+        }
 
         for (; !getExportGroupingsSet().isEmpty(); getExportGroupingsSet().iterator().next().delete()) {
             ;
@@ -437,9 +440,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
         }
         if (!hasOnlyFinalEvaluations()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
-        if (getEvaluationMethod() != null) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
         }
         if (!getAssociatedShifts().isEmpty()) {
