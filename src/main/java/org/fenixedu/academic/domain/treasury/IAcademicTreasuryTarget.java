@@ -37,4 +37,5 @@ public interface IAcademicTreasuryTarget extends DomainObject {
             handleTotalPayment(e);
         }
     }
+    
 }

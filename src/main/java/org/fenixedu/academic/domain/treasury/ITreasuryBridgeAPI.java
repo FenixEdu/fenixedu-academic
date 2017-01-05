@@ -115,6 +115,7 @@ public interface ITreasuryBridgeAPI {
     // @formatter:on
 
     public IAcademicTreasuryEvent getAcademicTreasuryEventForTarget(final IAcademicTreasuryTarget target);
+    public void anullDebtsForTarget(final IAcademicTreasuryTarget target, final String reason);
 
     public IAcademicTreasuryEvent createDebt(final ITreasuryEntity treasuryEntity, final ITreasuryProduct treasuryProduct,
             final IAcademicTreasuryTarget target, final LocalDate when, final boolean createPaymentCode,

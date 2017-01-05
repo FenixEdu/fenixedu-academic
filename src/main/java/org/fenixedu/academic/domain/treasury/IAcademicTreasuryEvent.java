@@ -65,5 +65,7 @@ public interface IAcademicTreasuryEvent {
     public List<IPaymentReferenceCode> getPaymentReferenceCodesList();
 
     public boolean isOnlinePaymentsActive();
+    
+    public void annulDebts(final String reason);
 
 }
