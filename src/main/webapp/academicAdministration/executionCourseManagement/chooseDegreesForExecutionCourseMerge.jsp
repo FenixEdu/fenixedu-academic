@@ -68,11 +68,11 @@
 	    	</fr:slot>
 			<fr:slot name="sourceDegree" layout="menu-select" key="label.mergedegrees.source" required="true">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreesAcademicAdminProvider" />
-				<fr:property name="format" value="${presentationName}" />
+				<fr:property name="format" value="[${code}] ${presentationName}" />
 			</fr:slot>
 			<fr:slot name="destinationDegree" layout="menu-select" key="label.mergedegrees.destination" required="true">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreesAcademicAdminProvider" />
-				<fr:property name="format" value="${presentationName}" />
+				<fr:property name="format" value="[${code}] ${presentationName}" />
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">

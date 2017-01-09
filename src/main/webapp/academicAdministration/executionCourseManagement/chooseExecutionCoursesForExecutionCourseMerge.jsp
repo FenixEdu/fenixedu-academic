@@ -60,7 +60,7 @@
 	</p>
 	</br>
 	(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mergedegrees.source"/>) <br/>
-	<bean:write name="degreeBean" property="sourceDegree.sigla" /> - <bean:write name="degreeBean" property="sourceDegree.presentationName"/>
+	[<bean:write name="degreeBean" property="sourceDegree.code" />] <bean:write name="degreeBean" property="sourceDegree.sigla" /> - <bean:write name="degreeBean" property="sourceDegree.presentationName"/>
 	
 	
 
@@ -81,7 +81,7 @@
 		</fr:layout>
 	</fr:edit>
 	<br/>
-	<bean:write name="degreeBean" property="destinationDegree.sigla"/> - <bean:write name="degreeBean" property="destinationDegree.presentationName"/> <br/>
+	[<bean:write name="degreeBean" property="destinationDegree.code" />] <bean:write name="degreeBean" property="destinationDegree.sigla"/> - <bean:write name="degreeBean" property="destinationDegree.presentationName"/> <br/>
 	(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mergedegrees.destination"/>)
 	<br/>
 	<br/>

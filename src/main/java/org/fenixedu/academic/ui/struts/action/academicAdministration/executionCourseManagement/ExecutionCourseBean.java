@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.CurricularYear;
@@ -152,6 +153,7 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
         StringBuilder result = new StringBuilder();
 
         if (getSourceExecutionCourse() != null) {
+            result.append(getCode(getSourceExecutionCourse()));
             result.append(getSourceExecutionCourse().getNameI18N().getContent());
 
             final Set<DegreeCurricularPlan> plans;
@@ -173,6 +175,7 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
         StringBuilder result = new StringBuilder();
 
         if (getDestinationExecutionCourse() != null) {
+            result.append(getCode(getDestinationExecutionCourse()));
             result.append(getDestinationExecutionCourse().getNameI18N().getContent());
 
             final Set<DegreeCurricularPlan> plans;
@@ -188,6 +191,11 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
         }
 
         return result.toString();
+    }
+    
+    public static String getCode(final ExecutionCourse executionCourse) {
+        return "[" + executionCourse.getCompetenceCourses().stream().map(cc -> cc.getCode()).distinct()
+                .collect(Collectors.joining(", ")) + "] ";
     }
 
     static private String getDegreeCurricularPlansPresentationString(final Set<DegreeCurricularPlan> input) {
