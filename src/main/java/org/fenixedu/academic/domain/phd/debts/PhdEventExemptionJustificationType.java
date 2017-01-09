@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain.phd.debts;
 
 public enum PhdEventExemptionJustificationType {
 
-    DIRECTIVE_COUNCIL_AUTHORIZATION, PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION, FINE_EXEMPTION;
+    DIRECTIVE_COUNCIL_AUTHORIZATION, PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION, THIRD_PARTY_CONTRIBUTION, FINE_EXEMPTION;
     public String getName() {
         return name();
     }

@@ -59,23 +59,15 @@ public class ExternalScholarshipGratuityExemption extends ExternalScholarshipGra
             ExternalScholarshipGratuityExemptionJustificationType justificationType, String reason, Party creditor,
             String fileName, InputStream file) {
         super();
-        init(responsible, gratuityEvent, value, justificationType, reason, creditor, fileName,
-                file);
-    }
-
-    protected void init(Person responsible, GratuityEvent gratuityEvent,
-            Money value, ExternalScholarshipGratuityExemptionJustificationType
-            justificationType,
-            String reason, Party creditor, String fileName, InputStream content) {
-        super.init(responsible, gratuityEvent, justificationType.justification(this, reason));
+        init(responsible, gratuityEvent, justificationType.justification(this, reason));
         setValue(value);
         setParty(creditor);
         try {
-            setDocument(new GratuityContributionFile(creditor,gratuityEvent,fileName, IOUtils.toByteArray(content)));
+            setDocument(new GratuityContributionFile(creditor, gratuityEvent, fileName, IOUtils.toByteArray(file)));
         } catch (IOException e) {
             throw new DomainException("error.accounting.events.gratuity.ExternalScholarshipGratuityExemption.failed.to.read.file",e);
         }
-        setExternalScholarshipGratuityContributionEvent(new ExternalScholarshipGratuityContributionEvent(getParty()));
+        setExternalScholarshipGratuityContributionEvent(new ExternalScholarshipGratuityContributionEvent(creditor));
     }
 
     public BigDecimal calculateDiscountPercentage(Money amount) {
@@ -88,10 +80,12 @@ public class ExternalScholarshipGratuityExemption extends ExternalScholarshipGra
         return party.getSocialSecurityNumber() + " - " + party.getName();
     }
 
-
     public void doDelete() {
         setExternalScholarshipGratuityContributionEvent(null);
         setParty(null);
+        GratuityContributionFile document = getDocument();
+        setDocument(null);
+        document.delete();
         super.delete();
     }
 }

@@ -4515,6 +4515,11 @@ class phd.debts.ExternalScholarshipPhdGratuityContribuitionPR extends accounting
 
 class phd.debts.PhdGratuityExternalScholarshipExemption extends phd.debts.PhdEventExemption{}
 
+relation ExternalScholarshipPhdGratuityExemptionGratuityContributionFile {
+    phd.debts.PhdGratuityExternalScholarshipExemption playsRole phdExemption;
+    accounting.events.gratuity.GratuityContributionFile playsRole document;
+}
+
 class phd.debts.PhdGratuityFineExemption extends phd.debts.PhdEventExemption{
 } 
 

@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -119,6 +120,9 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         for (Exemption exemption : phdGratuityEvent.getExemptionsSet()) {
             if (exemption.isGratuityExemption()) {
                 percentage = percentage.add(((GratuityExemption) exemption).calculateDiscountPercentage(amountToPay));
+            } else if (exemption instanceof ExternalScholarshipGratuityExemption) {
+                percentage = percentage
+                        .add(((ExternalScholarshipGratuityExemption) exemption).calculateDiscountPercentage(amountToPay));
             }
         }
 
