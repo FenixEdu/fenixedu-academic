@@ -165,6 +165,18 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
         return mapping.findForward("manageFocusAreas");
     }
 
+    public ActionForward toggleFocusAreaAction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
+        
+        atomic(() -> {
+            focusArea.setActive(!focusArea.getActive());
+        });
+
+        return redirect("/candidacies/phdProgramCandidacyProcess.do?method=manageFocusAreas", request);
+    }
+
     public ActionForward manageThesisSubjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
