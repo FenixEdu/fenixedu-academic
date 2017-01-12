@@ -50,6 +50,13 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
 
     @Override
+    public void edit(String name, String nameEn, CurricularStage curricularStage) {
+        setName(name);
+        setNameEn(nameEn);
+        setCurricularStage(curricularStage);
+    }
+
+    @Override
     public boolean isOptionalCurricularCourse() {
         return true;
     }

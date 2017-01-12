@@ -37,6 +37,13 @@ public class EditCurricularCourse {
         curricularCourse.edit(weight, prerequisites, prerequisitesEn, CurricularStage.DRAFT, competenceCourse);
     }
 
+    /**
+     * @deprecated If CurricularCourse is not an OptionalCurricularCourse, this method edits fields that are no
+     * longer in use as they were moved to the
+     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     * class
+     */
+    @Deprecated
     @Atomic
     public static void run(CurricularCourse curricularCourse, String name, String nameEn) throws FenixServiceException {
         curricularCourse.edit(name, nameEn, CurricularStage.DRAFT);
@@ -44,6 +51,6 @@ public class EditCurricularCourse {
 
     @Atomic
     public static void run(OptionalCurricularCourse curricularCourse, String name, String nameEn) throws FenixServiceException {
-        run((CurricularCourse) curricularCourse, name, nameEn);
+        curricularCourse.edit(name, nameEn, CurricularStage.DRAFT);
     }
 }

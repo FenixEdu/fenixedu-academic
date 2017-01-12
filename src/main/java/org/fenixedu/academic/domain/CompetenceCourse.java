@@ -76,6 +76,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
+    /**
+     * @deprecated This method sets attributes that are no longer used. A
+     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     * object must be created to hold these values.
+     */
+    @Deprecated
     public CompetenceCourse(String code, String name, Collection<Department> departments) {
         this();
         super.setCurricularStage(CurricularStage.OLD);
@@ -203,6 +209,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.setName(name);
     }
 
+    /**
+     * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
+     * appropriate
+     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     * object.
+     */
+    @Deprecated
     public void edit(String code, String name, Collection<Department> departments) {
         fillFields(code, name);
         for (final Department department : this.getDepartmentsSet()) {
@@ -418,10 +431,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public String getName(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
-        if ((super.getName() == null || super.getName().length() == 0) && information != null) {
-            return information.getName();
-        }
-        return super.getName();
+        return information != null ? information.getName() : null;
     }
 
     @Override
