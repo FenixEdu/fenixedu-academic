@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
+@Deprecated
 public class StudentStatuteTypeProvider extends AbstractDomainObjectProvider {
 
     @Override
