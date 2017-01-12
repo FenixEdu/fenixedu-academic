@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeC
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
@@ -179,7 +180,17 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     public boolean hasExternalScholarshipGratuityExemption() {
-        return getExemptionsSet().stream().anyMatch(e->e instanceof ExternalScholarshipGratuityExemption);
+        return hasExemptionsOfType(ExternalScholarshipGratuityExemption.class);
+    }
+
+    public boolean hasExemptionsOfType(Class cl) {
+        for (Exemption exemption : getExemptionsSet()) {
+            if (cl.isAssignableFrom(exemption.getClass())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public ExternalScholarshipGratuityExemption getExternalScholarshipGratuityExemption() {

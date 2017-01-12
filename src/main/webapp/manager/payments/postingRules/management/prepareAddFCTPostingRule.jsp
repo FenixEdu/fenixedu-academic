@@ -29,14 +29,15 @@
 <br />
 
 <fr:edit id="bean" name="bean" action="${phd ? '/phdPostingRules.do?method=addFCTScolarshipPostingRule' : '/postingRules.do?method=addExternalScholarshipPostingRule'}">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-	</fr:layout>
-	<fr:schema bundle="MANAGER_RESOURCES"
-		type="org.fenixedu.academic.ui.struts.action.manager.payments.PostingRulesManagementDA$FctScolarshipPostingRuleBean">
-		<fr:slot name="startDate" key="label.phd.gratuity.startDate"
-			required="true" />
-		<fr:slot name="endDate" key="label.phd.gratuity.endDate" />
-	</fr:schema>
+       <fr:layout name="tabular">
+               <fr:property name="classes" value="tstyle5 thlight thright" />
+               <fr:property name="columnClasses" value=",,tdclear tderror1" />
+       </fr:layout>
+       <fr:schema bundle="MANAGER_RESOURCES"
+               type="org.fenixedu.academic.ui.struts.action.manager.payments.PostingRulesManagementDA$FctScolarshipPostingRuleBean">
+               <fr:slot name="startDate" key="label.phd.gratuity.startDate"
+                       required="true" />
+               <fr:slot name="endDate" key="label.phd.gratuity.endDate" />
+       </fr:schema>
+       <fr:destination name="cancel" path="/postingRules.do?method=showFCTScolarshipPostingRules"/>
 </fr:edit>

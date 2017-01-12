@@ -40,5 +40,6 @@
 			required="true" />
 		<fr:slot name="endDate" key="label.phd.gratuity.endDate" />
 	</fr:schema>
+	<fr:destination name="cancel" path="/postingRules.do?method=showFCTScolarshipPostingRules"/>
 </fr:edit>
 

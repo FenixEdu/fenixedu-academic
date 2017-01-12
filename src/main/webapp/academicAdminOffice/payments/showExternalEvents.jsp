@@ -38,7 +38,9 @@
 
 <p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.external"/></strong></p>
 <logic:empty name="events">
-	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events.noEvents" />
+	<logic:empty name="phdEvents">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events.noEvents" />
+	</logic:empty>
 </logic:empty>
 
 <logic:notEmpty name="events">
@@ -46,6 +48,21 @@
 		<fr:layout name="tabular">
 			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent">
 				<fr:slot name="externalScholarshipGratuityExemption.description"
+						 key="label.org.fenixedu.academic.domain.accounting.Event.description" />
+			</fr:schema>
+			<fr:property name="linkFormat(liquidate)" value="/payments.do?method=prepareLiquidation&eventId=${externalId}" />
+			<fr:property name="key(liquidate)" value="label.payments.liquidate" />
+			<fr:property name="bundle(liquidate)" value="ACADEMIC_OFFICE_RESOURCES" />
+			<fr:property name="classes" value="tstyle4 mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
+<logic:notEmpty name="phdEvents">
+	<fr:view name="phdEvents">
+		<fr:layout name="tabular">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent">
+				<fr:slot name="phdGratuityExternalScholarshipExemption.description"
 						 key="label.org.fenixedu.academic.domain.accounting.Event.description" />
 			</fr:schema>
 			<fr:property name="linkFormat(liquidate)" value="/payments.do?method=prepareLiquidation&eventId=${externalId}" />
