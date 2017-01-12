@@ -203,7 +203,7 @@
     </fr:view>
     <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
       <tr>
-        <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits"/>:</th>
+        <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</th>
         <td class="width35em">
           <logic:empty name="advisor" property="percentageDistribution">-</logic:empty>
           <logic:notEmpty name="advisor" property="percentageDistribution">
