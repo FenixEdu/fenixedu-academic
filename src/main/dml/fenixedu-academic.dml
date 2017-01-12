@@ -3049,6 +3049,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         DateTime creationDate;
 		LocalDate beginDate;
 		LocalDate endDate;
+		String comment;
     }
     
     	class student.SeniorStatute extends student.StudentStatute {

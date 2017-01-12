@@ -58,10 +58,10 @@ public class StudentStatutesDA extends FenixDispatchAction {
         public Object execute() {
             if (getStatuteType().isSeniorStatute()) {
                 return new SeniorStatute(getStudent(), getRegistration(), getStatuteType(), getBeginExecutionPeriod(),
-                        getEndExecutionPeriod(), getBeginDate(), getEndDate());
+                        getEndExecutionPeriod(), getBeginDate(), getEndDate(), getComment());
             } else {
                 return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod(),
-                        getBeginDate(), getEndDate());
+                        getBeginDate(), getEndDate(), getComment());
             }
         }
     }
