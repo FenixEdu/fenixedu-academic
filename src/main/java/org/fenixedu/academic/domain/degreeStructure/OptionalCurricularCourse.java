@@ -109,4 +109,24 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
         return new MultiLanguageString();
     }
 
+    @Override
+    public String getName() {
+        return getBaseName();
+    }
+
+    @Override
+    public String getNameEn() {
+        return getBaseNameEn();
+    }
+
+    @Override
+    public String getName(ExecutionSemester period) {
+        return getBaseName();
+    }
+
+    @Override
+    public String getNameEn(ExecutionSemester period) {
+        return getBaseNameEn();
+    }
+
 }
