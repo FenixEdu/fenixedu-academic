@@ -1267,6 +1267,14 @@ public class CurricularCourse extends CurricularCourse_Base {
         return results;
     }
 
+    protected String getBaseName() {
+    	return super.getName();
+    }
+
+    protected String getBaseNameEn() {
+    	return super.getNameEn();
+    }
+
     @Override
     public String getName(ExecutionSemester period) {
         return getCompetenceCourse() != null ? getCompetenceCourse().getName(period) : null;
