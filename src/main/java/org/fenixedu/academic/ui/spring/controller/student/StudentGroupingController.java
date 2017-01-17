@@ -68,7 +68,7 @@ public class StudentGroupingController extends JsonAwareResource {
     }
 
     @RequestMapping(value = "/groupings", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<JsonElement> getOpenEnrollmentGroupings() {
+    public @ResponseBody ResponseEntity<String> getOpenEnrollmentGroupings() {
         return new ResponseEntity<>(view(AccessControl
                 .getPerson()
                 .getStudent()
@@ -81,22 +81,23 @@ public class StudentGroupingController extends JsonAwareResource {
                 .flatMap(executionCourse -> executionCourse.getGroupings().stream())
                 .filter(grouping -> grouping.getAttendsSet().stream()
                         .anyMatch(attends -> attends.getRegistration().getPerson() == AccessControl.getPerson()))
-                .filter(grouping -> checkEnrolmentDate(grouping)).collect(Collectors.toList())), HttpStatus.OK);
+                .filter(grouping -> checkEnrolmentDate(grouping)).collect(Collectors.toList()))
+                .toString(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/grouping/{grouping}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<JsonElement> getGrouping(Grouping grouping) {
+    public @ResponseBody ResponseEntity<String> getGrouping(Grouping grouping) {
         if (!groupingIsOpenForEnrollment(grouping)) {
             throw new DomainException("error.grouping.notOpenToEnrollment");
         }
         if (!personInGroupingAttends(grouping, AccessControl.getPerson())) {
             // throw new DomainException("error.grouping.notEnroled");
             return new ResponseEntity<>(
-                    createErrorJson((new DomainException("error.grouping.notEnroled")).getLocalizedMessage()),
+                    createErrorJson((new DomainException("error.grouping.notEnroled")).getLocalizedMessage()).toString(),
                     HttpStatus.FORBIDDEN);
 
         }
-        return new ResponseEntity<>(view(grouping), HttpStatus.OK);
+        return new ResponseEntity<>(view(grouping).toString(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/shift/{shift}", method = RequestMethod.GET)

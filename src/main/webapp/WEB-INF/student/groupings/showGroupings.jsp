@@ -29,8 +29,7 @@
 <div ng-view>
 </div>
 </div>
-    ${portal.bennuPortal()}
-    
+${portal.angularToolkit()}
 <script>
 	var strings = {
 		groupingShiftChange : "${fr:message('resources.ApplicationResources', 'message.student.studentGroup.shiftChange')}",
@@ -39,8 +38,6 @@
 		studentUnenrolledGroup : "${fr:message('resources.ApplicationResources', 'message.student.studentGroup.unrolled')}"
 	}
 </script>
-<script
-	src="${pageContext.request.contextPath}/bennu-core/js/angular.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/bennu-portal/js/angular-route.min.js"></script>
 <script src="${pageContext.request.contextPath}/student/groupings/studentGroupingsApp.js"></script>
