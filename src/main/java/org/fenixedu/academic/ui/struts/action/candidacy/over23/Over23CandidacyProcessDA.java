@@ -319,9 +319,38 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
+    protected List<Object> getCandidacyHeader() {
+        final List<Object> result = new ArrayList<Object>();
+
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.processCode"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.name"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationType"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationNumber"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.nationality"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.state"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.verified"));
+
+        return result;
+    }
+
+    @Override
     protected Spreadsheet buildIndividualCandidacyReport(Spreadsheet spreadsheet,
             IndividualCandidacyProcess individualCandidacyProcess) {
-        return null;
+            Over23IndividualCandidacyProcess over23IndividualCandidacyProcess =
+                    (Over23IndividualCandidacyProcess) individualCandidacyProcess;
+
+            final Row row = spreadsheet.addRow();
+            row.setCell(over23IndividualCandidacyProcess.getProcessCode());
+            row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getName());
+            row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
+            row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
+            row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getCountry() != null ? over23IndividualCandidacyProcess
+                    .getPersonalDetails().getCountry().getCountryNationality().getContent() : "");
+            row.setCell(BundleUtil.getString(Bundle.ENUMERATION, individualCandidacyProcess.getCandidacyState().getQualifiedName()));
+            row.setCell(BundleUtil.getString(Bundle.CANDIDATE, over23IndividualCandidacyProcess.getProcessChecked() != null
+                    && over23IndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
+
+            return spreadsheet;
     }
 
 }

@@ -71,6 +71,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
         activities.add(new EditCandidacyPeriod());
         activities.add(new SendInformationToJury());
         activities.add(new PrintCandidacies());
+        activities.add(new ExportCandidacies());
         activities.add(new SelectAvailableDegrees());
     }
 
@@ -221,6 +222,21 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
         @Override
         protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, User userView, Object object) {
             return process; // for now, nothing to be done
+        }
+    }
+
+    static private class ExportCandidacies extends Activity<Over23CandidacyProcess> {
+
+        @Override
+        public void checkPreConditions(Over23CandidacyProcess process, User userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
+
+        @Override
+        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, User userView, Object object) {
+            return process;
         }
     }
 
