@@ -427,7 +427,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             return editProposal(mapping, actionForm, request, response);
         }
 
-        Thesis thesis = getThesis(request);
         ThesisEvaluationParticipant participant = FenixFramework.getDomainObject(target);
 
         PersonTarget targetType = getPersonTarget(participant.getType());

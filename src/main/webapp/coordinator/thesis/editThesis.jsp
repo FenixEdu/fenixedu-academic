@@ -376,8 +376,12 @@ String contextPath = request.getContextPath();
         <bean:message key="link.coordinator.thesis.edit.addPerson" bundle="APPLICATION_RESOURCES"/>
     </html:link>
 </logic:empty>
+
 <logic:notEmpty name="thesis" property="president">
-    <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=president&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
+
+<bean:define id="presidentId" name="thesis" property="president.externalId"/>
+ 
+    <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=%s&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", presidentId, dcpId, thesisId) %>">
         <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
     </html:link>,
     <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=president&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
