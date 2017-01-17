@@ -235,7 +235,7 @@
 					<form role="form" class="form-horizontal" style="display: inline"
 						method="post"
 						action="${createStudentGroupBaseLink.concat('shift/').concat(shift.externalId).concat('/createStudentGroup/') }">
-
+						${csrfField}
 						<button type="submit" class="btn btn-default pull-left">
 							<span class="glyphicon glyphicon-plus"></span>${fr:message('resources.ApplicationResources', 'link.insertGroup')}
 						</button>

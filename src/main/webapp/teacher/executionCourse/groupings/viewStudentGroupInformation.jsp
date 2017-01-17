@@ -189,6 +189,7 @@
 
 		<form:form modelAttribute="attends"  style="display: inline" role="form" method="post"
 			action="${editStudentGroupAttendsUrl }" enctype="multipart/form-data">
+			${csrfField}
 			<c:if test="${not empty studentGroup.attendsSet}">
 				<a
 					href="${sendEmailLink }"

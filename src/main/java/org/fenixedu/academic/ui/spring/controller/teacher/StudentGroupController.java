@@ -43,6 +43,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.spring.security.CSRFTokenBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,7 +68,17 @@ public class StudentGroupController extends ExecutionCourseController {
     public StudentGroupController(StudentGroupService studentGroupService) {
         this.studentGroupService = studentGroupService;
     }
-
+    
+    
+    // hack
+    @Autowired
+    CSRFTokenBean csrfTokenBean;
+    
+    @ModelAttribute("csrfField")
+    public String getCSRFField(){
+        return csrfTokenBean.field();
+    }
+    
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
