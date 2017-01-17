@@ -54,6 +54,7 @@ import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.domain.PortalConfiguration;
 import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.HtmlCleanerException;
 import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
 import org.joda.time.YearMonthDay;
@@ -176,7 +177,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             TagNode root = cleaner.clean(dirtyHtml);
 
             return new SimpleHtmlSerializer(cleaner.getProperties()).getAsString(root);
-        } catch (IOException e) {
+        } catch (HtmlCleanerException e) {
             logger.error(e.getMessage(), e);
         }
         return StringUtils.EMPTY;
