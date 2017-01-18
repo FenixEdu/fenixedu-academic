@@ -47,7 +47,6 @@ public abstract class PhdReport {
     protected CellStyle headerBackgroundStyle() {
         CellStyle style = workbook.createCellStyle();
         style.setFillBackgroundColor(IndexedColors.AQUA.getIndex());
-        style.setFillPattern(CellStyle.BIG_SPOTS);
 
         return style;
     }
