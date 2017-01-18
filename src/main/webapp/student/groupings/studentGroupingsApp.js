@@ -1,4 +1,4 @@
-var app = angular.module("studentGroupingsApp", ['ngRoute']);
+var app = angular.module("studentGroupingsApp", ['bennuToolkit','ngRoute']);
 
 app.filter('fullShifts', function() {
   return function(shifts, grouping) {
@@ -186,10 +186,10 @@ app.controller("StudentGroupCtrl", ['$scope', '$rootScope', '$http', '$routePara
   function($scope, $rootScope, $http, $routeParams,
     $location) {
     $scope.currentPerson = {
-      id: window.BennuPortal.id,
-      username: window.BennuPortal.username,
-      name: window.BennuPortal.displayName,
-      email: window.BennuPortal.email,
+      id: Bennu.id,
+      username: Bennu.username,
+      name: Bennu.displayName,
+      email: Bennu.email,
       enrolled: true
     };
     $scope.message = $rootScope.message;
