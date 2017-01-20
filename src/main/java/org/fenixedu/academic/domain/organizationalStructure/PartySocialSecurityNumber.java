@@ -44,11 +44,18 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     }
 
     private void checkRules() {
+        
         if (getParty() == null) {
             throw new DomainException("error.PartySocialSecurityNumber.invalid.party");
         }
-        if (Strings.isNullOrEmpty(getSocialSecurityNumber())) {
-            throw new DomainException("error.PartySocialSecurityNumber.invalid.socialSecurityNumber");
+        
+        if (!hasSocialSecurityNumber() && !hasFiscalCountry()) {
+            //allow creation of persons without social security number (for instance: external persons, candidates, etc.)
+            return;
+        }
+
+        if ((hasSocialSecurityNumber() && !hasFiscalCountry()) || (hasFiscalCountry() && !hasSocialSecurityNumber())) {
+            throw new DomainException("error.PartySocialSecurityNumber.fiscal.information.is.not.complete");
         }
 
         final String defaultSocialSecurityNumber =
@@ -97,11 +104,28 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
         super.deleteDomainObject();
     }
 
-    public void edit(final Country fiscalCountry, final String socialSecurityNumber) {
+    private void edit(final Country fiscalCountry, final String socialSecurityNumber) {
+        
+        if (hasFiscalCountry() && fiscalCountry == null) {
+            throw new DomainException("error.PartySocialSecurityNumber.cannot.remove.fiscal.country");
+        }
+        
+        if (hasSocialSecurityNumber() && Strings.isNullOrEmpty(socialSecurityNumber)) {
+            throw new DomainException("error.PartySocialSecurityNumber.cannot.remove.social.security.number");
+        }
+        
         setFiscalCountry(fiscalCountry);
         setSocialSecurityNumber(socialSecurityNumber);
 
         checkRules();
+    }
+
+    protected boolean hasFiscalCountry() {
+        return getFiscalCountry() != null;
+    }
+
+    protected boolean hasSocialSecurityNumber() {
+        return !Strings.isNullOrEmpty(getSocialSecurityNumber());
     }
 
     // @formatter:off
