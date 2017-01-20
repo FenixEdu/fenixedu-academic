@@ -31,12 +31,12 @@
 	<logic:messagesPresent message="true" property="context">
 		<ul>
 			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="context">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
+				<li><span class="error0"><bean:write bundle="ACADEMIC_OFFICE_RESOURCES" name="messages" /></span></li>
 			</html:messages>
 		</ul>
 		<br />
 	</logic:messagesPresent>
-	
+
 	<logic:messagesPresent message="true" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
 		<ul>
 			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="<%=org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE%>">
@@ -45,7 +45,7 @@
 		</ul>
 		<br />
 	</logic:messagesPresent>
-	
+
 	<fr:hasMessages for="exemptionBean" type="conversion">
 		<ul>
 			<fr:messages>
@@ -67,37 +67,82 @@
 	<br />
 
 	<bean:define id="eventId" name="event" property="externalId" />
-	<fr:form action='<%="/exemptionsManagement.do?eventId=" + eventId %>'>
-		<html:hidden property="method" value="" />
 
-		<fr:edit id="exemptionBean" name="exemptionBean">
-			<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.ui.struts.action.phd.PhdEventExemptionBean">
-				<fr:slot name="justificationType" layout="radio-select" required="true">
-					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdEventExemptionJustificationTypeProvider" />
-			        <fr:property name="saveOptions" value="true"/>
-				</fr:slot>
+	<fr:edit id="exemptionBean" name="exemptionBean" action="<%="/exemptionsManagement.do?method=createPhdEventExemption&eventId="+eventId%>">
+		<fr:schema bundle="PHD_RESOURCES" type="org.fenixedu.academic.ui.struts.action.phd.PhdEventExemptionBean">
+			<fr:slot name="justificationType" layout="menu-postback" required="true">
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdEventExemptionJustificationTypeForGratuityProvider" />
+				<fr:property name="saveOptions" value="true"/>
+				<fr:property name="defaultOptionHidden" value="true" />
+			</fr:slot>
+
+			<logic:equal name="exemptionBean" property="justificationType" value="DIRECTIVE_COUNCIL_AUTHORIZATION">
 				<fr:slot name="dispatchDate" required="true" />
 				<fr:slot name="value" required="true" />
 				<fr:slot name="reason" layout="longText" required="true">
 					<fr:property name="rows" value="4" />
 					<fr:property name="columns" value="40" />
 				</fr:slot>
-			</fr:schema>
-		
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4" />
-				<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			</fr:layout>
-		
-			<fr:destination name="invalid" path='<%="/exemptionsManagement.do?method=prepareCreatePhdEventExemptionInvalid&amp;eventId=" + eventId %>'/>
-			<fr:destination name="postback" path='<%= "/exemptionsManagement.do?method=changeForm&amp;eventId=" + eventId %>'/>
-		</fr:edit>
+			</logic:equal>
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createPhdEventExemption';">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.create" />
-		</html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" onclick="this.form.method.value='showExemptions';">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.cancel" />
-		</html:cancel>
+			<logic:equal name="exemptionBean" property="justificationType" value="THIRD_PARTY_CONTRIBUTION">
+				<fr:slot name="creditorSocialSecurityNumber" layout="autoComplete"
+						 validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator"
+						 key="label.payments.event.creditor.party">
+					<fr:property name="size" value="70"/>
+					<fr:property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="provider"
+								 value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalScholarshipPartySocialSecurityNumber"/>
+					<fr:property name="args" value="slot=socialSecurityNumber"/>
+					<fr:property name="minChars" value="1"/>
+					<fr:property name="maxCount" value="20"/>
+				</fr:slot>
+				<fr:slot name="file" key="label.payments.event.creditor.document" bundle="ACADEMIC_OFFICE_RESOURCES">
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+						<fr:property name="required" value="true"/>
+						<fr:property name="typeMessage" value="label.payments.event.creditor.document.type"/>
+						<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+						<fr:property name="acceptedTypes" value="application/pdf"/>
+					</fr:validator>
+					<fr:property name="size" value="70"/>
+					<fr:property name="fileNameSlot" value="fileName"/>
+					<fr:property name="fileSizeSlot" value="fileSize"/>
+				</fr:slot>
+				<fr:slot name="reason" key="label.payments.event.transfer.reason"/>
+			</logic:equal>
 
-	</fr:form>
+			<logic:equal name="exemptionBean" property="justificationType" value="PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION">
+				<fr:slot name="creditorSocialSecurityNumber" layout="autoComplete"
+						 validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator"
+						 key="label.payments.event.creditor.party">
+					<fr:property name="size" value="70"/>
+					<fr:property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="provider"
+								 value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalScholarshipPartySocialSecurityNumber"/>
+					<fr:property name="args" value="slot=socialSecurityNumber"/>
+					<fr:property name="minChars" value="1"/>
+					<fr:property name="maxCount" value="20"/>
+				</fr:slot>
+				<fr:slot name="value" required="true" />
+			</logic:equal>
+
+			<logic:equal name="exemptionBean" property="justificationType" value="FINE_EXEMPTION">
+				<fr:slot name="reason" layout="longText" required="true">
+					<fr:property name="rows" value="4" />
+					<fr:property name="columns" value="40" />
+				</fr:slot>
+			</logic:equal>
+
+		</fr:schema>
+
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+
+		<fr:destination name="invalid" path='<%="/exemptionsManagement.do?method=prepareCreatePhdEventExemptionInvalid&amp;eventId=" + eventId %>'/>
+		<fr:destination name="postback" path='<%= "/exemptionsManagement.do?method=changeForm&amp;eventId=" + eventId %>'/>
+		<fr:destination name="cancel" path="<%="/exemptionsManagement.do?method=showExemptions&eventId=" + eventId%>"/>
+	</fr:edit>

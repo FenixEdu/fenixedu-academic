@@ -86,6 +86,7 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
         return phdGratuityExternalScholarshipExemption;
     }
 
+    @Atomic
     public static PhdGratuityExternalScholarshipExemption createPhdGratuityExternalScholarshipExemption(Person responsible,
             Money value, Party party, PhdGratuityEvent event, String reason, String fileName, InputStream file) {
         if (event.hasExternalScholarshipGratuityExemption()) {
@@ -108,8 +109,10 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
         setExternalScholarshipPhdGratuityContribuitionEvent(null);
         setParty(null);
         GratuityContributionFile document = getDocument();
-        setDocument(null);
-        document.delete();
+        if(document != null) {
+            setDocument(null);
+            document.delete();
+        }
         super.delete();
     }
 

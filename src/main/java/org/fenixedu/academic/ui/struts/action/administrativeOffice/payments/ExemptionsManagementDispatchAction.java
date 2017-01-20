@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.payments;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,7 +37,6 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWith
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
 import org.fenixedu.academic.domain.phd.debts.PhdEventExemption;
 import org.fenixedu.academic.domain.phd.debts.PhdEventExemptionJustificationType;
@@ -67,7 +64,6 @@ import org.fenixedu.academic.service.services.accounting.gratuity.CreateInstallm
 import org.fenixedu.academic.ui.struts.FenixActionForm;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
 import org.fenixedu.academic.ui.struts.action.phd.PhdEventExemptionBean;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -441,11 +437,11 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
         return mapping.findForward("createPhdEventExemption");
     }
 
+    @Deprecated
     public ActionForward prepareCreatePhdGratuityExemptionForGratuity(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         PhdEventExemptionBean phdEventExemptionBean = new PhdEventExemptionBean((PhdEvent) getEvent(request));
         phdEventExemptionBean.setJustificationType(PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION);
-        phdEventExemptionBean.setProviders(new ArrayList<Party>(Bennu.getInstance().getExternalScholarshipProviderSet()));
         request.setAttribute("exemptionBean", phdEventExemptionBean);
         return mapping.findForward("createFCTExemption");
     }
@@ -456,6 +452,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
         return mapping.findForward("createPhdEventExemption");
     }
 
+    @Deprecated
     public ActionForward createFCTExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -489,6 +486,11 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
             } else if (bean.getJustificationType() == PhdEventExemptionJustificationType.FINE_EXEMPTION) {
                 PhdGratuityFineExemption.createPhdGratuityFineExemption(getLoggedPerson(request),
                         (PhdGratuityEvent) bean.getEvent(), bean.getReason());
+            } else if (bean.getJustificationType().equals(PhdEventExemptionJustificationType.THIRD_PARTY_CONTRIBUTION)) {
+                PhdGratuityEvent event = ((PhdGratuityEvent) bean.getEvent());
+                PhdGratuityExternalScholarshipExemption.createPhdGratuityExternalScholarshipExemption(getLoggedPerson(request),
+                        event.getAmountToPay(), bean.getProvider(), event, bean.getReason(),bean
+                                .getFileName(), bean.getFile());
             }
         } catch (DomainExceptionWithLabelFormatter ex) {
             addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -612,13 +614,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
             HttpServletResponse response) {
         PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
         RenderUtils.invalidateViewState();
-        if (bean.getJustificationType().equals(PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION)) {
-            request.setAttribute("exemptionBean", bean);
-            return mapping.findForward("createFCTExemption");
-
-        } else {
-            request.setAttribute("exemptionBean", bean);
-            return mapping.findForward("createFCTExemption");
-        }
+        request.setAttribute("exemptionBean", bean);
+        return mapping.findForward("createPhdEventExemption");
     }
 }
