@@ -19,11 +19,15 @@
 package org.fenixedu.academic.domain.reports;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GrantOwnerType;
@@ -32,6 +36,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement;
+import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
 import org.fenixedu.academic.domain.raides.DegreeDesignation;
@@ -140,7 +145,8 @@ public class RaidesCommonReportFieldsWrapper {
     }
 
     public static Row reportRaidesFields(final Spreadsheet sheet, final Registration registration,
-            List<Registration> registrationPath, ExecutionYear executionYear, final CycleType cycleType, final boolean concluded,
+            StudentCurricularPlan studentCurricularPlan, List<Registration> registrationPath, ExecutionYear executionYear,
+            final CycleType cycleType, final boolean concluded,
             final YearMonthDay conclusionDate, BigDecimal average, boolean graduation) {
 
         final Row row = sheet.addRow();
@@ -148,7 +154,6 @@ public class RaidesCommonReportFieldsWrapper {
         //List<Registration> registrationPath = getFullRegistrationPath(registration);
         Registration sourceRegistration = registrationPath.iterator().next();
         final PersonalInformationBean personalInformationBean = registration.getPersonalInformationBean(executionYear);
-        StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 
         // Ciclo
         row.setCell(cycleType.getDescription());
@@ -160,7 +165,7 @@ public class RaidesCommonReportFieldsWrapper {
         if (graduation) {
             row.setCell(concluded ? printBigDecimal(average.setScale(0, BigDecimal.ROUND_HALF_EVEN)) : printBigDecimal(average));
         } else {
-            row.setCell(concluded ? lastStudentCurricularPlan.getCycle(cycleType).getCurriculum().getRawGrade().getValue() : "n/a");
+            row.setCell(concluded ? studentCurricularPlan.getCycle(cycleType).getCurriculum().getRawGrade().getValue() : "n/a");
         }
 
         // Data de Conclusão
@@ -214,7 +219,7 @@ public class RaidesCommonReportFieldsWrapper {
         // Ramos do currículo do aluno
         final StringBuilder majorBranches = new StringBuilder();
         final StringBuilder minorBranches = new StringBuilder();
-        for (final BranchCurriculumGroup group : lastStudentCurricularPlan.getBranchCurriculumGroups()) {
+        for (final BranchCurriculumGroup group : studentCurricularPlan.getBranchCurriculumGroups()) {
             if (group.isMajor()) {
                 majorBranches.append(group.getName().toString()).append(",");
             } else if (group.isMinor()) {
@@ -533,7 +538,7 @@ public class RaidesCommonReportFieldsWrapper {
         int totalEnrolmentsApprovedInPreviousYear = 0;
         //int totalEnrolmentsInFirstSemester = 0;
         double totalEctsConcludedUntilPreviousYear = 0d;
-        for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getInternalCycleCurriculumGrops()) {
+        for (final CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getInternalCycleCurriculumGrops()) {
 
             totalEctsConcludedUntilPreviousYear +=
                     cycleCurriculumGroup.getCreditsConcluded(executionYear.getPreviousExecutionYear());
@@ -553,7 +558,7 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Total de ECTS inscritos no total do ano
         double totalCreditsEnrolled = 0d;
-        for (Enrolment enrollment : lastStudentCurricularPlan.getEnrolmentsByExecutionYear(executionYear)) {
+        for (Enrolment enrollment : studentCurricularPlan.getEnrolmentsByExecutionYear(executionYear)) {
             totalCreditsEnrolled += enrollment.getEctsCredits();
         }
         row.setCell(printDouble(totalCreditsEnrolled));
@@ -562,7 +567,7 @@ public class RaidesCommonReportFieldsWrapper {
         // que se
         // referem os dados (neste caso até ao fim de 2007/08) no curso actual
         double totalCreditsDismissed = 0d;
-        for (Credits credits : lastStudentCurricularPlan.getCreditsSet()) {
+        for (Credits credits : studentCurricularPlan.getCreditsSet()) {
             if (credits.isEquivalence()) {
                 totalCreditsDismissed += credits.getEnrolmentsEcts();
             }
@@ -580,17 +585,17 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(totalEnrolmentsApprovedInPreviousYear);
 
         // Nº de Inscrições Externas no ano a que se referem os dados
-        ExtraCurriculumGroup extraCurriculumGroup = lastStudentCurricularPlan.getExtraCurriculumGroup();
+        ExtraCurriculumGroup extraCurriculumGroup = studentCurricularPlan.getExtraCurriculumGroup();
         int extraCurricularEnrolmentsCount =
                 extraCurriculumGroup != null ? extraCurriculumGroup.getEnrolmentsBy(executionYear).size() : 0;
 
-        for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getExternalCurriculumGroups()) {
+        for (final CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getExternalCurriculumGroups()) {
             extraCurricularEnrolmentsCount += cycleCurriculumGroup.getEnrolmentsBy(executionYear).size();
         }
 
-        if (lastStudentCurricularPlan.hasPropaedeuticsCurriculumGroup()) {
+        if (studentCurricularPlan.hasPropaedeuticsCurriculumGroup()) {
             extraCurricularEnrolmentsCount +=
-                    lastStudentCurricularPlan.getPropaedeuticCurriculumGroup().getEnrolmentsBy(executionYear).size();
+                    studentCurricularPlan.getPropaedeuticCurriculumGroup().getEnrolmentsBy(executionYear).size();
         }
 
         row.setCell(extraCurricularEnrolmentsCount);
@@ -625,21 +630,21 @@ public class RaidesCommonReportFieldsWrapper {
         // Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo
         // anterior ao que se referem os dados
         final CycleCurriculumGroup firstCycleCurriculumGroup =
-                lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE);
+                studentCurricularPlan.getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE);
         row.setCell(firstCycleCurriculumGroup != null ? printBigDecimal(firstCycleCurriculumGroup.getCurriculum(executionYear)
                 .getSumEctsCredits()) : "");
 
         // Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
         // anterior ao que se referem os dados
         final CycleCurriculumGroup secondCycleCurriculumGroup =
-                lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE);
+                studentCurricularPlan.getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE);
         row.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
                 .getCurriculum(executionYear).getSumEctsCredits()) : "");
 
         // Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
         // lectivo anterior ao que se referem os dados
         Double extraFirstCycleEcts = 0d;
-        for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getExternalCurriculumGroups()) {
+        for (final CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getExternalCurriculumGroups()) {
             for (final CurriculumLine curriculumLine : cycleCurriculumGroup.getAllCurriculumLines()) {
                 if (!curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
                     extraFirstCycleEcts += curriculumLine.getCreditsConcluded(executionYear.getPreviousExecutionYear());
@@ -669,8 +674,8 @@ public class RaidesCommonReportFieldsWrapper {
         // anterior que ao se referem os dados
         Double propaedeuticEcts = 0d;
         Double allPropaedeuticEcts = 0d;
-        if (lastStudentCurricularPlan.getPropaedeuticCurriculumGroup() != null) {
-            for (final CurriculumLine curriculumLine : lastStudentCurricularPlan.getPropaedeuticCurriculumGroup()
+        if (studentCurricularPlan.getPropaedeuticCurriculumGroup() != null) {
+            for (final CurriculumLine curriculumLine : studentCurricularPlan.getPropaedeuticCurriculumGroup()
                     .getAllCurriculumLines()) {
                 if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
                         && !curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
@@ -691,7 +696,7 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(printDouble(totalCreditsDismissed));
 
         // Tem situação de propinas no lectivo dos dados
-        row.setCell(String.valueOf(lastStudentCurricularPlan.hasAnyGratuityEventFor(executionYear)));
+        row.setCell(String.valueOf(studentCurricularPlan.hasAnyGratuityEventFor(executionYear)));
 
         return row;
     }
@@ -703,4 +708,37 @@ public class RaidesCommonReportFieldsWrapper {
     private static String printBigDecimal(BigDecimal value) {
         return value == null ? "" : value.toPlainString().replace('.', ',');
     }
+
+    public static StudentCurricularPlan getStudentCurricularPlan(Registration registration, CycleType cycleType) {
+        Optional<StudentCurricularPlan> studentCurricularPlan = registration.getStudentCurricularPlansSet().stream()
+                .filter(scp -> scp.getRoot().getCycleCurriculumGroup(cycleType) != null)
+                .max(StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
+
+        return studentCurricularPlan.orElse(registration.getLastStudentCurricularPlan());
+    }
+
+    public static Set<Registration> getRegistrationsToProcess(final ExecutionYear executionYear, final DegreeType degreeType) {
+        final Set<Registration> result = new HashSet<Registration>();
+
+        collectStudentCurricularPlansFor(executionYear, result, degreeType);
+
+        if (executionYear.getPreviousExecutionYear() != null) {
+            collectStudentCurricularPlansFor(executionYear.getPreviousExecutionYear(), result, degreeType);
+        }
+
+        return result;
+    }
+
+    public static void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<Registration> result,
+            final DegreeType degreeType) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(degreeType)) {
+            for (StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
+                    .getStudentCurricularPlansSet()) {
+                if (!studentCurricularPlan.getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())) {
+                    result.add(studentCurricularPlan.getRegistration());
+                }
+            }
+        }
+    }
+
 }
