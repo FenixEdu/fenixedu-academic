@@ -38,6 +38,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
@@ -143,6 +144,53 @@ public class ManageAccountsDA extends FenixDispatchAction {
     public ActionForward viewPerson(final Person person, final ActionMapping mapping, final HttpServletRequest request)
             throws Exception {
         request.setAttribute("person", person);
+        request.setAttribute("personBean", new PersonBean(person));
+        
         return mapping.findForward("viewPerson");
     }
+    
+    public ActionForward editPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Person person = getDomainObject(request, "personId");
+        final PersonBean personBean = getRenderedObject("personBean");
+        
+        request.setAttribute("editPersonalInfo", true);
+        request.setAttribute("person", person);
+        request.setAttribute("personBean", personBean);
+        
+        RenderUtils.invalidateViewState();
+        
+        return mapping.findForward("viewPerson");
+    }
+    
+    public ActionForward editPersonalDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Person person = getDomainObject(request, "personId");
+        final PersonBean personBean = getRenderedObject("personBean");
+        
+        request.setAttribute("editPersonalInfo", true);
+        request.setAttribute("person", person);
+        request.setAttribute("personBean", personBean);
+        
+        RenderUtils.invalidateViewState();
+        
+        return mapping.findForward("viewPerson");
+    }
+    
+    public ActionForward editPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Person person = getDomainObject(request, "personId");
+        final PersonBean personBean = getRenderedObject("personBean");
+        
+        try {
+            personBean.save();
+            
+            return viewPerson(person, mapping, request);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage());
+            
+            return editPersonalDataInvalid(mapping, form, request, response);
+        }
+    }
+    
 }
