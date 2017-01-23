@@ -171,6 +171,10 @@
 	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>
 </logic:equal>
 
+<logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="true">
+	<p><span class="success0"><bean:message key="message.submitted.document.files" bundle="CANDIDATE_RESOURCES"/></span></p>
+</logic:equal>
+
 <% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
 
 <div class="h_box">
