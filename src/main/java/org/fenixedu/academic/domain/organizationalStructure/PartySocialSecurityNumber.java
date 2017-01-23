@@ -74,8 +74,8 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
                 if (otherPartySecurityNumber == this) {
                     continue;
                 }
-
-                if (otherPartySecurityNumber.getSocialSecurityNumber().equals(getSocialSecurityNumber())) {
+                
+                if (getSocialSecurityNumber().equals(otherPartySecurityNumber.getSocialSecurityNumber())) {
                     throw new DomainException("error.PartySocialSecurityNumber.number.already.exists",
                             otherPartySecurityNumber.getParty().getName());
                 }
