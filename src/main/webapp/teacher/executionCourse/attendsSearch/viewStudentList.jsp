@@ -111,19 +111,23 @@
 								</div>
 							</div>
 							<div class="col-sm-3">
-
-								<h3>${fr:message('resources.ApplicationResources', 'label.workingStudents')}</h3>
+								<h3>${fr:message('resources.ApplicationResources', 'label.studentStatutes')}</h3>
 								<div class="checkbox">
-									<label> <input type="checkbox" ng-model="allCheck.workingStTypes" ng-change="changeAllWorkingStudentTypes()">
+									<label> <input type="checkbox" ng-model="allCheck.studentStatuteTypes" ng-change="changeAllStudentStatuteTypes()">
 										${fr:message('resources.ApplicationResources', 'label.all')}
 									</label>
 								</div>
-								<div class="checkbox"
-									ng-repeat="state in filters.workingStudentTypes">
-									<label> <input type="checkbox" ng-model="state.value" ng-change="genFilteredAttends()">
-										{{state.name }}
+								<div class="checkbox">
+									<label> <input type="checkbox"
+										ng-model="filters.noStudentStatuteTypes.value" ng-change="genFilteredAttends()">
+										{{filters.noStudentStatuteTypes.shortName }}
 									</label>
 								</div>
+							 	<div class="checkbox" ng-repeat="studentType in studentStatuteTypes">
+							 		<label><input type="checkbox" ng-model="studentType.value" ng-change="genFilteredAttends()" />
+							 			{{studentType.name}}
+							 		</label>
+							 	</div>
 							</div>
 						</form>
 					</div>
@@ -183,7 +187,7 @@
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.attends.enrollmentState')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.registration.state')}</th>
 					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.Degree')}</th>
-					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.workingStudents')}</th>
+					<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.studentStatutes')}</th>
 				</tr>
 				<tr>
 					<th ng-repeat="grouping in groupings">{{grouping.name}}</th>
@@ -212,7 +216,12 @@
 					<td>{{ attendee.enrolmentType}}</td>
 					<td>{{ attendee.registrationState}}</td>
 					<td>{{ attendee.curricularPlan.name}}</td>
-					<td><span class="glyphicon glyphicon-ok" ng-if="attendee.workingStudent"></span></td>
+					<td>
+						<span data-toggle="tooltip" ng-repeat="studentStatute in attendee.studentStatutes" data-placement="top" title="{{ studentStatute.comment}}">
+							<div>{{ studentStatute.type.name }}</div>
+						</span>
+						<span ng-if="attendee.studentStatutes.length == 0">-</span>
+					</td> 
 				</tr>
 				<tr ng-if="!attends">
 					<td colspan="{{9 + groupings.length + shiftTypes.length}}"
@@ -274,11 +283,11 @@ ${portal.bennuPortal()}
 	var shiftTypes = ${	shiftTypes }
 	var shifts = ${	shifts }
 	var groupings = ${	groupings }
-	var workingStudentTypes = ${ workingStudentTypes}
 	var executionCourseId = ${executionCourse.externalId}
 
 	var strings = {
 		noShiftShortName : "${fr:message('resources.ApplicationResources', 'message.NoShift')}",
+		noStudentStatuteTypesShortName : "${fr:message('resources.ApplicationResources', 'message.NoStudentStatutes')}",
 		firstText : "${fr:message('resources.ApplicationResources', 'label.pagination.first')}",
 		previousText : "${fr:message('resources.ApplicationResources', 'label.pagination.previous')}",
 		nextText : "${fr:message('resources.ApplicationResources', 'label.pagination.next')}",

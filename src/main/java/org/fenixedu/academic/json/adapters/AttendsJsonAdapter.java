@@ -27,6 +27,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.json.JsonBuilder;
 import org.fenixedu.bennu.core.json.JsonViewer;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -55,6 +56,13 @@ public class AttendsJsonAdapter implements JsonViewer<Attends> {
 
         object.addProperty("workingStudent",
                 attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod()));
+
+        JsonArray statutesArray = new JsonArray();
+
+        attends.getRegistration().getStudent().getStudentStatutesSet().stream().filter(s -> s.isValidInExecutionPeriod(attends.getExecutionPeriod())).forEach(ss ->
+        statutesArray.add(ctx.view(ss)));
+
+        object.add("studentStatutes", statutesArray);
 
         JsonObject shiftsByType = new JsonObject();
         attends.getExecutionCourse().getShiftTypes().forEach(shiftType -> {
