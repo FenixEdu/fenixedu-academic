@@ -18,12 +18,16 @@
  */
 package org.fenixedu.academic.ui.renderers.student.curriculum;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -40,10 +44,14 @@ import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.ConclusionValue;
@@ -53,8 +61,11 @@ import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGro
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
@@ -74,6 +85,8 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import com.google.common.base.Strings;
 
 public class StudentCurricularPlanRenderer extends InputRenderer {
+
+    private static final Logger logger = LoggerFactory.getLogger(StudentCurricularPlanRenderer.class);
 
     private static final String SCPLANTEMPORARYDISMISSAL = "scplantemporarydismissal";
 
@@ -570,19 +583,64 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                     groupName.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.maxCredits"));
                     groupName.append("\">, M(");
                     groupName.append(creditsLimit.getMaximumCredits());
-                    groupName.append(")</span>");
+                    groupName.append(") </span>");
                 }
 
                 if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan) && studentCurricularPlan.isBolonhaDegree()
                         && creditsLimit != null) {
+
                     final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
-                    groupName.append(" <em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
+                    groupName.append("<em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
                             + "\"");
-                    groupName.append(">");
+                    groupName.append("> ");
                     groupName.append(value.getLocalizedName());
                     groupName.append("</em>");
-                }
 
+
+                    ProgramConclusion programConclusion = curriculumGroup.getDegreeModule().getProgramConclusion();
+                    if (programConclusion != null && curriculumGroup == programConclusion.groupFor(this.studentCurricularPlan
+                            .getRegistration())
+                            .orElse(null)) {
+                        final StringBuilder conclusionText = new StringBuilder();
+
+                        ConclusionProcess conclusionProcess = curriculumGroup.getConclusionProcess();
+                        if (conclusionProcess != null) {
+                            conclusionText.append(" <em style=\"background-color:" + getBackgroundColor(ConclusionValue.CONCLUDED) +
+                                    "; color:" + getColor
+                                    (ConclusionValue.CONCLUDED)
+                                    + "\"");
+                            conclusionText.append(">");
+
+                            String conclusionDate = conclusionProcess.getConclusionDate()
+                                    .toString
+                                            ("yyyy-MM-dd");
+
+                            conclusionText.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.group.concluded", conclusionDate));
+                            conclusionText.append("</em>");
+                        } else {
+                            conclusionText.append(" <em style=\"background-color:" + getBackgroundColor(ConclusionValue.NOT_CONCLUDED) +
+                                    "; color:" + getColor
+                                    (ConclusionValue.NOT_CONCLUDED)
+                                    + "\"");
+                            conclusionText.append(">");
+
+                            conclusionText.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.group.not.concluded"));
+                            conclusionText.append("</em>");
+                        }
+
+                        final HtmlComponent programConclusionLink = createProgramConclusionLink(conclusionText.toString(),
+                                curriculumGroup.getRegistration(),
+                                programConclusion);
+                        try {
+                            StringWriter stringWriter = new StringWriter();
+                            programConclusionLink.draw(stringWriter);
+                            groupName.append(stringWriter.toString());
+                        } catch (IOException e) {
+                            logger.error("Can't draw link to writer", e);
+                        }
+                    }
+
+                }
             }
             return groupName;
         }
@@ -889,10 +947,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         /**
          * List the enrollment evaluations bounded to an enrollment
-         * 
+         *
          * @param mainTable
          *            - Main HTML Table
-         * @param evaluations
+         * @param evaluation
          *            - List of enrollment evaluations
          * @param level
          *            - The level of the evaluation rows
@@ -1198,6 +1256,29 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             }
 
             return new HtmlText(text);
+        }
+
+        protected HtmlComponent createProgramConclusionLink(final String text, final Registration registration, final
+        ProgramConclusion programConclusion) {
+
+
+            if (registration != null && programConclusion != null) {
+                boolean canManageConclusion = AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_CONCLUSION, registration.getDegree()).isMember
+                        (Authenticate.getUser());
+                if (canManageConclusion) {
+                    final HtmlLink result = new HtmlLink();
+                    result.setText(text);
+                    result.setModuleRelative(false);
+                    result.setTarget(HtmlLink.Target.BLANK);
+                    result.setUrl("/academicAdministration/registration.do");
+                    result.setParameter("method", "selectProgramConclusion");
+                    result.setParameter("registration", registration.getExternalId());
+                    result.setParameter("programConclusion", programConclusion.getExternalId());
+                    return result;
+                }
+            }
+
+            return new HtmlText(text, false);
         }
 
         protected HtmlLink createExecutionCourseStatisticsLink(final String text, final ExecutionCourse executionCourse) {

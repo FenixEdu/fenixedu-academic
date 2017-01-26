@@ -2320,7 +2320,8 @@ public class Registration extends Registration_Base {
     public void conclude(final CurriculumGroup curriculumGroup) {
         check(this, RegistrationPredicates.MANAGE_CONCLUSION_PROCESS);
 
-        if (curriculumGroup == null || !getLastStudentCurricularPlan().hasCurriculumModule(curriculumGroup)) {
+        if (curriculumGroup == null || getStudentCurricularPlansSet().stream().noneMatch(scp -> scp.hasCurriculumModule
+                (curriculumGroup))) {
             throw new DomainException("error.Registration.invalid.cycleCurriculumGroup");
         }
 
