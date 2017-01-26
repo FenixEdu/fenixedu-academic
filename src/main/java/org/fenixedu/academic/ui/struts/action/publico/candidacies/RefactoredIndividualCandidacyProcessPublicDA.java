@@ -262,7 +262,8 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         // check if person already exists
         if (person != null) {
             if (isPersonStudentAndNumberIsCorrect(person, bean.getPersonNumber())) {
-                if (!person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
+                if (person.getDateOfBirthYearMonthDay() == null
+                        || !person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
                     // found person with diff date
                     addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
                             + ".error.public.candidacies.fill.personal.information.and.institution.id.birth");
