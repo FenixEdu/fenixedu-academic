@@ -120,9 +120,9 @@ public class AttendsSearchController extends ExecutionCourseController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<JsonElement> listAttends() {
-        return new ResponseEntity<JsonElement>(view(executionCourse.getAttendsSet().stream()
-                .filter(attendee -> attendee.getRegistration() != null)), HttpStatus.OK);
+    public @ResponseBody ResponseEntity<String> listAttends() {
+        return new ResponseEntity<>(view(executionCourse.getAttendsSet().stream()
+                .filter(attendee -> attendee.getRegistration() != null)).toString(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/studentSpreadsheet", method = RequestMethod.POST)
