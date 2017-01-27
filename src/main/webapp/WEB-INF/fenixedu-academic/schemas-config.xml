@@ -497,6 +497,8 @@
    	    	<property name="linkFormat" value="${projectSubmissionFile.downloadUrl}"/>
    	    </slot>
    	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
+   	    <slot name="projectSubmissionFile.checksum"/>
+   	    <slot name="projectSubmissionFile.checksumAlgorithm"/>
 	</schema>
 
 	<schema name="deletedProjectSubmission.view-full" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
@@ -549,6 +551,8 @@
    	    <slot name="submissionDateTime" />
    	    <slot name="filename" />
    	    <slot name="fileSize" layout="fileSize"/>
+   	    <slot name="fileChecksum"/>
+   	    <slot name="fileChecksumAlgorithm"/>
 	</schema>
 	
 	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">

@@ -82,7 +82,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight width100" />
 				<fr:property name="rowClasses" value="<%= classForRow %>"/>
-				<fr:property name="columnClasses" value=",,,acenter" />
+				<fr:property name="columnClasses" value="acenter,acenter,acenter,acenter,smalltxt acenter,acenter" />
 				<fr:property name="linkFormat(observation)" value="<%="/projectSubmission.do?method=viewObservation&attendsId="  + attendsId + "&projectId=" + projectId + "&projectSubmissionId=${externalId}" %>"/>
 				<fr:property name="key(observation)" value="label.projectSubmissions.seeTeacherObservation"/>
 				<fr:property name="visibleIf(observation)" value="teacherObservationAvailable"/>

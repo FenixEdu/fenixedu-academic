@@ -56,7 +56,7 @@
 <fr:view name="projectSubmissions" schema="projectSubmission.view-full">
 	<fr:layout name="tabular">
         <fr:property name="classes" value="tstyle2 thlight mtop05"/>
-        <fr:property name="columnClasses" value="acenter,nowrap acenter,nowrap,acenter,smalltxt,"/>
+        <fr:property name="columnClasses" value="acenter,nowrap acenter,nowrap acenter,acenter,smalltxt acenter,acenter,acenter"/>
     </fr:layout>
 </fr:view>
 
@@ -64,7 +64,7 @@
 <fr:view name="projectSubmissionLogs" schema="projectSubmissionLog.view-full">
 	<fr:layout name="tabular">
         <fr:property name="classes" value="tstyle2 thlight mtop05"/>
-        <fr:property name="columnClasses" value="acenter,nowrap acenter,nowrap,acenter,smalltxt,"/>
+        <fr:property name="columnClasses" value="acenter,nowrap acenter,nowrap acenter,acenter,acenter,smalltxt acenter,acenter,acenter"/>
     </fr:layout>
 </fr:view>
 
