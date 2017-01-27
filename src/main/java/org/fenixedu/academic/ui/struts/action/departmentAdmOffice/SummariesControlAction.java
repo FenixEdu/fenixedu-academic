@@ -276,7 +276,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
             request.setAttribute("currentSemester", "true");
             request.setAttribute("oneWeekBeforeDate", oneWeekBeforeDate.minusDays(8));
         }
-        Collections.sort(allDepartmentsSummariesResume, new BeanComparator("department.realName"));
+        Collections.sort(allDepartmentsSummariesResume, new BeanComparator("department.fullName.content"));
         request.setAttribute("summariesResumeMap", allDepartmentsSummariesResume);
     }
 
@@ -481,11 +481,11 @@ public final class SummariesControlAction extends FenixDispatchAction {
         List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
         for (Department department : allDepartments) {
             LabelValueBean labelValueBean = new LabelValueBean();
-            labelValueBean.setValue(department.getExternalId().toString());
-            labelValueBean.setLabel(department.getRealName());
+            labelValueBean.setValue(department.getExternalId());
+            labelValueBean.setLabel(department.getFullName().getContent());
             departments.add(labelValueBean);
         }
-        Collections.sort(departments, new BeanComparator("label"));
+        departments.sort(new BeanComparator<>("label"));
         return departments;
     }
 
@@ -588,7 +588,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 if (counter == 0) {
                     sheet.newRow();
                     sheet.addCell(semester.getName(), sheet.getExcelStyle().getLabelStyle());
-                    sheet.addCell(department.getName(), sheet.getExcelStyle().getLabelStyle());
+                    sheet.addCell(department.getName().getContent(), sheet.getExcelStyle().getLabelStyle());
                     sheet.addCell(executionCourse.getExecutionCourse().getName(), sheet.getExcelStyle().getLabelStyle());
                     sheet.addCell(lessons, sheet.getExcelStyle().getLabelStyle());
                     sheet.addCell(lessonsWithSummaries, sheet.getExcelStyle().getLabelStyle());

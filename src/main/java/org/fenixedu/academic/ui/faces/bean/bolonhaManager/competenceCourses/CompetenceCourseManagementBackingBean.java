@@ -73,6 +73,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -1006,8 +1007,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    public String getDepartmentRealName() {
-        return getCompetenceCourse().getDepartmentUnit(getExecutionSemester()).getDepartment().getRealName();
+    public LocalizedString getDepartmentFullName() {
+        return getCompetenceCourse().getDepartmentUnit(getExecutionSemester()).getDepartment().getFullName();
     }
 
     public String getScientificAreaUnitName() {

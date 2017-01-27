@@ -275,7 +275,7 @@ public class AuthorizationService {
                 addCell(message("teacher.authorizations.csv.column.5.contracted"), item.isContracted() ? "Y" : "N");
                 addCell(message("teacher.authorizations.displayname"), user.getProfile().getDisplayName());
                 addCell(message("teacher.authorizations.category"), item.getTeacherCategory().getName().getContent());
-                addCell(message("teacher.authorizations.department"), item.getDepartment().getNameI18n().getContent());
+                addCell(message("teacher.authorizations.department"), item.getDepartment().getFullName().getContent());
                 addCell(message("teacher.authorizations.period"), item.getExecutionSemester().getQualifiedName());
                 addCell(message("teacher.authorizations.authorized"), String.format("%s (%s)", item.getAuthorizer().getProfile()
                         .getDisplayName(), item.getAuthorizer().getUsername()));

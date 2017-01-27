@@ -48,7 +48,7 @@
 <logic:present name="departments">
     <ul>
         <logic:iterate id="department" name="departments">
-            <li><bean:write name="department" property="name"/> - <html:link
+            <li><bean:write name="department" property="name.content"/> - <html:link
                     page="<%= "/manageAssociatedObjects.do?method=prepareEditDepartment&oid=" + ((Department) department).getExternalId() %>">Edit</html:link><br/>
             </li>
         </logic:iterate>
@@ -89,7 +89,7 @@
 <logic:present name="departments">
     <ul>
         <logic:iterate id="department" name="departments">
-            <li><bean:write name="department" property="name"/></li>
+            <li><bean:write name="department" property="name.content"/></li>
 
             <logic:present name="department" property="departmentUnit">
                 <bean:define id="depunit" name="department" property="departmentUnit"/>

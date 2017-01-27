@@ -35,7 +35,7 @@
 
 		<h:outputText value="<ul class='nobullet padding1 indent0 mtop15'>" escape="false"/>
 		<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
-		<h:outputText value="#{competenceCourse.departmentUnit.department.realName}</li>" escape="false"/>
+		<h:outputText value="#{competenceCourse.departmentUnit.department.fullName.content}</li>" escape="false"/>
 		<fc:dataRepeater value="#{competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 			<h:outputText value="<li><strong>#{scouncilBundle['area']}: </strong>" escape="false"/>
 			<h:outputText value="#{scientificAreaUnit.name} > #{competenceCourse.competenceCourseGroupUnit.name}</li>" escape="false"/>
@@ -226,7 +226,7 @@
 	</fc:dataRepeater>
 
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.departmentCompetenceCourses}" >
-		<h:outputText value="<h2>#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}</h2>" escape="false"/>
+		<h:outputText value="<h2>#{CompetenceCourseManagement.selectedDepartmentUnit.department.fullName.content}</h2>" escape="false"/>
 		<h:outputText value="<em>#{scouncilBundle['no.competence.courses']}</em>" escape="false" />
 	</h:panelGroup>
 

@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,7 @@ import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
@@ -73,6 +75,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -510,13 +513,10 @@ public class Thesis extends Thesis_Base {
 
     public String getDepartmentName() {
         final CompetenceCourse competenceCourse = getEnrolment().getCurricularCourse().getCompetenceCourse();
-        if (getEnrolment().isBolonhaDegree()) {
-            return competenceCourse.getDepartmentUnit().getDepartment().getRealName();
-        }
-        if (!competenceCourse.getDepartmentsSet().isEmpty()) {
-            return competenceCourse.getDepartmentsSet().iterator().next().getRealName();
-        }
-        return null;
+        Optional<Department> department =
+                getEnrolment().isBolonhaDegree() ? Optional.of(competenceCourse.getDepartmentUnit().getDepartment()) :
+                        competenceCourse.getDepartmentsSet().stream().findFirst();
+        return department.map(Department::getFullName).map(LocalizedString::getContent).orElse(null);
     }
 
     public Student getStudent() {

@@ -18,25 +18,25 @@
  */
 package org.fenixedu.academic.ui.spring.controller.manager;
 
+import org.fenixedu.commons.i18n.LocalizedString;
+
 public class DepartmentBean {
 
     private boolean active;
     private String code;
-    private String name;
-    private String realName;
-    private String realNameEn;
+    private LocalizedString name;
+    private String acronym;
     private String externalId;
 
     public DepartmentBean() {
 
     }
 
-    public DepartmentBean(boolean active, String code, String name, String realName, String realNameEn, String externalId) {
+    public DepartmentBean(boolean active, String code, LocalizedString name, String acronym, String externalId) {
         this.active = active;
         this.code = code;
         this.name = name;
-        this.realName = realName;
-        this.realNameEn = realNameEn;
+        this.acronym = acronym;
         this.externalId = externalId;
     }
 
@@ -56,28 +56,16 @@ public class DepartmentBean {
         this.code = code;
     }
 
-    public String getName() {
+    public LocalizedString getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(LocalizedString name) {
         this.name = name;
     }
 
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getRealNameEn() {
-        return realNameEn;
-    }
-
-    public void setRealNameEn(String realNameEn) {
-        this.realNameEn = realNameEn;
+    public LocalizedString getFullName() {
+        return getName().append(" (").append(getAcronym()).append(")");
     }
 
     public String getExternalId() {
@@ -87,4 +75,13 @@ public class DepartmentBean {
     public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
+
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
+    }
+
 }

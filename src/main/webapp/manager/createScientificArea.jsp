@@ -34,7 +34,7 @@
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
 
-        <fr:slot name="nameLS" key="label.fullName">
+        <fr:slot name="nameLS" key="label.name">
         </fr:slot>
 
         <fr:slot name="code" key="label.manager.code">
@@ -42,7 +42,7 @@
 
         <fr:slot name="department" layout="menu-select" key="label.username">
             <fr:property name="from" value="departments"/>
-            <fr:property name="format" value="${realName}"/>
+            <fr:property name="format" value="${fullName.content}"/>
         </fr:slot>
     </fr:schema>
     <fr:layout name="tabular">

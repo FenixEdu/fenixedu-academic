@@ -211,7 +211,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
                     if (stringBuilder.length() > 0) {
                         stringBuilder.append(", ");
                     }
-                    stringBuilder.append(department.getName());
+                    stringBuilder.append(department.getName().getContent());
                 }
             } else {
                 stringBuilder.append(departmentUnit.getName());

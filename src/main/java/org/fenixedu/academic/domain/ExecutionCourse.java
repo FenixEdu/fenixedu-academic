@@ -1781,7 +1781,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 if (departmentUnit != null) {
                     final Department department = departmentUnit.getDepartment();
                     if (department != null) {
-                        departments.add(department.getName());
+                        departments.add(department.getName().getContent());
                     }
                 }
             }

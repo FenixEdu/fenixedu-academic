@@ -51,16 +51,16 @@ import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class Department extends Department_Base {
 
     public static final Comparator<Department> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
-        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
+        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name.content", Collator.getInstance()));
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
@@ -116,12 +116,6 @@ public class Department extends Department_Base {
         return cycles;
     }
 
-    public String getAcronym() {
-        final int begin = this.getRealName().indexOf("(");
-        final int end = this.getRealName().indexOf(")");
-        return this.getRealName().substring(begin + 1, end);
-    }
-
     public List<CompetenceCourse> getBolonhaCompetenceCourses() {
         DepartmentUnit departmentUnit = this.getDepartmentUnit();
         List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
@@ -147,7 +141,7 @@ public class Department extends Department_Base {
     // -------------------------------------------------------------
     public static Department readByName(final String departmentName) {
         for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
-            if (department.getName().equals(departmentName)) {
+            if (department.getName().anyMatch(name->name.equals(departmentName))) {
                 return department;
             }
         }
@@ -164,18 +158,10 @@ public class Department extends Department_Base {
         deleteDomainObject();
     }
 
-    /**
-     * Joins the portuguese and english version of the department's name in a
-     * MultiLanguageString for an easier handling of the name in a
-     * internacionalized context.
-     *
-     * @return a MultiLanguageString with the portuguese and english versions of
-     *         the department's name
-     */
-    public MultiLanguageString getNameI18n() {
-        return new MultiLanguageString().with(MultiLanguageString.pt, getRealName())
-                .with(MultiLanguageString.en, getRealNameEn());
+    public LocalizedString getFullName() {
+        return getName().append(" (").append(getAcronym()).append(")");
     }
+
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
         int count = 0;

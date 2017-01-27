@@ -157,7 +157,7 @@ $(document).ready(function() {
 			<div class="col-sm-11">
 				<form:select path="department" id="selectDepartment" class="form-control">
 					<form:option label="${i18n.message('label.all')}" value="null"/>
-					<form:options items="${departments}" itemLabel="nameI18n.content" itemValue="externalId"/>
+					<form:options items="${departments}" itemLabel="fullName.content" itemValue="externalId"/>
 				</form:select>
 			</div>
 		</div>
@@ -178,7 +178,7 @@ $(document).ready(function() {
 <section>
 	<h3>
 		<c:if test="${not empty search.department}">
-			<spring:message code="teacher.professorships.subtitle.departments.single" arguments="${search.department.nameI18n.content};${search.period.qualifiedName}" argumentSeparator=";"/>
+			<spring:message code="teacher.professorships.subtitle.departments.single" arguments="${search.department.fullName.content};${search.period.qualifiedName}" argumentSeparator=";"/>
 		</c:if>
 		<c:if test="${empty search.department}">
 			<spring:message code="teacher.professorships.subtitle.departments.all" arguments="${search.period.qualifiedName}"/>	

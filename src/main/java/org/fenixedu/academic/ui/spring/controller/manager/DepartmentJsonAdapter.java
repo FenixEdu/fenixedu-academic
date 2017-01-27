@@ -31,12 +31,12 @@ public class DepartmentJsonAdapter implements JsonViewer<Department> {
     @Override
     public JsonElement view(Department department, JsonBuilder ctx) {
         JsonObject object = new JsonObject();
-        object.addProperty("name", department.getName());
-        object.addProperty("code", department.getCode());
-        object.addProperty("active", department.getActive());
-        object.addProperty("realName", department.getRealName());
-        object.addProperty("realNameEn", department.getRealNameEn());
         object.addProperty("externalId", department.getExternalId());
+        object.addProperty("code", department.getCode());
+        object.addProperty("acronym", department.getAcronym());
+        object.add("name", department.getName().json());
+        object.add("fullName", department.getFullName().json());
+        object.addProperty("active", department.getActive());
         return object;
     }
 }

@@ -89,7 +89,7 @@
 <schema name="thesis.review.person" type="org.fenixedu.academic.domain.Person">
     <slot name="name" key="label.scientificCouncil.thesis.review.person.name" />
     <slot name="teacher.category" key="label.scientificCouncil.thesis.review.teacher.category" schema="view.teacherCategory.name" />
-    <slot name="teacher.department.realName" key="label.scientificCouncil.thesis.review.teacher.department" />
+    <slot name="teacher.department.fullName.content" key="label.scientificCouncil.thesis.review.teacher.department" />
 </schema>
 
 <schema name="thesis.review.person.external" type="org.fenixedu.academic.domain.Person">
@@ -140,7 +140,7 @@
 </schema>
 
 <schema name="view.departments.with.requests" type="org.fenixedu.academic.domain.Department">
-    <slot name="name" layout="link">
+    <slot name="name.content" layout="link">
         <property name="useParent" value="true" />
         <property name="destination" value="viewDepartmentRequests" />
     </slot>

@@ -72,7 +72,7 @@
 	<logic:present name="summariesResumeMap"><!-- All departments resume -->
 		<fr:view name="summariesResumeMap">
 			<fr:schema bundle="PEDAGOGICAL_COUNCIL_RESOURCES" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement">
-				<fr:slot name="department.realName" key="label.teacher.department" layout="link">
+				<fr:slot name="department.fullName.content" key="label.teacher.department" layout="link">
 					<fr:property name="contextRelative" value="true"/>
 			        <fr:property name="moduleRelative" value="true"/>
 			        <fr:property name="useParent" value="true"/>
@@ -243,7 +243,7 @@ padding-right: 3px;
 		<logic:notEmpty name="departmentResume" property="summaryControlCategory">
 			<bean:define id="categoryControl" name="departmentResume" property="summaryControlCategoryString" type="java.lang.String"/>
 		</logic:notEmpty>
-		<h3 class="mtop1"><fr:view name="departmentResume" property="department.realName"></fr:view></h3>
+		<h3 class="mtop1"><fr:view name="departmentResume" property="department.fullName.content"></fr:view></h3>
 		<logic:empty name="departmentResume" property="executionCourses">
 			<p><em><bean:message key="message.summary.noExecutionCourses" bundle="PEDAGOGICAL_COUNCIL_RESOURCES"/></em></p>
 		</logic:empty>

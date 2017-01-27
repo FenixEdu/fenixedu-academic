@@ -242,7 +242,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         for (final CompetenceCourse competenceCourse : bolonhaCompetenceCourses) {
             if (!competenceCourse.equals(this) && competenceCourse.getAcronym().equalsIgnoreCase(acronym.trim())) {
                 throw new DomainException("competenceCourse.existing.acronym", competenceCourse.getName(), competenceCourse
-                        .getDepartmentUnit().getDepartment().getRealName());
+                        .getDepartmentUnit().getDepartment().getFullName().getContent());
             }
         }
 

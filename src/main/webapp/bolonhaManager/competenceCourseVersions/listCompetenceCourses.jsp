@@ -27,7 +27,7 @@
 <%@page import="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
 <%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
 
-	<h2><bean:write name="department" property="realName"/></h2>
+	<h2><bean:write name="department" property="fullName.content"/></h2>
 <h3><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h3>
 
 <logic:notEmpty name="department" property="competenceCourseMembersGroup.members">

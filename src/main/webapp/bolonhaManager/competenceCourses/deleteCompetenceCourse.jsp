@@ -35,7 +35,7 @@
 	<h:form>
 
 		<h:outputText value="<p class='mtop15'><span class='bold'>#{bolonhaBundle['department']}: </span>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}</p>" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.personDepartment.fullName.content}</p>" escape="false"/>
 
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 			<h:outputText value="<p><span class='bold'>#{bolonhaBundle['area']}: </span>" escape="false"/>

@@ -74,11 +74,11 @@
 				<spring:message code="teacher.authorizations.csv.column.3.departmentAcronym" />
 				<br />
 				<i>
-					<spring:message code="teacher.authorizations.upload.message.example" arguments="${departments[0].nameI18n.content};${departments[0].code}" argumentSeparator=";"/>
+					<spring:message code="teacher.authorizations.upload.message.example" arguments="${departments[0].fullName.content};${departments[0].code}" argumentSeparator=";"/>
 				</i>
 				<ul>
 					<c:forEach var="department" items="${departments}">
-						<li><c:out value="${department.acronym} - ${department.nameI18n.content}"/></li>
+						<li><c:out value="${department.acronym} - ${department.fullName.content}"/></li>
 					</c:forEach>
 				</ul>
 			</li>

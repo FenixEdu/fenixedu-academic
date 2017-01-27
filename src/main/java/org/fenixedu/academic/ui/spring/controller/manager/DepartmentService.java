@@ -42,12 +42,11 @@ public class DepartmentService {
 
     @Atomic
     public void editDepartment(DepartmentBean bean) {
-        Department department = ((Department) FenixFramework.getDomainObject(bean.getExternalId()));
+        Department department = FenixFramework.getDomainObject(bean.getExternalId());
         department.setActive(bean.isActive());
         department.setCode(bean.getCode());
         department.setName(bean.getName());
-        department.setRealName(bean.getRealName());
-        department.setRealNameEn(bean.getRealNameEn());
+        department.setAcronym(bean.getAcronym());
     }
 
     @Atomic
@@ -62,8 +61,7 @@ public class DepartmentService {
         department.setActive(bean.isActive());
         department.setCode(bean.getCode());
         department.setName(bean.getName());
-        department.setRealName(bean.getRealName());
-        department.setRealNameEn(bean.getRealNameEn());
+        department.setAcronym(bean.getAcronym());
         department.setRootDomainObject(Bennu.getInstance());
         return department;
     }

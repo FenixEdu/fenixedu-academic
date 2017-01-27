@@ -73,7 +73,7 @@
 									</c:otherwise>
 								</c:choose>
 							</td>
-							<td><c:out value="${auth.department.nameI18n.content}"/></td>
+							<td><c:out value="${auth.department.fullName.content}"/></td>
 							<td><c:out value="${auth.executionSemester.qualifiedName}"/></td>
 							<td><c:out value="${auth.teacherCategory.name.content}"/></td>
 							<td>${auth.lessonHours}</td>

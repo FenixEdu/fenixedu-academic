@@ -114,7 +114,7 @@ $(document).ready(function() {
 			<div class="col-sm-11">
 				<form:select path="department" id="selectDepartment" class="form-control">
 					<form:option label="${i18n.message('label.all')}" value="null"/>
-					<form:options items="${departments}" itemLabel="nameI18n.content" itemValue="externalId"/>
+					<form:options items="${departments}" itemLabel="fullName.content" itemValue="externalId"/>
 				</form:select>
 			</div>
 		</div>
@@ -175,7 +175,7 @@ $(document).ready(function() {
 								</c:choose>
 							</td>
 							<c:if test="${empty search.department}">
-								<td><c:out value="${auth.department.nameI18n.content}"/></td>
+								<td><c:out value="${auth.department.fullName.content}"/></td>
 							</c:if>
 							<td><c:out value="${auth.teacherCategory.name.content}"/></td>
 							<td>${auth.lessonHours}</td>

@@ -24,6 +24,7 @@ import org.fenixedu.academic.ui.spring.controller.manager.DepartmentService;
 import org.fenixedu.bennu.core.rest.JsonAwareResource;
 import org.fenixedu.bennu.spring.portal.SpringApplication;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,11 +99,10 @@ public class ManageDepartmentsController extends JsonAwareResource {
         JsonObject json = (JsonObject) new JsonParser().parse(departmentJson);
         boolean active = json.get("active").getAsBoolean();
         String code = json.get("code").getAsString();
-        String name = json.get("name").getAsString();
-        String realName = json.get("realName").getAsString();
-        String realNameEn = json.get("realNameEn").getAsString();
+        String acronym = json.get("acronym").getAsString();
+        LocalizedString name = LocalizedString.fromJson(json.get("name"));
         // externalId is null before department's creation
         String externalId = (json.get("externalId") == null) ? null : json.get("externalId").getAsString();
-        return new DepartmentBean(active, code, name, realName, realNameEn, externalId);
+        return new DepartmentBean(active, code, name, acronym, externalId);
     }
 }

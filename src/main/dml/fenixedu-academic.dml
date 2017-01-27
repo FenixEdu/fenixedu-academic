@@ -640,9 +640,8 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
     class Department  {
         String code;
-        String name;
-        String realName;
-        String realNameEn;
+        String acronym;
+        LocalizedString name;
         Boolean active;
     }
 

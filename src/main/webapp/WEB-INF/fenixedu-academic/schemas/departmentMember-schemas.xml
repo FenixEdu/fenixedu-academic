@@ -25,9 +25,9 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
 		<property name="destination" value="prepare"/>
-		<property name="sortBy" value="name"/>
+		<property name="sortBy" value="name.content"/>
 	</slot>
 	<slot name="degree" key="label.degree.to.associate"
 		layout="menu-select"

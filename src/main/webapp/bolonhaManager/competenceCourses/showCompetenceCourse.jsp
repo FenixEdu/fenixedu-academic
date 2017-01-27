@@ -51,7 +51,7 @@
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="<span class='highlight4'>#{CompetenceCourseManagement.competenceCourse.startExecutionSemester.qualifiedName}<span></li>" escape="false"/>
 	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="-</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.departmentRealName}</li>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.departmentFullName.content}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['area']}: </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnitName} > #{CompetenceCourseManagement.competenceCourseGroupUnitName}</li>" escape="false"/>
 	<h:outputText value="</ul>" escape="false"/>

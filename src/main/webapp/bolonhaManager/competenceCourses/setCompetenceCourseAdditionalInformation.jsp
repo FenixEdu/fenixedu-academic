@@ -31,7 +31,7 @@
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 
-	<h:outputText value="<em>#{CompetenceCourseManagement.personDepartment.realName}</em>" escape="false"/>
+	<h:outputText value="<em>#{CompetenceCourseManagement.personDepartment.fullName.content}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['set.param']}</h2>" rendered="#{CompetenceCourseManagement.action == 'create'}" escape="false">
 	 	<f:param value=" #{bolonhaBundle['additionalInformation']}"/>
 	</h:outputFormat>

@@ -62,22 +62,13 @@ ${portal.angularToolkit()}
 					<div class="form-group">
 						<label for="inputName" class="col-sm-2 control-label">${fr:message('resources.ApplicationResources','label.manager.departments.name')}</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputName"
-								ng-model="newDepartment.name" required/>
+							<textarea class="form-control" id="inputName" bennu-localized-string required-any ng-model="newDepartment.name"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="inputRealName" class="col-sm-2 control-label">${fr:message('resources.ApplicationResources','label.manager.departments.realName')}</label>
+						<label for="inputAcronym" class="col-sm-2 control-label">${fr:message('resources.ApplicationResources','label.manager.departments.acronym')}</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputRealName"
-								ng-model="newDepartment.realName" required/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputRealNameEn" class="col-sm-2 control-label">${fr:message('resources.ApplicationResources','label.manager.departments.realNameEn')}</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputRealNameEn"
-								ng-model="newDepartment.realNameEn" required/>
+							<input type="text" class="form-control" id="inputAcronym" ng-model="newDepartment.acronym" required/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -120,11 +111,10 @@ ${portal.angularToolkit()}
 							<br></br>
 							<label>${fr:message('resources.ApplicationResources','label.manager.departments.code')}</label> <input type="text" ng-model="selectedDepartment.code" required/>
 							<br></br>
-							<label>${fr:message('resources.ApplicationResources','label.manager.departments.name')}</label>	<input type="text" ng-model="selectedDepartment.name" required/>
+							<label>${fr:message('resources.ApplicationResources','label.manager.departments.name')}</label> <textarea bennu-localized-string required-any ng-model="selectedDepartment.name"></textarea>
 							<br></br>
-							<label>${fr:message('resources.ApplicationResources','label.manager.departments.realName')}</label>	<input type="text" ng-model="selectedDepartment.realName" required/>
-							<br></br>
-							<label>${fr:message('resources.ApplicationResources','label.manager.departments.realNameEn')}</label>	<input type="text" ng-model="selectedDepartment.realNameEn" required/>
+							<label>${fr:message('resources.ApplicationResources','label.manager.departments.acronym')}</label>
+							<input type="text" ng-model="selectedDepartment.acronym" required/>
 							<br></br>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary"  value="Submit">${fr:message('resources.ApplicationResources','label.manager.departments.edit')}</button>

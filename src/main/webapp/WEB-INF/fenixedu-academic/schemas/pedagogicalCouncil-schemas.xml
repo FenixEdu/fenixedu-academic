@@ -55,5 +55,5 @@
 </schema>
 
 <schema name="show.department" type="org.fenixedu.academic.domain.Department">
-	<slot name="name"/>
+	<slot name="name.content"/>
 </schema>

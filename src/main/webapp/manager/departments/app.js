@@ -33,9 +33,9 @@
 						externalId: department.externalId,
 						active: department.active,
 						code: department.code,
+						acronym: department.acronym,
 						name: department.name,
-						realName: department.realName,
-						realNameEn: department.realNameEn
+						fullName: department.fullName
 					};
 				};
 				

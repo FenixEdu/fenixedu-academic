@@ -234,9 +234,10 @@ public class FenixBootstrapper {
         private void createDepartment(final AggregateUnit departmentUnits, final int i) {
             final Department department = new Department();
             department.setCode(getDepartmentCode(i));
-            final String departmentName = getDepartmentName(i);
+            final LocalizedString departmentName = getDepartmentName(i);
+            final String departmentAcronym = getDepartmentAcronym(i);
             department.setName(departmentName);
-            department.setRealName(departmentName);
+            department.setAcronym(departmentAcronym);
             department.setCompetenceCourseMembersGroup(getCompetenceCourseMembersGroup());
 
             final DepartmentUnit departmentUnit = createDepartmentUnut(departmentUnits, 3020 + i, department);
@@ -272,8 +273,12 @@ public class FenixBootstrapper {
             return RoleType.TEACHER.actualGroup().or(Group.managers());
         }
 
-        private String getDepartmentName(final int i) {
-            return "Department " + i;
+        private LocalizedString getDepartmentName(final int i) {
+            return new LocalizedString(Locale.getDefault(),"Department " + i);
+        }
+
+        private String getDepartmentAcronym(final int i) {
+            return "DEP" + i;
         }
 
         private String getDepartmentCode(final int i) {

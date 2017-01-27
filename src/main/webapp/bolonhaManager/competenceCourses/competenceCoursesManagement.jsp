@@ -31,7 +31,7 @@
     <f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
     <f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-    <h:outputText value="<h2>#{CompetenceCourseManagement.departmentToDisplay.realName}</h2>" escape="false"/>
+    <h:outputText value="<h2>#{CompetenceCourseManagement.departmentToDisplay.fullName.content}</h2>" escape="false"/>
 
     <h:form>
         <h:panelGrid columns="2" style="infocell" columnClasses="infocell">

@@ -306,7 +306,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     public List<SelectItem> getDepartments() {
         List<SelectItem> departments = new ArrayList<SelectItem>();
         for (Department department : Bennu.getInstance().getDepartmentsSet()) {
-            final SelectItem e = new SelectItem(department.getExternalId(), department.getName());
+            final SelectItem e = new SelectItem(department.getExternalId(), department.getName().getContent());
             departments.add(e);
         }
         return departments;

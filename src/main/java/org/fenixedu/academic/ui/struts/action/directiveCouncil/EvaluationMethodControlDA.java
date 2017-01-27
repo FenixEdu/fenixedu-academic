@@ -147,7 +147,7 @@ public abstract class EvaluationMethodControlDA extends FenixDispatchAction {
                     if (departments.length() > 0) {
                         departments.append(", ");
                     }
-                    departments.append(department.getName());
+                    departments.append(department.getName().getContent());
                 }
                 row.setCell(departments.toString());
             }

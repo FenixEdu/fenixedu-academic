@@ -46,7 +46,7 @@
 		<h:outputText value="<p/>" escape="false"/>
 	
 		<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.departmentRealName}</li>" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.departmentFullName.content}</li>" escape="false"/>
 		<h:outputText value="<li><strong>#{scouncilBundle['area']}: </strong>" escape="false"/>
 		<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnitName} > #{CompetenceCourseManagement.competenceCourseGroupUnitName}</li>" escape="false"/>
 		<h:outputText value="</ul>" escape="false"/>

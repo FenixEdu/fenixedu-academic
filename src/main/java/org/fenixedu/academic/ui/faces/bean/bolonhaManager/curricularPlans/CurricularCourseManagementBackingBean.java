@@ -21,8 +21,6 @@
  */
 package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -73,6 +71,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -741,7 +741,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             Department personDepartment = getPersonDepartment();
             if (personDepartment != null
                     && !result.get(0).getValue().equals(personDepartment.getDepartmentUnit().getExternalId())) {
-                result.add(0, new SelectItem(personDepartment.getDepartmentUnit().getExternalId(), personDepartment.getName()));
+                result.add(0, new SelectItem(personDepartment.getDepartmentUnit().getExternalId(), personDepartment.getName()
+                        .getContent()));
             }
         }
         return result;

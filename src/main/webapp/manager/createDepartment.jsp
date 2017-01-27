@@ -35,11 +35,9 @@
 			</fr:slot>
 			<fr:slot name="code" key="label.manager.code">
 			</fr:slot>
+			<fr:slot name="acronym" key="label.acronym">
+			</fr:slot>
 			<fr:slot name="name" key="label.name">
-			</fr:slot>
-			<fr:slot name="realName" key="label.real.name">
-			</fr:slot>
-			<fr:slot name="realNameEn" key="label.real.name.en">
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">

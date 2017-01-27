@@ -33,7 +33,7 @@
 </h2>
 
 <h3>
-	<bean:write name="courseStatisticsBean" property="department.nameI18n.content" />
+	<bean:write name="courseStatisticsBean" property="department.fullName.content" />
 </h3>
 
 <fr:form id="chooseSemesterForm" action="/departmentCourses.do?method=prepareListCourses">

@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
-import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
@@ -85,9 +84,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     public static class AssociatedObjectsBean implements Serializable {
         private boolean active;
         private String code;
-        private String name;
-        private String realName;
-        private String realNameEn;
+        private LocalizedString name;
+        private String acronym;
         private YearMonthDay start;
         private AccountabilityTypeEnum accTypeEnum;
         private AdministrativeOfficeType type;
@@ -139,28 +137,20 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             this.code = code;
         }
 
-        public String getName() {
+        public LocalizedString getName() {
             return name;
         }
 
-        public void setName(String name) {
+        public void setName(LocalizedString name) {
             this.name = name;
         }
 
-        public String getRealName() {
-            return realName;
+        public String getAcronym() {
+            return acronym;
         }
 
-        public void setRealName(String realName) {
-            this.realName = realName;
-        }
-
-        public String getRealNameEn() {
-            return realNameEn;
-        }
-
-        public void setRealNameEn(String realNameEn) {
-            this.realNameEn = realNameEn;
+        public void setAcronym(String acronym) {
+            this.acronym = acronym;
         }
 
         public AdministrativeOfficeType getType() {
@@ -448,16 +438,14 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         department.setActive(bean.isActive());
         department.setCode(bean.getCode());
         department.setName(bean.getName());
-        department.setRealName(bean.getRealName());
-        department.setName(bean.getName());
-        department.setRealNameEn(bean.getRealNameEn());
+        department.setAcronym(bean.getAcronym());
         department.setRootDomainObject(Bennu.getInstance());
         Unit departmentParent =
                 Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
-                        .filter(x -> ((AggregateUnit) x).getName().equals("Departments")).findAny()
+                        .filter(x -> x.getName().equals("Departments")).findAny()
                         .orElse(Bennu.getInstance().getInstitutionUnit());
-        DepartmentUnit.createNewInternalDepartmentUnit(department.getNameI18n(), null, null, department.getCode(),
-                new YearMonthDay(), null, departmentParent,
+        DepartmentUnit.createNewInternalDepartmentUnit(MultiLanguageString.fromLocalizedString(department.getFullName()), null, null,
+                department.getCode(), new YearMonthDay(), null, departmentParent,
                 AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null, false, null);
 
     }
@@ -616,8 +604,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         associatedObjectsBean.setDepartment(d);
         associatedObjectsBean.setCode(d.getCode());
         associatedObjectsBean.setName(d.getName());
-        associatedObjectsBean.setRealName(d.getRealName());
-        associatedObjectsBean.setRealNameEn(d.getRealNameEn());
+        associatedObjectsBean.setAcronym(d.getAcronym());
         associatedObjectsBean.setUsername(d.getCompetenceCourseMembersGroup().getExpression());
 
         request.setAttribute("bean", associatedObjectsBean);
@@ -633,8 +620,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             Department d = bean.getDepartment();
             d.setCode(bean.getCode());
             d.setName(bean.getName());
-            d.setRealName(bean.getRealName());
-            d.setRealNameEn(bean.getRealNameEn());
+            d.setAcronym(bean.getAcronym());
             d.setCompetenceCourseMembersGroup(User.findByUsername(bean.getUsername()).groupOf());
         });
 

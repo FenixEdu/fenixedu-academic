@@ -40,7 +40,7 @@ ${portal.toolkit()}
 		<div class="form-group">
 			<form:label for="selectDepartment" path="department" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.department" /></form:label>
 			<div class="col-sm-11">
-				<form:select path="department" id="selectDepartment" items="${departments}" class="form-control" itemLabel="nameI18n.content" itemValue="externalId"/>
+				<form:select path="department" id="selectDepartment" items="${departments}" class="form-control" itemLabel="fullName.content" itemValue="externalId"/>
 			</div>
 		</div>
 	

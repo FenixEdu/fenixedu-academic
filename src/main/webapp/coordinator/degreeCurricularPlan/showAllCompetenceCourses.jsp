@@ -37,11 +37,11 @@
 
 		<h:outputText value="<h2>#{competenceCourse.name} " escape="false"/>
 		<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym})" escape="false"/>
-		<h:outputText value="</h2>" escape="false"/>		
+		<h:outputText value="</h2>" escape="false"/>
 
 		<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 		<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
-		<h:outputText value="#{competenceCourse.departmentUnit.department.realName}</li>" escape="false"/>
+		<h:outputText value="#{competenceCourse.departmentUnit.department.fullName.content}</li>" escape="false"/>
 		<fc:dataRepeater value="#{competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 			<h:outputText value="<li><strong>#{scouncilBundle['area']}: </strong>" escape="false"/>
 			<h:outputText value="#{scientificAreaUnit.name} > #{competenceCourse.competenceCourseGroupUnit.name}</li>" escape="false"/>

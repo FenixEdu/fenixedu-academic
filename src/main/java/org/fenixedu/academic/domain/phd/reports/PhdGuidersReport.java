@@ -105,7 +105,7 @@ public class PhdGuidersReport extends PhdReport {
             Department department = internalPhdParticipant.getDepartment();
 
             addCellValue(row, onNullEmptyString(department != null ? department.getCode() : ""), 7);
-            addCellValue(row, onNullEmptyString(department != null ? department.getName() : ""), 8);
+            addCellValue(row, onNullEmptyString(department != null ? department.getName().getContent() : ""), 8);
         }
     }
 

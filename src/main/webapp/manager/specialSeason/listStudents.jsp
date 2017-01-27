@@ -41,7 +41,7 @@
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 			<fr:slot name="department" layout="menu-select-postback" key="label.department">
-				<fr:property name="format" value="${name}"/>
+				<fr:property name="format" value="${name.content}"/>
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DepartmentsProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 				<fr:property name="destination" value="postback"/>
