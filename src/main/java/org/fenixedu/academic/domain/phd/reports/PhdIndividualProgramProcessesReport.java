@@ -82,7 +82,14 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
 
         DateTime presentationDate = process.getThesisProcess() != null ? process.getThesisProcess().getDiscussionDate() : null;
         String grade = process.getFinalGrade() != null ? process.getFinalGrade().getLocalizedName() : "";
-
+        String caseThesisState =
+                process.getThesisProcess() != null ? process.getThesisProcess().getActiveState().getLocalizedName() : "";
+        String caseCatState =
+                process.getSeminarProcess() != null ? process.getSeminarProcess().getActiveState().getLocalizedName() : "";
+        String syllabusState =
+                process.getRegistration() != null ? process.getRegistration().getActiveStateType().getDescription() : "";
+        String applicationProcessState =
+                process.getCandidacyProcess() != null ? process.getCandidacyProcess().getActiveState().getLocalizedName() : "";
 
         addCellValue(row, onNullEmptyString(processNumber), 0);
         addCellValue(row, onNullEmptyString(studentNumber), 1);
@@ -99,6 +106,10 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         addCellValue(row, onNullEmptyString(studentEmail), 12);
         addCellValue(row, onNullEmptyString(presentationDate), 13);
         addCellValue(row, onNullEmptyString(grade), 14);
+        addCellValue(row, onNullEmptyString(caseThesisState), 15);
+        addCellValue(row, onNullEmptyString(caseCatState), 16);
+        addCellValue(row, onNullEmptyString(syllabusState), 17);
+        addCellValue(row, onNullEmptyString(applicationProcessState), 18);
     }
 
     @Override
@@ -118,6 +129,10 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         addHeaderCell(sheet, getHeaderInBundle("studentEmail"), 12);
         addHeaderCell(sheet, getHeaderInBundle("discussionDate"), 13);
         addHeaderCell(sheet, getHeaderInBundle("grade"), 14);
+        addHeaderCell(sheet, getHeaderInBundle("caseThesisState"), 15);
+        addHeaderCell(sheet, getHeaderInBundle("caseCatState"), 16);
+        addHeaderCell(sheet, getHeaderInBundle("syllabusState"), 17);
+        addHeaderCell(sheet, getHeaderInBundle("applicationProcessState"), 18);
     }
 
     private String getHeaderInBundle(String field) {
