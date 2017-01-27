@@ -351,6 +351,33 @@
 						</div>
 					</div>
 				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a data-toggle="collapse" data-parent="#courses" data-target="#collapseOther" href="#">
+								<bean:message key="label.other.cycles" bundle="SOP_RESOURCES"/>
+							</a>
+						</h3>
+					</div>
+					<div id="collapseOther" class="panel-collapse collapse">
+						<div class="panel-body">
+							<logic:iterate id="degree" name="managementBean" property="degrees">
+								<logic:equal value="false" name="degree" property="degreeType.firstCycle">
+									<logic:equal value="false" name="degree" property="degreeType.secondCycle">
+										<logic:equal value="false" name="degree" property="degreeType.thirdCycle">
+											<div class="draggable_course">
+												<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
+												<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
+												<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
+												<div id="name"><bean:write name="degree" property="degreeName"/></div>
+											</div>
+										</logic:equal>
+									</logic:equal>
+								</logic:equal>
+							</logic:iterate>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div><!--courses-->
 		</div><!--sidebar-->
