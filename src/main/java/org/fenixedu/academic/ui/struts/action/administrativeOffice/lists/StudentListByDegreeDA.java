@@ -432,12 +432,17 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private String getAlmaMater(final Person person, final Registration registration) {
-        for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidaciesSet()) {
-            if (shite.getCandidacy().getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
-                MobilityIndividualApplicationProcess erasmusShite =
-                        (MobilityIndividualApplicationProcess) shite.getCandidacy().getCandidacyProcess();
-                return erasmusShite.getCandidacy().getMobilityStudentData().getSelectedOpening().getMobilityAgreement()
-                        .getUniversityUnit().getNameI18n().toString();
+        for (IndividualCandidacyPersonalDetails individualCandidacyPersonalDetails : person.getIndividualCandidaciesSet()) {
+            if (individualCandidacyPersonalDetails.getCandidacy() == null) {
+                return EMPTY;
+            }
+            if (individualCandidacyPersonalDetails.getCandidacy()
+                    .getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
+                MobilityIndividualApplicationProcess mobilityIndividualApplicationProcess =
+                        (MobilityIndividualApplicationProcess) individualCandidacyPersonalDetails.getCandidacy()
+                                .getCandidacyProcess();
+                return mobilityIndividualApplicationProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
+                        .getMobilityAgreement().getUniversityUnit().getNameI18n().toString();
             }
         }
 
@@ -464,12 +469,15 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private String getAlmaMaterCountry(final Person person, final Registration registration) {
-        for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidaciesSet()) {
-            if (shite.getCandidacy().getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
-                MobilityIndividualApplicationProcess erasmusShite =
-                        (MobilityIndividualApplicationProcess) shite.getCandidacy().getCandidacyProcess();
-                return erasmusShite.getCandidacy().getMobilityStudentData().getSelectedOpening().getMobilityAgreement()
-                        .getUniversityUnit().getCountry().getLocalizedName().toString();
+        for (IndividualCandidacyPersonalDetails individualCandidacyPersonalDetails : person.getIndividualCandidaciesSet()) {
+            if (individualCandidacyPersonalDetails.getCandidacy() == null) {
+                return EMPTY;
+            }
+            if (individualCandidacyPersonalDetails.getCandidacy().getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
+                MobilityIndividualApplicationProcess mobilityIndividualApplicationProcess =
+                        (MobilityIndividualApplicationProcess) individualCandidacyPersonalDetails.getCandidacy().getCandidacyProcess();
+                return mobilityIndividualApplicationProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
+                        .getMobilityAgreement().getUniversityUnit().getCountry().getLocalizedName().toString();
             }
         }
 
