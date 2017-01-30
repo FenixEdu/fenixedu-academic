@@ -38,7 +38,7 @@
 <schema name="professorship.view.properties" type="org.fenixedu.academic.domain.ProfessorshipPermissions" bundle="APPLICATION_RESOURCES">
 		<slot name="personalization" key="link.personalizationOptions"/>
 		<slot name="siteArchive"  key="link.executionCourse.archive.generate"/>
-		<slot name="sections" key="label.executionCourseManagement.menu.sections"/>
+		<slot name="sections" key="label.announcements.sections"/>
 		<slot name="summaries" key="link.summaries"/>
 		<slot name="students" key="link.students"/>
 		<slot name="planning" key="link.lessonPlannings"/>
