@@ -60,7 +60,7 @@
 		
 		<h:outputText value="<tr><th>#{bundle['label.identification']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.evaluationDate']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.lesson.room']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['message.out.room']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.enrolmentPeriodNoBR']}</th>" escape="false" />
 		<h:outputText value="<th></th>" escape="false" />
 		<h:outputText value="<th></th></tr>" escape="false" />
@@ -95,7 +95,15 @@
 				</h:outputFormat>
 				<h:outputText value="</td>" escape="false" />
 				
-				<h:outputText value="<td>-</td>" escape="false" />
+				<h:outputText value="<td>" escape="false" />
+				<fc:dataRepeater value="#{evaluation.writtenEvaluationSpaceOccupations}" var="spaceOccupation">
+					<fc:dataRepeater value="#{spaceOccupation.space}" var="space">
+						<h:outputText value="#{space.name}" escape="false" />
+						<h:outputText value="
+" escape="false" />
+					</fc:dataRepeater>
+				</fc:dataRepeater>
+				<h:outputText value="</td>" escape="false" />
 
 				<h:outputText value="<td>" escape="false" />
 				<h:outputText value=" #{bundle['label.lesson.beginning']}: " escape="false" />
@@ -142,7 +150,7 @@
 		<h:outputText value="<tr class='eval_title'><td colspan='6'><p><strong>#{bundle['label.evaluationsWithEnrolmentPeriodClosed']}:</strong></p></td></tr>" escape="false"/>				
 		<h:outputText value="<tr><th>#{bundle['label.identification']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.evaluationDate']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.lesson.room']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['message.out.room']}*</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.enrolmentPeriodNoBR']}</th>" escape="false" />
 		<h:outputText value="<th></th>" escape="false" />
 		<h:outputText value="<th></th></tr>" escape="false" />
@@ -177,7 +185,17 @@
 				</h:outputFormat>
 				<h:outputText value="</td>" escape="false" />
 
-				<h:outputText value="<td>#{manageEvaluationsForStudent.studentRooms[evaluation.externalId]}</td>" escape="false"/>
+				<h:outputText value="<td>" escape="false" />
+				<fc:dataRepeater value="#{evaluation.writtenEvaluationSpaceOccupations}" var="spaceOccupation">
+					<fc:dataRepeater value="#{spaceOccupation.space}" var="space">
+						<h:outputText value="<strong>" escape="false" rendered="#{manageEvaluationsForStudent.studentRooms[evaluation.externalId] == space.name}"/>
+						<h:outputText value="#{space.name}" escape="false" />
+						<h:outputText value="</strong>" escape="false" rendered="#{manageEvaluationsForStudent.studentRooms[evaluation.externalId] == space.name}"/>
+						<h:outputText value="
+" escape="false" />
+					</fc:dataRepeater>
+				</fc:dataRepeater>
+				<h:outputText value="</td>" escape="false" />
 
 				<h:outputText value="<td>" escape="false" />				
 				<h:outputText value=" #{bundle['label.lesson.beginning']}: " escape="false" />
@@ -213,7 +231,7 @@
 		<h:outputText value="<tr class='eval_title'><td colspan='6'><p><strong>#{bundle['label.evaluationsWithoutEnrolmentPeriod']}:</strong></p></td></tr>" escape="false"/>		
 		<h:outputText value="<tr><th>#{bundle['label.identification']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.evaluationDate']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.lesson.room']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['message.out.room']}*</th>" escape="false" />
 		<h:outputText value="<th></th>" escape="false" />
 		<h:outputText value="<th></th>" escape="false" />
 		<h:outputText value="<th></th></tr>" escape="false" />
@@ -247,7 +265,17 @@
 				</h:outputFormat>
 				<h:outputText value="</td>" escape="false" />
 
-				<h:outputText value="<td>#{manageEvaluationsForStudent.studentRooms[evaluation.externalId]}</td>" escape="false"/>
+				<h:outputText value="<td>" escape="false" />
+				<fc:dataRepeater value="#{evaluation.writtenEvaluationSpaceOccupations}" var="spaceOccupation">
+					<fc:dataRepeater value="#{spaceOccupation.space}" var="space">
+						<h:outputText value="<strong>" escape="false" rendered="#{manageEvaluationsForStudent.studentRooms[evaluation.externalId] == space.name}"/>
+						<h:outputText value="#{space.name}" escape="false" />
+						<h:outputText value="</strong>" escape="false" rendered="#{manageEvaluationsForStudent.studentRooms[evaluation.externalId] == space.name}"/>
+						<h:outputText value="
+" escape="false" />
+					</fc:dataRepeater>
+				</fc:dataRepeater>
+				<h:outputText value="</td>" escape="false" />
 
 				<h:outputText value="<td></td>" escape="false" />
 				<h:outputText value="<td></td>" escape="false" />				
@@ -255,5 +283,9 @@
 			</fc:dataRepeater>
 		</h:panelGroup>
 		<h:outputText value="</table>" escape="false"/>
+
+
+
+		<h:outputText value="#{bundle['label.evaluations.writtenEvaluationsAssignedRoomNote']}" />
 	</h:form>	
 </f:view>
