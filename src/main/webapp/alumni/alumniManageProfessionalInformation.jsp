@@ -63,5 +63,5 @@
 </logic:present>
 
 <p class="mbottom0">
-	<em>Nota: <bean:message key="date.note" bundle="ALUMNI_RESOURCES" /></em>
+	<em><bean:message key="date.note" bundle="ALUMNI_RESOURCES" /></em>
 </p>
