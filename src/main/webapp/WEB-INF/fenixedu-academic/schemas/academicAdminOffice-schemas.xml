@@ -1451,6 +1451,7 @@
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+<slot name="curriculumGroup.studentCurricularPlan.name" key="label.curricularPlan"/>
 	<slot name="curriculumGroup.name" />
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
@@ -1484,6 +1485,7 @@
 </schema>
 
 <schema name="RegistrationConclusionBean.viewConclusionPreviewForCycle" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+<slot name="curriculumGroup.studentCurricularPlan.name" key="label.curricularPlan"/>
 	<slot name="curriculumGroup.name" />
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize"/>
@@ -1533,6 +1535,7 @@
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForCycle" type="org.fenixedu.academic.dto.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+<slot name="curriculumGroup.studentCurricularPlan.name" key="label.curricularPlan"/>
 	<slot name="curriculumGroup.name" />
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
