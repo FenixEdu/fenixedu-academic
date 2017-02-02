@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -60,6 +61,7 @@ import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.StatuteType;
+import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
@@ -196,18 +198,12 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             if ((searchBean.isIngressedInChosenYear()) && (registration.getIngressionYear() != executionYear)) {
                 continue;
             }
-
-            if (searchBean.isConcludedInChosenYear()) {
-                Stream<ProgramConclusion> conclusions =
-                        ProgramConclusion.conclusionsFor(registration).filter(ProgramConclusion::isTerminal);
-
-                if (conclusions.allMatch(programConclusion -> {
-                    RegistrationConclusionBean conclusionBean = new RegistrationConclusionBean(registration, programConclusion);
-                    return conclusionBean.getCurriculumGroup() == null || !conclusionBean.isConcluded()
-                            || conclusionBean.getConclusionYear() != executionYear;
-                })) {
-                    continue;
-                }
+            
+            if ((searchBean.hasAnyProgramConclusion())
+                    && !((ProgramConclusion.conclusionsFor(registration).anyMatch(pC -> searchBean.getProgramConclusions().contains(pC)))
+                        && registration.getAllCurriculumGroups().stream().anyMatch(group -> Optional.ofNullable(group.getConclusionYear())
+                                .map(year -> year == executionYear).orElse(false)))) {
+                continue;
             }
 
             if (searchBean.getActiveEnrolments() && !registration.hasAnyEnrolmentsIn(executionYear)) {
@@ -297,10 +293,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addHeader(getResourceMessage("label.ingressedInChosenYear"));
         }
         spreadsheet.newHeaderRow();
-        if (searchBean.isConcludedInChosenYear()) {
-            spreadsheet.addHeader(getResourceMessage("label.concludedInChosenYear"));
-        }
-        spreadsheet.newHeaderRow();
         if (searchBean.getActiveEnrolments()) {
             spreadsheet.addHeader(getResourceMessage("label.activeEnrolments.capitalized"));
         }
@@ -341,6 +333,13 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addHeader(getResourceMessage("label.statutes") + ":");
             for (StatuteType statute : searchBean.getStudentStatuteTypes()) {
                 spreadsheet.addHeader(statute.getName().getContent());
+            }
+        }
+        spreadsheet.newHeaderRow();
+        if (searchBean.hasAnyProgramConclusion()) {
+            spreadsheet.addHeader(getResourceMessage("label.programConclusions") + ":");
+            for (ProgramConclusion programConclusion : searchBean.getProgramConclusions()) {
+                spreadsheet.addHeader(programConclusion.getName().getContent());
             }
         }
     }

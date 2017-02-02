@@ -337,6 +337,11 @@
 	<slot name="name.content" />
 </schema>
 
+<schema name="ProgramConclusion.view.name.only" type="org.fenixedu.academic.domain.degreeStructure.ProgramConclusion" >
+	<slot name="name.content" />
+	<slot name="description.content" />
+</schema>
+
 <schema name="student.show.personInformation"
 		type="org.fenixedu.academic.dto.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="name" key="label.name"/>
