@@ -83,7 +83,7 @@
 		</p>
 	</logic:empty>
 		<p>
-			<html:link action="<%="/exemptionsManagement.do?method=prepareCreatePhdGratuityExemptionForGratuity&amp;personId=" + personId + "&amp;eventId=" + eventId %>">
+			<html:link action="<%="/exemptionsManagement.do?method=prepareCreatePhdEventExemption&amp;personId=" + personId + "&amp;eventId=" + eventId %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.create"/>
 			</html:link>
 		</p>

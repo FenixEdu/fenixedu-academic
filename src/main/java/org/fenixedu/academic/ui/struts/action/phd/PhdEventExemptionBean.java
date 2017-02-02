@@ -18,10 +18,11 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd;
 
+import java.io.InputStream;
 import java.io.Serializable;
-import java.util.List;
 
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.PartySocialSecurityNumber;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
 import org.fenixedu.academic.domain.phd.debts.PhdEventExemptionJustificationType;
 import org.fenixedu.academic.util.Money;
@@ -41,9 +42,13 @@ public class PhdEventExemptionBean implements Serializable {
 
     private String reason;
 
-    private List<Party> providers;
-
     private Party provider;
+
+    private String fileName;
+
+    private Long fileSize;
+
+    transient private InputStream file;
 
     public PhdEventExemptionBean(final PhdEvent event) {
         setEvent(event);
@@ -89,20 +94,44 @@ public class PhdEventExemptionBean implements Serializable {
         this.reason = reason;
     }
 
-    public List<Party> getProviders() {
-        return providers;
-    }
-
-    public void setProviders(List<Party> providers) {
-        this.providers = providers;
-    }
-
     public Party getProvider() {
         return provider;
     }
 
     public void setProvider(Party provider) {
         this.provider = provider;
+    }
+
+    public PartySocialSecurityNumber getCreditorSocialSecurityNumber() {
+        return (this.provider != null) ? this.provider.getPartySocialSecurityNumber() : null;
+    }
+
+    public void setCreditorSocialSecurityNumber(PartySocialSecurityNumber partySocialSecurityNumber) {
+        this.provider = (partySocialSecurityNumber != null) ? partySocialSecurityNumber.getParty() : null;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    public InputStream getFile() {
+        return file;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public void setFile(InputStream file) {
+        this.file = file;
     }
 
 }
