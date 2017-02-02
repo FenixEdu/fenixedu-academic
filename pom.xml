@@ -17,7 +17,7 @@
     <inceptionYear>2002</inceptionYear>
 
     <properties>
-        <version.org.fenixedu.fenixedu-spaces>1.6.1</version.org.fenixedu.fenixedu-spaces>
+        <version.org.fenixedu.fenixedu-spaces>1.7.0</version.org.fenixedu.fenixedu-spaces>
         <version.org.fenixedu.bennu>3.4.0</version.org.fenixedu.bennu>
         <version.org.fenixedu.bennu-signals>1.0.0</version.org.fenixedu.bennu-signals>
         <version.org.fenixedu.bennu-spring>1.1.0</version.org.fenixedu.bennu-spring>
