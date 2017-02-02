@@ -469,6 +469,9 @@
 				<fr:slot name="familyNames" key="label.familyNames">
 					<fr:property name="size" value="50" />
 				</fr:slot>
+				<fr:slot name="displayName" key="label.person.nickname">
+					<fr:property name="size" value="50" />
+				</fr:slot>	
 				<fr:slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 				<fr:slot name="idDocumentType" key="label.person.identificationDocumentType">
 					<fr:property name="excludedValues" value="CITIZEN_CARD" />
@@ -523,6 +526,9 @@
 				<fr:slot name="familyNames" key="label.familyNames">
 					<fr:property name="size" value="50" />
 				</fr:slot>
+				<fr:slot name="displayName" key="label.person.nickname">
+					<fr:property name="size" value="50" />
+				</fr:slot>				
 				<fr:slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 				<fr:slot name="idDocumentType" key="label.person.identificationDocumentType">
 					<fr:property name="excludedValues" value="CITIZEN_CARD" />

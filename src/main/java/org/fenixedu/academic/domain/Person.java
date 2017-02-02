@@ -99,6 +99,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.core.domain.UserProfile;
+import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
@@ -217,6 +218,19 @@ public class Person extends Person_Base {
     public void setGivenNames(String newGivenNames) {
         UserProfile profile = getProfile();
         profile.changeName(newGivenNames, profile.getFamilyNames(), profile.getDisplayName());
+    }
+
+    public String getDisplayName() {
+        return getProfile().getDisplayName();
+    }
+
+    public void setDisplayName(String newDisplayName) {
+        UserProfile profile = getProfile();
+        try {
+            profile.changeName(profile.getGivenNames(), profile.getFamilyNames(), newDisplayName);
+        } catch (BennuCoreDomainException ex) {
+            throw new DomainException("error.invalid.displayName", ex.getLocalizedMessage());
+        }
     }
 
     public void setFamilyNames(String newFamilyNames) {
