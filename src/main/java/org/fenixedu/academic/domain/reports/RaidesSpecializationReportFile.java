@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.domain.reports;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -71,13 +68,14 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
         createHeaders(spreadsheet);
 
         logger.info("BEGIN report for " + getDegreeType().getName().getContent());
-        int count = 0;
 
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
-            final Registration registration = studentCurricularPlan.getRegistration();
+        for (final Registration registration : RaidesCommonReportFieldsWrapper.getRegistrationsToProcess(executionYear,
+                this.getDegreeType())) {
 
             if (registration != null && !registration.isTransition()) {
                 for (final CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
+                    final StudentCurricularPlan studentCurricularPlan =
+                            RaidesCommonReportFieldsWrapper.getStudentCurricularPlan(registration, cycleType);
                     final CycleCurriculumGroup cycleCGroup = studentCurricularPlan.getRoot().getCycleCurriculumGroup(cycleType);
                     if (cycleCGroup != null && !cycleCGroup.isExternal()) {
                         final RegistrationConclusionBean registrationConclusionBean =
@@ -92,33 +90,17 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
                         }
 
                         if ((registration.isActive() || registration.isConcluded()) && conclusionYear != null) {
-                            reportRaides(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
+                            reportRaides(spreadsheet, registration, studentCurricularPlan, getFullRegistrationPath(registration),
+                                    executionYear,
                                     cycleType, true, registrationConclusionBean.getConclusionDate());
                         } else if (registration.isActive()) {
-                            reportRaides(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
+                            reportRaides(spreadsheet, registration, studentCurricularPlan, getFullRegistrationPath(registration),
+                                    executionYear,
                                     cycleType, false, null);
                         }
                     }
                 }
-                count++;
             }
-        }
-    }
-
-    private Set<StudentCurricularPlan> getStudentCurricularPlansToProcess(ExecutionYear executionYear) {
-        final Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
-
-        collectStudentCurricularPlansFor(executionYear, result);
-
-        if (executionYear.getPreviousExecutionYear() != null) {
-            collectStudentCurricularPlansFor(executionYear.getPreviousExecutionYear(), result);
-        }
-        return result;
-    }
-
-    private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
-            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet());
         }
     }
 
@@ -127,17 +109,17 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
         spreadsheet.setHeader("Total ECTS necessários para a conclusão");
     }
 
-    private void reportRaides(final Spreadsheet sheet, final Registration registration, List<Registration> registrationPath,
+    private void reportRaides(final Spreadsheet sheet, final Registration registration,
+            StudentCurricularPlan studentCurricularPlan, List<Registration> registrationPath,
             ExecutionYear executionYear, final CycleType cycleType, final boolean concluded, final YearMonthDay conclusionDate) {
 
         final Row row =
-                RaidesCommonReportFieldsWrapper.reportRaidesFields(sheet, registration, registrationPath, executionYear,
-                        cycleType, concluded, conclusionDate, null, false);
+                RaidesCommonReportFieldsWrapper.reportRaidesFields(sheet, registration, studentCurricularPlan, registrationPath,
+                        executionYear, cycleType, concluded, conclusionDate, null, false);
 
         // Total de ECTS concluídos até ao fim do ano lectivo anterior ao que se referem os dados  no curso actual
         double totalEctsConcludedUntilPreviousYear = 0d;
-        for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-                .getInternalCycleCurriculumGrops()) {
+        for (final CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getInternalCycleCurriculumGrops()) {
             totalEctsConcludedUntilPreviousYear +=
                     cycleCurriculumGroup.getCreditsConcluded(executionYear.getPreviousExecutionYear());
         }
@@ -146,8 +128,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
         if (concluded) {
             row.setCell(0);
         } else {
-            row.setCell(registration.getLastStudentCurricularPlan().getRoot().getDefaultEcts(executionYear)
-                    - totalEctsConcludedUntilPreviousYear);
+            row.setCell(studentCurricularPlan.getRoot().getDefaultEcts(executionYear) - totalEctsConcludedUntilPreviousYear);
         }
     }
 }
