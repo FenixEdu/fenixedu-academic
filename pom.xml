@@ -18,10 +18,10 @@
 
     <properties>
         <version.org.fenixedu.fenixedu-spaces>1.7.0</version.org.fenixedu.fenixedu-spaces>
-        <version.org.fenixedu.bennu>3.4.0</version.org.fenixedu.bennu>
+        <version.org.fenixedu.bennu>3.4.4</version.org.fenixedu.bennu>
         <version.org.fenixedu.bennu-signals>1.0.0</version.org.fenixedu.bennu-signals>
         <version.org.fenixedu.bennu-spring>1.1.0</version.org.fenixedu.bennu-spring>
-        <version.org.fenixedu.bennu-renderers>5.0.0</version.org.fenixedu.bennu-renderers>
+        <version.org.fenixedu.bennu-renderers>5.0.3</version.org.fenixedu.bennu-renderers>
         <version.org.fenixedu.fenixedu-commons>1.1.1</version.org.fenixedu.fenixedu-commons>
         <version.pt.ist.standards>1.0.3</version.pt.ist.standards>
         <version.com.google.guava.guava>17.0</version.com.google.guava.guava>
