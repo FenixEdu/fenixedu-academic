@@ -63,24 +63,6 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
     }
 
     @Override
-    public boolean isOpen() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
-    }
-
-    @Override
-    public boolean isClosed() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
-    }
-
-    @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
