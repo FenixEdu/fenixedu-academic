@@ -188,21 +188,11 @@ public class InstallmentBean implements Serializable {
     }
 
     public Collection<ExecutionSemester> getExecutionSemesters() {
-        final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester each : this.executionSemesters) {
-            result.add(each);
-        }
-
-        return result;
+        return new ArrayList<ExecutionSemester>(this.executionSemesters);
     }
 
     public void setExecutionSemesters(Collection<ExecutionSemester> executionSemesters) {
-        final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester each : executionSemesters) {
-            result.add(each);
-        }
-
-        this.executionSemesters = result;
+        this.executionSemesters = new ArrayList<ExecutionSemester>(executionSemesters);
     }
 
     public Integer getNumberOfDaysToStartApplyingPenalty() {
