@@ -454,6 +454,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         department.setRootDomainObject(Bennu.getInstance());
         Unit departmentParent =
                 Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
+                        .filter(x -> x instanceof AggregateUnit)
                         .filter(x -> ((AggregateUnit) x).getName().equals("Departments")).findAny()
                         .orElse(Bennu.getInstance().getInstitutionUnit());
         DepartmentUnit.createNewInternalDepartmentUnit(department.getNameI18n(), null, null, department.getCode(),
