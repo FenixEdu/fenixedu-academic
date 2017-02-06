@@ -328,6 +328,7 @@
 		<div class="modal-content">
 			<form:form role="form" method="post"
 				action="${editStudentGroupShiftUrl }">
+				${csrf.field()}
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>

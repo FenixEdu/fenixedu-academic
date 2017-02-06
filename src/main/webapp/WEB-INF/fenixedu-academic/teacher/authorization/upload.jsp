@@ -101,7 +101,7 @@
 </section>
 <section>
 	<form method="POST" class="form-horizontal" enctype="multipart/form-data">
-	
+		${csrf.field()}
 		<div class="form-group">
 			<label for="period" class="col-sm-1"><spring:message code="teacher.authorizations.period"/></label>
 			<div class="col-sm-11">

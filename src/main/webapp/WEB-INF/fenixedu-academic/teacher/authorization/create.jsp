@@ -36,7 +36,7 @@ ${portal.toolkit()}
 </div>
 <section>
 	<form:form role="form" modelAttribute="formBean" method="POST" class="form-horizontal" action="${createUrl}">
-	
+		${csrf.field()}
 		<div class="form-group">
 			<form:label for="selectDepartment" path="department" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.department" /></form:label>
 			<div class="col-sm-11">

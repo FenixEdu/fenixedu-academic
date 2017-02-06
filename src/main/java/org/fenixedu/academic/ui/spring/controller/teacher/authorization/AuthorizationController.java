@@ -248,7 +248,15 @@ public class AuthorizationController {
      */
     @RequestMapping(method = POST, value = "create")
     public String create(Model model, @ModelAttribute FormBean form, final RedirectAttributes attrs) {
-        service.createTeacherAuthorization(form);
+    
+        try {
+            service.createTeacherAuthorization(form);
+        } catch (Exception e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            model.addAttribute("form", form);
+            return "redirect:/teacher/authorizations/create";
+        }
+        
         return redirectHome(form, attrs);
     }
 
