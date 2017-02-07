@@ -22,6 +22,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
 
 public class Holiday extends Holiday_Base {
     public Holiday() {
@@ -47,6 +48,16 @@ public class Holiday extends Holiday_Base {
     }
 
     public static boolean isHoliday(LocalDate date, Space campus) {
+        for (Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
+            if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getLocality()))
+                    && holiday.getDate().isMatch(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isHoliday(YearMonthDay date, Space campus) {
         for (Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
             if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getLocality()))
                     && holiday.getDate().isMatch(date)) {

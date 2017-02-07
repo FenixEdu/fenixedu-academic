@@ -600,13 +600,15 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
-        Collection<CycleCourseGroup> res = new HashSet<CycleCourseGroup>();
-        for (CourseGroup courseGroup : getParentCourseGroups()) {
-            res.addAll(courseGroup.getParentCycleCourseGroups());
-        }
+        final Collection<CycleCourseGroup> res = new HashSet<CycleCourseGroup>();
+        getParentContextsSet().forEach(c -> res.addAll(c.getParentCourseGroup().getParentCycleCourseGroups()));
         return res;
     }
 
+    /**
+     * @deprecated use getParentContextsSet instead
+     */
+    @Deprecated
     public Set<CourseGroup> getParentCourseGroups() {
         Set<CourseGroup> res = new HashSet<CourseGroup>();
         for (Context context : getParentContextsSet()) {
