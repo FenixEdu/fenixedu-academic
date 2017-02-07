@@ -484,7 +484,7 @@ public class Alumni extends Alumni_Base {
                 if (!hasPasswordRequest) {
                     hasPasswordRequest = true;
                 }
-                if (request.getApproved()) {
+                if (request.isApproved()) {
                     hasPasswordRequestAccepted = true;
                     break;
                 }
