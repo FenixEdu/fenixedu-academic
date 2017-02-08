@@ -34,6 +34,7 @@ import org.fenixedu.academic.dto.GenericPair;
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
     static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
+
     static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2;
 
     /*
@@ -100,9 +101,12 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
         return curricularCourse.getEctsCredits(executionSemester.getSemester(), executionSemester) * ACCUMULATED_FACTOR;
     }
 
+    /**
+     * @deprecated Use static MAXIMUM_NUMBER_OF_CREDITS field instead
+     */
+    @Deprecated
     static public double getMaximumNumberOfCredits(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
-        final Registration registration = studentCurricularPlan.getRegistration();
-        return registration.isPartialRegime(executionYear) ? MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME : MAXIMUM_NUMBER_OF_CREDITS;
+    	return MAXIMUM_NUMBER_OF_CREDITS;
     }
 }
