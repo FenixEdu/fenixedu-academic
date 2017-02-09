@@ -20,6 +20,7 @@ package org.fenixedu.academic.service.services.commons.searchers;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.organizationalStructure.Party;
@@ -34,7 +35,7 @@ public class SearchExternalScholarshipPartySocialSecurityNumber extends Abstract
     @Override
     public Collection<PartySocialSecurityNumber> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         return process(Bennu.getInstance().getExternalScholarshipProviderSet().stream().map
-                (Party::getPartySocialSecurityNumber).collect(Collectors.toSet()), value, maxCount,
+                        (Party::getPartySocialSecurityNumber).filter(Objects::nonNull).collect(Collectors.toSet()), value, maxCount,
                 argsMap);
     }
 

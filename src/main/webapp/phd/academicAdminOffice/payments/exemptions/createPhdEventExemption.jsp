@@ -88,9 +88,9 @@
 			<logic:equal name="exemptionBean" property="justificationType" value="THIRD_PARTY_CONTRIBUTION">
 				<fr:slot name="creditorSocialSecurityNumber" layout="autoComplete"
 						 validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator"
-						 key="label.payments.event.creditor.party">
+						 key="label.payments.event.creditor.party" bundle="ACADEMIC_OFFICE_RESOURCES">
 					<fr:property name="size" value="70"/>
-					<fr:property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
+					<fr:property name="format" value="\${party.socialSecurityNumber} - \${party.name}"/>
 					<fr:property name="indicatorShown" value="true"/>
 					<fr:property name="provider"
 								 value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalScholarshipPartySocialSecurityNumber"/>
@@ -117,7 +117,7 @@
 						 validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator"
 						 key="label.payments.event.creditor.party">
 					<fr:property name="size" value="70"/>
-					<fr:property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
+					<fr:property name="format" value="\${party.socialSecurityNumber} - \${party.name}"/>
 					<fr:property name="indicatorShown" value="true"/>
 					<fr:property name="provider"
 								 value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalScholarshipPartySocialSecurityNumber"/>
