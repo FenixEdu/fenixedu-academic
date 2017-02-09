@@ -1926,9 +1926,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                     cycleType.getDescription());
         }
 
-        return getAllCoursesGroups().stream().filter(cg -> cg.getParentCycleCourseGroups().contains(cycleCourseGroup))
+        return Math.toIntExact(getAllCoursesGroups().stream().filter(cg -> cg.getParentCycleCourseGroups().contains(cycleCourseGroup))
                 .flatMap(cg -> cg.getChildContextsSet().stream()).filter(ctx -> ctx.getChildDegreeModule().isLeaf())
-                .map(curricularPeriodCollector).filter(curricularPeriodFilter).collect(Collectors.toSet()).size();
+                .map(curricularPeriodCollector).filter(curricularPeriodFilter).count());
 
     }
 

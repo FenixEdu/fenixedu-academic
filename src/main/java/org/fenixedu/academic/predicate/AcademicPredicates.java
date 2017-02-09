@@ -177,7 +177,7 @@ public class AcademicPredicates {
         public boolean evaluate(final Object degree) {
             return AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_ENROLMENT_PERIODS, Authenticate.getUser())
-                    .collect(Collectors.toSet()).contains(degree);
+                    .anyMatch(d -> d == degree);
         };
     };
 

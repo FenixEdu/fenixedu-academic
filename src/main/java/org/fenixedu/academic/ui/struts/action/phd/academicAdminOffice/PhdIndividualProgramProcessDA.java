@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +54,7 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean;
 import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.PhdParticipantBean;
 import org.fenixedu.academic.domain.phd.PhdProcessState;
+import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
 import org.fenixedu.academic.domain.phd.PhdStudyPlanBean;
 import org.fenixedu.academic.domain.phd.PhdStudyPlanEntry;
@@ -1390,9 +1390,10 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         predicate.add(new Predicate<PhdMigrationIndividualProcessData>() {
             @Override
             public boolean test(PhdMigrationIndividualProcessData process) {
+            	final PhdProgram program = process.getProcessBean().getPhdProgram();
                 return AcademicAccessRule
                         .getPhdProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES, Authenticate.getUser())
-                        .collect(Collectors.toSet()).contains(process.getProcessBean().getPhdProgram());
+                        .anyMatch(p -> p == program);
             }
         });
 

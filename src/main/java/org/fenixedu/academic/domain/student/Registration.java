@@ -1715,12 +1715,13 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isAllowedToManageRegistration() {
-        return AcademicAccessRule
-                .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
-                .collect(Collectors.toSet()).contains(getDegree())
-                || AcademicAccessRule
-                        .getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM,
-                                Authenticate.getUser()).collect(Collectors.toSet()).contains(getDegree());
+		final Degree degree = getDegree();
+		final User user = Authenticate.getUser();
+		return AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, user)
+				.anyMatch(ap -> ap == degree)
+				|| AcademicAccessRule
+						.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
+						.anyMatch(ap -> ap == degree);
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {

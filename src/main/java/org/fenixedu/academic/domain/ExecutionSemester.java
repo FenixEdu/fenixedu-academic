@@ -322,9 +322,10 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
                 if ((dcp == null || sheet.isFor(dcp)) && sheet.getCurricularCourse().hasAnyExecutionDegreeFor(getExecutionYear())) {
                     ExecutionDegree executionDegree =
                             sheet.getCurricularCourse().getExecutionDegreeFor(getExecutionYear().getAcademicInterval());
+                    final Degree degree = executionDegree.getDegree();
                     if (AcademicAccessRule
                             .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser())
-                            .collect(Collectors.toSet()).contains(executionDegree.getDegree())) {
+                            .anyMatch(d -> d == degree)) {
                         markSheets.add(sheet);
                     }
                 }

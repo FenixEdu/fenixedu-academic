@@ -65,21 +65,22 @@ public class MarkSheetPredicates {
 
         @Override
         public boolean evaluate(final MarkSheet markSheet) {
+        	final Degree degree = markSheet.getCurricularCourse().getDegree();
             return AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.REMOVE_GRADES, Authenticate.getUser())
-                    .collect(Collectors.toSet()).contains(markSheet.getCurricularCourse().getDegree());
+            		.anyMatch(d -> d == degree);
         }
     };
 
     static public boolean checkRectification(Degree degree) {
         return AcademicAccessRule
                 .getDegreesAccessibleToFunction(AcademicOperationType.RECTIFICATION_MARKSHEETS, Authenticate.getUser())
-                .collect(Collectors.toSet()).contains(degree);
+                .anyMatch(d -> d == degree);
     }
 
     static public boolean checkDissertation(Degree degree) {
         return AcademicAccessRule
                 .getDegreesAccessibleToFunction(AcademicOperationType.DISSERTATION_MARKSHEETS, Authenticate.getUser())
-                .collect(Collectors.toSet()).contains(degree);
+                .anyMatch(d -> d == degree);
     }
 
     private static boolean hasScientificCouncilRole() {

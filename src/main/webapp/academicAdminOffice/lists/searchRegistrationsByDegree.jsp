@@ -175,7 +175,6 @@
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="moduleRelative" value="true" />
 					<fr:property name="useParent" value="true" />
-					<fr:property name="linkIf" value="registration.allowedToManageRegistration" />
 				</fr:slot>
 				<fr:slot name="registration.person.name" key="label.name" />
 				<fr:slot name="registration.degree.sigla" key="label.degree" />

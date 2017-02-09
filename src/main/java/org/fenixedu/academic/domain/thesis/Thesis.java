@@ -1288,7 +1288,7 @@ public class Thesis extends Thesis_Base {
                 }
             }
 
-            if (getVowels().stream().filter(v -> !v.isExternal()).collect(Collectors.toSet()).size() != juryPersons.size()) {
+            if (getVowels().stream().filter(v -> !v.isExternal()).count() != juryPersons.size()) {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.vowels"));
             }
 
