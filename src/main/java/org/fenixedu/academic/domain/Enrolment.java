@@ -411,8 +411,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                     @Override
                     final public boolean evaluate(Object arg0) {
                         ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-                        if (executionCourse.getExecutionPeriod().equals(executionSemester)
-                                && executionCourse.getEntryPhase().equals(EntryPhase.FIRST_PHASE)) {
+                        if (executionCourse.getExecutionPeriod() == executionSemester
+                                && executionCourse.getEntryPhase() == EntryPhase.FIRST_PHASE) {
                             return true;
                         }
                         return false;
@@ -462,8 +462,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
-        return getCurricularCourse().getAssociatedExecutionCoursesSet().contains(executionCourse)
-                && getExecutionPeriod() != executionCourse.getExecutionPeriod();
+        return getExecutionPeriod() != executionCourse.getExecutionPeriod()
+        		&& getCurricularCourse().getAssociatedExecutionCoursesSet().contains(executionCourse);
     }
 
     final public boolean isImprovingInExecutionPeriodFollowingApproval(final ExecutionSemester improvementExecutionPeriod) {
@@ -552,9 +552,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean hasImprovementFor(ExecutionSemester executionSemester) {
         for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-            if (enrolmentEvaluation.getEvaluationSeason().isImprovement() && enrolmentEvaluation.getExecutionPeriod() != null
-                    && enrolmentEvaluation.getExecutionPeriod().equals(executionSemester)) {
-                return true;
+            if (enrolmentEvaluation.getEvaluationSeason().isImprovement()) {
+            	final ExecutionSemester evalPeriod = enrolmentEvaluation.getExecutionPeriod();
+            	if (evalPeriod != null && evalPeriod == executionSemester) {
+            		return true;
+            	}
             }
         }
         return false;
@@ -945,14 +947,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        return isValid(executionSemester) && this.getCurricularCourse().equals(curricularCourse);
+        return this.getCurricularCourse() == curricularCourse && isValid(executionSemester);
     }
 
     @Override
     public boolean isValid(final ExecutionSemester executionSemester) {
         return getExecutionPeriod() == executionSemester
-                || (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionSemester
-                        .getExecutionYear());
+                || (getExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()
+                	&& getCurricularCourse().isAnual());
     }
 
     public boolean isValid(final ExecutionYear executionYear) {
@@ -967,7 +969,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     final public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
             final ExecutionSemester executionSemester) {
-        return isEnroledInExecutionPeriod(curricularCourse, executionSemester) && isEnroled();
+        return isEnroled() && isEnroledInExecutionPeriod(curricularCourse, executionSemester);
     }
 
     final public Collection<ExecutionCourse> getExecutionCourses() {
@@ -1130,10 +1132,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
-        if (isSpecialSeason() && getExecutionPeriod().getExecutionYear().equals(executionYear)) {
-            return Collections.singleton(this);
-        }
-        return Collections.emptySet();
+        return getExecutionPeriod().getExecutionYear() == executionYear && isSpecialSeason() ?
+            Collections.singleton(this) : Collections.emptySet();
     }
 
     @Override

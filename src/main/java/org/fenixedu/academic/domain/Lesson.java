@@ -896,7 +896,7 @@ public class Lesson extends Lesson_Base {
     }
 
     private boolean isHoliday(YearMonthDay day, Space lessonCampus) {
-        return Holiday.isHoliday(day.toLocalDate(), lessonCampus);
+        return Holiday.isHoliday(day, lessonCampus);
     }
 
     private boolean isDayValid(YearMonthDay day, Space lessonCampus) {

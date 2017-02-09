@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -545,7 +546,11 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
+    /**
+     * @deprecated use getParentContextsSet directly instead
+     */
     @Override
+    @Deprecated
     public Set<CourseGroup> getParentCourseGroups() {
         final Set<CourseGroup> result = new HashSet<CourseGroup>();
         for (final Context context : getParentContextsSet()) {
@@ -554,13 +559,17 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
+    public Stream<CourseGroup> getParentCourseGroupStream() {
+    	return getParentContextsSet().stream().map(c -> c.getParentCourseGroup());
+    }
+
     @Override
     public Double getMaxEctsCredits(final ExecutionSemester executionSemester) {
         final List<CreditsLimit> creditsLimitRules =
                 (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
         if (!creditsLimitRules.isEmpty()) {
             for (final CreditsLimit creditsLimit : creditsLimitRules) {
-                if (getParentCourseGroups().contains(creditsLimit.getContextCourseGroup())) {
+                if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
                     return creditsLimit.getMaximumCredits();
                 }
             }
@@ -593,7 +602,7 @@ public class CourseGroup extends CourseGroup_Base {
                 (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
         if (!creditsLimitRules.isEmpty()) {
             for (final CreditsLimit creditsLimit : creditsLimitRules) {
-                if (getParentCourseGroups().contains(creditsLimit.getContextCourseGroup())) {
+            	if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
                     return creditsLimit.getMinimumCredits();
                 }
             }
