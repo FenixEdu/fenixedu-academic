@@ -19,11 +19,14 @@
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.student.Registration;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends CurricularRuleExecutor {
 
@@ -33,14 +36,21 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 
         final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
-        double accumulated = 0d;
-        for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-            accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionSemester);
-        }
+        final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
+        final ExecutionYear executionYear = executionSemester.getExecutionYear();
+        final Registration registration = studentCurricularPlan.getRegistration();
 
-        final double maxEcts =
-                MaximumNumberOfCreditsForEnrolmentPeriod.getMaximumNumberOfCredits(enrolmentContext.getStudentCurricularPlan(),
-                        executionSemester.getExecutionYear());
+        double accumulated = 0d;
+        final boolean isPartial = registration.isPartialRegime(executionYear);
+    	for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
+    		if (isPartial || semester == executionSemester) {
+            	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+            		accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(semester);
+            	}    			
+    		}
+    	}
+
+        final double maxEcts = MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS;
 
         if (accumulated > maxEcts) {
             if (sourceDegreeModuleToEvaluate.isEnroled()) {
