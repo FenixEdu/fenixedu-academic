@@ -130,6 +130,14 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
                 && (!StringUtils.isEmpty(person.getNameOfMother()) && person.getNameOfMother().equals(getNameOfMother()));
     }
 
+    public boolean isApproved() {
+        return Boolean.TRUE.equals(getApproved());
+    }
+
+    public boolean isPending() {
+        return getApproved() == null;
+    }
+
     public void validate(Boolean approval) {
         setApproved(approval);
         setDecisionDateTime(new DateTime());
