@@ -26,15 +26,16 @@ import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 
 /**
- * 
+ *
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearBean {
@@ -45,13 +46,15 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private List<StatuteType> statuteTypes = new ArrayList<StatuteType>();
 
-    private boolean ingressedInChosenYear = false;
+    private List<ProgramConclusion> programConclusions = new ArrayList<ProgramConclusion>();
 
-    private boolean concludedInChosenYear = false;
+    private boolean ingressedInChosenYear = false;
 
     private boolean activeEnrolments = false;
 
     private boolean standaloneEnrolments = false;
+
+    private boolean includeConcludedWithoutConclusionProcess = false;
 
     private RegistrationRegimeType regime = null;
 
@@ -112,7 +115,19 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
         return this.statuteTypes != null && !this.statuteTypes.isEmpty();
     }
 
-    public boolean getActiveEnrolments() {
+    public boolean hasAnyProgramConclusion() {
+    	return this.programConclusions != null && !this.programConclusions.isEmpty();
+    }
+
+    public List<ProgramConclusion> getProgramConclusions() {
+		return programConclusions;
+	}
+
+	public void setProgramConclusions(List<ProgramConclusion> programConclusions) {
+		this.programConclusions = programConclusions;
+	}
+
+	public boolean getActiveEnrolments() {
         return activeEnrolments;
     }
 
@@ -152,12 +167,11 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
         return ingressedInChosenYear;
     }
 
-    public void setConcludedInChosenYear(boolean concludedInChosenYear) {
-        this.concludedInChosenYear = concludedInChosenYear;
+    public boolean isIncludeConcludedWithoutConclusionProcess() {
+        return includeConcludedWithoutConclusionProcess;
     }
 
-    public boolean isConcludedInChosenYear() {
-        return concludedInChosenYear;
+    public void setIncludeConcludedWithoutConclusionProcess(boolean includeConcludedWithoutConclusionProcess) {
+        this.includeConcludedWithoutConclusionProcess = includeConcludedWithoutConclusionProcess;
     }
-
 }

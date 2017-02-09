@@ -2001,24 +2001,13 @@ public class Registration extends Registration_Base {
     }
 
     public RegistrationState getFirstRegistrationState() {
-        return !getRegistrationStatesSet().isEmpty() ? Collections.min(getRegistrationStatesSet(),
-                RegistrationState.DATE_COMPARATOR) : null;
+        return getRegistrationStatesSet().stream().min(RegistrationState.DATE_COMPARATOR).orElse(null);
     }
 
     final public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
-        List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistrationStatesSet());
-        Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
-
-        for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
-                .hasPrevious();) {
-            RegistrationState state = iter.previous();
-            if (state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
-                continue;
-            }
-            return state;
-        }
-
-        return null;
+        return getRegistrationStatesSet().stream().sorted(RegistrationState.DATE_COMPARATOR.reversed()).filter(state -> !state
+                .getStateDate()
+                .isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())).findFirst().orElse(null);
     }
 
     public boolean hasState(final RegistrationStateType stateType) {
