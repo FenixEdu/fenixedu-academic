@@ -87,6 +87,22 @@
 	</academic:allowed>
 </p>
 
+<!-- Student Warnings -->
+<logic:notEmpty name="warnings">
+	<div class="panel panel-danger mtop15 mbottom0">
+		<div class="panel-heading">
+			<h3 class="panel-title"><bean:message key="label.warnings" bundle="ACADEMIC_OFFICE_RESOURCES"></bean:message></h3>
+		</div>
+		<div class="panel-body">
+			<ul class="mbottom0">
+				<logic:iterate name="warnings" id="warning">
+					<li><bean:write name="warning"></bean:write></li>
+				</logic:iterate>
+			</ul>
+		</div>
+	</div>
+</logic:notEmpty>
+
 <academic:allowed operation="MANAGE_REGISTRATIONS">
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations" schema="student.registrationDetail.short" >

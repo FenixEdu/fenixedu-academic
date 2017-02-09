@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.student.StudentsSearchBean;
+import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminStudentsApp;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.EditCandidacyInformationDA.ChooseRegistrationOrPhd;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -60,6 +61,7 @@ public class SearchForStudentsDA extends FenixDispatchAction {
                 Student student = students.iterator().next();
                 request.setAttribute("student", student);
                 request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
+                request.setAttribute("warnings", StudentWarningsService.check(student));
                 return mapping.findForward("viewStudentDetails");
             }
             request.setAttribute("students", students);
