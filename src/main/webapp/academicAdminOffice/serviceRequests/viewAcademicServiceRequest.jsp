@@ -47,6 +47,21 @@
 	</fr:layout>
 </fr:view>
 
+<logic:equal name="academicServiceRequest" property="editable" value="true">
+	<fr:form>
+		<fr:edit id="academicServiceRequest" name="academicServiceRequest">
+			<fr:schema type="org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:slot name="language" layout="null-as-label">
+					<fr:property name="label" value="-"/>
+				</fr:slot>
+			</fr:schema>
+		</fr:edit>
+		<div>
+			<html:submit><bean:message key="label.edit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
+		</div>
+	</fr:form>
+</logic:equal>
+
 <academic:allowed operation="SERVICE_REQUESTS_RECTORAL_SENDING" office="<%= academicServiceRequest.getAdministrativeOffice() %>">
 	<logic:notEmpty name="academicServiceRequest" property="rectorateSubmissionBatch">
 		<bean:define id="rectorateSubmissionBatch" name="academicServiceRequest" property="rectorateSubmissionBatch" />
