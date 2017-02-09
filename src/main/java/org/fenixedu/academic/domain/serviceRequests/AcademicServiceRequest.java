@@ -188,15 +188,17 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public boolean isPayedUponCreation();
 
     public boolean isPaymentsAccessible() {
+    	final AcademicProgram program = getAcademicProgram();
         return AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS, Authenticate.getUser())
-                .collect(Collectors.toSet()).contains(getAcademicProgram());
+                .anyMatch(p -> p == program);
     }
 
     public boolean isRegistrationAccessible() {
+    	final AcademicProgram program = getAcademicProgram();
         return AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
-                .collect(Collectors.toSet()).contains(getAcademicProgram());
+                .anyMatch(p -> p == program);
     }
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {

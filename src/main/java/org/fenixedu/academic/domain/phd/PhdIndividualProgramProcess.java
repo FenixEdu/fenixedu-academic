@@ -774,7 +774,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return getRegistration() != null
                 && AcademicAccessRule
                         .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
-                        .collect(Collectors.toSet()).contains(getRegistration().getDegree());
+                        .anyMatch(p -> p == getRegistration().getDegree());
     }
 
     @Override
