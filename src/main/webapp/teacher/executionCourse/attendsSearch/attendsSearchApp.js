@@ -40,7 +40,7 @@ app.filter('attendsFilter', function() {
                     if (Object.keys(attendee.shifts[shiftName]).length == 0) {
                         return true;
                     }
-                }).length>0) {
+                }).length>0 || filters.shifts.length == 0) {
                    return true;
                }
             }
