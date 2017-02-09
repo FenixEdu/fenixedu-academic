@@ -19,18 +19,14 @@
 package org.fenixedu.academic.domain.accounting.installments;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
-import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
@@ -72,7 +68,7 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
         }
     }
 
-    private void checkParameters(final BigDecimal ectsForAmount, final List<ExecutionSemester> executionSemesters) {
+    private void checkParameters(final BigDecimal ectsForAmount, final Collection<ExecutionSemester> executionSemesters) {
         if (ectsForAmount == null) {
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.accounting.installments.PartialRegimeInstallment.ectsForAmount.cannot.be.null");
@@ -121,31 +117,11 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
     }
 
     private BigDecimal getEnroledEcts(GratuityEvent gratuityEvent) {
-
-        BigDecimal total = BigDecimal.ZERO;
-
-        for (final Enrolment enrolment : collectEnrolments(gratuityEvent)) {
-            total = total.add(enrolment.getEctsCreditsForCurriculum());
-        }
-
-        return total;
-
-    }
-
-    private Set<Enrolment> collectEnrolments(GratuityEvent gratuityEvent) {
-        final Set<Enrolment> result = new HashSet<Enrolment>();
-
-        for (final ExecutionSemester executionSemester : getExecutionSemestersSet()) {
-            for (final CycleCurriculumGroup cycleCurriculumGroup : gratuityEvent.getStudentCurricularPlan()
-                    .getCycleCurriculumGroups()) {
-                for (final Enrolment enrolment : cycleCurriculumGroup.getEnrolmentsBy(executionSemester)) {
-                    result.add(enrolment);
-                }
-            }
-        }
-
-        return result;
-
+    	return getExecutionSemestersSet().stream()
+        		.flatMap(es -> gratuityEvent.getStudentCurricularPlan().getCycleCurriculumGroups().stream()
+        						.flatMap(ccg -> ccg.getEnrolmentsBy(es).stream()))
+        		.map(e -> e.getEctsCreditsForCurriculum())
+        		.reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
@@ -195,15 +171,14 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
     }
 
     @Override
-    public void edit(InstallmentBean bean) {
-        List<ExecutionSemester> executionSemesters = new ArrayList<>(bean.getExecutionSemesters());
-        BigDecimal ectsForAmount = bean.getEctsForAmount();
+    public void edit(final InstallmentBean bean) {
+    	final Collection<ExecutionSemester> executionSemesters = bean.getExecutionSemesters();
+        final BigDecimal ectsForAmount = bean.getEctsForAmount();
 
         checkParameters(ectsForAmount, executionSemesters);
 
-        for (ExecutionSemester executionSemester : executionSemesters) {
-            super.addExecutionSemesters(executionSemester);
-        }
+        getExecutionSemestersSet().addAll(executionSemesters);
+        getExecutionSemestersSet().retainAll(executionSemesters);
 
         super.setEctsForAmount(ectsForAmount);
         super.edit(bean);
