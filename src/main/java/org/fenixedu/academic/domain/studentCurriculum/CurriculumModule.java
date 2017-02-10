@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -353,6 +354,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
 
     abstract public Set<CurriculumLine> getAllCurriculumLines();
+
+	abstract public Stream<CurriculumLine> getCurriculumLineStream();
 
     abstract public ConclusionValue isConcluded(ExecutionYear executionYear);
 
