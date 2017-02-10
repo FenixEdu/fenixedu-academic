@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
@@ -1310,5 +1311,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     final public Double calculateCreditsConcluded() {
         return super.getCreditsConcluded();
     }
+
+	@Override
+	public Stream<CurriculumLine> getCurriculumLineStream() {
+		return getCurriculumModulesSet().stream().flatMap(m -> m.getCurriculumLineStream());
+	}
 
 }

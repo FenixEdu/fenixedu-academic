@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.CurricularCourseEquivalence;
@@ -322,5 +323,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     abstract public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
 
     abstract public String getModuleTypeName();
+
+	@Override
+	public Stream<CurriculumLine> getCurriculumLineStream() {
+		return Stream.of(this);
+	}
 
 }
