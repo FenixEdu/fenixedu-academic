@@ -44,7 +44,7 @@
         <version.commons-collections.commons-collections>3.2.2</version.commons-collections.commons-collections>
         <version.javax.servlet.jsp.jsp-api>2.1</version.javax.servlet.jsp.jsp-api>
         <version.com.github.axet.kaptcha>0.0.9</version.com.github.axet.kaptcha>
-        <version.com.googlecode.libphonenumber.libphonenumber>7.0.4</version.com.googlecode.libphonenumber.libphonenumber>
+        <version.com.googlecode.libphonenumber.libphonenumber>8.2.0</version.com.googlecode.libphonenumber.libphonenumber>
         <version.commons-validator.commons-validator>1.1.4</version.commons-validator.commons-validator>
         <version.org.jsoup.jsoup>1.7.3</version.org.jsoup.jsoup>
         <version.commons-beanutils.commons-beanutils>1.9.2</version.commons-beanutils.commons-beanutils>
