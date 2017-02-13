@@ -63,9 +63,13 @@
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{writtenTest.dayDate}"/>
 					</h:outputFormat>
-					<h:outputText value=" #{bundle['label.at']}" />
+					<h:outputText value=" #{bundle['label.from']}" />
 					<h:outputFormat value="{0, date, HH:mm}">
 						<f:param value="#{writtenTest.beginningDate}"/>
+					</h:outputFormat>
+					<h:outputText value=" #{bundle['label.to']}" />
+					<h:outputFormat value="{0, date, HH:mm}">
+						<f:param value="#{writtenTest.endDate}"/>
 					</h:outputFormat>
 					<h:panelGroup rendered="#{!empty writtenTest.associatedRooms}">
 						<h:outputText value=" #{writtenTest.associatedRoomsAsStringList}" escape="false"/>
