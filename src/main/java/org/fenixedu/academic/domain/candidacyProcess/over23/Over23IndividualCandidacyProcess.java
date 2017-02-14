@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacy
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState;
 import org.fenixedu.academic.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
@@ -64,6 +65,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
         activities.add(new SendEmailForApplicationSubmission());
         activities.add(new ChangePaymentCheckedState());
         activities.add(new RevokeDocumentFile());
+        activities.add(new RevertApplicationToStandBy());
         activities.add(new MoveCandidacy());
     }
 
@@ -659,6 +661,38 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
             return Boolean.FALSE;
         }
 
+    }
+
+    static private class RevertApplicationToStandBy extends Activity<Over23IndividualCandidacyProcess> {
+
+        @Override
+        public void checkPreConditions(Over23IndividualCandidacyProcess process, User userView) {
+            if (!isAllowedToManageProcess(process, userView)) {
+                throw new PreConditionNotValidException();
+            }
+
+            if (!process.isCandidacyCancelled() && !process.isCandidacyRejected()) {
+                throw new PreConditionNotValidException();
+            }
+        }
+
+        @Override
+        protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, User userView,
+                Object object) {
+            process.getCandidacy().setState(IndividualCandidacyState.STAND_BY);
+
+            return process;
+        }
+
+        @Override
+        public Boolean isVisibleForGriOffice() {
+            return false;
+        }
+
+        @Override
+        public Boolean isVisibleForCoordinator() {
+            return false;
+        }
     }
 
     @Override
