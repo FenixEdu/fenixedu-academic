@@ -19,6 +19,8 @@
 package org.fenixedu.academic.service.services.person;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -31,15 +33,25 @@ import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.FenixEduAcademicConfiguration.ConfigurationProperties;
 import org.fenixedu.academic.service.services.exceptions.PasswordInitializationException;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.io.BaseEncoding;
 import com.google.gson.Gson;
 
 public class InitializePassword {
-
+    private static final Logger logger = LoggerFactory.getLogger(InitializePassword.class);
     private static final Client HTTP_CLIENT = ClientBuilder.newClient();
     private static final String ALREADY_INITIALIZED = "internationalRegistration.error.alreadyInitialized";
     private static final String ERROR_REGISTERING = "internationalRegistration.error.registering";
+    private static final Map<String, String> ERRORS = new HashMap<String, String>() {{
+        put("NOT_ASCII_PASSWORD", "internationalRegistration.error.not.ascii");
+        put("CIISTADMIN_KERBEROS_PASSWORD_TOO_SHORT", "internationalRegistration.error.too.short");
+        put("CIISTADMIN_KERBEROS_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES",
+                "internationalRegistration.error.not.enough.character.classes");
+        put("CIISTADMIN_KERBEROS_PASSWORD_CANNOT_REUSE", "internationalRegistration.error.old.password");
+        put("CIISTADMIN_PASSWORD_LOW_QUALITY", "internationalRegistration.error.low.quality");
+    }};
 
     public static void run(User user, String password) throws PasswordInitializationException {
         Form form = new Form().param("istid", user.getUsername()).param("password", password);
@@ -54,8 +66,8 @@ public class InitializePassword {
         }
 
         if (output == null || output.getErrno() != 0) {
-            String errorMessage = output.getErrno() == 1 ? ERROR_REGISTERING : ALREADY_INITIALIZED;
-            System.out.println(output.getErrno() + " : " + output.getError());
+            String errorMessage = ERRORS.getOrDefault(output.getError(), ERROR_REGISTERING);
+            logger.debug(output.getErrno() + " : " + output.getError());
             throw new PasswordInitializationException(errorMessage);
         }
 
