@@ -109,6 +109,13 @@ public class Phone extends Phone_Base {
         return getNumber();
     }
 
+    @Override
+    protected void checkRulesToDelete() {
+        if (getParty().getPartyContacts(getClass()).size() == 1) {
+            throw new DomainException("error.domain.contacts.Phone.cannot.remove.last.phone");
+        }
+    }
+
     public boolean hasNumber() {
         return getNumber() != null && !getNumber().isEmpty();
     }

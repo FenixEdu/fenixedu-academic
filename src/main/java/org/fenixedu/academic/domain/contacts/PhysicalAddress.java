@@ -138,11 +138,6 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         }
     }
 
-    @Override
-    public String getPresentationValue() {
-        return getAddress();
-    }
-
     public String getPostalCode() {
         final StringBuilder result = new StringBuilder();
         result.append(getAreaCode());

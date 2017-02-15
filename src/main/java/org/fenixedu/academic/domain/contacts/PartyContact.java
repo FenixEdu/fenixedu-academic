@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.PersonInformationLog;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.PhoneUtil;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
@@ -176,7 +177,9 @@ public abstract class PartyContact extends PartyContact_Base {
         setDefaultContactInformation(defaultContact);
     }
 
-    public abstract String getPresentationValue();
+    public String getPresentationValue() {
+        return PhoneUtil.resolve(this);
+    }
 
     public boolean isDefault() {
         return hasDefaultContactValue() && getDefaultContact().booleanValue();
@@ -526,4 +529,5 @@ public abstract class PartyContact extends PartyContact_Base {
     private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
         return ContactRoot.getInstance().getPartyContactsSet().stream().filter((type)::isInstance).collect(Collectors.toSet());
     }
+
 }
