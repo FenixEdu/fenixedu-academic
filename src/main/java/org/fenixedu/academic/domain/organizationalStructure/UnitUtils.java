@@ -22,6 +22,7 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -197,7 +198,8 @@ public class UnitUtils {
         throw new DomainException("error.unitUtils.unit.full.path.has.more.than.one.parent");
     }
 
-    public static StringBuilder getUnitFullPathName(final Unit unit, final List<AccountabilityTypeEnum> validAccountabilityTypes) {
+    public static StringBuilder getUnitFullPathName(final Unit unit,
+            final List<AccountabilityTypeEnum> validAccountabilityTypes) {
         if (unit == readEarthUnit()) {
             return new StringBuilder(0);
         }
@@ -214,18 +216,26 @@ public class UnitUtils {
         throw new DomainException("error.unitUtils.unit.full.path.has.more.than.one.parent");
     }
 
-    public static List<Unit> readExternalUnitsByNameAndTypesStartingAtEarth(final String unitName, final List<PartyTypeEnum> types) {
+    public static List<Unit> readExternalUnitsByNameAndTypesStartingAtEarth(final String unitName,
+            final List<PartyTypeEnum> types) {
         if (unitName == null) {
             return Collections.emptyList();
         }
-        final String nameToSearch = unitName.replaceAll("%", ".*").toLowerCase();
+
+        final String nameToSearch = Normalizer.normalize(unitName.replaceAll("%", ".*").toLowerCase(), Normalizer.Form.NFD)
+                .replaceAll("\\s", " ").replaceAll("[^\\p{ASCII}]", "");
+
         final List<Unit> result = new ArrayList<Unit>();
         for (final UnitName name : Bennu.getInstance().getUnitNameSet()) {
-            if (name.getName().toLowerCase().matches(nameToSearch) && name.getIsExternalUnit()
-                    && types.contains(name.getUnit().getType())) {
+
+            final String current = Normalizer.normalize(name.getName().toLowerCase(), Normalizer.Form.NFD).replaceAll("\\s", " ")
+                    .replaceAll("[^\\p{ASCII}]", "");
+
+            if (current.matches(nameToSearch) && name.getIsExternalUnit() && types.contains(name.getUnit().getType())) {
                 result.add(name.getUnit());
             }
         }
+
         return result;
     }
 
