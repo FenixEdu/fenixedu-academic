@@ -62,6 +62,7 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsDismissal;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.EctsAndWeightProviderRegistry;
 import org.fenixedu.academic.domain.studentCurriculum.EnrolmentWrapper;
@@ -83,6 +84,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Sets;
 
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 
@@ -1355,6 +1358,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
 
         return result;
+    }
+    
+    @Override
+    public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
+        return Sets.newHashSet(this);
     }
 
     @Override

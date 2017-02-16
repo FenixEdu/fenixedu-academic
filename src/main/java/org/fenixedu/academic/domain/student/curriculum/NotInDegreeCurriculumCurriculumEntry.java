@@ -19,13 +19,17 @@
 package org.fenixedu.academic.domain.student.curriculum;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import com.google.common.collect.Sets;
 
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
@@ -48,6 +52,11 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     @Override
     public BigDecimal getEctsCreditsForCurriculum() {
         return BigDecimal.valueOf(getEnrolment().getEctsCredits());
+    }
+
+    @Override
+    public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
+        return Sets.newHashSet(getEnrolment());
     }
 
     @Override

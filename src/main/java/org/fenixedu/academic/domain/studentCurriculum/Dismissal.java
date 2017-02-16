@@ -50,6 +50,8 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.collect.Sets;
+
 public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     public Dismissal() {
@@ -324,6 +326,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     public String getGradeValue() {
         return getGrade().getValue();
+    }
+
+    @Override
+    public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
+        return Sets.newHashSet(this);
     }
 
     public Double getWeigth() {

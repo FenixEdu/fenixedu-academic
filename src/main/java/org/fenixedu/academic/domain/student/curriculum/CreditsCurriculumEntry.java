@@ -19,11 +19,20 @@
 package org.fenixedu.academic.domain.student.curriculum;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.joda.time.DateTime;
 
+import com.google.common.collect.Sets;
+
 public abstract class CreditsCurriculumEntry extends CurriculumEntry {
+
+    @Override
+    public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
+        return Sets.newHashSet();
+    }
 
     @Override
     public BigDecimal getWeigthForCurriculum() {

@@ -20,12 +20,14 @@ package org.fenixedu.academic.domain.student.curriculum;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.Set;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -166,6 +168,8 @@ public interface ICurriculumEntry {
     Grade getGrade();
 
     String getGradeValue();
+
+    Set<CurriculumLine> getCurriculumLinesForCurriculum();
 
     BigDecimal getWeigthForCurriculum();
 

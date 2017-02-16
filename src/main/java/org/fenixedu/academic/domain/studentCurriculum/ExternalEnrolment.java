@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
@@ -211,7 +212,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     @Override
     final public YearMonthDay getApprovementDate() {
-        return getEvaluationDate() == null && hasExecutionPeriod() ? getExecutionPeriod().getEndDateYearMonthDay() : getEvaluationDate();
+        return getEvaluationDate() == null && hasExecutionPeriod() ? getExecutionPeriod()
+                .getEndDateYearMonthDay() : getEvaluationDate();
     }
 
     @Override
@@ -278,6 +280,12 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     @Override
     final public BigDecimal getEctsCreditsForCurriculum() {
         return BigDecimal.valueOf(getEctsCredits());
+    }
+
+    @Override
+    public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
+        return getEnrolmentWrappersSet().stream().flatMap(i -> i.getCredits().getDismissalsSet().stream())
+                .collect(Collectors.toSet());
     }
 
     @Override
