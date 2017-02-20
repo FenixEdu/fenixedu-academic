@@ -3217,6 +3217,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 Boolean isExtraCurricular;
                 Boolean isFirstTime;
                 Double weigth;
+                DateTime annulmentDate;
             }
 
                 class EnrolmentInOptionalCurricularCourse extends Enrolment {

@@ -1749,12 +1749,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public void annul() {
         setEnrollmentState(EnrollmentState.ANNULED);
+        setAnnulmentDate(new DateTime());
     }
 
     public void activate() {
         if (!isActive()) {
             final Grade finalGrade = getGrade();
             setEnrollmentState(finalGrade.isEmpty() ? EnrollmentState.ENROLLED : finalGrade.getEnrolmentState());
+            setAnnulmentDate(null);
         }
     }
 
