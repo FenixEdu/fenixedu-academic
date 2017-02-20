@@ -64,6 +64,10 @@
         		<fr:property name="columns" value="80"/>
         		<fr:property name="rows" value="10"/>
     		</fr:slot>
+			<fr:slot name="discussedWithoutRules" key="label.thesis.evaluate.discussion.date" layout="null-as-label">
+				<fr:property name="label" value="-"/>
+				<fr:property name="subLayout" value="dataDependent"/>
+			</fr:slot>
 		</fr:schema>
      	<fr:layout name="tabular">
         	<fr:property name="classes" value="tstyle5 tdtop thlight thright mtop05"/>
