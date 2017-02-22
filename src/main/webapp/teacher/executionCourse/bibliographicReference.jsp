@@ -123,7 +123,7 @@
             <logic:greaterThan name="referencesSize" value="1">
                 <p>
                     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-                    <html:link page="/manageBibliographicReference .do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+                    <html:link page="/manageBibliographicReference.do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
                         <bean:message key="message.sortRecommendedBibliography"/>
                     </html:link>
                 </p>
