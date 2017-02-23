@@ -626,9 +626,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                             .getAcademicIntervalFromResumedString(getAcademicInterval()));
 
             if (calendarPeriod.intValue() == 0) {
+                final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
                 result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
-                if (semester == 1) {
-                    result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
+                if (semester == 1 && examPeriod != null) {
+                    result[1] = examPeriod.getStart();
                 }
             } else if (calendarPeriod.intValue() == 1) {
                 final OccupationPeriod occupationPeriod =
@@ -639,8 +640,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 final OccupationPeriod occupationPeriod =
                         semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
                                 .getPeriodExamsSecondSemester();
+                final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
                 result[0] = occupationPeriod.getStart();
-                result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
+                result[1] = examPeriod != null ? examPeriod.getStart() : null;
             }
         }
 
@@ -662,9 +664,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                             .getAcademicIntervalFromResumedString(getAcademicInterval()));
 
             if (calendarPeriod.intValue() == 0) {
+                final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
                 result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
-                if (semester == 1) {
-                    result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
+                if (semester == 1 && examPeriod != null) {
+                    result[1] = examPeriod.getEnd();
                 }
             } else if (calendarPeriod.intValue() == 1) {
                 final OccupationPeriod occupationPeriod =
@@ -675,8 +678,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 final OccupationPeriod occupationPeriod =
                         semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
                                 .getPeriodExamsSecondSemester();
+                final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
                 result[0] = occupationPeriod.getEnd();
-                result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
+                result[1] = examPeriod != null ? examPeriod.getEnd() : null;
             }
         }
 
