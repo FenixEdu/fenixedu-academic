@@ -33,13 +33,17 @@ public class DetailSummaryElement implements Serializable {
     String executionPeriodName;
     String departmentName;
     String siglas;
+    BigDecimal givenLessons;
     BigDecimal givenSummaries;
+    BigDecimal givenSummariesPercentage;
     BigDecimal givenNotTaughtSummaries;
+    BigDecimal givenNotTaughtSummariesPercentage;
     String teacherId;
     String teacherEmail;
 
     public DetailSummaryElement(String teacherName, String executionCourseName, String teacherId, String teacherEmail,
-            String categoryName, BigDecimal givenSummaries, BigDecimal givenNotTaughtSummaries, String siglas) {
+            String categoryName, BigDecimal givenSummaries, BigDecimal givenNotTaughtSummaries, String siglas,
+            BigDecimal givenLessons, BigDecimal givenSummariesPercentage, BigDecimal givenNotTaughtSummariesPercentage) {
 
         setExecutionCourseName(executionCourseName);
         setTeacherName(teacherName);
@@ -47,8 +51,11 @@ public class DetailSummaryElement implements Serializable {
         setTeacherEmail(teacherEmail);
         setCategoryName(categoryName);
         setSiglas(siglas);
+        setGivenLessons(givenLessons);
         setGivenSummaries(givenSummaries);
+        setGivenSummariesPercentage(givenSummariesPercentage);
         setGivenNotTaughtSummaries(givenNotTaughtSummaries);
+        setGivenNotTaughtSummariesPercentage(givenNotTaughtSummariesPercentage);
     }
 
     public String getTeacherEmail() {
@@ -107,6 +114,14 @@ public class DetailSummaryElement implements Serializable {
         this.siglas = siglas;
     }
 
+    public BigDecimal getGivenLessons() {
+        return givenLessons;
+    }
+
+    public void setGivenLessons(BigDecimal givenLessons) {
+        this.givenLessons = givenLessons;
+    }
+
     public BigDecimal getGivenSummaries() {
         return givenSummaries;
     }
@@ -115,12 +130,28 @@ public class DetailSummaryElement implements Serializable {
         this.givenSummaries = givenSummaries;
     }
 
+    public BigDecimal getGivenSummariesPercentage() {
+        return givenSummariesPercentage;
+    }
+
+    public void setGivenSummariesPercentage(BigDecimal givenSummariesPercentage) {
+        this.givenSummariesPercentage = givenSummariesPercentage;
+    }
+
     public void setGivenNotTaughtSummaries(BigDecimal givenNotTaughtSummaries) {
         this.givenNotTaughtSummaries = givenNotTaughtSummaries;
     }
 
     public BigDecimal getGivenNotTaughtSummaries() {
         return givenNotTaughtSummaries;
+    }
+
+    public BigDecimal getGivenNotTaughtSummariesPercentage() {
+        return givenNotTaughtSummariesPercentage;
+    }
+
+    public void setGivenNotTaughtSummariesPercentage(BigDecimal givenNotTaughtSummariesPercentage) {
+        this.givenNotTaughtSummariesPercentage = givenNotTaughtSummariesPercentage;
     }
 
     public String getTeacherId() {
