@@ -169,7 +169,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public YearMonthDay calculateConclusionDate() {
-        return getCurriculumGroup().calculateConclusionDate();
+        return getCurriculumForConclusion().getLastApprovementDate();
     }
 
     public YearMonthDay getCalculatedConclusionDate() {
@@ -204,7 +204,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         if (isConclusionProcessed()) {
             return getCurriculumGroup().getConclusionYear();
         }
-        
+
         return getCalculatedConclusionYear();
     }
 
@@ -237,7 +237,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public double calculateCredits() {
-        return getCurriculumGroup().calculateCreditsConcluded();
+        return getCurriculumForConclusion().getSumEctsCredits().doubleValue();
     }
 
     public double getCalculatedEctsCredits() {

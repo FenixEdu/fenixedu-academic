@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
+import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -484,6 +485,11 @@ public class Curriculum implements Serializable, ICurriculum {
     @Override
     public Set<ICurriculumEntry> getCurricularYearEntries() {
         return curricularYearEntries;
+    }
+
+    @Override
+    public YearMonthDay getLastApprovementDate() {
+        return getCurricularYearEntries().stream().map(i -> i.getApprovementDate()).max(YearMonthDay::compareTo).orElse(null);
     }
 
     @Deprecated

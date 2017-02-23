@@ -24,12 +24,15 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.joda.time.YearMonthDay;
 
 public interface ICurriculum {
 
     abstract public Collection<ICurriculumEntry> getCurriculumEntries();
 
     abstract public Set<ICurriculumEntry> getCurricularYearEntries();
+
+    abstract public YearMonthDay getLastApprovementDate();
 
     abstract public Grade getRawGrade();
 
