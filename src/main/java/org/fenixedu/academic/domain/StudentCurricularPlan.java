@@ -292,9 +292,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         checkRulesToDelete();
 
-        setDegreeCurricularPlan(null);
-        setBranch(null);
-
         for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
             ;
         }
@@ -313,6 +310,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             ;
         }
 
+        setDegreeCurricularPlan(null);
+        setBranch(null);
         setStudent(null);
         setRootDomainObject(null);
 
@@ -2680,6 +2679,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         } else {
             setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    public boolean isAllowedToDelete() {
+        final Set<StudentCurricularPlan> plans = getRegistration().getStudentCurricularPlansSet();
+        return isAllowedToManageEnrolments() && plans.size() > 1;
     }
 
     public boolean isAllowedToManageEnrolments() {

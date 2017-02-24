@@ -166,6 +166,11 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         delete();
     }
 
+    protected void deleteRecursiveEmptyChildGroups() {
+        getChildCurriculumGroups().forEach(CurriculumGroup::deleteRecursiveEmptyChildGroups);
+        deleteRecursive();
+    }
+
     @Override
     final public StringBuilder print(String tabs) {
         final StringBuilder builder = new StringBuilder();

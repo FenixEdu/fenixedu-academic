@@ -267,33 +267,50 @@
 			<fr:property name="bundle(createAccountingEvents)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="contextRelative(createAccountingEvents)" value="true"/>      	
 			<fr:property name="order(createAccountingEvents)" value="3"/>
-			<fr:property name="visibleIf(createAccountingEvents)" value="allowedToManageAccountingEvents"/>      					
-	
+			<fr:property name="visibleIf(createAccountingEvents)" value="allowedToManageAccountingEvents"/>
+			
+			<fr:property name="linkFormat(edit)" value="/manageStudentCurricularPlans.do?method=prepareEdit&amp;studentCurricularPlanId=${externalId}" />
+			<fr:property name="key(edit)" value="label.edit"/>
+			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="contextRelative(edit)" value="true"/>      	
+			<fr:property name="visibleIf(edit)" value="allowedToManageEnrolments" />
+			<fr:property name="order(edit)" value="4"/>
+			
+			<fr:property name="linkFormat(delete)" value="/manageStudentCurricularPlans.do?method=delete&amp;studentCurricularPlanId=${externalId}" />
+			<fr:property name="key(delete)" value="label.delete"/>
+			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="confirmationKey(delete)" value="message.manageStudentCurricularPlans.delete.confirmation"/>
+			<fr:property name="confirmationBundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="contextRelative(delete)" value="true"/>      	
+			<fr:property name="visibleIf(delete)" value="allowedToDelete" />
+			<fr:property name="order(delete)" value="5"/>
+			
 		</fr:layout>
 	</fr:view>
 	
 	<p class="mtop0">
+
 		<span>
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="externalId">
-				<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>
-		<span class="pleft1">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link page="/studentExternalEnrolments.do?method=manageExternalEnrolments" paramId="registrationId" paramName="registration" paramProperty="externalId">
 				<bean:message key="label.student.manageExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
 		</span>
+
+		<span class="pleft1">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="externalId">
+				<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</span>
 		
-	<%--	<logic:equal name="registration" property="active" value="true">
-			<span class="pleft1">
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link action="/addNewStudentCurricularPlan.do?method=prepareCreateSCP" paramName="registration" paramProperty="externalId" paramId="registrationId">
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.registration.newSCP" />
-				</html:link>
-			</span>
-		</logic:equal> --%>
+		<span class="pleft1">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/manageStudentCurricularPlans.do?method=prepareCreate" paramId="registrationId" paramName="registration" paramProperty="externalId">
+				<bean:message key="link.manageStudentCurricularPlans.create" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</span>
+		
 	</p>
 	
 	</academic:allowed>
