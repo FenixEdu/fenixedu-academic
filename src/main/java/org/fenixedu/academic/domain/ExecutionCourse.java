@@ -1596,6 +1596,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void setBibliographicReferencesOrder(List<BibliographicReference> references) {
+        for(int i = 0; i < references.size(); i++) {
+            references.get(i).setReferenceOrder(i);
+        }
     }
 
     public List<BibliographicReference> getMainBibliographicReferences() {
