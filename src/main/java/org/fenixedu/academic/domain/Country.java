@@ -41,7 +41,9 @@ public class Country extends Country_Base {
     public static Comparator<Country> COMPARATOR_BY_NAME = new Comparator<Country>() {
         @Override
         public int compare(Country leftCountry, Country rightCountry) {
-            int comparationResult = Collator.getInstance().compare(leftCountry.getName(), rightCountry.getName());
+            int comparationResult =
+                    Collator.getInstance().compare(leftCountry.getLocalizedName().getContent(),
+                            rightCountry.getLocalizedName().getContent());
             return (comparationResult == 0) ? leftCountry.getExternalId().compareTo(rightCountry.getExternalId()) : comparationResult;
         }
     };
