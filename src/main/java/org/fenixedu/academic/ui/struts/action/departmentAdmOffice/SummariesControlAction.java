@@ -220,10 +220,14 @@ public final class SummariesControlAction extends FenixDispatchAction {
         LocalDate today = new LocalDate();
         LocalDate oneWeekBeforeToday = today.minusDays(8);
         for (Professorship professorship : professorships) {
+            BigDecimal lessonsGiven = EMPTY;
             BigDecimal summariesGiven = EMPTY;
+            BigDecimal summariesGivenPercentage = EMPTY;
             BigDecimal notTaughtSummaries = EMPTY;
+            BigDecimal notTaughtSummariesPercentage = EMPTY;
             if (professorship.belongsToExecutionPeriod(executionSemester)) {
                 for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
+                    lessonsGiven = lessonsGiven.add(BigDecimal.valueOf(shift.getNumberOfLessonInstances()));
 
                     // Get the number of summaries given
                     summariesGiven = getSummariesGiven(professorship, shift, summariesGiven, oneWeekBeforeToday);
@@ -232,6 +236,12 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 }
                 summariesGiven = summariesGiven.setScale(1, RoundingMode.HALF_UP);
                 notTaughtSummaries = notTaughtSummaries.setScale(1, RoundingMode.HALF_UP);
+
+                summariesGivenPercentage = summariesGiven.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
+                        .multiply(BigDecimal.valueOf(100));
+
+                notTaughtSummariesPercentage = notTaughtSummaries.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
+                        .multiply(BigDecimal.valueOf(100));
 
                 Teacher teacher = professorship.getTeacher();
                 String categoryName = null;
@@ -253,7 +263,8 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 DetailSummaryElement listElementDTO =
                         new DetailSummaryElement(professorship.getPerson().getName(), professorship.getExecutionCourse()
                                 .getNome(), teacher != null ? teacher.getTeacherId() : null, teacherEmail, categoryName,
-                                summariesGiven, notTaughtSummaries, siglas);
+                                summariesGiven, notTaughtSummaries, siglas, lessonsGiven, summariesGivenPercentage,
+                                notTaughtSummariesPercentage);
 
                 allListElements.add(listElementDTO);
             }
@@ -601,11 +612,11 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 sheet.addCell(null);
                 sheet.addCell(null);
                 sheet.addCell(null);
-//                sheet.addCell(detailSummaryElement.getDeclaredLessons());
+                sheet.addCell(detailSummaryElement.getGivenLessons());
                 sheet.addCell(detailSummaryElement.getGivenSummaries());
-//                sheet.addCell(detailSummaryElement.getGivenSummariesPercentage());
+                sheet.addCell(detailSummaryElement.getGivenSummariesPercentage());
                 sheet.addCell(detailSummaryElement.getGivenNotTaughtSummaries());
-//                sheet.addCell(detailSummaryElement.getGivenNotTaughtSummariesPercentage());
+                sheet.addCell(detailSummaryElement.getGivenNotTaughtSummariesPercentage());
 
                 sheet.addCell(detailSummaryElement.getTeacherName());
                 sheet.addCell(detailSummaryElement.getTeacherId());
@@ -622,11 +633,11 @@ public final class SummariesControlAction extends FenixDispatchAction {
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.semester"));
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.department"), 10000);
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.course"), 10000);
-//        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons"));
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons.summaries"));
-//        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons.summaries.percentage"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons.summaries.percentage"));
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons.notTaught.summaries"));
-//        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons.notTaught.summaries.percentage"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.lessons.notTaught.summaries.percentage"));
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.professorName"), 10000);
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.professorUsername"));
         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.excel.professorEmail"), 10000);
