@@ -112,23 +112,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         generateCheckSum();
     }
 
-    @Override
-    public void setExamDateYearMonthDay(YearMonthDay evaluationDateYearMonthDay) {
-        if (evaluationDateYearMonthDay != null) {
-            final Enrolment enrolment = getEnrolment();
-            final Thesis thesis = enrolment.getThesis();
-            if (thesis != null) {
-                DateTime newDateTime = evaluationDateYearMonthDay.toDateTimeAtMidnight();
-                final DateTime dateTime = thesis.getDiscussed();
-                if (dateTime != null) {
-                    newDateTime = newDateTime.withHourOfDay(dateTime.getHourOfDay());
-                    newDateTime = newDateTime.withMinuteOfHour(dateTime.getMinuteOfHour());
-                }
-                thesis.setDiscussed(newDateTime);
-            }
-        }
-        super.setExamDateYearMonthDay(evaluationDateYearMonthDay);
-    }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
             EvaluationSeason season, Person responsibleFor, Grade grade, Date availableDate, Date examDate, DateTime when) {

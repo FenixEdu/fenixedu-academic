@@ -72,17 +72,22 @@ import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.signals.DomainObjectEvent;
 import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 import com.google.common.collect.Lists;
 
 public class Thesis extends Thesis_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(Thesis.class);
 
     public static final String PROPOSAL_APPROVED_SIGNAL = "academic.Thesis.proposal.approved";
 
@@ -272,6 +277,28 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.invalid.discussed.date.time");
         }
         super.setDiscussed(discussed);
+    }
+
+    public void setDiscussedWithoutRules(DateTime discussed) {
+        logger.info("Thesis {} of {} was changed from {} to {} by user {}", getExternalId(), getStudent().getNumber(),
+                getDiscussed() == null ? "null" : getDiscussed().toString(), discussed == null ? "null" : discussed.toString(),
+                Authenticate.getUser() == null ? "-" : Authenticate.getUser().getUsername());
+        super.setDiscussed(discussed);
+    }
+
+    public boolean hasInconsistentDates() {
+        if (getDiscussed() == null) {
+            return false;
+        }
+        return (getCreation() != null && getDiscussed().isBefore(getCreation())) || (getEnrolment() != null && getDiscussed()
+                .isBefore(getEnrolment().getCreationDateDateTime()));
+    }
+
+    /**
+     * This only exists since it is being used with fr:edit
+     */
+    public DateTime getDiscussedWithoutRules() {
+        return super.getDiscussed();
     }
 
     @Override

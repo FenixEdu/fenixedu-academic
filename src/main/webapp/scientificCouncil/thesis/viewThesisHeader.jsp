@@ -96,6 +96,22 @@
 						</tr>
 						<tr>
 							<td>
+								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.evaluate.enrolment.date"/>:
+							</td>
+							<td>
+								<%= thesis.getEnrolment() == null ? "" : thesis.getEnrolment().getCreationDateDateTime().toString("yyyy-MM-dd HH:mm") %>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.evaluate.creation.date"/>:
+							</td>
+							<td>
+								<%= thesis.getCreation() == null ? "" : thesis.getCreation().toString("yyyy-MM-dd HH:mm") %>
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.evaluate.discussion.date"/>:
 							</td>
 							<td>
@@ -118,6 +134,13 @@
 								<%= thesis.getEvaluation() == null ? "" : thesis.getEvaluation().toString("yyyy-MM-dd HH:mm")  %>
 							</td>							
 						</tr>
+                        <%  if (thesis.hasInconsistentDates()) { %>
+                        <tr>
+                            <td colspan="2" class="warning1">
+                                <bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.evaluate.illegal.dates" />
+                            </td>
+                        </tr>
+                        <% } %>
 					</table>
 				</div> 
 			</div>
