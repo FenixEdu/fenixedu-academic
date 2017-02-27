@@ -19,12 +19,14 @@
 package org.fenixedu.academic.task;
 
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
 import org.fenixedu.academic.util.InvocationResult;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.commons.i18n.I18N;
@@ -56,20 +58,29 @@ public class CreateGratuityEvents extends CronTask {
         generateGratuityEvent(studentCurricularPlan, executionYear);
     }
 
-    @Atomic(mode = TxMode.WRITE)
     private void generateGratuityEvent(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
         try {
             final AccountingEventsManager manager = new AccountingEventsManager();
 
-            final InvocationResult result = manager.createGratuityEvent(studentCurricularPlan, executionYear);
+            final InvocationResult result = getInvocationResult(studentCurricularPlan, executionYear, manager);
 
             if (result.isSuccess()) {
                 GratuityEvent_TOTAL_CREATED++;
+            } else {
+                taskLog("no success for student %s %s with errors : %s %n", studentCurricularPlan.getStudent().getNumber(),
+                        studentCurricularPlan.getExternalId(),
+                        result.getMessages().stream().map(LabelFormatter::toString).collect(Collectors.joining(",")));
             }
         } catch (Exception e) {
             taskLog("Exception on student curricular plan with oid : %s\n", studentCurricularPlan.getExternalId());
             e.printStackTrace(getTaskLogWriter());
         }
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private InvocationResult getInvocationResult(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear,
+            AccountingEventsManager manager) {
+        return manager.createGratuityEvent(studentCurricularPlan, executionYear);
     }
 
     @Override
