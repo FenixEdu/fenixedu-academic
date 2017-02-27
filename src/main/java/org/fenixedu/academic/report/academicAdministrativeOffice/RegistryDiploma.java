@@ -244,11 +244,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         result.add(programConclusion.getName().getContent(getLocale()));
 
         if (!programConclusion.getDescription().isEmpty()) {
-            result.add(BundleUtil.getString(Bundle.ACADEMIC, "label.of.both"));
+            result.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.both"));
             result.add(programConclusion.getDescription().getContent(getLocale()));
         }
 
-        result.add(BundleUtil.getString(Bundle.ACADEMIC, "label.in"));
+        result.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in"));
         result.add(getDocumentRequest().getDegreeName(year));
 
         return Joiner.on(" ").join(result);
