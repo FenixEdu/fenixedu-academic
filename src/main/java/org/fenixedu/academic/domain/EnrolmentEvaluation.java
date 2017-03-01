@@ -48,7 +48,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
         @Override
         public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
-            return o1.getWhenDateTime().compareTo(o2.getWhenDateTime());
+            final DateTime o1When = o1.getWhenDateTime();
+            final DateTime o2When = o2.getWhenDateTime();
+
+            if (o1When != null && o2When != null) {
+                return o1When.compareTo(o2When);
+            }
+
+            return o1When == null ? -1 : 1;
         }
 
     };
@@ -115,8 +122,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
 
-    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
-            EvaluationSeason season, Person responsibleFor, Grade grade, Date availableDate, Date examDate, DateTime when) {
+    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState, EvaluationSeason season,
+            Person responsibleFor, Grade grade, Date availableDate, Date examDate, DateTime when) {
         this(enrolment, enrolmentEvaluationState, season, responsibleFor, grade, availableDate, examDate);
         setWhenDateTime(when);
     }
@@ -232,8 +239,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             return;
         }
 
-        throw new DomainException("error.EnrolmentEvaluation.registration.with.invalid.state", getRegistration().getNumber()
-                .toString());
+        throw new DomainException("error.EnrolmentEvaluation.registration.with.invalid.state",
+                getRegistration().getNumber().toString());
     }
 
     private ExecutionYear getExecutionYear() {
@@ -354,8 +361,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
     protected void generateCheckSum() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getExamDateYearMonthDay() != null ? getExamDateYearMonthDay().toString() : "").append(
-                getGradeValue());
+        stringBuilder.append(getExamDateYearMonthDay() != null ? getExamDateYearMonthDay().toString() : "")
+                .append(getGradeValue());
         stringBuilder.append(getEvaluationSeason().getExternalId());
         stringBuilder.append(getEnrolment().getStudentCurricularPlan().getRegistration().getNumber());
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
