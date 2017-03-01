@@ -233,7 +233,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
             return getCurriculumGroup().getCreditsConcluded();
         }
 
-        return getCurriculumGroup().calculateCreditsConcluded();
+        return calculateCredits();
     }
 
     public double calculateCredits() {
