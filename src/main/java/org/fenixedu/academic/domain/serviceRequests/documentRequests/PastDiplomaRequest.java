@@ -89,18 +89,9 @@ public class PastDiplomaRequest extends PastDiplomaRequest_Base {
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         if (academicServiceRequestBean.isToProcess()) {
-            checkForDuplicate();
-
             if (!getRegistration().isRegistrationConclusionProcessed()) {
                 throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
             }
-        }
-    }
-
-    private void checkForDuplicate() {
-        final PastDiplomaRequest diplomaRequest = getRegistration().getPastDiplomaRequest();
-        if (diplomaRequest != null && diplomaRequest != this) {
-            throw new DomainException("DiplomaRequest.diploma.already.requested");
         }
     }
 

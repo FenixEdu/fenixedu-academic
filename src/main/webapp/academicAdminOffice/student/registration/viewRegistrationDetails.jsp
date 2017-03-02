@@ -435,11 +435,12 @@
                         <fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(deliver)" value="deliver"/>
                         <fr:property name="visibleIf(deliver)" value="deliveredSituationAccepted"/>
-                        
-    
-                        <fr:property name="linkFormat(code)" value="/academicServiceRequestsManagement.do?method=generateRegistryCode&amp;academicServiceRequestId=${externalId}"/>
-                        <fr:property name="key(code)" value="label.generateRegistryCode"/>
-                        <fr:property name="visibleIf(code)" value="canGenerateRegistryCode"/>
+
+
+                        <fr:property name="linkFormat(code)"
+                                     value="/academicServiceRequestsManagement.do?method=addToRectorateBatch&amp;academicServiceRequestId=${externalId}"/>
+                        <fr:property name="key(code)" value="label.addToRectorateBatch"/>
+                        <fr:property name="visibleIf(code)" value="manuallySentToRectorate"/>
     
                         <fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${externalId}"/>
                         <fr:property name="key(conclude)" value="conclude"/>

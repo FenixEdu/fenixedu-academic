@@ -643,7 +643,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
      * Special condition for pre-existing documents that are able to consume a
      * registry number.
      */
-    public boolean isCanGenerateRegistryCode() {
+    public boolean isManuallySentToRectorate() {
         return false;
     }
 

@@ -29,6 +29,11 @@
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="org.fenixedu.academic.domain.ExecutionYear.view"/>
 	</slot>
+	<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="values"/>
+		<property name="format" value="${code}"/>
+	</slot>
 	<slot name="freeProcessed" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />
 	<slot name="language.displayName" key="language" />
 </schema>
@@ -370,6 +375,14 @@
 		<property name="rawSlotName" value="branch"/>
 	</slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
+	<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="menu-select">
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.documentRequests.AssociateRegistryDiplomaCodesProvider"/>
+		<property name="format" value="${description}"/>
+		<property name="sortBy" value="code"/>
+		<property name="nullOptionHidden" value="false"/>
+		<property name="nullOptionKey" value="label.documentRequestsManagement.searchDocumentRequests.generate.code" />
+		<property name="nullOptionBundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+	</slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE_WithBranch.AdditionalInformation.view"
@@ -383,6 +396,11 @@
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan" />
 	<slot name="branch" key="label.branch"/>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate" />
+	<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="null-as-label">
+		<property name="label" value=" - "/>
+		<property name="subLayout" value="values"/>
+		<property name="format" value="${description}"/>
+	</slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation"
@@ -395,6 +413,15 @@
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
+    <slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="menu-select">
+        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.documentRequests.AssociateRegistryDiplomaCodesProvider"/>
+        <property name="format" value="${description}"/>
+        <property name="sortBy" value="code"/>
+        <property name="nullOptionHidden" value="false"/>
+		<property name="key" value="true"/>
+		<property name="defaultText" value="label.documentRequestsManagement.searchDocumentRequests.generate.code"/>
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation.view"
@@ -407,6 +434,11 @@
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved" />
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan" />
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate" />
+	<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="null-as-label">
+		<property name="label" value=" - "/>
+		<property name="subLayout" value="values"/>
+		<property name="format" value="${description}"/>
+	</slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation"
@@ -633,9 +665,12 @@
     name="DocumentRequestCreateBean.REGISTRY_DIPLOMA_REQUEST.AdditionalInformation"
     type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean"
     bundle="ACADEMIC_OFFICE_RESOURCES">
-    <slot name="givenNames" key="label.givenNames"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+    <slot name="givenNames" key="label.givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
     <slot name="familyNames" key="label.familyNames" />
+</schema>
+
+<schema name="registryCodeDescription" type="org.fenixedu.academic.domain.serviceRequests.RegistryCode">
+	<slot name="description"/>
 </schema>
 
 <schema
@@ -654,6 +689,13 @@
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
     <slot name="familyNames" key="label.familyNames"
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code"
+		  layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.documentRequests.AssociateRegistryDiplomaCodesProvider"/>
+		<property name="format" value="${description}"/>
+		<property name="sortBy" value="code"/>
+		<property name="nullOptionHidden" value="true"/>
+	</slot>
 </schema>
 
 <schema
@@ -662,6 +704,33 @@
     bundle="ACADEMIC_OFFICE_RESOURCES">
     <slot name="givenNames" key="label.givenNames" />
     <slot name="familyNames" key="label.familyNames" />
+	<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="null-as-label">
+		<property name="label" value=" - "/>
+		<property name="subLayout" value="values"/>
+		<property name="format" value="${code}"/>
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.DIPLOMA_REQUEST.AdditionalInformation"
+		type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="menu-select">
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.documentRequests.AssociateRegistryDiplomaCodesProvider"/>
+		<property name="format" value="${description}"/>
+		<property name="sortBy" value="code"/>
+		<property name="nullOptionHidden" value="false"/>
+		<property name="key" value="true"/>
+		<property name="defaultText" value="label.documentRequestsManagement.searchDocumentRequests.generate.code"/>
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.DIPLOMA_REQUEST.AdditionalInformation.view"
+		type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" layout="null-as-label">
+	<property name="label" value=" - "/>
+	<property name="subLayout" value="values"/>
+	<property name="format" value="${code}"/>
+</slot>
 </schema>
 
 <schema name="Enrolment.view-curricular-course-name-only" 

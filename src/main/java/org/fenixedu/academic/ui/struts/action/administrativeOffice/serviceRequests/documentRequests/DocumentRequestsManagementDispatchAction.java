@@ -26,11 +26,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jvstm.cps.ConsistencyException;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import jvstm.cps.ConsistencyException;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -248,6 +248,12 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward executionPeriodToCreateDocumentChangedPostBack(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         return createDocumentRequestPostback(mapping, request);
+    }
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return super.execute(mapping, actionForm, request, response);
     }
 
     public ActionForward viewDocumentRequestToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

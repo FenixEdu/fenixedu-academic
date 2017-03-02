@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituat
 import org.fenixedu.academic.domain.serviceRequests.IProgramConclusionRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.student.MobilityProgram;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
@@ -81,6 +80,11 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         super.setExceptionalConclusionDate(bean.getExceptionalConclusionDate());
         super.setLanguage(bean.getLanguage());
         super.setProgramConclusion(bean.getProgramConclusion());
+        RegistryCode code = bean.getRegistryCode();
+        if (code != null) {
+            setRegistryCode(code);
+        }
+
     }
 
     @Override
@@ -107,59 +111,58 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
             throw new DomainException("DegreeFinalizationCertificateRequest.missing.language");
         }
 
-        if (bean.getProgramConclusion() == null) {
+        ProgramConclusion programConclusion = bean.getProgramConclusion();
+
+        if (programConclusion == null) {
             throw new DomainException("error.program.conclusion.empty");
         }
 
-        checkSpecificConditions(bean.getProgramConclusion());
+        checkSpecificConditions(programConclusion, bean.getRegistryCode());
     }
 
-    protected void checkSpecificConditions(ProgramConclusion programConclusion) {
-        if (!programConclusion.getGraduationTitle().isEmpty()) {
-            checkForDiplomaRequest(getRegistration(), programConclusion);
-        } else {
-            if (!programConclusion.isConclusionProcessed(getRegistration())) {
-                throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
+    protected void checkSpecificConditions(ProgramConclusion programConclusion, RegistryCode code) {
+        if (code != null) {
+            RegistryDiplomaRequest registryDiploma = code.getRegistryDiploma();
+            if (registryDiploma == null) {
+                throw new DomainException("DegreeFinalizationCertificateRequest.registration.incorrectRegistryCode");
+            } else if (registryDiploma.isPayedUponCreation() && registryDiploma.getEvent() != null && !registryDiploma.getEvent()
+                    .isPayed()) {
+                throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedRegistryRequest");
+            }
+        } else if (!programConclusion.getGraduationTitle().isEmpty()) {
+            if (!getRegistration().getRegistryDiplomaRequests(programConclusion).isEmpty()) {
+                throw new DomainException("DegreeFinalizationCertificateRequest.registration.mandatoryExistingCode");
+            } else {
+                final Set<DiplomaRequest> diplomaRequests = getRegistration().getDiplomaRequests(programConclusion);
+                if (diplomaRequests.isEmpty()) {
+                    if (getRegistration().getPastDiplomaRequest() == null) {
+                        throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
+                    }
+                } else if (diplomaRequests.stream()
+                        .anyMatch(dr -> dr.isPayedUponCreation() && dr.getEvent() != null && !dr.getEvent().isPayed())) {
+                    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedDiplomaRequest");
+                }
             }
         }
-    }
 
-    static public void checkForDiplomaRequest(final Registration registration, final ProgramConclusion programConclusion) {
-        final DiplomaRequest diplomaRequest = registration.getDiplomaRequest(programConclusion);
-        final PastDiplomaRequest pastDiplomaRequest = registration.getPastDiplomaRequest();
-        if (diplomaRequest == null) {
-            if (pastDiplomaRequest == null) {
-                checkForRegistryRequest(registration, programConclusion);
-            }
-        } else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.getEvent() != null
-                && !diplomaRequest.getEvent().isPayed()) {
-            throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedDiplomaRequest");
+        if (programConclusion.getGraduationTitle().isEmpty() && !programConclusion.isConclusionProcessed(getRegistration())) {
+            throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
         }
-    }
 
-    static public void checkForRegistryRequest(final Registration registration, final ProgramConclusion programConclusion) {
-        final RegistryDiplomaRequest registryRequest = registration.getRegistryDiplomaRequest(programConclusion);
-        if (registryRequest == null) {
-            throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutRegistryRequest");
-        } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null
-                && !registryRequest.getEvent().isPayed()) {
-            throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedRegistryRequest");
-        }
     }
 
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         if (academicServiceRequestBean.isToProcess()) {
-            checkSpecificConditions(getProgramConclusion());
+            checkSpecificConditions(getProgramConclusion(), getRegistryCode());
 
             if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
             }
 
-            final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
-            if (registryRequest != null
-                    && registryRequest.getAcademicServiceRequestSituationType().compareTo(
-                            AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) < 0) {
+            final RegistryDiplomaRequest registryRequest = getRegistryCode().getRegistryDiploma();
+            if (registryRequest != null && registryRequest.getAcademicServiceRequestSituationType()
+                    .compareTo(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) < 0) {
                 throw new DomainException(
                         "DegreeFinalizationCertificateRequest.registration.registryRequestIsNotSentToExternalEntity");
             }
@@ -328,12 +331,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     public boolean hasPersonalInfo() {
         return true;
-    }
-
-    @Override
-    public RegistryCode getRegistryCode() {
-        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
-        return registry != null ? registry.getRegistryCode() : null;
     }
 
     @Atomic

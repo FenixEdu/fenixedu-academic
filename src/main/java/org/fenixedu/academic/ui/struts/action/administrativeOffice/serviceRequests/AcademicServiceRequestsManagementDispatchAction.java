@@ -462,12 +462,12 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     @Atomic
-    public ActionForward generateRegistryCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward addToRectorateBatch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
         DiplomaRequest diploma = (DiplomaRequest) academicServiceRequest;
-        diploma.generateRegistryCode();
-        addActionMessage(request, "rectorate.code.generated.with.success");
+        diploma.addToRectorateBatch();
+        addActionMessage(request, "request.added.to.batch.with.success");
         request.setAttribute("registration", academicServiceRequest.getRegistration());
         return mapping.findForward("viewRegistrationDetails");
     }

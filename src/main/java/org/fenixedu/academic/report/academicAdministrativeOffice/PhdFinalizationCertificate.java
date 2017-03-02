@@ -222,7 +222,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         if (phdIndividualProgramProcess.isBolonha() && phdIndividualProgramProcess.hasRegistryDiplomaRequest()) {
             return String.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                     "message.phd.finalization.info.thesis.grade.approved.by.jury.registry.diploma"), thesisFinalGrade,
-                    phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode().getCode());
+                    getDocumentRequest().getRegistryCode().getCode());
         } else {
             return String.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                     "message.phd.finalization.info.thesis.grade.approved.by.jury"), thesisFinalGrade);

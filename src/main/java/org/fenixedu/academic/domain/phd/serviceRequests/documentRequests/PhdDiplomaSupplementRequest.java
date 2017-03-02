@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceReques
 import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import org.fenixedu.academic.domain.student.Registration;
@@ -69,6 +70,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
         super.init(bean);
         checkParameters(bean);
 
+        setRegistryCode(bean.getRegistryCode());
         getPhdIndividualProgramProcess().getPerson().getProfile().changeName(bean.getGivenNames(), bean.getFamilyNames(), null);
     }
 
@@ -82,14 +84,13 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
             throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
         }
 
-        PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
-        if (!process.hasRegistryDiplomaRequest() && process.hasDiplomaRequest()) {
+        RegistryCode code = bean.getRegistryCode();
+        if (code == null || (code.getPhdRegistryDiploma() == null && code.getPhdDiploma() == null)) {
             throw new DomainException(
                     "error.diplomaSupplementRequest.cannotAskForSupplementWithoutEitherRegistryDiplomaOrDiplomaRequest");
         }
 
-        final PhdDiplomaSupplementRequest supplement = process.getDiplomaSupplementRequest();
-        if (supplement != null && supplement != this) {
+        if(code.getPhdDiplomaSupplement() != null) {
             throw new DomainException("error.diplomaSupplementRequest.alreadyRequested");
         }
     }
@@ -153,10 +154,6 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
             if (!getPhdIndividualProgramProcess().isConcluded()) {
                 throw new PhdDomainOperationException(
                         "error.phdDiplomaSupplement.registration.not.submited.to.conclusion.process");
-            }
-
-            if (getRegistryCode() == null) {
-                getRegistryDiplomaRequest().getRegistryCode().addDocumentRequest(this);
             }
 
             if (getLastGeneratedDocument() == null) {

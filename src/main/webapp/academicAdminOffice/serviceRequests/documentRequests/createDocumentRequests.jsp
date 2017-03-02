@@ -87,7 +87,7 @@
 	<fr:form action="/documentRequestsManagement.do?method=viewDocumentRequestToCreate">
 	
 	<p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
-	
+
 		<!-- Choose Document Request Type -->
 		<bean:define id="schema" name="documentRequestCreateBean" property="schema" type="java.lang.String"/>
 		<fr:edit id="documentRequestTypeEdit" name="documentRequestCreateBean" schema="<%=schema%>" type="org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean">

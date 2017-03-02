@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.accounting.events.serviceRequests.RegistryDi
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
@@ -50,12 +51,17 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
         this();
         super.init(bean);
         checkParameters(bean);
+
         setProgramConclusion(bean.getProgramConclusion());
+
+        RegistryCode code = getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+        setRegistryCode(code);
 
         if (isPayedUponCreation() && !isFree()) {
             RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
         }
         if (bean.getRegistration().isBolonha()) {
+            bean.setRegistryCode(code);
             setDiplomaSupplement(new DiplomaSupplementRequest(bean));
         }
     }
@@ -78,9 +84,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
         if (getRegistration().getDiplomaRequest(bean.getProgramConclusion()) != null) {
             throw new DomainException("error.registryDiploma.alreadyHasDiplomaRequest");
         }
-        if (getRegistration().getRegistryDiplomaRequest(bean.getProgramConclusion()) != null) {
-            throw new DomainException("error.registryDiploma.alreadyRequested");
-        }
+
         if (hasPersonalInfo() && hasMissingPersonalInfo()) {
             throw new DomainException("AcademicServiceRequest.has.missing.personal.info");
         }
@@ -144,10 +148,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
             if (isPayable() && !isPayed()) {
                 throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }
-            if (getRegistryCode() == null) {
-                getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-                getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-            }
+            getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
             if (getLastGeneratedDocument() == null) {
                 generateDocument();
             }
