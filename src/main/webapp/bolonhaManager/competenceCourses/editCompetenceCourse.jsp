@@ -91,6 +91,8 @@
             <f:selectItem itemValue="" itemLabel="#{enumerationBundle['dropDown.Default']}"/>
             <f:selectItem itemValue="REGULAR" itemLabel="#{enumerationBundle['REGULAR']}"/>
             <f:selectItem itemValue="DISSERTATION" itemLabel="#{enumerationBundle['DISSERTATION']}"/>
+            <f:selectItem itemValue="PROJECT_WORK" itemLabel="#{enumerationBundle['PROJECT_WORK']}"/>
+            <f:selectItem itemValue="INTERNSHIP" itemLabel="#{enumerationBundle['INTERNSHIP']}"/>
         </fc:selectOneMenu>
         <h:outputText value="</p>" escape="false"/>
         

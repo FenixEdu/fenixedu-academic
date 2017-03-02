@@ -19,5 +19,5 @@
 package org.fenixedu.academic.domain;
 
 public enum CompetenceCourseType {
-    REGULAR, DISSERTATION
+    REGULAR, DISSERTATION, PROJECT_WORK, INTERNSHIP
 }
