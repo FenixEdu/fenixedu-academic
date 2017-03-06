@@ -57,7 +57,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br>
  *         Created on May 5, 2006, 10:42:00 AM
  * 
  * @author pcma

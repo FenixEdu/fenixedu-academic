@@ -1100,7 +1100,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-     * @use {@link #getEnrolmentsByAcademicInterval(AcademicInterval)}
+     * @deprecated {@link #getEnrolmentsByAcademicInterval(AcademicInterval)}
      */
     @Deprecated
     public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionSemester executionSemester) {

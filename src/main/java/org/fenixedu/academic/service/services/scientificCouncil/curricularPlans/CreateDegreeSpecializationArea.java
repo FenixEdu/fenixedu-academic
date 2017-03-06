@@ -34,8 +34,9 @@ public class CreateDegreeSpecializationArea {
     /**
      * Must ensure "REQUIRED" slots are filled
      * 
-     * @param degree
-     * @param date
+     * @param degreeOfficialPublication
+     * @param area
+     * @param name
      * @throws FenixServiceException
      */
     @Atomic

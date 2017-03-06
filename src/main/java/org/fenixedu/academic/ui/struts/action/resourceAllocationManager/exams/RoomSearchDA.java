@@ -53,7 +53,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author Ana & Ricardo
+ * @author Ana &amp; Ricardo
  */
 @StrutsFunctionality(app = RAMEvaluationsApp.class, path = "room-search", titleKey = "link.exams.searchAvailableRooms")
 @Mapping(module = "resourceAllocationManager", path = "/roomSearch", formBean = "roomSearchForm")

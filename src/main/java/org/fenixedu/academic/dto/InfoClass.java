@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  */
 public class InfoClass extends InfoObject {
 

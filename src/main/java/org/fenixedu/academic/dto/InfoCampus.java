@@ -30,7 +30,7 @@ public class InfoCampus extends InfoObject {
     }
 
     /**
-     * @param integer
+     * @param campusId
      */
     public InfoCampus(String campusId) {
         super(campusId);

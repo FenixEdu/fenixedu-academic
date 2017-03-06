@@ -174,7 +174,7 @@ public class ProfessorshipController {
      *
      * @param department
      * @param period
-     * @return
+     * @param response
      * @throws IOException
      */
     @RequestMapping(method = GET, value = "/download")

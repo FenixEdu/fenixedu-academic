@@ -70,8 +70,8 @@ import com.google.common.base.Predicates;
  * 
  * <p>
  * Must configure the following forwards: intro (common value: /candidacy/mainCandidacyProcess.jsp), prepare-create-new-process
- * (common value: /candidacy/createCandidacyPeriod.jsp; used schemas: <process_name>Bean.manage), prepare-edit-candidacy-period
- * (common value: /candidacy/editCandidacyPeriod.jsp; used schemas: <process_name>Bean.manage)
+ * (common value: /candidacy/createCandidacyPeriod.jsp; used schemas: Bean.manage), prepare-edit-candidacy-period
+ * (common value: /candidacy/editCandidacyPeriod.jsp; used schemas: Bean.manage)
  * 
  */
 

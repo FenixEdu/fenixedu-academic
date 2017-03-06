@@ -103,7 +103,6 @@ public class Coordinator extends Coordinator_Base {
      * 
      * @param operationType
      * @param personMakingAction
-     * @param arguments
      */
     public void makeAction(OperationType operationType, Person personMakingAction) {
         if (operationType.compareTo(OperationType.CHANGERESPONSIBLE_FALSE) == 0) {

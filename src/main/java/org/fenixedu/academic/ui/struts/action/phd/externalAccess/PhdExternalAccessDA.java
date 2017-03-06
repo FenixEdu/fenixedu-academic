@@ -61,9 +61,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * following format:
  * 
  * <pre>
- * - method1: 'prepare<Descriptor>'
- * - method2: '<descriptor>'
- * - method3: 'prepare<Descriptor>Invalid'
+ * - method1: 'prepare&lt;Descriptor&gt;'
+ * - method2: '&lt;descriptor&gt;'
+ * - method3: 'prepare&lt;Descriptor&gt;Invalid'
  * </pre>
  * 
  * Each new method will handle an operation in this page

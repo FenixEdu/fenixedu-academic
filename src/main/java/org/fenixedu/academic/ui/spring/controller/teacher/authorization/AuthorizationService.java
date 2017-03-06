@@ -292,7 +292,7 @@ public class AuthorizationService {
     /**
      * get the CSV sheet name when exporting existing teacher authorizations
      * 
-     * @param filter bean
+     * @param search bean
      * @return
      */
     public String getSheetName(SearchBean search) {

@@ -89,7 +89,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
      * possible full name, always visiting the first element of every list of
      * contexts on our way to the root course group.
      * 
-     * @return A string with one possible full name of this course group
+     * @param result builder for with one possible full name of this course group
+     * @param executionSemester
      */
     protected void getOneFullName(final StringBuilder result, final ExecutionSemester executionSemester) {
         final String selfName = getNameI18N(executionSemester).getContent();

@@ -43,7 +43,7 @@ import org.fenixedu.commons.i18n.LocalizedString;
 
 /**
  * 
- * @author Nuno Nunes & Joana Mota
+ * @author Nuno Nunes &amp; Joana Mota
  */
 public class DegreeType extends DegreeType_Base implements Comparable<DegreeType> {
 

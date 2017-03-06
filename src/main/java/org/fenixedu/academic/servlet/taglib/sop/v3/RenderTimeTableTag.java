@@ -310,7 +310,7 @@ public final class RenderTimeTableTag extends TagSupport {
     /**
      * Sets the type.
      *
-     * @param type
+     * @param timeTableType
      *            The type to set
      */
     public void setType(int timeTableType) {

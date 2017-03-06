@@ -138,7 +138,6 @@ public class JsfRenderUtils {
      * @param component
      * @param uiParameterList
      * @return
-     * @throws IOException
      */
     public static String getSubmitJavaScriptWithParameters(FacesContext context, UIComponent component,
             List<UIParameter> uiParameterList) {

@@ -93,9 +93,9 @@ public class Teacher extends Teacher_Base {
         super.setPerson(person);
     }
 
-    /***************************************************************************
+    /*
      * BUSINESS SERVICES *
-     **************************************************************************/
+     */
 
     public List<Professorship> responsibleFors() {
         final List<Professorship> result = new ArrayList<Professorship>();
@@ -247,9 +247,9 @@ public class Teacher extends Teacher_Base {
         });
     }
 
-    /***************************************************************************
+    /*
      * PRIVATE METHODS *
-     **************************************************************************/
+     * */
 
     public static Teacher readTeacherByUsername(final String userName) {
         final Person person = Person.readPersonByUsername(userName);

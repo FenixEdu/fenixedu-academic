@@ -30,7 +30,7 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  *
  */
 @Mapping(path = "/chooseContext", module = "resourceAllocationManager", functionality = ExecutionPeriodDA.class)

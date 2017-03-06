@@ -33,8 +33,8 @@ public class DeleteDegreeSpecializationArea {
     /**
      * Must ensure "REQUIRED" slots are filled
      * 
-     * @param degree
-     * @param date
+     * @param degreeOfficialPublication
+     * @param degreeSpecializationArea
      * @throws FenixServiceException
      */
     @Atomic

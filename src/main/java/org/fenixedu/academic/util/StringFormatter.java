@@ -184,7 +184,7 @@ public class StringFormatter {
 
     /**
      * Capitalizes a string that may contain whitespaces and special characters.
-     * This method uses <code>capitalizeWord</code> and <code>capitalizeWordWithSpecChars<code>.
+     * This method uses <code>capitalizeWord</code> and <code>capitalizeWordWithSpecChars</code>.
      * 
      * @param uglyDuckling
      *            the string to capitalize.

@@ -27,7 +27,7 @@ import org.fenixedu.academic.util.PeriodState;
 import pt.ist.fenixframework.DomainObject;
 
 /**
- * @author Nuno & Joana
+ * @author Nuno &amp; Joana
  */
 public class InfoExecutionPeriod extends InfoObject implements Comparable {
 

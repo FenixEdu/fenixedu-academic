@@ -51,7 +51,7 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  *
  */
 @StrutsFunctionality(app = RAMExecutionCoursesApp.class, path = "manage", titleKey = "link.management")

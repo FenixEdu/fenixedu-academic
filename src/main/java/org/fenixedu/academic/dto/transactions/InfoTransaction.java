@@ -70,7 +70,6 @@ public abstract class InfoTransaction extends InfoObject {
     }
 
     /**
-     * @param infoTransaction
      * @param transaction
      */
     protected void copyFromDomain(Transaction transaction) {

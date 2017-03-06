@@ -32,7 +32,7 @@ import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import pt.ist.fenixframework.Atomic;
 
 /**
- * @author LuisCruz & Sara Ribeiro
+ * @author LuisCruz &amp; Sara Ribeiro
  */
 public class ReadClassesByExecutionCourse {
 

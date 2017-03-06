@@ -94,8 +94,6 @@ public class FileLinkRenderer extends OutputRenderer {
     /**
      * Instead of specifying thr {@link #setText(String) text} property you can
      * specify a key, with this property, and a bundle with the {@link #setBundle(String) bundle}.
-     * 
-     * @property
      */
     public void setKey(String key) {
         this.key = key;
@@ -107,8 +105,6 @@ public class FileLinkRenderer extends OutputRenderer {
 
     /**
      * The bundle were the {@link #setKey(String) key} will be fetched.
-     * 
-     * @property
      */
     public void setBundle(String bundle) {
         this.bundle = bundle;

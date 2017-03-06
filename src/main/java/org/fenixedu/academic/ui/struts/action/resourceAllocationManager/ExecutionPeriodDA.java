@@ -70,7 +70,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import pt.ist.fenixframework.Atomic;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  */
 
 @StrutsFunctionality(app = RAMSchedulesApp.class, path = "manage", titleKey = "link.schedules.chooseContext")

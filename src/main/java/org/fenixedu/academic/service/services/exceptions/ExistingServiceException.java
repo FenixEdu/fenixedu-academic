@@ -20,7 +20,7 @@ package org.fenixedu.academic.service.services.exceptions;
 
 /**
  * 
- * @author Luis Cruz & Nuno Nunes
+ * @author Luis Cruz &amp; Nuno Nunes
  */
 
 public class ExistingServiceException extends FenixServiceException {

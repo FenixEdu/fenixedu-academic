@@ -58,7 +58,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  *
  */
 @Mapping(path = "/manageClasses", module = "resourceAllocationManager", formBean = "classForm",

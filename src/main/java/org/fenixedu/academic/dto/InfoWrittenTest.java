@@ -29,7 +29,7 @@ import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.EvaluationType;
 
 /**
- * @author Luis&Nuno
+ * @author Luis &amp; Nuno
  * 
  */
 public class InfoWrittenTest extends InfoWrittenEvaluation {
