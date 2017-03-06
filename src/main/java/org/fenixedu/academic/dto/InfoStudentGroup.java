@@ -132,7 +132,7 @@ public class InfoStudentGroup extends InfoObject {
     /**
      * Sets the infoGroupProperties.
      * 
-     * @param infoGroupProperties
+     * @param infoGrouping
      *            The infoGroupProperties to set
      */
     public void setInfoGrouping(InfoGrouping infoGrouping) {

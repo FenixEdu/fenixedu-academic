@@ -23,7 +23,6 @@ import org.fenixedu.bennu.core.annotation.GroupArgumentParser;
 
 /**
  * @deprecated
- *             Use {@link RoleArgument} instead.
  *
  */
 @Deprecated

@@ -55,8 +55,6 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
     /**
      * Chooses the bundle used when the label is interpreted as a resource
      * message.
-     * 
-     * @property
      */
     public void setBundle(String bundle) {
         this.bundle = bundle;
@@ -68,8 +66,6 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
 
     /**
      * Indicates if the label is a resource message.
-     * 
-     * @property
      */
     public void setKey(boolean key) {
         this.key = key;
@@ -83,8 +79,6 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
      * The label to use when a person is external. If this is not defined then
      * no label is shown in that case. By default the value of this property is
      * treated as a key to a resource message.
-     * 
-     * @property
      */
     public void setLabel(String label) {
         this.label = label;
@@ -96,8 +90,6 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
 
     /**
      * The css class to apply to the label.
-     * 
-     * @property
      */
     public void setLabelClass(String labelClass) {
         this.labelClass = labelClass;
@@ -109,8 +101,6 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
 
     /**
      * The css style to apply to the label.
-     * 
-     * @property
      */
     public void setLabelStyle(String labelStyle) {
         this.labelStyle = labelStyle;

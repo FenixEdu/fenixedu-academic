@@ -80,8 +80,8 @@ public class InfoLessonWrapper implements Comparable {
     /**
      * Sets the locked.
      * 
-     * @param locked
-     *            The locked to set
+     * @param locked The locked to set
+     * @param slotIndex slot index
      */
     public void setLocked(boolean locked, int slotIndex) {
         this.locked = locked;

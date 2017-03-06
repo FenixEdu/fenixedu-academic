@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 
 /**
- * Code Format: <numericPartOfIstId{6}><typeDigit{1}><controlDigits{2}>
+ * Code Format: numericPartOfIstId{6} - typeDigit{1} - controlDigits{2}
  */
 @Deprecated
 public class PersonRotationPaymentCodeGenerator extends PaymentCodeGenerator {

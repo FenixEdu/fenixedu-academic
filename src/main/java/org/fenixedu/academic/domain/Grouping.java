@@ -47,7 +47,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author joaosa & rmalo
+ * @author joaosa &amp; rmalo
  *
  */
 public class Grouping extends Grouping_Base {

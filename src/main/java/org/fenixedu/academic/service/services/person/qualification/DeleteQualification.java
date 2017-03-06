@@ -30,7 +30,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author João Fialho & Rita Ferreira
+ * @author João Fialho &amp; Rita Ferreira
  * 
  */
 public class DeleteQualification {

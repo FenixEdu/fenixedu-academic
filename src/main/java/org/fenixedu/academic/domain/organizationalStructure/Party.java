@@ -723,7 +723,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link #getDefaultWebAddressUrl()}
+     * @deprecated {@link #getDefaultWebAddressUrl()}
      */
     @Deprecated
     public String getWebAddress() {
@@ -731,7 +731,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link #setDefaultWebAddressUrl(String)}
+     * @deprecated {@link #setDefaultWebAddressUrl(String)}
      */
     @Deprecated
     public void setWebAddress(String webAddress) {
@@ -796,7 +796,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link #getDefaultPhoneNumber()}
+     * @deprecated {@link #getDefaultPhoneNumber()}
      */
     @Deprecated
     public String getPhone() {
@@ -804,7 +804,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link #setDefaultPhoneNumber(String)}
+     * @deprecated {@link #setDefaultPhoneNumber(String)}
      */
     @Deprecated
     public void setPhone(String phone) {
@@ -877,7 +877,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link getDefaultMobilePhoneNumber}
+     * @deprecated  {@link getDefaultMobilePhoneNumber}
      */
     @Deprecated
     public String getMobile() {
@@ -885,7 +885,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link setDefaultMobilePhoneNumber}
+     * @deprecated  {@link setDefaultMobilePhoneNumber}
      */
     @Deprecated
     public void setMobile(String mobile) {
@@ -974,7 +974,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link #getDefaultEmailAddressValue()}
+     * @deprecated  {@link #getDefaultEmailAddressValue()}
      */
     @Deprecated
     public String getEmail() {
@@ -982,7 +982,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @use {@link #setDefaultEmailAddressValue(String)}
+     * @deprecated {@link #setDefaultEmailAddressValue(String)}
      */
     @Deprecated
     public void setEmail(String email) {

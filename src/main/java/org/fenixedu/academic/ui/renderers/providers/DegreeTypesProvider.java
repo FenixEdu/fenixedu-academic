@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @deprecated Use {@link #DegreeTypeProvider}
+ * @deprecated Use {@link DegreeTypeProvider}
  */
 @Deprecated
 public class DegreeTypesProvider implements DataProvider {

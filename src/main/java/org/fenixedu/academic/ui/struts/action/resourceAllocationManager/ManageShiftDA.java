@@ -76,7 +76,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  *
  */
 @Mapping(path = "/manageShift", module = "resourceAllocationManager", input = "/manageShift.do?method=prepareEditShift",

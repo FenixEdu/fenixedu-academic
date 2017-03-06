@@ -34,7 +34,7 @@ import org.fenixedu.academic.util.State;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
- * This class contains all the information regarding a Reimbursement Guide. <br/>
+ * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a>
  */

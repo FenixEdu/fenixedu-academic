@@ -32,7 +32,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  */
 public class SchoolClass extends SchoolClass_Base {
 

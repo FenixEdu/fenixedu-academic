@@ -40,7 +40,7 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
 /**
- * @author Nuno Nunes & David Santos
+ * @author Nuno Nunes &amp; David Santos
  */
 public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRenderer {
 

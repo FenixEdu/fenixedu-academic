@@ -57,9 +57,10 @@ public class TimeTableRenderer {
      * 
      * @param timeTable
      * @param lessonSlotContentRenderer
-     * @param integer
-     * @param integer1
-     * @param integer2
+     * @param slotSize
+     * @param startHour
+     * @param endHour
+     * @param colorPicker
      */
     public TimeTableRenderer(TimeTable timeTable, LessonSlotContentRenderer lessonSlotContentRenderer, Integer slotSize,
             Integer startHour, Integer endHour, ColorPicker colorPicker) {

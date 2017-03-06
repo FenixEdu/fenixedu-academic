@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionForward;
 
 /**
  * 
- * @author Luis Cruz & Nuno Nunes & João Mota
+ * @author Luis Cruz &amp; Nuno Nunes &amp; João Mota
  */
 
 public class NonExistingActionException extends FenixActionException {

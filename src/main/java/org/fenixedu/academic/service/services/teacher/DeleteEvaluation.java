@@ -34,8 +34,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class DeleteEvaluation {
 
     /**
-     * @param Integer
-     *            executionCourseID used in filtering
+     * @param executionCourseID not used
+     * @param evaluationID evaluationID used in filtering
      *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
     protected void run(String executionCourseID, String evaluationID) throws FenixServiceException {

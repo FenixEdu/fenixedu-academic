@@ -30,9 +30,9 @@ import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.RequestUtils;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
- * <br/>
- * <br/>
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br>
+ * <br>
+ * <br>
  *         Created on 16:13:53,23/Set/2005
  * @version $Id: EnumDefineTagLib.java 45653 2010-01-19 18:39:54Z
  *          ist148357@IST.UTL.PT $

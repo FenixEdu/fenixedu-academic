@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br>
  *         Created on May 8, 2006, 4:13:15 PM
  * 
  */
@@ -96,7 +96,6 @@ public class EmailIdentityRenderer extends OutputRenderer {
 
     /**
      * 
-     * @property
      */
     public void setCollapsed(boolean collapsed) {
         this.collapsed = collapsed;

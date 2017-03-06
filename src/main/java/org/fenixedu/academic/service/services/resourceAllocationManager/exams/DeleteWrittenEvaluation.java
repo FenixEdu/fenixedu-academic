@@ -36,9 +36,9 @@ import pt.ist.fenixframework.FenixFramework;
 public class DeleteWrittenEvaluation {
 
     /**
-     * @param Integer
-     *            executionCourseOID used in filtering
-     *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
+     * @param executionCourseOID not used
+     * @param writtenEvaluationOID used in filtering
+     *
      */
     protected void run(String executionCourseOID, String writtenEvaluationOID) throws FenixServiceException {
         final WrittenEvaluation writtenEvaluationToDelete =

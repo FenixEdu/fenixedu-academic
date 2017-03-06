@@ -158,7 +158,7 @@ public class ProfessorshipService {
     /**
      * get the CSV sheet name when exporting existing teacher professorships
      *
-     * @param filter bean
+     * @param search bean
      * @return
      */
     public String getSheetName(SearchBean search) {

@@ -29,9 +29,9 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
- * <br/>
- * <br/>
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br>
+ * <br>
+ * <br>
  *         Created on 17:31:53,23/Nov/2005
  * @version $Id$
  */

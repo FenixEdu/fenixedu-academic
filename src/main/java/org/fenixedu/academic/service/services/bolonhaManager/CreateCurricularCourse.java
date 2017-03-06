@@ -63,7 +63,7 @@ public class CreateCurricularCourse {
     /**
      * For Optional Curricular Courses
      * 
-     * @param createOptionalCurricularCourseArgs
+     * @param curricularCourseArgs
      * @throws FenixServiceException
      */
     @Atomic

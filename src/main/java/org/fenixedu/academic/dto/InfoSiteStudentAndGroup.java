@@ -25,7 +25,7 @@ package org.fenixedu.academic.dto;
 import java.util.Comparator;
 
 /**
- * @author joaosa & rmalo
+ * @author joaosa &amp; rmalo
  * 
  */
 public class InfoSiteStudentAndGroup extends DataTranferObject {
@@ -54,7 +54,7 @@ public class InfoSiteStudentAndGroup extends DataTranferObject {
     }
 
     /**
-     * @param InfoSiteStudentInformation
+     * @param infoSiteStudentInformation
      */
     public void setInfoSiteStudentInformation(InfoSiteStudentInformation infoSiteStudentInformation) {
         this.infoSiteStudentInformation = infoSiteStudentInformation;
@@ -68,7 +68,7 @@ public class InfoSiteStudentAndGroup extends DataTranferObject {
     }
 
     /**
-     * @param InfoStudentGroup
+     * @param infoStudentGroup
      */
     public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
         this.infoStudentGroup = infoStudentGroup;

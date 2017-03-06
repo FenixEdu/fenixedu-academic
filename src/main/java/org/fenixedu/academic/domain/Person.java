@@ -495,9 +495,7 @@ public class Person extends Person_Base {
      * 
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
      * 
-     * 
-     * @return true if the person have been deleted, false otherwise
-     */
+     **/
     @Override
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());

@@ -34,7 +34,7 @@ import org.apache.commons.validator.ValidatorAction;
 import org.apache.struts.action.ActionMessages;
 
 /**
- * @author TJBF & PFON
+ * @author TJBF &amp; PFON
  * 
  *         To change the template for this generated type comment go to Window -
  *         Preferences - Java - Code Generation - Code and Comments

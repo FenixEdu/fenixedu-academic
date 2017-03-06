@@ -1677,6 +1677,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Has special season in given semester if is enroled in special season in
      * previous semester
+     * @param executionSemester
      * 
      */
     public boolean hasSpecialSeasonFor(final ExecutionSemester executionSemester) {
@@ -1896,6 +1897,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Note that this method must not use the ExtraCurriculumGroup due to the
      * pre-Bolonha SCPs
+     * @return extra curricular enrolments
      */
     final public Collection<Enrolment> getExtraCurricularEnrolments() {
         final Collection<Enrolment> result = new ArrayList<Enrolment>();
@@ -1976,6 +1978,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Note that this method must not use the ExtraCurriculumGroup due to the
      * pre-Bolonha SCPs
+     * @return get propaedeutic enrolments
      */
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
         final Collection<Enrolment> result = new ArrayList<Enrolment>();

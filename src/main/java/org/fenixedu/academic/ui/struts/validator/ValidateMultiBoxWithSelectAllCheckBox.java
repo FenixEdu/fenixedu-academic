@@ -33,7 +33,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  * 
  */
 public class ValidateMultiBoxWithSelectAllCheckBox {

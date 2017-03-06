@@ -65,7 +65,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  *
  */
 public class ContextUtils {

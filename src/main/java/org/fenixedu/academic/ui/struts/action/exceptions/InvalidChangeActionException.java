@@ -26,7 +26,7 @@ package org.fenixedu.academic.ui.struts.action.exceptions;
 
 /**
  * 
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  */
 
 public class InvalidChangeActionException extends FenixActionException {

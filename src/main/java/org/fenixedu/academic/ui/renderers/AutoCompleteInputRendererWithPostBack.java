@@ -48,7 +48,6 @@ public class AutoCompleteInputRendererWithPostBack extends AutoCompleteInputRend
      * Allows to choose the postback destination. If this property is not
      * specified the default "postback" destination is used.
      * 
-     * @property
      */
     public void setDestination(String destination) {
         this.destination = destination;

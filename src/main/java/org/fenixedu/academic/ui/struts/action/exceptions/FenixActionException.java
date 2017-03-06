@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionForward;
 
 /**
  * 
- * @author Luis Cruz & Nuno Nunes & João Mota
+ * @author Luis Cruz &amp; Nuno Nunes &amp; João Mota
  */
 
 // Note: When upgrading to struts 1.1 rc1 or above change

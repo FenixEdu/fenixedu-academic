@@ -37,7 +37,7 @@ import pt.ist.fenixframework.FenixFramework;
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  * 
- * @return List containing all InfoExecutionDegrees, corresponding to Degree
+ * running this returns List containing all InfoExecutionDegrees, corresponding to Degree
  *         Curricular Plan
  * 
  */

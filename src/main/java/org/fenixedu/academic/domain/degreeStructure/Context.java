@@ -333,7 +333,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     /**
      * 
-     * Beware of {@link #contains(ExecutionSemester, ExecutionSemester)} method because it only checks for intersection, not a
+     * Beware of {@link #containsInterval(ExecutionInterval, ExecutionInterval)} method because it only checks for intersection, not a
      * full
      * contains.
      * 

@@ -50,7 +50,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author Luis Crus & Sara Ribeiro
+ * @author Luis Crus &amp; Sara Ribeiro
  */
 @StrutsFunctionality(app = ManagerExecutionsApp.class, path = "manage-periods", titleKey = "title.execution.periods")
 @Mapping(module = "manager", path = "/manageExecutionPeriods")

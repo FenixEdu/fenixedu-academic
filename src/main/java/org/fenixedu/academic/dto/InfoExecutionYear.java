@@ -24,7 +24,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.util.PeriodState;
 
 /**
- * @author Nuno & Joana
+ * @author Nuno &amp; Joana
  */
 public class InfoExecutionYear extends InfoObject {
 

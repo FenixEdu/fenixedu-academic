@@ -60,7 +60,7 @@ public class InfoSiteStudentGroup extends DataTranferObject {
     }
 
     /**
-     * @param list
+     * @param infoStudentGroup
      */
     public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
         this.infoStudentGroup = infoStudentGroup;
@@ -74,7 +74,7 @@ public class InfoSiteStudentGroup extends DataTranferObject {
     }
 
     /**
-     * @param list
+     * @param nrOfElements
      */
     public void setNrOfElements(Object nrOfElements) {
         this.nrOfElements = nrOfElements;
@@ -88,7 +88,7 @@ public class InfoSiteStudentGroup extends DataTranferObject {
     }
 
     /**
-     * @param list
+     * @param infoSiteStudentInformationList
      */
     public void setInfoSiteStudentInformationList(List infoSiteStudentInformationList) {
         this.infoSiteStudentInformationList = infoSiteStudentInformationList;

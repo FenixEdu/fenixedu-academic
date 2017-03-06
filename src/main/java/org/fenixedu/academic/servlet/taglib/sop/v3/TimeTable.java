@@ -54,6 +54,10 @@ public class TimeTable {
      *
      * @param numberOfHours
      * @param numberOfDays
+     * @param minimumHour
+     * @param slotSize
+     * @param locale
+     * @param pageContext
      */
     public TimeTable(Integer numberOfHours, Integer numberOfDays, Calendar minimumHour, Integer slotSize, Locale locale,
             PageContext pageContext) {
@@ -77,6 +81,8 @@ public class TimeTable {
      * Method getDiaSemanaLabel.
      *
      * @param day
+     * @param locale
+     * @param pageContext
      */
     private String getDiaSemanaLabel(int day, Locale locale, PageContext pageContext) {
         switch (day) {
@@ -109,7 +115,7 @@ public class TimeTable {
     /**
      * This method will break infoLesson in minute slots.
      *
-     * @param infoLesson
+     * @param infoShowOccupation
      */
     public void addLesson(InfoShowOccupation infoShowOccupation) {
 
@@ -137,7 +143,7 @@ public class TimeTable {
     /**
      * Method getInfoLessonWrapper.
      *
-     * @param infoLesson
+     * @param infoShowOccupation
      */
     private InfoLessonWrapper getInfoLessonWrapper(InfoShowOccupation infoShowOccupation) {
         InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap.get(infoShowOccupation);
@@ -151,7 +157,7 @@ public class TimeTable {
     /**
      * Method getTimeTableSlot.
      *
-     * @param dayIndex
+     * @param day
      * @param hourIndex
      * @return TimeTableSlot
      */
@@ -203,7 +209,7 @@ public class TimeTable {
     /**
      * Method getMinutes.
      *
-     * @param calendar
+     * @param hms hour minute second
      * @return int
      */
     public static int getMinutes(final HourMinuteSecond hms) {
