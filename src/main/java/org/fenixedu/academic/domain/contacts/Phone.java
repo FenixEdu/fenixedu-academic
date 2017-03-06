@@ -28,6 +28,10 @@ import org.joda.time.DateTime;
 
 public class Phone extends Phone_Base {
 
+    static {
+        setResolver(Phone.class, (pc) -> ((Phone) pc).getNumber());
+    }
+
     public static Comparator<Phone> COMPARATOR_BY_NUMBER = new Comparator<Phone>() {
         @Override
         public int compare(Phone contact, Phone otherContact) {
@@ -102,11 +106,6 @@ public class Phone extends Phone_Base {
             setLastModifiedDate(new DateTime());
         }
 
-    }
-
-    @Override
-    public String getPresentationValue() {
-        return getNumber();
     }
 
     public boolean hasNumber() {

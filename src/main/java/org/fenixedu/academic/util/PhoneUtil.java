@@ -20,6 +20,7 @@ package org.fenixedu.academic.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -30,51 +31,99 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 public class PhoneUtil {
-    private static final Collection<PhoneNumberType> FIXED_NUMBERS;
-    private static final Collection<PhoneNumberType> MOBILE_NUMBERS;
 
-    private static final int ALAMEDA_PHONE = 218416000;
-    private static final int TAGUS_PHONE_000 = 214233200;
-    private static final int TAGUS_PHONE_100 = 214233500;
+    public interface PhoneNumberHandler {
 
-    static {
-        FIXED_NUMBERS = new ArrayList<PhoneNumberType>();
-        FIXED_NUMBERS.add(PhoneNumberType.VOIP);
-        FIXED_NUMBERS.add(PhoneNumberType.FIXED_LINE);
+        public PhoneNumber parsePhoneNumber(String number);
 
-        MOBILE_NUMBERS = new ArrayList<PhoneNumberType>();
-        MOBILE_NUMBERS.add(PhoneNumberType.MOBILE);
+        public boolean shouldReceiveValidationCall(String number);
+
+        public boolean shouldReceiveValidationSMS(String number);
+
+        public boolean isMobileNumber(String number);
+
+        public boolean isFixedNumber(String number);
+
+        public String getInternationalFormatNumber(String numberText);
+
     }
 
-    private static final PhoneNumberUtil PHONE_UTIL = PhoneNumberUtil.getInstance();
-    private static final String COUNTRY_CODE = "PT";
+    public static class AcademicPhoneNumberHandler implements PhoneNumberHandler {
+
+        protected static final PhoneNumberUtil PHONE_UTIL = PhoneNumberUtil.getInstance();
+
+        private static final Collection<PhoneNumberType> MOBILE_NUMBERS = Collections.singletonList(PhoneNumberType.MOBILE);
+        private static final Collection<PhoneNumberType> FIXED_NUMBERS = new ArrayList<PhoneNumberType>();
+
+        static {
+            FIXED_NUMBERS.add(PhoneNumberType.VOIP);
+            FIXED_NUMBERS.add(PhoneNumberType.FIXED_LINE);
+        }
+
+        private PhoneNumberType getPhoneNumberType(PhoneNumber phoneNumber) {
+            return phoneNumber != null ? PHONE_UTIL.getNumberType(phoneNumber) : null;
+        }
+
+        @Override
+        public boolean isMobileNumber(String numberText) {
+            return isType(getPhoneNumberType(parsePhoneNumber(numberText)), MOBILE_NUMBERS);
+        }
+
+        @Override
+        public boolean isFixedNumber(String numberText) {
+            return isType(getPhoneNumberType(parsePhoneNumber(numberText)), FIXED_NUMBERS);
+        }
+
+        private boolean isType(PhoneNumberType type, Collection<PhoneNumberType> types) {
+            return types.contains(type);
+        }
+
+        @Override
+        public boolean shouldReceiveValidationSMS(String number) {
+            return isMobileNumber(number);
+        }
+
+        @Override
+        public boolean shouldReceiveValidationCall(String number) {
+            return isFixedNumber(number);
+        }
+
+        @Override
+        public PhoneNumber parsePhoneNumber(String numberText) {
+            if (!StringUtils.isEmpty(numberText)) {
+
+                if (numberText.startsWith("00")) {
+                    numberText = numberText.replaceFirst("00", "+");
+                }
+
+                try {
+                    final PhoneNumber phoneNumber = PHONE_UTIL.parse(numberText, null);
+                    if (PHONE_UTIL.isValidNumber(phoneNumber)) {
+                        return phoneNumber;
+                    }
+                } catch (NumberParseException e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String getInternationalFormatNumber(String numberText) {
+            final PhoneNumber phoneNumber = parsePhoneNumber(numberText);
+            return phoneNumber != null ? PHONE_UTIL.format(phoneNumber, PhoneNumberFormat.E164) : null;
+        }
+
+    }
+
+    private static PhoneNumberHandler PHONE_NUMBER_HANDLER = new AcademicPhoneNumberHandler();
 
     public static PhoneNumber getPhoneNumber(String numberText) {
-        if (!StringUtils.isEmpty(numberText)) {
-
-            if (numberText.startsWith("00")) {
-                numberText = numberText.replaceFirst("00", "+");
-            }
-
-            if (isExtension(numberText)) {
-                numberText = getExternalNumberForExtension(numberText);
-            }
-
-            try {
-                final PhoneNumber phoneNumber = PHONE_UTIL.parse(numberText, COUNTRY_CODE);
-                if (PHONE_UTIL.isValidNumber(phoneNumber)) {
-                    return phoneNumber;
-                }
-            } catch (NumberParseException e) {
-                System.out.println("O n�mero n�o � v�lido:" + e);
-                return null;
-            }
-        }
-        return null;
+        return PHONE_NUMBER_HANDLER.parsePhoneNumber(numberText);
     }
 
-    private static PhoneNumberType getPhoneNumberType(PhoneNumber phoneNumber) {
-        return phoneNumber != null ? PHONE_UTIL.getNumberType(phoneNumber) : null;
+    public static String getInternacionalFormatNumber(String numberText) {
+        return PHONE_NUMBER_HANDLER.getInternationalFormatNumber(numberText);
     }
 
     public static boolean isValidNumber(String numberText) {
@@ -82,65 +131,18 @@ public class PhoneUtil {
         return phoneNumber != null;
     }
 
-    private static boolean isType(PhoneNumberType type, Collection<PhoneNumberType> types) {
-        return types.contains(type);
-    }
-
     public static boolean isMobileNumber(String numberText) {
-        return isType(getPhoneNumberType(getPhoneNumber(numberText)), MOBILE_NUMBERS);
-    }
-
-    public static boolean isPortugueseNumber(String numberText) {
-        final PhoneNumber phoneNumber = getPhoneNumber(numberText);
-        if (phoneNumber != null) {
-            return phoneNumber.getCountryCode() == 351;
-        }
-        return false;
+        return PHONE_NUMBER_HANDLER.isMobileNumber(numberText);
     }
 
     public static boolean isFixedNumber(String numberText) {
-        return isType(getPhoneNumberType(getPhoneNumber(numberText)), FIXED_NUMBERS);
+        return PHONE_NUMBER_HANDLER.isFixedNumber(numberText);
     }
 
-    public static String getExternalNumberForExtension(String numberText) {
-        int extension;
-        try {
-            extension = Integer.parseInt(numberText);
-        } catch (NumberFormatException nfe) {
-            return null;
-        }
-        if (extension >= 1000 && extension <= 3999) {
-            return new Integer(ALAMEDA_PHONE + extension).toString();
-        } else {
-            if (extension >= 5000 && extension <= 5099) {
-                extension -= 5000;
-                return new Integer(TAGUS_PHONE_000 + extension).toString();
-            } else if (extension >= 5100 && extension <= 5199) {
-                extension -= 5100;
-                return new Integer(TAGUS_PHONE_100 + extension).toString();
-            }
-        }
-        return null;
-    }
-
-    public static String getInternacionalFormatNumber(String numberText) {
-
-        if (isExtension(numberText)) {
-            numberText = getExternalNumberForExtension(numberText);
-        }
-
-        final PhoneNumber phoneNumber = getPhoneNumber(numberText);
-        if (phoneNumber != null) {
-            return PHONE_UTIL.format(phoneNumber, PhoneNumberFormat.E164);
-        }
-
-        return null;
-    }
-
-    private static boolean isExtension(String numberText) {
-        return getExternalNumberForExtension(numberText) != null;
-    }
-
+    /**
+     * This function is never used, delete on next major
+     */
+    @Deprecated
     public static int getCountry(String numberText) {
         final PhoneNumber phoneNumber = getPhoneNumber(numberText);
         if (phoneNumber != null) {
@@ -148,4 +150,17 @@ public class PhoneUtil {
         }
         return -1;
     }
+
+    public static boolean shouldReceiveValidationCall(String numberText) {
+        return PHONE_NUMBER_HANDLER.shouldReceiveValidationCall(numberText);
+    }
+
+    public static boolean shouldReceiveValidationSMS(String numberText) {
+        return PHONE_NUMBER_HANDLER.shouldReceiveValidationSMS(numberText);
+    }
+
+    public static void setPhoneNumberHandler(PhoneNumberHandler handler) {
+        PHONE_NUMBER_HANDLER = handler;
+    }
+
 }

@@ -28,6 +28,10 @@ import org.joda.time.DateTime;
 
 public class MobilePhone extends MobilePhone_Base {
 
+    static {
+        setResolver(MobilePhone.class, (pc) -> ((MobilePhone) pc).getNumber());
+    }
+
     public static Comparator<MobilePhone> COMPARATOR_BY_NUMBER = new Comparator<MobilePhone>() {
         @Override
         public int compare(MobilePhone contact, MobilePhone otherContact) {

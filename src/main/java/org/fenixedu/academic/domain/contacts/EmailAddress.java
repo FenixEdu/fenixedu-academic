@@ -32,6 +32,10 @@ import pt.ist.fenixframework.Atomic;
 
 public class EmailAddress extends EmailAddress_Base {
 
+    static {
+        setResolver(EmailAddress.class, (pc) -> ((EmailAddress) pc).getValue());
+    }
+
     public static Comparator<EmailAddress> COMPARATOR_BY_EMAIL = new Comparator<EmailAddress>() {
         @Override
         public int compare(EmailAddress contact, EmailAddress otherContact) {
@@ -176,11 +180,6 @@ public class EmailAddress extends EmailAddress_Base {
                 .map(partyContact -> (EmailAddress) partyContact)
                 .filter(emailAddress -> emailAddress.hasValue(emailAddressString))
                 .filter(emailAddress -> emailAddress.isActiveAndValid());
-    }
-
-    @Override
-    public String getPresentationValue() {
-        return getValue();
     }
 
     private void updateProfileEmail() {
