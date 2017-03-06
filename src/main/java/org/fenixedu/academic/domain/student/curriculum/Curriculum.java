@@ -201,6 +201,10 @@ public class Curriculum implements Serializable, ICurriculum {
     static public CurriculumGradeCalculator getCurriculumGradeCalculator() {
         return CURRICULUM_GRADE_CALCULATOR.get();
     }
+    
+    public CurriculumGradeCalculator getGradeCalculator() {
+        return this.gradeCalculator;
+    }
 
     static public void setCurriculumGradeCalculator(final Supplier<CurriculumGradeCalculator> input) {
         if (input != null && input.get() != null) {
@@ -494,17 +498,17 @@ public class Curriculum implements Serializable, ICurriculum {
 
     @Deprecated
     public BigDecimal getWeigthedGradeSum() {
-        return gradeCalculator.weigthedGradeSum(this);
+        return getGradeCalculator().weigthedGradeSum(this);
     }
 
     @Override
     public Grade getRawGrade() {
-        return gradeCalculator.rawGrade(this);
+        return getGradeCalculator().rawGrade(this);
     }
 
     @Override
     public Grade getFinalGrade() {
-        return gradeCalculator.finalGrade(this);
+        return getGradeCalculator().finalGrade(this);
     }
 
     @Override
