@@ -36,6 +36,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -526,6 +527,16 @@ public class Registration extends Registration_Base {
         return null;
     }
 
+    final public Stream<StudentCurricularPlan> getStudentCurricularPlanStream() {
+        return getStudentCurricularPlansSet().stream().sorted(StudentCurricularPlan
+                .STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE.reversed());
+    }
+
+    final private CycleCurriculumGroup getCycleCurriculumGroup(CycleType cycleType) {
+        return getStudentCurricularPlanStream().map(scp -> scp.getCycle(cycleType)).filter
+                (Objects::nonNull).findFirst().orElse(null);
+    }
+
     final public ICurriculum getCurriculum() {
         return getCurriculum(new DateTime(), (ExecutionYear) null, (CycleType) null);
     }
@@ -561,7 +572,7 @@ public class Registration extends Registration_Base {
                 return studentCurricularPlan.getCurriculum(when, executionYear);
             }
 
-            final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(cycleType);
+            final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
             if (cycleCurriculumGroup == null) {
                 return Curriculum.createEmpty(executionYear);
             }

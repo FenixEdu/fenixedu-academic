@@ -136,10 +136,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
         if (registration == null) {
             return Optional.empty();
         }
-        return registration.getStudentCurricularPlansSet().stream().sorted(StudentCurricularPlan
-                .STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE.reversed()).map(this::groupFor).filter(Optional::isPresent).findFirst()
-                .orElse(Optional
-                        .empty());
+        return registration.getStudentCurricularPlanStream().map(this::groupFor).filter(Optional::isPresent).findFirst().orElse(Optional.empty());
     }
 
     public Optional<CourseGroup> groupFor(DegreeCurricularPlan degreeCurricularPlan) {
