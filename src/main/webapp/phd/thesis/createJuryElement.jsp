@@ -91,7 +91,7 @@
 	
 						<%-- INTERNAL jury type slots --%>
 						<logic:equal name="thesisJuryElementBean" property="participantType.name" value="INTERNAL">
-							<fr:slot name="person" layout="autoComplete">
+							<fr:slot name="person" key="label.org.fenixedu.academic.domain.phd.PhdParticipantBean.personName" layout="autoComplete">
 								<fr:property name="size" value="50"/>
 								<fr:property name="format" value="${name} (${user.username})" />
 								<fr:property name="indicatorShown" value="true"/>		
