@@ -27,7 +27,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <%@ page import="java.util.Locale"%>
-<%@ page import="org.fenixedu.bennu.io.servlets.FileDownloadServlet"%>
+<%@ page import="org.fenixedu.bennu.io.servlet.FileDownloadServlet"%>
 <%@ page import="org.fenixedu.bennu.io.domain.GenericFile"%>
 
 <html:xhtml/>

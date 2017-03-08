@@ -23,7 +23,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str" %>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.1" prefix="str" %>
 
 <h2><bean:message key="link.weekly.work.load"/></h2>
 <h3>
