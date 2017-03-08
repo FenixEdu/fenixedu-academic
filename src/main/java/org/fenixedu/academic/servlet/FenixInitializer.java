@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
+import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
+import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.rest.Healthcheck;
@@ -61,6 +63,11 @@ public class FenixInitializer implements ServletContextListener {
         registerChecksumFilterRules();
 
         registerHealthchecks();
+        registerDefaultStudentWarningCheckers();
+    }
+
+    private void registerDefaultStudentWarningCheckers() {
+        StudentWarningsService.register(StudentWarningsDefaultCheckers.WARNING_VALID_ID_DOCUMENT);
     }
 
     private void registerHealthchecks() {
