@@ -22,7 +22,7 @@
 package org.fenixedu.academic.util;
 
 /**
- * @author joaosa & rmalo
+ * @author joaosa &amp; rmalo
  */
 
 public class ProposalState extends FenixUtil {

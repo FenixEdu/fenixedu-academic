@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.contacts;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -29,10 +28,10 @@ public class ContactRoot extends ContactRoot_Base {
     private ContactRoot() {
         super();
         setRoot(Bennu.getInstance());
-        setStudentVisibility(NobodyGroup.get());
-        setStaffVisibility(NobodyGroup.get());
-        setManagementVisibility(NobodyGroup.get());
-        setEmergencyContactVisibility(NobodyGroup.get());
+        setStudentVisibility(Group.nobody());
+        setStaffVisibility(Group.nobody());
+        setManagementVisibility(Group.nobody());
+        setEmergencyContactVisibility(Group.nobody());
     }
 
     public static ContactRoot getInstance() {

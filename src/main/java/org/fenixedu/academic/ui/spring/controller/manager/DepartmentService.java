@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.DynamicGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.springframework.stereotype.Service;
 
 import pt.ist.fenixframework.Atomic;
@@ -58,7 +58,7 @@ public class DepartmentService {
     @Atomic
     private Department createDepartment(DepartmentBean bean) {
         Department department = new Department();
-        department.setCompetenceCourseMembersGroup(DynamicGroup.get("managers"));
+        department.setCompetenceCourseMembersGroup(Group.managers());
         department.setActive(bean.isActive());
         department.setCode(bean.getCode());
         department.setName(bean.getName());

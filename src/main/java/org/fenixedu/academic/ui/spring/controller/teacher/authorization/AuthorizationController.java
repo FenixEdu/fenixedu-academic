@@ -169,6 +169,8 @@ public class AuthorizationController {
      * 
      * @param model
      * @param search
+     * @param attrs
+     * @param response
      * @return
      * @throws IOException
      */
@@ -186,9 +188,7 @@ public class AuthorizationController {
      * Shows webview with instructions to upload teacher authorizations CSV file
      * 
      * @param model
-     * @param search
      * @return
-     * @throws IOException
      */
     @RequestMapping(method = GET, value = "upload")
     public String showUpload(Model model) {
@@ -207,7 +207,6 @@ public class AuthorizationController {
      * @param csv
      * @return
      */
-
     @RequestMapping(method = POST, value = "upload")
     public String upload(Model model, @RequestParam ExecutionSemester period, @RequestParam MultipartFile csv) {
         try {
@@ -248,7 +247,15 @@ public class AuthorizationController {
      */
     @RequestMapping(method = POST, value = "create")
     public String create(Model model, @ModelAttribute FormBean form, final RedirectAttributes attrs) {
-        service.createTeacherAuthorization(form);
+    
+        try {
+            service.createTeacherAuthorization(form);
+        } catch (Exception e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            model.addAttribute("form", form);
+            return "redirect:/teacher/authorizations/create";
+        }
+        
         return redirectHome(form, attrs);
     }
 

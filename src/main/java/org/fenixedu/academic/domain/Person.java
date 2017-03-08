@@ -102,7 +102,6 @@ import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
@@ -353,7 +352,7 @@ public class Person extends Person_Base {
         if (getUser() == null) {
             setUser(new User(getProfile()));
         }
-        UserLoginPeriod.createOpenPeriod(getUser());
+        getUser().openLoginPeriod();
     }
 
     public void ensureUserAccount() {
@@ -489,16 +488,14 @@ public class Person extends Person_Base {
      * @return a group that only contains this person
      */
     public Group getPersonGroup() {
-        return UserGroup.of(this.getUser());
+        return this.getUser().groupOf();
     }
 
     /**
      * 
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
      * 
-     * 
-     * @return true if the person have been deleted, false otherwise
-     */
+     **/
     @Override
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
@@ -1891,7 +1888,7 @@ public class Person extends Person_Base {
         contact.logRefuse(this);
     }
 
-    public static Set<User> convertToUsers(Collection<Person> persons) {
-        return persons.stream().map(Person::getUser).filter(Objects::nonNull).collect(Collectors.toSet());
+    public static Group convertToUserGroup(Collection<Person> persons) {
+        return Group.users(persons.stream().map(Person::getUser).filter(Objects::nonNull));
     }
 }

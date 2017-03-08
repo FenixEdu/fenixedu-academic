@@ -260,6 +260,7 @@ ${portal.toolkit()}
 </c:if>
 <h4><spring:message code="label.student.registrationManagement.search" /></h4>
 <form:form role="form" modelAttribute="search" method="POST" class="form" action="${findUsersUrl}">
+    ${csrf.field()}
     <div class="form-group">
         <input type="hidden" name="target" value="${bean.target.username}">
         <input type="text" class="form-control" name="searched" value="${bean.searched.username}" bennu-user-autocomplete onchange="this.form.submit()" placeholder="<spring:message code="label.student.registrationManagement.search.placeholder" />">

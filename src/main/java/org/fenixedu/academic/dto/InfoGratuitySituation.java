@@ -211,7 +211,7 @@ public class InfoGratuitySituation extends InfoObject {
     }
 
     /**
-     * @param student
+     * @param studentCurricularPlan
      *            The student to set.
      */
     public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan studentCurricularPlan) {

@@ -79,7 +79,7 @@ public class ValidateCompareTwoFields {
     }
 
     /**
-     * Compares two fields and checks if second field >= first field
+     * Compares two fields and checks if second field &gt;= first field
      * 
      * @param bean
      * @param va
@@ -107,7 +107,7 @@ public class ValidateCompareTwoFields {
     }
 
     /**
-     * Compares two fields and checks if second field > first field
+     * Compares two fields and checks if second field &gt; first field
      * 
      * @param bean
      * @param va
@@ -163,7 +163,7 @@ public class ValidateCompareTwoFields {
     }
 
     /**
-     * Compares two fields and checks if the second field < first field
+     * Compares two fields and checks if the second field &lt; first field
      * 
      * @param bean
      * @param va
@@ -191,7 +191,7 @@ public class ValidateCompareTwoFields {
     }
 
     /**
-     * Compares two fields and checks if the second field <= first field
+     * Compares two fields and checks if the second field &lt;= first field
      * 
      * @param bean
      * @param va

@@ -189,6 +189,7 @@
 
 		<form:form modelAttribute="attends"  style="display: inline" role="form" method="post"
 			action="${editStudentGroupAttendsUrl }" enctype="multipart/form-data">
+			${csrfField}
 			<c:if test="${not empty studentGroup.attendsSet}">
 				<a
 					href="${sendEmailLink }"
@@ -327,6 +328,7 @@
 		<div class="modal-content">
 			<form:form role="form" method="post"
 				action="${editStudentGroupShiftUrl }">
+				${csrf.field()}
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>

@@ -49,7 +49,6 @@ import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestCreateBea
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
@@ -313,7 +312,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         }
 
         final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
-        final Recipient recipient = new Recipient(UserGroup.of(getPerson().getUser()));
+        final Recipient recipient = new Recipient(getPerson().getUser().groupOf());
         new Message(sender, sender.getReplyTosSet(), recipient.asCollection(), getDescription(), body, "");
     }
 

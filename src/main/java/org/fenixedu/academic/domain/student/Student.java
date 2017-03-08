@@ -731,8 +731,8 @@ public class Student extends Student_Base {
     }
 
     /**
-     * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
+     * -&gt; Temporary overrides due migrations - Filter 'InTransition'
+     * registrations &gt; Do not use this method to add new registrations directly
      * (use {@link addRegistrations} method)
      */
     @Override

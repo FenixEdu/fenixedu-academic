@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +40,10 @@ import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.spring.security.CSRFTokenBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,7 +68,17 @@ public class StudentGroupController extends ExecutionCourseController {
     public StudentGroupController(StudentGroupService studentGroupService) {
         this.studentGroupService = studentGroupService;
     }
-
+    
+    
+    // hack
+    @Autowired
+    CSRFTokenBean csrfTokenBean;
+    
+    @ModelAttribute("csrfField")
+    public String getCSRFField(){
+        return csrfTokenBean.field();
+    }
+    
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
@@ -164,8 +177,8 @@ public class StudentGroupController extends ExecutionCourseController {
         ArrayList<Recipient> recipients = new ArrayList<Recipient>();
         recipients.add(Recipient.newInstance(
                 label,
-                UserGroup.of(studentGroup.getAttendsSet().stream().map(Attends::getRegistration).map(Registration::getPerson)
-                        .map(Person::getUser).collect(Collectors.toSet()))));
+                Group.users(studentGroup.getAttendsSet().stream().map(Attends::getRegistration).map(Registration::getPerson)
+                        .map(Person::getUser).filter(Objects::nonNull).sorted(User.COMPARATOR_BY_NAME))));
         String sendEmailUrl =
                 UriBuilder
                         .fromUri("/messaging/emails.do")

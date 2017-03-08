@@ -34,8 +34,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
@@ -222,7 +220,7 @@ public enum AcademicOperationType implements IPresentableEnum, AccessOperation<A
 
     @Override
     public Optional<AcademicAccessRule> grant(Group whoCanAccess, Set<AcademicAccessTarget> whatCanAffect) {
-        if (whoCanAccess.equals(NobodyGroup.get())) {
+        if (whoCanAccess.equals(Group.nobody())) {
             return Optional.empty();
         }
         Optional<AcademicAccessRule> match =
@@ -246,7 +244,7 @@ public enum AcademicOperationType implements IPresentableEnum, AccessOperation<A
                 AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(this) && r.getWhatCanAffect().isEmpty())
                         .findAny();
         return match.map(r -> r.<AcademicAccessRule> grant(user)).orElseGet(
-                () -> Optional.of(new AcademicAccessRule(this, UserGroup.of(user), Collections.emptySet())));
+                () -> Optional.of(new AcademicAccessRule(this, user.groupOf(), Collections.emptySet())));
     }
 
     @Override

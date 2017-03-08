@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -123,7 +124,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
         int count = 0;
 
-        for (User user : RoleType.ALUMNI.actualGroup().getMembers()) {
+        for (User user : RoleType.ALUMNI.actualGroup().getMembers().collect(Collectors.toSet())) {
             Person person = user.getPerson();
             if ((++count % 100) == 0) {
                 logger.info(String.format("Count %s persons", count));

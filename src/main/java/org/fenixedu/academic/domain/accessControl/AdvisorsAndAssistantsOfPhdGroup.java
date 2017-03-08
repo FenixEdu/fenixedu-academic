@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.phd.InternalPhdParticipant;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -59,22 +58,13 @@ public class AdvisorsAndAssistantsOfPhdGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
-        Set<User> users = new HashSet<>();
-
-        for (PhdParticipant participant : process.getGuidingsAndAssistantGuidings()) {
-            if (participant.isInternal()) {
-                User user = ((InternalPhdParticipant) participant).getPerson().getUser();
-                if (user != null) {
-                    users.add(user);
-                }
-            }
-        }
-        return users;
+    public Stream<User> getMembers() {
+        return process.getGuidingsAndAssistantGuidings().stream().filter(PhdParticipant::isInternal)
+                .map(InternalPhdParticipant.class::cast).map(part -> part.getPerson().getUser()).filter(u -> u != null);
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

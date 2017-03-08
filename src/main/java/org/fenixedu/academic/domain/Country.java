@@ -74,6 +74,7 @@ public class Country extends Country_Base {
      * If the person country is undefined it is set to default. In a not
      * distance future this will not be needed since the coutry can never be
      * null.
+     * @return default country
      */
     public static Country readDefault() {
         for (final Country country : Bennu.getInstance().getCountrysSet()) {

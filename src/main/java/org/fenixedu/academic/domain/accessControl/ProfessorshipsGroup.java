@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -77,12 +78,12 @@ public class ProfessorshipsGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return getMembers(DateTime.now());
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         Set<User> users = new HashSet<>();
         //TODO: select active 'when'
         ExecutionInterval interval = ExecutionInterval.getExecutionInterval(AcademicInterval.readDefaultAcademicInterval(period));
@@ -94,7 +95,7 @@ public class ProfessorshipsGroup extends FenixGroup {
                 fillMembers(users, semester);
             }
         }
-        return users;
+        return users.stream();
     }
 
     private void fillMembers(Set<User> users, ExecutionSemester semester) {

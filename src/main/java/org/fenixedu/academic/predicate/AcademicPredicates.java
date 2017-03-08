@@ -36,7 +36,7 @@ import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyPersonal
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.bennu.core.groups.DynamicGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicPredicates {
@@ -86,7 +86,7 @@ public class AcademicPredicates {
 
         @Override
         public boolean evaluate(Object c) {
-            return DynamicGroup.get("managers").isMember(Authenticate.getUser());
+            return Group.managers().isMember(Authenticate.getUser());
         }
 
     };

@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -94,9 +93,7 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
             if (whoCanAccess instanceof UnitGroup) {
                 return ((UnitGroup) whoCanAccess).getUnit();
             }
-            if (whoCanAccess instanceof UserGroup) {
-                return ((UserGroup) whoCanAccess).getMembers().iterator().next().getPerson();
-            }
+            return whoCanAccess.getMembers().iterator().next().getPerson();
         }
         return null;
     }

@@ -63,6 +63,7 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
@@ -294,7 +295,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     static private boolean isManager(User userView) {
-        return RoleType.MANAGER.isMember(userView.getPerson().getUser());
+        return Group.managers().isMember(userView);
     }
 
     @Override

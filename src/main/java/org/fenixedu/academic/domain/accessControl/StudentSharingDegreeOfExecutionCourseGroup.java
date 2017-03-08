@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.accessControl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
@@ -60,7 +61,7 @@ public class StudentSharingDegreeOfExecutionCourseGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         Set<User> users = new HashSet<>();
 
         Set<Degree> degrees = new HashSet<>();
@@ -83,11 +84,11 @@ public class StudentSharingDegreeOfExecutionCourseGroup extends FenixGroup {
                 users.add(user);
             }
         }
-        return users;
+        return users.stream();
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

@@ -18,8 +18,11 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -31,6 +34,8 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     protected PersistentStudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
@@ -55,13 +60,16 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     }
 
     @Override
-    protected void gc() {
-        setCampus(null);
-        setDegree(null);
-        setExecutionCourse(null);
-        setCurricularYear(null);
-        setExecutionYear(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        Set<Relation<?, ?>> set = new HashSet<>();
+        set.add(getRelationPersistentStudentGroupCampus());
+        set.add(getRelationPersistentStudentGroupExecutionCourse());
+        set.add(getRelationPersistentStudentGroupExecutionYear());
+        set.add(getRelationPersistentStudentGroupCurricularYear());
+        set.add(getRelationPersistentStudentGroupDegreeType());
+        set.add(getRelationPersistentStudentGroupDegree());
+        set.addAll(super.getContextRelations());
+        return set;
     }
 
     public static PersistentStudentGroup getInstance() {

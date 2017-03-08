@@ -41,7 +41,7 @@ ${portal.toolkit()}
 	</c:if>
 
 	<form:form role="form" modelAttribute="form" method="POST" class="form-horizontal">
-
+		${csrf.field()}
 		<div class="form-group">
 			<label for="code" class="col-sm-1 control-label"><spring:message code="teacher.categories.code" /></label>
 			<div class="col-sm-11">

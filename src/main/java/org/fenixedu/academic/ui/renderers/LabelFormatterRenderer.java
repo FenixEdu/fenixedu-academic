@@ -44,9 +44,6 @@ public class LabelFormatterRenderer extends OutputRenderer {
     }
 
     /**
-     * 
-     * 
-     * @property
      */
     public void setBundleName(String bundle, String name) {
     }

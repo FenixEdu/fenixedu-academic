@@ -39,7 +39,6 @@ import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
@@ -124,7 +123,7 @@ public class AlertService {
         alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
         alertBean.setBody(getBodyText(process, bodyKey));
         alertBean.setFireDate(new LocalDate());
-        alertBean.setTargetGroup(UserGroup.of(process.getPerson().getUser()));
+        alertBean.setTargetGroup(process.getPerson().getUser().groupOf());
 
         new PhdCustomAlert(alertBean);
     }
@@ -135,7 +134,7 @@ public class AlertService {
         alertBean.setSubject(getSubjectPrefixed(process, subject));
         alertBean.setBody(getBodyText(process, body));
         alertBean.setFireDate(new LocalDate());
-        alertBean.setTargetGroup(UserGroup.of(process.getPerson().getUser()));
+        alertBean.setTargetGroup(process.getPerson().getUser().groupOf());
 
         new PhdCustomAlert(alertBean);
     }
@@ -158,7 +157,7 @@ public class AlertService {
         alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
         alertBean.setBody(getBodyText(process, bodyKey));
         alertBean.setFireDate(new LocalDate());
-        alertBean.setTargetGroup(UserGroup.of(Person.convertToUsers(toNotify)));
+        alertBean.setTargetGroup(Person.convertToUserGroup(toNotify));
 
         new PhdCustomAlert(alertBean);
 
@@ -183,7 +182,7 @@ public class AlertService {
         alertBean.setSubject(getSubjectPrefixed(process, subjectMessage));
         alertBean.setBody(getBodyText(process, bodyMessage));
         alertBean.setFireDate(new LocalDate());
-        alertBean.setTargetGroup(UserGroup.of(Person.convertToUsers(toNotify)));
+        alertBean.setTargetGroup(Person.convertToUserGroup(toNotify));
 
         new PhdCustomAlert(alertBean);
 
@@ -235,7 +234,7 @@ public class AlertService {
         final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
         alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
         alertBean.setBody(getBodyText(process, bodyKey));
-        alertBean.setTargetGroup(UserGroup.of(Person.convertToUsers(persons)));
+        alertBean.setTargetGroup(Person.convertToUserGroup(persons));
         alertBean.setFireDate(new LocalDate());
 
         new PhdCustomAlert(alertBean);
@@ -254,7 +253,7 @@ public class AlertService {
         final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
         alertBean.setSubject(getSubjectPrefixed(process, subject));
         alertBean.setBody(getBodyText(process, body));
-        alertBean.setTargetGroup(UserGroup.of(Person.convertToUsers(persons)));
+        alertBean.setTargetGroup(Person.convertToUserGroup(persons));
         alertBean.setFireDate(new LocalDate());
         new PhdCustomAlert(alertBean);
     }
@@ -286,7 +285,7 @@ public class AlertService {
             final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
             alertBean.setSubject(getSubjectPrefixed(process, subject));
             alertBean.setBody(getBodyText(process, body));
-            alertBean.setTargetGroup(UserGroup.of(Person.convertToUsers(toNotify)));
+            alertBean.setTargetGroup(Person.convertToUserGroup(toNotify));
             alertBean.setFireDate(new LocalDate());
             new PhdCustomAlert(alertBean);
         }

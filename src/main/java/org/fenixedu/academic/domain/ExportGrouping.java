@@ -24,7 +24,7 @@ package org.fenixedu.academic.domain;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
- * @author joaosa & rmalo
+ * @author joaosa &amp; rmalo
  */
 
 public class ExportGrouping extends ExportGrouping_Base {

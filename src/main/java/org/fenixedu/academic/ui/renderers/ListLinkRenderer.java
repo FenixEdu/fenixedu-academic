@@ -48,9 +48,7 @@ public class ListLinkRenderer extends OutputRenderer {
 
     /**
      * Indicates the separator between generated links. If not specified then
-     * " > " default sting is used
-     * 
-     * @property
+     * " &gt; " default sting is used
      */
     public void setSeparator(String separator) {
         this.separator = separator;

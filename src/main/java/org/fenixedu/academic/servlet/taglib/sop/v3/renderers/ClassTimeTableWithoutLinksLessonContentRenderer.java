@@ -32,7 +32,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  */
 public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotContentRenderer {
 

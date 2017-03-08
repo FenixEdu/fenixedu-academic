@@ -87,7 +87,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
         final Group group =
                 AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
 
-        Set<Person> members = group.getMembers().stream().map(User::getPerson).collect(Collectors.toSet());
+        Set<Person> members = group.getMembers().map(User::getPerson).collect(Collectors.toSet());
         new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
 
         new Message(getSender(), new Recipient(group), buildMailSubject(), buildMailBody());

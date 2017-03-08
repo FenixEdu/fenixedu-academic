@@ -20,8 +20,8 @@ package org.fenixedu.academic.predicate;
 
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class RegistrationPredicates {
@@ -30,7 +30,7 @@ public class RegistrationPredicates {
     public static final AccessControlPredicate<Registration> TRANSIT_TO_BOLONHA = new AccessControlPredicate<Registration>() {
         @Override
         public boolean evaluate(final Registration registration) {
-            return RoleType.MANAGER.isMember(AccessControl.getPerson().getUser());
+            return Group.managers().isMember(Authenticate.getUser());
         };
     };
 

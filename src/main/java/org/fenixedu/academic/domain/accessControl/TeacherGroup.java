@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
@@ -137,7 +138,7 @@ public class TeacherGroup extends FenixGroup {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         Set<User> users = new HashSet<>();
 
         //by degree
@@ -159,11 +160,11 @@ public class TeacherGroup extends FenixGroup {
         }
         //by campus
         if (campus != null) {
-            for (User user : RoleType.TEACHER.actualGroup().getMembers()) {
+            RoleType.TEACHER.actualGroup().getMembers().forEach(user -> {
                 if (user.getPerson() != null && user.getPerson().getTeacher().teachesAt(campus)) {
                     users.add(user);
                 }
-            }
+            });
         }
         //by department
         if (department != null) {
@@ -183,11 +184,11 @@ public class TeacherGroup extends FenixGroup {
                 }
             }
         }
-        return users;
+        return users.stream();
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

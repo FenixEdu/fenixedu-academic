@@ -895,14 +895,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     /**
-     * @see #getDeparmentUnit(ExecutionYear)
+     * @see #getDepartmentUnit(ExecutionYear)
      */
     public DepartmentUnit getDepartmentUnit() {
         return getDepartmentUnit(ExecutionSemester.readActualExecutionSemester());
     }
 
     /**
-     * @see #getDeparmentUnit(ExecutionSemester)
+     * @see #getDepartmentUnit(ExecutionSemester)
      */
     public DepartmentUnit getDepartmentUnit(ExecutionYear executionYear) {
         ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
@@ -925,20 +925,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      * 
      * @see CompetenceCourseInformation
      * @see CompetenceCourseGroupUnit
+     * @param semester semester of the competence course to be searched for
+     * @return Department unit for the given semester
      */
     public DepartmentUnit getDepartmentUnit(ExecutionSemester semester) {
         return getMostRecentCompetenceCourseInformationUntil(semester).getDepartmentUnit();
     }
 
     /**
-     * @see #getDeparmentUnit(ExecutionSemester)
+     * @see #getDepartmentUnit(ExecutionSemester)
      */
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit() {
         return getCompetenceCourseGroupUnit(ExecutionSemester.readActualExecutionSemester());
     }
 
     /**
-     * @see #getDeparmentUnit(ExecutionSemester)
+     * @see #getDepartmentUnit(ExecutionSemester)
+     * @return
      */
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionYear executionYear) {
         ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
@@ -1320,7 +1323,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     /**
      * Find the most recent <b>until</b> given {@link ExecutionInterval}:
      * usefull for getting current info
-     * 
+     * @param input the interval to find this competence coure information
      */
     public CompetenceCourseInformation findInformationMostRecentUntil(final ExecutionInterval input) {
         CompetenceCourseInformation result = null;

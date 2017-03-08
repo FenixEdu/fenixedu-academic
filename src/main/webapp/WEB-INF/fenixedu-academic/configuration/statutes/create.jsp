@@ -38,6 +38,7 @@ ${portal.toolkit()}
 </c:if>
 
 <form method="post" class="form-horizontal">
+	${csrf.field()}
 	<div class="form-group">
 		<label class="col-sm-2 control-label"><spring:message code="label.StatuteType.code"/></label>
 		<div class="col-sm-10">

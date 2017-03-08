@@ -73,7 +73,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz &amp; Sara Ribeiro
  *
  */
 

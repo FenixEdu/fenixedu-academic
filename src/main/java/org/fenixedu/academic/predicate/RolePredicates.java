@@ -22,6 +22,8 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class RolePredicates {
 
@@ -69,7 +71,7 @@ public class RolePredicates {
     public static final AccessControlPredicate<Object> MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.MANAGER);
+            return Group.managers().isMember(Authenticate.getUser());
         };
     };
 

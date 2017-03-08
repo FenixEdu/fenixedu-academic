@@ -31,7 +31,7 @@ import org.fenixedu.academic.util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
- * @author joaosa & rmalo 12/Aug/2004
+ * @author joaosa &amp; rmalo 12/Aug/2004
  */
 public class InfoGrouping extends InfoObject {
 

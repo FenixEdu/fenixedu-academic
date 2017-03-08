@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -28,6 +30,8 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType.Scope;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 import com.google.common.collect.Sets;
 
@@ -51,10 +55,12 @@ public class PersistentAcademicOperationGroup extends PersistentAcademicOperatio
     }
 
     @Override
-    protected void gc() {
-        getProgramSet().clear();
-        getOfficeSet().clear();
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        Set<Relation<?, ?>> set = new HashSet<>();
+        set.add(getRelationAcademicAuthorizationGroupAcademicPrograms());
+        set.add(getRelationAcademicAuthorizationGroupAdministrativeOffices());
+        set.addAll(super.getContextRelations());
+        return set;
     }
 
     public static PersistentAcademicOperationGroup getInstance(final AcademicOperationType operation, final Scope scope) {

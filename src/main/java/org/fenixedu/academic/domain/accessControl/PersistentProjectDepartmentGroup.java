@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.Project;
 import org.fenixedu.bennu.core.groups.Group;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 @Deprecated
 public class PersistentProjectDepartmentGroup extends PersistentProjectDepartmentGroup_Base {
@@ -36,9 +40,8 @@ public class PersistentProjectDepartmentGroup extends PersistentProjectDepartmen
     }
 
     @Override
-    protected void gc() {
-        setProject(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentProjectDepartmentGroupProject());
     }
 
     public static PersistentProjectDepartmentGroup getInstance(final Project project) {

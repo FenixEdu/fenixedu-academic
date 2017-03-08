@@ -29,7 +29,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 /**
- * @author Nuno Nunes & Joana Mota
+ * @author Nuno Nunes &amp; Joana Mota
  */
 @Deprecated
 public enum StudentCurricularPlanState {

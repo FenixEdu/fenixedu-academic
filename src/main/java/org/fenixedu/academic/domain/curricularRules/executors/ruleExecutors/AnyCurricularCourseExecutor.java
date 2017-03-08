@@ -47,9 +47,9 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
     }
 
     /**
-     * -> if getDegree() == null ? getBolonhaDegreeType() == null ? any degree
+     * -&gt; if getDegree() == null ? getBolonhaDegreeType() == null ? any degree
      * from IST ? getBolonhaDegreeType() != null ? any degree with same
-     * DegreeType -> else ? check selected degree -> if departmentUnit != null ?
+     * DegreeType -&gt; else ? check selected degree -&gt; if departmentUnit != null ?
      * CurricularCourse from CompetenceCourse that belong to that Department
      */
     @Override

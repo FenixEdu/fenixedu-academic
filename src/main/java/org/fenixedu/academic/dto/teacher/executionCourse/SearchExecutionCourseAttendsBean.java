@@ -37,7 +37,6 @@ import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class SearchExecutionCourseAttendsBean implements Serializable {
@@ -225,7 +224,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
         for (Attends attends : getAttendsResult()) {
             persons.add(attends.getRegistration().getStudent().getPerson());
         }
-        return UserGroup.of(Person.convertToUsers(persons));
+        return Person.convertToUserGroup(persons);
     }
 
     public String getLabel() {

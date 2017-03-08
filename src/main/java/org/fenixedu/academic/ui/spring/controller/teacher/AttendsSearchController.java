@@ -21,9 +21,12 @@ package org.fenixedu.academic.ui.spring.controller.teacher;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Stream;
+import java.util.stream.Stream.Builder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +46,7 @@ import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.spreadsheet.SheetData;
 import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
@@ -118,8 +121,8 @@ public class AttendsSearchController extends ExecutionCourseController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<String> listAttends() {
-        return new ResponseEntity<String>(view(executionCourse.getAttendsSet().stream()
-                .filter(attendee -> attendee.getRegistration() != null)), HttpStatus.OK);
+        return new ResponseEntity<>(view(executionCourse.getAttendsSet().stream()
+                .filter(attendee -> attendee.getRegistration() != null)).toString(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/studentSpreadsheet", method = RequestMethod.POST)
@@ -290,16 +293,17 @@ public class AttendsSearchController extends ExecutionCourseController {
                         BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"), degreeNameValues,
                         BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues, workingStudentsValues);
 
-        Set<User> users = new TreeSet<User>(User.COMPARATOR_BY_NAME);
-
+        Builder<Attends> builder = Stream.builder();
         for (JsonElement elem : new JsonParser().parse(filteredAttendsJson).getAsJsonArray()) {
             JsonObject object = elem.getAsJsonObject();
-            users.add(((Attends) FenixFramework.getDomainObject(object.get("id").getAsString())).getRegistration().getPerson()
-                    .getUser());
+            builder.accept(FenixFramework.getDomainObject(object.get("id").getAsString()));
         }
 
+        Group users =
+                Group.users(builder.build().map(a -> a.getRegistration().getPerson().getUser()).filter(Objects::nonNull)
+                        .sorted(User.COMPARATOR_BY_NAME));
         ArrayList<Recipient> recipients = new ArrayList<Recipient>();
-        recipients.add(Recipient.newInstance(label, UserGroup.of(users)));
+        recipients.add(Recipient.newInstance(label, users));
         String sendEmailUrl =
                 UriBuilder
                         .fromUri("/messaging/emails.do")

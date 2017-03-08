@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.accessControl;
 
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ public class PersistentRoleGroup extends PersistentRoleGroup_Base {
             return Group.parse(getTargetGroup());
         } catch (Exception e) {
             logger.error("Error parsing target group for " + this, e);
-            return NobodyGroup.get();
+            return Group.nobody();
         }
     }
 

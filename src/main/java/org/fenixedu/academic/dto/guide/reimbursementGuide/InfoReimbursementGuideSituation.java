@@ -30,9 +30,8 @@ import org.fenixedu.academic.dto.InfoObject;
 import org.fenixedu.academic.util.State;
 
 /**
- * 
- * 
- * This class contains all the information regarding a Reimbursement Guide. <br/>
+ *
+ * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * 

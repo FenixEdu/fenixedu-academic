@@ -71,7 +71,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -248,11 +247,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         Group competenceCoursesManagementGroup = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
 
         if (competenceCoursesManagementGroup != null) {
-            result = new ArrayList<SelectItem>();
-
-            for (User user : competenceCoursesManagementGroup.getMembers()) {
-                result.add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " (" + user.getUsername() + ")"));
-            }
+            competenceCoursesManagementGroup.getMembers().forEach(
+                    user -> result.add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " ("
+                            + user.getUsername() + ")")));
         }
 
         return result;
@@ -260,7 +257,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private boolean isUserMemberOfAnyCurricularPlanGroup(User user) {
         return Degree.readBolonhaDegrees().stream().flatMap(d -> d.getDegreeCurricularPlansSet().stream())
-                .map(dcp -> dcp.getCurricularPlanMembersGroup()).reduce(NobodyGroup.get(), (g1, g2) -> g1.or(g2)).isMember(user);
+                .map(dcp -> dcp.getCurricularPlanMembersGroup()).reduce(Group.nobody(), (g1, g2) -> g1.or(g2)).isMember(user);
     }
 
     private boolean isUserMemberOfAnyDepartmentCompetenceCourseGroup(User user) {

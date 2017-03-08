@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -25,15 +26,15 @@ public class ActivePhdProcessesGroup extends GroupStrategy {
     }
 
     @Override
-    public Set<User> getMembers() {
+    public Stream<User> getMembers() {
         return Bennu.getInstance().getPhdProgramsSet().stream()
                 .flatMap(program -> program.getIndividualProgramProcessesSet().stream())
                 .filter(PhdIndividualProgramProcess::isProcessActive).map(PhdIndividualProgramProcess::getPerson).map
-                        (Person::getUser).collect(Collectors.toSet());
+                        (Person::getUser);
     }
 
     @Override
-    public Set<User> getMembers(DateTime when) {
+    public Stream<User> getMembers(DateTime when) {
         return getMembers();
     }
 

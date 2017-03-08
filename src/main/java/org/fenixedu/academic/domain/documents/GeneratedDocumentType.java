@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.documents;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 
 /**
- * Type of {@GeneratedDocument}s
+ * Type of {@link GeneratedDocument}s
  * 
  * @author Pedro Santos (pmrsa)
  */

@@ -20,7 +20,7 @@ package org.fenixedu.academic.ui.renderers;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.io.domain.GenericFile;
-import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
+import org.fenixedu.bennu.io.servlet.FileDownloadServlet;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -94,8 +94,6 @@ public class FileLinkRenderer extends OutputRenderer {
     /**
      * Instead of specifying thr {@link #setText(String) text} property you can
      * specify a key, with this property, and a bundle with the {@link #setBundle(String) bundle}.
-     * 
-     * @property
      */
     public void setKey(String key) {
         this.key = key;
@@ -107,8 +105,6 @@ public class FileLinkRenderer extends OutputRenderer {
 
     /**
      * The bundle were the {@link #setKey(String) key} will be fetched.
-     * 
-     * @property
      */
     public void setBundle(String bundle) {
         this.bundle = bundle;

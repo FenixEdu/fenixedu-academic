@@ -36,7 +36,6 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
@@ -86,7 +85,7 @@ public class ChangeStudentsShift {
 
         final String message = messagePrefix + messagePosfix;
 
-        Recipient recipient = new Recipient(groupName, UserGroup.of(Person.convertToUsers(recievers)));
+        Recipient recipient = new Recipient(groupName, Person.convertToUserGroup(recievers));
         Sender sender = Bennu.getInstance().getSystemSender();
         String gopEmailAddress = Installation.getInstance().getInstituitionalEmailAddress("gop");
         new Message(sender, new ConcreteReplyTo(gopEmailAddress).asCollection(), recipient.asCollection(), subject, message, "");

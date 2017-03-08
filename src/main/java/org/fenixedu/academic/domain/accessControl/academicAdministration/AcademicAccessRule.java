@@ -170,26 +170,25 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
         return stream;
     }
 
-    public static Set<User> getMembers(Predicate<? super AcademicAccessRule> filter) {
+    public static Stream<User> getMembers(Predicate<? super AcademicAccessRule> filter) {
         return AcademicAccessRule.accessRules().filter(filter).map(AccessRule::getWhoCanAccess)
-                .flatMap(group -> group.getMembers().stream()).collect(Collectors.toSet());
+                .flatMap(group -> group.getMembers());
     }
 
-    public static Set<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
+    public static Stream<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices) {
-        return filter(function, programs, offices).map(AccessRule::getWhoCanAccess).flatMap(group -> group.getMembers().stream())
-                .collect(Collectors.toSet());
+        return filter(function, programs, offices).map(AccessRule::getWhoCanAccess).flatMap(group -> group.getMembers());
     }
 
-    public static Set<User> getMembers(Predicate<? super AcademicAccessRule> filter, DateTime when) {
+    public static Stream<User> getMembers(Predicate<? super AcademicAccessRule> filter, DateTime when) {
         return AcademicAccessRule.accessRules(when).filter(filter).map(AccessRule::getWhoCanAccess)
-                .flatMap(group -> group.getMembers(when).stream()).collect(Collectors.toSet());
+                .flatMap(group -> group.getMembers(when));
     }
 
-    public static Set<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
+    public static Stream<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
             Set<AdministrativeOffice> offices, DateTime when) {
         return filter(function, programs, offices, when).map(AccessRule::getWhoCanAccess)
-                .flatMap(group -> group.getMembers(when).stream()).collect(Collectors.toSet());
+                .flatMap(group -> group.getMembers(when));
     }
 
     public static boolean isMember(User user, Predicate<? super AcademicAccessRule> filter) {

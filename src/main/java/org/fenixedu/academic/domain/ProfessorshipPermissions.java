@@ -20,8 +20,8 @@ package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.signals.DomainObjectEvent;
-import org.fenixedu.bennu.signals.Signal;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 
 public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
 

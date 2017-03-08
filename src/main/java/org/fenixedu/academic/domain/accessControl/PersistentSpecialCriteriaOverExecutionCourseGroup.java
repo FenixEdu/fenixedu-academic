@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
+
+import pt.ist.fenixframework.dml.runtime.Relation;
 
 public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
         PersistentSpecialCriteriaOverExecutionCourseGroup_Base {
@@ -34,9 +38,8 @@ public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
     }
 
     @Override
-    protected void gc() {
-        setExecutionCourse(null);
-        super.gc();
+    protected Collection<Relation<?, ?>> getContextRelations() {
+        return Collections.singleton(getRelationPersistentSpecialCriteriaOverExecutionCourseGroupExecutionCourse());
     }
 
     protected static <T extends PersistentSpecialCriteriaOverExecutionCourseGroup> T singleton(Class<T> type,

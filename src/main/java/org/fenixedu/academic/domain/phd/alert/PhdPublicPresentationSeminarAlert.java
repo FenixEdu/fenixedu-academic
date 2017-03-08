@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
@@ -38,7 +39,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -151,8 +151,8 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessageForCoodinator() {
-        generateMessage(UserGroup.of(Person.convertToUsers(getProcess().getPhdProgram().getCoordinatorsFor(
-                ExecutionYear.readCurrentExecutionYear()))));
+        generateMessage(Person.convertToUserGroup(getProcess().getPhdProgram().getCoordinatorsFor(
+                ExecutionYear.readCurrentExecutionYear())));
 
     }
 
@@ -162,13 +162,13 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessageForStudent() {
-        generateMessage(UserGroup.of(getProcess().getPerson().getUser()));
+        generateMessage(getProcess().getPerson().getUser().groupOf());
     }
 
     private void generateMessageForGuiders() {
         for (final PhdParticipant guiding : getProcess().getGuidingsSet()) {
             if (guiding.isInternal()) {
-                generateMessage(UserGroup.of(((InternalPhdParticipant) guiding).getPerson().getUser()));
+                generateMessage(((InternalPhdParticipant) guiding).getPerson().getUser().groupOf());
             } else {
                 new Message(getSender(), Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(),
                         buildMailSubject(), buildMailBody(), Collections.singleton(guiding.getEmail()));
@@ -177,7 +177,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessage(Group group) {
-        Set<Person> members = group.getMembers().stream().map(User::getPerson).collect(Collectors.toSet());
+        Set<Person> members = group.getMembers().map(User::getPerson).collect(Collectors.toSet());
         new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
         new Message(getSender(), new Recipient("", group), buildMailSubject(), buildMailBody());
     }

@@ -25,6 +25,7 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.messaging.ConversationMessage;
@@ -38,11 +39,10 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.HtmlToTextConverterUtil;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br>
  *         Created on May 23, 2006, 3:48:23 PM
  * 
  */
@@ -60,7 +60,8 @@ public abstract class ForumService {
     }
 
     private void notifyEmailSubscribers(ConversationMessage conversationMessage) {
-        final Set<User> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getMembers();
+        final Set<User> readers =
+                conversationMessage.getConversationThread().getForum().getReadersGroup().getMembers().collect(Collectors.toSet());
         final Set<Person> teachers = new HashSet<Person>();
         final Set<Person> students = new HashSet<Person>();
         final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
@@ -118,7 +119,7 @@ public abstract class ForumService {
 
     private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
         if (!persons.isEmpty()) {
-            final Recipient recipient = new Recipient(getString("label.teachers"), UserGroup.of(Person.convertToUsers(persons)));
+            final Recipient recipient = new Recipient(getString("label.teachers"), Person.convertToUserGroup(persons));
             SystemSender systemSender = Bennu.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
         }

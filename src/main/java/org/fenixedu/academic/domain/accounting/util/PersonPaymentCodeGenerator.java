@@ -25,7 +25,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.util.Verhoeff;
 
 /**
- * Code Format: <numericPartOfIstId{6}><typeDigit{2}><checkDigit{1}>
+ * Code Format: numericPartOfIstId{6} - typeDigit{2} - checkDigit{1}
  */
 public class PersonPaymentCodeGenerator extends PaymentCodeGenerator {
     private static final String CODE_FILLER = "0";

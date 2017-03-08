@@ -32,8 +32,8 @@ public class ChangeDegreeOfficialPublicationReference {
     /**
      * Must ensure "REQUIRED" slots are filled
      * 
-     * @param degree
-     * @param date
+     * @param degreeOfficialPublication
+     * @param officialReference
      * @throws FenixServiceException
      */
     @Atomic

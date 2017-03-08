@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.ist.fenixframework.Atomic;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -52,7 +53,7 @@ public class ManageDepartmentsController extends JsonAwareResource {
     }
 
     @RequestMapping(value = "departments.json")
-    public @ResponseBody String getDepartmentsSet() {
+    public @ResponseBody JsonElement getDepartmentsSet() {
         return view(DepartmentService.getAllDepartments());
     }
 

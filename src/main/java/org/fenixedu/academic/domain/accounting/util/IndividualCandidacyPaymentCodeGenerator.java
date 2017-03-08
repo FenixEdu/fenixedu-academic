@@ -35,7 +35,7 @@ import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyP
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
- * Code Format: 8<sequentialNumber{4}><typeDigit{2}><controlDigits{2}>
+ * Code Format: 8 - sequentialNumber{4} - typeDigit{2} - controlDigits{2}
  * 
  */
 public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerator {

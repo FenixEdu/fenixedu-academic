@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess;
 import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcessBean;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 
 public class ConcludePhdProcess extends PhdThesisActivity {
 
@@ -74,7 +73,7 @@ public class ConcludePhdProcess extends PhdThesisActivity {
         if (!PhdIndividualProgramProcessState.CONCLUDED.equals(individualProgramProcess.getActiveState())) {
             individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson(), "");
         }
-        UserLoginPeriod.createOpenPeriod(process.getPerson().getUser());
+        process.getPerson().getUser().openLoginPeriod();
 
         return process;
     }
