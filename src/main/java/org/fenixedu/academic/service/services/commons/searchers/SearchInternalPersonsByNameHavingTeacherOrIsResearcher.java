@@ -19,7 +19,9 @@
 package org.fenixedu.academic.service.services.commons.searchers;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -28,12 +30,15 @@ public class SearchInternalPersonsByNameHavingTeacherOrIsResearcher extends Sear
 
     @Override
     protected Collection<Person> search(String value, int size) {
-        final Collection<Person> result = new HashSet<Person>();
-        for (final Person person : Person.findPerson(value, size)) {
-            if (person.getUser() != null && (person.getTeacher() != null || RoleType.RESEARCHER.isMember(person.getUser()))) {
-                result.add(person);
-            }
-        }
-        return result;
+        final Predicate<Person> isTeacherOrResearcher = person -> person.getUser() != null
+                && (person.getTeacher() != null || RoleType.RESEARCHER.isMember(person.getUser()));
+
+        Person personByUsername = Person.readPersonByUsername(value);
+
+        return Stream
+                .concat(personByUsername != null ? Stream.of(personByUsername) : Stream.empty(),
+                        Person.findPersonStream(value, Integer.MAX_VALUE))
+                .filter(isTeacherOrResearcher).limit(size)
+                .collect(Collectors.toSet());
     }
 }
