@@ -201,7 +201,7 @@ public class Curriculum implements Serializable, ICurriculum {
     static public CurriculumGradeCalculator getCurriculumGradeCalculator() {
         return CURRICULUM_GRADE_CALCULATOR.get();
     }
-    
+
     public CurriculumGradeCalculator getGradeCalculator() {
         return this.gradeCalculator;
     }
@@ -493,7 +493,16 @@ public class Curriculum implements Serializable, ICurriculum {
 
     @Override
     public YearMonthDay getLastApprovementDate() {
-        return getCurricularYearEntries().stream().map(i -> i.getApprovementDate()).max(YearMonthDay::compareTo).orElse(null);
+        return getCurricularYearEntries().stream().filter(i -> {
+
+            if (i.getApprovementDate() == null) {
+                logger.warn("Null Approvement Date! %s\n", i.getExternalId());
+                return false;
+            }
+
+            return true;
+
+        }).map(i -> i.getApprovementDate()).max(YearMonthDay::compareTo).orElse(null);
     }
 
     @Deprecated
