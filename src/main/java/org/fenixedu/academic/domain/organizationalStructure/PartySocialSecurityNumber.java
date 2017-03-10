@@ -44,11 +44,11 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     }
 
     private void checkRules() {
-        
+
         if (getParty() == null) {
             throw new DomainException("error.PartySocialSecurityNumber.invalid.party");
         }
-        
+
         if (!hasSocialSecurityNumber() && !hasFiscalCountry()) {
             //allow creation of persons without social security number (for instance: external persons, candidates, etc.)
             return;
@@ -74,7 +74,7 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
                 if (otherPartySecurityNumber == this) {
                     continue;
                 }
-                
+
                 if (getSocialSecurityNumber().equals(otherPartySecurityNumber.getSocialSecurityNumber())) {
                     throw new DomainException("error.PartySocialSecurityNumber.number.already.exists",
                             otherPartySecurityNumber.getParty().getName());
@@ -94,7 +94,7 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     }
 
     public boolean hasSocialSecurityNumber(String socialSecurityNumber) {
-        return getSocialSecurityNumber().equals(socialSecurityNumber);
+        return hasSocialSecurityNumber() && getSocialSecurityNumber().equals(socialSecurityNumber);
     }
 
     public void delete() {
@@ -105,15 +105,15 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     }
 
     private void edit(final Country fiscalCountry, final String socialSecurityNumber) {
-        
+
         if (hasFiscalCountry() && fiscalCountry == null) {
             throw new DomainException("error.PartySocialSecurityNumber.cannot.remove.fiscal.country");
         }
-        
+
         if (hasSocialSecurityNumber() && Strings.isNullOrEmpty(socialSecurityNumber)) {
             throw new DomainException("error.PartySocialSecurityNumber.cannot.remove.social.security.number");
         }
-        
+
         setFiscalCountry(fiscalCountry);
         setSocialSecurityNumber(socialSecurityNumber);
 
