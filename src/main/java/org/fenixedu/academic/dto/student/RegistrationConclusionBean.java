@@ -209,7 +209,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public ExecutionYear calculateConclusionYear() {
-        return getCurriculumGroup().hasAnyApprovedCurriculumLines() ? getCurriculumGroup().calculateConclusionYear() : null;
+        return getCurriculumForConclusion().getLastExecutionYear();
     }
 
     public ExecutionYear getCalculatedConclusionYear() {

@@ -492,11 +492,25 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     @Override
+    public ExecutionYear getLastExecutionYear() {
+        return getCurricularYearEntries().stream().filter(i -> {
+
+            if (i.getExecutionYear() == null) {
+                logger.warn(String.format("Null Execution Year! %s\n", i.getExternalId()));
+                return false;
+            }
+
+            return true;
+
+        }).map(i -> i.getExecutionYear()).max(ExecutionYear::compareTo).orElse(null);
+    }
+
+    @Override
     public YearMonthDay getLastApprovementDate() {
         return getCurricularYearEntries().stream().filter(i -> {
 
             if (i.getApprovementDate() == null) {
-                logger.warn("Null Approvement Date! %s\n", i.getExternalId());
+                logger.warn(String.format("Null Approvement Date! %s\n", i.getExternalId()));
                 return false;
             }
 
