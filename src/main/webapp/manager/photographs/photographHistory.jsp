@@ -31,14 +31,25 @@
 
 <fr:form action="/photographs/history.do?method=historyFilter">
     <h3>Foto</h3>
-    <fr:edit id="historyFilter" name="filter" schema="photographs.filter.main">
-        <fr:layout name="tabular-editable">
-            <fr:property name="classes" value="tstyle1" />
-            <fr:property name="columnClasses" value=",,noborder" />
-        </fr:layout>
-    </fr:edit>
-    <h3>Pessoa</h3>
-    <fr:edit id="historyFilterPerson" name="filter" schema="photographs.filter.person">
+    <fr:edit id="historyFilter" name="filter">
+    	<fr:schema type="org.fenixedu.academic.dto.photographs.PhotographFilterBean" bundle="DOMAIN_RESOURCES">
+    		<fr:slot name="state" key="label.Photograph.state" />
+			<fr:slot name="type" key="label.Photograph.type" />
+    		<fr:slot name="startDate" key="label.Photograph.startDateModified" layout="picker" >
+        		<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+				<fr:property name="size" value="12"/>
+				<fr:property name="maxLength" value="10"/>
+			</fr:slot>
+			<fr:slot name="endDate" key="label.Photograph.endDateModified" layout="picker" >
+        		<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+				<fr:property name="size" value="12"/>
+				<fr:property name="maxLength" value="10"/>
+			</fr:slot>
+			<fr:slot name="userName" key="label.Party.username">
+	    		<fr:property name="size" value="15" />
+			</fr:slot>    	
+    	</fr:schema>
+    	
         <fr:layout name="tabular-editable">
             <fr:property name="classes" value="tstyle1" />
             <fr:property name="columnClasses" value=",,noborder" />
