@@ -34,6 +34,11 @@ ${portal.toolkit()}
 		<small><spring:message code="teacher.authorizations.create.title" /></small>
 	</h1>
 </div>
+<c:if test="${not empty error}">
+    <div class="alert alert-danger">
+      <c:out value="${error}"/>
+    </div>
+</c:if>
 <section>
 	<form:form role="form" modelAttribute="formBean" method="POST" class="form-horizontal" action="${createUrl}">
 		${csrf.field()}
