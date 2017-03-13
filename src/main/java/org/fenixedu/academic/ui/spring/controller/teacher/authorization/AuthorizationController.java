@@ -23,6 +23,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +35,9 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +59,9 @@ public class AuthorizationController {
 
     @Autowired
     AuthorizationService service;
+
+    @Autowired
+    MessageSource messageService;
 
     /***
      * Helper method that returns webview resource for this context
@@ -246,17 +252,15 @@ public class AuthorizationController {
      * @return
      */
     @RequestMapping(method = POST, value = "create")
-    public String create(Model model, @ModelAttribute FormBean form, final RedirectAttributes attrs) {
-    
-        try {
+    public String create(Locale loc, Model model, @ModelAttribute FormBean form, final RedirectAttributes attrs,
+            BindingResult result) {
+        if (form.getUser() == null) {
+            model.addAttribute("error", messageService.getMessage("label.valid.username", null, loc));
+            return showCreate(model, form);
+        } else {
             service.createTeacherAuthorization(form);
-        } catch (Exception e) {
-            model.addAttribute("error", e.getLocalizedMessage());
-            model.addAttribute("form", form);
-            return "redirect:/teacher/authorizations/create";
+            return redirectHome(form, attrs);
         }
-        
-        return redirectHome(form, attrs);
     }
 
     /***
