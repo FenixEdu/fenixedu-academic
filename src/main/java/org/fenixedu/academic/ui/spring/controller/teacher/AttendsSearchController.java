@@ -21,10 +21,12 @@ package org.fenixedu.academic.ui.spring.controller.teacher;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
 
@@ -42,9 +44,9 @@ import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.WorkingStudentSelectionType;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -62,14 +64,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Joiner;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+import pt.ist.fenixframework.FenixFramework;
 
 @Controller
 @RequestMapping("/teacher/{executionCourse}/attends/")
@@ -98,15 +100,6 @@ public class AttendsSearchController extends ExecutionCourseController {
             studentAttendsStateTypes.add(typeJson);
         }
 
-        JsonArray workingStudentSelectionType = new JsonArray();
-
-        for (WorkingStudentSelectionType wsstype : WorkingStudentSelectionType.values()) {
-            JsonObject object = new JsonObject();
-            object.addProperty("name", BundleUtil.getString(Bundle.ENUMERATION, wsstype.getQualifiedName()));
-            object.addProperty("working", wsstype.equals(WorkingStudentSelectionType.WORKING_STUDENT));
-            workingStudentSelectionType.add(object);
-        }
-
         model.addAttribute("attendsStates", studentAttendsStateTypes);
         model.addAttribute("groupings", view(executionCourse.getGroupings()));
 
@@ -115,7 +108,6 @@ public class AttendsSearchController extends ExecutionCourseController {
 
         model.addAttribute("shiftTypes", view(executionCourse.getShiftTypes()));
 
-        model.addAttribute("workingStudentTypes", workingStudentSelectionType);
         return new TeacherView("executionCourse/attendsSearch/viewStudentList");
     }
 
@@ -174,14 +166,11 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
                                 .getPresentationName());
 
-                        if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod())) {
-                            addCell(getLabel("label.workingStudents"),
-                                    BundleUtil.getString(Bundle.ENUMERATION,
-                                            WorkingStudentSelectionType.WORKING_STUDENT.getQualifiedName()));
-                        } else {
-                            addCell(getLabel("label.workingStudents"),
-                                    BundleUtil.getString(Bundle.ENUMERATION,
-                                            WorkingStudentSelectionType.NOT_WORKING_STUDENT.getQualifiedName()));
+                        Collection<StudentStatuteBean> studentStatutes =
+                                attends.getRegistration().getStudent().getStatutes(executionCourse.getExecutionPeriod());
+                        if (studentStatutes.size() > 0) {
+                            addCell(getLabel("label.studentStatutes"), studentStatutes.stream()
+                                    .map(st -> st.getStatuteType().getName().getContent()).collect(Collectors.joining(" | ")));
                         }
                     }
                 });
@@ -244,7 +233,7 @@ public class AttendsSearchController extends ExecutionCourseController {
     @RequestMapping(value = "/sendEmail", method = RequestMethod.POST)
     public RedirectView sendEmail(Model model, HttpServletRequest request, HttpSession session,
             @RequestParam("filteredAttendsJson") String filteredAttendsJson, @RequestParam("filtersJson") String filtersJson) {
-        String attendTypeValues = "", degreeNameValues = "", shiftsValues = "", workingStudentsValues = "";
+        String attendTypeValues = "", degreeNameValues = "", shiftsValues = "", studentStatuteTypesValues = "";
 
         JsonObject filters = new JsonParser().parse(filtersJson).getAsJsonObject();
         for (JsonElement elem : filters.get("attendsStates").getAsJsonArray()) {
@@ -277,21 +266,26 @@ public class AttendsSearchController extends ExecutionCourseController {
             }
         }
 
-        for (JsonElement elem : filters.get("workingStudentTypes").getAsJsonArray()) {
+        JsonObject noStatuteObject = filters.get("noStudentStatuteTypes").getAsJsonObject();
+        if (noStatuteObject.get("value").getAsBoolean()) {
+            studentStatuteTypesValues += noStatuteObject.get("shortName");
+        }
+        for (JsonElement elem : filters.get("studentStatuteTypes").getAsJsonArray()) {
             JsonObject object = elem.getAsJsonObject();
             if (object.get("value").getAsBoolean()) {
-                if (!workingStudentsValues.isEmpty()) {
-                    workingStudentsValues += ", ";
+                if (!studentStatuteTypesValues.isEmpty()) {
+                    studentStatuteTypesValues += ", ";
                 }
-                workingStudentsValues += object.get("name");
+                studentStatuteTypesValues += object.get("name");
             }
         }
 
         String label =
-                String.format("%s : %s \n%s : %s \n%s : %s \n%s",
+                String.format("%s : %s \n%s : %s \n%s : %s \n%s : %s",
                         BundleUtil.getString(Bundle.APPLICATION, "label.selectStudents"), attendTypeValues,
                         BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"), degreeNameValues,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues, workingStudentsValues);
+                        BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues,
+                        BundleUtil.getString(Bundle.APPLICATION, "label.studentStatutes"), studentStatuteTypesValues);
 
         Builder<Attends> builder = Stream.builder();
         for (JsonElement elem : new JsonParser().parse(filteredAttendsJson).getAsJsonArray()) {

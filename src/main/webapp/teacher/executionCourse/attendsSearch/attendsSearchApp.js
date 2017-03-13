@@ -5,15 +5,16 @@ var app = angular.module("AttendsSearchApp",  [ 'ui.bootstrap']);
 
 app.filter('attendsFilter', function() {
     return function(attends, filters) {
-    	var workingStudentCheck = function(attendee){
-            for (var i = 0; i < filters.workingStudentTypes.length; i++) {
-                if (filters.workingStudentTypes[i].value
-                		&& attendee.workingStudent == filters.workingStudentTypes[i].working) {
-                    return true;
-                }
-            }
-        	return false;
-    	}
+    	var studentStatuteTypeCheck = function(attendee) {
+    		if(filters.noStudentStatuteTypes.value && attendee.studentStatutes.length == 0) {
+    			return true;
+    		}
+    		return filters.studentStatuteTypes.filter(function(elem, index, array) {
+    		    return (elem.value && attendee.studentStatutes.map(function(statute) {
+    		        return statute.type.id;
+    		    }).indexOf(elem.id) > -1)
+    		}).length > 0
+    	};
 
     	var enrolmentTypeCheck = function(attendee){
     		for (var i = 0; i < filters.attendsStates.length; i++) {
@@ -62,7 +63,7 @@ app.filter('attendsFilter', function() {
         var attendsSet = [];
         for (var j = 0; j < attends.length; j++) {
             var attendee = attends[j];
-            if( workingStudentCheck(attendee)
+            if( studentStatuteTypeCheck(attendee)
             		&& enrolmentTypeCheck(attendee)
             		&& shiftCheck(attendee)
             		&& curricularPlanCheck(attendee)
@@ -83,6 +84,33 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
             url: window.contextPath + '/teacher/' + executionCourseId + '/attends/list'
         }).success(function(attends) {
             $scope.attends = attends
+
+            $scope.studentStatuteTypes = $scope.attends.map(function(attend) {
+            	return attend.studentStatutes.map(function(s) {
+            		return s.type;
+            	});
+            }).reduce(function(a,b) {
+            	return a.concat(b);
+            }).filter(function(elem, index, array) {
+        	  for(var i=0; i<index; i++) {
+        		  if(elem.id == array[i].id) {
+        			  return false;
+        		  }
+        	  }
+        	  return true;
+            });
+
+            $scope.filters.studentStatuteTypes = new Array($scope.studentStatuteTypes.length);   
+
+            for (var i = 0; i < $scope.studentStatuteTypes.length; i++) {
+                $scope.filters.studentStatuteTypes[i] = $scope.studentStatuteTypes[i];
+                $scope.filters.studentStatuteTypes[i].value = true;
+            }
+            $scope.filters.noStudentStatuteTypes = {}
+            $scope.filters.noStudentStatuteTypes.shortName = strings.noStudentStatuteTypesShortName;
+            $scope.filters.noStudentStatuteTypes.value = true;
+            $scope.allCheck.studentStatuteTypes = true;
+
             $scope.genFilteredAttends();
             genNumberOfEnrolments();
         }).error(function(data) {
@@ -98,7 +126,6 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
         $scope.filters.attendsStates = new Array(attendsStates.length);
         $scope.filters.curricularPlans = new Array(curricularPlans.length);
         $scope.filters.shifts = new Array(shifts.length);
-        $scope.filters.workingStudentTypes = new Array(workingStudentTypes.length);
         $scope.showPhotos = false;
 
         $scope.itemsPerPage = 30;
@@ -126,13 +153,6 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
         $scope.filters.noShift.value = true;
         $scope.allCheck.shifts = true;
 
-        for (var i = 0; i < workingStudentTypes.length; i++) {
-            $scope.filters.workingStudentTypes[i] = workingStudentTypes[i];
-            $scope.filters.workingStudentTypes[i].value = true;
-        }
-        $scope.allCheck.workingStTypes = true;
-
-        $scope.workingStudentTypes = workingStudentTypes;
         $scope.rowspan = $scope.groupings || $scope.ShiftTypes ? 2 : 1;
 
         $scope.filteredAttends =new Array();
@@ -185,6 +205,14 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
         	return Object.keys(obj).length === 0;
         };
 
+        $scope.changeAllStudentStatuteTypes = function() {
+        	$scope.filters.studentStatuteTypes.forEach(function(elem, index, array) {
+        		array[index].value = $scope.allCheck.studentStatuteTypes; 
+        	}); 
+        	$scope.filters.noStudentStatuteTypes.value = $scope.allCheck.studentStatuteTypes;
+        	$scope.genFilteredAttends();
+        };
+
         $scope.changeAllAttendsStates = function(){
             for (var i = 0; i < $scope.filters.attendsStates.length; i++) {
                 $scope.filters.attendsStates[i].value = $scope.allCheck.attendsStates;
@@ -206,13 +234,6 @@ app.controller("AttendsSearchCtrl", ['$scope', '$http','$filter',
             $scope.filters.noShift.value = $scope.allCheck.shifts;
             $scope.genFilteredAttends();
         }
-        $scope.changeAllWorkingStudentTypes = function(){
-            for (var i = 0; i < $scope.filters.workingStudentTypes.length; i++) {
-                $scope.filters.workingStudentTypes[i].value = $scope.allCheck.workingStTypes
-            }
-            $scope.genFilteredAttends();
-        }
-
 
         var genNumberOfEnrolments = function(){
         	$scope.numberOfEnrolments = new Array(1);
