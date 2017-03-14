@@ -122,6 +122,7 @@
 				<form role="form" class="form-horizontal" style="display: inline"
 					id="delete" method="post" action="${deleteGrouping }"
 					enctype="multipart/form-data">
+					${csrf.field()}
 					<button type="submit" class="btn btn-default">
 						<span class="glyphicon glyphicon-remove"></span>${fr:message('resources.ApplicationResources', 'link.deleteGroupProperties')}
 					</button>
@@ -156,7 +157,7 @@
 				<form role="form" class="form-horizontal" style="display: inline"
 					method="post"
 					action="${createStudentGroupBaseLink.concat('createStudentGroup') }">
-
+					${csrf.field()}
 					<span class="btn-group pull-left"> <button type="submit"
 						class="btn btn-default pull-left"> <span
 							class="glyphicon glyphicon-plus"></span>
@@ -235,7 +236,7 @@
 					<form role="form" class="form-horizontal" style="display: inline"
 						method="post"
 						action="${createStudentGroupBaseLink.concat('shift/').concat(shift.externalId).concat('/createStudentGroup/') }">
-						${csrfField}
+						${csrf.field()}
 						<button type="submit" class="btn btn-default pull-left">
 							<span class="glyphicon glyphicon-plus"></span>${fr:message('resources.ApplicationResources', 'link.insertGroup')}
 						</button>

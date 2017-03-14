@@ -18,16 +18,7 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExportGrouping;
-import org.fenixedu.academic.domain.Grouping;
-import org.fenixedu.academic.domain.Professorship;
-import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.ShiftType;
-import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.academic.util.ProposalState;
@@ -43,8 +34,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.RedirectView;
-
 import pt.ist.fenixframework.FenixFramework;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/teacher/{executionCourse}/student-groups/")
@@ -56,11 +49,6 @@ public class GroupingController extends ExecutionCourseController {
     // hack
     @Autowired
     CSRFTokenBean csrfTokenBean;
-    
-    @ModelAttribute("csrfField")
-    public String getCSRFField(){
-        return csrfTokenBean.field();
-    }
     
     @Override
     protected Class<?> getFunctionalityType() {
@@ -74,17 +62,20 @@ public class GroupingController extends ExecutionCourseController {
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
     public TeacherView showStudentGroups(Model model) {
+        model.addAttribute("csrf",csrfTokenBean);
         return new TeacherView("executionCourse/groupings/viewProjectsAndLink");
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public TeacherView create(Model model) {
+        model.addAttribute("csrf",csrfTokenBean);
         model.addAttribute("projectGroup", new ProjectGroupBean(this.executionCourse));
         return new TeacherView("executionCourse/groupings/insertGroupProperties");
     }
 
     @RequestMapping(value = "/edit/{grouping}", method = RequestMethod.GET)
     public TeacherView edit(Model model, Grouping grouping) {
+        model.addAttribute("csrf",csrfTokenBean);
         model.addAttribute("projectGroup", new ProjectGroupBean(grouping, this.executionCourse));
         return new TeacherView("executionCourse/groupings/insertGroupProperties");
     }
@@ -198,7 +189,7 @@ public class GroupingController extends ExecutionCourseController {
     @RequestMapping(value = "/view/{grouping}", method = RequestMethod.GET)
     public TeacherView viewGrouping(Model model, @PathVariable Grouping grouping) {
         List<Shift> shiftList = new ArrayList<Shift>();
-
+        model.addAttribute("csrf",csrfTokenBean);
         if (grouping.getShiftType() != null) {
             shiftList =
                     grouping.getExportGroupingsSet().stream().map(ExportGrouping::getExecutionCourse)
@@ -228,6 +219,7 @@ public class GroupingController extends ExecutionCourseController {
 
     @RequestMapping(value = "/viewAttends/{grouping}", method = RequestMethod.GET)
     public TeacherView viewAttends(Model model, @PathVariable Grouping grouping) {
+        model.addAttribute("csrf",csrfTokenBean);
         model.addAttribute("grouping", grouping);
 
         ArrayList<Registration> studentsNotAttending = new ArrayList<Registration>();
@@ -268,6 +260,7 @@ public class GroupingController extends ExecutionCourseController {
 
     @RequestMapping(value = "/viewAllStudentsAndGroups/{grouping}", method = RequestMethod.GET)
     public TeacherView viewAllStudentsAndGroups(Model model, @PathVariable Grouping grouping) {
+        model.addAttribute("csrf",csrfTokenBean);
         model.addAttribute("grouping", grouping);
         model.addAttribute("studentsInStudentGroupsSize",
                 grouping.getStudentGroupsSet().stream().mapToInt(sg -> sg.getAttendsSet().size()).sum());
@@ -277,6 +270,7 @@ public class GroupingController extends ExecutionCourseController {
 
     @RequestMapping(value = "/viewStudentsAndGroupsByShift/{grouping}", method = RequestMethod.GET)
     public TeacherView viewStudentsAndGroupsByShift(Model model, @PathVariable Grouping grouping) {
+        model.addAttribute("csrf",csrfTokenBean);
         model.addAttribute("grouping", grouping);
 
         return new TeacherView("executionCourse/groupings/viewStudentsAndGroupsByShift");
@@ -284,6 +278,7 @@ public class GroupingController extends ExecutionCourseController {
 
     @RequestMapping(value = "/viewStudentsAndGroupsByShift/{grouping}/shift/{shift}", method = RequestMethod.GET)
     public TeacherView viewStudentsAndGroupsByShift(Model model, @PathVariable Grouping grouping, @PathVariable Shift shift) {
+        model.addAttribute("csrf",csrfTokenBean);
         model.addAttribute("shift", shift);
         model.addAttribute("grouping", grouping);
         TreeSet<StudentGroup> studentsByGroup = new TreeSet<StudentGroup>(StudentGroup.COMPARATOR_BY_GROUP_NUMBER);

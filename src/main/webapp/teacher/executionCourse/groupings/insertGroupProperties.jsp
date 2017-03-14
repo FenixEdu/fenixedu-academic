@@ -69,7 +69,7 @@
 	<form:form modelAttribute="projectGroup" role="form" method="post"
 		action="${createGroupUrl }" class="form-horizontal"
 		enctype="multipart/form-data">
-		${csrfField}
+		${csrf.field()}
 
 		<form:input type="hidden" class="form-control" path="externalId"  required="required"/>
 
