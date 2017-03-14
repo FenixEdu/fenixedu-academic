@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
 
@@ -172,7 +173,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
                 final User userView = Authenticate.getUser();
                 if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getRegistration()
                         .getDegree(), userView.getPerson().getUser())
-                        || RoleType.MANAGER.isMember(userView.getPerson().getUser())) {
+                        || Group.managers().isMember(userView.getPerson().getUser())) {
                     return;
                 }
             }
