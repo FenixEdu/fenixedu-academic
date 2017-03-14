@@ -299,21 +299,19 @@ ${portal.bennuPortal()}
 
 </script>
 
-<script>
-    angular.module("bennuToolkit").config(['$httpProvider',function($httpProvider) {
-        $httpProvider.defaults.headers.common = $httpProvider.defaults.headers.common || {};
-        $httpProvider.defaults.headers.common['${csrf.headerName}'] = '${csrf.token}';
-    }]);
-</script>
-
-
-
 <script
 	src="${pageContext.request.contextPath}/bennu-core/js/angular.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/teacher/executionCourse/attendsSearch/attendsSearchApp.js"></script>
 <script
 	src="${pageContext.request.contextPath}/teacher/executionCourse/attendsSearch/ui-bootstrap-pagination-0.12.0.js"></script>
+
+<script>
+    angular.module("AttendsSearchApp").config(['$httpProvider',function($httpProvider) {
+        $httpProvider.defaults.headers.common = $httpProvider.defaults.headers.common || {};
+        $httpProvider.defaults.headers.common['${csrf.headerName}'] = '${csrf.token}';
+    }]);
+</script>
 
 <script>
 	$(function () {

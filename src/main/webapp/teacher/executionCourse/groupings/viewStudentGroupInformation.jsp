@@ -180,7 +180,7 @@
 		<form role="form" class="form-horizontal" style="display: inline"
 			id="delete" method="post" action="${deleteStudentGroupLink }"
 			enctype="multipart/form-data">
-
+				${csrf.field()}
 			<button type="submit" class="btn btn-danger">
 				<span class="glyphicon glyphicon-remove"></span>
 				${fr:message('resources.ApplicationResources', 'link.deleteGroup')}
@@ -189,7 +189,7 @@
 
 		<form:form modelAttribute="attends"  style="display: inline" role="form" method="post"
 			action="${editStudentGroupAttendsUrl }" enctype="multipart/form-data">
-			${csrfField}
+			${csrf.field()}
 			<c:if test="${not empty studentGroup.attendsSet}">
 				<a
 					href="${sendEmailLink }"

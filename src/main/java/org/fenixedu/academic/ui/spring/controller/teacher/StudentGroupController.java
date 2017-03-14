@@ -18,15 +18,6 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.UriBuilder;
-
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExportGrouping;
@@ -55,8 +46,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.RedirectView;
-
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.UriBuilder;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/teacher/{executionCourse}/student-groups/{grouping}")
@@ -74,10 +72,6 @@ public class StudentGroupController extends ExecutionCourseController {
     @Autowired
     CSRFTokenBean csrfTokenBean;
     
-    @ModelAttribute("csrfField")
-    public String getCSRFField(){
-        return csrfTokenBean.field();
-    }
     
     @Override
     protected Class<?> getFunctionalityType() {
@@ -110,7 +104,7 @@ public class StudentGroupController extends ExecutionCourseController {
 
     @RequestMapping(value = "/viewStudentGroup/{studentGroup}", method = RequestMethod.GET)
     public TeacherView viewStudentGroup(Model model, @PathVariable Grouping grouping, @PathVariable StudentGroup studentGroup) {
-
+        model.addAttribute("csrf",csrfTokenBean);
         model.addAttribute("studentGroup", studentGroup);
 
         ArrayList<Shift> shiftList = new ArrayList<Shift>();
