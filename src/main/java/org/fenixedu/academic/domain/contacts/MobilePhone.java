@@ -104,11 +104,6 @@ public class MobilePhone extends MobilePhone_Base {
         }
     }
 
-    @Override
-    public String getPresentationValue() {
-        return getNumber();
-    }
-
     public boolean hasNumber() {
         return getNumber() != null && !getNumber().isEmpty();
     }

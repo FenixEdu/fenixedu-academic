@@ -178,11 +178,6 @@ public class EmailAddress extends EmailAddress_Base {
                 .filter(emailAddress -> emailAddress.isActiveAndValid());
     }
 
-    @Override
-    public String getPresentationValue() {
-        return getValue();
-    }
-
     private void updateProfileEmail() {
         if (getParty() != null && getParty() instanceof Person) {
             Person person = (Person) getParty();

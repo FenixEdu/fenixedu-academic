@@ -105,11 +105,6 @@ public class WebAddress extends WebAddress_Base {
     }
 
     @Override
-    public String getPresentationValue() {
-        return getUrl();
-    }
-
-    @Override
     public boolean hasValue(String value) {
         return hasUrl() && getUrl().equals(value);
     }
