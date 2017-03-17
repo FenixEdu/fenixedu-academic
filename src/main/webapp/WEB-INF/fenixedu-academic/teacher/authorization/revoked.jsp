@@ -75,7 +75,7 @@ text-align: center;
 				<c:set var="user" value="${auth.teacher.person.user}"/>
 				<tr>
 					<td><c:out value="${user.username}"/></td>
-					<td><c:out value="${user.name}"/></td>
+					<td><c:out value="${user.profile.displayName}"/></td>
 					<td title="${auth.creationDate.toString('dd/MM/yyyy HH:mm:ss')}">
 						${auth.creationDate == null ? '-' : auth.creationDate.toString('dd/MM/yyyy')}
 					</td>

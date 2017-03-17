@@ -163,7 +163,7 @@ $(document).ready(function() {
 						<c:set var="user" value="${auth.teacher.person.user}"/>
 						<tr>
 							<td><c:out value="${user.username}"/></td>  
-							<td><c:out value="${user.name}"/></td>
+							<td><c:out value="${user.profile.displayName}"/></td>
 							<td>
 								<c:choose>
 									<c:when test="${auth.contracted}">
