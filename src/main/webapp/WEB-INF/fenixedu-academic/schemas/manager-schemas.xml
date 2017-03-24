@@ -508,35 +508,6 @@
     <slot name="this" layout="link" key="documents.link" />
 </schema>
 
-<schema name="photographs.filter.main" type="org.fenixedu.academic.dto.photographs.PhotographFilterBean"
-	bundle="DOMAIN_RESOURCES">
-	<slot name="state" key="label.Photograph.state" />
-	<slot name="type" key="label.Photograph.type" />
-    <slot name="startDate" key="label.Photograph.startDateModified" layout="picker" >
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-		<property name="size" value="12"/>
-		<property name="maxLength" value="10"/>
-	</slot>
-	<slot name="endDate" key="label.Photograph.endDateModified" layout="picker" >
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-		<property name="size" value="12"/>
-		<property name="maxLength" value="10"/>
-	</slot>
-</schema>
-
-<schema name="photographs.filter.person" type="org.fenixedu.academic.dto.photographs.PhotographFilterBean"
-    bundle="DOMAIN_RESOURCES">
-	<slot name="personType" key="label.RoleType.name">
-        <property name="includedValues" value="ALUMNI, TEACHER, STUDENT, EMPLOYEE, GRANT_OWNER" />
-        <property name="key" value="true" />
-        <property name="defaultText" value="label.dropDown.all" />
-        <property name="bundle" value="ENUMERATION_RESOURCES" />
-    </slot>
-	<slot name="name" key="label.Party.name">
-	    <property name="size" value="50" />
-	</slot>
-</schema>
-
 <schema name="EditUserDomainObject" type="org.fenixedu.bennu.core.domain.User" bundle="MANAGER_RESOURCES">
 	<slot name="username" />
 </schema>

@@ -24,9 +24,10 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PhotoState;
 import org.fenixedu.academic.domain.PhotoType;
 import org.fenixedu.academic.domain.Photograph;
-import org.fenixedu.academic.domain.person.HumanName;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.joda.time.LocalDate;
+
+import com.google.common.base.Strings;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -44,7 +45,18 @@ public class PhotographFilterBean implements Serializable {
 
     private RoleType personType;
 
+    @Deprecated
     private String name;
+
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public LocalDate getStartDate() {
         return startDate;
@@ -86,10 +98,12 @@ public class PhotographFilterBean implements Serializable {
         this.personType = personType;
     }
 
+    @Deprecated
     public String getName() {
         return name;
     }
 
+    @Deprecated
     public void setName(String name) {
         this.name = name;
     }
@@ -130,7 +144,7 @@ public class PhotographFilterBean implements Serializable {
             if (getPersonType() != null && !getPersonType().isMember(person.getUser())) {
                 return false;
             }
-            if (getName() != null && !HumanName.namesMatch(person.getName(), name)) {
+            if (!Strings.isNullOrEmpty(getUserName()) && !getUserName().equals(person.getUsername())) {
                 return false;
             }
         } else {
