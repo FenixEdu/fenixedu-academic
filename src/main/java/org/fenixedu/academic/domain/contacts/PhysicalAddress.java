@@ -34,6 +34,10 @@ import pt.ist.fenixframework.Atomic;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
 
+    static {
+        setResolver(PhysicalAddress.class, (pc) -> ((PhysicalAddress) pc).getAddress());
+    }
+
     public static Comparator<PhysicalAddress> COMPARATOR_BY_ADDRESS = new Comparator<PhysicalAddress>() {
         @Override
         public int compare(PhysicalAddress contact, PhysicalAddress otherContact) {
@@ -136,11 +140,6 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         if (getParty().getPartyContacts(getClass()).size() == 1) {
             throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.last.physicalAddress");
         }
-    }
-
-    @Override
-    public String getPresentationValue() {
-        return getAddress();
     }
 
     public String getPostalCode() {

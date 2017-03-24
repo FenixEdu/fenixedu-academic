@@ -62,9 +62,9 @@ public class PhoneValidation extends PhoneValidation_Base {
             final Country country = person.getCountry();
             final String language = Country.isCPLPCountry(country) ? "pt" : "en";
 
-            if (PhoneUtil.isFixedNumber(number) || !PhoneUtil.isPortugueseNumber(number)) {
+            if (PhoneUtil.shouldReceiveValidationCall(number)) {
                 PhoneValidationUtils.getInstance().makeCall(PhoneUtil.getInternacionalFormatNumber(number), token, language);
-            } else if (PhoneUtil.isMobileNumber(number)) {
+            } else if (PhoneUtil.shouldReceiveValidationSMS(number)) {
                 PhoneValidationUtils.getInstance().sendSMS(PhoneUtil.getInternacionalFormatNumber(number), token);
             }
 

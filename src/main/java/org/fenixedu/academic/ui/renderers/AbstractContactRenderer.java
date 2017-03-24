@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.contacts.WebAddress;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
-import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
@@ -105,24 +104,17 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
     protected HtmlComponent getValue(PartyContact contact) {
         HtmlInlineContainer span = new HtmlInlineContainer();
         if (contact instanceof Phone) {
-            span.addChild(new HtmlText(((Phone) contact).getNumber()));
+            span.addChild(new HtmlText(((Phone) contact).getPresentationValue()));
         } else if (contact instanceof MobilePhone) {
-            span.addChild(new HtmlText(((MobilePhone) contact).getNumber()));
+            span.addChild(new HtmlText(((MobilePhone) contact).getPresentationValue()));
         } else if (contact instanceof EmailAddress) {
             EmailAddress email = (EmailAddress) contact;
-            if (isPublicSpace()) {
-                HtmlImage img = new HtmlImage();
-                img.setSource(RenderUtils.getContextRelativePath("") + "/publico/viewHomepage.do?method=emailPng&amp;email="
-                        + email.getExternalId());
-                span.addChild(img);
-            } else {
-                HtmlLink link = new HtmlLink();
-                link.setModuleRelative(false);
-                link.setContextRelative(false);
-                link.setUrl("mailto:" + email.getValue());
-                link.setBody(new HtmlText(email.getValue()));
-                span.addChild(link);
-            }
+            HtmlLink link = new HtmlLink();
+            link.setModuleRelative(false);
+            link.setContextRelative(false);
+            link.setUrl("mailto:" + email.getPresentationValue());
+            link.setBody(new HtmlText(email.getPresentationValue()));
+            span.addChild(link);
         } else if (contact instanceof WebAddress) {
             HtmlLink link = new HtmlLink();
             link.setModuleRelative(false);

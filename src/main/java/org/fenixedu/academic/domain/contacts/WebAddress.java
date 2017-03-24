@@ -30,6 +30,10 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class WebAddress extends WebAddress_Base {
 
+    static {
+        setResolver(WebAddress.class, (pc) -> ((WebAddress) pc).getUrl());
+    }
+
     public static Comparator<WebAddress> COMPARATOR_BY_URL = new Comparator<WebAddress>() {
         @Override
         public int compare(WebAddress contact, WebAddress otherContact) {
@@ -102,11 +106,6 @@ public class WebAddress extends WebAddress_Base {
 
     public boolean hasUrl() {
         return getUrl() != null && getUrl().length() > 0;
-    }
-
-    @Override
-    public String getPresentationValue() {
-        return getUrl();
     }
 
     @Override

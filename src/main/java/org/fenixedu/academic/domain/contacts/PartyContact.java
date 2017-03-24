@@ -19,11 +19,13 @@
 package org.fenixedu.academic.domain.contacts;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
 import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonInformationLog;
@@ -37,6 +39,25 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 
 public abstract class PartyContact extends PartyContact_Base {
+
+    public interface ContactResolver<T extends PartyContact> {
+        public String getPresentationValue(T partyContact);
+    }
+
+    private static final Map<Class<? extends PartyContact>, ContactResolver<? extends PartyContact>> DEFAULT_RESOLVERS =
+            new HashMap<>();
+
+    private static ContactResolver<? extends PartyContact> getResolver(Class<?> class1) {
+        synchronized (DEFAULT_RESOLVERS) {
+            return DEFAULT_RESOLVERS.get(class1);
+        }
+    }
+
+    public static void setResolver(Class<? extends PartyContact> class1, ContactResolver<?> contactResolver) {
+        synchronized (DEFAULT_RESOLVERS) {
+            DEFAULT_RESOLVERS.put(class1, contactResolver);
+        }
+    }
 
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
         @Override
@@ -176,7 +197,10 @@ public abstract class PartyContact extends PartyContact_Base {
         setDefaultContactInformation(defaultContact);
     }
 
-    public abstract String getPresentationValue();
+    public String getPresentationValue() {
+        final ContactResolver resolver = getResolver(getClass());
+        return resolver == null ? null : resolver.getPresentationValue(this);
+    }
 
     public boolean isDefault() {
         return hasDefaultContactValue() && getDefaultContact().booleanValue();
@@ -526,4 +550,5 @@ public abstract class PartyContact extends PartyContact_Base {
     private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
         return ContactRoot.getInstance().getPartyContactsSet().stream().filter((type)::isInstance).collect(Collectors.toSet());
     }
+
 }
