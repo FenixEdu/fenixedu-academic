@@ -139,6 +139,7 @@
 			<form id="emailForm" class=""
 				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/sendEmail"
 				method="post">
+				${csrf.field()}
 				<div class="form-group">
 					<input type='hidden' name="filteredAttendsJson" value="{{ attendsList }}" />
 					<input type='hidden' name="filtersJson" value="{{ filters }}" />
@@ -150,15 +151,17 @@
 			<form  id="spreadsheetform"
 				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentSpreadsheet"
 				method="post">
+				${csrf.field()}
 				<div class="form-group">
 					<input type='hidden' name="filteredAttendsJson" value="{{ attendsList }}" />
 					<input type='submit' class="btn btn-default" ng-click="genFilteredIdsList()"
 						value="${fr:message('resources.ApplicationResources','link.getExcelSpreadSheet')}" />
 				</div>
 			</form>
-			<form id="spreadsheetform"
+			<form id="spreadsheetAvalform"
 				action="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/attends/studentEvaluationsSpreadsheet"
 				method="post">
+				${csrf.field()}
 				<div class="form-group">
 					<input type='submit' class="btn btn-default" ng-click="genFilteredIdsList()"
 						value="${fr:message('resources.ApplicationResources','link.getExcelSpreadSheetWithGrades')}" />
@@ -296,13 +299,19 @@ ${portal.bennuPortal()}
 
 </script>
 
-
 <script
 	src="${pageContext.request.contextPath}/bennu-core/js/angular.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/teacher/executionCourse/attendsSearch/attendsSearchApp.js"></script>
 <script
 	src="${pageContext.request.contextPath}/teacher/executionCourse/attendsSearch/ui-bootstrap-pagination-0.12.0.js"></script>
+
+<script>
+    angular.module("AttendsSearchApp").config(['$httpProvider',function($httpProvider) {
+        $httpProvider.defaults.headers.common = $httpProvider.defaults.headers.common || {};
+        $httpProvider.defaults.headers.common['${csrf.headerName}'] = '${csrf.token}';
+    }]);
+</script>
 
 <script>
 	$(function () {

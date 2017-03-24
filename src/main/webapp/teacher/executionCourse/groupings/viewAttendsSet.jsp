@@ -106,7 +106,7 @@
 				<form:form modelAttribute="attends" role="form" method="post"
 					id="formTop" action="${editAttendsUrl }"
 					enctype="multipart/form-data">
-					${csrfField}
+					${csrf.field()}
 					<button type="submit" class="btn btn-primary showOnChange hide "
 						id="submitChangesToGroup">
 						<span class="glyphicon glyphicon-ok"></span>
