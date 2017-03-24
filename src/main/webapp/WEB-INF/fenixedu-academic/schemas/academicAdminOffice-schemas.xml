@@ -1360,7 +1360,7 @@
 </schema>
 
 <schema name="responsibleUser.name" type="org.fenixedu.bennu.core.domain.User">
-	<slot name="name" />
+	<slot name="profile.displayName" />
 </schema>
 
 <schema name="CurriculumLineLocationBean.edit" 
