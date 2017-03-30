@@ -27,11 +27,11 @@
 
 <h2><bean:message key="label.studentStatutes.manage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+<logic:present name="error">
 	<p>
-		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+		<span class="error"><!-- Error messages go here --><bean:write name="error" /></span>
 	</p>
-</html:messages>
+</logic:present>
 
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
@@ -63,8 +63,15 @@
 	<fr:view name="student" property="allStatutes" schema="student.statutes" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight"/>
+			<fr:property name="linkFormat(edit)" value="/studentStatutes.do?method=prepareEditStatute&statuteId=${studentStatute.externalId}" />
+			<fr:property name="key(edit)" value="label.edit"/>
+			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="visibleIf(edit)" value="statuteType.explicitCreation"/>
+			<fr:property name="contextRelative(edit)" value="true"/> 		
+		
+			<fr:property name="classes" value="tstyle4 thlight"/>
 			<fr:property name="linkFormat(delete)" value="/studentStatutes.do?method=deleteStatute&statuteId=${studentStatute.externalId}" />
-			<fr:property name="key(delete)" value="link.student.statute.delete"/>
+			<fr:property name="key(delete)" value="label.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="visibleIf(delete)" value="statuteType.explicitCreation"/>
 			<fr:property name="contextRelative(delete)" value="true"/> 		

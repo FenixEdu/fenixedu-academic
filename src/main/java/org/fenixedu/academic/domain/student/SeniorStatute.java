@@ -18,8 +18,11 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 import org.joda.time.LocalDate;
 
 public class SeniorStatute extends SeniorStatute_Base {
@@ -62,7 +65,7 @@ public class SeniorStatute extends SeniorStatute_Base {
                 continue;
             }
 
-            throw new DomainException("error.studentStatute.alreadyExistsOneOverlapingStatute");
+            throw new DomainException(Optional.of(Bundle.ACADEMIC), "error.studentStatute.alreadyExistsOneOverlapingStatute");
 
         }
 
