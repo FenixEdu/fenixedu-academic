@@ -23,6 +23,7 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -87,11 +88,12 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         CompetenceCourseInformationRequestBean requestBean = getOrCreateRequestBean(request);
 
+        Department department = Bennu.getInstance().getDepartmentsSet().stream()
+                .filter(dep -> dep.getCompetenceCourseMembersGroup().isMember(Authenticate.getUser())).findAny().orElse(null);
         request.setAttribute(
-                "department",
-                Bennu.getInstance().getDepartmentsSet().stream()
-                        .filter(dep -> dep.getCompetenceCourseMembersGroup().isMember(Authenticate.getUser())).findAny()
-                        .orElse(null));
+                "department", department);
+        request.setAttribute("competenceCourseMembersGroupMembers", department == null ? null : department
+                .getCompetenceCourseMembersGroup().getMembers().collect(Collectors.toSet()));
         request.setAttribute("requestBean", requestBean);
         return mapping.findForward("showCourses");
     }
