@@ -115,11 +115,11 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     private SearchStudentsByDegreeParametersBean getOrCreateSearchParametersBean() {
         SearchStudentsByDegreeParametersBean bean = getRenderedObject("searchParametersBean");
         if (bean == null) {
-            Set<DegreeType> degreeTypesForOperation =
-                    AcademicAccessRule.getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS,
-                            Authenticate.getUser()).collect(Collectors.toSet());
-            bean =
-                    new SearchStudentsByDegreeParametersBean(degreeTypesForOperation, AcademicAccessRule
+            Set<DegreeType> degreeTypesForOperation = AcademicAccessRule
+                    .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
+                    .collect(Collectors.toSet());
+            bean = new SearchStudentsByDegreeParametersBean(degreeTypesForOperation,
+                    AcademicAccessRule
                             .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                             .collect(Collectors.toSet()));
         }
@@ -235,8 +235,9 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     static private boolean hasStudentStatuteType(final SearchStudentsByDegreeParametersBean searchBean,
             final Registration registration) {
-        return CollectionUtils.containsAny(searchBean.getStudentStatuteTypes(), registration.getStudent()
-                .getStatutesTypesValidOnAnyExecutionSemesterFor(searchBean.getExecutionYear()));
+        return CollectionUtils.containsAny(searchBean.getStudentStatuteTypes(),
+                registration.getStudent().getStatutesValidOnAnyExecutionSemesterFor(searchBean.getExecutionYear()).stream()
+                        .map(bean -> bean.getStatuteType()).distinct().collect(Collectors.toList()));
     }
 
 
@@ -302,7 +303,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         spreadsheet.getWorkbook().write(outputStream);
     }
 
-    private void fillSpreadSheetFilters(SearchStudentsByDegreeParametersBean searchBean, final StyledExcelSpreadsheet spreadsheet) {
+    private void fillSpreadSheetFilters(SearchStudentsByDegreeParametersBean searchBean,
+            final StyledExcelSpreadsheet spreadsheet) {
         spreadsheet.newHeaderRow();
         if (searchBean.isIngressedInChosenYear()) {
             spreadsheet.addHeader(getResourceMessage("label.ingressedInChosenYear"));
@@ -404,8 +406,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
                 fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
 
-                spreadsheet
-                        .addCell(getResourceMessage(registration.getStudent().isSenior(executionYear) ? "label.yes" : "label.no"));
+                spreadsheet.addCell(
+                        getResourceMessage(registration.getStudent().isSenior(executionYear) ? "label.yes" : "label.no"));
 
                 final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
@@ -543,7 +545,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         return EMPTY;
     }
 
-    private void addBranchsInformation(final StyledExcelSpreadsheet spreadsheet, final StudentCurricularPlan studentCurricularPlan) {
+    private void addBranchsInformation(final StyledExcelSpreadsheet spreadsheet,
+            final StudentCurricularPlan studentCurricularPlan) {
 
         final StringBuilder majorBranches = new StringBuilder();
         final StringBuilder minorBranches = new StringBuilder();
@@ -687,8 +690,9 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     protected Set<CycleType> getAdministratedCycleTypes() {
         Set<CycleType> cycles = new HashSet<CycleType>();
-        for (DegreeType degreeType : AcademicAccessRule.getDegreeTypesAccessibleToFunction(
-                AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser()).collect(Collectors.toSet())) {
+        for (DegreeType degreeType : AcademicAccessRule
+                .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
+                .collect(Collectors.toSet())) {
             cycles.addAll(degreeType.getCycleTypes());
         }
         return cycles;
