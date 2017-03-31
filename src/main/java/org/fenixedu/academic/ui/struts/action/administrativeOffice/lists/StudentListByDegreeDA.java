@@ -236,8 +236,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     static private boolean hasStudentStatuteType(final SearchStudentsByDegreeParametersBean searchBean,
             final Registration registration) {
         return CollectionUtils.containsAny(searchBean.getStudentStatuteTypes(),
-                registration.getStudent().getStatutesValidOnAnyExecutionSemesterFor(searchBean.getExecutionYear()).stream()
-                        .map(bean -> bean.getStatuteType()).distinct().collect(Collectors.toList()));
+                registration.getStudent().getStatutesTypesValidOnAnyExecutionSemesterFor(searchBean.getExecutionYear()));
     }
 
 
