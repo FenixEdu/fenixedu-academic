@@ -247,7 +247,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
             addActionMessage(request, "academic.service.request.processed.with.success");
         } catch (DomainException ex) {
             addActionMessage(request, ex.getKey(), ex.getArgs());
-            request.setAttribute("failingCondition", ex.getKey());
+            request.setAttribute("failingCondition", ex.getLocalizedMessage());
             return mapping.findForward("prepareRejectAcademicServiceRequest");
         }
 

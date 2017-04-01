@@ -302,7 +302,7 @@
 	<slot name="summaryTime" layout="hour-minute" key="label.hour" />
 	<slot name="summaryRoom" layout="menu-select" key="label.room" >
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.executionCourse.RoomsForEducationProvider" />
-		<property name="format" value="${fullName}" />
+		<property name="format" value="${presentationName}" />
 	</slot>	
 	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>	
