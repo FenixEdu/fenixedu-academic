@@ -18,8 +18,11 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 import org.joda.time.LocalDate;
 
 public class SeniorStatute extends SeniorStatute_Base {
@@ -47,11 +50,17 @@ public class SeniorStatute extends SeniorStatute_Base {
     public SeniorStatute(Student student, Registration registration, StatuteType statuteType, ExecutionSemester
             beginExecutionPeriod, ExecutionSemester endExecutionPeriod, LocalDate beginDate, LocalDate endDate, String comment) {
         this();
+        setType(statuteType);
+        edit(student, registration, beginExecutionPeriod, endExecutionPeriod, beginDate, endDate, comment);
+    }
+
+    public void edit(Student student, Registration registration, ExecutionSemester beginExecutionPeriod,
+            ExecutionSemester endExecutionPeriod, LocalDate beginDate, LocalDate endDate, String comment) {
+
         setBeginDate(beginDate);
         setEndDate(endDate);
         setBeginExecutionPeriod(beginExecutionPeriod);
         setEndExecutionPeriod(endExecutionPeriod);
-        setType(statuteType);
         setComment(comment);
 
         for (StudentStatute statute : student.getStudentStatutesSet()) {
@@ -62,7 +71,7 @@ public class SeniorStatute extends SeniorStatute_Base {
                 continue;
             }
 
-            throw new DomainException("error.studentStatute.alreadyExistsOneOverlapingStatute");
+            throw new DomainException(Optional.of(Bundle.ACADEMIC), "error.studentStatute.alreadyExistsOneOverlapingStatute");
 
         }
 
