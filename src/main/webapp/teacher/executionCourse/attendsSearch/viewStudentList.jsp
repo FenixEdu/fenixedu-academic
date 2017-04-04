@@ -220,8 +220,14 @@
 					<td>{{ attendee.registrationState}}</td>
 					<td>{{ attendee.curricularPlan.name}}</td>
 					<td>
-						<span data-toggle="tooltip" ng-repeat="studentStatute in attendee.studentStatutes" data-placement="top" title="{{ studentStatute.comment}}">
+						<span ng-repeat="studentStatute in attendee.studentStatutes">
 							<div>{{ studentStatute.type.name }}</div>
+								<ul ng-if="studentStatute.comment">
+									<li>{{ studentStatute.comment }}</li>
+								</ul>
+								<span ng-if="!studentStatute.comment">
+									<p>
+								</span>
 						</span>
 						<span ng-if="attendee.studentStatutes.length == 0">-</span>
 					</td> 
