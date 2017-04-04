@@ -30,18 +30,18 @@
 	<h2><bean:write name="department" property="realName"/></h2>
 <h3><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h3>
 
-<logic:notEmpty name="department" property="competenceCourseMembersGroup.members">
+<logic:notEmpty name="competenceCourseMembersGroupMembers">
 
 <p class="mtop15 mbottom05"><strong class='highlight1'><bean:message key="groupMembers" bundle="BOLONHA_MANAGER_RESOURCES"/></strong> <bean:message key="label.group.members.explanation" bundle="BOLONHA_MANAGER_RESOURCES"/></p>
 
 <ul>
-	<logic:iterate id="user" name="department" property="competenceCourseMembersGroup.members">
+	<logic:iterate id="user" property="competenceCourseMembersGroupMembers">
 		<li><fr:view name="user" property="person" layout="name-with-alias"/></li>
 	</logic:iterate>
 </ul>
 </logic:notEmpty>
 
-<logic:empty name="department" property="competenceCourseMembersGroup.members">
+<logic:empty property="competenceCourseMembersGroupMembers">
 	<p>
 		<em><bean:message key="label.empty.group.members" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
 	</p>
