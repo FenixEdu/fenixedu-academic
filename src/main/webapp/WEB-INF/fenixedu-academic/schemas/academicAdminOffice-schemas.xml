@@ -660,7 +660,7 @@
 		<property name="providerClass"
 			value="org.fenixedu.academic.ui.renderers.providers.VisibleStudentStatuteTypeProvider" />
 		<property name="format" value="${name.content}" />
-		<property name="destination" value="seniorStatutePostBack"/>	
+		<property name="destination" value="seniorStatutePostBack"/>
 	</slot>
 	<slot name="beginExecutionPeriod" layout="menu-select" key="label.beginExecutionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider" />
@@ -682,6 +682,41 @@
 </schema>
 
 <schema name="student.createSeniorStatute" extends="student.createStatutes"
+		bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.student.ManageStudentStatuteBean">
+	<slot name="registration" layout="menu-select" key="label.studentRegistrations" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentRegisrationsProvider" />
+		<property name="format" value="${degree.presentationName}" />
+	</slot>
+</schema>
+
+<schema name="student.editStatutes" bundle="ACADEMIC_OFFICE_RESOURCES" 
+		type="org.fenixedu.academic.dto.student.ManageStudentStatuteBean">
+	<slot name="statuteType" read-only="true" key="label.statuteType">
+		<property name="providerClass"
+			value="org.fenixedu.academic.ui.renderers.providers.VisibleStudentStatuteTypeProvider" />
+		<property name="format" value="${name.content}" />
+		<property name="destination" value="seniorStatutePostBack"/>
+	</slot>
+	<slot name="beginExecutionPeriod" layout="menu-select" key="label.beginExecutionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider" />
+		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+	</slot>
+	<slot name="endExecutionPeriod" layout="menu-select"  key="label.endExecutionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider" />
+		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+	</slot>
+	<slot name="beginDate" key="label.beginDate">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="comment" key="label.comment"></slot>
+</schema>
+
+<schema name="student.editSeniorStatute" extends="student.editStatutes"
 		bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.student.ManageStudentStatuteBean">
 	<slot name="registration" layout="menu-select" key="label.studentRegistrations" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentRegisrationsProvider" />

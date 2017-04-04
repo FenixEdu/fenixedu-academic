@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -25,6 +26,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -62,22 +64,8 @@ public class StudentStatute extends StudentStatute_Base {
     public StudentStatute(Student student, StatuteType statuteType, ExecutionSemester beginExecutionPeriod, ExecutionSemester
                  endExecutionPeriod, LocalDate beginDate, LocalDate endDate, String comment) {
         this();
-        setBeginDate(beginDate);
-        setEndDate(endDate);
-        setBeginExecutionPeriod(beginExecutionPeriod);
-        setEndExecutionPeriod(endExecutionPeriod);
         setType(statuteType);
-        setComment(comment);
-
-        for (StudentStatute statute : student.getStudentStatutesSet()) {
-            if (statute.overlapsWith(this)) {
-                throw new DomainException("error.studentStatute.alreadyExistsOneOverlapingStatute");
-            }
-        }
-
-        setStudent(student);
-
-        checkRules();
+        edit(student, beginExecutionPeriod, endExecutionPeriod, beginDate, endDate, comment);
     }
 
     protected void checkRules() {
@@ -143,6 +131,26 @@ public class StudentStatute extends StudentStatute_Base {
         return this.isValidInExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
     }
 
+    public void edit(Student student, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod,
+            LocalDate beginDate, LocalDate endDate, String comment) {
+
+        setBeginExecutionPeriod(beginExecutionPeriod);
+        setEndExecutionPeriod(endExecutionPeriod);
+        setBeginDate(beginDate);
+        setEndDate(endDate);
+        setComment(comment);
+
+        for (StudentStatute statute : student.getStudentStatutesSet()) {
+            if (statute.overlapsWith(this)) {
+                throw new DomainException(Optional.of(Bundle.ACADEMIC), "error.studentStatute.alreadyExistsOneOverlapingStatute");
+            }
+        }
+
+        setStudent(student);
+
+        checkRules();
+    }
+
     public void delete() {
         checkRulesToDelete();
         setBeginExecutionPeriod(null);
@@ -154,6 +162,10 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean overlapsWith(StudentStatute statute) {
+
+        if (statute == this) {
+            return false;
+        }
         ExecutionSemester statuteBegin =
                 statute.getBeginExecutionPeriod() != null ? statute.getBeginExecutionPeriod() : ExecutionSemester
                         .readFirstExecutionSemester();
