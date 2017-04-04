@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.exceptions;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response.Status;
@@ -35,6 +36,10 @@ public class DomainException extends org.fenixedu.bennu.core.domain.exceptions.D
 
     public DomainException(final String key, final String... args) {
         super(DEFAULT_BUNDLE, key, args);
+    }
+
+    public DomainException(Optional<String> bundle, final String key, final String... args) {
+        super(bundle == null ? DEFAULT_BUNDLE : bundle.orElse(DEFAULT_BUNDLE), key, args);
     }
 
     public DomainException(Status status, String key, String... args) {

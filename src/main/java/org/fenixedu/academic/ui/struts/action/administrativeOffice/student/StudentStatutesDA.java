@@ -42,10 +42,11 @@ import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 @Mapping(path = "/studentStatutes", module = "academicAdministration", functionality = SearchForStudentsDA.class)
-@Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp") })
+@Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp"),
+        @Forward(name = "editStatute", path = "/academicAdminOffice/editStatute.jsp") })
 public class StudentStatutesDA extends FenixDispatchAction {
 
     public static class CreateStudentStatuteFactory extends ManageStudentStatuteBean implements FactoryExecutor {
@@ -103,6 +104,16 @@ public class StudentStatutesDA extends FenixDispatchAction {
         return mapping.findForward("manageStatutes");
     }
 
+    public ActionForward invalidEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        keepInRequest(request, "statuteId");
+        keepInRequest(request, "schemaName");
+        request.setAttribute("manageStatuteBean", getRenderedObject());
+
+        return mapping.findForward("editStatute");
+    }
+
     public ActionForward seniorStatutePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -133,7 +144,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
             // add new statute
             executeFactoryMethod();
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage());
+            request.setAttribute("error", e.getLocalizedMessage());
         }
 
         final Student student = ((CreateStudentStatuteFactory) getRenderedObject()).getStudent();
@@ -164,6 +175,57 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
         return mapping.findForward("manageStatutes");
 
+    }
+
+    public ActionForward prepareEditStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+
+        StudentStatute studentStatute = getDomainObject(request, "statuteId");
+        Student student = studentStatute.getStudent();
+
+        ManageStudentStatuteBean bean = new CreateStudentStatuteFactory(student);
+        bean.setStatuteType(studentStatute.getType());
+        bean.setBeginExecutionPeriod(studentStatute.getBeginExecutionPeriod());
+        bean.setEndExecutionPeriod(studentStatute.getEndExecutionPeriod());
+        bean.setBeginDate(studentStatute.getBeginDate());
+        bean.setEndDate(studentStatute.getEndDate());
+        bean.setComment(studentStatute.getComment());
+
+        request.setAttribute("statuteId", studentStatute.getExternalId());
+        request.setAttribute("manageStatuteBean", bean);
+
+        if (studentStatute.getType().isSeniorStatute()) {
+            request.setAttribute("schemaName", "student.editSeniorStatute");
+            bean.setRegistration(((SeniorStatute) studentStatute).getRegistration());
+        } else {
+            request.setAttribute("schemaName", "student.editStatutes");
+        }
+
+        return mapping.findForward("editStatute");
+    }
+
+    public ActionForward editStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+        final ManageStudentStatuteBean manageStatuteBean = getRenderedObject();
+        StudentStatute studentStatute = getDomainObject(request, "statuteId");
+
+        try {
+            atomic(() -> {
+                if (manageStatuteBean.getStatuteType().isSeniorStatute()) {
+                    ((SeniorStatute) studentStatute).edit(manageStatuteBean.getStudent(), manageStatuteBean.getRegistration(),
+                            manageStatuteBean.getBeginExecutionPeriod(), manageStatuteBean.getEndExecutionPeriod(),
+                            manageStatuteBean.getBeginDate(), manageStatuteBean.getEndDate(), manageStatuteBean.getComment());
+                } else {
+                    studentStatute.edit(manageStatuteBean.getStudent(), manageStatuteBean.getBeginExecutionPeriod(),
+                            manageStatuteBean.getEndExecutionPeriod(), manageStatuteBean.getBeginDate(),
+                            manageStatuteBean.getEndDate(), manageStatuteBean.getComment());
+                }
+            });
+        } catch (DomainException e) {
+            request.setAttribute("error", e.getLocalizedMessage());
+            return prepareEditStatute(mapping, actionForm, request, response);
+        }
+        return redirect("/studentStatutes.do?method=prepare&studentId=" + studentStatute.getStudent().getExternalId(), request);
     }
 
 }
