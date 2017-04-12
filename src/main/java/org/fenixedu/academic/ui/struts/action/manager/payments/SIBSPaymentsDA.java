@@ -56,10 +56,10 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.StringNormalizer;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @StrutsFunctionality(app = ManagerPaymentsApp.class, path = "sibs-payments", titleKey = "label.payments.uploadPaymentsFile")
 @Mapping(path = "/SIBSPayments", module = "manager")
@@ -307,7 +307,9 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
     private void createSibsFileReport(SibsIncommingPaymentFile sibsIncomingPaymentFile, ProcessResult result) throws Exception {
         final SibsPaymentFileProcessReportDTO reportDTO = new SibsPaymentFileProcessReportDTO(sibsIncomingPaymentFile);
         for (final SibsIncommingPaymentFileDetailLine detailLine : sibsIncomingPaymentFile.getDetailLines()) {
-            reportDTO.addAmount(detailLine, getPaymentCode(detailLine, result));
+            ExecutionYear executionYear = ExecutionYear.readByDateTime(detailLine.getWhenOccuredTransaction());
+            PaymentCode paymentCodeToProcess = getPaymentCodeToProcess(getPaymentCode(detailLine, result), executionYear, result);
+            reportDTO.addAmount(detailLine, paymentCodeToProcess);
         }
         SibsPaymentFileProcessReport.create(reportDTO);
         result.addMessage("label.manager.SIBS.reportCreated");
