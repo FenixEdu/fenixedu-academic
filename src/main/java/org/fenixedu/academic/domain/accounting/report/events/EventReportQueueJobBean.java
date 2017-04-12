@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class EventReportQueueJobBean implements Serializable {
@@ -43,8 +44,10 @@ public class EventReportQueueJobBean implements Serializable {
     private Boolean exportOthers;
     private LocalDate beginDate;
     private LocalDate endDate;
+    private DateTime dateToConsiderInformation;
+    
 
-    private AdministrativeOffice administrativeOffice;
+	private AdministrativeOffice administrativeOffice;
 
     private ExecutionYear executionYear;
 
@@ -142,6 +145,14 @@ public class EventReportQueueJobBean implements Serializable {
     public void setExecutionYear(ExecutionYear executionYear) {
         this.executionYear = executionYear;
     }
+
+    public DateTime getDateToConsiderInformation() {
+		return dateToConsiderInformation;
+	}
+
+	public void setDateToConsiderInformation(DateTime dateToConsiderInformation) {
+		this.dateToConsiderInformation = dateToConsiderInformation;
+	}
 
     public Set<AdministrativeOffice> getAvailableOffices() {
         return AcademicAccessRule.getOfficesAccessibleToFunction(AcademicOperationType.MANAGE_EVENT_REPORTS,

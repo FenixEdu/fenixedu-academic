@@ -77,9 +77,9 @@ public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
     }
 
     @Override
-    public String getRemainingAmount() {
+    public String getRemainingAmount(final DateTime when) {
         Map<Installment, Money> calculateInstallmentRemainingAmounts =
-                event.getGratuityPaymentPlan().calculateInstallmentRemainingAmounts(event, new DateTime(),
+                event.getGratuityPaymentPlan().calculateInstallmentRemainingAmounts(event, when,
                         event.getPostingRule().getDiscountPercentage(event));
 
         for (Map.Entry<Installment, Money> entry : calculateInstallmentRemainingAmounts.entrySet()) {

@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting.report.events;
 
+import org.joda.time.DateTime;
+
 public interface InstallmentWrapper {
 
     public String getExpirationDateLabel();
@@ -30,6 +32,6 @@ public interface InstallmentWrapper {
 
     public String getAmountToPay();
 
-    public String getRemainingAmount();
+    public String getRemainingAmount(final DateTime when);
 
 }

@@ -43,6 +43,7 @@ import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
+import org.fenixedu.academic.domain.accounting.VatNumberResolver;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.IndividualCandidacyEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
@@ -52,6 +53,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.ConnectionManager;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.spreadsheet.SheetData;
 import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
@@ -89,6 +91,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         setExportOthers(bean.getExportOthers());
         setBeginDate(bean.getBeginDate());
         setEndDate(bean.getEndDate());
+        setDateToConsiderInformation(bean.getDateToConsiderInformation());
 
         setForExecutionYear(bean.getExecutionYear());
         setForAdministrativeOffice(bean.getAdministrativeOffice());
@@ -257,6 +260,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             protected void makeLine(EventBean bean) {
                 addCell("Identificador", bean.externalId);
                 addCell("Aluno", bean.studentNumber);
+                addCell("uVATNumber", bean.uVatNumber);
                 addCell("Nome", bean.studentName);
                 addCell("Email", bean.email);
                 addCell("Data inscrição", bean.registrationStartDate);
@@ -287,7 +291,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                     for (InstallmentWrapper installment : list) {
                         addCell(installment.getExpirationDateLabel(), installment.getExpirationDate());
                         addCell(installment.getAmountToPayLabel(), installment.getAmountToPay());
-                        addCell(installment.getRemainingAmountLabel(), installment.getRemainingAmount());
+                        addCell(installment.getRemainingAmountLabel(), installment.getRemainingAmount(getDateToConsiderInformation()));
                     }
                 }
             }
@@ -371,6 +375,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         bean.externalId = event.getExternalId();
         bean.studentNumber = wrapper.getStudentNumber();
+        bean.uVatNumber = uVatNumberFor(event);
         bean.studentName = wrapper.getStudentName();
         bean.email = wrapper.getStudentEmail();
         bean.registrationStartDate = wrapper.getRegistrationStartDate();
@@ -387,9 +392,10 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         bean.description = event.getDescription().toString();
         bean.whenOccured = event.getWhenOccured().toString("dd/MM/yyyy");
-        bean.totalAmount = event.getTotalAmountToPay() != null ? event.getTotalAmountToPay().toPlainString() : "-";
-        bean.payedAmount = event.getPayedAmount().toPlainString();
-        bean.amountToPay = event.getAmountToPay().toPlainString();
+        final Money totalAmountToPay = event.getTotalAmountToPay(getDateToConsiderInformation());
+        bean.totalAmount = totalAmountToPay != null ? totalAmountToPay.toPlainString() : "-";
+        bean.payedAmount = event.getPayedAmount(getDateToConsiderInformation()).toPlainString();
+        bean.amountToPay = event.calculateAmountToPay(getDateToConsiderInformation()).toPlainString();
         bean.reimbursableAmount = event.getReimbursableAmount().toPlainString();
         bean.totalDiscount = event.getTotalDiscount().toPlainString();
         bean.relatedEvent = wrapper.getRelatedEventExternalId();
@@ -403,9 +409,15 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         return bean;
     }
 
-    private static class EventBean {
+    private String uVatNumberFor(final Event event) {
+    	final Person person = event.getPerson();
+    	return VatNumberResolver.RESOLVER.uVATNumberFor(person);
+	}
+
+	private static class EventBean {
         public String externalId;
         public String studentNumber;
+        public String uVatNumber;
         public String studentName;
         public String email;
         public String registrationStartDate;
@@ -531,7 +543,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         final PrintWriter printWriter = new PrintWriter(result);
         e.printStackTrace(printWriter);
         String[] exceptionLines = result.toString().split(LINE_BREAK);
-        exceptionLine.append(exceptionLines[0]).append(" - ").append(exceptionLines[1].replace(FIELD_SEPARATOR, ""));
+        exceptionLine.append(exceptionLines[0]).append(" - ")
+        	.append(exceptionLines.length > 1 ? exceptionLines[1].replace(FIELD_SEPARATOR, "") : "");
         return exceptionLine;
     }
 
