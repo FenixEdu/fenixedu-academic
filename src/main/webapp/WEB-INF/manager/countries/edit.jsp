@@ -41,6 +41,7 @@ ${portal.toolkit()}
 <spring:url var="editCountryUrl" value="/country-management/${country.externalId}/edit" />
 <spring:url var="backUrl" value="/country-management" />
 <form id="bean" role="form" class="accept" action="${editCountryUrl}" method="POST">
+    ${csrf.field()}
     <div class="container-fluid">
         <div class="form-group">
         	<div class="row">
