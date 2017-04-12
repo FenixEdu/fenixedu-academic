@@ -53,6 +53,9 @@
 			<fr:slot name="endDate" required="true" >
 				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 			</fr:slot>
+            <fr:slot name="dateToConsiderInformation" required="true" >
+                <fr:validator name="org.fenixedu.academic.ui.renderers.validators.DateTimeValidator" />
+            </fr:slot>
 			<fr:slot name="administrativeOffice" layout="menu-select-postback" key="label.academicAdminOffice" required="true">
 				<fr:property name="from" value="availableOffices" />
 				<fr:property name="format" value="${unit.name}" />

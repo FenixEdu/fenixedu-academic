@@ -4421,6 +4421,7 @@ class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
 	Boolean forMasterDegreeAdministrativeOffice;
 	LocalDate beginDate;
 	LocalDate endDate;
+	DateTime dateToConsiderInformation;
 }
 	class accounting.report.events.EventReportQueueJobFile extends .org.fenixedu.bennu.io.domain.GenericFile {
 	}
