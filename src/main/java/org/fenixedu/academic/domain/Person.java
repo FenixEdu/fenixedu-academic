@@ -105,6 +105,8 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.joda.time.DateTime;
@@ -120,7 +122,7 @@ import com.google.common.base.Strings;
 public class Person extends Person_Base {
 
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
-
+    public static final String CREATED_SIGNAL = "academic.person.create.signal";
     private IdDocument getIdDocument() {
         final Iterator<IdDocument> documentIterator = getIdDocumentsSet().iterator();
         return documentIterator.hasNext() ? documentIterator.next() : null;
@@ -262,6 +264,7 @@ public class Person extends Person_Base {
             setUser(profile.getUser());
         }
         setMaritalStatus(MaritalStatus.UNKNOWN);
+        Signal.emit(Person.CREATED_SIGNAL, new DomainObjectEvent<Person>(this));
     }
 
     /**
