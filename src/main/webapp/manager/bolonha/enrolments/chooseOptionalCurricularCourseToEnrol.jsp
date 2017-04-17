@@ -23,6 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 
 <em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
 <h2>
@@ -50,6 +51,7 @@
 			<p class="mvert0"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.enrollment.errors.in.enrolment" />:</strong></p>
 			<ul class="mvert05">
 				<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
+					<% pageContext.setAttribute("messages", ((String) pageContext.getAttribute("messages")).replaceAll("\\?\\?\\?" + I18N.getLocale().toString() + "\\.", "").replaceAll("\\?\\?\\?", ""));%>
 					<li><span class="error0"><bean:write name="messages" /></span></li>
 				</html:messages>
 			</ul>
