@@ -64,7 +64,7 @@
 			<tr>
 				<td align="center">
 					<div class="items-container" data-toggle="tooltip" data-placement="right" title="${fr:message('resources.ApplicationResources', 'link.operator.submitPhoto')}">
-						<img src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto')}" width="100" height="100" align="middle" style="border: 2px #eee solid"/>
+						<img src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto&'.concat(person.personalPhotoEvenIfPending.externalId))}" width="100" height="100" align="middle" style="border: 2px #eee solid"/>
 						<html:link page="/uploadPhoto.do?method=prepare" styleClass="play">
 							<div class="play-bg"></div>
 							<span class="glyphicon glyphicon-camera"></span>
