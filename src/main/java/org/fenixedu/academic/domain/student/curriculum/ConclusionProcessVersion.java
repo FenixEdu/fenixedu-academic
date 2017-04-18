@@ -103,6 +103,27 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setNotes(StringUtils.isEmpty(notes) ? null : notes);
     }
 
+    private boolean isDeletable() {
+        return getLastVersionConclusionProcess() == null || !isActive();
+    }
+    
+    public void delete() {
+        if(!isDeletable()) {
+            throw new DomainException("error.ConclusionProcessVersion.delete.impossible");
+        }
+        
+        super.getLastVersionConclusionProcess();
+        super.setConclusionProcess(null);
+        super.setConclusionYear(null);
+        super.setDissertationEnrolment(null);
+        super.setIngressionYear(null);
+        super.setResponsible(null);
+
+        super.setRootDomainObject(null);
+        
+        super.deleteDomainObject();
+    }
+
     @Override
     public Enrolment getDissertationEnrolment() {
         //FIXME: remove when the framework enables read-only slots

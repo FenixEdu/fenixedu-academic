@@ -91,4 +91,9 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
         return getDegree().getDegreeType().getName();
     }
 
+    @Override
+    public void delete() {
+        throw new DomainException("error.RegistrationConclusionProcess.delete.not.supported");
+    }
+
 }

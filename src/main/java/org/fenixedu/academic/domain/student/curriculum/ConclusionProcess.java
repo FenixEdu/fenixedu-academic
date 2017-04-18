@@ -149,5 +149,26 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
     public boolean isActive() {
         return getLastVersion() != null && getLastVersion().isActive();
     }
+    
+    private boolean isDeletable() {
+        return !isActive();
+    }
+    
+    public void delete() {
+        if(!isDeletable()) {
+            throw new DomainException("error.ProgramConclusionProcess.delete.impossible");
+        }
+        
+        while(!getVersionsSet().isEmpty()) {
+            getVersionsSet().iterator().next().delete();
+        }
+        
+        super.setGroup(null);
+        super.setConclusionYear(null);
+        super.setLastVersion(null);
+        super.setRootDomainObject(null);
+
+        super.deleteDomainObject();
+    }
 
 }
