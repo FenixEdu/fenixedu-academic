@@ -92,11 +92,15 @@ public class Student extends Student_Base {
 
     };
 
+    public static interface StudentNumberGenerator {
+        public Integer doGenerate(Person person);
+    }
+
     public Student(Person person, Integer number) {
         super();
         setPerson(person);
         if (number == null || readStudentByNumber(number) != null) {
-            number = Student.generateStudentNumber();
+            number = Student.generateStudentNumber(person);
         }
         setNumber(number);
         setRootDomainObject(Bennu.getInstance());
@@ -111,7 +115,7 @@ public class Student extends Student_Base {
             throw new DomainException("error.custom.student.creation.student.number.already.set");
         }
 
-        if (number >= Student.generateStudentNumber()) {
+        if (number >= Student.generateStudentNumber(person)) {
             throw new DomainException("error.custom.student.creation.student.number.higher.than.generated");
         }
 
@@ -123,6 +127,23 @@ public class Student extends Student_Base {
 
     public Student(Person person) {
         this(person, null);
+    }
+
+    private static StudentNumberGenerator studentNumberGenerator = new StudentNumberGenerator() {
+        @Override
+        public Integer doGenerate(Person person) {
+            int nextNumber = 0;
+            for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
+                if (studentNumber.getNumber().intValue() > nextNumber) {
+                    nextNumber = studentNumber.getNumber().intValue();
+                }
+            }
+            return Integer.valueOf(nextNumber + 1);
+        }
+    };
+
+    public static void setStudentNumberGenerator(StudentNumberGenerator generator) {
+        studentNumberGenerator = generator;
     }
 
     public static Student readStudentByNumber(final Integer number) {
@@ -281,14 +302,13 @@ public class Student extends Student_Base {
         return false;
     }
 
+    @Deprecated
     public static Integer generateStudentNumber() {
-        int nextNumber = 0;
-        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
-            if (studentNumber.getNumber().intValue() > nextNumber) {
-                nextNumber = studentNumber.getNumber().intValue();
-            }
-        }
-        return Integer.valueOf(nextNumber + 1);
+        return studentNumberGenerator.doGenerate(null);
+    }
+
+    private static Integer generateStudentNumber(Person person) {
+        return studentNumberGenerator.doGenerate(person);
     }
 
     public ResidenceCandidacies getResidenceCandidacyForCurrentExecutionYear() {
