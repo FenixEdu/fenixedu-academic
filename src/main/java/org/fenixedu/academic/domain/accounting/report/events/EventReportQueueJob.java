@@ -42,15 +42,31 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.VatNumberResolver;
+import org.fenixedu.academic.domain.accounting.events.AcademicEventExemption;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeExemption;
+import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentPenaltyExemption;
+import org.fenixedu.academic.domain.accounting.events.InsuranceExemption;
+import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
 import org.fenixedu.academic.domain.accounting.events.candidacy.IndividualCandidacyEvent;
+import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
+import org.fenixedu.academic.domain.phd.debts.PhdEventExemption;
+import org.fenixedu.academic.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
+import org.fenixedu.academic.domain.phd.debts.PhdGratuityFineExemption;
+import org.fenixedu.academic.domain.phd.debts.PhdRegistrationFeePenaltyExemption;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.ConnectionManager;
 import org.fenixedu.academic.util.Money;
@@ -276,11 +292,13 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                 addCell("Residência - Mês", bean.residenceMonth);
                 addCell("Tipo de divida", bean.description);
                 addCell("Data de criação", bean.whenOccured);
+                addCell("Valor Original", bean.originalAmount);
                 addCell("Valor Total", bean.totalAmount);
                 addCell("Valor Pago", bean.payedAmount);
                 addCell("Valor em divida", bean.amountToPay);
                 addCell("Valor Reembolsável", bean.reimbursableAmount);
                 addCell("Desconto", bean.totalDiscount);
+                addCell("Isento", bean.totalExempt);
                 addCell("Dívida Associada", bean.relatedEvent);
                 addCell("Id. Fiscal Entidade", bean.debtorFiscalId);
                 addCell("Nome Entidade", bean.debtorName);
@@ -392,12 +410,15 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         bean.description = event.getDescription().toString();
         bean.whenOccured = event.getWhenOccured().toString("dd/MM/yyyy");
+        final Money originalAmount = calculateOriginalDebtValue(event);
+        bean.originalAmount = originalAmount.toPlainString();
         final Money totalAmountToPay = event.getTotalAmountToPay(getDateToConsiderInformation());
         bean.totalAmount = totalAmountToPay != null ? totalAmountToPay.toPlainString() : "-";
         bean.payedAmount = event.getPayedAmount(getDateToConsiderInformation()).toPlainString();
         bean.amountToPay = event.calculateAmountToPay(getDateToConsiderInformation()).toPlainString();
         bean.reimbursableAmount = event.getReimbursableAmount().toPlainString();
         bean.totalDiscount = event.getTotalDiscount().toPlainString();
+        bean.totalExempt = exemptions(event, originalAmount).toPlainString();
         bean.relatedEvent = wrapper.getRelatedEventExternalId();
         bean.debtorFiscalId = wrapper.getDebtorFiscalId();
         bean.debtorName = wrapper.getDebtorName();
@@ -407,6 +428,67 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         }
 
         return bean;
+    }
+
+    public static Money calculateOriginalDebtValue(final Event event) {
+        final DateTime when = event.getWhenOccured().plusSeconds(1);
+        final PostingRule rule = event.getPostingRule();
+        return rule.doCalculationForAmountToPayWithoutExemptions(event, when, false);
+    }
+
+    private static Money exemptions(final Event event, final Money originalDebt) {
+        return event.getExemptionsSet().stream().map(e -> amountFor(event, originalDebt, e)).reduce(Money.ZERO, Money::add);
+    }
+
+    private static Money amountFor(final Event event, final Money originalDebt, final Exemption e) {
+        if (e instanceof AcademicEventExemption) {
+            final AcademicEventExemption o = (AcademicEventExemption) e;
+            return o.getValue();
+        } else if (e instanceof AdministrativeOfficeFeeAndInsuranceExemption) {
+            final AdministrativeOfficeFeeAndInsuranceExemption o = (AdministrativeOfficeFeeAndInsuranceExemption) e;
+        } else if (e instanceof AdministrativeOfficeFeeExemption) {
+            final AdministrativeOfficeFeeExemption o = (AdministrativeOfficeFeeExemption) e;
+            final DateTime when = event.getWhenOccured().plusSeconds(1);
+            final PostingRule postingRule = event.getPostingRule();
+            final Money originalAmount = postingRule.calculateTotalAmountToPay(event, when, false);
+            final Money amountToPay = postingRule.calculateTotalAmountToPay(event, when, true);
+            return originalAmount.subtract(amountToPay);
+        } else if (e instanceof InsuranceExemption) {
+            final InsuranceExemption o = (InsuranceExemption) e;
+        } else if (e instanceof SecondCycleIndividualCandidacyExemption) {
+            final SecondCycleIndividualCandidacyExemption o = (SecondCycleIndividualCandidacyExemption) e;
+        } else if (e instanceof PercentageGratuityExemption) {
+            final PercentageGratuityExemption o = (PercentageGratuityExemption) e;
+            return originalDebt.multiply(o.getPercentage());
+        } else if (e instanceof ValueGratuityExemption) {
+            final ValueGratuityExemption o = (ValueGratuityExemption) e;
+            return o.getValue();
+        } else if (e instanceof PhdGratuityExternalScholarshipExemption) {
+            final PhdGratuityExternalScholarshipExemption o = (PhdGratuityExternalScholarshipExemption) e;
+            return o.getValue();
+        } else if (e instanceof PhdGratuityFineExemption) {
+            final PhdGratuityFineExemption o = (PhdGratuityFineExemption) e;
+            return o.getValue();
+        } else if (e instanceof PhdEventExemption) {
+            final PhdEventExemption o = (PhdEventExemption) e;
+            return o.getValue();
+        } else if (e instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption) {
+            final AdministrativeOfficeFeeAndInsurancePenaltyExemption o = (AdministrativeOfficeFeeAndInsurancePenaltyExemption) e;
+            return Money.ZERO;
+        } else if (e instanceof ImprovementOfApprovedEnrolmentPenaltyExemption) {
+            final ImprovementOfApprovedEnrolmentPenaltyExemption o = (ImprovementOfApprovedEnrolmentPenaltyExemption) e;
+            return Money.ZERO;
+        } else if (e instanceof InstallmentPenaltyExemption) {
+            final InstallmentPenaltyExemption o = (InstallmentPenaltyExemption) e;
+            return Money.ZERO;
+        } else if (e instanceof PhdRegistrationFeePenaltyExemption) {
+            final PhdRegistrationFeePenaltyExemption o = (PhdRegistrationFeePenaltyExemption) e;
+            return Money.ZERO;
+        } else if (e instanceof PenaltyExemption) {
+            final PenaltyExemption o = (PenaltyExemption) e;
+            return Money.ZERO;
+        }
+        return originalDebt;
     }
 
     private String uVatNumberFor(final Event event) {
@@ -433,11 +515,13 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         public String residenceMonth;
         public String description;
         public String whenOccured;
+        public String originalAmount;
         public String totalAmount;
         public String payedAmount;
         public String amountToPay;
         public String reimbursableAmount;
         public String totalDiscount;
+        public String totalExempt;
         public String relatedEvent;
         public String debtorFiscalId;
         public String debtorName;
