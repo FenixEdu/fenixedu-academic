@@ -40,43 +40,52 @@ public class CreateAdministrativeOfficeFeeEvent extends CronTask {
     private int AdministrativeOfficeFee_TOTAL_CREATED = 0;
     private int InsuranceEvent_TOTAL_CREATED = 0;
 
-    @Atomic(mode = TxMode.WRITE)
+    
     private void createAdministrativeOfficeFeeEvent(StudentCurricularPlan scp, ExecutionYear executionYear) {
         try {
-
-            final AccountingEventsManager manager = new AccountingEventsManager();
-            final InvocationResult result;
-            if (scp.getAdministrativeOffice().isDegree()) {
-                result = manager.createAdministrativeOfficeFeeAndInsuranceEvent(scp, executionYear);
-
-            } else if (scp.getAdministrativeOffice().isMasterDegree()) {
-                result = manager.createInsuranceEvent(scp, executionYear);
-
-            } else {
-                throw new RuntimeException();
-            }
-
-            if (result.isSuccess()) {
-                AdministrativeOfficeFee_TOTAL_CREATED++;
-            }
+            createAdministrativeOfficeFeeEventAtomic(scp, executionYear);
         } catch (Exception e) {
             taskLog("Exception on student curricular plan with oid : %s\n", scp.getExternalId());
             e.printStackTrace();
         }
     }
-
+    
     @Atomic(mode = TxMode.WRITE)
+    private void createAdministrativeOfficeFeeEventAtomic(StudentCurricularPlan scp, ExecutionYear executionYear) {
+        final AccountingEventsManager manager = new AccountingEventsManager();
+        final InvocationResult result;
+        if (scp.getAdministrativeOffice().isDegree()) {
+            result = manager.createAdministrativeOfficeFeeAndInsuranceEvent(scp, executionYear);
+
+        } else if (scp.getAdministrativeOffice().isMasterDegree()) {
+            result = manager.createInsuranceEvent(scp, executionYear);
+
+        } else {
+            throw new RuntimeException();
+        }
+
+        if (result.isSuccess()) {
+            AdministrativeOfficeFee_TOTAL_CREATED++;
+        }
+    }
+
+    
     private void createInsuranceEvent(Person person, ExecutionYear executionYear) {
         try {
-            final AccountingEventsManager manager = new AccountingEventsManager();
-            final InvocationResult result = manager.createInsuranceEvent(person, executionYear);
-
-            if (result.isSuccess()) {
-                InsuranceEvent_TOTAL_CREATED++;
-            }
+            createInsuranceEventAtomic(person, executionYear);
         } catch (Exception e) {
             taskLog("Exception on person with oid : %s\n", person.getExternalId());
             e.printStackTrace();
+        }
+    }
+    
+    @Atomic(mode = TxMode.WRITE)
+    private void createInsuranceEventAtomic(Person person, ExecutionYear executionYear) {
+        final AccountingEventsManager manager = new AccountingEventsManager();
+        final InvocationResult result = manager.createInsuranceEvent(person, executionYear);
+
+        if (result.isSuccess()) {
+            InsuranceEvent_TOTAL_CREATED++;
         }
     }
 
