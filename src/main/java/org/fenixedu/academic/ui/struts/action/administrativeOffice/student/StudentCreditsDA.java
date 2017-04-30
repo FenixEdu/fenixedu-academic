@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.struts.action.administrativeOffice.student;
 
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
 import org.fenixedu.academic.service.services.administrativeOffice.dismissal.CreateNewCreditsDismissal;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -35,7 +36,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 public class StudentCreditsDA extends StudentDismissalsDA {
 
     @Override
-    protected void executeCreateDismissalService(DismissalBean dismissalBean) {
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws NotAuthorizedException {
         CreateNewCreditsDismissal.run(dismissalBean);
     }
 

@@ -2694,6 +2694,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 Authenticate.getUser());
     }
 
+    public boolean isAllowedToManageEquivalencies() {
+        return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EQUIVALENCES, getDegree(),
+                Authenticate.getUser());
+    }
+
     public boolean isAllowedToManageAccountingEvents() {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_ACCOUNTING_EVENTS, getDegree(),
                 Authenticate.getUser());

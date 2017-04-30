@@ -19,13 +19,18 @@
 package org.fenixedu.academic.service.services.administrativeOffice.dismissal;
 
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CreateNewInternalSubstitution {
 
     @Atomic
-    static public void create(final DismissalBean dismissalBean) {
+    static public void create(final DismissalBean dismissalBean) throws NotAuthorizedException {
+        if (!dismissalBean.getStudentCurricularPlan().isAllowedToManageEquivalencies()) {
+            throw new NotAuthorizedException("error.notAuthorized");
+        }
+
         dismissalBean.getStudentCurricularPlan().createNewInternalSubstitution(dismissalBean.getCourseGroup(),
                 dismissalBean.getCurriculumGroup(), dismissalBean.getAllDismissals(), dismissalBean.getSelectedEnrolments(),
                 dismissalBean.getCredits(), dismissalBean.getExecutionPeriod());
