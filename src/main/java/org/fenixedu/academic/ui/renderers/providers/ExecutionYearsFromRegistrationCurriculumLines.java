@@ -18,7 +18,12 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import org.fenixedu.academic.dto.student.RegistrationSelectExecutionYearBean;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.dto.student.RegistrationCurriculumBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -28,7 +33,9 @@ public class ExecutionYearsFromRegistrationCurriculumLines implements DataProvid
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return ((RegistrationSelectExecutionYearBean) source).getRegistration().getSortedCurriculumLinesExecutionYears();
+        final SortedSet<ExecutionYear> result = ((RegistrationCurriculumBean) source).getCurriculumGroup()
+                .getCurriculumLineStream().map(cl -> cl.getExecutionYear()).collect(Collectors.toCollection(TreeSet::new));
+        return result;
     }
 
     @Override
