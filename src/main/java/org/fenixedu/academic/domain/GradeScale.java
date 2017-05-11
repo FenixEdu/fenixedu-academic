@@ -30,6 +30,79 @@ import org.fenixedu.commons.i18n.LocalizedString;
 
 public enum GradeScale {
 
+    /**
+     * Scale in which all numeric values are approvals
+     */
+    TYPE20_ABSOLUTE(true, new GradeScaleLogic() {
+
+        @Override
+        public boolean checkFinal(final Grade grade) {
+            return belongsTo(grade.getValue());
+        }
+
+        @Override
+        public boolean checkNotFinal(final Grade grade) {
+            return belongsTo(grade.getValue());
+        }
+
+        @Override
+        public String qualify(final Grade grade) {
+            throw new DomainException("GradeScale.unable.to.qualify.given.grade.use.qualitative.scale");
+        }
+
+        @Override
+        public boolean isNotEvaluated(final Grade grade) {
+            final String value = grade.getValue();
+            return grade.isEmpty() || value.equals(GradeScale.NA);
+        }
+
+        @Override
+        public boolean isNotApproved(final Grade grade) {
+            final String value = grade.getValue();
+
+            if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
+                return true;
+            }
+
+            try {
+                return Integer.parseInt(value) < 0;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean isApproved(final Grade grade) {
+            final String value = grade.getValue();
+
+            if (value.equals(GradeScale.AP)) {
+                return true;
+            }
+
+            try {
+                final int intValue = Integer.parseInt(value);
+                return 0 <= intValue && intValue <= 20;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean belongsTo(final String value) {
+            if (value.equals(NA) || value.equals(RE)) {
+                return true;
+            }
+
+            try {
+                final double doubleValue = Double.parseDouble(value);
+                return doubleValue >= 0 && doubleValue <= 20;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+    }),
+
     TYPE20(true, new GradeScaleLogic() {
         @Override
         public boolean checkFinal(final Grade grade) {
