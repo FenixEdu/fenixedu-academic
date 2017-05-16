@@ -29,6 +29,8 @@ import org.fenixedu.academic.bootstrap.FenixBootstrapper.SchoolSetupSection;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.EvaluationConfiguration;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -67,6 +69,7 @@ import org.fenixedu.bennu.core.bootstrap.annotations.Section;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper;
@@ -108,6 +111,11 @@ public class FenixBootstrapper {
         createDistrictAndDistrictSubdivision();
         createOrganizationalStructure();
 
+        EvaluationSeason normalSeason = createEvaluationSeason("EN", "RS", "NORMAL", true, false, false, false);
+        EvaluationConfiguration.getInstance().setDefaultEvaluationSeason(normalSeason);
+        createEvaluationSeason("MN", "GI", "IMPROVEMENT", false, true, false, false);
+        createEvaluationSeason("AE", "SA", "SPECIAL_AUTHORIZATION", false, false, true, false);
+        createEvaluationSeason("EE", "SS", "SPECIAL_SEASON", false, false, false, true);
         //new CreateExecutionYears().doIt();
         //new CreateResources().doIt();
 
@@ -152,6 +160,14 @@ public class FenixBootstrapper {
         }
 
         return Lists.newArrayList();
+    }
+
+    private static EvaluationSeason createEvaluationSeason(final String ptCode, final String enCode, final String nameKey,
+            final boolean normal, final boolean improvement, final boolean specialAuthorization, final boolean special) {
+        final LocalizedString acronym = new LocalizedString.Builder().with(Locale.forLanguageTag("pt-PT"), ptCode)
+                .with(Locale.forLanguageTag("en-GB"), enCode).build();
+        return new EvaluationSeason(acronym, BundleUtil.getLocalizedString(Bundle.ENUMERATION, nameKey), normal, improvement,
+                specialAuthorization, special);
     }
 
     private static void createDefaultRegistrationProtocol() {

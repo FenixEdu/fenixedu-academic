@@ -261,6 +261,7 @@
 			<fr:property name="bundle(dismissal)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="contextRelative(dismissal)" value="true"/>      	
 			<fr:property name="order(dismissal)" value="2"/>
+			<fr:property name="visibleIf(dismissal)" value="allowedToManageEquivalencies"/>
 			
 			<fr:property name="linkFormat(createAccountingEvents)" value="/accountingEventsManagement.do?method=prepare&amp;scpID=${externalId}" />
 			<fr:property name="key(createAccountingEvents)" value="label.accountingEvents.management.createEvents"/>

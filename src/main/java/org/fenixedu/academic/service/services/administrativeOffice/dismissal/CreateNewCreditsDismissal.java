@@ -19,13 +19,18 @@
 package org.fenixedu.academic.service.services.administrativeOffice.dismissal;
 
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CreateNewCreditsDismissal {
 
     @Atomic
-    public static void run(DismissalBean dismissalBean) {
+    public static void run(DismissalBean dismissalBean) throws NotAuthorizedException {
+        if (!dismissalBean.getStudentCurricularPlan().isAllowedToManageEquivalencies()) {
+            throw new NotAuthorizedException("error.notAuthorized");
+        }
+
         dismissalBean.getStudentCurricularPlan().createNewCreditsDismissal(dismissalBean.getCourseGroup(),
                 dismissalBean.getCurriculumGroup(), dismissalBean.getAllDismissals(), dismissalBean.getSelectedEnrolments(),
                 dismissalBean.getCredits(), dismissalBean.getExecutionPeriod());

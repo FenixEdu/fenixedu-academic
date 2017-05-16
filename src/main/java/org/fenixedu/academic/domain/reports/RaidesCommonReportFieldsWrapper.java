@@ -630,14 +630,14 @@ public class RaidesCommonReportFieldsWrapper {
         // Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo
         // anterior ao que se referem os dados
         final CycleCurriculumGroup firstCycleCurriculumGroup =
-                studentCurricularPlan.getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE);
+                getStudentCurricularPlan(registration, CycleType.FIRST_CYCLE).getCycle(CycleType.FIRST_CYCLE);
         row.setCell(firstCycleCurriculumGroup != null ? printBigDecimal(firstCycleCurriculumGroup.getCurriculum(executionYear)
                 .getSumEctsCredits()) : "");
 
         // Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
         // anterior ao que se referem os dados
         final CycleCurriculumGroup secondCycleCurriculumGroup =
-                studentCurricularPlan.getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE);
+                getStudentCurricularPlan(registration, CycleType.SECOND_CYCLE).getCycle(CycleType.SECOND_CYCLE);
         row.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
                 .getCurriculum(executionYear).getSumEctsCredits()) : "");
 
