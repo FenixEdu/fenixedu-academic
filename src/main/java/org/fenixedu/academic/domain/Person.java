@@ -97,7 +97,6 @@ import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
@@ -235,6 +234,15 @@ public class Person extends Person_Base {
     public void setFamilyNames(String newFamilyNames) {
         UserProfile profile = getProfile();
         profile.changeName(profile.getGivenNames(), newFamilyNames, profile.getDisplayName());
+    }
+
+    public void setNames(String newGivenName, String newFamilyName, String newDisplayName) {
+        UserProfile profile = getProfile();
+        try {
+            profile.changeName(newGivenName, newFamilyName, newDisplayName);
+        } catch (BennuCoreDomainException ex) {
+            throw new DomainException("error.invalid.displayName", ex.getLocalizedMessage());
+        }
     }
 
     private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
