@@ -184,7 +184,7 @@ public class AuthorizationController {
     public String download(Model model, @ModelAttribute SearchBean search, RedirectAttributes attrs, HttpServletResponse response)
             throws IOException {
         response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "filename=" + service.getCsvFilename(search));
+        response.setHeader("Content-Disposition", "filename=" + service.getCsvFilename(search) + ".csv");
         service.dumpCSV(search, response.getOutputStream());
         response.flushBuffer();
         return redirectHome(search, attrs);

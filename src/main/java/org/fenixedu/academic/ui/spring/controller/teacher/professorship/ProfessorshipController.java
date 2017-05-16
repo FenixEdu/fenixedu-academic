@@ -185,7 +185,7 @@ public class ProfessorshipController {
         SearchBean search = new SearchBean();
         search.setDepartment(department);
         search.setPeriod(period);
-        response.setHeader("Content-Disposition", "filename=" + professorshipService.getCsvFilename(search));
+        response.setHeader("Content-Disposition", "filename=" + professorshipService.getCsvFilename(search) + ".csv");
         professorshipService.dumpCSV(search, response.getOutputStream());
         response.flushBuffer();
     }
