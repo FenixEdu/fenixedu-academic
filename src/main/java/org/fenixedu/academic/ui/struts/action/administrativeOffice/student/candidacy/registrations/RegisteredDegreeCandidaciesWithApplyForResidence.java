@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -119,12 +118,10 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
     }
 
     private String getPersonalEmailAddress(final Person person) {
-        for (final EmailAddress email : person.getEmailAddresses()) {
-            if (email.isPersonalType() && email.hasValue()) {
-                return email.getValue();
-            }
-        }
-        return "";
+        return person.getEmailAddressStream()
+                .filter(e -> e.isPersonalType() && e.hasValue())
+                .map(e -> e.getValue())
+                .findAny().orElse("");
     }
 
     private String getPhone(final Person person) {

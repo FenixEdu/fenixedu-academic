@@ -196,7 +196,52 @@
 			<property name="required" value="false" />
 		</validator>
     </slot>    
-</schema>	
+</schema>
+	
+<schema name="editPersonalInfo" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">
+	<slot name="givenNames" key="label.givenNames">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="familyNames" key="label.familyNames">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="displayName" key="label.person.nickname">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="idDocumentType" key="label.person.identificationDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
+	<slot name="documentIdNumber" key="label.person.identificationDocumentNumber" />
+	<logic:equal name="person" property="idDocumentType" value="IDENTITY_CARD">
+		<slot name="identificationDocumentSeriesNumber" key="label.person.identificationDocumentSeriesNumber" />
+	</logic:equal>
+	<slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace" />
+	<slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="socialSecurityNumber" key="label.person.contributorNumber" />
+	<slot name="profession" key="label.person.occupation" />
+	<slot name="maritalStatus" key="label.person.maritalStatus" />
+	<slot name="dateOfBirthYearMonthDay" key="label.person.birth" />
+	<slot name="country" layout="menu-select" key="label.person.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="format" value="${countryNationality}" />
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+	<slot name="countryOfBirth" layout="menu-select" key="label.person.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+	<slot name="parishOfBirth" key="label.person.birthPlaceParish" />
+	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality" />
+	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict" />
+	<setter signature="setNames(givenNames,familyNames,displayName)" />
+</schema>
 
 <schema name="EditUserLoginPeriod" type="org.fenixedu.bennu.core.domain.UserLoginPeriod" bundle="MANAGER_RESOURCES">
 		<slot name="beginDate" required="true" />

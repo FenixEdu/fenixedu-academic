@@ -461,57 +461,15 @@
 
 	<logic:present parameter="editPersonalInfo">
 		<fr:edit name="person"
-			action="<%="/accounts/manageAccounts.do?method=viewPerson&personId=" + personID %>">
-			<fr:schema type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">
-				<fr:slot name="givenNames" key="label.givenNames">
-					<fr:property name="size" value="50" />
-				</fr:slot>
-				<fr:slot name="familyNames" key="label.familyNames">
-					<fr:property name="size" value="50" />
-				</fr:slot>
-				<fr:slot name="displayName" key="label.person.nickname">
-					<fr:property name="size" value="50" />
-				</fr:slot>	
-				<fr:slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-				<fr:slot name="idDocumentType" key="label.person.identificationDocumentType">
-					<fr:property name="excludedValues" value="CITIZEN_CARD" />
-				</fr:slot>
-				<fr:slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
-				<fr:slot name="identificationDocumentSeriesNumber" key="label.person.identificationDocumentSeriesNumber">
-					<fr:property name="readOnly" value="${person.idDocumentType.name ne 'IDENTITY_CARD'}" />
-				</fr:slot>
-				<fr:slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/>
-				<fr:slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate">
-					<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-				</fr:slot>
-				<fr:slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
-					<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-				</fr:slot>
-				<fr:slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
-				<fr:slot name="profession" key="label.person.occupation"/>
-				<fr:slot name="maritalStatus" key="label.person.maritalStatus"/>
-				<fr:slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
-				<fr:slot name="country" layout="menu-select" key="label.person.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-					<fr:property name="format" value="\${countryNationality}"/>
-					<fr:property name="sortBy" value="name=asc" />
-					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
-				</fr:slot>
-				<fr:slot name="countryOfBirth" layout="menu-select" key="label.person.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="format" value="\${name}"/>
-					<fr:property name="sortBy" value="name=asc" />
-					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
-				</fr:slot>
-				<fr:slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
-				<fr:slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
-				<fr:slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
-				<%--<setter signature="setIdentificationAndNames(documentIdNumber,idDocumentType,givenNames,familyNames)"/>--%>
-			</fr:schema>
+			action="<%="/accounts/manageAccounts.do?method=viewPerson&personId=" + personID %>"
+			schema="editPersonalInfo">			
 
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
+			<fr:destination name="cancel" path='<%="/accounts/manageAccounts.do?method=viewPerson&personId=" + personID %>'/>
 		</fr:edit>
 
 	</logic:present>

@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
@@ -219,12 +218,10 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
     }
 
     private String getPersonalEmailAddress(final Person person) {
-        for (final EmailAddress email : person.getEmailAddresses()) {
-            if (email.isPersonalType() && email.hasValue()) {
-                return email.getValue();
-            }
-        }
-        return "";
+        return person.getEmailAddressStream()
+            .filter(e -> e.isPersonalType() && e.hasValue())
+            .map(e -> e.getValue())
+            .findAny().orElse("");
     }
 
     private String getPhone(final Person person) {
