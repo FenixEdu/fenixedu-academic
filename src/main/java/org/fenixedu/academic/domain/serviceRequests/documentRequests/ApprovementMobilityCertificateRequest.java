@@ -24,6 +24,7 @@ import java.util.HashSet;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
@@ -175,8 +176,9 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
         final Registration registration = getRegistration();
         ICurriculum curriculum;
         if (registration.isBolonha()) {
-            for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
-                if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
+            for (CycleType cycleType : registration.getDegree().getCycleTypes()) {
+                CycleCurriculumGroup cycle = registration.getStudentCurricularPlan(cycleType).getCycle(cycleType);
+                if (cycle != null && cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
                     curriculum = cycle.getCurriculum(getFilteringDate());
                     filterEntries(result, this, curriculum);
                 }

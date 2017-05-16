@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -94,7 +95,13 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     final private void mapCycles(final SortedSet<ICurriculumEntry> entries) {
         final Collection<CycleCurriculumGroup> cycles =
                 new TreeSet<CycleCurriculumGroup>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-        cycles.addAll(getDocumentRequest().getRegistration().getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
+        Registration registration = getDocumentRequest().getRegistration();
+        for (CycleType cycleType : registration.getDegree().getCycleTypes()) {
+            CycleCurriculumGroup cycleCurriculumGroup = registration.getStudentCurricularPlan(cycleType).getCycle(cycleType);
+            if (cycleCurriculumGroup != null) {
+                cycles.add(cycleCurriculumGroup);
+            }
+        }
 
         for (final CycleCurriculumGroup cycle : cycles) {
             if (!cycle.isConclusionProcessed() || isDEARegistration()) {
