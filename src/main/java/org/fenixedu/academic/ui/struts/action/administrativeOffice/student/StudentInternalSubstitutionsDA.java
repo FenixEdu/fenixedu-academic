@@ -37,6 +37,7 @@ import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedEnrolment;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.InternalSubstitutionDismissalBean;
 import org.fenixedu.academic.service.services.administrativeOffice.dismissal.CreateNewInternalSubstitution;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -112,7 +113,7 @@ public class StudentInternalSubstitutionsDA extends StudentDismissalsDA {
     }
 
     @Override
-    protected void executeCreateDismissalService(DismissalBean dismissalBean) {
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws NotAuthorizedException {
         CreateNewInternalSubstitution.create(dismissalBean);
     }
 

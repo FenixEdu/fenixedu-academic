@@ -47,6 +47,7 @@ import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.Se
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
 import org.fenixedu.academic.service.services.administrativeOffice.dismissal.DeleteCredits;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -72,7 +73,12 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     @EntryPoint
     public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("studentCurricularPlan", getSCP(request));
+        StudentCurricularPlan scp = getSCP(request);
+        request.setAttribute("studentCurricularPlan", scp);
+
+        if (!scp.isAllowedToManageEquivalencies()) {
+            addActionMessage(request, "error.notAuthorized");
+        }
         return mapping.findForward("manage");
     }
 
@@ -243,12 +249,16 @@ public class StudentDismissalsDA extends FenixDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
             return confirmCreateDismissals(mapping, form, request, response);
+        } catch (NotAuthorizedException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            return confirmCreateDismissals(mapping, form, request, response);
         }
 
         return manage(mapping, form, request, response);
     }
 
-    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws FenixServiceException {
+    protected void executeCreateDismissalService(DismissalBean dismissalBean)
+            throws FenixServiceException, NotAuthorizedException {
         // Do nothing, the dismissals MUST be created in the concrete classes
     }
 
