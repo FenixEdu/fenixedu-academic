@@ -26,6 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean;
 import org.fenixedu.academic.service.services.administrativeOffice.dismissal.CreateNewSubstitutionDismissal;
+import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -53,7 +54,7 @@ public class StudentSubstitutionsDA extends StudentDismissalsDA {
     }
 
     @Override
-    protected void executeCreateDismissalService(DismissalBean dismissalBean) {
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws NotAuthorizedException {
         CreateNewSubstitutionDismissal.run(dismissalBean);
     }
 

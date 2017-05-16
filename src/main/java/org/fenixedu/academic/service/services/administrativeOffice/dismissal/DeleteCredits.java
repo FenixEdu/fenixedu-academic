@@ -19,6 +19,7 @@
 package org.fenixedu.academic.service.services.administrativeOffice.dismissal;
 
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
@@ -28,6 +29,10 @@ public class DeleteCredits {
 
     @Atomic
     public static void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
+        if (!studentCurricularPlan.isAllowedToManageEquivalencies()) {
+            throw new DomainException("error.notAuthorized");
+        }
+
         for (String creditsID : creditsIDs) {
             Credits credits = getCreditsByID(studentCurricularPlan, creditsID);
             if (credits == null) {

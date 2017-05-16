@@ -33,8 +33,6 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.*;
-import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -43,10 +41,16 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
+import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationRegime;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.AddAttendsBean;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.dto.student.RegistrationCurriculumBean;
@@ -59,6 +63,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
@@ -121,6 +126,8 @@ public class RegistrationDA extends StudentRegistrationDA {
         final Person studentPerson = registrationCurriculumBean.getStudent().getPerson();
         request.setAttribute("studentPerson", studentPerson);
 
+        setEctsGradeAttributes(request, registrationCurriculumBean);
+
         return mapping.findForward("view-registration-curriculum");
     }
 
@@ -140,6 +147,9 @@ public class RegistrationDA extends StudentRegistrationDA {
         }
 
         request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
+
+        setEctsGradeAttributes(request, registrationCurriculumBean);
+
         return mapping.findForward("view-registration-curriculum");
     }
 
@@ -395,6 +405,34 @@ public class RegistrationDA extends StudentRegistrationDA {
         request.setAttribute("registration", registration);
 
         return mapping.findForward("view-application");
+    }
+
+    private void setEctsGradeAttributes(HttpServletRequest request, final RegistrationCurriculumBean registrationCurriculumBean) {
+
+        CurriculumGroup curriculumGroup = registrationCurriculumBean.getCurriculumGroup();
+        CycleType cycleType =
+                curriculumGroup.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) curriculumGroup).getCycleType() : null;
+
+        if (cycleType != null) {
+
+            AcademicInterval academicInterval = ExecutionYear.readCurrentExecutionYear().getAcademicInterval();
+            DateTime processingDate = new DateTime();
+
+            RegistrationConclusionBean conclusionBean = new RegistrationConclusionBean(
+                    registrationCurriculumBean.getRegistration(), registrationCurriculumBean.getProgramConclusion());
+
+            if (conclusionBean.isConcluded()) {
+                academicInterval = conclusionBean.getConclusionYear().getAcademicInterval();
+            }
+
+            final EctsGraduationGradeConversionTable ectsGraduationGradeConversionTable =
+                    EctsTableIndex.getGraduationGradeConversionTable(registrationCurriculumBean.getRegistration().getDegree(),
+                            cycleType, academicInterval, processingDate);
+            request.setAttribute("ectsGradeConversionTable",
+                    ectsGraduationGradeConversionTable.getEctsTable().toString().split(""));
+            request.setAttribute("ectsGradePercentagesTable",
+                    ectsGraduationGradeConversionTable.getPercentages().toString().split(":"));
+        }
     }
 
 }

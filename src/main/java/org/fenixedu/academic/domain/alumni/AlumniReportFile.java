@@ -248,16 +248,9 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public EmailAddress getPersonalEmail(final Person person) {
-        if (person.getStudent().getAlumni() != null) {
-            return person.getStudent().getAlumni().getPersonalEmail();
-        }
-
-        for (EmailAddress email : person.getEmailAddresses()) {
-            if (email.isPersonalType()) {
-                return email;
-            }
-        }
-        return null;
+        return person.getEmailAddressStream()
+                .filter(e -> e.isPersonalType())
+                .findAny().orElse(null);
     }
 
     public Boolean hasPersonalEmail(final Person person) {

@@ -116,12 +116,9 @@ public class Alumni extends Alumni_Base {
     }
 
     public EmailAddress getPersonalEmail() {
-        for (EmailAddress email : getStudent().getPerson().getEmailAddresses()) {
-            if (email.isPersonalType()) {
-                return email;
-            }
-        }
-        return null;
+        return getStudent().getPerson().getEmailAddressStream()
+            .filter(e -> e.isPersonalType())
+            .findAny().orElse(null);
     }
 
     public Boolean hasPersonalEmail() {
