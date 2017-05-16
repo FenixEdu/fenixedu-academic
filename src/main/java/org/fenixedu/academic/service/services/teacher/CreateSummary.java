@@ -19,6 +19,7 @@
 package org.fenixedu.academic.service.services.teacher;
 
 import org.fenixedu.academic.domain.Summary;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.SummariesManagementBean;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -47,6 +48,7 @@ public class CreateSummary {
                     bean.getSummaryType().equals(SummariesManagementBean.SummaryType.EXTRA_SUMMARY), bean.getProfessorship(),
                     bean.getTeacherName(), bean.getTeacher(), bean.getShift(), bean.getLesson(), bean.getSummaryDate(),
                     bean.getSummaryRoom(), bean.getSummaryTime(), bean.getLessonType(), bean.getTaught());
+            Signal.emit(Summary.EDIT_SIGNAL, new DomainObjectEvent<Summary>(bean.getSummary()));
         }
     }
 
@@ -54,8 +56,30 @@ public class CreateSummary {
 
     private static final CreateSummary serviceInstance = new CreateSummary();
 
-    @Atomic
     public static void runCreateSummary(SummariesManagementBean bean) throws NotAuthorizedException {
+        try {
+            atomicCreateSummary(bean);
+        } catch (RuntimeException re) {
+            if (re.getCause() != null && re.getCause() instanceof DomainException) {
+                throw (DomainException) re.getCause();
+            }
+            throw re;
+        }
+    }
+
+    public static void runEditSummary(SummariesManagementBean bean) throws NotAuthorizedException {
+        try {
+            atomicEditSummary(bean);
+        } catch (RuntimeException re) {
+            if (re.getCause() != null && re.getCause() instanceof DomainException) {
+                throw (DomainException) re.getCause();
+            }
+            throw re;
+        }
+    }
+
+    @Atomic
+    private static void atomicCreateSummary(SummariesManagementBean bean) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(bean);
         serviceInstance.run(bean);
     }
@@ -63,7 +87,7 @@ public class CreateSummary {
     // Service Invokers migrated from Berserk
 
     @Atomic
-    public static void runEditSummary(SummariesManagementBean bean) throws NotAuthorizedException {
+    private static void atomicEditSummary(SummariesManagementBean bean) throws NotAuthorizedException {
         SummaryManagementToTeacherAuthorizationFilter.instance.execute(bean.getSummary(), bean.getProfessorshipLogged());
         serviceInstance.run(bean);
     }

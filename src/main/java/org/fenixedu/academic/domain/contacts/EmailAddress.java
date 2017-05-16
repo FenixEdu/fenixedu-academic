@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.contacts;
 
 import java.util.Comparator;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
@@ -55,21 +56,19 @@ public class EmailAddress extends EmailAddress_Base {
 
     public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, Boolean isDefault,
             Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToStaff) {
-
-        EmailAddress result = null;
-        if (!StringUtils.isEmpty(email)) {
-            result = new EmailAddress(party, type, visibleToPublic, visibleToStudents, visibleToStaff, isDefault, email);
-        }
-        return result;
+        final Supplier<EmailAddress> supplier = () -> new EmailAddress(party, type, visibleToPublic, visibleToStudents, visibleToStaff, isDefault, email);
+        return createEmailAddress(supplier, party, email);
     }
 
     public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, boolean isDefault) {
-        for (EmailAddress emailAddress : party.getEmailAddresses()) {
-            if (emailAddress.getValue().equals(email)) {
-                return emailAddress;
-            }
-        }
-        return (!StringUtils.isEmpty(email)) ? new EmailAddress(party, type, isDefault, email) : null;
+        final Supplier<EmailAddress> supplier = () -> new EmailAddress(party, type, isDefault, email);
+        return createEmailAddress(supplier, party, email);
+    }
+
+    private static EmailAddress createEmailAddress(final Supplier<EmailAddress> supplier, final Party party, final String email) {
+        return StringUtils.isEmpty(email) ? null : party.getEmailAddressStream()
+                .filter(ea -> email.equalsIgnoreCase(ea.getValue()))
+                .findAny().orElseGet(supplier);
     }
 
     protected EmailAddress() {
