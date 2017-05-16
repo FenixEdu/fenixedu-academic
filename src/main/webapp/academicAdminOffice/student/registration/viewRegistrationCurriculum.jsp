@@ -85,7 +85,7 @@
 </fr:view>
 </logic:notPresent>
 
-<p class="mtop15 mbottom025"><strong>Visualizar Currículo:</strong></p>
+<p class="mtop15 mbottom025"><strong><bean:message key="label.curriculum.view" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 <fr:form action="/registration.do?method=viewRegistrationCurriculum">
 	<fr:edit id="registrationCurriculumBean" 
 		name="registrationCurriculumBean"
@@ -141,7 +141,8 @@
 		</div>
 	</logic:empty>
 	  
-	
+	<h3><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<h4><bean:message key="label.summary" bundle="ACADEMIC_OFFICE_RESOURCES"/></h4>
 	<table class="tstyle4 thlight tdcenter mtop15">
 		<tr>
 			<th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
@@ -169,8 +170,45 @@
 			</logic:empty>
 		</tr>
 	</table>
-
+	
+	<logic:present name="ectsGradeConversionTable">
+		<h4><bean:message key="label.gradeConversionTable" bundle="ACADEMIC_OFFICE_RESOURCES"/></h4>
+	    <table class="tstyle4 thlight tdcenter mtop15">
+		    <tr>
+		        <th><bean:message key="diploma.supplement.four.four.two" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+		        <td>10</td>
+		        <td>11</td>
+		        <td>12</td>
+		        <td>13</td>
+		        <td>14</td>
+		        <td>15</td>
+		        <td>16</td>
+		        <td>17</td>
+		        <td>18</td>
+		        <td>19</td>
+		        <td>20</td>
+		    </tr>
+	    	<tr>
+		    	<th>%</th>
+		   		<logic:iterate name = "ectsGradePercentagesTable" id="percentage">	
+		    		<td class="width50px"><bean:write name="percentage"/></td>
+		    	</logic:iterate>
+	    	</tr>
+		    <tr>
+		    	<th><bean:message key="diploma.supplement.four.four.three" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+	    		<logic:iterate name = "ectsGradeConversionTable" id="convert">
+		    		<td><bean:write name="convert"/></td>
+		    	</logic:iterate>
+		    </tr>
+		</table>
+	</logic:present>
+	
 		<p>
-			<fr:view name="curriculum"/>
+			<h4><bean:message key="label.grades" bundle="ACADEMIC_OFFICE_RESOURCES"/></h4>
+			<fr:view name="curriculum">
+				<logic:present name="ectsGradeConversionTable">
+					<fr:layout> <fr:property name="visibleEctsConvertedGrade" value="true"/> </fr:layout>
+				</logic:present>
+			</fr:view>	
 		</p>
 </logic:equal>
