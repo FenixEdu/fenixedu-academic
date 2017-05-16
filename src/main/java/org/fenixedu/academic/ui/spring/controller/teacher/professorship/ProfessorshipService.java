@@ -173,6 +173,6 @@ public class ProfessorshipService {
     }
 
     public String getCsvFilename(SearchBean search) {
-        return getSheetName(search);
+        return getSheetName(search) + ".csv";
     }
 }

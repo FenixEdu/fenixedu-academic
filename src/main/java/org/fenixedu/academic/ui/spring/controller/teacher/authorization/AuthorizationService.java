@@ -286,7 +286,7 @@ public class AuthorizationService {
     }
 
     public String getCsvFilename(SearchBean search) {
-        return getSheetName(search);
+        return getSheetName(search) + ".csv";
     };
 
     /**
