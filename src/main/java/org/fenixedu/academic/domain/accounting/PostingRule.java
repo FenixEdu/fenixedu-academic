@@ -383,4 +383,8 @@ public abstract class PostingRule extends PostingRule_Base {
         return result;
     }
 
+    public Money doCalculationForAmountToPayWithoutExemptions(Event event, DateTime when, boolean applyDiscount) {
+        return doCalculationForAmountToPay(event, when, applyDiscount);
+    }
+
 }
