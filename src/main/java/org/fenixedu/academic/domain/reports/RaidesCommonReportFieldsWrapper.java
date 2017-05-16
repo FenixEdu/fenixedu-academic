@@ -709,12 +709,9 @@ public class RaidesCommonReportFieldsWrapper {
         return value == null ? "" : value.toPlainString().replace('.', ',');
     }
 
+    @Deprecated
     public static StudentCurricularPlan getStudentCurricularPlan(Registration registration, CycleType cycleType) {
-        Optional<StudentCurricularPlan> studentCurricularPlan = registration.getStudentCurricularPlansSet().stream()
-                .filter(scp -> scp.getRoot().getCycleCurriculumGroup(cycleType) != null)
-                .max(StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
-
-        return studentCurricularPlan.orElse(registration.getLastStudentCurricularPlan());
+        return registration.getStudentCurricularPlan(cycleType);
     }
 
     public static Set<Registration> getRegistrationsToProcess(final ExecutionYear executionYear, final DegreeType degreeType) {

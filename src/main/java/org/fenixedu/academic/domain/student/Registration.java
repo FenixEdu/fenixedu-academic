@@ -2444,6 +2444,16 @@ public class Registration extends Registration_Base {
         return null;
     }
 
+    final public StudentCurricularPlan getStudentCurricularPlan(final CycleType cycleType) {
+        if (cycleType == null) {
+            return getLastStudentCurricularPlan();
+        }
+        return getStudentCurricularPlansSet().stream()
+                .filter(scp -> scp.getRoot().getCycleCurriculumGroup(cycleType) != null)
+                .max(StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE)
+                .orElse(getLastStudentCurricularPlan());
+    }
+
     final public Set<DegreeCurricularPlan> getDegreeCurricularPlans() {
         Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
