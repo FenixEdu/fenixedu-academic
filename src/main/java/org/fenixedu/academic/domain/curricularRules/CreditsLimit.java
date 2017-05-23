@@ -38,7 +38,7 @@ public class CreditsLimit extends CreditsLimit_Base {
         setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
     }
 
-    protected CreditsLimit(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+    public CreditsLimit(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionSemester begin, final ExecutionSemester end, final Double minimum, final Double maximum) {
 
         this(minimum, maximum);

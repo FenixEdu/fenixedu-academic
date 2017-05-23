@@ -46,7 +46,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         }
     }
 
-    protected RestrictionBetweenDegreeModules(final DegreeModule degreeModuleToApplyRule,
+    public RestrictionBetweenDegreeModules(final DegreeModule degreeModuleToApplyRule,
             final DegreeModule precedenceDegreeModule, final Double minimumCredits, final CourseGroup contextCourseGroup,
             final ExecutionSemester begin, final ExecutionSemester end) {
 

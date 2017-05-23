@@ -32,7 +32,7 @@ import org.fenixedu.academic.dto.GenericPair;
 
 public class Exclusiveness extends Exclusiveness_Base {
 
-    protected Exclusiveness(final DegreeModule toApplyRule, final DegreeModule exclusiveDegreeModule,
+    public Exclusiveness(final DegreeModule toApplyRule, final DegreeModule exclusiveDegreeModule,
             final CourseGroup contextCourseGroup, final ExecutionSemester begin, final ExecutionSemester end) {
 
         super();
@@ -106,7 +106,7 @@ public class Exclusiveness extends Exclusiveness_Base {
         setExclusiveDegreeModule(null);
     }
 
-    private void removeRuleFromCurrentExclusiveDegreeModule(final Iterator<CurricularRule> curricularRulesIterator) {
+    public void removeRuleFromCurrentExclusiveDegreeModule(final Iterator<CurricularRule> curricularRulesIterator) {
         while (curricularRulesIterator.hasNext()) {
             final CurricularRule curricularRule = curricularRulesIterator.next();
             if (curricularRule.getCurricularRuleType() == null) { // (composite

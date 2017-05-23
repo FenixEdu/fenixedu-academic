@@ -43,7 +43,7 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
         }
     }
 
-    protected MinimumNumberOfCreditsToEnrol(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+    public MinimumNumberOfCreditsToEnrol(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionSemester begin, final ExecutionSemester end, final Double minimumNumberOfCredits) {
 
         this(minimumNumberOfCredits);

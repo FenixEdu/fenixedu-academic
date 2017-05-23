@@ -35,14 +35,14 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
         setCurricularRuleType(CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR);
     }
 
-    protected EnrolmentToBeApprovedByCoordinator(final DegreeModule toApplyRule, final CourseGroup contextCourseGroup,
+    public EnrolmentToBeApprovedByCoordinator(final DegreeModule toApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionSemester begin, final ExecutionSemester end) {
 
         this();
         init(toApplyRule, contextCourseGroup, begin, end);
     }
 
-    protected void edit(CourseGroup contextCourseGroup) {
+    public void edit(CourseGroup contextCourseGroup) {
         setContextCourseGroup(contextCourseGroup);
     }
 

@@ -43,7 +43,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         setCurricularRuleType(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE);
     }
 
-    protected RestrictionEnroledDegreeModule(final CurricularCourse toApplyRule, final CurricularCourse toBeEnroled,
+    public RestrictionEnroledDegreeModule(final CurricularCourse toApplyRule, final CurricularCourse toBeEnroled,
             final CourseGroup contextCourseGroup, final CurricularPeriodInfoDTO curricularPeriodInfoDTO,
             final ExecutionSemester begin, final ExecutionSemester end) {
 

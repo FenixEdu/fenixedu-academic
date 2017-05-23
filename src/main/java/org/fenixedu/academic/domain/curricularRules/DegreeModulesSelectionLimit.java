@@ -37,7 +37,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         setCurricularRuleType(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT);
     }
 
-    protected DegreeModulesSelectionLimit(final CourseGroup degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+    public DegreeModulesSelectionLimit(final CourseGroup degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionSemester begin, final ExecutionSemester end, final Integer minimum, final Integer maximum) {
 
         this(minimum, maximum);

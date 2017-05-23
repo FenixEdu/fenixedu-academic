@@ -40,7 +40,7 @@ import org.fenixedu.academic.dto.GenericPair;
 
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
-    protected AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
+    public AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionSemester begin, final ExecutionSemester end, final Double minimumCredits, Double maximumCredits,
             final Integer curricularPeriodOrder, final Integer minimumYear, final Integer maximumYear,
             final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
