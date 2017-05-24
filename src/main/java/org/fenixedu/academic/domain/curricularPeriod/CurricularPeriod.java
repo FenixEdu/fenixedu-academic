@@ -242,6 +242,18 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             }
         }
     }
+    
+    public void createChilds(final AcademicPeriod smallest) {
+        AcademicPeriod academicPeriod = getAcademicPeriod();
+        AcademicPeriod possibleChild = academicPeriod.getPossibleChild();
+        if (possibleChild != null && (smallest == null || possibleChild.isBiggerOrEquals(smallest))) {
+            final int childs = Float.valueOf(academicPeriod.getWeight() / possibleChild.getWeight()).intValue();
+            for (int order = 1; order <= childs; order++) {
+                final CurricularPeriod child = new CurricularPeriod(possibleChild, order, this);
+                child.createChilds(smallest);
+            }
+        }
+    }
 
     public Integer getParentOrder() {
         if (this.getParent() != null) {

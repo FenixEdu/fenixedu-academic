@@ -98,7 +98,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    protected CurricularCourse() {
+    public CurricularCourse() {
         super();
         final Double d = Double.valueOf(0d);
         setTheoreticalHours(d);

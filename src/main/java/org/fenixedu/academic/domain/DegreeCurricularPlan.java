@@ -1802,6 +1802,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return result;
     }
+    
+    public void setDescriptionI18N(final MultiLanguageString input) {
+        if (input != null && !input.isEmpty()) {
+            setDescription(input.getContent(MultiLanguageString.pt));
+            setDescriptionEn(input.getContent(MultiLanguageString.en));
+        } else {
+            setDescription(null);
+            setDescriptionEn(null);
+        }
+    }
 
     public Collection<CycleCourseGroup> getDestinationAffinities(final CycleType sourceCycleType) {
         final CycleCourseGroup cycleCourseGroup = getRoot().getCycleCourseGroup(sourceCycleType);

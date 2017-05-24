@@ -25,7 +25,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -39,6 +41,7 @@ import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -168,6 +171,151 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setObjectivesEn(objectivesEn);
         setProgramEn(programEn);
         setEvaluationMethodEn(evaluationMethodEn);
+    }
+    
+    public ExecutionInterval getExecutionInterval() {
+        return getExecutionPeriod();
+    }
+
+    public void setExecutionInterval(final ExecutionInterval input) {
+        if (input == null) {
+            throw new DomainException("error.CompetenceCourseInformation.required.ExecutionInterval");
+        }
+        
+        super.setExecutionPeriod(input.convert(ExecutionSemester.class));
+    }
+    
+    public AcademicPeriod getAcademicPeriod() {
+        AcademicPeriod result = null;
+        final RegimeType regime = getRegime();
+        if (regime.equals(RegimeType.SEMESTRIAL)) {
+            result = AcademicPeriod.SEMESTER;
+        } else if (regime.equals(RegimeType.ANUAL)) {
+            result = AcademicPeriod.YEAR;
+        } else {
+            throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
+        }
+        return result;
+    }
+
+    public void setAcademicPeriod(final AcademicPeriod input) {
+        if (input == null) {
+            throw new DomainException("error.CompetenceCourseInformation.required.AcademicPeriod");
+        }
+        
+        if (!input.equals(AcademicPeriod.SEMESTER) && !input.equals(AcademicPeriod.YEAR)) {
+            throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
+        }
+        setRegime(input.equals(AcademicPeriod.SEMESTER) ? RegimeType.SEMESTRIAL : RegimeType.ANUAL);
+    }
+
+    public MultiLanguageString getNameI18N() {
+        MultiLanguageString result = new MultiLanguageString();
+
+        if (!StringUtils.isEmpty(getName())) {
+            result = result.with(MultiLanguageString.pt, getName());
+        }
+        if (!StringUtils.isEmpty(getNameEn())) {
+            result = result.with(MultiLanguageString.en, getNameEn());
+        }
+
+        return result;
+    }
+
+    public void setNameI18N(final MultiLanguageString input) {
+        if (input != null) {
+            setName(input.getContent(Locale.getDefault()));
+            setNameEn(input.getContent(Locale.ENGLISH));
+        } else {
+            setName(null);
+            setNameEn(null);
+        }
+    }
+
+    public MultiLanguageString getObjectivesI18N() {
+        MultiLanguageString result = new MultiLanguageString();
+
+        if (!StringUtils.isEmpty(getObjectives())) {
+            result = result.with(MultiLanguageString.pt, getObjectives());
+        }
+        if (!StringUtils.isEmpty(getObjectivesEn())) {
+            result = result.with(MultiLanguageString.en, getObjectivesEn());
+        }
+
+        return result;
+    }
+
+    public void setObjectivesI18N(final MultiLanguageString input) {
+        if (input != null) {
+            setObjectives(input.getContent(Locale.getDefault()));
+            setObjectivesEn(input.getContent(Locale.ENGLISH));
+        } else {
+            setObjectives(null);
+            setObjectivesEn(null);
+        }
+    }
+
+    public MultiLanguageString getProgramI18N() {
+        MultiLanguageString result = new MultiLanguageString();
+
+        if (!StringUtils.isEmpty(getProgram())) {
+            result = result.with(MultiLanguageString.pt, getProgram());
+        }
+        if (!StringUtils.isEmpty(getProgramEn())) {
+            result = result.with(MultiLanguageString.en, getProgramEn());
+        }
+
+        return result;
+    }
+
+    public void setProgramI18N(final MultiLanguageString input) {
+        if (input != null) {
+            setProgram(input.getContent(Locale.getDefault()));
+            setProgramEn(input.getContent(Locale.ENGLISH));
+        } else {
+            setProgram(null);
+            setProgramEn(null);
+        }
+    }
+
+    public MultiLanguageString getEvaluationMethodI18N() {
+        MultiLanguageString result = new MultiLanguageString();
+
+        if (!StringUtils.isEmpty(getEvaluationMethod())) {
+            result = result.with(MultiLanguageString.pt, getEvaluationMethod());
+        }
+        if (!StringUtils.isEmpty(getEvaluationMethodEn())) {
+            result = result.with(MultiLanguageString.en, getEvaluationMethodEn());
+        }
+
+        return result;
+    }
+
+    public void setEvaluationMethodI18N(final MultiLanguageString input) {
+        if (input != null) {
+            setEvaluationMethod(input.getContent(Locale.getDefault()));
+            setEvaluationMethodEn(input.getContent(Locale.ENGLISH));
+        } else {
+            setEvaluationMethod(null);
+            setEvaluationMethodEn(null);
+        }
+    }
+    
+    protected CompetenceCourseLoad findLoad(final Integer order) {
+        CompetenceCourseLoad result = null;
+
+        for (final CompetenceCourseLoad iter : getCompetenceCourseLoadsSet()) {
+            if (iter.getLoadOrder().equals(order)) {
+                if (result != null) {
+                    throw new DomainException("error.CompetenceCourseInformation.found.duplicate.CompetenceCourseLoad",
+                            result.toString(), iter.toString());
+                }
+
+                result = iter;
+            }
+        }
+
+        return result;
     }
 
     public void delete() {
@@ -357,23 +505,6 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
-    }
-
-    public ExecutionInterval getExecutionInterval() {
-        return getExecutionPeriod();
-    }
-
-    public AcademicPeriod getAcademicPeriod() {
-        AcademicPeriod result = null;
-        final RegimeType regime = getRegime();
-        if (regime.equals(RegimeType.SEMESTRIAL)) {
-            result = AcademicPeriod.SEMESTER;
-        } else if (regime.equals(RegimeType.ANUAL)) {
-            result = AcademicPeriod.YEAR;
-        } else {
-            throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
-        }
-        return result;
     }
 
 }

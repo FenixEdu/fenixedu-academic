@@ -107,7 +107,23 @@ public class DegreeInfo extends DegreeInfo_Base {
     private boolean hasSameName(final LocalizedString name) {
         return hasName() && getName().equals(name);
     }
+    
+    public void setGraduationNextLevelAccess(MultiLanguageString graduationNextLevelAccess) {
+        getDegreeInfoFuture().setGraduationNextLevelAccess(graduationNextLevelAccess);
+    }
 
+    public MultiLanguageString getGraduationNextLevelAccess() {
+        return getDegreeInfoFuture().getGraduationNextLevelAccess();
+    }
+
+    public void setProfessionalStatute(MultiLanguageString professionalStatute) {
+        getDegreeInfoFuture().setProfessionalStatute(professionalStatute);
+    }
+
+    public MultiLanguageString getProfessionalStatute() {
+        return getDegreeInfoFuture().getProfessionalStatute();
+    }
+    
     public DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
         this(degreeInfo.getDegree(), executionYear);
 

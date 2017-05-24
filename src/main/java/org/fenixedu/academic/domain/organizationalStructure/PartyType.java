@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -38,6 +40,21 @@ public class PartyType extends PartyType_Base {
             throw new DomainException("error.PartyType.empty.type");
         }
         super.setType(type);
+    }
+    
+    protected Collection<PartyType> getAllowedChildPartyTypes(final Boolean managedByUser) {
+
+        final Set<PartyType> result = new HashSet<PartyType>();
+
+        for (final ConnectionRule connectionRule : getAllowedChildConnectionRulesSet()) {
+            if (managedByUser != null && connectionRule.getManagedByUser() != managedByUser.booleanValue()) {
+                continue;
+            }
+
+            result.add(connectionRule.getAllowedChildPartyType());
+        }
+
+        return result;
     }
 
     public static PartyType readPartyTypeByType(final PartyTypeEnum partyTypeEnum) {

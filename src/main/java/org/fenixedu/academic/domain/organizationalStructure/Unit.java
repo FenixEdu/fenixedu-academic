@@ -419,6 +419,29 @@ public class Unit extends Unit_Base {
         }
         return new ArrayList<Unit>(allActiveSubUnits);
     }
+    
+    public List<Unit> getAllActiveSubUnitsWithAllowedChildParties(final YearMonthDay currentDate, final PartyType childType) {
+        final Set<Unit> allActiveSubUnits = new HashSet<Unit>();
+        allActiveSubUnits.addAll(getActiveSubUnitsWithAllowedChildParties(currentDate, childType));
+        for (Unit subUnit : getSubUnits()) {
+            allActiveSubUnits.addAll(subUnit.getAllActiveSubUnitsWithAllowedChildParties(currentDate, childType));
+        }
+        return new ArrayList<Unit>(allActiveSubUnits);
+    }
+
+    protected List<Unit> getActiveSubUnitsWithAllowedChildParties(YearMonthDay currentDate, final PartyType childType) {
+        final List<Unit> allSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits()) {
+            if (subUnit.isActive(currentDate) && subUnit.getAllowedChildPartyTypes(null).contains(childType)) {
+                allSubUnits.add(subUnit);
+            }
+        }
+        return allSubUnits;
+    }
+
+    public Collection<PartyType> getAllowedChildPartyTypes(final Boolean managedByUser) {
+        return getPartyType().getAllowedChildPartyTypes(managedByUser);
+    }
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
         Set<Unit> allInactiveSubUnits = new HashSet<Unit>();

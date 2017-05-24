@@ -22,8 +22,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -49,6 +52,14 @@ public class RootCourseGroup extends RootCourseGroup_Base {
             new CycleCourseGroup(this, cycleType.getDescription(Locale.getDefault()), cycleType.getDescription(Locale.ENGLISH),
                     cycleType, executionSemester, null);
         }
+    }
+    
+    public ExecutionInterval getBeginExecutionInterval() {
+        final SortedSet<ExecutionInterval> executionIntervals = new TreeSet<ExecutionInterval>();
+        for (final Context context : getChildContextsSet()) {
+            executionIntervals.add(context.getBeginExecutionPeriod());
+        }
+        return executionIntervals.isEmpty() ? null : executionIntervals.first();
     }
 
     @Override

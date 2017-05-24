@@ -327,6 +327,25 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
     }
+    
+    public DegreeCurricularPlan findDegreeCurricularPlan(MultiLanguageString name) {
+        if (name == null || !name.hasContent(Locale.getDefault())) {
+            return null;
+        }
+        String degreeName = getNameI18N().getContent(Locale.getDefault());
+        String dcpName = name.getContent(Locale.getDefault());
+
+        DegreeCurricularPlan foundDcp = null;
+        for (DegreeCurricularPlan dcp : getDegreeCurricularPlansSet()) {
+            if (dcp.getName().equalsIgnoreCase(dcpName)) {
+                if (foundDcp != null) {
+                    throw new DomainException("error.Degree.found.duplicate.DegreeCurricularPlan", dcpName, degreeName);
+                }
+                foundDcp = dcp;
+            }
+        }
+        return foundDcp;
+    }
 
     @Override
     public Collection<CycleType> getCycleTypes() {
@@ -773,6 +792,18 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public void setSigla(final String sigla) {
         updateCache(this, sigla.toLowerCase());
         super.setSigla(sigla);
+    }
+    
+    public String getAcronym() {
+        return super.getSigla();
+    }
+
+    public void setAcronym(final String input) {
+        if (Strings.isNullOrEmpty(input)) {
+            throw new DomainException("error.Degree.required.acronym");
+        }
+        
+        setSigla(input.trim());
     }
 
     public static Degree readBySigla(final String sigla) {

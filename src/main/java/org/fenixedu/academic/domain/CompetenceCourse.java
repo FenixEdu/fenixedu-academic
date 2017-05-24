@@ -43,6 +43,7 @@ import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
+import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -822,6 +823,16 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         });
     }
+    
+    public Collection<Context> getCurricularCourseContexts() {
+        final Set<Context> result = new HashSet<Context>();
+        for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            for (Context context : curricularCourse.getParentContextsSet()) {
+                result.add(context);
+            }
+        }
+        return result;
+    }
 
     public CurricularCourse getCurricularCourse(final DegreeCurricularPlan degreeCurricularPlan) {
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
@@ -847,6 +858,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             curricularCourse.addActiveEnrollments(results, executionSemester);
         }
         return results;
+    }
+    
+    public ExecutionInterval getBeginExecutionInterval() {
+        final CompetenceCourseInformation firstInformation = getOldestCompetenceCourseInformation();
+        return firstInformation != null ? firstInformation.getExecutionInterval() : null;
+    }
+    
+    public CompetenceCourseInformation getActiveCompetenceCourseInformation() {
+        return getMostRecentCompetenceCourseInformationUntil(ExecutionSemester.readActualExecutionSemester());
     }
 
     public Boolean hasActiveScopesInExecutionYear(ExecutionYear executionYear) {
@@ -1283,6 +1303,27 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         }
         return null;
+    }
+
+    /**
+     * Find for <b>exactly</b> the given {@link ExecutionInterval}
+     * 
+     */
+    public CompetenceCourseInformation findInformation(final ExecutionInterval input) {
+        CompetenceCourseInformation result = null;
+
+        for (final CompetenceCourseInformation iter : getCompetenceCourseInformationsSet()) {
+            if (iter.getExecutionInterval().equals(input)) {
+                if (result != null) {
+                    throw new DomainException("error.CompetenceCourse.found.duplicate.CompetenceCourseInformation",
+                            result.toString(), iter.toString());
+                }
+
+                result = iter;
+            }
+        }
+
+        return result;
     }
 
     /**

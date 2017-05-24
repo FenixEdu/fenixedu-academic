@@ -619,6 +619,11 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         LocalizedString links;
         LocalizedString operationalRegime;
         LocalizedString schoolCalendar;
+
+		LocalizedString learningLanguages;
+		LocalizedString officialProgramDuration;
+		LocalizedString studyRegime;
+		LocalizedString prevailingScientificArea;
     }
 
     class DegreeInfoCandidacy  {
@@ -637,6 +642,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         LocalizedString professionalExits;
         LocalizedString qualificationLevel;
         LocalizedString recognitions;
+        
+    	LocalizedString graduationNextLevelAccess;
+		LocalizedString professionalStatute;
     }
 
     class Department  {
@@ -2399,6 +2407,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
         	boolean isOptional;
+        	boolean isBranch;
         }
 
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {
@@ -2531,6 +2540,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }       
             
     class organizationalStructure.ConnectionRule  {
+    	boolean managedByUser;
     }
 
     class organizationalStructure.PartyType  {
