@@ -291,6 +291,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
 
+    public TreeSet<CompetenceCourseInformation> getSortedCompetenceCourseInformations() {
+        return getOrderedCompetenceCourseInformations();
+    }
+    
     private TreeSet<CompetenceCourseInformation> getOrderedCompetenceCourseInformations() {
         TreeSet<CompetenceCourseInformation> informations =
                 new TreeSet<CompetenceCourseInformation>(CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_PERIOD);

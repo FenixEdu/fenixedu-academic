@@ -305,6 +305,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return super.getGradeScale();
     }
 
+    public TreeSet<DegreeInfo> getDegreeInfosSorted() {
+        final TreeSet<DegreeInfo> result = new TreeSet<DegreeInfo>(DegreeInfo.COMPARATOR_BY_EXECUTION_YEAR);
+        result.addAll(getDegreeInfosSet());
+        return result;
+    }
+
     public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator,
             AcademicPeriod duration) {
         if (name == null) {
