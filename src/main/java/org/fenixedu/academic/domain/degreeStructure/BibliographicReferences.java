@@ -123,20 +123,23 @@ public class BibliographicReferences implements Serializable {
     public static class BibliographicReference implements Comparable<BibliographicReference>, Serializable {
         private static final long serialVersionUID = 7998864914358693747L;
 
-        private final String year;
+        private String year;
 
-        private final String title;
+        private String title;
 
-        private final String authors;
+        private String authors;
 
-        private final String reference;
+        private String reference;
 
-        private final String url;
+        private String url;
 
-        private final BibliographicReferenceType type;
+        private BibliographicReferenceType type;
 
-        private final int order;
+        private int order;
 
+        public BibliographicReference() {
+        }
+        
         public BibliographicReference(String year, String title, String authors, String reference, String url,
                 BibliographicReferenceType type, int order) {
             if (Strings.isNullOrEmpty(title) || Strings.isNullOrEmpty(authors)) {
