@@ -96,4 +96,35 @@ public class AccountabilityType extends AccountabilityType_Base {
         setTypeName(typeName);
     }
 
+    public boolean hasConnectionRuleFor(PartyType parentType, PartyType childType) {
+        return getConnectionRuleFor(parentType, childType) != null;
+    }
+
+    public ConnectionRule getConnectionRuleFor(PartyType parentType, PartyType childType) {
+        for (final ConnectionRule connectionRule : getConnectionRulesSet()) {
+            if (connectionRule.isValid(parentType, childType)) {
+                return connectionRule;
+            }
+        }
+
+        return null;
+    }
+
+    public ConnectionRule addConnectionRule(PartyType parentType, PartyType childType, Boolean managedByUser) {
+        final ConnectionRule result = new ConnectionRule(parentType, childType, this);
+        result.setManagedByUser(managedByUser);
+        return result;
+    }
+
+    public boolean canConnect(PartyType parentType, PartyType childType) {
+
+        for (final ConnectionRule connectionRule : getConnectionRulesSet()) {
+            if (connectionRule.isValid(parentType, childType)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

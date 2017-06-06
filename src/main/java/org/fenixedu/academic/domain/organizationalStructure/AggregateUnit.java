@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
@@ -51,4 +54,16 @@ public class AggregateUnit extends AggregateUnit_Base {
     public boolean isAggregateUnit() {
         return true;
     }
+
+    @Override
+    public Collection<PartyType> getAllowedChildPartyTypes(final Boolean managedByUser) {
+        final Collection<PartyType> result = new HashSet<PartyType>();
+
+        for (final Unit iter : getParentUnits()) {
+            result.addAll(iter.getAllowedChildPartyTypes(managedByUser));
+        }
+
+        return result;
+    }
+    
 }

@@ -22,6 +22,9 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 public enum PartyTypeEnum {
 
     ADMINISTRATIVE_OFFICE_UNIT,
@@ -59,4 +62,9 @@ public enum PartyTypeEnum {
     public String getName() {
         return name();
     }
+
+    public String getLocalizedName() {
+        return BundleUtil.getString(Bundle.ENUMERATION, getClass().getName() + "." + name());
+    }
+
 }

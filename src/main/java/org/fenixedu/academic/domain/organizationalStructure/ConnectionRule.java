@@ -27,7 +27,8 @@ public class ConnectionRule extends ConnectionRule_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public ConnectionRule(PartyType allowedParentPartyType, PartyType allowedChildPartyType, AccountabilityType accountabilityType) {
+    public ConnectionRule(PartyType allowedParentPartyType, PartyType allowedChildPartyType,
+            AccountabilityType accountabilityType) {
         this();
         setAllowedParentPartyType(allowedParentPartyType);
         setAllowedChildPartyType(allowedChildPartyType);
@@ -40,6 +41,10 @@ public class ConnectionRule extends ConnectionRule_Base {
         setAllowedParentPartyType(null);
         setRootDomainObject(null);
         deleteDomainObject();
+    }
+
+    public boolean isValid(PartyType parentType, PartyType childType) {
+        return getAllowedParentPartyType() == parentType && getAllowedChildPartyType() == childType;
     }
 
 }

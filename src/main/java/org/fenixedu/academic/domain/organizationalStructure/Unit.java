@@ -24,6 +24,7 @@ package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -441,6 +442,19 @@ public class Unit extends Unit_Base {
 
     public Collection<PartyType> getAllowedChildPartyTypes(final Boolean managedByUser) {
         return getPartyType().getAllowedChildPartyTypes(managedByUser);
+    }
+    
+    public Accountability getMostRecentParentUnitAccountability() {
+        return getParentUnitAccountabilities().isEmpty() ? null : Collections.max(getParentUnitAccountabilities(),
+                Accountability.getComparatorByBeginDate());
+    }
+
+    public Collection<? extends Accountability> getParentUnitAccountabilities() {
+        return getParentAccountabilitiesByParentClass(Unit.class);
+    }
+
+    public Collection<? extends Accountability> getChildUnitAccountabilities() {
+        return getChildAccountabilitiesByChildClass(Unit.class);
     }
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {

@@ -18,8 +18,10 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import java.util.Comparator;
 import java.util.Date;
 
+import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
@@ -45,6 +47,19 @@ public class Accountability extends Accountability_Base {
         super.setParentParty(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+    
+    public static Comparator<Accountability> getComparatorByBeginDate() {
+        return new Comparator<Accountability>() {
+
+            @Override
+            public int compare(Accountability left, Accountability right) {
+                final int result = left.getBeginDate().compareTo(right.getBeginDate());
+
+                return result == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(left, right) : result;
+
+            }
+        };
     }
 
     public boolean belongsToPeriod(YearMonthDay begin, YearMonthDay end) {
