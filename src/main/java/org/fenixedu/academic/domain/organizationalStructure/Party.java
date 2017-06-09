@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
@@ -589,6 +590,12 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return getAllPartyContacts(clazz, null);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public <T extends PartyContact> Stream<T> getPartyContactStream(final Class<T> clazz, final PartyContactType type) {
+        final Stream<PartyContact> stream = getPartyContactsSet().stream();
+        return (Stream) stream.filter(c -> clazz.isAssignableFrom(c.getClass()) && (type == null || c.getType() == type) && c.isActiveAndValid());
+    }
+
     public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
         final List<PartyContact> result = new ArrayList<PartyContact>();
         for (final PartyContact contact : getPartyContactsSet()) {
@@ -636,6 +643,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             }
         }
         return result;
+    }
+
+    public <T extends PartyContact> Stream<T> getPartyContactStream(final Class<T> clazz) {
+        return getPartyContactStream(clazz, null);
     }
 
     public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz) {
@@ -895,6 +906,14 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     /*
      * EmailAddress
      */
+    public Stream<EmailAddress> getEmailAddressStream() {
+        return getPartyContactStream(EmailAddress.class);
+    }
+
+    /**
+     * @deprecated  Use {@link getEmailAddressStream} instead
+     */
+    @Deprecated
     public List<EmailAddress> getEmailAddresses() {
         return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
     }

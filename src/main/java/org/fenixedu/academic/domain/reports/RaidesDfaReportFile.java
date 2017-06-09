@@ -72,7 +72,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 
                 for (final CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
                     final StudentCurricularPlan studentCurricularPlan =
-                            RaidesCommonReportFieldsWrapper.getStudentCurricularPlan(registration, cycleType);
+                            registration.getStudentCurricularPlan(cycleType);
                     final CycleCurriculumGroup cycleCGroup = studentCurricularPlan.getRoot().getCycleCurriculumGroup(cycleType);
                     if (cycleCGroup != null && !cycleCGroup.isExternal()) {
                         final RegistrationConclusionBean registrationConclusionBean =

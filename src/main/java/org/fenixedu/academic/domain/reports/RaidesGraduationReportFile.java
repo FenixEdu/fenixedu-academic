@@ -66,8 +66,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
             if (registration != null && !registration.isTransition() && !registration.isSchoolPartConcluded()) {
 
                 for (final CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
-                    final StudentCurricularPlan studentCurricularPlan =
-                            RaidesCommonReportFieldsWrapper.getStudentCurricularPlan(registration, cycleType);
+                    final StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(cycleType);
                     final CycleCurriculumGroup cycleCGroup = studentCurricularPlan.getRoot().getCycleCurriculumGroup(cycleType);
                     if (cycleCGroup != null && !cycleCGroup.isExternal()) {
 
