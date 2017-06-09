@@ -127,6 +127,7 @@ $(document).ready(function() {
 			$.ajax({
 				url : url,
 				type: "DELETE",
+                headers: { '${csrf.headerName}' :  '${csrf.token}' } ,
 				success : function(res) {
 						professorship.remove();
 				},
