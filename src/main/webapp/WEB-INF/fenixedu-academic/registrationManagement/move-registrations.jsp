@@ -160,6 +160,7 @@ ${portal.toolkit()}
             <span class="pull-right">
                 <spring:message var="transferConfirmation" code="label.student.registrationManagement.transferconfirmation" arguments="${similar.username},${bean.target.username}" />
                 <form:form role="form" modelAttribute="search" action="${mergeUrl}" onsubmit="return confirm('${transferConfirmation}');">
+                    ${csrf.field()}
                     <input type="hidden" name="target" value="${bean.target.username}">
                     <input type="hidden" name="source" value="${similar.username}">
                     <button type="submit" class="btn btn-primary"><spring:message code="link.student.registrationManagement.transfer" /></button>
@@ -288,6 +289,7 @@ ${portal.toolkit()}
             <span class="pull-right">
                 <spring:message var="transferConfirmation" code="label.student.registrationManagement.transferconfirmation" arguments="${bean.searched.username},${bean.target.username}" />
                 <form:form role="form" modelAttribute="search" action="${mergeUrl}" onsubmit="return confirm('${transferConfirmation}');">
+                    ${csrf.field()}
                     <input type="hidden" name="target" value="${bean.target.username}">
                     <input type="hidden" name="source" value="${bean.searched.username}">
                     <button type="submit" class="btn btn-primary"><spring:message code="link.student.registrationManagement.transfer" /></button>
