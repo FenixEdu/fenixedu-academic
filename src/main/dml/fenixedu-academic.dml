@@ -2407,7 +2407,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
         	boolean isOptional;
-        	boolean isBranch;
         }
 
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {
