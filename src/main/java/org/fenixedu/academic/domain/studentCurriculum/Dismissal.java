@@ -330,7 +330,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
-        return Sets.newHashSet(this);
+        return getCredits().isEquivalence() ? Sets.newHashSet(this) : Sets.newHashSet();
     }
 
     public Double getWeigth() {

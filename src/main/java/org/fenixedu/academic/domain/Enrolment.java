@@ -33,6 +33,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -84,8 +85,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Sets;
 
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 
@@ -1359,10 +1358,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         return result;
     }
-    
+
     @Override
     public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
-        return Sets.newHashSet(this);
+        return getRegistration().getLastStudentCurricularPlan().getCreditsSet().stream()
+                .filter(c -> c.getEnrolmentsSet().stream().anyMatch(ew -> ew.getIEnrolment() == this))
+                .flatMap(c -> c.getDismissalsSet().stream()).collect(Collectors.toSet());
     }
 
     @Override
