@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -65,5 +66,16 @@ public class AggregateUnit extends AggregateUnit_Base {
 
         return result;
     }
-    
+
+    @Override
+    protected Collection<AccountabilityType> getAllowedAccountabilityTypes(final PartyType partyType) {
+        final Set<AccountabilityType> result = new HashSet<AccountabilityType>();
+
+        for (final Unit parent : getParentUnits()) {
+            result.addAll(parent.getAllowedAccountabilityTypes(partyType));
+        }
+
+        return result;
+    }
+
 }

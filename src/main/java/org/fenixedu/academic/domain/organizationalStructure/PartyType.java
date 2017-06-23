@@ -41,7 +41,7 @@ public class PartyType extends PartyType_Base {
         }
         super.setType(type);
     }
-    
+
     protected Collection<PartyType> getAllowedChildPartyTypes(final Boolean managedByUser) {
 
         final Set<PartyType> result = new HashSet<PartyType>();
@@ -52,6 +52,18 @@ public class PartyType extends PartyType_Base {
             }
 
             result.add(connectionRule.getAllowedChildPartyType());
+        }
+
+        return result;
+    }
+
+    public Collection<AccountabilityType> getAllowedAccountabilityTypesFor(final PartyType childPartyType) {
+        final Set<AccountabilityType> result = new HashSet<AccountabilityType>();
+
+        for (final ConnectionRule connectionRule : getAllowedChildConnectionRulesSet()) {
+            if (connectionRule.isValid(this, childPartyType)) {
+                result.add(connectionRule.getAccountabilityType());
+            }
         }
 
         return result;

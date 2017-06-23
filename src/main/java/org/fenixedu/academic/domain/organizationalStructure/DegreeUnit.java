@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class DegreeUnit extends DegreeUnit_Base {
@@ -97,6 +98,14 @@ public class DegreeUnit extends DegreeUnit_Base {
             throw new DomainException("error.DegreeUnit.empty.degree");
         }
         super.setDegree(degree);
+    }
+
+    public void edit(final Collection<Unit> parentUnits, final MultiLanguageString name, final String acronym,
+            final LocalDate begin, final LocalDate end) {
+
+        setPartyName(name);
+        setAcronym(acronym);
+        updateParentUnits(parentUnits, begin, end);
     }
 
     @Override

@@ -24,6 +24,7 @@ import java.util.Date;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class Accountability extends Accountability_Base {
@@ -48,7 +49,7 @@ public class Accountability extends Accountability_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
-    
+
     public static Comparator<Accountability> getComparatorByBeginDate() {
         return new Comparator<Accountability>() {
 
@@ -76,6 +77,24 @@ public class Accountability extends Accountability_Base {
 
     public boolean isFinished() {
         return getEndDate() != null && getEndDate().isBefore(new YearMonthDay());
+    }
+
+    public LocalDate getBeginLocalDate() {
+        final YearMonthDay result = getBeginDate();
+        return result == null ? null : result.toLocalDate();
+    }
+
+    public void setBeginLocalDate(final LocalDate input) {
+        super.setBeginDate(input == null ? null : new YearMonthDay(input));
+    }
+
+    public LocalDate getEndLocalDate() {
+        final YearMonthDay result = getEndDate();
+        return result == null ? null : result.toLocalDate();
+    }
+
+    public void setEndLocalDate(final LocalDate input) {
+        super.setEndDate(input == null ? null : new YearMonthDay(input));
     }
 
     public Date getBeginDateInDateType() {
