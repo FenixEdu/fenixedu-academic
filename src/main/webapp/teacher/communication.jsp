@@ -27,6 +27,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}/teacher/${executionCourse.externalId}/communication" />
 
 <form role="form" method="post" action="${context}/edit" class="form-horizontal">
+    ${csrf.field()}
     <div class="form-group">
         <label for="email" class="col-md-2 control-label">
             ${fr:message('resources.ApplicationResources', 'email')}
