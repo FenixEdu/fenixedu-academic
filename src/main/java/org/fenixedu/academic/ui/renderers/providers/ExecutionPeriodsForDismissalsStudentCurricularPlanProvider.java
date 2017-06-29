@@ -40,7 +40,7 @@ public class ExecutionPeriodsForDismissalsStudentCurricularPlanProvider implemen
         final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
         ExecutionSemester scpSemester = studentCurricularPlan.getStartExecutionPeriod();
         ExecutionSemester lastExecutionSemester = ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod();
-        while (scpSemester != lastExecutionSemester) {
+        while (scpSemester != null && scpSemester != lastExecutionSemester) {
             result.add(scpSemester);
             scpSemester = scpSemester.getNextExecutionPeriod();
         }
