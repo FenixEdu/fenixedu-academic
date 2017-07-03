@@ -520,6 +520,10 @@ public class Lesson extends Lesson_Base {
         }
         super.setPeriod(null);
     }
+    
+    public void removeOccupationPeriod() {
+        super.setPeriod(null);
+    }    
 
     public LessonSpaceOccupation getRoomOccupation() {
         return getLessonSpaceOccupation();

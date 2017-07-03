@@ -329,8 +329,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     public boolean isEqualTo(OccupationPeriod period) {
         if (getNextPeriod() != null && period.getNextPeriod() != null) {
-            return isEqualTo(period.getStartYearMonthDay(), period.getEndYearMonthDay(), period.getNextPeriod()
-                    .getStartYearMonthDay(), period.getNextPeriod().getEndYearMonthDay());
+            return isEqualTo(period.getStartYearMonthDay(), period.getEndYearMonthDay(),
+                    period.getNextPeriod().getStartYearMonthDay(), period.getNextPeriod().getEndYearMonthDay());
         }
         return getPeriodInterval().equals(period.getPeriodInterval());
     }
@@ -338,9 +338,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     public boolean isEqualTo(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2, final YearMonthDay endPart2) {
         final boolean eqStart = getStartYearMonthDay().equals(start);
         final boolean eqEnd = getEndYearMonthDay().equals(end);
-        final boolean eqNextPeriod =
-                getNextPeriod() != null ? (getNextPeriod().getStartYearMonthDay().equals(startPart2)
-                        && getNextPeriod().getEndYearMonthDay().equals(endPart2) ? true : false) : true;
+        final boolean eqNextPeriod = getNextPeriod() != null ? (getNextPeriod().getStartYearMonthDay().equals(startPart2)
+                && getNextPeriod().getEndYearMonthDay().equals(endPart2) ? true : false) : true;
         return eqStart && eqEnd && eqNextPeriod;
     }
 
@@ -354,8 +353,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     public Interval getIntervalWithNextPeriods() {
-        return new Interval(getStartYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(), getEndYearMonthDayWithNextPeriods()
-                .toLocalDate().toDateTimeAtStartOfDay());
+        return new Interval(getStartYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
+                getEndYearMonthDayWithNextPeriods().toLocalDate().toDateTimeAtStartOfDay());
     }
 
     /*
@@ -402,6 +401,19 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             }
         }
 
+    }
+
+    @Override
+    public void setPeriodInterval(Interval periodInterval) {
+        if (periodInterval != null) {
+            if (getPreviousPeriod() != null && !getPreviousPeriod().getPeriodInterval().isBefore(periodInterval)) {
+                throw new DomainException("error.occupationPeriod.invalid.dates");
+            }
+            if (getNextPeriod() != null && !getNextPeriod().getPeriodInterval().isAfter(periodInterval)) {
+                throw new DomainException("error.occupationPeriod.invalid.dates");
+            }
+        }
+        super.setPeriodInterval(periodInterval);
     }
 
 }
