@@ -84,9 +84,9 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public CompetenceCourseInformation(CompetenceCourseInformation existingInformation) {
-        this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(), existingInformation
-                .getRegime(), existingInformation.getCompetenceCourseLevel(), existingInformation.getExecutionPeriod(),
-                existingInformation.getCompetenceCourseGroupUnit());
+        this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(),
+                existingInformation.getRegime(), existingInformation.getCompetenceCourseLevel(),
+                existingInformation.getExecutionPeriod(), existingInformation.getCompetenceCourseGroupUnit());
         setCompetenceCourse(existingInformation.getCompetenceCourse());
         for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoadsSet()) {
             CompetenceCourseLoad newLoad = new CompetenceCourseLoad(load);
@@ -172,7 +172,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setProgramEn(programEn);
         setEvaluationMethodEn(evaluationMethodEn);
     }
-    
+
     public ExecutionInterval getExecutionInterval() {
         return getExecutionPeriod();
     }
@@ -181,10 +181,10 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         if (input == null) {
             throw new DomainException("error.CompetenceCourseInformation.required.ExecutionInterval");
         }
-        
+
         super.setExecutionPeriod(input.convert(ExecutionSemester.class));
     }
-    
+
     public AcademicPeriod getAcademicPeriod() {
         AcademicPeriod result = null;
         final RegimeType regime = getRegime();
@@ -202,7 +202,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         if (input == null) {
             throw new DomainException("error.CompetenceCourseInformation.required.AcademicPeriod");
         }
-        
+
         if (!input.equals(AcademicPeriod.SEMESTER) && !input.equals(AcademicPeriod.YEAR)) {
             throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
         }
@@ -300,7 +300,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             setEvaluationMethodEn(null);
         }
     }
-    
+
     protected CompetenceCourseLoad findLoad(final Integer order) {
         CompetenceCourseLoad result = null;
 
@@ -385,6 +385,14 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getTutorialOrientationHours();
+        }
+        return result;
+    }
+
+    public Double getOtherHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getOtherHours();
         }
         return result;
     }

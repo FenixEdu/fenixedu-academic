@@ -30,6 +30,7 @@ public class CompetenceCourseLoadBean implements Serializable {
     private Double fieldWorkHours;
     private Double trainingPeriodHours;
     private Double tutorialOrientationHours;
+    private Double otherHours;
     private Double autonomousWorkHours;
     private Double ectsCredits;
 
@@ -40,6 +41,7 @@ public class CompetenceCourseLoadBean implements Serializable {
     private Double secondFieldWorkHours;
     private Double secondTrainingPeriodHours;
     private Double secondTutorialOrientationHours;
+    private Double secondOtherHours;
     private Double secondAutonomousWorkHours;
     private Double secondEctsCredits;
     private Integer loadOrder;
@@ -88,6 +90,7 @@ public class CompetenceCourseLoadBean implements Serializable {
         setFieldWorkHours(competenceCourseLoad.getFieldWorkHours());
         setTrainingPeriodHours(competenceCourseLoad.getTrainingPeriodHours());
         setTutorialOrientationHours(competenceCourseLoad.getTutorialOrientationHours());
+        setOtherHours(competenceCourseLoad.getOtherHours());
         setAutonomousWorkHours(competenceCourseLoad.getAutonomousWorkHours());
         setEctsCredits(competenceCourseLoad.getEctsCredits());
         setLoadOrder(competenceCourseLoad.getLoadOrder());
@@ -175,6 +178,14 @@ public class CompetenceCourseLoadBean implements Serializable {
         this.tutorialOrientationHours = tutorialOrientationHours;
     }
 
+    public Double getOtherHours() {
+        return otherHours;
+    }
+
+    public void setOtherHours(Double otherHours) {
+        this.otherHours = otherHours;
+    }
+
     public boolean isSameInformationForBothPeriods() {
         return sameInformationForBothPeriods;
     }
@@ -253,6 +264,14 @@ public class CompetenceCourseLoadBean implements Serializable {
 
     public void setSecondTutorialOrientationHours(Double secondTutorialOrientationHours) {
         this.secondTutorialOrientationHours = secondTutorialOrientationHours;
+    }
+
+    public Double getSecondOtherHours() {
+        return secondOtherHours;
+    }
+
+    public void setSecondOtherHours(Double secondOtherHours) {
+        this.secondOtherHours = secondOtherHours;
     }
 
     public Integer getLoadOrder() {

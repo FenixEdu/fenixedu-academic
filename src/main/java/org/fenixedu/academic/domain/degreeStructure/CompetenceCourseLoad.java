@@ -70,6 +70,11 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
         setAcademicPeriod(academicPeriod);
     }
 
+    @Override
+    public Double getOtherHours() {
+        return super.getOtherHours() != null ? super.getOtherHours() : Double.valueOf(0);
+    }
+
     public void delete() {
         setCompetenceCourseInformation(null);
         setRootDomainObject(null);
@@ -79,7 +84,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     public double getTotalLessonHours() {
         return getTheoreticalHours().doubleValue() + getProblemsHours().doubleValue() + getLaboratorialHours().doubleValue()
                 + getSeminaryHours().doubleValue() + getFieldWorkHours().doubleValue() + getTrainingPeriodHours().doubleValue()
-                + getTutorialOrientationHours().doubleValue();
+                + getTutorialOrientationHours().doubleValue() + getOtherHours().doubleValue();
     }
 
     public Double getContactLoad() {

@@ -43,7 +43,9 @@ public enum ShiftType {
 
     TRAINING_PERIOD,
 
-    TUTORIAL_ORIENTATION;
+    TUTORIAL_ORIENTATION,
+
+    OTHER;
 
     public String getSiglaTipoAula() {
         String value = this.name();

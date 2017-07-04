@@ -161,9 +161,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR)).append("Y,");
         dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S]\t");
         dcp.append("[B:").append(previousContext.getBeginExecutionPeriod().getBeginDateYearMonthDay());
-        dcp.append(" E:").append(
-                previousContext.getEndExecutionPeriod() != null ? previousContext.getEndExecutionPeriod()
-                        .getEndDateYearMonthDay() : "          ");
+        dcp.append(" E:").append(previousContext.getEndExecutionPeriod() != null ? previousContext.getEndExecutionPeriod()
+                .getEndDateYearMonthDay() : "          ");
         dcp.append("]\t");
         dcp.append(getName()).append("\n");
     }
@@ -512,10 +511,10 @@ public class CurricularCourse extends CurricularCourse_Base {
             @Override
             public boolean evaluate(Object obj) {
                 CurricularCourseScope curricularCourseScope = (CurricularCourseScope) obj;
-                return ((curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR) || curricularCourseScope
-                        .getBranch().equals(branch))
-                        && curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope
-                        .isActive().booleanValue());
+                return ((curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR)
+                        || curricularCourseScope.getBranch().equals(branch))
+                        && curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                        && curricularCourseScope.isActive().booleanValue());
             }
         });
 
@@ -661,16 +660,15 @@ public class CurricularCourse extends CurricularCourse_Base {
             String operacionalObjectives, String operacionalObjectivesEn, DateTime lastModification) {
         Curriculum curriculum = findLatestCurriculum();
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (!curriculum.getLastModificationDateDateTime().isBefore(
-                currentExecutionYear.getBeginDateYearMonthDay().toDateMidnight())
-                && !curriculum.getLastModificationDateDateTime().isAfter(
-                        currentExecutionYear.getEndDateYearMonthDay().toDateMidnight())) {
+        if (!curriculum.getLastModificationDateDateTime()
+                .isBefore(currentExecutionYear.getBeginDateYearMonthDay().toDateMidnight())
+                && !curriculum.getLastModificationDateDateTime()
+                        .isAfter(currentExecutionYear.getEndDateYearMonthDay().toDateMidnight())) {
             curriculum.edit(generalObjectives, operacionalObjectives, program, generalObjectivesEn, operacionalObjectivesEn,
                     programEn);
         } else {
-            curriculum =
-                    insertCurriculum(program, programEn, operacionalObjectives, operacionalObjectivesEn, generalObjectives,
-                            generalObjectivesEn, lastModification);
+            curriculum = insertCurriculum(program, programEn, operacionalObjectives, operacionalObjectivesEn, generalObjectives,
+                    generalObjectivesEn, lastModification);
         }
         return curriculum;
     }
@@ -717,8 +715,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Curriculum findLatestCurriculum() {
         Curriculum latestCurriculum = null;
         for (final Curriculum curriculum : getAssociatedCurriculumsSet()) {
-            if (latestCurriculum == null
-                    || latestCurriculum.getLastModificationDateDateTime().isBefore(curriculum.getLastModificationDateDateTime())) {
+            if (latestCurriculum == null || latestCurriculum.getLastModificationDateDateTime()
+                    .isBefore(curriculum.getLastModificationDateDateTime())) {
                 latestCurriculum = curriculum;
             }
         }
@@ -851,6 +849,23 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getCompetenceCourse() != null ? getCompetenceCourse()
                 .getTutorialOrientationHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(),
                         executionSemester) : 0.0d;
+    }
+
+    final public double getOtherHours() {
+        return getOtherHours((CurricularPeriod) null, (ExecutionSemester) null);
+    }
+
+    final public Double getOtherHours(final CurricularPeriod curricularPeriod) {
+        return getOtherHours(curricularPeriod, (ExecutionSemester) null);
+    }
+
+    final public double getOtherHours(final ExecutionSemester executionSemester) {
+        return getOtherHours((CurricularPeriod) null, executionSemester);
+    }
+
+    final public Double getOtherHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
+        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse()
+                .getOtherHours(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
     }
 
     final public double getAutonomousWorkHours() {
@@ -1112,9 +1127,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                if (!enrolment.isAnnulled()
-                        && (enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval) || enrolment
-                                .getExecutionPeriod().getExecutionYear().getAcademicInterval().equals(academicInterval))) {
+                if (!enrolment.isAnnulled() && (enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval)
+                        || enrolment.getExecutionPeriod().getExecutionYear().getAcademicInterval().equals(academicInterval))) {
                     enrolments.add(enrolment);
                 }
             }
@@ -1550,9 +1564,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
-        return equals(oldCurricularCourse)
-                || (getCompetenceCourse() != null && getCompetenceCourse().getAssociatedCurricularCoursesSet().contains(
-                        oldCurricularCourse));
+        return equals(oldCurricularCourse) || (getCompetenceCourse() != null
+                && getCompetenceCourse().getAssociatedCurricularCoursesSet().contains(oldCurricularCourse));
     }
 
     public boolean hasScopeForCurricularYear(final Integer curricularYear, final ExecutionSemester executionSemester) {
@@ -1588,8 +1601,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingExecutionCourse(ExecutionCourse executionCourse) {
         AcademicInterval academicInterval = executionCourse.getAcademicInterval();
 
-        return findCurricularCourseScopesIntersectingPeriod(academicInterval.getStart().toDate(), academicInterval.getEnd()
-                .toDate());
+        return findCurricularCourseScopesIntersectingPeriod(academicInterval.getStart().toDate(),
+                academicInterval.getEnd().toDate());
     }
 
     public Set<Enrolment> getEnrolmentsNotInAnyMarkSheet(EvaluationSeason season, ExecutionSemester executionSemester) {
@@ -1601,8 +1614,8 @@ public class CurricularCourse extends CurricularCourse_Base {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
 
                 if (enrolment.isValid(executionSemester)
-                        && (season.isSpecialAuthorization() || (season.equals(enrolment.getEvaluationSeason()) && !enrolment
-                                .hasAssociatedMarkSheetOrFinalGrade(season)))) {
+                        && (season.isSpecialAuthorization() || (season.equals(enrolment.getEvaluationSeason())
+                                && !enrolment.hasAssociatedMarkSheetOrFinalGrade(season)))) {
                     result.add(enrolment);
                 } else if (season.isImprovement()) {
                     if (enrolment.hasImprovementFor(executionSemester) && !enrolment.hasAssociatedMarkSheet(season)) {
@@ -1709,8 +1722,8 @@ public class CurricularCourse extends CurricularCourse_Base {
                 person);
     }
 
-    public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation,
-            Date evaluationDate, Grade grade, String reason, Person person) {
+    public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate,
+            Grade grade, String reason, Person person) {
 
         if (markSheet == null || evaluationDate == null || grade.isEmpty()) {
             throw new DomainException("error.markSheet.invalid.arguments");
@@ -1725,17 +1738,16 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
 
         if (enrolmentEvaluation.getRectification() != null) {
-            throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation.getEnrolment()
-                    .getStudentCurricularPlan().getRegistration().getNumber().toString());
+            throw new DomainException("error.markSheet.student.alreadyRectified",
+                    enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getRegistration().getNumber().toString());
         }
 
         enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
         // enrolmentEvaluation.setWhenDateTime(new DateTime());
 
-        MarkSheet rectificationMarkSheet =
-                createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet.getResponsibleTeacher(),
-                        markSheet.getEvaluationSeason(), reason,
-                        new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade), person);
+        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate,
+                markSheet.getResponsibleTeacher(), markSheet.getEvaluationSeason(), reason,
+                new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade), person);
 
         // Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
         rectificationMarkSheet.getEnrolmentEvaluationsSet().iterator().next().setRectified(enrolmentEvaluation);
@@ -1750,16 +1762,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
 
         if (enrolmentEvaluation.getRectification() != null) {
-            throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation.getEnrolment()
-                    .getStudentCurricularPlan().getRegistration().getNumber().toString());
+            throw new DomainException("error.markSheet.student.alreadyRectified",
+                    enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getRegistration().getNumber().toString());
         }
 
         enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 
-        MarkSheet rectificationMarkSheet =
-                createRectificationOldMarkSheet(enrolmentEvaluation.getExecutionPeriod(), evaluationDate, enrolmentEvaluation
-                        .getPersonResponsibleForGrade().getTeacher(), season, reason, new MarkSheetEnrolmentEvaluationBean(
-                        enrolmentEvaluation.getEnrolment(), evaluationDate, newGrade), person);
+        MarkSheet rectificationMarkSheet = createRectificationOldMarkSheet(enrolmentEvaluation.getExecutionPeriod(),
+                evaluationDate, enrolmentEvaluation.getPersonResponsibleForGrade().getTeacher(), season, reason,
+                new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, newGrade), person);
 
         // Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
         rectificationMarkSheet.getEnrolmentEvaluationsSet().iterator().next().setRectified(enrolmentEvaluation);
@@ -1796,8 +1807,8 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
                 continue;
             }
-            if (evaluationDate != null
-                    && DateFormatUtil.compareDates(dateFormat, evaluationDate, markSheet.getEvaluationDateDateTime().toDate()) != 0) {
+            if (evaluationDate != null && DateFormatUtil.compareDates(dateFormat, evaluationDate,
+                    markSheet.getEvaluationDateDateTime().toDate()) != 0) {
                 continue;
             }
             if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {
@@ -1965,7 +1976,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public List<CurricularCourseEquivalence> getCurricularCourseEquivalencesFor(final CurricularCourse equivalentCurricularCourse) {
+    public List<CurricularCourseEquivalence> getCurricularCourseEquivalencesFor(
+            final CurricularCourse equivalentCurricularCourse) {
         final List<CurricularCourseEquivalence> result = new ArrayList<CurricularCourseEquivalence>();
         for (final CurricularCourseEquivalence curricularCourseEquivalence : getOldCurricularCourseEquivalencesSet()) {
             if (curricularCourseEquivalence.getEquivalentCurricularCourse() == equivalentCurricularCourse) {
@@ -1988,14 +2000,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public Integer getMinimumValueForAcumulatedEnrollments() {
-        return super.getMinimumValueForAcumulatedEnrollments() == null ? Integer.valueOf(0) : super
-                .getMinimumValueForAcumulatedEnrollments();
+        return super.getMinimumValueForAcumulatedEnrollments() == null ? Integer
+                .valueOf(0) : super.getMinimumValueForAcumulatedEnrollments();
     }
 
     @Override
     public Integer getMaximumValueForAcumulatedEnrollments() {
-        return super.getMaximumValueForAcumulatedEnrollments() == null ? Integer.valueOf(0) : super
-                .getMaximumValueForAcumulatedEnrollments();
+        return super.getMaximumValueForAcumulatedEnrollments() == null ? Integer
+                .valueOf(0) : super.getMaximumValueForAcumulatedEnrollments();
     }
 
     public BigDecimal getTotalHoursByShiftType(ShiftType type, ExecutionSemester executionSemester) {
@@ -2029,10 +2041,14 @@ public class CurricularCourse extends CurricularCourse_Base {
             case FIELD_WORK:
                 hours = getFieldWorkHours(executionSemester);
                 break;
+            case OTHER:
+                hours = getOtherHours(executionSemester);
+                break;
             default:
                 break;
             }
-            return hours != null ? BigDecimal.valueOf(hours).multiply(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS)) : null;
+            return hours != null ? BigDecimal.valueOf(hours)
+                    .multiply(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS)) : null;
         }
         return null;
     }
@@ -2091,7 +2107,8 @@ public class CurricularCourse extends CurricularCourse_Base {
                 EnrolmentEvaluation latestEnrolmentEvaluationBy = enrolment.getLatestEnrolmentEvaluationBySeason(season);
                 if (latestEnrolmentEvaluationBy != null
                         && latestEnrolmentEvaluationBy.getExecutionPeriod().equals(executionSemester)
-                        && latestEnrolmentEvaluationBy.isFinal() && latestEnrolmentEvaluationBy.getExamDateYearMonthDay() != null) {
+                        && latestEnrolmentEvaluationBy.isFinal()
+                        && latestEnrolmentEvaluationBy.getExamDateYearMonthDay() != null) {
                     res.add(latestEnrolmentEvaluationBy);
                 }
             } else {

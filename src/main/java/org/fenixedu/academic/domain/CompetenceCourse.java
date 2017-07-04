@@ -85,9 +85,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.setCurricularStage(curricularStage);
         setType(type);
 
-        CompetenceCourseInformation competenceCourseInformation =
-                new CompetenceCourseInformation(name.trim(), nameEn.trim(), basic, regimeType, competenceCourseLevel,
-                        startSemester, unit);
+        CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(),
+                basic, regimeType, competenceCourseLevel, startSemester, unit);
         super.addCompetenceCourseInformations(competenceCourseInformation);
 
         // unique acronym creation
@@ -107,8 +106,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
             CompetenceCourseGroupUnit unit) {
 
-        this(name, nameEn, basic, regimeType, competenceCourseLevel, type, curricularStage, unit, ExecutionSemester
-                .readActualExecutionSemester());
+        this(name, nameEn, basic, regimeType, competenceCourseLevel, type, curricularStage, unit,
+                ExecutionSemester.readActualExecutionSemester());
     }
 
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
@@ -145,7 +144,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getSecondaryBibliographicReferences(null);
     }
 
-    public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences(final ExecutionSemester period) {
+    public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences(
+            final ExecutionSemester period) {
         return this.getBibliographicReferences(period).getSecondaryBibliographicReferences();
     }
 
@@ -165,11 +165,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         info.setBibliographicReferences(info.getBibliographicReferences().with(year, title, authors, reference, url, type));
     }
 
-    public void editBibliographicReference(Integer index, String year, String title, String authors, String reference,
-            String url, BibliographicReferenceType type) {
+    public void editBibliographicReference(Integer index, String year, String title, String authors, String reference, String url,
+            BibliographicReferenceType type) {
         CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
-        info.setBibliographicReferences(info.getBibliographicReferences().replacing(index, year, title, authors, reference, url,
-                type));
+        info.setBibliographicReferences(
+                info.getBibliographicReferences().replacing(index, year, title, authors, reference, url, type));
     }
 
     public void deleteBibliographicReference(Integer index) {
@@ -238,8 +238,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         Set<CompetenceCourse> bolonhaCompetenceCourses = (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses();
         for (final CompetenceCourse competenceCourse : bolonhaCompetenceCourses) {
             if (!competenceCourse.equals(this) && competenceCourse.getAcronym().equalsIgnoreCase(acronym.trim())) {
-                throw new DomainException("competenceCourse.existing.acronym", competenceCourse.getName(), competenceCourse
-                        .getDepartmentUnit().getDepartment().getRealName());
+                throw new DomainException("competenceCourse.existing.acronym", competenceCourse.getName(),
+                        competenceCourse.getDepartmentUnit().getDepartment().getRealName());
             }
         }
 
@@ -294,7 +294,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public TreeSet<CompetenceCourseInformation> getSortedCompetenceCourseInformations() {
         return getOrderedCompetenceCourseInformations();
     }
-    
+
     private TreeSet<CompetenceCourseInformation> getOrderedCompetenceCourseInformations() {
         TreeSet<CompetenceCourseInformation> informations =
                 new TreeSet<CompetenceCourseInformation>(CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_PERIOD);
@@ -532,8 +532,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public LocalizedString getLocalizedEvaluationMethod(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
-        return information == null ? null : new LocalizedString(Locale.getDefault(), information.getEvaluationMethod()).with(
-                Locale.ENGLISH, information.getEvaluationMethodEn());
+        return information == null ? null : new LocalizedString(Locale.getDefault(), information.getEvaluationMethod())
+                .with(Locale.ENGLISH, information.getEvaluationMethodEn());
     }
 
     public String getEvaluationMethod(final ExecutionSemester period) {
@@ -691,6 +691,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return (information != null) ? information.getTutorialOrientationHours(order) : 0.0;
     }
 
+    public double getOtherHours() {
+        return getOtherHours((Integer) null, (ExecutionSemester) null);
+    }
+
+    public Double getOtherHours(final Integer order) {
+        return getOtherHours(order, (ExecutionSemester) null);
+    }
+
+    public double getOtherHours(final ExecutionSemester period) {
+        return getOtherHours(null, period);
+    }
+
+    public double getOtherHours(final Integer order, final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return (information != null) ? information.getOtherHours(order) : 0.0;
+    }
+
     public double getAutonomousWorkHours() {
         return getAutonomousWorkHours((Integer) null, (ExecutionSemester) null);
     }
@@ -811,7 +828,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @SuppressWarnings("unchecked")
-    public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(final ExecutionSemester executionSemester) {
+    public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(
+            final ExecutionSemester executionSemester) {
         return (List<CurricularCourse>) CollectionUtils.select(getAssociatedCurricularCoursesSet(), new Predicate() {
 
             @Override
@@ -827,7 +845,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         });
     }
-    
+
     public Collection<Context> getCurricularCourseContexts() {
         final Set<Context> result = new HashSet<Context>();
         for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
@@ -863,12 +881,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
         return results;
     }
-    
+
     public ExecutionInterval getBeginExecutionInterval() {
         final CompetenceCourseInformation firstInformation = getOldestCompetenceCourseInformation();
         return firstInformation != null ? firstInformation.getExecutionInterval() : null;
     }
-    
+
     public CompetenceCourseInformation getActiveCompetenceCourseInformation() {
         return getMostRecentCompetenceCourseInformationUntil(ExecutionSemester.readActualExecutionSemester());
     }
@@ -890,7 +908,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public boolean hasActiveScopesInExecutionPeriod(ExecutionSemester executionSemester) {
         Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCoursesSet();
         for (CurricularCourse curricularCourse : curricularCourses) {
-            if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval()).size() > 0) {
+            if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval())
+                    .size() > 0) {
                 return true;
             }
         }
