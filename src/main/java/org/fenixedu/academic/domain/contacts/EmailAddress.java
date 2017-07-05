@@ -161,6 +161,12 @@ public class EmailAddress extends EmailAddress_Base {
         }
     }
 
+    @Override
+    protected void processDelete() {
+        super.processDelete();
+        updateProfileEmail();
+    }
+
     static public EmailAddress find(final String emailAddressString) {
         for (final PartyContact contact : ContactRoot.getInstance().getPartyContactsSet()) {
             if (contact.isEmailAddress()) {
