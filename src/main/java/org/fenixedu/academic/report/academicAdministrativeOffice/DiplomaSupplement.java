@@ -468,7 +468,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                                 enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
 
                 this.ectsScale =
-                        enrolment.getEctsGrade(getDocumentRequest().getRegistration().getLastStudentCurricularPlan(),
+                        enrolment
+                                .getEctsGrade(getDocumentRequest().getRegistration()
+                                        .getStudentCurricularPlan(getDocumentRequest().getRequestedCycle()),
                                 processingDate).getValue();
             } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
                 Dismissal dismissal = (Dismissal) entry;

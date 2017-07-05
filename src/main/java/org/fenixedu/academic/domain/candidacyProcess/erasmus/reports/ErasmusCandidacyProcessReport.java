@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.candidacyProcess.erasmus.reports;
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.QueueJobResult;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
@@ -123,7 +124,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
                     .getMobilityAgreement().getUniversityUnit().getCountry().getName());
             row.setCell(7, erasmusIndividualCandidacyProcess.getMobilityProgram().getRegistrationProtocol().getDescription()
                     .getContent());
-            row.setCell(8, erasmusIndividualCandidacyProcess.getCandidacyHashCode().getEmail());
+            row.setCell(8, getEmail(erasmusIndividualCandidacyProcess));
             row.setCell(9, erasmusIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getNameI18N().getContent());
             row.setCell(
                     10,
@@ -182,6 +183,18 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
 
         return spreadsheet;
 
+    }
+
+    private String getEmail(MobilityIndividualApplicationProcess process) {
+        if (process.getCandidacyHashCode() != null) {
+            return process.getCandidacyHashCode().getEmail();
+        }
+        if (process.getCandidacy() != null) {
+            if (process.getCandidacy().getPersonalDetails() != null) {
+                return process.getCandidacy().getPersonalDetails().getEmail();
+            }
+        }
+        return StringUtils.EMPTY;
     }
 
     @Atomic
