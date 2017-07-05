@@ -75,7 +75,7 @@ public class PhdEventWrapper implements Wrapper {
 
     @Override
     public String getPhdProgramName() {
-        return event.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(MultiLanguageString.pt);
+        return event.getPhdIndividualProgramProcess().getPhdProgram().getName(getForExecutionYear()).getContent(MultiLanguageString.pt);
     }
 
     @Override

@@ -299,7 +299,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         row.setCell(process.getPhdProgram().getAcronym());
 
         // Programa doutoral
-        row.setCell(process.getPhdProgram().getName().getContent());
+        row.setCell(process.getPhdProgram().getName(process.getExecutionYear()).getContent());
 
         // Tipo Curso
         row.setCell(registration != null ? registration.getDegreeType().getName().getContent() : "n/a");

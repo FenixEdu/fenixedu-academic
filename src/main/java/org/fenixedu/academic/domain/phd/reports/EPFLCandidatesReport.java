@@ -24,6 +24,7 @@ import java.util.Set;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
@@ -90,7 +91,8 @@ public class EPFLCandidatesReport extends PhdReport {
         YearMonthDay dateOfBirth = process.getPerson().getDateOfBirthYearMonthDay();
         String documentIdNumber = process.getPerson().getDocumentIdNumber();
         String documentIdTypeName = process.getPerson().getIdDocumentType().getLocalizedName();
-        String phdProgramName = process.getPhdProgram() != null ? process.getPhdProgram().getName().getContent() : "";
+        final ExecutionYear executionYear = process.getExecutionYear();
+        final String phdProgramName = process.getPhdProgram() != null ? process.getPhdProgram().getName(executionYear).getContent() : "";
         String focusArea =
                 process.getPhdProgramFocusArea() != null ? process.getPhdProgramFocusArea().getName().getContent() : "";
 

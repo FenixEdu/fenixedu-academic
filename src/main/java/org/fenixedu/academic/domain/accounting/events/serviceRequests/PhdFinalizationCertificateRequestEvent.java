@@ -74,7 +74,7 @@ public class PhdFinalizationCertificateRequestEvent extends PhdFinalizationCerti
     private void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
         final PhdAcademicServiceRequest request = (PhdAcademicServiceRequest) getAcademicServiceRequest();
-        labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getPreferedContent());
+        labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
     }
 }

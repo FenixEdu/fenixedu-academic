@@ -153,11 +153,12 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
 
     @Override
     public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
+        final ExecutionYear executionYear = ExecutionYear.readByDateTime(referee.getPhdProgramCandidacyProcess().getCandidacyDate());
         return MessageFormat.format(String.format(BundleUtil.getString(Bundle.PHD, "message.phd.institution.email.body.referee"),
-                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(MultiLanguageString.en),
+                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(MultiLanguageString.en),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
                 referee.getValue(),
-                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(MultiLanguageString.pt),
+                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(MultiLanguageString.pt),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("pt", "PT")),
                 referee.getValue()), Unit.getInstitutionName().getContent());
     }
