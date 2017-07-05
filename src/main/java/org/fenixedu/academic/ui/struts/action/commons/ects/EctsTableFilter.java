@@ -30,13 +30,14 @@ import java.util.List;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.ui.renderers.converters.AcademicIntervalConverter;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
+
+import com.google.common.io.CharStreams;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
-
-import com.google.common.io.CharStreams;
 
 public class EctsTableFilter implements Serializable {
     private static final long serialVersionUID = 4127180744673004205L;
@@ -49,12 +50,11 @@ public class EctsTableFilter implements Serializable {
 
         @Override
         public Object provide(Object source, Object current) {
+            List<ExecutionYear> executionYearsList = new ArrayList<ExecutionYear>(Bennu.getInstance().getExecutionYearsSet());
             List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            ExecutionYear year = ExecutionYear.readFirstBolonhaExecutionYear();
-            while (year != null) {
-                result.add(year.getAcademicInterval());
-                year = year.getNextExecutionYear();
-            }
+            executionYearsList.stream().sorted(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR)
+                    .forEach(ey -> result.add(ey.getAcademicInterval()));
+
             return result;
         }
     }
