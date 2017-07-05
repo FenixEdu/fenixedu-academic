@@ -81,9 +81,8 @@ public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements 
 
     @Override
     public String getPhdProgramName() {
-        PhdGratuityEvent phdGratuityEvent = getPhdGratuityEvent();
-
-        return phdGratuityEvent.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent();
+        final PhdGratuityEvent phdGratuityEvent = getPhdGratuityEvent();
+        return phdGratuityEvent.getPhdIndividualProgramProcess().getPhdProgram().getName(getForExecutionYear()).getContent();
     }
 
     @Override

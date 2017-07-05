@@ -26,6 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -67,7 +68,7 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
         for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
             JsonObject json = new JsonObject();
             json.addProperty("id", program.getExternalId());
-            json.addProperty("name", program.getPresentationName());
+            json.addProperty("name", program.getPresentationName(ExecutionYear.readCurrentExecutionYear()));
             json.addProperty("acronym", program.getAcronym());
             json.addProperty("office", program.getAdministrativeOffice().getExternalId());
             programs.add(json);

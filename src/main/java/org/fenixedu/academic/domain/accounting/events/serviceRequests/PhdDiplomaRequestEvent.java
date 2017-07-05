@@ -73,7 +73,7 @@ public class PhdDiplomaRequestEvent extends PhdDiplomaRequestEvent_Base {
     private void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
         final PhdDiplomaRequest request = (PhdDiplomaRequest) getAcademicServiceRequest();
-        labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getPreferedContent());
+        labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
     }
 

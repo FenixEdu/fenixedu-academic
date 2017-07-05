@@ -43,6 +43,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -117,16 +118,32 @@ public class PhdProgram extends PhdProgram_Base {
         return getAcronym() != null && getAcronym().equalsIgnoreCase(acronym);
     }
 
+    @Deprecated
     public String getPresentationName() {
         return getPresentationName(I18N.getLocale());
     }
 
+    public String getPresentationName(final ExecutionYear executionYear) {
+        return getPresentationName(I18N.getLocale(), executionYear);
+    }
+
+    @Deprecated
     private String getPresentationName(final Locale locale) {
         return getPrefix(locale) + getNameFor(locale);
     }
 
+    private String getPresentationName(final Locale locale, final ExecutionYear executionYear) {
+        return getPrefix(locale) + getName(executionYear).getContent(locale);
+    }
+
     private String getNameFor(final Locale locale) {
         return getName().hasContent(locale) ? getName().getContent(locale) : getName().getPreferedContent();
+    }
+
+    public LocalizedString getName(final ExecutionYear year) {
+        final Degree degree = getDegree();
+        final MultiLanguageString mls = degree == null ? getName() : degree.getNameI18N(year);
+        return mls.toLocalizedString();
     }
 
     private String getPrefix(final Locale locale) {

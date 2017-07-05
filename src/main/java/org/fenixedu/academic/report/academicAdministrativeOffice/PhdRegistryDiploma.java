@@ -20,6 +20,7 @@ package org.fenixedu.academic.report.academicAdministrativeOffice;
 
 import java.text.MessageFormat;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
@@ -114,6 +115,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         PhdRegistryDiplomaRequest phdRequest = getDocumentRequest();
 
+        final ExecutionYear executionYear = phdRequest.getPhdIndividualProgramProcess().getExecutionYear();
         String secondParagraph =
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdSecondParagraph");
         addParameter(
@@ -121,7 +123,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
                 MessageFormat.format(secondParagraph, studentGender,
                         BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()),
                         person.getDocumentIdNumber(), country, phdRequest.getPhdIndividualProgramProcess().getPhdProgram()
-                                .getName().getContent(getLanguage())));
+                            .getName(executionYear).getContent(getLanguage())));
     }
 
     @Override

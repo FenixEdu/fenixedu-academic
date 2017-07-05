@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityContributionFile;
@@ -98,11 +99,12 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
     @Override
     public LabelFormatter getDescription() {
         PhdGratuityEvent event = (PhdGratuityEvent) getEvent();
+        final ExecutionYear executionYear = event.getPhdIndividualProgramProcess().getExecutionYear();
         return new LabelFormatter()
                 .appendLabel(
                         "Bolsa de entidade externa (" + getParty().getName()
                                 + ") aplicada à Propina do Programa de Doutoramento de ")
-                .appendLabel(event.getPhdProgram().getName().getContent()).appendLabel(" referente a " + event.getYear());
+                .appendLabel(event.getPhdProgram().getName(executionYear).getContent()).appendLabel(" referente a " + event.getYear());
     }
 
     public void doDelete() {

@@ -20,6 +20,7 @@ package org.fenixedu.academic.report.phd.notification;
 
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.report.FenixReport;
@@ -59,8 +60,9 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
     @Override
     protected void fillReport() {
         addParameter("name", getCandidacyProcess().getPerson().getName());
+        final ExecutionYear executionYear = getCandidacyProcess().getIndividualProgramProcess().getExecutionYear();
         addParameter("programName",
-                getCandidacyProcess().getIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage()));
+                getCandidacyProcess().getIndividualProgramProcess().getPhdProgram().getName(executionYear).getContent(getLanguage()));
         addParameter("candidacyDate", getCandidacyProcess().getCandidacyDate());
         addParameter("currentDate", new LocalDate());
         addParameter("documentIdNumber", getCandidacyProcess().getPerson().getDocumentIdNumber());
