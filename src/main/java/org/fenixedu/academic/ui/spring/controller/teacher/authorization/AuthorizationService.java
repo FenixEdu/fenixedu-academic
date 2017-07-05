@@ -277,8 +277,8 @@ public class AuthorizationService {
                 addCell(message("teacher.authorizations.category"), item.getTeacherCategory().getName().getContent());
                 addCell(message("teacher.authorizations.department"), item.getDepartment().getNameI18n().getContent());
                 addCell(message("teacher.authorizations.period"), item.getExecutionSemester().getQualifiedName());
-                addCell(message("teacher.authorizations.authorized"), String.format("%s (%s)", item.getAuthorizer().getProfile()
-                        .getDisplayName(), item.getAuthorizer().getUsername()));
+                addCell(message("teacher.authorizations.authorized"), item.getAuthorizer() == null ? "" : String.format("%s (%s)",
+                        item.getAuthorizer().getProfile().getDisplayName(), item.getAuthorizer().getUsername()));
             }
         });
 
