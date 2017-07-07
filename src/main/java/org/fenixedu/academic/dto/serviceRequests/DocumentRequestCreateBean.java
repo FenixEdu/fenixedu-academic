@@ -41,7 +41,7 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -146,9 +146,9 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         this.registrationProtocol = registration.getRegistrationProtocol();
 
         if (registrationProtocol != null && registrationProtocol.isMobilityAgreement()) {
-            setLanguage(MultiLanguageString.en);
+            setLanguage(org.fenixedu.academic.util.LocaleUtils.EN);
         } else {
-            setLanguage(MultiLanguageString.pt);
+            setLanguage(org.fenixedu.academic.util.LocaleUtils.PT);
         }
     }
 

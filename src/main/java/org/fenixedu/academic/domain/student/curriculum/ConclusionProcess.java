@@ -143,7 +143,7 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
     }
 
     public LocalizedString getName() {
-        return getGroup().getName().toLocalizedString();
+        return getGroup().getName();
     }
 
     public boolean isActive() {

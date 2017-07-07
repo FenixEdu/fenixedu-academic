@@ -19,6 +19,7 @@
 package org.fenixedu.academic.dto.thesis;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -76,7 +77,8 @@ public class ThesisSearchBean implements Serializable {
             if (isMatchPerson(thesis.getStudent().getPerson(), text)) {
                 return true;
             }
-            for (String title : thesis.getFinalFullTitle().getAllContents()) {
+            for (final Locale l : thesis.getFinalFullTitle().getLocales()) {
+                final String title = thesis.getFinalFullTitle().getContent(l);
                 if (title.toLowerCase().contains(text.toLowerCase())) {
                     return true;
                 }

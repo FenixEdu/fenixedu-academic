@@ -23,7 +23,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.phd.EPFLPhdCandidacyProcessProperties;
 import org.fenixedu.academic.util.phd.PhdProperties;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -132,18 +132,18 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
     }
 
     @Override
-    public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
-        return new MultiLanguageString().with(MultiLanguageString.en,
+    public LocalizedString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.EN,
                 BundleUtil.getString(Bundle.PHD, "message.phd.epfl.email.subject.missing.candidacy.validation"));
     }
 
     @Override
-    public MultiLanguageString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+    public LocalizedString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
         final String body =
                 String.format(BundleUtil.getString(Bundle.PHD, "message.phd.epfl.email.body.missing.candidacy.validation"),
                         PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode()
                                 .getValue());
-        return new MultiLanguageString().with(MultiLanguageString.en, body);
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.EN, body);
     }
 
 }

@@ -22,7 +22,7 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.administrativeOffice.externalUnits.EditExternalUnitBean;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -31,7 +31,7 @@ public class EditExternalUnit {
     @Atomic
     public static void run(final EditExternalUnitBean externalUnitBean) {
         final Unit externalUnit = externalUnitBean.getExternalUnit();
-        externalUnit.edit(new MultiLanguageString(Locale.getDefault(), externalUnitBean.getUnitName()),
+        externalUnit.edit(new LocalizedString(Locale.getDefault(), externalUnitBean.getUnitName()),
                 externalUnitBean.getUnitCode());
     }
 }

@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.candidacy.util;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
@@ -32,27 +32,27 @@ public class GenericApplicationPeriodBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private MultiLanguageString title = new MultiLanguageString(MultiLanguageString.en, "");
-    private MultiLanguageString description = new MultiLanguageString(MultiLanguageString.en, "");
+    private LocalizedString title = new LocalizedString(org.fenixedu.academic.util.LocaleUtils.EN, "");
+    private LocalizedString description = new LocalizedString(org.fenixedu.academic.util.LocaleUtils.EN, "");
     private DateTime start;
     private DateTime end;
 
     public GenericApplicationPeriodBean() {
     }
 
-    public MultiLanguageString getTitle() {
+    public LocalizedString getTitle() {
         return title;
     }
 
-    public void setTitle(MultiLanguageString title) {
+    public void setTitle(LocalizedString title) {
         this.title = title;
     }
 
-    public MultiLanguageString getDescription() {
+    public LocalizedString getDescription() {
         return description;
     }
 
-    public void setDescription(MultiLanguageString description) {
+    public void setDescription(LocalizedString description) {
         this.description = description;
     }
 
@@ -75,7 +75,7 @@ public class GenericApplicationPeriodBean implements Serializable {
     @Atomic
     public void createNewPeriod() {
         if (Group.managers().isMember(Authenticate.getUser())) {
-            if (title != null && title.hasContent() && start != null && end != null) {
+            if (title != null && title.getContent() != null && start != null && end != null) {
                 new GenericApplicationPeriod(title, description, start, end);
             }
         }

@@ -20,7 +20,7 @@
 package org.fenixedu.academic.ui.spring.controller.manager;
 
 import org.fenixedu.academic.domain.Country;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class CountryService {
     }
 
     @Atomic public void editCountry(Country country, LocalizedString localizedName, LocalizedString countryNationality) {
-        country.setCountryNationality(MultiLanguageString.fromLocalizedString(countryNationality));
-        country.setLocalizedName((MultiLanguageString.fromLocalizedString(localizedName)));
+        country.setCountryNationality(countryNationality);
+        country.setLocalizedName(localizedName);
     }
 }

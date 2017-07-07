@@ -30,7 +30,7 @@ import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 /**
@@ -93,22 +93,22 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    public MultiLanguageString getName() {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getName() {
+        LocalizedString LocalizedString = new LocalizedString();
 
         if (!StringUtils.isEmpty(getDegreeModule().getName())) {
-            multiLanguageString =
-                    multiLanguageString.with(MultiLanguageString.pt, getDegreeModule().getName() + " ("
+            LocalizedString =
+                    LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, getDegreeModule().getName() + " ("
                             + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 
         if (!StringUtils.isEmpty(getDegreeModule().getNameEn())) {
-            multiLanguageString =
-                    multiLanguageString.with(MultiLanguageString.en, getDegreeModule().getNameEn() + " ("
+            LocalizedString =
+                    LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, getDegreeModule().getNameEn() + " ("
                             + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 
-        return multiLanguageString;
+        return LocalizedString;
     }
 
     @Override

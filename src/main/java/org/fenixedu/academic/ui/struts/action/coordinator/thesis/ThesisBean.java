@@ -28,7 +28,7 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonTarget;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class ThesisBean implements Serializable {
@@ -49,7 +49,7 @@ public class ThesisBean implements Serializable {
     private UnitName unitName;
     private String rawUnitName;
 
-    private MultiLanguageString title;
+    private LocalizedString title;
     private String comment;
 
     private String mark;
@@ -165,19 +165,19 @@ public class ThesisBean implements Serializable {
         this.rawUnitName = rawUnitName;
     }
 
-    public MultiLanguageString getTitle() {
+    public LocalizedString getTitle() {
         return this.title;
     }
 
-    public void setTitle(MultiLanguageString title) {
+    public void setTitle(LocalizedString title) {
         this.title = title;
     }
 
-    public MultiLanguageString getFinalTitle() {
+    public LocalizedString getFinalTitle() {
         return getTitle();
     }
 
-    public void setFinalTitle(MultiLanguageString title) {
+    public void setFinalTitle(LocalizedString title) {
         setTitle(title);
     }
 

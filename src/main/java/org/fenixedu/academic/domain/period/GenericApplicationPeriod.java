@@ -25,7 +25,7 @@ import java.util.TreeSet;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.candidacy.GenericApplication;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
@@ -49,7 +49,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
         }
     };
 
-    public GenericApplicationPeriod(final MultiLanguageString title, final MultiLanguageString description, final DateTime start,
+    public GenericApplicationPeriod(final LocalizedString title, final LocalizedString description, final DateTime start,
             final DateTime end) {
         super();
         setTitle(title);

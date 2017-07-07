@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.accounting.events.specializationDegree.Speci
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.student.EnrolmentModel;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class EventWrapper implements Wrapper {
     private final Event event;
@@ -90,7 +90,7 @@ public class EventWrapper implements Wrapper {
     @Override
     public String getDegreeName() {
         if (hasRegistration()) {
-            return getRegistration().getDegree().getNameI18N().getContent(MultiLanguageString.pt);
+            return getRegistration().getDegree().getNameI18N().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
         }
 
         return "--";

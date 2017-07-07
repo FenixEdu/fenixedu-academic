@@ -487,7 +487,7 @@
 					<div id="emptynationality" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
-					<%= genericApplication.getNationality() == null ? "" : genericApplication.getNationality().getCountryNationality() %>
+					<%= genericApplication.getNationality() == null ? "" : genericApplication.getNationality().getCountryNationality().getContent() %>
 				</logic:notPresent>
 			</td>
 		</tr>

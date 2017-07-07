@@ -30,7 +30,7 @@ import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class SearchCurricularCourseBean implements Serializable {
 
@@ -75,16 +75,15 @@ public class SearchCurricularCourseBean implements Serializable {
                 continue;
             }
 
-            MultiLanguageString nameI18N = childDegreeModule.getNameI18N();
-            Collection<String> allContents = nameI18N.getAllContents();
+            LocalizedString nameI18N = childDegreeModule.getNameI18N();
 
             Pattern searchPattern = getSearchRegex();
 
-            for (String degreeModuleName : allContents) {
-                if (searchPattern.matcher(degreeModuleName).matches()) {
+            nameI18N.forEach((l, s) -> {
+                if (searchPattern.matcher(s).matches()) {
                     result.add(context);
-                }
-            }
+                }                
+            });
         }
     }
 

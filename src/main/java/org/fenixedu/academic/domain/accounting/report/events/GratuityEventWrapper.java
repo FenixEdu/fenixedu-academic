@@ -28,7 +28,7 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.student.EnrolmentModel;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class GratuityEventWrapper implements Wrapper {
 
@@ -69,7 +69,7 @@ public class GratuityEventWrapper implements Wrapper {
 
     @Override
     public String getDegreeName() {
-        return event.getRegistration().getDegree().getNameI18N().getContent(MultiLanguageString.pt);
+        return event.getRegistration().getDegree().getNameI18N().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
     }
 
     @Override

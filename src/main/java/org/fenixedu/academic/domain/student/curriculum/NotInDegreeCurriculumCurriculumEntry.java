@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -81,7 +81,7 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     }
 
     @Override
-    public MultiLanguageString getName() {
+    public LocalizedString getName() {
         return enrolmentDomainReference.getName();
     }
 

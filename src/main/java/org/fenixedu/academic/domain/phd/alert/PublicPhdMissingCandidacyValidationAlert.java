@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -45,12 +45,12 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
         init(process, generateSubject(process), generateBody(process));
     }
 
-    private MultiLanguageString generateSubject(final PhdIndividualProgramProcess process) {
+    private LocalizedString generateSubject(final PhdIndividualProgramProcess process) {
         return process.getCandidacyProcess().getPublicPhdCandidacyPeriod()
                 .getEmailMessageSubjectForMissingCandidacyValidation(process);
     }
 
-    private MultiLanguageString generateBody(final PhdIndividualProgramProcess process) {
+    private LocalizedString generateBody(final PhdIndividualProgramProcess process) {
         return process.getCandidacyProcess().getPublicPhdCandidacyPeriod()
                 .getEmailMessageBodyForMissingCandidacyValidation(process);
     }

@@ -24,7 +24,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class StudentThesisInfo implements Serializable {
 
@@ -71,8 +71,8 @@ public class StudentThesisInfo implements Serializable {
         return curricularCourse.isAnual() ? "" : enrolment.getExecutionPeriod().getSemester().toString();
     }
 
-    public MultiLanguageString getTitle() {
-        return thesis != null ? thesis.getTitle() : new MultiLanguageString();
+    public LocalizedString getTitle() {
+        return thesis != null ? thesis.getTitle() : new LocalizedString();
     }
 
     public ThesisPresentationState getState() {
