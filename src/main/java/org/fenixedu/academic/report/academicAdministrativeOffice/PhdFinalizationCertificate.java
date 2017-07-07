@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR;
@@ -52,8 +53,9 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
     @Override
     protected String getDegreeDescription() {
-        PhdIndividualProgramProcess phdIndividualProgramProcess = getDocumentRequest().getPhdIndividualProgramProcess();
-        return phdIndividualProgramProcess.getPhdProgram().getName().getContent(getLanguage());
+        final PhdIndividualProgramProcess phdIndividualProgramProcess = getDocumentRequest().getPhdIndividualProgramProcess();
+        final ExecutionYear executionYear = phdIndividualProgramProcess.getExecutionYear();
+        return phdIndividualProgramProcess.getPhdProgram().getName(executionYear).getContent(getLanguage());
     }
 
     @Override
@@ -198,7 +200,8 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
                         "message.phd.finalization.certificate.made.thesis.presentation.on.doctoral.grade")).append(":")
                 .append(SINGLE_SPACE);
 
-        builder.append(phdIndividualProgramProcess.getPhdProgram().getName().getContent(getLanguage()).toUpperCase());
+        final ExecutionYear executionYear = phdIndividualProgramProcess.getExecutionYear();
+        builder.append(phdIndividualProgramProcess.getPhdProgram().getName(executionYear).getContent(getLanguage()).toUpperCase());
 
         addParameter("phdProgram", customMultipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
         addParameter("finalizationInfo", buildFinalizationInfo());

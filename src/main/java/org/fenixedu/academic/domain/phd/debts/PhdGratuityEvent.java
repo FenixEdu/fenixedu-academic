@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.phd.debts;
 import java.util.Collections;
 import java.util.Set;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -89,15 +90,17 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
         return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName().getContent())
+                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName(executionYear).getContent())
                 .appendLabel(")");
     }
 
     @Override
     public LabelFormatter getDescription() {
+        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
         return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName().getContent())
+                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName(executionYear).getContent())
                 .appendLabel(")");
     }
 

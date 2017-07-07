@@ -217,8 +217,9 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         page.rowStart().headerStartWithStyle("width: 125px;").write("Candidacy Date:").headerEnd()
                 .column(process.getCandidacyDate().toString("dd/MM/yyyy")).rowEnd();
         page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
+        final ExecutionYear executionYear = process.getExecutionYear();
         page.rowStart().header(Unit.getInstitutionAcronym() + " Phd Program:")
-                .column(process.getPhdProgram().getName().getContent(MultiLanguageString.en)).rowEnd();
+                .column(process.getPhdProgram().getName(executionYear).getContent(MultiLanguageString.en)).rowEnd();
         if (process.getExternalPhdProgram() != null) {
             page.rowStart().header("EPFL Phd Program:")
                     .column(process.getExternalPhdProgram().getName().getContent(MultiLanguageString.en));

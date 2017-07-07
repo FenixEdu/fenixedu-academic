@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.phd.alert;
 import java.util.Collections;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.phd.InternalPhdParticipant;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -103,8 +104,9 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
+        final ExecutionYear executionYear = process.getExecutionYear();
         return new MultiLanguageString(Locale.getDefault(), AlertMessage.get(
-                "message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName()));
+                "message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName(executionYear).getContent()));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process, PhdParticipant participant) {

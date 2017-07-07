@@ -75,21 +75,21 @@ public class Department extends Department_Base {
 
     public List<Teacher> getAllTeachers(AcademicInterval interval) {
         return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
-                .map(a -> a.getTeacher()).collect(Collectors.toList());
+                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers(ExecutionSemester semester) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().equals(semester)).map(a -> a.getTeacher())
-                .collect(Collectors.toList());
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().equals(semester)).map(TeacherAuthorization::getTeacher)
+                .distinct().collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers(ExecutionYear executionYear) {
         return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getExecutionYear().equals(executionYear))
-                .map(a -> a.getTeacher()).collect(Collectors.toList());
+                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers() {
-        return getTeacherAuthorizationStream().map(a -> a.getTeacher()).collect(Collectors.toList());
+        return getTeacherAuthorizationStream().map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
     public Stream<TeacherAuthorization> getRevokedTeacherAuthorizationStream() {

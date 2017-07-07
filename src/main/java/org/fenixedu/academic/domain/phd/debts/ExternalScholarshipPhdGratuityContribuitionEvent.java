@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountType;
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -67,11 +68,12 @@ public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalSc
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final ExecutionYear executionYear = ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdIndividualProgramProcess().getExecutionYear();
         return new LabelFormatter()
                 .appendLabel(entryType.name(), Bundle.ENUMERATION)
                 .appendLabel(" (")
                 .appendLabel(
-                        ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getName()
+                        ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getName(executionYear)
                                 .getContent()).appendLabel(")");
     }
 
