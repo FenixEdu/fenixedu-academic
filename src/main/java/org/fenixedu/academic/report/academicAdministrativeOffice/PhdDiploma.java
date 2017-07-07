@@ -57,9 +57,9 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         PhdDiplomaRequest diplomaRequest = getDocumentRequest();
         String phdProgramConclusion =
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.diploma.pdhProgramConclusion");
-        ExecutionYear conclusionYear = ExecutionYear.readByDateTime(diplomaRequest.getConclusionDate());
+        ExecutionYear ingressionYear = diplomaRequest.getPhdIndividualProgramProcess().getExecutionYear();
         String phdProgramDescription =
-                getDocumentRequest().getPhdIndividualProgramProcess().getPhdProgram().getDegree().getNameI18N(conclusionYear)
+                getDocumentRequest().getPhdIndividualProgramProcess().getPhdProgram().getName(ingressionYear)
                         .getContent(getLanguage());
         String phdConclusionDate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.diploma.pdhConclusionDate");
 

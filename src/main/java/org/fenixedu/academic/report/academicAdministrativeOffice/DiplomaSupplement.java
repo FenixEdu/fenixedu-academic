@@ -44,6 +44,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
@@ -262,20 +263,15 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         //TODO: phd-refactor registration should always be present in phd
 
-        Degree degree;
-
-        if (request.hasRegistration()) {
-            degree = request.getRegistration().getDegree();
-        } else {
-            degree = ((PhdDiplomaSupplementRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getDegree();
-        }
-
         if (request.isRequestForPhd()) {
-            result.add(degree.getNameI18N(request.getConclusionYear()).getContent(locale));
+            PhdIndividualProgramProcess phdIndividualProgramProcess = ((PhdDiplomaSupplementRequest) request)
+                    .getPhdIndividualProgramProcess();
+            result.add(phdIndividualProgramProcess.getPhdProgram().getName(phdIndividualProgramProcess.getExecutionYear())
+                    .getContent(locale));
         } else {
             result.add(request.getProgramConclusion().groupFor(request.getRegistration()).map(CurriculumGroup::getDegreeModule)
                     .map(dm -> dm.getDegreeNameWithTitleSuffix(request.getConclusionYear(), locale))
-                    .orElse(degree.getNameI18N(request.getConclusionYear()).getContent(locale)));
+                    .orElse(request.getRegistration().getDegree().getNameI18N(request.getConclusionYear()).getContent(locale)));
         }
 
         return Joiner.on(" ").join(result);
