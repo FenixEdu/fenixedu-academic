@@ -2,6 +2,9 @@
 
 This file contains the steps required to update from one version to another. The following sections represent the steps required to update from the previous to that version. 
 
+## Migration from 6.x to 7.0
+[instructions](doc/migration/6.x-7.0.md)
+
 ## Migrating from 3.x to 4.0.
 
 [instructions](doc/migration/3.x-4.0.md)
