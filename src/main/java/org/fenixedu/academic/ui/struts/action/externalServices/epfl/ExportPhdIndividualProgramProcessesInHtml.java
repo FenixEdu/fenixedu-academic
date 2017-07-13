@@ -55,7 +55,7 @@ import org.fenixedu.academic.domain.phd.ThesisSubjectOrder;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Partial;
 import org.slf4j.Logger;
@@ -219,10 +219,10 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
         final ExecutionYear executionYear = process.getExecutionYear();
         page.rowStart().header(Unit.getInstitutionAcronym() + " Phd Program:")
-                .column(process.getPhdProgram().getName(executionYear).getContent(MultiLanguageString.en)).rowEnd();
+                .column(process.getPhdProgram().getName(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN)).rowEnd();
         if (process.getExternalPhdProgram() != null) {
             page.rowStart().header("EPFL Phd Program:")
-                    .column(process.getExternalPhdProgram().getName().getContent(MultiLanguageString.en));
+                    .column(process.getExternalPhdProgram().getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN));
         }
         page.rowStart().header("Title:").column(string(process.getThesisTitle())).rowEnd();
         page.rowStart().header("Collaboration:").column(process.getCollaborationTypeName()).rowEnd();

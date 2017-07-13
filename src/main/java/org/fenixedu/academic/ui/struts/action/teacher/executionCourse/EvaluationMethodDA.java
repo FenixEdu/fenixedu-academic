@@ -35,7 +35,6 @@ import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.teacher.EditEvaluation;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
-import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -56,7 +55,7 @@ public class EvaluationMethodDA extends ManageExecutionCourseDA {
 
     private LocalizedString getEvaluationMethod(ExecutionCourse executionCourse) {
         if (executionCourse.getEvaluationMethod() != null) {
-            return executionCourse.getEvaluationMethod().getEvaluationElements().toLocalizedString();
+            return executionCourse.getEvaluationMethod().getEvaluationElements();
         } else {
             String competenceMethod =
                     !executionCourse.getCompetenceCourses().isEmpty() ? executionCourse.getCompetenceCourses().iterator().next()
@@ -69,17 +68,17 @@ public class EvaluationMethodDA extends ManageExecutionCourseDA {
             HttpServletResponse response) throws Exception {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
-        MultiLanguageString evaluationElements = evaluationMethod == null ? null : evaluationMethod.getEvaluationElements();
+        LocalizedString evaluationElements = evaluationMethod == null ? null : evaluationMethod.getEvaluationElements();
         if (evaluationMethod == null || evaluationElements == null || evaluationElements.isEmpty()
                 || StringUtils.isEmpty(evaluationElements.getContent())) {
-            MultiLanguageString evaluationMethodMls = new MultiLanguageString();
+            LocalizedString evaluationMethodMls = new LocalizedString();
             final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
             if (!competenceCourses.isEmpty()) {
                 final CompetenceCourse competenceCourse = competenceCourses.iterator().next();
                 final String pt = competenceCourse.getEvaluationMethod();
                 final String en = competenceCourse.getEvaluationMethodEn();
                 evaluationMethodMls =
-                        evaluationMethodMls.with(MultiLanguageString.pt, pt == null ? "" : pt).with(MultiLanguageString.en,
+                        evaluationMethodMls.with(org.fenixedu.academic.util.LocaleUtils.PT, pt == null ? "" : pt).with(org.fenixedu.academic.util.LocaleUtils.EN,
                                 en == null ? "" : en);
             }
             EditEvaluation.runEditEvaluation(executionCourse, evaluationMethodMls);

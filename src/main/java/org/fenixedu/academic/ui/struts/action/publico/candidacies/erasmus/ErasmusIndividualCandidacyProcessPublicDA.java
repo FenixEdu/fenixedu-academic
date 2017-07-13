@@ -967,7 +967,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         return reportAppenderAuxString(field, value);
     }
 
-    //return string to append from a value MobilityProgram (uses MultiLanguageString)
+    //return string to append from a value MobilityProgram (uses LocalizedString)
     private String reportAppenderAuxProgram(String field, MobilityProgram obj) {
         String value = null;
         if (obj != null) {

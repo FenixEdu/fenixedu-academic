@@ -27,14 +27,14 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.I18N;
 
 public class InfoDegree extends InfoObject implements Comparable {
 
     private final Degree degreeDomainReference;
 
-    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
+    private final boolean showEnVersion = I18N.getLocale().equals(org.fenixedu.academic.util.LocaleUtils.EN);
 
     public InfoDegree(final Degree degree) {
         degreeDomainReference = degree;

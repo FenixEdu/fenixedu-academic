@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.phd;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
@@ -33,7 +33,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    protected ThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
+    protected ThesisSubject(PhdProgramFocusArea focusArea, LocalizedString name, LocalizedString description,
             Teacher teacher, String externalAdvisor) {
         this();
 
@@ -52,7 +52,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         }
     }
 
-    private void checkParameters(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
+    private void checkParameters(PhdProgramFocusArea focusArea, LocalizedString name, LocalizedString description,
             Teacher teacher) {
         String[] args = {};
         if (focusArea == null) {
@@ -66,7 +66,7 @@ public class ThesisSubject extends ThesisSubject_Base {
             }
         }
 
-        if (!name.hasContent(MultiLanguageString.en)) {
+        if (name.getContent(org.fenixedu.academic.util.LocaleUtils.EN) == null) {
             throw new PhdDomainOperationException("error.org.fenixedu.academic.domain.phd.ThesisSubject.name.in.english.required");
         }
 
@@ -76,7 +76,7 @@ public class ThesisSubject extends ThesisSubject_Base {
     }
 
     @Atomic
-    public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher, String externalAdvisor) {
+    public void edit(LocalizedString name, LocalizedString description, Teacher teacher, String externalAdvisor) {
         checkParameters(getPhdProgramFocusArea(), name, description, teacher);
 
         setName(name);
@@ -103,8 +103,8 @@ public class ThesisSubject extends ThesisSubject_Base {
     }
 
     @Atomic
-    public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
-            MultiLanguageString description, Teacher teacher, String externalAdvisor) {
+    public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, LocalizedString name,
+            LocalizedString description, Teacher teacher, String externalAdvisor) {
         return new ThesisSubject(focusArea, name, description, teacher, externalAdvisor);
     }
 

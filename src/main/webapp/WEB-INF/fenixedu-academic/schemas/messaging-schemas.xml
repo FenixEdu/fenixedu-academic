@@ -75,8 +75,8 @@
 
 
 <schema bundle="MESSAGING_RESOURCES" name="forum.view-with-name-description-and-creation-date" type="org.fenixedu.academic.domain.messaging.Forum">
-	<slot name="name" key="label.org.fenixedu.academic.domain.messaging.Forum.name"/>
-	<slot name="description" key="label.org.fenixedu.academic.domain.messaging.Forum.description"/>
+	<slot name="name.content" key="label.org.fenixedu.academic.domain.messaging.Forum.name"/>
+	<slot name="description.content" key="label.org.fenixedu.academic.domain.messaging.Forum.description"/>
 	<slot name="creationDate" key="label.org.fenixedu.academic.domain.messaging.Forum.creationDate"/>
 </schema>
 

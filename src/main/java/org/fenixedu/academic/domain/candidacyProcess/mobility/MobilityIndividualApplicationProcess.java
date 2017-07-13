@@ -58,7 +58,8 @@ import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -631,8 +632,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
             if (bean.getCreateAlert()) {
                 ErasmusAlert alert =
-                        new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new MultiLanguageString(
-                                bean.getAlertSubject()), new MultiLanguageString(bean.getAlertBody()), ErasmusAlertEntityType.GRI);
+                        new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new LocalizedString(I18N.getLocale(),
+                                bean.getAlertSubject()), new LocalizedString(I18N.getLocale(), bean.getAlertBody()), ErasmusAlertEntityType.GRI);
                 alert.setFireDate(new DateTime());
             }
 
@@ -661,8 +662,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             process.setValidatedByMobilityCoordinator(bean.getValidatedByErasmusCoordinator());
 
             if (bean.getCreateAlert()) {
-                new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new MultiLanguageString(bean.getAlertSubject()),
-                        new MultiLanguageString(bean.getAlertBody()), ErasmusAlertEntityType.COORDINATOR);
+                new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new LocalizedString(I18N.getLocale(), bean.getAlertSubject()),
+                        new LocalizedString(I18N.getLocale(), bean.getAlertBody()), ErasmusAlertEntityType.COORDINATOR);
             }
 
             return process;

@@ -59,7 +59,8 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
 import org.fenixedu.academic.util.HourMinuteSecond;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -288,7 +289,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         readAndSaveTeacher(bean, (DynaActionForm) form, request, mapping);
 
         if (bean.getTaught() == false) {
-            bean.setTitle(new MultiLanguageString("Not Taught."));
+            bean.setTitle(new LocalizedString(I18N.getLocale(), "Not Taught."));
         }
 
         try {
@@ -512,8 +513,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
     private void invalidateAndReloadView(HttpServletRequest request, String view) {
         final IViewState summaryViewState = RenderUtils.getViewState(view);
         SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
-        if (summaryBean.getTitle().equals(new MultiLanguageString("Not Taught."))) {
-            summaryBean.setTitle(new MultiLanguageString(""));
+        if (summaryBean.getTitle().equals(new LocalizedString(I18N.getLocale(), "Not Taught."))) {
+            summaryBean.setTitle(new LocalizedString(I18N.getLocale(), ""));
         }
         RenderUtils.invalidateViewState(view);
         request.setAttribute("summariesManagementBean", summaryBean);
@@ -599,7 +600,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
             summaryBean.setLessonType(bean.getLessonType());
 
             if (summaryBean.getTaught() == false) {
-                summaryBean.setTitle(new MultiLanguageString("Not Taught."));
+                summaryBean.setTitle(new LocalizedString(I18N.getLocale(), "Not Taught."));
             }
 
             try {

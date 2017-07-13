@@ -27,7 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.joda.time.DateTime;
@@ -49,8 +49,8 @@ public class PhdProgramEmailBean extends PhdEmailBean {
     }
 
     public PhdProgramEmailBean(PhdProgramEmail email) {
-        this.subject = email.getFormattedSubject().getContent(MultiLanguageString.pt);
-        this.message = email.getFormattedBody().getContent(MultiLanguageString.pt);
+        this.subject = email.getFormattedSubject().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
+        this.message = email.getFormattedBody().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
         this.bccs = email.getBccs();
         this.creationDate = email.getWhenCreated();
         this.creator = email.getPerson();

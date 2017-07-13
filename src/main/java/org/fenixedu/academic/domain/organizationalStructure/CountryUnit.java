@@ -30,7 +30,7 @@ import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
@@ -49,7 +49,7 @@ public class CountryUnit extends CountryUnit_Base {
         super.setType(PartyTypeEnum.COUNTRY);
     }
 
-    public static CountryUnit createNewCountryUnit(MultiLanguageString countryName, String countryNameCard,
+    public static CountryUnit createNewCountryUnit(LocalizedString countryName, String countryNameCard,
             Integer costCenterCode, String countryAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
@@ -64,13 +64,13 @@ public class CountryUnit extends CountryUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString name, String acronym) {
+    public void edit(LocalizedString name, String acronym) {
         super.edit(name, acronym);
         checkIfAlreadyExistsOneCountryWithSameAcronym(this);
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
             Space campus) {

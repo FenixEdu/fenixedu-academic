@@ -67,7 +67,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FenixStringTools;
 import org.fenixedu.academic.util.HtmlToTextConverterUtil;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -417,7 +417,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected String getPresentationNameFor(final ICurriculumEntry entry) {
-        final MultiLanguageString result;
+        final LocalizedString result;
 
         if (entry instanceof OptionalEnrolment) {
             final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) entry;
@@ -429,16 +429,16 @@ public class AdministrativeOfficeDocument extends FenixReport {
         return getMLSTextContent(result);
     }
 
-    protected String getMLSTextContent(final MultiLanguageString mls) {
+    protected String getMLSTextContent(final LocalizedString mls) {
         return getMLSTextContent(mls, getLanguage());
     }
 
-    protected String getMLSTextContent(final MultiLanguageString mls, final Locale language) {
+    protected String getMLSTextContent(final LocalizedString mls, final Locale language) {
         if (mls == null) {
             return EMPTY_STR;
         }
         final String content =
-                mls.hasContent(language) && !StringUtils.isEmpty(mls.getContent(language)) ? mls.getContent(language) : mls
+                mls.getContent(language) != null && !StringUtils.isEmpty(mls.getContent(language)) ? mls.getContent(language) : mls
                         .getContent();
         return content;
         // return convert(content);

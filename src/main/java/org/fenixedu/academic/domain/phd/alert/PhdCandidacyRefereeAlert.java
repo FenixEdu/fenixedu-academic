@@ -27,8 +27,9 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -51,13 +52,13 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
         setReferee(referee);
     }
 
-    private MultiLanguageString generateSubject(final PhdCandidacyReferee referee) {
-        return new MultiLanguageString(String.format(BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.referee"),
+    private LocalizedString generateSubject(final PhdCandidacyReferee referee) {
+        return new LocalizedString(I18N.getLocale(), String.format(BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.referee"),
                 referee.getCandidatePerson().getName(), referee.getCandidatePerson().getName()));
     }
 
-    private MultiLanguageString generateBody(final PhdCandidacyReferee referee) {
-        return new MultiLanguageString(referee.getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod()
+    private LocalizedString generateBody(final PhdCandidacyReferee referee) {
+        return new LocalizedString(I18N.getLocale(), referee.getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod()
                 .getEmailMessageBodyForRefereeForm(referee));
     }
 

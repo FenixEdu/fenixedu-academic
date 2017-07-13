@@ -21,7 +21,7 @@
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisParticipationType"%>
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant"%>
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisFile"%>
-<%@page import="org.fenixedu.academic.util.MultiLanguageString"%>
+<%@page import="org.fenixedu.commons.i18n.LocalizedString"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.List"%>
@@ -169,7 +169,7 @@
 		</th>
 		<%
 			for (final Locale language : languages) {
-			    final MultiLanguageString mls = thesis.getTitle();
+			    final LocalizedString mls = thesis.getTitle();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
 				<td>
@@ -185,7 +185,7 @@
 		</th>
 		<%
 			for (final Locale language : languages) {
-			    final MultiLanguageString mls = thesis.getKeywords();
+			    final LocalizedString mls = thesis.getKeywords();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
 				<td>
@@ -201,7 +201,7 @@
 		</th>
 		<%
 			for (final Locale language : languages) {
-			    final MultiLanguageString mls = thesis.getThesisAbstract();
+			    final LocalizedString mls = thesis.getThesisAbstract();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
 				<td>

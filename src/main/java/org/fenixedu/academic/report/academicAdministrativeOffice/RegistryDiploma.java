@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
@@ -118,7 +119,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     protected void setFirstParagraph(IRegistryDiplomaRequest request) {
 
         final UniversityUnit university = getUniversity(new DateTime());
-        String universityName = university.getPartyName().getPreferedContent();
+        String universityName = LocaleUtils.getPreferedContent(university.getPartyName());
 
         final Person rector = university.getCurrentPrincipal();
 
@@ -199,7 +200,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
                             + rector.getName());
         }
 
-        String universityName = university.getPartyName().getPreferedContent();
+        String universityName = LocaleUtils.getPreferedContent(university.getPartyName());
 
         addParameter("dateParagraph", getFormatedCurrentDate(universityName));
         addParameter("rector", rectorGender);

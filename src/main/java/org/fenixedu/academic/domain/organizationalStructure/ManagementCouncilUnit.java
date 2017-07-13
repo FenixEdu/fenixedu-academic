@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain.organizationalStructure;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -31,7 +31,7 @@ public class ManagementCouncilUnit extends ManagementCouncilUnit_Base {
         super.setType(PartyTypeEnum.MANAGEMENT_COUNCIL);
     }
 
-    public static ManagementCouncilUnit createManagementCouncilUnit(MultiLanguageString name, String unitNameCard,
+    public static ManagementCouncilUnit createManagementCouncilUnit(LocalizedString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
             Boolean canBeResponsibleOfSpaces, Space campus) {

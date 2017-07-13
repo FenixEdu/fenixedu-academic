@@ -21,12 +21,12 @@ package org.fenixedu.academic.domain.time.calendarStructure;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class AcademicYearCE extends AcademicYearCE_Base {
 
-    public AcademicYearCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, MultiLanguageString description,
+    public AcademicYearCE(AcademicCalendarEntry parentEntry, LocalizedString title, LocalizedString description,
             DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         super();

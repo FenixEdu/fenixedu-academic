@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -33,7 +33,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
     private transient volatile AcademicChronology academicChronology;
 
-    public AcademicCalendarRootEntry(MultiLanguageString title, MultiLanguageString description,
+    public AcademicCalendarRootEntry(LocalizedString title, LocalizedString description,
             AcademicCalendarEntry templateCalendar) {
         super();
         setRootDomainObjectForRootEntries(Bennu.getInstance());
@@ -43,7 +43,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
 
     @Override
-    public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
+    public AcademicCalendarEntry edit(LocalizedString title, LocalizedString description, DateTime begin, DateTime end,
             AcademicCalendarRootEntry rootEntryDestination, AcademicCalendarEntry templateEntry) {
 
         setTitle(title);

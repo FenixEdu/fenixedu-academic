@@ -24,7 +24,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 abstract public class CurriculumEntry implements Serializable, ICurriculumEntry {
 
@@ -70,12 +70,12 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
     }
 
     @Override
-    public MultiLanguageString getName() {
-        return new MultiLanguageString();
+    public LocalizedString getName() {
+        return new LocalizedString();
     }
 
     @Override
-    public MultiLanguageString getPresentationName() {
+    public LocalizedString getPresentationName() {
         return getName();
     }
 }

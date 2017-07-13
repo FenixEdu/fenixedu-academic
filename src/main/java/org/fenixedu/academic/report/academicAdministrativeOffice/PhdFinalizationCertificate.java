@@ -34,7 +34,7 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRe
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FenixStringTools;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
@@ -74,7 +74,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
         StringBuilder builder1 = new StringBuilder();
 
-        if (getLanguage().equals(MultiLanguageString.pt)) {
+        if (getLanguage().equals(org.fenixedu.academic.util.LocaleUtils.PT)) {
             builder1.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.with")).append(SINGLE_SPACE);
         }
 
@@ -102,7 +102,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void setNationality(final Person person) {
         StringBuilder builder = new StringBuilder();
-        if (getLanguage().equals(MultiLanguageString.pt)) {
+        if (getLanguage().equals(org.fenixedu.academic.util.LocaleUtils.PT)) {
             builder.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.and")).append(SINGLE_SPACE);
         }
 
@@ -209,7 +209,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     }
 
     private String getThesisTitle(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-        if (getLanguage().equals(MultiLanguageString.en) && !StringUtils.isEmpty(phdIndividualProgramProcess.getThesisTitleEn())) {
+        if (getLanguage().equals(org.fenixedu.academic.util.LocaleUtils.EN) && !StringUtils.isEmpty(phdIndividualProgramProcess.getThesisTitleEn())) {
             return phdIndividualProgramProcess.getThesisTitleEn();
         }
 

@@ -79,7 +79,7 @@ import org.fenixedu.academic.domain.phd.thesis.activities.UploadDocuments;
 import org.fenixedu.academic.domain.phd.thesis.activities.ValidateJury;
 import org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -117,8 +117,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
                     MessageFormat.format(BundleUtil.getString(Bundle.PHD, new Locale("en", "EN"),
                             "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
 
-            result.setPresidentTitle(new MultiLanguageString(MultiLanguageString.pt, presidentTitlePt).with(
-                    MultiLanguageString.en, presidentTitleEn));
+            result.setPresidentTitle(new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, presidentTitlePt).with(
+                    org.fenixedu.academic.util.LocaleUtils.EN, presidentTitleEn));
 
             if (!result.getIndividualProgramProcess().isMigratedProcess()) {
                 new PhdThesisRequestFee(bean.getProcess());
