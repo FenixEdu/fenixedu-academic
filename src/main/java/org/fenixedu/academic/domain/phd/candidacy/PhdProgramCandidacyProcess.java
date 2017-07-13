@@ -216,19 +216,13 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
-        if (getEvent() == null) {
-            return null;
-        }
-
-        return getEvent().getAssociatedPaymentCode();
+        return getEvent() == null ? null : getEvent().getAssociatedPaymentCode();
     }
 
     public boolean hasPaymentCodeToPay() {
-        if (getEvent() == null) {
-            return false;
-        }
-        return getEvent().getAssociatedPaymentCode().getMinAmount().isPositive()
-                && getEvent().getAssociatedPaymentCode().getMaxAmount().isPositive();
+        final IndividualCandidacyPaymentCode paymentCode = getAssociatedPaymentCode();
+        return paymentCode != null && paymentCode.getMinAmount().isPositive()
+                && paymentCode.getMaxAmount().isPositive();
     }
 
     private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {
