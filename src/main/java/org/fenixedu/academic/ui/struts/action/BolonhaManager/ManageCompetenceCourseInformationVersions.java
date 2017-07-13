@@ -87,15 +87,23 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         CompetenceCourseInformationRequestBean requestBean = getOrCreateRequestBean(request);
-
-        Department department = Bennu.getInstance().getDepartmentsSet().stream()
-                .filter(dep -> dep.getCompetenceCourseMembersGroup().isMember(Authenticate.getUser())).findAny().orElse(null);
+        List<Department> departments = Bennu.getInstance().getDepartmentsSet().stream()
+                .filter(dep -> dep.getCompetenceCourseMembersGroup().isMember(Authenticate.getUser()))
+                .sorted(Department.COMPARATOR_BY_NAME)
+                .collect(Collectors.toList());
+        request.setAttribute("departments", departments);
+        Department department = getDepartment(request, departments);
         request.setAttribute(
                 "department", department);
         request.setAttribute("competenceCourseMembersGroupMembers", department == null ? null : department
                 .getCompetenceCourseMembersGroup().getMembers().collect(Collectors.toSet()));
         request.setAttribute("requestBean", requestBean);
         return mapping.findForward("showCourses");
+    }
+
+    private Department getDepartment(HttpServletRequest request, List<Department> departments) {
+        Department department = getDomainObject(request, "departmentID");
+        return department != null ? department : departments.isEmpty() ? null : departments.get(0);
     }
 
     private CompetenceCourseInformationRequestBean getOrCreateRequestBean(HttpServletRequest request) {

@@ -22,7 +22,7 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 abstract public class PhdAlert extends PhdAlert_Base {
 
@@ -30,7 +30,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
         super();
     }
 
-    protected void init(PhdIndividualProgramProcess process, MultiLanguageString subject, MultiLanguageString body) {
+    protected void init(PhdIndividualProgramProcess process, LocalizedString subject, LocalizedString body) {
         String[] args = {};
         if (process == null) {
             throw new DomainException("error.phd.alert.PhdAlert.process.cannot.be.null", args);
@@ -47,9 +47,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
     protected String buildMailBody() {
         final StringBuilder result = new StringBuilder();
 
-        for (final String eachContent : getFormattedBody().getAllContents()) {
-            result.append(eachContent).append("\n").append(" ------------------------- ");
-        }
+        getFormattedBody().forEach((l, s) ->  result.append(s).append("\n").append(" ------------------------- "));
 
         result.delete(result.lastIndexOf("\n") + 1, result.length());
 
@@ -60,9 +58,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
     protected String buildMailSubject() {
         final StringBuilder result = new StringBuilder();
 
-        for (final String eachContent : getFormattedSubject().getAllContents()) {
-            result.append(eachContent).append(" / ");
-        }
+        getFormattedSubject().forEach((l, s) -> result.append(s).append(" / "));
 
         if (result.toString().endsWith(" / ")) {
             result.delete(result.length() - 3, result.length());

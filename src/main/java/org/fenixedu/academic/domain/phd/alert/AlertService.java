@@ -79,7 +79,7 @@ public class AlertService {
 
         builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "phdProgram"));
         if (process.getPhdProgram() != null) {
-            builder.append(": ").append(process.getPhdProgram().getName());
+            builder.append(": ").append(process.getPhdProgram().getName(process.getExecutionYear()).getContent());
         }
         builder.append("\n");
 

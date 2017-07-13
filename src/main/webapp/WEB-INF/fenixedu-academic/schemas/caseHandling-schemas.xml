@@ -1634,8 +1634,8 @@
 
 	<slot name="personBean.nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/>
-		<property name="format" value="${countryNationality}" />
-		<property name="sortBy" value="countryNationality"/>
+		<property name="format" value="${countryNationality.content}" />
+		<property name="sortBy" value="countryNationality.content"/>
 	</slot>
 	
 	<slot name="personBean.fiscalCode" key="label.fiscalCode" >
@@ -2522,8 +2522,8 @@
 	
 	<slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/>
-		<property name="format" value="${countryNationality}" />
-		<property name="sortBy" value="countryNationality"/>
+		<property name="format" value="${countryNationality.content}" />
+		<property name="sortBy" value="countryNationality.content"/>
 	</slot>
 
 	<slot name="address" key="label.address">
@@ -2671,7 +2671,7 @@
 	<slot name="idDocumentType" key="label.idDocumentType" />
 	<slot name="gender" key="label.gender" />
 	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirth" />
-	<slot name="country.countryNationality" key="label.nationality" />
+	<slot name="country.countryNationality.content" key="label.nationality" />
 	<slot name="address" key="label.address" />
 	<slot name="areaCode" key="label.areaCode" />
 	<slot name="area" key="label.area" />

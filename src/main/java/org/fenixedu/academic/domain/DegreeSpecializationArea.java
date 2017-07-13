@@ -19,32 +19,32 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
 public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
 
-    public DegreeSpecializationArea(DegreeOfficialPublication officialPublication, MultiLanguageString area) {
+    public DegreeSpecializationArea(DegreeOfficialPublication officialPublication, LocalizedString area) {
         super();
         init(officialPublication, area);
     }
 
-    protected void init(DegreeOfficialPublication degreeOfficialPublication, MultiLanguageString area) {
+    protected void init(DegreeOfficialPublication degreeOfficialPublication, LocalizedString area) {
         checkParameters(degreeOfficialPublication, area);
         setOfficialPublication(degreeOfficialPublication);
         setName(area);
     }
 
-    private void checkParameters(DegreeOfficialPublication degreeOfficialPublication, MultiLanguageString area) {
+    private void checkParameters(DegreeOfficialPublication degreeOfficialPublication, LocalizedString area) {
         if (degreeOfficialPublication == null) {
             throw new DomainException(DegreeSpecializationArea.class.getName() + ".degreeOfficialPublication.required");
         }
         if (area == null) {
-            throw new DomainException(MultiLanguageString.class.getName() + ".area.required");
+            throw new DomainException(LocalizedString.class.getName() + ".area.required");
         }
 
-        if (area.getAllLocales().isEmpty()) {
+        if (area.getLocales().isEmpty()) {
             throw new DomainException(DegreeSpecializationArea.class.getName() + ".area.names.required");
         }
 
@@ -53,13 +53,8 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
         }
     }
 
-    private boolean verifyIfSomeContentsAreNotEmpty(MultiLanguageString area) {
-        for (String language : area.getAllContents()) {
-            if (!language.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
+    private boolean verifyIfSomeContentsAreNotEmpty(LocalizedString area) {
+        return area.anyMatch(s -> !s.isEmpty());
     }
 
     public void delete() {
@@ -69,20 +64,20 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
 
     @Atomic
     public void setNameEn(String nameEn) {
-        setName(getName().with(MultiLanguageString.en, nameEn));
+        setName(getName().with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn));
     }
 
     @Atomic
     public void setNamePt(String namePt) {
-        setName(getName().with(MultiLanguageString.pt, namePt));
+        setName(getName().with(org.fenixedu.academic.util.LocaleUtils.PT, namePt));
     }
 
     public String getNameEn() {
-        return this.getName().getContent(MultiLanguageString.en);
+        return this.getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN);
     }
 
     public String getNamePt() {
-        return this.getName().getContent(MultiLanguageString.pt);
+        return this.getName().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
     }
 
 }

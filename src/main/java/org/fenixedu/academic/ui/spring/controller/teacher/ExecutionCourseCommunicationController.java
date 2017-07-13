@@ -26,6 +26,8 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.ui.spring.StrutsFunctionalityController;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
+import org.fenixedu.bennu.spring.security.CSRFTokenBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,13 +41,18 @@ import pt.ist.fenixframework.Atomic;
 @Controller
 @RequestMapping("/teacher/{executionCourseId}/communication")
 public class ExecutionCourseCommunicationController extends StrutsFunctionalityController {
-
+    
+    // hack
+    @Autowired
+    CSRFTokenBean csrfTokenBean;
+    
     @RequestMapping(method = RequestMethod.GET)
     public TeacherView communication(Model model, @PathVariable String executionCourseId) {
         final ExecutionCourse executionCourse = getDomainObject(executionCourseId);
         check(getPerson(), person -> hasPermissions(person, executionCourse));
         model.addAttribute("professorship", executionCourse.getProfessorship(getPerson()));
         model.addAttribute("executionCourse", executionCourse);
+        model.addAttribute("csrf", csrfTokenBean);
         return new TeacherView("communication");
     }
 

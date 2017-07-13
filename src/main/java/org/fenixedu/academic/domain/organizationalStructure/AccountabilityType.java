@@ -23,7 +23,8 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.LocaleUtils;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class AccountabilityType extends AccountabilityType_Base {
@@ -33,7 +34,7 @@ public class AccountabilityType extends AccountabilityType_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum, MultiLanguageString name) {
+    public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum, LocalizedString name) {
         this();
         setType(accountabilityTypeEnum);
         setTypeName(name);
@@ -58,7 +59,7 @@ public class AccountabilityType extends AccountabilityType_Base {
     }
 
     @Override
-    public void setTypeName(MultiLanguageString typeName) {
+    public void setTypeName(LocalizedString typeName) {
         if (typeName == null || typeName.isEmpty()) {
             throw new DomainException("error.accountabilityType.empty.typeName");
         }
@@ -79,7 +80,7 @@ public class AccountabilityType extends AccountabilityType_Base {
     }
 
     public String getName() {
-        return getTypeName().getPreferedContent();
+        return LocaleUtils.getPreferedContent(getTypeName());
     }
 
     public void setName(String name) {
@@ -88,9 +89,9 @@ public class AccountabilityType extends AccountabilityType_Base {
             throw new DomainException("error.accountabilityType.empty.name");
         }
 
-        MultiLanguageString typeName = getTypeName();
+        LocalizedString typeName = getTypeName();
         typeName =
-                typeName == null ? new MultiLanguageString(Locale.getDefault(), name) : typeName.with(Locale.getDefault(), name);
+                typeName == null ? new LocalizedString(Locale.getDefault(), name) : typeName.with(Locale.getDefault(), name);
 
         setTypeName(typeName);
     }

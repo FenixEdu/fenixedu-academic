@@ -56,7 +56,7 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -421,7 +421,7 @@ public class StudentLine implements java.io.Serializable {
 
     public String getDegreeName() {
         if (getRegistration() != null) {
-            return getRegistration().getDegree().getNameI18N().getContent(MultiLanguageString.pt);
+            return getRegistration().getDegree().getNameI18N().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
         }
 
         return degreeName;

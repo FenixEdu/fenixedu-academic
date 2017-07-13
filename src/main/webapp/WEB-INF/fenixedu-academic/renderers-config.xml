@@ -227,20 +227,6 @@ Documentation:
     </renderer>
     
     <!-- Legacy Renderers -->
-    <renderer mode="input" type="org.fenixedu.academic.util.MultiLanguageString" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringInputRenderer"/>
-	<renderer mode="input" type="org.fenixedu.academic.util.MultiLanguageString" layout="area" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageTextInputRenderer"/>
-	<renderer mode="input" type="org.fenixedu.academic.util.MultiLanguageString" layout="rich-text" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageRichTextInputRenderer"/>
-
-	<renderer type="org.fenixedu.academic.util.MultiLanguageString" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringRenderer">
-		<property name="languageShown" value="false"/>
-	</renderer>
-	<renderer type="org.fenixedu.academic.util.MultiLanguageString" layout="short" class="org.fenixedu.academic.ui.renderers.legacy.ShortMultiLanguageStringRenderer">
-		<property name="length" value="40"/>
-	</renderer>
-	<renderer type="org.fenixedu.academic.util.MultiLanguageString" layout="html" class="org.fenixedu.academic.ui.renderers.legacy.MultiLanguageStringRenderer">
-		<property name="escaped" value="false"/>
-		<property name="languageShown" value="false"/>
-	</renderer>
     <renderer type="org.fenixedu.academic.util.LabelFormatter" class="org.fenixedu.academic.ui.renderers.LabelFormatterRenderer">
     		<property name="bundleName(application)" value="APPLICATION_RESOURCES"/>
     		<property name="bundleName(enum)" value="ENUMERATION_RESOURCES"/>

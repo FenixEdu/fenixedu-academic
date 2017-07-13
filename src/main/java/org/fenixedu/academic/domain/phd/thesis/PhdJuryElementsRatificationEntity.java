@@ -20,6 +20,8 @@ package org.fenixedu.academic.domain.phd.thesis;
 
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
@@ -29,11 +31,12 @@ public enum PhdJuryElementsRatificationEntity {
 
         @Override
         public String getRatificationEntityMessage(final PhdThesisProcess process, final Locale locale) {
-            String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
-
-            String phdProgramName = process.getIndividualProgramProcess().getPhdProgram().getName().getContent();
-            String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
-            String personName = process.getPerson().getName();
+            final String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
+            final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
+            final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
+            final String phdProgramName = individualProgramProcess.getPhdProgram().getName(executionYear).getContent();
+            final String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
+            final String personName = process.getPerson().getName();
 
             return String.format(message, phdProgramName, whenJuryDesignated, personName);
         }
@@ -43,11 +46,12 @@ public enum PhdJuryElementsRatificationEntity {
 
         @Override
         public String getRatificationEntityMessage(PhdThesisProcess process, final Locale locale) {
-            String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
-
-            String phdProgramName = process.getIndividualProgramProcess().getPhdProgram().getName().getContent();
-            String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
-            String personName = process.getPerson().getName();
+            final String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
+            final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
+            final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
+            final String phdProgramName = individualProgramProcess.getPhdProgram().getName(executionYear).getContent();
+            final String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
+            final String personName = process.getPerson().getName();
 
             return String.format(message, phdProgramName, whenJuryDesignated, personName);
         }
@@ -57,12 +61,13 @@ public enum PhdJuryElementsRatificationEntity {
 
         @Override
         public String getRatificationEntityMessage(PhdThesisProcess process, final Locale locale) {
-            String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
-
-            String phdProgramName = process.getIndividualProgramProcess().getPhdProgram().getName().getContent();
-            String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
-            String personName = process.getPerson().getName();
-            String whenJuryValidated = process.getWhenJuryValidated().toString("dd/MM/yyyy");
+            final String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
+            final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
+            final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
+            final String phdProgramName = individualProgramProcess.getPhdProgram().getName(executionYear).getContent();
+            final String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
+            final String personName = process.getPerson().getName();
+            final String whenJuryValidated = process.getWhenJuryValidated().toString("dd/MM/yyyy");
 
             return String.format(message, phdProgramName, whenJuryDesignated, personName, whenJuryValidated);
         }

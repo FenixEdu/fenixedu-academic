@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -44,7 +44,7 @@ public class UniversityUnit extends UniversityUnit_Base {
         return true;
     }
 
-    public static UniversityUnit createNewUniversityUnit(MultiLanguageString name, Unit parentUnit, Boolean official,
+    public static UniversityUnit createNewUniversityUnit(LocalizedString name, Unit parentUnit, Boolean official,
             String code, AcademicalInstitutionType institutionType) {
 
         UniversityUnit universityUnit = new UniversityUnit();
@@ -57,7 +57,7 @@ public class UniversityUnit extends UniversityUnit_Base {
         return createNewUnit(parentUnit, universityUnit);
     }
 
-    public static UniversityUnit createNewUniversityUnit(MultiLanguageString universityName, String universityNameCard,
+    public static UniversityUnit createNewUniversityUnit(LocalizedString universityName, String universityNameCard,
             Integer costCenterCode, String universityAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
@@ -75,13 +75,13 @@ public class UniversityUnit extends UniversityUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString name, String acronym) {
+    public void edit(LocalizedString name, String acronym) {
         super.edit(name, acronym);
         checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(this);
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
             Space campus) {

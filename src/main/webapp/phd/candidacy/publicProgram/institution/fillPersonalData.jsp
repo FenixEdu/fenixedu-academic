@@ -126,8 +126,8 @@
 				</fr:slot>
 				<fr:slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.CountryProvider"/>
-					<fr:property name="format" value="\${countryNationality}" />
-					<fr:property name="sortBy" value="countryNationality"/>
+					<fr:property name="format" value="\${countryNationality.content}" />
+					<fr:property name="sortBy" value="countryNationality.content"/>
 				</fr:slot>
 				<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="60"/>

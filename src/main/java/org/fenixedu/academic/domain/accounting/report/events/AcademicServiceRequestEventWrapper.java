@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceReques
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class AcademicServiceRequestEventWrapper implements Wrapper {
 
@@ -76,7 +76,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     public String getDegreeName() {
         if (request.isRequestForRegistration()) {
             return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegree().getNameI18N()
-                    .getContent(MultiLanguageString.pt);
+                    .getContent(org.fenixedu.academic.util.LocaleUtils.PT);
         }
 
         return "--";
@@ -94,8 +94,8 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     @Override
     public String getPhdProgramName() {
         if (request.isRequestForPhd()) {
-            return ((PhdAcademicServiceRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getName()
-                    .getContent(MultiLanguageString.pt);
+            return ((PhdAcademicServiceRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getName(getForExecutionYear())
+                    .getContent(org.fenixedu.academic.util.LocaleUtils.PT);
         }
 
         return "--";

@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -43,7 +43,7 @@ public class SchoolUnit extends SchoolUnit_Base {
         return true;
     }
 
-    public static SchoolUnit createNewSchoolUnit(MultiLanguageString schoolName, String schoolNameCard, Unit parentUnit,
+    public static SchoolUnit createNewSchoolUnit(LocalizedString schoolName, String schoolNameCard, Unit parentUnit,
             Boolean official, String code, AcademicalInstitutionType institutionType) {
 
         SchoolUnit schoolUnit = new SchoolUnit();
@@ -57,7 +57,7 @@ public class SchoolUnit extends SchoolUnit_Base {
         return createNewUnit(parentUnit, schoolUnit, Boolean.FALSE);
     }
 
-    public static SchoolUnit createNewSchoolUnit(MultiLanguageString schoolName, String schoolNameCard, Integer costCenterCode,
+    public static SchoolUnit createNewSchoolUnit(LocalizedString schoolName, String schoolNameCard, Integer costCenterCode,
             String schoolAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress,
             UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
@@ -82,13 +82,13 @@ public class SchoolUnit extends SchoolUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString name, String acronym) {
+    public void edit(LocalizedString name, String acronym) {
         super.edit(name, acronym);
         checkIfAlreadyExistsOneSchoolWithSameAcronymAndName(this);
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
             Space campus) {

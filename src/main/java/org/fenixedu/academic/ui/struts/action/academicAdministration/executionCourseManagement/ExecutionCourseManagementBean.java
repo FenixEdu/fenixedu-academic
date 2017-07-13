@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.interfaces.HasExecutionDegree;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class ExecutionCourseManagementBean implements java.io.Serializable, HasExecutionDegree {
 
@@ -58,7 +58,7 @@ public class ExecutionCourseManagementBean implements java.io.Serializable, HasE
         setSemester(semester);
         setCurricularCourseList(new ArrayList<CurricularCourse>());
         getCurricularCourseList().add(curricularCourse);
-        setName(curricularCourse.getNameI18N().getContent(MultiLanguageString.pt));
+        setName(curricularCourse.getNameI18N().getContent(org.fenixedu.academic.util.LocaleUtils.PT));
     }
 
     public ExecutionCourseManagementBean(final ExecutionCourse executionCourse) {

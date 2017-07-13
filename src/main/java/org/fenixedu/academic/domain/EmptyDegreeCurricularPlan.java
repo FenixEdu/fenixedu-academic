@@ -39,7 +39,7 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.MarkType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 
@@ -479,8 +479,8 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    final public MultiLanguageString getDescriptionI18N() {
-        return new MultiLanguageString();
+    final public LocalizedString getDescriptionI18N() {
+        return new LocalizedString();
     }
 
     @Override

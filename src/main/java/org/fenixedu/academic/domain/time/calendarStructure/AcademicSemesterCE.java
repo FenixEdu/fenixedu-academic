@@ -24,12 +24,12 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
-    public AcademicSemesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, MultiLanguageString description,
+    public AcademicSemesterCE(AcademicCalendarEntry parentEntry, LocalizedString title, LocalizedString description,
             DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         super();

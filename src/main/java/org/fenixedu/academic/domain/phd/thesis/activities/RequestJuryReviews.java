@@ -21,6 +21,7 @@
  */
 package org.fenixedu.academic.domain.phd.thesis.activities;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
 import org.fenixedu.academic.domain.caseHandling.Process;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -117,10 +118,11 @@ public class RequestJuryReviews extends PhdThesisActivity {
             participant.ensureExternalAccess();
         }
 
+        final ExecutionYear executionYear = process.getExecutionYear();
         final AlertMessage subject =
                 AlertMessage
                         .create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-                                .getPhdProgram().getName())).isKey(false).withPrefix(false);
+                                .getPhdProgram().getName(executionYear).getContent())).isKey(false).withPrefix(false);
 
         final AlertMessage body =
                 AlertMessage
@@ -145,10 +147,11 @@ public class RequestJuryReviews extends PhdThesisActivity {
             createExternalAccess(thesisJuryElement);
             participant.ensureExternalAccess();
         }
+        final ExecutionYear executionYear = process.getExecutionYear();
         final AlertMessage subject =
                 AlertMessage
                         .create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-                                .getPhdProgram().getName())).isKey(false).withPrefix(false);
+                                .getPhdProgram().getName(executionYear).getContent())).isKey(false).withPrefix(false);
 
         final AlertMessage body =
                 AlertMessage

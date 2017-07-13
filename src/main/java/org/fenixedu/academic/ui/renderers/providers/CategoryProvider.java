@@ -21,7 +21,7 @@ package org.fenixedu.academic.ui.renderers.providers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -49,7 +49,7 @@ public class CategoryProvider implements DataProvider {
     }
 
     private String hardcoded(String pt, String en) {
-        return new MultiLanguageString(MultiLanguageString.pt, pt).with(MultiLanguageString.en, en).getContent();
+        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, pt).with(org.fenixedu.academic.util.LocaleUtils.EN, en).getContent();
     }
 
     @Override

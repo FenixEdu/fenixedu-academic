@@ -87,7 +87,7 @@
 			<fr:slot name="socialSecurityNumber" />
 		   	<fr:slot name="dateOfBirth" />
 			<fr:slot name="districtSubdivisionOfBirth" />
-			<fr:slot name="nationality.countryNationality" />
+			<fr:slot name="nationality.countryNationality.content" />
 			<fr:slot name="address" />
 			<fr:slot name="area" />
 			<fr:slot name="areaCode" />

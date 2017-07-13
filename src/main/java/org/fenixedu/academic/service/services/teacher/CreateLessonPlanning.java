@@ -23,13 +23,13 @@ import org.fenixedu.academic.domain.LessonPlanning;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CreateLessonPlanning {
 
-    protected void run(String executionCourseId, MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
+    protected void run(String executionCourseId, LocalizedString title, LocalizedString planning, ShiftType lessonType,
             ExecutionCourse executionCourse) {
 
         new LessonPlanning(title, planning, lessonType, executionCourse);
@@ -40,7 +40,7 @@ public class CreateLessonPlanning {
     private static final CreateLessonPlanning serviceInstance = new CreateLessonPlanning();
 
     @Atomic
-    public static void runCreateLessonPlanning(String executionCourseId, MultiLanguageString title, MultiLanguageString planning,
+    public static void runCreateLessonPlanning(String executionCourseId, LocalizedString title, LocalizedString planning,
             ShiftType lessonType, ExecutionCourse executionCourse) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, title, planning, lessonType, executionCourse);

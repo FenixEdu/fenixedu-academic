@@ -21,7 +21,7 @@ package org.fenixedu.academic.service.services.teacher;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -30,7 +30,7 @@ import pt.ist.fenixframework.Atomic;
  */
 public class EditEvaluation {
 
-    protected Boolean run(final ExecutionCourse executionCourse, final MultiLanguageString evaluationMethod) {
+    protected Boolean run(final ExecutionCourse executionCourse, final LocalizedString evaluationMethod) {
         if (executionCourse.getEvaluationMethod() == null) {
             executionCourse.createEvaluationMethod(evaluationMethod);
         } else {
@@ -44,7 +44,7 @@ public class EditEvaluation {
     private static final EditEvaluation serviceInstance = new EditEvaluation();
 
     @Atomic
-    public static Boolean runEditEvaluation(ExecutionCourse executionCourse, MultiLanguageString evaluationMethod)
+    public static Boolean runEditEvaluation(ExecutionCourse executionCourse, LocalizedString evaluationMethod)
             throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse.getExternalId());
         return serviceInstance.run(executionCourse, evaluationMethod);

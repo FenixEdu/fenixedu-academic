@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.util.DayType;
 import org.fenixedu.academic.util.DiaSemana;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.occupation.Occupation;
@@ -77,8 +77,8 @@ public class InfoOccupation extends InfoShowOccupation implements GanttDiagramEv
     }
 
     @Override
-    public MultiLanguageString getGanttDiagramEventName() {
-        return new MultiLanguageString(occupation.getSubject());
+    public LocalizedString getGanttDiagramEventName() {
+        return new LocalizedString(I18N.getLocale(), occupation.getSubject());
     }
 
     @Override

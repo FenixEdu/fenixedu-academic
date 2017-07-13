@@ -39,7 +39,7 @@ import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -49,7 +49,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateUnit {
 
     @Atomic
-    public static Unit run(Unit parentUnit, MultiLanguageString unitName, String unitNameCard, String unitCostCenter,
+    public static Unit run(Unit parentUnit, LocalizedString unitName, String unitNameCard, String unitCostCenter,
             String acronym, YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, String departmentID, String degreeID,
             String administrativeOfficeID, AccountabilityType accountabilityType, String webAddress,
             UnitClassification classification, Boolean canBeResponsibleOfSpaces, String campusID) throws FenixServiceException {

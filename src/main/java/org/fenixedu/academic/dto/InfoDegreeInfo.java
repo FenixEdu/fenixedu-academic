@@ -22,7 +22,7 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 /**
  * @author T�nia Pous�o Created on 30/Out/2003
@@ -114,35 +114,35 @@ public class InfoDegreeInfo extends InfoObject {
         if (degreeInfo != null) {
             setInfoDegree(InfoDegree.newInfoFromDomain(degreeInfo.getDegree()));
 
-            setDescription((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(MultiLanguageString.pt) : null);
-            setHistory((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(MultiLanguageString.pt) : null);
-            setObjectives((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(MultiLanguageString.pt) : null);
-            setDesignedFor((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(MultiLanguageString.pt) : null);
+            setDescription((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(org.fenixedu.academic.util.LocaleUtils.PT) : null);
+            setHistory((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(org.fenixedu.academic.util.LocaleUtils.PT) : null);
+            setObjectives((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(org.fenixedu.academic.util.LocaleUtils.PT) : null);
+            setDesignedFor((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setProfessionalExits((degreeInfo.getProfessionalExits() != null) ? degreeInfo.getProfessionalExits().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setOperationalRegime((degreeInfo.getOperationalRegime() != null) ? degreeInfo.getOperationalRegime().getContent(
-                    MultiLanguageString.pt) : null);
-            setGratuity((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
+            setGratuity((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setSchoolCalendar((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setCandidacyPeriod((degreeInfo.getCandidacyPeriod() != null) ? degreeInfo.getCandidacyPeriod().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setSelectionResultDeadline((degreeInfo.getSelectionResultDeadline() != null) ? degreeInfo
-                    .getSelectionResultDeadline().getContent(MultiLanguageString.pt) : null);
+                    .getSelectionResultDeadline().getContent(org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setEnrolmentPeriod((degreeInfo.getEnrolmentPeriod() != null) ? degreeInfo.getEnrolmentPeriod().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setAdditionalInfo((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(
-                    MultiLanguageString.pt) : null);
-            setLinks((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
+            setLinks((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(org.fenixedu.academic.util.LocaleUtils.PT) : null);
 
             setTestIngression((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setClassifications((degreeInfo.getClassifications() != null) ? degreeInfo.getClassifications().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setAccessRequisites((degreeInfo.getAccessRequisites() != null) ? degreeInfo.getAccessRequisites().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setCandidacyDocuments((degreeInfo.getCandidacyDocuments() != null) ? degreeInfo.getCandidacyDocuments().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setDriftsInitial(degreeInfo.getDriftsInitial());
             setDriftsFirst(degreeInfo.getDriftsFirst());
             setDriftsSecond(degreeInfo.getDriftsSecond());
@@ -151,47 +151,47 @@ public class InfoDegreeInfo extends InfoObject {
             setMarkAverage(degreeInfo.getMarkAverage());
 
             setQualificationLevel((degreeInfo.getQualificationLevel() != null) ? degreeInfo.getQualificationLevel().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
             setRecognitions((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(
-                    MultiLanguageString.pt) : null);
+                    org.fenixedu.academic.util.LocaleUtils.PT) : null);
 
             // in english
             setDescriptionEn((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(
-                    MultiLanguageString.en) : null);
-            setHistoryEn((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(MultiLanguageString.en) : null);
-            setObjectivesEn((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
+            setHistoryEn((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(org.fenixedu.academic.util.LocaleUtils.EN) : null);
+            setObjectivesEn((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setDesignedForEn((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setProfessionalExitsEn((degreeInfo.getProfessionalExits() != null) ? degreeInfo.getProfessionalExits().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setOperationalRegimeEn((degreeInfo.getOperationalRegime() != null) ? degreeInfo.getOperationalRegime().getContent(
-                    MultiLanguageString.en) : null);
-            setGratuityEn((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
+            setGratuityEn((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setSchoolCalendarEn((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setCandidacyPeriodEn((degreeInfo.getCandidacyPeriod() != null) ? degreeInfo.getCandidacyPeriod().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setSelectionResultDeadlineEn((degreeInfo.getSelectionResultDeadline() != null) ? degreeInfo
-                    .getSelectionResultDeadline().getContent(MultiLanguageString.en) : null);
+                    .getSelectionResultDeadline().getContent(org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setEnrolmentPeriodEn((degreeInfo.getEnrolmentPeriod() != null) ? degreeInfo.getEnrolmentPeriod().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setAdditionalInfoEn((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(
-                    MultiLanguageString.en) : null);
-            setLinksEn((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
+            setLinksEn((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(org.fenixedu.academic.util.LocaleUtils.EN) : null);
 
             setTestIngressionEn((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setClassificationsEn((degreeInfo.getClassifications() != null) ? degreeInfo.getClassifications().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setAccessRequisitesEn((degreeInfo.getAccessRequisites() != null) ? degreeInfo.getAccessRequisites().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setCandidacyDocumentsEn((degreeInfo.getCandidacyDocuments() != null) ? degreeInfo.getCandidacyDocuments().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
 
             setQualificationLevelEn((degreeInfo.getQualificationLevel() != null) ? degreeInfo.getQualificationLevel().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
             setRecognitionsEn((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(
-                    MultiLanguageString.en) : null);
+                    org.fenixedu.academic.util.LocaleUtils.EN) : null);
         }
     }
 

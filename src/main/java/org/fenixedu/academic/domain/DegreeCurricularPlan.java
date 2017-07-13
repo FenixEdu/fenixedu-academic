@@ -73,7 +73,7 @@ import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.DegreeCurricularPlanPredicates;
 import org.fenixedu.academic.util.MarkType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
@@ -161,7 +161,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             Integer numerusClausus, String annotation, GradeScale gradeScale) {
 
         this(degree, name, gradeScale);
-        super.setCurricularStage(CurricularStage.OLD);
+        super.setCurricularStage(CurricularStage.DRAFT);
         super.setState(state);
 
         oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits, markType,
@@ -1763,14 +1763,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return beginContextExecutionYears.isEmpty() ? null : beginContextExecutionYears.iterator().next();
     }
 
-    public MultiLanguageString getDescriptionI18N() {
-        MultiLanguageString result = new MultiLanguageString();
+    public LocalizedString getDescriptionI18N() {
+        LocalizedString result = new LocalizedString();
 
         if (!StringUtils.isEmpty(getDescription())) {
-            result = result.with(MultiLanguageString.pt, getDescription());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.PT, getDescription());
         }
         if (!StringUtils.isEmpty(getDescriptionEn())) {
-            result = result.with(MultiLanguageString.en, getDescriptionEn());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.EN, getDescriptionEn());
         }
 
         return result;

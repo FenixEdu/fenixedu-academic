@@ -30,7 +30,7 @@ import java.util.Comparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourseScope;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.I18N;
 
 /**
@@ -100,7 +100,7 @@ public class InfoCurricularCourseScope extends InfoObject {
 
     private final CurricularCourseScope curricularCourseScope;
 
-    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
+    private final boolean showEnVersion = I18N.getLocale().equals(org.fenixedu.academic.util.LocaleUtils.EN);
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
         this.curricularCourseScope = curricularCourseScope;

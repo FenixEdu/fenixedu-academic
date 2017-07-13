@@ -46,7 +46,7 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -159,19 +159,19 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         return null;
     }
 
-    public MultiLanguageString getName() {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getName() {
+        LocalizedString LocalizedString = new LocalizedString();
 
         if (this.getDegreeModule().getName() != null && this.getDegreeModule().getName().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, this.getDegreeModule().getName());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, this.getDegreeModule().getName());
         }
         if (this.getDegreeModule().getNameEn() != null && this.getDegreeModule().getNameEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, this.getDegreeModule().getNameEn());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, this.getDegreeModule().getNameEn());
         }
-        return multiLanguageString;
+        return LocalizedString;
     }
 
-    public MultiLanguageString getPresentationName() {
+    public LocalizedString getPresentationName() {
         return getName();
     }
 

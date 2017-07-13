@@ -22,13 +22,13 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.messaging.Forum;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class CreateConversationThreadAndMessageBean implements Serializable {
 
-    private MultiLanguageString subject;
+    private LocalizedString subject;
 
-    private MultiLanguageString body;
+    private LocalizedString body;
 
     private Person creatorReference;
 
@@ -40,19 +40,19 @@ public class CreateConversationThreadAndMessageBean implements Serializable {
         forumReference = null;
     }
 
-    public MultiLanguageString getSubject() {
+    public LocalizedString getSubject() {
         return subject;
     }
 
-    public void setSubject(MultiLanguageString subject) {
+    public void setSubject(LocalizedString subject) {
         this.subject = subject;
     }
 
-    public MultiLanguageString getBody() {
+    public LocalizedString getBody() {
         return body;
     }
 
-    public void setBody(MultiLanguageString body) {
+    public void setBody(LocalizedString body) {
         this.body = body;
     }
 

@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.report.phd.registration;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
@@ -62,7 +63,8 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
         addParameter("registrationState", getRegistrationStateLabel());
         addParameter("executionYear", process.getExecutionYear().getName());
-        addParameter("phdProgramName", process.getPhdProgram().getName().getContent());
+        final ExecutionYear executionYear = process.getExecutionYear();
+        addParameter("phdProgramName", process.getPhdProgram().getName(executionYear).getContent());
 
         addParameter("documentDate", new LocalDate().toString(DD_MMMM_YYYY, I18N.getLocale()));
     }

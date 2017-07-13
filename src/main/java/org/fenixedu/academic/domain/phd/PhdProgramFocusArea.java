@@ -29,8 +29,9 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
@@ -49,7 +50,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
         setActive(Boolean.TRUE);
     }
 
-    public PhdProgramFocusArea(final MultiLanguageString name) {
+    public PhdProgramFocusArea(final LocalizedString name) {
         this();
         String[] args = {};
         if (name == null) {
@@ -59,9 +60,9 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
         setName(name);
     }
 
-    private void checkForEqualFocusArea(final MultiLanguageString name) {
+    private void checkForEqualFocusArea(final LocalizedString name) {
         for (final PhdProgramFocusArea focusArea : Bennu.getInstance().getPhdProgramFocusAreasSet()) {
-            if (focusArea != this && focusArea.getName().equalInAnyLanguage(name)) {
+            if (focusArea != this && LocaleUtils.equalInAnyLanguage(focusArea.getName(), name)) {
                 throw new DomainException("error.PhdProgramFocusArea.found.area.with.same.name");
             }
         }

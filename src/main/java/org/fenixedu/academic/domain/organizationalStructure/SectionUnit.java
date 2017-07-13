@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.organizationalStructure;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -30,7 +30,7 @@ public class SectionUnit extends SectionUnit_Base {
         super.setType(PartyTypeEnum.SECTION);
     }
 
-    public static Unit createNewSectionUnit(MultiLanguageString name, String unitNameCard, Integer costCenterCode,
+    public static Unit createNewSectionUnit(LocalizedString name, String unitNameCard, Integer costCenterCode,
             String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 

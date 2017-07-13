@@ -33,7 +33,7 @@ import org.fenixedu.academic.domain.Holiday;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.util.DayType;
 import org.fenixedu.academic.util.Month;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.renderer.GanttDiagram;
 import org.fenixedu.academic.util.renderer.GanttDiagram.ViewType;
 import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
@@ -200,7 +200,7 @@ public class GanttDiagramTagLib extends TagSupport {
                     eventUrl = eventUrl.concat(event.getGanttDiagramEventUrlAddOns());
                 }
 
-                final MultiLanguageString diagramEventName = event.getGanttDiagramEventName();
+                final LocalizedString diagramEventName = event.getGanttDiagramEventName();
                 String eventName = diagramEventName == null ? "" : diagramEventName.getContent();
                 String paddingStyle = "padding-left:" + event.getGanttDiagramEventOffset() * PADDING_LEFT_MULTIPLIER + "px";
 

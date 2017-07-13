@@ -62,7 +62,7 @@ import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.Mark
 import org.fenixedu.academic.predicate.MarkSheetPredicates;
 import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -121,9 +121,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         setEnrollmentAllowed(enrolmentAllowed);
         setCurricularStage(curricularStage);
         setDegreeCurricularPlan(degreeCurricularPlan);
-        if (curricularStage == CurricularStage.OLD) {
-            setRegimeType(RegimeType.SEMESTRIAL);
-        }
     }
 
     private void checkParameters(final String name, final String code, final String acronym) {
@@ -183,12 +180,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        if (!(getCurricularStage() == CurricularStage.OLD)) {
-            return !getParentContextsSet().isEmpty() ? getParentContextsSet().iterator().next().getParentCourseGroup()
-                    .getParentDegreeCurricularPlan() : null;
-        } else {
-            return super.getDegreeCurricularPlan();
-        }
+        return !getParentContextsSet().isEmpty() ? getParentContextsSet().iterator().next().getParentCourseGroup()
+                .getParentDegreeCurricularPlan() : null;
     }
 
     @Override
@@ -1365,7 +1358,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return null;
     }
 
-    public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
+    public LocalizedString getObjectivesI18N(ExecutionSemester period) {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectivesI18N(period);
         }
@@ -1373,7 +1366,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (curriculum != null) {
             return curriculum.getFullObjectivesI18N();
         }
-        return new MultiLanguageString();
+        return new LocalizedString();
     }
 
     public String getProgram(ExecutionSemester period) {
@@ -1420,7 +1413,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return null;
     }
 
-    public MultiLanguageString getProgramI18N(ExecutionSemester period) {
+    public LocalizedString getProgramI18N(ExecutionSemester period) {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgramI18N(period);
         }
@@ -1428,11 +1421,11 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (curriculum != null) {
             return curriculum.getProgramI18N();
         }
-        return new MultiLanguageString();
+        return new LocalizedString();
     }
 
-    public MultiLanguageString getPrerequisitesI18N() {
-        return new MultiLanguageString(MultiLanguageString.pt, getPrerequisites()).with(MultiLanguageString.en,
+    public LocalizedString getPrerequisitesI18N() {
+        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getPrerequisites()).with(org.fenixedu.academic.util.LocaleUtils.EN,
                 getPrerequisitesEn());
     }
 
@@ -1472,17 +1465,17 @@ public class CurricularCourse extends CurricularCourse_Base {
         return null;
     }
 
-    public MultiLanguageString getEvaluationMethodI18N(ExecutionSemester period) {
+    public LocalizedString getEvaluationMethodI18N(ExecutionSemester period) {
         if (getCompetenceCourse() != null) {
-            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getEvaluationMethod(period))
-                    .with(MultiLanguageString.en, getCompetenceCourse().getEvaluationMethodEn(period));
+            return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getCompetenceCourse().getEvaluationMethod(period))
+                    .with(org.fenixedu.academic.util.LocaleUtils.EN, getCompetenceCourse().getEvaluationMethodEn(period));
         }
         List<ExecutionCourse> courses = getExecutionCoursesByExecutionPeriod(period);
         if (courses.isEmpty()) {
-            return new MultiLanguageString();
+            return new LocalizedString();
         }
-        return new MultiLanguageString(MultiLanguageString.pt, courses.iterator().next().getEvaluationMethodText()).with(
-                MultiLanguageString.en, courses.iterator().next().getEvaluationMethodTextEn());
+        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, courses.iterator().next().getEvaluationMethodText()).with(
+                org.fenixedu.academic.util.LocaleUtils.EN, courses.iterator().next().getEvaluationMethodTextEn());
     }
 
     public RegimeType getRegime(final ExecutionSemester period) {
