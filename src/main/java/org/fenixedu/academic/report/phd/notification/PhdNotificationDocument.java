@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR;
@@ -86,7 +87,8 @@ public class PhdNotificationDocument extends FenixReport {
         addParameter("address", person.getAddress());
         addParameter("areaCode", person.getAreaCode());
         addParameter("areaOfAreaCode", person.getAreaOfAreaCode());
-        addParameter("programName", individualProgramProcess.getPhdProgram().getName().getContent(getLanguage()));
+        final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
+        addParameter("programName", individualProgramProcess.getPhdProgram().getName(executionYear).getContent(getLanguage()));
 
         addParameter("processNumber", individualProgramProcess.getProcessNumber());
 

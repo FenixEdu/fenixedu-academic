@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.phd.thesis.activities;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdParticipant;
@@ -74,9 +75,10 @@ public class RemindJuryReviewToReporters extends PhdThesisActivity {
     }
 
     private void sendReminderToReporter(PhdIndividualProgramProcess process, PhdParticipant participant) {
+        final ExecutionYear executionYear = process.getExecutionYear();
         final AlertMessage subject =
                 AlertMessage
-                        .create(AlertMessage.get("message.phd.remind.jury.reviews.subject", process.getPhdProgram().getName()))
+                        .create(AlertMessage.get("message.phd.remind.jury.reviews.subject", process.getPhdProgram().getName(executionYear)))
                         .isKey(false).withPrefix(false);
 
         String partialBody = null;

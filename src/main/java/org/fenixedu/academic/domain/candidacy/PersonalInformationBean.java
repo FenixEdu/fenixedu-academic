@@ -763,9 +763,10 @@ public class PersonalInformationBean implements Serializable {
 
     public String getDescription() {
         if (hasPhdIndividualProgramProcess()) {
+            final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
             return BundleUtil.getString(Bundle.GEP, "label.personal.ingression.data.viewer.phd.program.name") + " "
                     + BundleUtil.getString(Bundle.APPLICATION, "label.in") + " "
-                    + getPhdIndividualProgramProcess().getPhdProgram().getName().getContent();
+                    + getPhdIndividualProgramProcess().getPhdProgram().getName(executionYear).getContent();
         } else {
             return getRegistration().getDegreeNameWithDescription();
         }

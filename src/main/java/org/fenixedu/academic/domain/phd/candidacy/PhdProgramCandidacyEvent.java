@@ -90,8 +90,9 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
+        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
-                .appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
+        .appendLabel(getPhdProgram().getPresentationName(executionYear)).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
                 .appendLabel(")");
 
         return labelFormatter;
@@ -100,8 +101,9 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
     @Override
     public LabelFormatter getDescription() {
+        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
         return new LabelFormatter().appendLabel(AlertService.getMessageFromResource("label.phd.candidacy")).appendLabel(": ")
-                .appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear());
+                .appendLabel(getPhdProgram().getPresentationName(executionYear)).appendLabel(" - ").appendLabel(getExecutionYear().getYear());
     }
 
     private ExecutionYear getExecutionYear() {

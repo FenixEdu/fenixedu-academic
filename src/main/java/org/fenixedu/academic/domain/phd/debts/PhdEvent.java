@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountType;
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -51,8 +52,9 @@ abstract public class PhdEvent extends PhdEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
         return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
-                .appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
+                .appendLabel(getPhdProgram().getName(executionYear).getContent()).appendLabel(")");
     }
 
     abstract protected PhdProgram getPhdProgram();
