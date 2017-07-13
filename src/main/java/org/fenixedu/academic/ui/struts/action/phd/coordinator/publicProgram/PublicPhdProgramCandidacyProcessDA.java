@@ -46,7 +46,7 @@ import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
 import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 import org.fenixedu.academic.ui.struts.action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
 import org.fenixedu.academic.ui.struts.action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -431,8 +431,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
         private static final long serialVersionUID = 1L;
 
-        private MultiLanguageString name;
-        private MultiLanguageString description;
+        private LocalizedString name;
+        private LocalizedString description;
         private Teacher teacher;
         private String externalAdvisorName;
 
@@ -447,19 +447,19 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
             setExternalAdvisorName(thesisSubject.getExternalAdvisorName());
         }
 
-        public MultiLanguageString getName() {
+        public LocalizedString getName() {
             return name;
         }
 
-        public void setName(MultiLanguageString name) {
+        public void setName(LocalizedString name) {
             this.name = name;
         }
 
-        public MultiLanguageString getDescription() {
+        public LocalizedString getDescription() {
             return description;
         }
 
-        public void setDescription(MultiLanguageString description) {
+        public void setDescription(LocalizedString description) {
             this.description = description;
         }
 

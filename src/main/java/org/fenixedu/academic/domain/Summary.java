@@ -32,7 +32,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.HourMinuteSecond;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
@@ -77,7 +77,7 @@ public class Summary extends Summary_Base {
         }
     };
 
-    public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
+    public Summary(LocalizedString title, LocalizedString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
             Space room, Partial hour, ShiftType type, Boolean taught) {
 
@@ -91,7 +91,7 @@ public class Summary extends Summary_Base {
                         .getDegreePresentationString());
     }
 
-    public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
+    public void edit(LocalizedString title, LocalizedString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
             Space room, Partial hour, ShiftType type, Boolean taught) {
 
@@ -105,7 +105,7 @@ public class Summary extends Summary_Base {
         Signal.emit(EDIT_SIGNAL, new DomainObjectEvent<Summary>(this));
     }
 
-    private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
+    private void fillSummaryWithInfo(LocalizedString title, LocalizedString summaryText, Integer studentsNumber,
             Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson,
             YearMonthDay day, Space room, Partial hour, ShiftType type, Boolean taught) {
 
@@ -213,16 +213,16 @@ public class Summary extends Summary_Base {
     }
 
     @Override
-    public void setTitle(MultiLanguageString title) {
-        if (title == null || title.getAllContents().isEmpty()) {
+    public void setTitle(LocalizedString title) {
+        if (title == null || title.getLocales().isEmpty()) {
             throw new DomainException("error.summary.no.title");
         }
         super.setTitle(title);
     }
 
     @Override
-    public void setSummaryText(MultiLanguageString summaryText) {
-        if (summaryText == null || summaryText.getAllContents().isEmpty()) {
+    public void setSummaryText(LocalizedString summaryText) {
+        if (summaryText == null || summaryText.getLocales().isEmpty()) {
             throw new DomainException("error.summary.no.summaryText");
         }
         super.setSummaryText(summaryText);

@@ -25,7 +25,8 @@ import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.ReplyTo;
 import org.fenixedu.academic.domain.util.email.Sender;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -37,12 +38,12 @@ public abstract class PhdEmail extends PhdEmail_Base {
     }
 
     protected void init(final String subject, final String body, String additionalTo, String additionalBcc) {
-        super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
+        super.init(new LocalizedString(I18N.getLocale(), subject), new LocalizedString(I18N.getLocale(), body));
     }
 
     protected void init(final String subject, final String body, String additionalTo, String additionalBcc, Person creator,
             DateTime whenCreated) {
-        super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
+        super.init(new LocalizedString(I18N.getLocale(), subject), new LocalizedString(I18N.getLocale(), body));
         setAdditionalTo(additionalTo);
         setAdditionalBcc(additionalBcc);
         setPerson(creator);
@@ -66,8 +67,8 @@ public abstract class PhdEmail extends PhdEmail_Base {
 
     @Override
     protected void generateMessage() {
-        new Message(getSender(), getReplyTos(), getRecipients(), getSubject().getContent(MultiLanguageString.pt), getBody()
-                .getContent(MultiLanguageString.pt), getBccs());
+        new Message(getSender(), getReplyTos(), getRecipients(), getSubject().getContent(org.fenixedu.academic.util.LocaleUtils.PT), getBody()
+                .getContent(org.fenixedu.academic.util.LocaleUtils.PT), getBccs());
     }
 
     @Override

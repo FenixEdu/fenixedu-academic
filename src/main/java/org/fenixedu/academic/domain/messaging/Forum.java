@@ -22,9 +22,10 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public abstract class Forum extends Forum_Base {
@@ -33,26 +34,26 @@ public abstract class Forum extends Forum_Base {
 
     }
 
-    public Forum(MultiLanguageString name, MultiLanguageString description) {
+    public Forum(LocalizedString name, LocalizedString description) {
         init(name, description);
     }
 
-    public void init(MultiLanguageString name, MultiLanguageString description) {
+    public void init(LocalizedString name, LocalizedString description) {
         setCreationDate(new DateTime());
         setName(name);
         setDescription(description);
     }
 
-    public boolean hasConversationThreadWithSubject(MultiLanguageString subject) {
+    public boolean hasConversationThreadWithSubject(LocalizedString subject) {
         ConversationThread conversationThread = getConversationThreadBySubject(subject);
 
         return (conversationThread != null) ? true : false;
     }
 
-    public ConversationThread getConversationThreadBySubject(MultiLanguageString subject) {
+    public ConversationThread getConversationThreadBySubject(LocalizedString subject) {
         for (ConversationThread conversationThread : getConversationThreadSet()) {
-            final MultiLanguageString title = conversationThread.getTitle();
-            if (title != null && title.equalInAnyLanguage(subject)) {
+            final LocalizedString title = conversationThread.getTitle();
+            if (title != null && LocaleUtils.equalInAnyLanguage(title, subject)) {
                 return conversationThread;
             }
         }
@@ -76,7 +77,7 @@ public abstract class Forum extends Forum_Base {
         }
     }
 
-    public void checkIfCanAddConversationThreadWithSubject(MultiLanguageString subject) {
+    public void checkIfCanAddConversationThreadWithSubject(LocalizedString subject) {
         if (hasConversationThreadWithSubject(subject)) {
             throw new DomainException("forum.already.existing.conversation.thread");
         }
@@ -126,7 +127,7 @@ public abstract class Forum extends Forum_Base {
         return (subscription != null) ? subscription.getReceivePostsByEmail() : false;
     }
 
-    public ConversationThread createConversationThread(Person creator, MultiLanguageString subject) {
+    public ConversationThread createConversationThread(Person creator, LocalizedString subject) {
         checkIfPersonCanWrite(creator);
         checkIfCanAddConversationThreadWithSubject(subject);
 
@@ -139,17 +140,17 @@ public abstract class Forum extends Forum_Base {
 
     public abstract Group getAdminGroup();
 
-    public MultiLanguageString getNormalizedName() {
+    public LocalizedString getNormalizedName() {
         return normalize(getName());
     }
 
-    public static MultiLanguageString normalize(final MultiLanguageString multiLanguageString) {
-        if (multiLanguageString == null) {
+    public static LocalizedString normalize(final LocalizedString LocalizedString) {
+        if (LocalizedString == null) {
             return null;
         }
-        MultiLanguageString result = new MultiLanguageString();
-        for (final Locale language : multiLanguageString.getAllLocales()) {
-            result = result.with(language, normalize(multiLanguageString.getContent(language)));
+        LocalizedString result = new LocalizedString();
+        for (final Locale language : LocalizedString.getLocales()) {
+            result = result.with(language, normalize(LocalizedString.getContent(language)));
         }
         return result;
     }

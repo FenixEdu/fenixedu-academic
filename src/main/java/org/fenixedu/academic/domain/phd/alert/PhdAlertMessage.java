@@ -32,7 +32,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -54,20 +54,20 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         setWhenCreated(new DateTime());
     }
 
-    public PhdAlertMessage(PhdIndividualProgramProcess process, Person person, MultiLanguageString subject,
-            MultiLanguageString body) {
+    public PhdAlertMessage(PhdIndividualProgramProcess process, Person person, LocalizedString subject,
+            LocalizedString body) {
         this();
         init(process, Collections.singletonList(person), subject, body);
     }
 
-    public PhdAlertMessage(PhdIndividualProgramProcess process, Collection<Person> persons, MultiLanguageString subject,
-            MultiLanguageString body) {
+    public PhdAlertMessage(PhdIndividualProgramProcess process, Collection<Person> persons, LocalizedString subject,
+            LocalizedString body) {
         this();
         init(process, persons, subject, body);
     }
 
-    protected void init(PhdIndividualProgramProcess process, Collection<Person> persons, MultiLanguageString subject,
-            MultiLanguageString body) {
+    protected void init(PhdIndividualProgramProcess process, Collection<Person> persons, LocalizedString subject,
+            LocalizedString body) {
         checkParameters(process, persons, subject, body);
         super.setProcess(process);
         super.getPersonsSet().addAll(persons);
@@ -76,8 +76,8 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         super.setReaded(Boolean.FALSE);
     }
 
-    private void checkParameters(PhdIndividualProgramProcess process, Collection<Person> persons, MultiLanguageString subject,
-            MultiLanguageString body) {
+    private void checkParameters(PhdIndividualProgramProcess process, Collection<Person> persons, LocalizedString subject,
+            LocalizedString body) {
         String[] args = {};
         if (process == null) {
             throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.process.cannot.be.null", args);
@@ -117,12 +117,12 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     }
 
     @Override
-    public void setSubject(MultiLanguageString subject) {
+    public void setSubject(LocalizedString subject) {
         throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.modify.subject");
     }
 
     @Override
-    public void setBody(MultiLanguageString body) {
+    public void setBody(LocalizedString body) {
         throw new DomainException("error.org.fenixedu.academic.domain.phd.alert.PhdAlertMessage.cannot.modify.body");
     }
 

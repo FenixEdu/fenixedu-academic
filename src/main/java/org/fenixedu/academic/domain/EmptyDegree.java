@@ -30,7 +30,7 @@ import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricular
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -218,7 +218,7 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     @Override
     final public String getPresentationName(ExecutionYear executionYear) {
-        return getNameFor((ExecutionYear) null).getContent(MultiLanguageString.pt);
+        return getNameFor((ExecutionYear) null).getContent(org.fenixedu.academic.util.LocaleUtils.PT);
     }
 
     @Override
@@ -237,13 +237,13 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public MultiLanguageString getQualificationLevel(final ExecutionYear executionYear) {
-        return new MultiLanguageString();
+    public LocalizedString getQualificationLevel(final ExecutionYear executionYear) {
+        return new LocalizedString();
     }
 
     @Override
-    public MultiLanguageString getProfessionalExits(final ExecutionYear executionYear) {
-        return new MultiLanguageString();
+    public LocalizedString getProfessionalExits(final ExecutionYear executionYear) {
+        return new LocalizedString();
     }
 
     @Override

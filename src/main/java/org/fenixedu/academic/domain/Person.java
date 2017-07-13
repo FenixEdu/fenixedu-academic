@@ -92,7 +92,6 @@ import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -111,10 +110,10 @@ import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.base.Strings;
+
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
-
-import com.google.common.base.Strings;
 
 public class Person extends Person_Base {
 
@@ -135,12 +134,12 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public MultiLanguageString getPartyName() {
+    public LocalizedString getPartyName() {
         Builder builder = new LocalizedString.Builder();
         for (Locale locale : CoreConfiguration.supportedLocales()) {
             builder.with(locale, getName());
         }
-        return MultiLanguageString.fromLocalizedString(builder.build());
+        return builder.build();
     }
 
     @Override

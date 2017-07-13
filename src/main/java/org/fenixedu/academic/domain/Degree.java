@@ -56,7 +56,7 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
@@ -190,7 +190,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         if (degreeInfo == null) {
             degreeInfo = tryCreateUsingMostRecentInfo(executionYear);
         }
-        degreeInfo.setName(new MultiLanguageString().with(MultiLanguageString.pt, name.trim()).with(MultiLanguageString.en,
+        degreeInfo.setName(new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, name.trim()).with(org.fenixedu.academic.util.LocaleUtils.EN,
                 nameEn.trim()));
 
         this.setNome(name);
@@ -563,21 +563,21 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     @Deprecated
-    public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
+    public LocalizedString getNameFor(final ExecutionYear executionYear) {
         DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);
-        return degreeInfo == null ? new MultiLanguageString().with(MultiLanguageString.pt, super.getNome()).with(
-                MultiLanguageString.en, super.getNameEn()) : degreeInfo.getName();
+        return degreeInfo == null ? new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, super.getNome()).with(
+                org.fenixedu.academic.util.LocaleUtils.EN, super.getNameEn()) : degreeInfo.getName();
     }
 
     @Deprecated
-    public MultiLanguageString getNameFor(final ExecutionSemester executionSemester) {
+    public LocalizedString getNameFor(final ExecutionSemester executionSemester) {
         return getNameFor(executionSemester != null ? executionSemester.getExecutionYear() : null);
     }
 
-    public MultiLanguageString getNameFor(final AcademicInterval academicInterval) {
+    public LocalizedString getNameFor(final AcademicInterval academicInterval) {
         DegreeInfo degreeInfo = academicInterval == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(academicInterval);
-        return degreeInfo == null ? new MultiLanguageString().with(MultiLanguageString.pt, super.getNome()).with(
-                MultiLanguageString.en, super.getNameEn()) : degreeInfo.getName();
+        return degreeInfo == null ? new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, super.getNome()).with(
+                org.fenixedu.academic.util.LocaleUtils.EN, super.getNameEn()) : degreeInfo.getName();
     }
 
     @Override
@@ -592,7 +592,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Deprecated
     public String getName() {
         DegreeInfo degreeInfo = getMostRecentDegreeInfo();
-        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(MultiLanguageString.pt);
+        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
     }
 
     /**
@@ -602,14 +602,14 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Deprecated
     public String getNameEn() {
         DegreeInfo degreeInfo = getMostRecentDegreeInfo();
-        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(MultiLanguageString.en);
+        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN);
     }
 
-    final public MultiLanguageString getNameI18N() {
+    final public LocalizedString getNameI18N() {
         return getNameFor(ExecutionYear.readCurrentExecutionYear());
     }
 
-    final public MultiLanguageString getNameI18N(ExecutionYear executionYear) {
+    final public LocalizedString getNameI18N(ExecutionYear executionYear) {
         return getNameFor(executionYear);
     }
 
@@ -852,11 +852,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getMinistryCode() != null;
     }
 
-    public MultiLanguageString getQualificationLevel(final ExecutionYear executionYear) {
+    public LocalizedString getQualificationLevel(final ExecutionYear executionYear) {
         return getMostRecentDegreeInfo(executionYear).getQualificationLevel();
     }
 
-    public MultiLanguageString getProfessionalExits(final ExecutionYear executionYear) {
+    public LocalizedString getProfessionalExits(final ExecutionYear executionYear) {
         return getMostRecentDegreeInfo(executionYear).getProfessionalExits();
     }
 

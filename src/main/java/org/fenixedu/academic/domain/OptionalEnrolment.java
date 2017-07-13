@@ -31,7 +31,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.OptionalEnrolmentLog;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.EnrolmentAction;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
@@ -103,15 +103,15 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    public MultiLanguageString getName() {
+    public LocalizedString getName() {
         final ExecutionSemester executionSemester = getExecutionPeriod();
-        return new MultiLanguageString().with(MultiLanguageString.pt,
-                this.getOptionalCurricularCourse().getName(executionSemester)).with(MultiLanguageString.en,
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT,
+                this.getOptionalCurricularCourse().getName(executionSemester)).with(org.fenixedu.academic.util.LocaleUtils.EN,
                 this.getOptionalCurricularCourse().getNameEn(executionSemester));
     }
 
     @Override
-    public MultiLanguageString getPresentationName() {
+    public LocalizedString getPresentationName() {
 
         final String namePt =
                 String.format("%s (%s)", getOptionalCurricularCourse().getName(getExecutionPeriod()), getCurricularCourse()
@@ -121,7 +121,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
                 String.format("%s (%s)", getOptionalCurricularCourse().getNameEn(getExecutionPeriod()), getCurricularCourse()
                         .getNameEn(getExecutionPeriod()));
 
-        return new MultiLanguageString().with(MultiLanguageString.pt, namePt).with(MultiLanguageString.en, nameEn);
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, namePt).with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
     }
 
     @Override

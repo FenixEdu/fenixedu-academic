@@ -112,7 +112,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
         AcademicCalendarEntry academicCalendarEntry = getAcademicCalendarEntry();
         while (!(academicCalendarEntry instanceof AcademicCalendarRootEntry)) {
-            result += academicCalendarEntry.getTitle() + NAME_SEPARATOR;
+            result += academicCalendarEntry.getTitle().getContent() + NAME_SEPARATOR;
             academicCalendarEntry = academicCalendarEntry.getParentEntry();
         }
 

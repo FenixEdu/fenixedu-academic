@@ -25,7 +25,8 @@ import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.dto.alumni.formation.AlumniFormation;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.YearMonthDay;
 
 public class FormationManagement {
@@ -40,7 +41,7 @@ public class FormationManagement {
 
             if (!StringUtils.isEmpty(formation.getForeignUnit())) {
                 institutionUnit =
-                        UniversityUnit.createNewUniversityUnit(new MultiLanguageString(formation.getForeignUnit()), null, null,
+                        UniversityUnit.createNewUniversityUnit(new LocalizedString(I18N.getLocale(), formation.getForeignUnit()), null, null,
                                 null, new YearMonthDay(), null, getParentUnit(formation), null, null, false, null);
                 institutionUnit.setInstitutionType(formation.getInstitutionType());
             }

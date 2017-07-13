@@ -22,11 +22,11 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.messaging.ConversationThread;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class CreateConversationMessageBean implements Serializable {
 
-    private MultiLanguageString body;
+    private LocalizedString body;
 
     private Person creatorReference;
 
@@ -38,11 +38,11 @@ public class CreateConversationMessageBean implements Serializable {
         conversationThreadReference = null;
     }
 
-    public MultiLanguageString getBody() {
+    public LocalizedString getBody() {
         return body;
     }
 
-    public void setBody(MultiLanguageString body) {
+    public void setBody(LocalizedString body) {
         this.body = body;
     }
 
