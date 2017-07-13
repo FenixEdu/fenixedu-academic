@@ -1735,6 +1735,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public boolean canSubmitImprovementMarkSheets(final ExecutionYear executionYear) {
+        if (getExecutionDegreesSet().isEmpty()) {
+            return false;
+        }
         SortedSet<ExecutionDegree> sortedExecutionDegrees =
                 new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
         sortedExecutionDegrees.addAll(getExecutionDegreesSet());
