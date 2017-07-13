@@ -121,9 +121,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         setEnrollmentAllowed(enrolmentAllowed);
         setCurricularStage(curricularStage);
         setDegreeCurricularPlan(degreeCurricularPlan);
-        if (curricularStage == CurricularStage.OLD) {
-            setRegimeType(RegimeType.SEMESTRIAL);
-        }
     }
 
     private void checkParameters(final String name, final String code, final String acronym) {
@@ -183,12 +180,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        if (!(getCurricularStage() == CurricularStage.OLD)) {
-            return !getParentContextsSet().isEmpty() ? getParentContextsSet().iterator().next().getParentCourseGroup()
-                    .getParentDegreeCurricularPlan() : null;
-        } else {
-            return super.getDegreeCurricularPlan();
-        }
+        return !getParentContextsSet().isEmpty() ? getParentContextsSet().iterator().next().getParentCourseGroup()
+                .getParentDegreeCurricularPlan() : null;
     }
 
     @Override

@@ -40,10 +40,6 @@ public class CompetenceCoursePredicates {
         @Override
         public boolean evaluate(CompetenceCourse competenceCourse) {
 
-            if (!competenceCourse.isBolonha()) {
-                return true;
-            }
-
             Person person = AccessControl.getPerson();
 
             boolean isDegreeCurricularPlansMember = false;

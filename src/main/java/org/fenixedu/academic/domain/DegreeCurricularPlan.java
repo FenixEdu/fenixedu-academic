@@ -161,7 +161,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             Integer numerusClausus, String annotation, GradeScale gradeScale) {
 
         this(degree, name, gradeScale);
-        super.setCurricularStage(CurricularStage.OLD);
+        super.setCurricularStage(CurricularStage.DRAFT);
         super.setState(state);
 
         oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits, markType,

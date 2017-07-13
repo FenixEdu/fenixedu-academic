@@ -26,8 +26,6 @@ import org.fenixedu.commons.i18n.I18N;
 
 public enum CurricularStage {
 
-    OLD,
-
     DRAFT,
 
     PUBLISHED,
