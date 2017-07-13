@@ -28,7 +28,7 @@ import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividual
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.FenixStringTools;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.jsoup.helper.StringUtil;
 
 public class LearningAgreementDocument extends FenixReport {
@@ -54,7 +54,7 @@ public class LearningAgreementDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(MultiLanguageString.en));
+        addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN));
         addParameter("academicYear", process.getCandidacyExecutionInterval().getName());
         addParameter("studentName", process.getPersonalDetails().getName());
         addParameter("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
@@ -70,7 +70,7 @@ public class LearningAgreementDocument extends FenixReport {
             String yearAndSemester = buildYearAndSemester(course);
 
             result.append(
-                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(MultiLanguageString.en)
+                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(org.fenixedu.academic.util.LocaleUtils.EN)
                             + " (" + course.getDegree().getSigla() + ")" + yearAndSemester, LINE_LENGTH, END_CHAR, course
                             .getEctsCredits().toString())).append(LINE_BREAK);
         }

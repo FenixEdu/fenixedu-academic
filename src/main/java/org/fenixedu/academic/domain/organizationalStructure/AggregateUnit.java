@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.organizationalStructure;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -30,7 +30,7 @@ public class AggregateUnit extends AggregateUnit_Base {
         super.setType(PartyTypeEnum.AGGREGATE_UNIT);
     }
 
-    public static AggregateUnit createNewAggregateUnit(MultiLanguageString name, String unitNameCard, Integer costCenterCode,
+    public static AggregateUnit createNewAggregateUnit(LocalizedString name, String unitNameCard, Integer costCenterCode,
             String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 

@@ -40,7 +40,7 @@
 		<tr>
 			<td>
 				<html:link action="<%=String.format("/departmentForum.do?method=viewForum&forumId=%s",forum.getExternalId())%>">
-					<bean:write name="forum" property="name"/>
+					<bean:write name="forum" property="name.content"/>
 				</html:link>
 			</td>
 			<td>

@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
@@ -119,8 +119,8 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
         final Row row = spreadsheet.addRow();
         final Degree degree = degreeCurricularPlan.getDegree();
 
-        row.setCell(normalize(degree.getNameFor(executionYear).getContent(MultiLanguageString.pt)));
-        row.setCell(normalize(degree.getNameFor(executionYear).getContent(MultiLanguageString.en)));
+        row.setCell(normalize(degree.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT)));
+        row.setCell(normalize(degree.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN)));
 
         row.setCell(degree.getDegreeType().getName().getContent());
         row.setCell(degreeCurricularPlan.getDurationInYears());
@@ -129,17 +129,17 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
         final DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
         if (degreeInfo != null) {
-            row.setCell(normalize(degreeInfo.getDesignedFor(MultiLanguageString.pt)));
-            row.setCell(normalize(degreeInfo.getDesignedFor(MultiLanguageString.en)));
-            row.setCell(normalize(degreeInfo.getObjectives(MultiLanguageString.pt)));
-            row.setCell(normalize(degreeInfo.getObjectives(MultiLanguageString.en)));
-            row.setCell(normalize(degreeInfo.getProfessionalExits(MultiLanguageString.pt)));
-            row.setCell(normalize(degreeInfo.getProfessionalExits(MultiLanguageString.en)));
-            row.setCell(normalize(degreeInfo.getOperationalRegime(MultiLanguageString.pt)));
-            row.setCell(normalize(degreeInfo.getOperationalRegime(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getDesignedFor(org.fenixedu.academic.util.LocaleUtils.PT)));
+            row.setCell(normalize(degreeInfo.getDesignedFor(org.fenixedu.academic.util.LocaleUtils.EN)));
+            row.setCell(normalize(degreeInfo.getObjectives(org.fenixedu.academic.util.LocaleUtils.PT)));
+            row.setCell(normalize(degreeInfo.getObjectives(org.fenixedu.academic.util.LocaleUtils.EN)));
+            row.setCell(normalize(degreeInfo.getProfessionalExits(org.fenixedu.academic.util.LocaleUtils.PT)));
+            row.setCell(normalize(degreeInfo.getProfessionalExits(org.fenixedu.academic.util.LocaleUtils.EN)));
+            row.setCell(normalize(degreeInfo.getOperationalRegime(org.fenixedu.academic.util.LocaleUtils.PT)));
+            row.setCell(normalize(degreeInfo.getOperationalRegime(org.fenixedu.academic.util.LocaleUtils.EN)));
             row.setCell(normalize(getResponsibleCoordinatorNames(degreeCurricularPlan, executionYear)));
-            row.setCell(normalize(degreeInfo.getAdditionalInfo(MultiLanguageString.pt)));
-            row.setCell(normalize(degreeInfo.getAdditionalInfo(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getAdditionalInfo(org.fenixedu.academic.util.LocaleUtils.PT)));
+            row.setCell(normalize(degreeInfo.getAdditionalInfo(org.fenixedu.academic.util.LocaleUtils.EN)));
         }
     }
 

@@ -78,7 +78,7 @@
 				<td><bean:write name="process" property="person.name"/></td>
 				<td>
 					<logic:present name="process" property="individualProgramProcess.phdProgram">
-						<bean:write name="process" property="individualProgramProcess.phdProgram.name"/>
+						<bean:write name="process" property="individualProgramProcess.phdProgram.name.content"/>
 					</logic:present>
 				</td>
 				<td><bean:write name="process" property="candidacyDate"/></td>

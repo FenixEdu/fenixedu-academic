@@ -39,7 +39,7 @@
 			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThread"/>
 			<p>
 				<html:link action="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>" paramId="forumId" paramName="executionCourseForum" paramProperty="externalId">
-					<bean:write name="executionCourseForum" property="name"/>
+					<bean:write name="executionCourseForum" property="name.content"/>
 				</html:link>
 				<span class="color888"> (<bean:write name="threadsCount"/> tópicos)</span>
 			</p>

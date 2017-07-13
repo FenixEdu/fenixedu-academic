@@ -37,7 +37,7 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.EnrolmentAction;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
@@ -220,10 +220,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public MultiLanguageString getName() {
+    public LocalizedString getName() {
         ExecutionSemester period = getExecutionPeriod();
         CurricularCourse course = getCurricularCourse();
-        return new MultiLanguageString().with(MultiLanguageString.pt, course.getName(period)).with(MultiLanguageString.en,
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, course.getName(period)).with(org.fenixedu.academic.util.LocaleUtils.EN,
                 course.getNameEn(period));
     }
 

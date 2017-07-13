@@ -29,6 +29,7 @@ import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -52,7 +53,7 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         addInstitutionParameters();
         addPersonParameters();
         final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
-        String universityName = university.getPartyName().getPreferedContent();
+        String universityName = LocaleUtils.getPreferedContent(university.getPartyName());
 
         PhdDiplomaRequest diplomaRequest = getDocumentRequest();
         String phdProgramConclusion =
@@ -144,7 +145,7 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         final Person president = getUniversity(getDocumentRequest().getRequestDate()).getCurrentPresident();
 
         final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
-        String universityName = university.getPartyName().getPreferedContent();
+        String universityName = LocaleUtils.getPreferedContent(university.getPartyName());
 
         String rectorGender, rectorGrant, presidentGender;
 

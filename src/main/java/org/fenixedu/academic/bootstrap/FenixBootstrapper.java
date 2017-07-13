@@ -59,7 +59,8 @@ import org.fenixedu.academic.domain.serviceRequests.InstitutionRegistryCodeGener
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.bootstrap.BootstrapError;
 import org.fenixedu.bennu.core.bootstrap.annotations.Bootstrap;
@@ -216,12 +217,12 @@ public class FenixBootstrapper {
 
         private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
                 final String universityAcronym) {
-            return UniversityUnit.createNewUniversityUnit(new MultiLanguageString(Locale.getDefault(), universityName), null,
+            return UniversityUnit.createNewUniversityUnit(new LocalizedString(Locale.getDefault(), universityName), null,
                     null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
         }
 
         private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
-            return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Locale.getDefault(), unitName), null, null, null,
+            return AggregateUnit.createNewAggregateUnit(new LocalizedString(Locale.getDefault(), unitName), null, null, null,
                     new YearMonthDay(), null, parentUnit,
                     AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, Boolean.FALSE,
                     null);
@@ -229,13 +230,13 @@ public class FenixBootstrapper {
 
         private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
                 final String universityAcronym) {
-            return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Locale.getDefault(), universityName), null, null,
+            return SchoolUnit.createNewSchoolUnit(new LocalizedString(Locale.getDefault(), universityName), null, null,
                     universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
         }
 
         private void createServiceUnits(final AggregateUnit serviceUnits) {
             AdministrativeOffice administrativeOffice = new AdministrativeOffice();
-            Unit.createNewUnit(new MultiLanguageString(Locale.getDefault(), "Office"), null, null, null, new YearMonthDay(),
+            Unit.createNewUnit(new LocalizedString(Locale.getDefault(), "Office"), null, null, null, new YearMonthDay(),
                     null, serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
                     null, administrativeOffice, Boolean.FALSE, null);
             new AdministrativeOfficeServiceAgreementTemplate(administrativeOffice);
@@ -265,19 +266,19 @@ public class FenixBootstrapper {
 
         private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
             final ScientificAreaUnit scientificAreaUnit =
-                    ScientificAreaUnit.createNewInternalScientificArea(new MultiLanguageString(Locale.getDefault(),
+                    ScientificAreaUnit.createNewInternalScientificArea(new LocalizedString(Locale.getDefault(),
                             "Scientific Area"), null, null, "Code" + areaCounter++, new YearMonthDay(), null, departmentUnit,
                             AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE,
                             null);
 
-            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new MultiLanguageString(Locale.getDefault(),
+            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new LocalizedString(Locale.getDefault(),
                     "Competence Courses"), null, null, null, new YearMonthDay(), null, scientificAreaUnit, AccountabilityType
                     .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
         }
 
         private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber,
                 final Department department) {
-            return DepartmentUnit.createNewInternalDepartmentUnit(new MultiLanguageString(Locale.getDefault(), "Department Name "
+            return DepartmentUnit.createNewInternalDepartmentUnit(new LocalizedString(Locale.getDefault(), "Department Name "
                     + someNumber), null, Integer.valueOf(2100 + someNumber), "DU" + someNumber,
                     new YearMonthDay().minusMonths(1), null, departmentUnits,
                     AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null,
@@ -368,16 +369,16 @@ public class FenixBootstrapper {
                 }
             }
 
-            final MultiLanguageString countryName = new MultiLanguageString(MultiLanguageString.pt, localizedNamePT);
-            countryName.append(new MultiLanguageString(MultiLanguageString.en, localizedNameEN));
+            final LocalizedString countryName = new LocalizedString(PT, localizedNamePT);
+            countryName.append(new LocalizedString(EN, localizedNameEN));
 
             final String code = metaData.alpha2;
             final String threeLetterCode = metaData.alpha3;
 
             final Country country =
                     new Country(countryName,
-                            new MultiLanguageString(MultiLanguageString.pt, nationalityPT).append(new MultiLanguageString(
-                                    MultiLanguageString.en, nationalityEN)), code, threeLetterCode);
+                            new LocalizedString(PT, nationalityPT).append(new LocalizedString(
+                                    EN, nationalityEN)), code, threeLetterCode);
             if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode().toUpperCase())) {
                 defaultCountry = country;
             }
@@ -427,7 +428,7 @@ public class FenixBootstrapper {
 
     private static void createAccountabilityTypeEnums() {
         for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
-            new AccountabilityType(accountabilityTypeEnum, new MultiLanguageString(Locale.getDefault(),
+            new AccountabilityType(accountabilityTypeEnum, new LocalizedString(Locale.getDefault(),
                     accountabilityTypeEnum.getName()));
         }
     }
@@ -435,7 +436,7 @@ public class FenixBootstrapper {
     private static void createOrganizationalStructure() {
         final Bennu rootDomainObject = Bennu.getInstance();
         final PlanetUnit planetUnit =
-                PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Locale.getDefault(), "Earth"), null, null, "E",
+                PlanetUnit.createNewPlanetUnit(new LocalizedString(Locale.getDefault(), "Earth"), null, null, "E",
                         new YearMonthDay(), null, null, null, null, false, null);
         rootDomainObject.setEarthUnit(planetUnit);
 
@@ -444,7 +445,7 @@ public class FenixBootstrapper {
 
     private static void createCountryUnits(final Bennu rootDomainObject, final PlanetUnit planetUnit) {
         for (final Country country : Country.readDistinctCountries()) {
-            CountryUnit.createNewCountryUnit(new MultiLanguageString(Locale.getDefault(), country.getName()), null, null,
+            CountryUnit.createNewCountryUnit(new LocalizedString(Locale.getDefault(), country.getName()), null, null,
                     country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
         }
     }

@@ -45,7 +45,7 @@
 			<tr>
 				<td>
 					<html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="externalId">
-						<bean:write name="executionCourseForum" property="name"/>
+						<bean:write name="executionCourseForum" property="name.content"/>
 					</html:link>
 				</td>
 				<td>

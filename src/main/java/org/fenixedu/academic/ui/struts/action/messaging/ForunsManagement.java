@@ -50,7 +50,8 @@ import org.fenixedu.academic.service.services.messaging.CreateConversationThread
 import org.fenixedu.academic.service.services.messaging.RemoveForumEmailSubscriber;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.utils.RequestUtils;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -220,7 +221,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         return totalPages;
     }
 
-    private MultiLanguageString getQuotationText(HttpServletRequest request) {
+    private LocalizedString getQuotationText(HttpServletRequest request) {
 
         String quotedMessageId = this.getQuotedMessageId(request);
         String quotationText = null;
@@ -235,7 +236,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
                             .getContent());
 
         }
-        return new MultiLanguageString(quotationText);
+        return new LocalizedString(I18N.getLocale(), quotationText);
     }
 
     private void prepareViewForum(HttpServletRequest request) throws FenixServiceException {

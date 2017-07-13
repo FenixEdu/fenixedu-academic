@@ -24,14 +24,14 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CreateThesisProposal {
 
     @Atomic
-    public static Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, MultiLanguageString title, String comment)
+    public static Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, LocalizedString title, String comment)
             throws NotAuthorizedException {
         final Degree degree = degreeCurricularPlan.getDegree();
         final Enrolment enrolment = student.getDissertationEnrolment(degreeCurricularPlan);

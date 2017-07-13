@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 import org.fenixedu.academic.domain.thesis.Thesis;
+import org.fenixedu.academic.util.LocaleUtils;
 
 public class ThesisFileBean implements Serializable {
 
@@ -45,7 +46,7 @@ public class ThesisFileBean implements Serializable {
     public ThesisFileBean(final Thesis thesis) {
         title = thesis.getFinalTitle().getContent();
         subTitle = thesis.getFinalSubtitle() != null ? thesis.getFinalSubtitle().getContent() : null;
-        language = thesis.getFinalFullTitle().getContentLocale();
+        language = LocaleUtils.getContentLocale(thesis.getFinalFullTitle());
     }
 
     public String getTitle() {

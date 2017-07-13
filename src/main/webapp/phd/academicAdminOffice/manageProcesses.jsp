@@ -72,7 +72,7 @@
 			</fr:slot>
 			<fr:slot name="phdProgram" layout="menu-select">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramsFilteredProvider" />
-				<fr:property name="format" value="${name}" />
+				<fr:property name="format" value="${name.content}" />
 			</fr:slot>
 			<fr:slot name="processState" layout="menu-select-postback">
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.PhdIndividualProgramProcessStateProvider" />

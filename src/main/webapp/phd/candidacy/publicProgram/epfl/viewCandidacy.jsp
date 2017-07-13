@@ -110,7 +110,7 @@ padding: 0.5em 1em;
 			<fr:slot name="person.socialSecurityNumber" key="label.org.fenixedu.academic.domain.Person.socialSecurityNumber" />
 		   	<fr:slot name="person.dateOfBirth" key="label.org.fenixedu.academic.domain.Person.dateOfBirth" />
 			<fr:slot name="person.districtSubdivisionOfBirth" key="label.org.fenixedu.academic.domain.Person.districtSubdivisionOfBirth" />
-			<fr:slot name="person.nationality.countryNationality" key="label.org.fenixedu.academic.domain.Person.nationality" />
+			<fr:slot name="person.nationality.countryNationality.content" key="label.org.fenixedu.academic.domain.Person.nationality" />
 			<fr:slot name="defaultPhysicalAddress.address" key="label.org.fenixedu.academic.domain.Person.address" />
 			<fr:slot name="defaultPhysicalAddress.area" key="label.org.fenixedu.academic.domain.Person.area" />
 			<fr:slot name="defaultPhysicalAddress.areaCode" key="label.org.fenixedu.academic.domain.Person.areaCode" />

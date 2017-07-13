@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -38,7 +38,7 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     };
 
-    public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
+    public LessonPlanning(LocalizedString title, LocalizedString planning, ShiftType lessonType,
             ExecutionCourse executionCourse) {
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -91,16 +91,16 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     @Override
-    public void setPlanning(MultiLanguageString planning) {
-        if (planning == null || planning.getAllContents().isEmpty()) {
+    public void setPlanning(LocalizedString planning) {
+        if (planning == null || planning.getLocales().isEmpty()) {
             throw new DomainException("error.LessonPlanning.no.planning");
         }
         super.setPlanning(planning);
     }
 
     @Override
-    public void setTitle(MultiLanguageString title) {
-        if (title == null || title.getAllContents().isEmpty()) {
+    public void setTitle(LocalizedString title) {
+        if (title == null || title.getLocales().isEmpty()) {
             throw new DomainException("error.LessonPlanning.no.title");
         }
         super.setTitle(title);

@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.student.curriculum;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
@@ -29,7 +29,7 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public ExtraCurricularActivityType(MultiLanguageString name) {
+    public ExtraCurricularActivityType(LocalizedString name) {
         setName(name);
         setRootDomainObject(Bennu.getInstance());
     }
@@ -44,26 +44,26 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
     }
 
     public String getNamePt() {
-        return getName().getContent(MultiLanguageString.pt);
+        return getName().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
     }
 
     public void setNamePt(String name) {
         if (getName() == null) {
-            setName(new MultiLanguageString(MultiLanguageString.pt, name));
+            setName(new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, name));
         } else {
-            setName(getName().with(MultiLanguageString.pt, name));
+            setName(getName().with(org.fenixedu.academic.util.LocaleUtils.PT, name));
         }
     }
 
     public String getNameEn() {
-        return getName().getContent(MultiLanguageString.en);
+        return getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN);
     }
 
     public void setNameEn(String name) {
         if (getName() == null) {
-            setName(new MultiLanguageString(MultiLanguageString.en, name));
+            setName(new LocalizedString(org.fenixedu.academic.util.LocaleUtils.EN, name));
         } else {
-            setName(getName().with(MultiLanguageString.en, name));
+            setName(getName().with(org.fenixedu.academic.util.LocaleUtils.EN, name));
         }
     }
 

@@ -21,7 +21,7 @@ package org.fenixedu.academic.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -80,11 +80,11 @@ public class VariantBean implements Serializable {
         setType(Type.STRING);
     }
 
-    public MultiLanguageString getMLString() {
-        return (MultiLanguageString) this.value;
+    public LocalizedString getMLString() {
+        return (LocalizedString) this.value;
     }
 
-    public void setMLString(MultiLanguageString value) {
+    public void setMLString(LocalizedString value) {
         this.value = value;
         setType(Type.MULTI_LANGUAGE_STRING);
     }

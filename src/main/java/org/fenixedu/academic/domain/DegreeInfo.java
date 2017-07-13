@@ -23,7 +23,7 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +82,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     @Override
-    public void setName(MultiLanguageString name) {
+    public void setName(LocalizedString name) {
         if (hasSameName(name)) {
             return;
         }
@@ -98,7 +98,7 @@ public class DegreeInfo extends DegreeInfo_Base {
         return getName() != null && !getName().isEmpty();
     }
 
-    private boolean hasSameName(final MultiLanguageString name) {
+    private boolean hasSameName(final LocalizedString name) {
         return hasName() && getName().equals(name);
     }
 
@@ -168,23 +168,23 @@ public class DegreeInfo extends DegreeInfo_Base {
         deleteDomainObject();
     }
 
-    public MultiLanguageString getAccessRequisites() {
+    public LocalizedString getAccessRequisites() {
         return getDegreeInfoCandidacy().getAccessRequisites();
     }
 
-    public MultiLanguageString getCandidacyDocuments() {
+    public LocalizedString getCandidacyDocuments() {
         return getDegreeInfoCandidacy().getCandidacyDocuments();
     }
 
-    public MultiLanguageString getCandidacyPeriod() {
+    public LocalizedString getCandidacyPeriod() {
         return getDegreeInfoCandidacy().getCandidacyPeriod();
     }
 
-    public MultiLanguageString getClassifications() {
+    public LocalizedString getClassifications() {
         return getDegreeInfoFuture().getClassifications();
     }
 
-    public MultiLanguageString getDesignedFor() {
+    public LocalizedString getDesignedFor() {
         return getDegreeInfoFuture().getDesignedFor();
     }
 
@@ -193,103 +193,103 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     public boolean hasDesignedFor(final Locale language) {
-        return getDesignedFor() != null && getDesignedFor().hasContent(language);
+        return getDesignedFor() != null && getDesignedFor().getContent(language) != null;
     }
 
-    public MultiLanguageString getEnrolmentPeriod() {
+    public LocalizedString getEnrolmentPeriod() {
         return getDegreeInfoCandidacy().getEnrolmentPeriod();
     }
 
-    public MultiLanguageString getObjectives() {
+    public LocalizedString getObjectives() {
         return getDegreeInfoFuture().getObjectives();
     }
 
     public boolean hasObjectives(final Locale language) {
-        return getObjectives() != null && getObjectives().hasContent(language);
+        return getObjectives() != null && getObjectives().getContent(language) != null;
     }
 
     public String getObjectives(final Locale language) {
         return hasObjectives(language) ? getObjectives().getContent(language) : "";
     }
 
-    public MultiLanguageString getProfessionalExits() {
+    public LocalizedString getProfessionalExits() {
         return getDegreeInfoFuture().getProfessionalExits();
     }
 
     public boolean hasProfessionalExits(final Locale language) {
-        return getProfessionalExits() != null && getProfessionalExits().hasContent(language);
+        return getProfessionalExits() != null && getProfessionalExits().getContent(language) != null;
     }
 
     public String getProfessionalExits(final Locale language) {
         return hasProfessionalExits(language) ? getProfessionalExits().getContent(language) : "";
     }
 
-    public MultiLanguageString getQualificationLevel() {
+    public LocalizedString getQualificationLevel() {
         return getDegreeInfoFuture().getQualificationLevel();
     }
 
-    public MultiLanguageString getRecognitions() {
+    public LocalizedString getRecognitions() {
         return getDegreeInfoFuture().getRecognitions();
     }
 
-    public MultiLanguageString getSelectionResultDeadline() {
+    public LocalizedString getSelectionResultDeadline() {
         return getDegreeInfoCandidacy().getSelectionResultDeadline();
     }
 
-    public MultiLanguageString getTestIngression() {
+    public LocalizedString getTestIngression() {
         return getDegreeInfoCandidacy().getTestIngression();
     }
 
-    public void setAccessRequisites(MultiLanguageString accessRequisites) {
+    public void setAccessRequisites(LocalizedString accessRequisites) {
         getDegreeInfoCandidacy().setAccessRequisites(accessRequisites);
     }
 
-    public void setCandidacyDocuments(MultiLanguageString candidacyDocuments) {
+    public void setCandidacyDocuments(LocalizedString candidacyDocuments) {
         getDegreeInfoCandidacy().setCandidacyDocuments(candidacyDocuments);
     }
 
-    public void setCandidacyPeriod(MultiLanguageString candidacyPeriod) {
+    public void setCandidacyPeriod(LocalizedString candidacyPeriod) {
         getDegreeInfoCandidacy().setCandidacyPeriod(candidacyPeriod);
     }
 
-    public void setClassifications(MultiLanguageString classifications) {
+    public void setClassifications(LocalizedString classifications) {
         getDegreeInfoFuture().setClassifications(classifications);
     }
 
-    public void setDesignedFor(MultiLanguageString designedFor) {
+    public void setDesignedFor(LocalizedString designedFor) {
         getDegreeInfoFuture().setDesignedFor(designedFor);
     }
 
-    public void setEnrolmentPeriod(MultiLanguageString enrolmentPeriod) {
+    public void setEnrolmentPeriod(LocalizedString enrolmentPeriod) {
         getDegreeInfoCandidacy().setEnrolmentPeriod(enrolmentPeriod);
     }
 
-    public void setObjectives(MultiLanguageString objectives) {
+    public void setObjectives(LocalizedString objectives) {
         getDegreeInfoFuture().setObjectives(objectives);
     }
 
-    public void setProfessionalExits(MultiLanguageString professionalExits) {
+    public void setProfessionalExits(LocalizedString professionalExits) {
         getDegreeInfoFuture().setProfessionalExits(professionalExits);
     }
 
-    public void setQualificationLevel(MultiLanguageString qualificationLevel) {
+    public void setQualificationLevel(LocalizedString qualificationLevel) {
         getDegreeInfoFuture().setQualificationLevel(qualificationLevel);
     }
 
-    public void setRecognitions(MultiLanguageString recognitions) {
+    public void setRecognitions(LocalizedString recognitions) {
         getDegreeInfoFuture().setRecognitions(recognitions);
     }
 
-    public void setSelectionResultDeadline(MultiLanguageString selectionResultDeadline) {
+    public void setSelectionResultDeadline(LocalizedString selectionResultDeadline) {
         getDegreeInfoCandidacy().setSelectionResultDeadline(selectionResultDeadline);
     }
 
-    public void setTestIngression(MultiLanguageString testIngression) {
+    public void setTestIngression(LocalizedString testIngression) {
         getDegreeInfoCandidacy().setTestIngression(testIngression);
     }
 
     public boolean hasOperationalRegime(final Locale language) {
-        return getOperationalRegime() != null && getOperationalRegime().hasContent(language);
+        return getOperationalRegime() != null && getOperationalRegime().getContent(language) != null;
     }
 
     public String getOperationalRegime(final Locale language) {
@@ -297,7 +297,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     public boolean hasAdditionalInfo(final Locale language) {
-        return getAdditionalInfo() != null && getAdditionalInfo().hasContent(language);
+        return getAdditionalInfo() != null && getAdditionalInfo().getContent(language) != null;
     }
 
     public String getAdditionalInfo(final Locale language) {

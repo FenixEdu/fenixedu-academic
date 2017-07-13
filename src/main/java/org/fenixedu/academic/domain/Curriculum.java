@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -83,42 +83,42 @@ public class Curriculum extends Curriculum_Base {
                 .collect(Collectors.joining(" "));
     }
 
-    public MultiLanguageString getFullObjectivesI18N() {
-        return MultiLanguageString.fromLocalizedString(new LocalizedString.Builder()
-                .with(MultiLanguageString.pt, getFullObjectives()).with(MultiLanguageString.en, getFullObjectivesEn()).build());
+    public LocalizedString getFullObjectivesI18N() {
+        return new LocalizedString.Builder()
+                .with(org.fenixedu.academic.util.LocaleUtils.PT, getFullObjectives()).with(org.fenixedu.academic.util.LocaleUtils.EN, getFullObjectivesEn()).build();
     }
 
-    public MultiLanguageString getGeneralObjectivesI18N() {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getGeneralObjectivesI18N() {
+        LocalizedString LocalizedString = new LocalizedString();
         if (getGeneralObjectives() != null && getGeneralObjectives().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, getGeneralObjectives());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, getGeneralObjectives());
         }
         if (getGeneralObjectivesEn() != null && getGeneralObjectivesEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, getGeneralObjectivesEn());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, getGeneralObjectivesEn());
         }
-        return multiLanguageString;
+        return LocalizedString;
     }
 
-    public MultiLanguageString getOperacionalObjectivesI18N() {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getOperacionalObjectivesI18N() {
+        LocalizedString LocalizedString = new LocalizedString();
         if (getOperacionalObjectives() != null && getOperacionalObjectives().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, getOperacionalObjectives());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, getOperacionalObjectives());
         }
         if (getOperacionalObjectivesEn() != null && getOperacionalObjectivesEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, getOperacionalObjectivesEn());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, getOperacionalObjectivesEn());
         }
-        return multiLanguageString;
+        return LocalizedString;
     }
 
-    public MultiLanguageString getProgramI18N() {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getProgramI18N() {
+        LocalizedString LocalizedString = new LocalizedString();
         if (getProgram() != null && getProgram().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, getProgram());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, getProgram());
         }
         if (getProgramEn() != null && getProgramEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, getProgramEn());
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, getProgramEn());
         }
-        return multiLanguageString;
+        return LocalizedString;
     }
 
     @Deprecated

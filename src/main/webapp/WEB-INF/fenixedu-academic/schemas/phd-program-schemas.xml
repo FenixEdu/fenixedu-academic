@@ -230,8 +230,8 @@
 	</slot>	
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.CountryProvider"/>
-		<property name="format" value="${countryNationality}" />
-		<property name="sortBy" value="countryNationality"/>
+		<property name="format" value="${countryNationality.content}" />
+		<property name="sortBy" value="countryNationality.content"/>
 	</slot>
 	<slot name="fatherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
@@ -763,7 +763,7 @@
 	<slot name="socialSecurityNumber" />
    	<slot name="dateOfBirth" />
 	<slot name="districtSubdivisionOfBirth" />
-	<slot name="nationality.countryNationality" />
+	<slot name="nationality.countryNationality.content" />
 	<slot name="address" />
 	<slot name="area" />
 	<slot name="areaCode" />
@@ -784,7 +784,7 @@
 	<slot name="socialSecurityNumber" />
    	<slot name="dateOfBirth" />
 	<slot name="districtSubdivisionOfBirth" />
-	<slot name="nationality.countryNationality" />
+	<slot name="nationality.countryNationality.content" />
 	<slot name="address" />
 	<slot name="area" />
 	<slot name="areaCode" />
@@ -1463,8 +1463,8 @@
 	<slot name="gender" layout="phd-enum-renderer"/>
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.CountryProvider"/>
-		<property name="format" value="${countryNationality}" />
-		<property name="sortBy" value="countryNationality"/>
+		<property name="format" value="${countryNationality.content}" />
+		<property name="sortBy" value="countryNationality.content"/>
 	</slot>
 	<slot name="parishOfResidence" />
 	<slot name="districtSubdivisionOfResidence" />

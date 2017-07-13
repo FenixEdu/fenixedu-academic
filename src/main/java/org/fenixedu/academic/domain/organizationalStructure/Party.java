@@ -48,7 +48,7 @@ import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
@@ -99,7 +99,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public abstract String getPartyPresentationName();
 
-    public abstract MultiLanguageString getPartyName();
+    public abstract LocalizedString getPartyName();
 
     public abstract String getName();
 

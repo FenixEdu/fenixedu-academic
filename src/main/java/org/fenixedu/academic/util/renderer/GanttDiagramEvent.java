@@ -21,14 +21,14 @@ package org.fenixedu.academic.util.renderer;
 import java.util.List;
 
 import org.fenixedu.academic.util.DayType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.Interval;
 
 public interface GanttDiagramEvent {
 
     public List<Interval> getGanttDiagramEventSortedIntervals();
 
-    public MultiLanguageString getGanttDiagramEventName();
+    public LocalizedString getGanttDiagramEventName();
 
     public int getGanttDiagramEventOffset();
 

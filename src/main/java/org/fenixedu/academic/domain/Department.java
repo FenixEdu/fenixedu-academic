@@ -51,7 +51,7 @@ import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
@@ -166,15 +166,15 @@ public class Department extends Department_Base {
 
     /**
      * Joins the portuguese and english version of the department's name in a
-     * MultiLanguageString for an easier handling of the name in a
+     * LocalizedString for an easier handling of the name in a
      * internacionalized context.
      *
-     * @return a MultiLanguageString with the portuguese and english versions of
+     * @return a LocalizedString with the portuguese and english versions of
      *         the department's name
      */
-    public MultiLanguageString getNameI18n() {
-        return new MultiLanguageString().with(MultiLanguageString.pt, getRealName())
-                .with(MultiLanguageString.en, getRealNameEn());
+    public LocalizedString getNameI18n() {
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, getRealName())
+                .with(org.fenixedu.academic.util.LocaleUtils.EN, getRealNameEn());
     }
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
