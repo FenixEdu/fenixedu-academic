@@ -219,8 +219,8 @@
 					<fr:slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcessBean.getPersonBean().getNationality() != null) %>" />
 						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/>
-						<fr:property name="format" value="${countryNationality}" />
-						<fr:property name="sortBy" value="countryNationality"/>
+						<fr:property name="format" value="${countryNationality.content}" />
+						<fr:property name="sortBy" value="countryNationality.content"/>
 					</fr:slot>
 		
 					<fr:slot name="address" key="label.address">

@@ -23,7 +23,7 @@
 <%@page import="org.fenixedu.academic.domain.thesis.Thesis"%>
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant"%>
 <%@page import="org.fenixedu.academic.domain.thesis.ThesisFile"%>
-<%@page import="org.fenixedu.academic.util.MultiLanguageString"%>
+<%@page import="org.fenixedu.commons.i18n.LocalizedString"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="java.util.List"%>
 <%@page import="org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState"%>

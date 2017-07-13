@@ -32,7 +32,7 @@ import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSem
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DayType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -85,7 +85,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         deleteDomainObject();
     }
 
-    public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
+    public AcademicCalendarEntry edit(LocalizedString title, LocalizedString description, DateTime begin, DateTime end,
             AcademicCalendarRootEntry rootEntry, AcademicCalendarEntry templateEntry) {
 
         if (isRoot() || rootEntry == null) {
@@ -124,7 +124,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         }
     }
 
-    protected void initEntry(AcademicCalendarEntry parentEntry, MultiLanguageString title, MultiLanguageString description,
+    protected void initEntry(AcademicCalendarEntry parentEntry, LocalizedString title, LocalizedString description,
             DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         if (rootEntry == null || parentEntry == null) {
@@ -240,7 +240,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Override
-    public void setTitle(MultiLanguageString title) {
+    public void setTitle(LocalizedString title) {
         if (title == null || title.isEmpty()) {
             throw new DomainException("error.AcademicCalendarEntry.empty.title");
         }
@@ -258,12 +258,12 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Override
-    public MultiLanguageString getTitle() {
+    public LocalizedString getTitle() {
         return isVirtual() && !isRoot() ? getTemplateEntry().getTitle() : super.getTitle();
     }
 
     @Override
-    public MultiLanguageString getDescription() {
+    public LocalizedString getDescription() {
         return isVirtual() && !isRoot() ? getTemplateEntry().getDescription() : super.getDescription();
     }
 
@@ -436,15 +436,15 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         }
     }
 
-    public MultiLanguageString getType() {
-        MultiLanguageString type = new MultiLanguageString();
+    public LocalizedString getType() {
+        LocalizedString type = new LocalizedString();
         String key = "label." + getClass().getSimpleName() + ".type";
-        type = type.with(MultiLanguageString.pt, BundleUtil.getString(Bundle.MANAGER, new Locale("pt", "PT"), key));
+        type = type.with(org.fenixedu.academic.util.LocaleUtils.PT, BundleUtil.getString(Bundle.MANAGER, new Locale("pt", "PT"), key));
         return type;
     }
 
     public String getPresentationName() {
-        return getTitle().getContent() + " - " + "[" + getType() + "]";
+        return getTitle().getContent() + " - " + "[" + getType().getContent() + "]";
     }
 
     public AcademicCalendarRootEntry getAcademicCalendar() {
@@ -646,7 +646,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Override
-    public MultiLanguageString getGanttDiagramEventName() {
+    public LocalizedString getGanttDiagramEventName() {
         return getTitle();
     }
 

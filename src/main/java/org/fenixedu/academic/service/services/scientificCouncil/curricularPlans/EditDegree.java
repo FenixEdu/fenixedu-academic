@@ -30,7 +30,7 @@ import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -52,7 +52,7 @@ public class EditDegree {
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();
         } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
-                || !degreeToEdit.getNameFor(executionYear).getContent(MultiLanguageString.pt).equalsIgnoreCase(name)
+                || !degreeToEdit.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name)
                 || !degreeToEdit.getDegreeType().equals(degreeType)) {
 
             final List<Degree> degrees = Degree.readNotEmptyDegrees();
@@ -63,8 +63,8 @@ public class EditDegree {
                     if (degree.getSigla().equalsIgnoreCase(acronym)) {
                         throw new FenixServiceException("error.existing.degree.acronym");
                     }
-                    if ((degree.getNameFor(executionYear).getContent(MultiLanguageString.pt).equalsIgnoreCase(name) || degree
-                            .getNameFor(executionYear).getContent(MultiLanguageString.en).equalsIgnoreCase(nameEn))
+                    if ((degree.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name) || degree
+                            .getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN).equalsIgnoreCase(nameEn))
                             && degree.getDegreeType().equals(degreeType)) {
                         throw new FenixServiceException("error.existing.degree.name.and.type");
                     }

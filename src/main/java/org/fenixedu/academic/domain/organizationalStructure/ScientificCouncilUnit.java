@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
@@ -54,7 +54,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
         return parties.isEmpty() ? null : (ScientificCouncilUnit) parties.iterator().next();
     }
 
-    public static ScientificCouncilUnit createScientificCouncilUnit(MultiLanguageString name, String unitNameCard,
+    public static ScientificCouncilUnit createScientificCouncilUnit(LocalizedString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
             Boolean canBeResponsibleOfSpaces, Space campus) {

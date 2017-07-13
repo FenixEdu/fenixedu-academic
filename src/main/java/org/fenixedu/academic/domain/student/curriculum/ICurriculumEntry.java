@@ -25,7 +25,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -159,9 +159,9 @@ public interface ICurriculumEntry {
 
     String getCode();
 
-    MultiLanguageString getName();
+    LocalizedString getName();
 
-    MultiLanguageString getPresentationName();
+    LocalizedString getPresentationName();
 
     Grade getGrade();
 

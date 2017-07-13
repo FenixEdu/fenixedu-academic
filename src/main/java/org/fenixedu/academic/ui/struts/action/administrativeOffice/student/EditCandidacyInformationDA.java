@@ -167,7 +167,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             } else {
                 Locale locale = I18N.getLocale();
                 StringBuilder stringBuilder = new StringBuilder(BundleUtil.getString(Bundle.PHD, "label.phd")).append(" ");
-                stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(locale));
+                final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
+                stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName(executionYear).getContent(locale));
                 return stringBuilder.toString();
             }
         }

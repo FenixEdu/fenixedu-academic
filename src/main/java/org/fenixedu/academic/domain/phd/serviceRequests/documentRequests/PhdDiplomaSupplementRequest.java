@@ -186,7 +186,9 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public String getPrevailingScientificArea(final Locale locale) {
-        return getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(locale);
+        final PhdIndividualProgramProcess individualProgramProcess = getPhdIndividualProgramProcess();
+        final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
+        return individualProgramProcess.getPhdProgram().getName(executionYear).getContent(locale);
     }
 
     @Override

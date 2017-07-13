@@ -25,7 +25,8 @@ import org.fenixedu.academic.domain.DegreeSpecializationArea;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -49,8 +50,8 @@ public class CreateDegreeSpecializationArea {
         }
 
         DegreeSpecializationArea specializationArea =
-                new DegreeSpecializationArea(degreeOfficialPublication, new MultiLanguageString(area));
-        specializationArea.setName(new MultiLanguageString(name));
+                new DegreeSpecializationArea(degreeOfficialPublication, new LocalizedString(I18N.getLocale(), area));
+        specializationArea.setName(new LocalizedString(I18N.getLocale(), name));
         degreeOfficialPublication.addSpecializationArea(specializationArea);
 
     }

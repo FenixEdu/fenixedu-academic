@@ -217,9 +217,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     @Override
     public boolean isAllowedToManageProcess(User userView) {
         if (userView != null) {
-            Set<AcademicProgram> programs =
-                    AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES,
-                            userView.getPerson().getUser()).collect(Collectors.toSet());
+            Set<AcademicProgram> programs = AcademicAccessRule
+                    .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES, userView.getPerson().getUser())
+                    .collect(Collectors.toSet());
 
             return programs.contains(this.getPhdProgram());
         } else {
@@ -240,9 +240,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             return false;
         }
 
-        Set<AcademicProgram> programs =
-                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESS_STATE,
-                        userView.getPerson().getUser()).collect(Collectors.toSet());
+        Set<AcademicProgram> programs = AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESS_STATE, userView.getPerson().getUser())
+                .collect(Collectors.toSet());
 
         return programs.contains(this.getPhdProgram());
     }
@@ -260,7 +260,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         @Override
-        protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, User userView, Object object) {
+        protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, User userView,
+                Object object) {
 
             final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
             final Person person = getOrCreatePerson(bean);
@@ -312,13 +313,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         setThesisTitle(bean.getThesisTitle());
 
         if (bean.getMigratedProcess()) {
-            setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(
-                    bean.getCandidacyDate().getYear(), bean.getPhdStudentNumber()));
-            setPhdConfigurationIndividualProgramProcess(PhdConfigurationIndividualProgramProcess
-                    .createMigratedProcessConfiguration());
+            setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear(),
+                    bean.getPhdStudentNumber()));
+            setPhdConfigurationIndividualProgramProcess(
+                    PhdConfigurationIndividualProgramProcess.createMigratedProcessConfiguration());
         } else {
-            setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(
-                    bean.getCandidacyDate().getYear(), null));
+            setPhdIndividualProcessNumber(
+                    PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear(), null));
             setPhdConfigurationIndividualProgramProcess(PhdConfigurationIndividualProgramProcess.createDefault());
         }
 
@@ -659,9 +660,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-        TreeSet<PrecedentDegreeInformation> degreeInformations =
-                new TreeSet<PrecedentDegreeInformation>(
-                        Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+        TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(
+                Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         for (PrecedentDegreeInformation pdi : getPrecedentDegreeInformationsSet()) {
             if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
@@ -723,9 +723,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             return false;
         }
 
-        final ExecutionDegree executionDegree =
-                getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan()
-                        .getExecutionDegreeByAcademicInterval(ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
+        final ExecutionDegree executionDegree = getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan()
+                .getExecutionDegreeByAcademicInterval(ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
 
         if (executionDegree != null) {
             for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
@@ -771,10 +770,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isRegistrationAvailable() {
-        return getRegistration() != null
-                && AcademicAccessRule
-                        .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
-                        .anyMatch(p -> p == getRegistration().getDegree());
+        return getRegistration() != null && AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
+                .anyMatch(p -> p == getRegistration().getDegree());
     }
 
     @Override
@@ -1082,7 +1080,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessDataSet()) {
+            for (final PhdMigrationIndividualProcessData processData : migrationProcess
+                    .getPhdMigrationIndividualProcessDataSet()) {
                 if (processData.getNumber().equals(getPhdStudentNumber())) {
                     return processData;
                 }
@@ -1129,7 +1128,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         final List<PhdMigrationIndividualProcessData> processDataList = new ArrayList<PhdMigrationIndividualProcessData>();
 
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessDataSet()) {
+            for (final PhdMigrationIndividualProcessData processData : migrationProcess
+                    .getPhdMigrationIndividualProcessDataSet()) {
                 final ExecutionYear processYear = processData.getExecutionYear();
                 if (processYear == null || year == null || processYear.equals(year)) {
                     processDataList.add(processData);
@@ -1316,10 +1316,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public String getGraduateTitle(Locale locale) {
-        StringBuilder stringBuilder =
+        final StringBuilder stringBuilder =
                 new StringBuilder(BundleUtil.getString(Bundle.PHD, locale, "label.phd.graduated.title.in")).append(" ");
-        stringBuilder.append(getPhdProgram().getName().getContent(locale));
-
+        stringBuilder.append(getPhdProgram().getName(getExecutionYear()).getContent(locale));
         return stringBuilder.toString();
     }
 

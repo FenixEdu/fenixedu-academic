@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.candidacy.CandidacyOperationType;
 import org.fenixedu.academic.domain.candidacy.CandidacySituation;
@@ -59,7 +60,7 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
             return getRegistration().getDegreeCurricularPlanName();
 
         } else if (getCandidacyProcess().hasPhdProgram()) {
-            return getCandidacyProcess().getPhdProgram().getName().getContent();
+            return getCandidacyProcess().getPhdProgram().getName(getExecutionYear()).getContent();
 
         } else {
             return getCandidacyProcess().getPhdProgramFocusArea().getName().getContent();

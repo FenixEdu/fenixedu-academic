@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
@@ -39,7 +39,7 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     @Atomic
     public DegreeSpecializationArea createSpecializationArea(String nameEn, String namePt) {
 
-        MultiLanguageString area = new MultiLanguageString(MultiLanguageString.en, nameEn).with(MultiLanguageString.pt, namePt);
+        LocalizedString area = new LocalizedString(org.fenixedu.academic.util.LocaleUtils.EN, nameEn).with(org.fenixedu.academic.util.LocaleUtils.PT, namePt);
 
         return new DegreeSpecializationArea(this, area);
     }

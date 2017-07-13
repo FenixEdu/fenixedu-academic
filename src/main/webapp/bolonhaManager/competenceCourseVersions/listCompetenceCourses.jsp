@@ -27,7 +27,25 @@
 <%@page import="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
 <%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
 
-	<h2><bean:write name="department" property="realName"/></h2>
+
+<logic:notEmpty name="departments">
+
+<h2><bean:write name="department" property="realName"/></h2>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <bean:write name="department" property="realName"/>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <logic:iterate id="dep" name="departments">
+        <li>
+            <html:link action="/competenceCourses/manageVersions.do?method=prepare&departmentID=${dep.externalId}">
+                <bean:write name="dep" property="realName"/>
+            </html:link>
+        </li>
+    </logic:iterate>
+  </ul>
+</div>
 <h3><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h3>
 
 <logic:notEmpty name="competenceCourseMembersGroupMembers">
@@ -82,3 +100,11 @@
 <logic:equal name="department" property="currentUserMemberOfCompetenceCourseMembersGroup" value="false">
 	<em><bean:message key="notMemberInCompetenceCourseManagementGroup" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
 </logic:equal>
+
+</logic:notEmpty>
+
+<logic:empty name="departments">
+    <p>
+        <em><bean:message key="no.current.department.working.place" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
+    </p>
+</logic:empty>

@@ -48,10 +48,8 @@ import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
-import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
@@ -493,7 +491,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         Unit servicesParent =
                 Bennu.getInstance().getInstitutionUnit().getSubUnits().stream().filter(x -> x.getName().equals("Services"))
                         .findAny().orElse(Bennu.getInstance().getInstitutionUnit());
-        Unit.createNewUnit(MultiLanguageString.fromLocalizedString(office.getName()), null, null, null, new YearMonthDay(), null,
+        Unit.createNewUnit(office.getName(), null, null, null, new YearMonthDay(), null,
                 servicesParent, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
                 UnitClassification.CENTRAL_ORG, office, false, bean.getBuilding());
     }
@@ -579,7 +577,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
     @Atomic(mode = TxMode.WRITE)
     private void createScientificArea(AssociatedObjectsBean bean) {
-        ScientificAreaUnit.createNewInternalScientificArea(MultiLanguageString.fromLocalizedString(bean.getNameLS()), null, null,
+        ScientificAreaUnit.createNewInternalScientificArea(bean.getNameLS(), null, null,
                 bean.getCode(), new YearMonthDay(), null, bean.getDepartment().getDepartmentUnit(),
                 AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, false, null);
     }
@@ -605,7 +603,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     @Atomic(mode = TxMode.WRITE)
     private void createCompetenceCourseGroup(AssociatedObjectsBean bean) {
         CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(
-                MultiLanguageString.fromLocalizedString(bean.getNameLS()), null, null, bean.getCode(), new YearMonthDay(), null,
+                bean.getNameLS(), null, null, bean.getCode(), new YearMonthDay(), null,
                 bean.getScientificAreaUnit(), AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE),
                 null, null, false, null);
     }

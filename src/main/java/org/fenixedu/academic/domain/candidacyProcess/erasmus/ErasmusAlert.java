@@ -23,7 +23,7 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.LocalDate;
 
 public class ErasmusAlert extends ErasmusAlert_Base {
@@ -42,13 +42,13 @@ public class ErasmusAlert extends ErasmusAlert_Base {
     }
 
     public ErasmusAlert(MobilityIndividualApplicationProcess process, Boolean sendEmail, LocalDate whenToFire,
-            final MultiLanguageString subject, final MultiLanguageString body, ErasmusAlertEntityType entity) {
+            final LocalizedString subject, final LocalizedString body, ErasmusAlertEntityType entity) {
         this();
         init(process, sendEmail, whenToFire, subject, body, entity);
     }
 
     protected void init(MobilityIndividualApplicationProcess process, Boolean sendEmail, LocalDate whenToFire,
-            final MultiLanguageString subject, final MultiLanguageString body, ErasmusAlertEntityType entity) {
+            final LocalizedString subject, final LocalizedString body, ErasmusAlertEntityType entity) {
         super.init(subject, body);
         String[] args = {};
 
@@ -76,9 +76,7 @@ public class ErasmusAlert extends ErasmusAlert_Base {
     protected String buildMailBody() {
         final StringBuilder result = new StringBuilder();
 
-        for (final String eachContent : getFormattedBody().getAllContents()) {
-            result.append(eachContent).append("\n").append(" ------------------------- ");
-        }
+        getFormattedBody().forEach((l, s) -> result.append(s).append("\n").append(" ------------------------- "));
 
         result.delete(result.lastIndexOf("\n") + 1, result.length());
 
@@ -89,9 +87,7 @@ public class ErasmusAlert extends ErasmusAlert_Base {
     protected String buildMailSubject() {
         final StringBuilder result = new StringBuilder();
 
-        for (final String eachContent : getFormattedSubject().getAllContents()) {
-            result.append(eachContent).append(" / ");
-        }
+        getFormattedSubject().forEach((l, s) -> result.append(s).append(" / "));
 
         if (result.toString().endsWith(" / ")) {
             result.delete(result.length() - 3, result.length());

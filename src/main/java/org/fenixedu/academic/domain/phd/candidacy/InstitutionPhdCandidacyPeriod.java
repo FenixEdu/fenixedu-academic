@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.phd.InstitutionPhdCandidacyProcessProperties;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -153,11 +153,12 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
 
     @Override
     public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
+        final ExecutionYear executionYear = ExecutionYear.readByDateTime(referee.getPhdProgramCandidacyProcess().getCandidacyDate());
         return MessageFormat.format(String.format(BundleUtil.getString(Bundle.PHD, "message.phd.institution.email.body.referee"),
-                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(MultiLanguageString.en),
+                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
                 referee.getValue(),
-                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(MultiLanguageString.pt),
+                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("pt", "PT")),
                 referee.getValue()), Unit.getInstitutionName().getContent());
     }
@@ -175,19 +176,19 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
     }
 
     @Override
-    public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
-        return new MultiLanguageString().with(
-                MultiLanguageString.pt,
+    public LocalizedString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+        return new LocalizedString().with(
+                org.fenixedu.academic.util.LocaleUtils.PT,
                 MessageFormat.format(BundleUtil.getString(Bundle.PHD, Locale.forLanguageTag("pt"),
                         "message.phd.institution.email.subject.missing.candidacy.validation"), Unit.getInstitutionAcronym()))
-                .with(MultiLanguageString.en,
+                .with(org.fenixedu.academic.util.LocaleUtils.EN,
                         MessageFormat.format(BundleUtil.getString(Bundle.PHD, Locale.ENGLISH,
                                 "message.phd.institution.email.subject.missing.candidacy.validation"), Unit
                                 .getInstitutionAcronym()));
     }
 
     @Override
-    public MultiLanguageString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+    public LocalizedString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
         final String englishBody =
                 MessageFormat.format(String.format(BundleUtil.getString(Bundle.PHD, Locale.ENGLISH,
                         "message.phd.institution.email.body.missing.candidacy.validation"),
@@ -199,7 +200,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
                         InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(new Locale("en", "EN")), process
                                 .getCandidacyProcess().getCandidacyHashCode().getValue()), Unit.getInstitutionAcronym());
 
-        return new MultiLanguageString().with(MultiLanguageString.en, englishBody).with(MultiLanguageString.pt, portugueseBody);
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.EN, englishBody).with(org.fenixedu.academic.util.LocaleUtils.PT, portugueseBody);
     }
 
     public static InstitutionPhdCandidacyPeriod readNextCandidacyPeriod() {

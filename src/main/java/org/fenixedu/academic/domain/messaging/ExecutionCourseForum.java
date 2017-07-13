@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.messaging;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.accessControl.StudentGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherGroup;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.groups.Group;
 
 public class ExecutionCourseForum extends ExecutionCourseForum_Base {
@@ -30,13 +30,13 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
         super();
     }
 
-    public ExecutionCourseForum(MultiLanguageString name, MultiLanguageString description) {
+    public ExecutionCourseForum(LocalizedString name, LocalizedString description) {
         this();
         init(name, description);
     }
 
     @Override
-    public void setName(MultiLanguageString name) {
+    public void setName(LocalizedString name) {
         if (this.getExecutionCourse() != null) {
             getExecutionCourse().checkIfCanAddForum(name);
         }

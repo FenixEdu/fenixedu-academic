@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.phd.alert;
 import java.util.Collections;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.phd.InternalPhdParticipant;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -32,7 +33,7 @@ import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.ReplyTo;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -102,13 +103,14 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
         generateMessageForReporters();
     }
 
-    private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Locale.getDefault(), AlertMessage.get(
-                "message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName()));
+    private LocalizedString buildSubject(final PhdIndividualProgramProcess process) {
+        final ExecutionYear executionYear = process.getExecutionYear();
+        return new LocalizedString(Locale.getDefault(), AlertMessage.get(
+                "message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName(executionYear).getContent()));
     }
 
-    private MultiLanguageString buildBody(final PhdIndividualProgramProcess process, PhdParticipant participant) {
-        return new MultiLanguageString(Locale.getDefault(), AlertMessage.get(
+    private LocalizedString buildBody(final PhdIndividualProgramProcess process, PhdParticipant participant) {
+        return new LocalizedString(Locale.getDefault(), AlertMessage.get(
                 "message.phd.request.reminder.jury.reviews.reporter.body", process.getPerson().getName(),
                 process.getProcessNumber(), getDaysLeftUntilDeadline(process))
                 + "\n\n"

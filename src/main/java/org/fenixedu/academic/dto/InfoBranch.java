@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
 
 import org.fenixedu.academic.domain.Branch;
 import org.fenixedu.academic.domain.branch.BranchType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.I18N;
 
 /**
@@ -40,7 +40,7 @@ public class InfoBranch extends InfoObject {
         return branch;
     }
 
-    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
+    private final boolean showEnVersion = I18N.getLocale().equals(org.fenixedu.academic.util.LocaleUtils.EN);
 
     public InfoBranch(final Branch branch) {
         this.branch = branch;

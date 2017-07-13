@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.accounting.report.events;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class PhdEventWrapper implements Wrapper {
     PhdEvent event;
@@ -75,7 +75,7 @@ public class PhdEventWrapper implements Wrapper {
 
     @Override
     public String getPhdProgramName() {
-        return event.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(MultiLanguageString.pt);
+        return event.getPhdIndividualProgramProcess().getPhdProgram().getName(getForExecutionYear()).getContent(org.fenixedu.academic.util.LocaleUtils.PT);
     }
 
     @Override

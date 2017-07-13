@@ -38,11 +38,13 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.LocaleUtils;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -66,7 +68,7 @@ public class PhdProgram extends PhdProgram_Base {
         new PhdProgramServiceAgreementTemplate(this);
     }
 
-    private PhdProgram(final Degree degree, final MultiLanguageString name, final String acronym) {
+    private PhdProgram(final Degree degree, final LocalizedString name, final String acronym) {
         this();
 
         checkDegree(degree);
@@ -77,7 +79,7 @@ public class PhdProgram extends PhdProgram_Base {
         setAcronym(acronym);
     }
 
-    private PhdProgram(final Degree degree, final MultiLanguageString name, final String acronym, final Unit parentProgramUnit) {
+    private PhdProgram(final Degree degree, final LocalizedString name, final String acronym, final Unit parentProgramUnit) {
         this(degree, name, acronym);
         PhdProgramUnit.create(this, getName(), getWhenCreated().toYearMonthDay(), null, parentProgramUnit);
     }
@@ -117,16 +119,32 @@ public class PhdProgram extends PhdProgram_Base {
         return getAcronym() != null && getAcronym().equalsIgnoreCase(acronym);
     }
 
+    @Deprecated
     public String getPresentationName() {
         return getPresentationName(I18N.getLocale());
     }
 
+    public String getPresentationName(final ExecutionYear executionYear) {
+        return getPresentationName(I18N.getLocale(), executionYear);
+    }
+
+    @Deprecated
     private String getPresentationName(final Locale locale) {
         return getPrefix(locale) + getNameFor(locale);
     }
 
+    private String getPresentationName(final Locale locale, final ExecutionYear executionYear) {
+        return getPrefix(locale) + getName(executionYear).getContent(locale);
+    }
+
     private String getNameFor(final Locale locale) {
-        return getName().hasContent(locale) ? getName().getContent(locale) : getName().getPreferedContent();
+        return getName().getContent(locale) != null ? getName().getContent(locale) : LocaleUtils.getPreferedContent(getName());
+    }
+
+    public LocalizedString getName(final ExecutionYear year) {
+        final Degree degree = getDegree();
+        final LocalizedString mls = degree == null ? getName() : degree.getNameI18N(year);
+        return mls;
     }
 
     private String getPrefix(final Locale locale) {
@@ -195,12 +213,12 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     @Atomic
-    static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym) {
+    static public PhdProgram create(final Degree degree, final LocalizedString name, final String acronym) {
         return new PhdProgram(degree, name, acronym);
     }
 
     @Atomic
-    static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym, final Unit parent) {
+    static public PhdProgram create(final Degree degree, final LocalizedString name, final String acronym, final Unit parent) {
         return new PhdProgram(degree, name, acronym, parent);
     }
 

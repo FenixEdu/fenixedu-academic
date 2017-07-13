@@ -147,7 +147,8 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
             // Third case person exists so the birth date must be equal and also
             // ist Id if it has
 
-            if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
+            if (person.getDateOfBirthYearMonthDay() != null
+                    && person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
                 if (person.getUsername() != null && person.getUsername().equals(bean.getInstitutionId())) {
                     personBean.setPerson(person);
                 } else if (person.getUsername() == null && !bean.hasInstitutionId()) {

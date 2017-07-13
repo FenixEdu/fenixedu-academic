@@ -53,7 +53,7 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.CompetenceCoursePredicates;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.UniqueAcronymCreator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
@@ -66,29 +66,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
         @Override
         public int compare(CompetenceCourse o1, CompetenceCourse o2) {
-            return Collator.getInstance().compare(o1.getName(), o2.getName());
+            int result = Collator.getInstance().compare(o1.getName(), o2.getName());            
+            return result == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : result;
         }
-
     };
 
     protected CompetenceCourse() {
         super();
         setRootDomainObject(Bennu.getInstance());
-    }
-
-    /**
-     * @deprecated This method sets attributes that are no longer used. A
-     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
-     * object must be created to hold these values.
-     */
-    @Deprecated
-    public CompetenceCourse(String code, String name, Collection<Department> departments) {
-        this();
-        super.setCurricularStage(CurricularStage.OLD);
-        fillFields(code, name);
-        if (departments != null) {
-            addDepartments(departments);
-        }
     }
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
@@ -121,10 +106,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
         this(name, nameEn, basic, regimeType, competenceCourseLevel, type, curricularStage, unit, ExecutionSemester
                 .readActualExecutionSemester());
-    }
-
-    public boolean isBolonha() {
-        return !getCurricularStage().equals(CurricularStage.OLD);
     }
 
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
@@ -1086,55 +1067,55 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         changeRequest.approve(requester);
     }
 
-    public MultiLanguageString getNameI18N() {
+    public LocalizedString getNameI18N() {
         return getNameI18N(null);
     }
 
-    public MultiLanguageString getNameI18N(ExecutionSemester semester) {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getNameI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
         String name = getName(semester);
         if (name != null && name.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, name);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, name);
         }
         String nameEn = getNameEn(semester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, nameEn);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
         }
-        return multiLanguageString;
+        return LocalizedString;
     }
 
-    public MultiLanguageString getObjectivesI18N() {
+    public LocalizedString getObjectivesI18N() {
         return getObjectivesI18N(null);
     }
 
-    public MultiLanguageString getObjectivesI18N(ExecutionSemester semester) {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getObjectivesI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
         String objectives = getObjectives(semester);
         if (objectives != null && objectives.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, objectives);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, objectives);
         }
         String objectivesEn = getObjectivesEn(semester);
         if (objectivesEn != null && objectivesEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, objectivesEn);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, objectivesEn);
         }
-        return multiLanguageString;
+        return LocalizedString;
     }
 
-    public MultiLanguageString getProgramI18N() {
+    public LocalizedString getProgramI18N() {
         return getProgramI18N(null);
     }
 
-    public MultiLanguageString getProgramI18N(ExecutionSemester semester) {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getProgramI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
         String program = getProgram(semester);
         if (program != null && program.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, program);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, program);
         }
         String programEn = getProgramEn(semester);
         if (programEn != null && programEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, programEn);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, programEn);
         }
-        return multiLanguageString;
+        return LocalizedString;
     }
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -1233,25 +1214,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getOldestCompetenceCourseInformation().getExecutionPeriod();
     }
 
-    // -------------------------------------------------------------
-    // read static methods
-    // -------------------------------------------------------------
-    static public List<CompetenceCourse> readOldCompetenceCourses() {
-        final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-            if (!competenceCourse.isBolonha()) {
-                result.add(competenceCourse);
-            }
-        }
-        return result;
-    }
-
     static public Collection<CompetenceCourse> readBolonhaCompetenceCourses() {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-            if (competenceCourse.isBolonha()) {
                 result.add(competenceCourse);
-            }
         }
         return result;
     }
@@ -1259,9 +1225,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     static public Collection<CompetenceCourse> searchBolonhaCompetenceCourses(String searchName, String searchCode) {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-            if (!competenceCourse.isBolonha()) {
-                continue;
-            }
             if ((!searchName.isEmpty()) && (!competenceCourse.matchesName(searchName))) {
                 continue;
             }
@@ -1276,7 +1239,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     static public Collection<CompetenceCourse> readApprovedBolonhaCompetenceCourses() {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-            if (competenceCourse.isBolonha() && competenceCourse.isApproved()) {
+            if (competenceCourse.isApproved()) {
                 result.add(competenceCourse);
             }
         }
@@ -1286,7 +1249,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     static public Collection<CompetenceCourse> readApprovedBolonhaDissertations() {
         final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
         for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-            if (competenceCourse.isBolonha() && competenceCourse.isApproved() && competenceCourse.isDissertation()) {
+            if (competenceCourse.isApproved() && competenceCourse.isDissertation()) {
                 result.add(competenceCourse);
             }
         }

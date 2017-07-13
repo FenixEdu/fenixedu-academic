@@ -22,15 +22,15 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ShiftType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class CreateLessonPlanningBean implements Serializable {
 
     private ExecutionCourse executionCourseReference;
 
-    private MultiLanguageString title;
+    private LocalizedString title;
 
-    private MultiLanguageString planning;
+    private LocalizedString planning;
 
     private ShiftType lessonType;
 
@@ -54,19 +54,19 @@ public class CreateLessonPlanningBean implements Serializable {
         this.lessonType = lessonType;
     }
 
-    public MultiLanguageString getPlanning() {
+    public LocalizedString getPlanning() {
         return planning;
     }
 
-    public void setPlanning(MultiLanguageString planning) {
+    public void setPlanning(LocalizedString planning) {
         this.planning = planning;
     }
 
-    public MultiLanguageString getTitle() {
+    public LocalizedString getTitle() {
         return title;
     }
 
-    public void setTitle(MultiLanguageString title) {
+    public void setTitle(LocalizedString title) {
         this.title = title;
     }
 }

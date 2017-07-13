@@ -59,7 +59,7 @@ import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -348,7 +348,7 @@ public class MergeExecutionCourses {
 
         while (!executionCourseFrom.getForuns().isEmpty()) {
             ExecutionCourseForum sourceForum = executionCourseFrom.getForuns().iterator().next();
-            MultiLanguageString forumName = sourceForum.getName();
+            LocalizedString forumName = sourceForum.getName();
 
             ExecutionCourseForum targetForum = executionCourseTo.getForumByName(forumName);
             if (targetForum == null) {

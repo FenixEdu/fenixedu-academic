@@ -42,11 +42,12 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -58,7 +59,7 @@ public class Unit extends Unit_Base {
         super();
     }
 
-    protected void init(MultiLanguageString name, String unitNameCard, Integer costCenterCode, String acronym,
+    protected void init(LocalizedString name, String unitNameCard, Integer costCenterCode, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Space campus) {
 
@@ -80,17 +81,17 @@ public class Unit extends Unit_Base {
     }
 
     @Override
-    public void setPartyName(MultiLanguageString partyName) {
+    public void setPartyName(LocalizedString partyName) {
         if (partyName == null || partyName.isEmpty()) {
             throw new DomainException("error.Party.empty.partyName");
         }
         super.setPartyName(partyName);
-        setName(partyName.getPreferedContent());
+        setName(LocaleUtils.getPreferedContent(partyName));
     }
 
     @Override
     public String getName() {
-        return getPartyName().getPreferedContent();
+        return LocaleUtils.getPreferedContent(getPartyName());
     }
 
     public void setName(String name) {
@@ -99,10 +100,10 @@ public class Unit extends Unit_Base {
             throw new DomainException("error.person.empty.name");
         }
 
-        MultiLanguageString partyName = getPartyName();
+        LocalizedString partyName = getPartyName();
 
         partyName =
-                partyName == null ? new MultiLanguageString(Locale.getDefault(), name) : partyName
+                partyName == null ? new LocalizedString(Locale.getDefault(), name) : partyName
                         .with(Locale.getDefault(), name);
 
         super.setPartyName(partyName);
@@ -112,12 +113,12 @@ public class Unit extends Unit_Base {
         unitName.setName(name);
     }
 
-    public void edit(MultiLanguageString name, String acronym) {
+    public void edit(LocalizedString name, String acronym) {
         setPartyName(name);
         setAcronym(acronym);
     }
 
-    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
             Space campus) {
@@ -624,7 +625,7 @@ public class Unit extends Unit_Base {
         return unitCostCenterCode == null ? null : unitCostCenterCode.getUnit();
     }
 
-    public static Unit createNewUnit(MultiLanguageString unitName, String unitNameCard, Integer costCenterCode, String acronym,
+    public static Unit createNewUnit(LocalizedString unitName, String unitNameCard, Integer costCenterCode, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
             String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
             Boolean canBeResponsibleOfSpaces, Space campus) {
@@ -645,7 +646,7 @@ public class Unit extends Unit_Base {
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
         Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
         Unit noOfficialExternalInstitutionUnit = new Unit();
-        noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Locale.getDefault(), unitName), null, null, null,
+        noOfficialExternalInstitutionUnit.init(new LocalizedString(Locale.getDefault(), unitName), null, null, null,
                 new YearMonthDay(), null, null, null, null, null, null);
         noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
                 AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
@@ -831,7 +832,7 @@ public class Unit extends Unit_Base {
         return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
     }
 
-    public MultiLanguageString getNameI18n() {
+    public LocalizedString getNameI18n() {
         return getPartyName();
     }
 
@@ -859,13 +860,13 @@ public class Unit extends Unit_Base {
         return new ArrayList<Group>();
     }
 
-    static public MultiLanguageString getInstitutionName() {
+    static public LocalizedString getInstitutionName() {
         return Optional
                 .ofNullable(Bennu.getInstance().getInstitutionUnit())
                 .map(Unit::getNameI18n)
                 .orElseGet(
-                        () -> MultiLanguageString.fromLocalizedString(BundleUtil.getLocalizedString(Bundle.GLOBAL,
-                                "error.institutionUnit.notconfigured")));
+                        () -> BundleUtil.getLocalizedString(Bundle.GLOBAL,
+                                "error.institutionUnit.notconfigured"));
     }
 
     static public String getInstitutionAcronym() {
