@@ -24,7 +24,7 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -39,7 +39,7 @@ public class EvaluationMethod extends EvaluationMethod_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public void edit(MultiLanguageString evaluationElements) {
+    public void edit(LocalizedString evaluationElements) {
         if (evaluationElements == null) {
             throw new NullPointerException();
         }
@@ -54,7 +54,7 @@ public class EvaluationMethod extends EvaluationMethod_Base {
     }
 
     @Override
-    public void setEvaluationElements(MultiLanguageString evaluationElements) {
+    public void setEvaluationElements(LocalizedString evaluationElements) {
         ContentManagementLog.createLog(this.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.curricular.evaluation.method", this.getExecutionCourse().getNome(), this
                         .getExecutionCourse().getDegreePresentationString());

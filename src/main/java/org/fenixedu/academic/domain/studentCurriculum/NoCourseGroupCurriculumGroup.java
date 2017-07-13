@@ -36,7 +36,7 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurriculumGroup_Base {
@@ -83,10 +83,10 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public MultiLanguageString getName() {
-        return new MultiLanguageString(MultiLanguageString.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(
-                MultiLanguageString.pt)).with(MultiLanguageString.en,
-                getNoCourseGroupCurriculumGroupType().getLocalizedName(MultiLanguageString.en));
+    public LocalizedString getName() {
+        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getNoCourseGroupCurriculumGroupType().getLocalizedName(
+                org.fenixedu.academic.util.LocaleUtils.PT)).with(org.fenixedu.academic.util.LocaleUtils.EN,
+                getNoCourseGroupCurriculumGroupType().getLocalizedName(org.fenixedu.academic.util.LocaleUtils.EN));
     }
 
     @Override

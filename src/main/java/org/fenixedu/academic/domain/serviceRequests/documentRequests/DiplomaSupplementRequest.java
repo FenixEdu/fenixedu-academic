@@ -36,7 +36,7 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.DiplomaSupplement;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Joiner;
@@ -51,7 +51,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
         this();
         super.init(bean);
         checkParameters(bean);
-        setLanguage(MultiLanguageString.pt);
+        setLanguage(org.fenixedu.academic.util.LocaleUtils.PT);
         setProgramConclusion(bean.getProgramConclusion());
     }
 

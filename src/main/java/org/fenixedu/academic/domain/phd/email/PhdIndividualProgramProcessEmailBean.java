@@ -35,7 +35,7 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.alert.AlertService.AlertMessage;
 import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -233,8 +233,8 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
     }
 
     public PhdIndividualProgramProcessEmailBean(PhdIndividualProgramProcessEmail email) {
-        this.subject = email.getFormattedSubject().getContent(MultiLanguageString.pt);
-        this.message = email.getFormattedBody().getContent(MultiLanguageString.pt);
+        this.subject = email.getFormattedSubject().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
+        this.message = email.getFormattedBody().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
         this.bccs = email.getBccs();
         this.creationDate = email.getWhenCreated();
         this.creator = email.getPerson();

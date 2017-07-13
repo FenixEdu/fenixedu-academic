@@ -170,7 +170,7 @@
     <slot name="maritalStatus" key="label.person.maritalStatus"/>
     <slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
     <slot name="country" layout="menu-select" key="label.person.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
-        <property name="format" value="${countryNationality}"/>
+        <property name="format" value="${countryNationality.content}"/>
         <property name="sortBy" value="name=asc" />
         <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
     </slot> 

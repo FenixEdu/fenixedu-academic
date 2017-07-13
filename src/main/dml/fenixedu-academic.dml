@@ -346,14 +346,6 @@ valueType org.joda.time.YearMonthDay as YearMonthDay {
     internalizeWith org.fenixedu.academic.util.date.SerializationTool.yearMonthDayDeserialize();
 }
 
-valueType org.fenixedu.academic.util.MultiLanguageString as MultiLanguageString {
-    externalizeWith {
-        String exportAsString();
-    }
-
-    internalizeWith importFromString();
-}
-
 valueType org.fenixedu.academic.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
     externalizeWith {
         String toString();
@@ -503,9 +495,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         String code (REQUIRED);
         String threeLetterCode (REQUIRED);
         String name;
-        MultiLanguageString countryNationality (REQUIRED);
+        LocalizedString countryNationality (REQUIRED);
         Boolean defaultCountry (REQUIRED);
-        MultiLanguageString localizedName (REQUIRED);
+        LocalizedString localizedName (REQUIRED);
     }
     
     class CurricularCourseEquivalence  {
@@ -573,7 +565,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
     class DegreeSpecializationArea  {
-       MultiLanguageString name (REQUIRED);
+       LocalizedString name (REQUIRED);
     }
 
     class DegreeCurricularPlan  {
@@ -610,32 +602,32 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Double markAverage;
         Double markMax;
         Double markMin;
-        MultiLanguageString name;
-        MultiLanguageString additionalInfo;
-        MultiLanguageString description;
-        MultiLanguageString gratuity;
-        MultiLanguageString history;
-        MultiLanguageString links;
-        MultiLanguageString operationalRegime;
-        MultiLanguageString schoolCalendar;
+        LocalizedString name;
+        LocalizedString additionalInfo;
+        LocalizedString description;
+        LocalizedString gratuity;
+        LocalizedString history;
+        LocalizedString links;
+        LocalizedString operationalRegime;
+        LocalizedString schoolCalendar;
     }
 
     class DegreeInfoCandidacy  {
-        MultiLanguageString accessRequisites;
-        MultiLanguageString candidacyDocuments;
-        MultiLanguageString candidacyPeriod;
-        MultiLanguageString enrolmentPeriod;
-        MultiLanguageString selectionResultDeadline;
-        MultiLanguageString testIngression;
+        LocalizedString accessRequisites;
+        LocalizedString candidacyDocuments;
+        LocalizedString candidacyPeriod;
+        LocalizedString enrolmentPeriod;
+        LocalizedString selectionResultDeadline;
+        LocalizedString testIngression;
     }
 
     class DegreeInfoFuture  {
-        MultiLanguageString classifications;
-        MultiLanguageString designedFor;
-        MultiLanguageString objectives;
-        MultiLanguageString professionalExits;
-        MultiLanguageString qualificationLevel;
-        MultiLanguageString recognitions;
+        LocalizedString classifications;
+        LocalizedString designedFor;
+        LocalizedString objectives;
+        LocalizedString professionalExits;
+        LocalizedString qualificationLevel;
+        LocalizedString recognitions;
     }
 
     class Department  {
@@ -758,7 +750,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
     class EvaluationMethod  {
-        MultiLanguageString evaluationElements;
+        LocalizedString evaluationElements;
     }
 
         class FinalEvaluation extends Evaluation {
@@ -846,7 +838,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
     class ExecutionDegree  {
-        MultiLanguageString anotation;
+        LocalizedString anotation;
         Boolean temporaryExamMap;                           
         AcademicInterval executionInterval;
         YearMonthDay beginThesisCreationPeriod;
@@ -1025,8 +1017,8 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     class LessonPlanning  {
         ShiftType lessonType;
         Integer orderOfPlanning;
-        MultiLanguageString planning;
-        MultiLanguageString title;
+        LocalizedString planning;
+        LocalizedString title;
     }
 
     class Locality  {
@@ -1204,10 +1196,10 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Integer studentsNumber;
         YearMonthDay summaryDateYearMonthDay;
         HourMinuteSecond summaryHourHourMinuteSecond;
-        MultiLanguageString summaryText;
+        LocalizedString summaryText;
         ShiftType summaryType;
         String teacherName;
-        MultiLanguageString title;    
+        LocalizedString title;    
         Boolean taught;
         }
 
@@ -2448,8 +2440,8 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     
     class Alert  {
 	    DateTime whenCreated;
-	    MultiLanguageString subject;
-	    MultiLanguageString body;
+	    LocalizedString subject;
+	    LocalizedString body;
 	    Boolean active;
 	    DateTime fireDate;    	
     }
@@ -2501,7 +2493,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 	}
 	
     class organizationalStructure.AccountabilityType  {     
-        MultiLanguageString typeName;
+        LocalizedString typeName;
         AccountabilityTypeEnum type;
     }
     
@@ -2559,7 +2551,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 			}
 
         class organizationalStructure.Unit extends organizationalStructure.Party {
-            MultiLanguageString partyName;
+            LocalizedString partyName;
             String acronym;
             String code;
             YearMonthDay beginDateYearMonthDay;
@@ -2913,7 +2905,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
     class student.curriculum.ExtraCurricularActivityType  {
-        MultiLanguageString name (REQUIRED);
+        LocalizedString name (REQUIRED);
     }
 
     class student.ExternalRegistrationData  {
@@ -3228,13 +3220,13 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         DateTime discussed;
         DateTime documentsAvailableAfter;
         DateTime evaluation;
-        MultiLanguageString keywords;
+        LocalizedString keywords;
         Integer mark;
         String rejectionComment;
         ThesisState state;
         DateTime submission;
-        MultiLanguageString thesisAbstract;
-        MultiLanguageString title;
+        LocalizedString thesisAbstract;
+        LocalizedString title;
         ThesisVisibilityType visibility;
         DateTime confirmmedDocuments;
     }
@@ -3284,8 +3276,8 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     }
 
     class time.calendarStructure.AcademicCalendarEntry  {
-        MultiLanguageString title;
-        MultiLanguageString description;        
+        LocalizedString title;
+        LocalizedString description;        
         DateTime begin;
         DateTime end;        
     }
@@ -3403,18 +3395,18 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
     class messaging.ConversationMessage {
         DateTime creationDate;
-        MultiLanguageString body;
+        LocalizedString body;
     }
 
     class messaging.ConversationThread {
         DateTime creationDate;
-        MultiLanguageString title;
+        LocalizedString title;
     }
 
     class messaging.Forum {
         DateTime creationDate;
-        MultiLanguageString name;
-        MultiLanguageString description;
+        LocalizedString name;
+        LocalizedString description;
     }
 
     class messaging.ForumSubscription  {
@@ -3479,8 +3471,8 @@ class period.CandidacyPeriod  {
 
     class period.GenericApplicationPeriod extends period.CandidacyPeriod {
     	Integer periodNumber;
-    	MultiLanguageString title;
-    	MultiLanguageString description;
+    	LocalizedString title;
+    	LocalizedString description;
     } 
 
 class candidacy.GenericApplication {
@@ -3939,7 +3931,7 @@ class phd.PhdProgram extends AcademicProgram {
     DateTime whenCreated;
     String creator;
     
-    MultiLanguageString name;
+    LocalizedString name;
     String acronym;
 }
 
@@ -3956,7 +3948,7 @@ class phd.PhdProgramInformation  {
 class phd.ExternalPhdProgram  {
 	DateTime whenCreated;
 	
-	MultiLanguageString name;
+	LocalizedString name;
 	String acronym;
 	
 	PhdIndividualProgramCollaborationType forCollaborationType;
@@ -3964,13 +3956,13 @@ class phd.ExternalPhdProgram  {
 
 class phd.PhdProgramFocusArea  {
     DateTime whenCreated;
-    MultiLanguageString name;
+    LocalizedString name;
     Boolean active;
 }
 
 class phd.ThesisSubject  {
-	MultiLanguageString name;
-	MultiLanguageString description;
+	LocalizedString name;
+	LocalizedString description;
 	String externalAdvisorName;
 }
 
@@ -4100,7 +4092,7 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate conclusionDate;
 	PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity;
 	String ratificationEntityCustomMessage;
-	MultiLanguageString presidentTitle;
+	LocalizedString presidentTitle;
 }
 
 class phd.thesis.meeting.PhdMeetingSchedulingProcess extends phd.PhdProgramProcess {
@@ -4213,8 +4205,8 @@ class phd.alert.PhdAlert extends Alert {
     
 class phd.alert.PhdAlertMessage  {
     DateTime whenCreated;
-    MultiLanguageString subject;
-    MultiLanguageString body;
+    LocalizedString subject;
+    LocalizedString body;
     Boolean readed;
 }
 

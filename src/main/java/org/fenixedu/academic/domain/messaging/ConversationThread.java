@@ -22,17 +22,17 @@ import jvstm.cps.ConsistencyPredicate;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class ConversationThread extends ConversationThread_Base implements Comparable<ConversationThread> {
 
-    public ConversationThread(Forum forum, Person creator, MultiLanguageString subject) {
+    public ConversationThread(Forum forum, Person creator, LocalizedString subject) {
         setCreationDate(new DateTime());
         init(forum, creator, subject);
     }
 
-    private void init(Forum forum, Person creator, MultiLanguageString subject) {
+    private void init(Forum forum, Person creator, LocalizedString subject) {
         setForum(forum);
         setTitle(subject);
         setCreator(creator);
@@ -48,7 +48,7 @@ public class ConversationThread extends ConversationThread_Base implements Compa
     }
 
     @Override
-    public void setTitle(MultiLanguageString subject) {
+    public void setTitle(LocalizedString subject) {
         if (subject == null || subject.getContent() == null || subject.getContent().trim().isEmpty()) {
             throw new DomainException("conversationThread.subject.cannot.be.null");
         }
@@ -67,7 +67,7 @@ public class ConversationThread extends ConversationThread_Base implements Compa
         getForum().checkIfPersonCanWrite(person);
     }
 
-    public ConversationMessage createConversationMessage(Person creator, MultiLanguageString body) {
+    public ConversationMessage createConversationMessage(Person creator, LocalizedString body) {
         checkIfPersonCanWrite(creator);
         return new ConversationMessage(this, creator, body);
     }

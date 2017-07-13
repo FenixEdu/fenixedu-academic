@@ -40,7 +40,8 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -139,8 +140,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     @Override
-    public MultiLanguageString getName() {
-        return new MultiLanguageString(getExternalCurricularCourse().getName());
+    public LocalizedString getName() {
+        return new LocalizedString(I18N.getLocale(), getExternalCurricularCourse().getName());
     }
 
     @Override
@@ -296,7 +297,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     @Override
-    public MultiLanguageString getPresentationName() {
+    public LocalizedString getPresentationName() {
         return getName();
     }
 

@@ -36,7 +36,7 @@ import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.util.CurricularCourseExecutionScope;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.I18N;
 
 /**
@@ -54,7 +54,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable {
 
     private final CurricularCourse curricularCourse;
 
-    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
+    private final boolean showEnVersion = I18N.getLocale().equals(org.fenixedu.academic.util.LocaleUtils.EN);
 
     private List<InfoCurricularCourseScope> infoScopes;
 

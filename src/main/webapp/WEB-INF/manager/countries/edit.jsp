@@ -57,7 +57,7 @@ ${portal.toolkit()}
                 	<spring:message code="label.country.nationality"/>
                 </label>
                 <div class="col-xs-4">
-                    <input bennu-localized-string type="text" name="countryNationality" value='<c:out value="${country.countryNationality.toLocalizedString().json()}"/>' required/>
+                    <input bennu-localized-string type="text" name="countryNationality" value='<c:out value="${country.countryNationality.json()}"/>' required/>
                 </div>
             </div>
         </div>

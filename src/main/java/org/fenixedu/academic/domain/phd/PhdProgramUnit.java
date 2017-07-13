@@ -22,7 +22,7 @@ import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.YearMonthDay;
 
 public class PhdProgramUnit extends PhdProgramUnit_Base {
@@ -32,7 +32,7 @@ public class PhdProgramUnit extends PhdProgramUnit_Base {
         super.setType(PartyTypeEnum.PHD_PROGRAM_UNIT);
     }
 
-    static PhdProgramUnit create(final PhdProgram program, final MultiLanguageString unitName, final YearMonthDay beginDate,
+    static PhdProgramUnit create(final PhdProgram program, final LocalizedString unitName, final YearMonthDay beginDate,
             final YearMonthDay endDate, final Unit parent) {
 
         final PhdProgramUnit programUnit = new PhdProgramUnit();

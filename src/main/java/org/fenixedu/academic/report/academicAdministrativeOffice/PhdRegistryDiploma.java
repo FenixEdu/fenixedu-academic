@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegi
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
@@ -89,9 +89,9 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         super.setHeader();
     }
 
-    private MultiLanguageString getThesisTitleI18N() {
-        return new MultiLanguageString(MultiLanguageString.pt, getDocumentRequest().getPhdIndividualProgramProcess()
-                .getThesisTitle()).with(MultiLanguageString.en, getDocumentRequest().getPhdIndividualProgramProcess()
+    private LocalizedString getThesisTitleI18N() {
+        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getDocumentRequest().getPhdIndividualProgramProcess()
+                .getThesisTitle()).with(org.fenixedu.academic.util.LocaleUtils.EN, getDocumentRequest().getPhdIndividualProgramProcess()
                 .getThesisTitleEn());
     }
 

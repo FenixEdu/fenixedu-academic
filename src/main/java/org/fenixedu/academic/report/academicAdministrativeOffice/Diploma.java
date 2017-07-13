@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequ
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
@@ -53,7 +54,7 @@ public class Diploma extends AdministrativeOfficeDocument {
         super.fillReport();
         final DiplomaRequest diplomaRequest = getDocumentRequest();
 
-        String universityName = getUniversity(diplomaRequest.getRequestDate()).getPartyName().getPreferedContent();
+        String universityName = LocaleUtils.getPreferedContent(getUniversity(diplomaRequest.getRequestDate()).getPartyName());
 
         addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
         addParameter("documentNumber", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.documentNumber"));
@@ -100,7 +101,7 @@ public class Diploma extends AdministrativeOfficeDocument {
         Person president = getUniversity(getDocumentRequest().getRequestDate()).getCurrentPresident();
 
         final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
-        String universityName = university.getPartyName().getPreferedContent();
+        String universityName = LocaleUtils.getPreferedContent(university.getPartyName());
 
         String rectorGender, rectorGrant, presidentGender;
 

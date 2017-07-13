@@ -64,7 +64,7 @@ import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnr
 import org.fenixedu.academic.service.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DateFormatUtil;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.academic.util.ProposalState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -250,7 +250,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return true;
     }
 
-    public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
+    public void createEvaluationMethod(final LocalizedString evaluationElements) {
         if (evaluationElements == null) {
             throw new NullPointerException();
         }
@@ -1046,7 +1046,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    public void createForum(MultiLanguageString name, MultiLanguageString description) {
+    public void createForum(LocalizedString name, LocalizedString description) {
         if (hasForumWithName(name)) {
             throw new DomainException("executionCourse.already.existing.forum");
         }
@@ -1059,19 +1059,19 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         super.addForum(executionCourseForum);
     }
 
-    public void checkIfCanAddForum(MultiLanguageString name) {
+    public void checkIfCanAddForum(LocalizedString name) {
         if (hasForumWithName(name)) {
             throw new DomainException("executionCourse.already.existing.forum");
         }
     }
 
-    public boolean hasForumWithName(MultiLanguageString name) {
+    public boolean hasForumWithName(LocalizedString name) {
         return getForumByName(name) != null;
     }
 
-    public ExecutionCourseForum getForumByName(MultiLanguageString name) {
+    public ExecutionCourseForum getForumByName(LocalizedString name) {
         for (final ExecutionCourseForum executionCourseForum : getForuns()) {
-            if (executionCourseForum.getNormalizedName().equalInAnyLanguage(name)) {
+            if (LocaleUtils.equalInAnyLanguage(executionCourseForum.getNormalizedName(), name)) {
                 return executionCourseForum;
             }
         }
@@ -1905,7 +1905,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public String getLocalizedEvaluationMethodText() {
         final EvaluationMethod evaluationMethod = getEvaluationMethod();
         if (evaluationMethod != null) {
-            final MultiLanguageString evaluationElements = evaluationMethod.getEvaluationElements();
+            final LocalizedString evaluationElements = evaluationMethod.getEvaluationElements();
             return evaluationElements.getContent();
         }
         for (final CompetenceCourse competenceCourse : getCompetenceCourses()) {
@@ -1919,10 +1919,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public String getEvaluationMethodText() {
         if (getEvaluationMethod() != null) {
-            final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
+            final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.hasContent(MultiLanguageString.pt) ? evaluationElements
-                    .getContent(MultiLanguageString.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
+            return evaluationElements != null && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.PT) != null ? evaluationElements
+                    .getContent(org.fenixedu.academic.util.LocaleUtils.PT) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
                     .next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
@@ -1931,10 +1931,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public String getEvaluationMethodTextEn() {
         if (getEvaluationMethod() != null) {
-            final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
+            final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.hasContent(MultiLanguageString.en) ? evaluationElements
-                    .getContent(MultiLanguageString.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
+            return evaluationElements != null && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.EN) != null ? evaluationElements
+                    .getContent(org.fenixedu.academic.util.LocaleUtils.EN) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
                     .next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
@@ -2199,9 +2199,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
      * This method returns the portuguese name and the english name with the
      * rules implemented in getNome() method
      */
-    public MultiLanguageString getNameI18N() {
-        MultiLanguageString nameI18N = new MultiLanguageString();
-        nameI18N = nameI18N.with(MultiLanguageString.pt, super.getNome());
+    public LocalizedString getNameI18N() {
+        LocalizedString nameI18N = new LocalizedString();
+        nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.PT, super.getNome());
 
         final StringBuilder stringBuilder = new StringBuilder();
 
@@ -2221,7 +2221,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (stringBuilder.length() > 0) {
-            nameI18N = nameI18N.with(MultiLanguageString.en, stringBuilder.toString());
+            nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.EN, stringBuilder.toString());
             return nameI18N;
         }
 
@@ -2238,10 +2238,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (unique && nameEn != null) {
-            nameI18N = nameI18N.with(MultiLanguageString.en, nameEn);
+            nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
             return nameI18N;
         } else {
-            nameI18N = nameI18N.with(MultiLanguageString.en, super.getNome());
+            nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.EN, super.getNome());
             return nameI18N;
         }
     }

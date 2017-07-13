@@ -48,12 +48,12 @@ import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 abstract public class DegreeModule extends DegreeModule_Base {
 
-    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = Comparator.<DegreeModule, MultiLanguageString> comparing(
+    static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = Comparator.<DegreeModule, LocalizedString> comparing(
             DegreeModule::getNameI18N).thenComparing(DegreeModule::getExternalId);
 
     public static class ComparatorByMinEcts implements Comparator<DegreeModule> {
@@ -156,27 +156,27 @@ abstract public class DegreeModule extends DegreeModule_Base {
         }
     }
 
-    public MultiLanguageString getNameI18N(final ExecutionSemester executionSemester) {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
+    public LocalizedString getNameI18N(final ExecutionSemester executionSemester) {
+        LocalizedString LocalizedString = new LocalizedString();
 
         String name = getName(executionSemester);
         if (name != null && name.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, name);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, name);
         }
 
         String nameEn = getNameEn(executionSemester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, nameEn);
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
         }
 
-        return multiLanguageString;
+        return LocalizedString;
     }
 
-    public MultiLanguageString getNameI18N(final ExecutionYear executionYear) {
+    public LocalizedString getNameI18N(final ExecutionYear executionYear) {
         return getNameI18N((executionYear == null) ? null : executionYear.getLastExecutionPeriod());
     }
 
-    public MultiLanguageString getNameI18N() {
+    public LocalizedString getNameI18N() {
         return getNameI18N((ExecutionSemester) null);
     }
 
@@ -188,7 +188,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return getNameEn();
     }
 
-    public MultiLanguageString getNameI18N(ExecutionInterval executionInterval) {
+    public LocalizedString getNameI18N(ExecutionInterval executionInterval) {
         if (executionInterval instanceof ExecutionSemester) {
             return getNameI18N((ExecutionSemester) executionInterval);
         }

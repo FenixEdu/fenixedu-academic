@@ -18,13 +18,13 @@
  */
 package org.fenixedu.academic.domain.time.calendarStructure;
 
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
 
-    public EnrolmentsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title,
-            MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
+    public EnrolmentsPeriodCE(AcademicCalendarEntry academicCalendarEntry, LocalizedString title,
+            LocalizedString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         super();
         super.initEntry(academicCalendarEntry, title, description, begin, end, rootEntry);
