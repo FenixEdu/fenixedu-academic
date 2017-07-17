@@ -1143,7 +1143,7 @@ public class Lesson extends Lesson_Base {
                 }
                 String summary = null;
                 if (lessonInstance.getSummary() != null) {
-                    summary = lessonInstance.getSummary().getSummaryText().toString();
+                    summary = lessonInstance.getSummary().getSummaryText().getContent();
                     Pattern p = Pattern.compile("<[a-zA-Z0-9\\/]*[^>]*>");
                     Matcher matcher = p.matcher(summary);
                     summary = matcher.replaceAll("");

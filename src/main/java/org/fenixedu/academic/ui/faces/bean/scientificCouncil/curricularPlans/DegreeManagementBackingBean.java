@@ -569,7 +569,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
             for (DegreeSpecializationArea specializationArea : degreeOfficialPublication.getSpecializationAreaSet()) {
                 specializationAreas +=
-                        (specializationAreas.compareTo("") == 0 ? "" : ", ") + specializationArea.getName().toString();
+                        (specializationAreas.compareTo("") == 0 ? "" : ", ") + specializationArea.getName().getContent();
             }
 
             return specializationAreas;

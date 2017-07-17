@@ -292,7 +292,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
             map.put("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
             if (registration != null) {
-                map.put("course", registration.getDegree().getNameI18N().toString());
+                map.put("course", registration.getDegree().getNameI18N().getContent());
             }
             map.put("studentNumber", student.getNumber().toString());
             map.put("fullName", person.getName());

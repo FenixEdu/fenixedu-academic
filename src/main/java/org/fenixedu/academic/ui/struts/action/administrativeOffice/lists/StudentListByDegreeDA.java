@@ -383,7 +383,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
             final Degree degree = registration.getDegree();
             spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
-                    .toString());
+                    .getContent());
             spreadsheet.addCell(degree.getFilteredName(executionYear));
             spreadsheet.addCell(registration.getNumber().toString());
 
@@ -466,7 +466,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                         (MobilityIndividualApplicationProcess) individualCandidacyPersonalDetails.getCandidacy()
                                 .getCandidacyProcess();
                 return mobilityIndividualApplicationProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
-                        .getMobilityAgreement().getUniversityUnit().getNameI18n().toString();
+                        .getMobilityAgreement().getUniversityUnit().getNameI18n().getContent();
             }
         }
 
@@ -486,7 +486,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 return EMPTY;
             }
 
-            return precedentDegreeInformation.getPrecedentInstitution().getNameI18n().toString();
+            return precedentDegreeInformation.getPrecedentInstitution().getNameI18n().getContent();
         }
 
         return EMPTY;
@@ -501,7 +501,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 MobilityIndividualApplicationProcess mobilityIndividualApplicationProcess =
                         (MobilityIndividualApplicationProcess) individualCandidacyPersonalDetails.getCandidacy().getCandidacyProcess();
                 return mobilityIndividualApplicationProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
-                        .getMobilityAgreement().getUniversityUnit().getCountry().getLocalizedName().toString();
+                        .getMobilityAgreement().getUniversityUnit().getCountry().getLocalizedName().getContent();
             }
         }
 
@@ -521,7 +521,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 return EMPTY;
             }
 
-            return precedentDegreeInformation.getPrecedentCountry().getLocalizedName().toString();
+            return precedentDegreeInformation.getPrecedentCountry().getLocalizedName().getContent();
         }
 
         return EMPTY;
@@ -560,9 +560,9 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
         for (final BranchCurriculumGroup group : studentCurricularPlan.getBranchCurriculumGroups()) {
             if (group.isMajor()) {
-                majorBranches.append(group.getName().toString()).append(",");
+                majorBranches.append(group.getName().getContent()).append(",");
             } else if (group.isMinor()) {
-                minorBranches.append(group.getName().toString()).append(",");
+                minorBranches.append(group.getName().getContent()).append(",");
             }
         }
 

@@ -221,9 +221,9 @@ public class RaidesCommonReportFieldsWrapper {
         final StringBuilder minorBranches = new StringBuilder();
         for (final BranchCurriculumGroup group : studentCurricularPlan.getBranchCurriculumGroups()) {
             if (group.isMajor()) {
-                majorBranches.append(group.getName().toString()).append(",");
+                majorBranches.append(group.getName().getContent()).append(",");
             } else if (group.isMinor()) {
-                minorBranches.append(group.getName().toString()).append(",");
+                minorBranches.append(group.getName().getContent()).append(",");
             }
         }
 
