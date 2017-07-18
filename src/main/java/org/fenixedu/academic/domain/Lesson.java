@@ -645,13 +645,27 @@ public class Lesson extends Lesson_Base {
     }
 
     private YearMonthDay getValidBeginDate(YearMonthDay startDate) {
-        YearMonthDay lessonBegin =
-                startDate.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat())
-                        .toYearMonthDay();
-        if (lessonBegin.isBefore(startDate)) {
-            lessonBegin = lessonBegin.plusDays(NUMBER_OF_DAYS_IN_WEEK);
+        final YearMonthDay periodEndDate = getPeriod() != null ? getPeriod().getEndYearMonthDayWithNextPeriods() : null;
+        if (periodEndDate != null) {
+
+            YearMonthDay lessonBegin = startDate.toDateTimeAtMidnight()
+                    .withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();
+            if (lessonBegin.isBefore(startDate)) {
+                lessonBegin = lessonBegin.plusDays(NUMBER_OF_DAYS_IN_WEEK);
+            }
+
+            while (!isDayValid(lessonBegin, null)) {
+                if (!lessonBegin.isAfter(periodEndDate)) {
+                    lessonBegin = lessonBegin.plusDays(NUMBER_OF_DAYS_IN_WEEK);
+                } else {
+                    return null;
+                }
+            }
+
+            return lessonBegin;
         }
-        return lessonBegin;
+
+        return null;
     }
 
     private YearMonthDay getValidEndDate(YearMonthDay endDate) {
