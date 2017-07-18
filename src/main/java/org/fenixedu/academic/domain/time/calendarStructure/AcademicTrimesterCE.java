@@ -18,12 +18,12 @@
  */
 package org.fenixedu.academic.domain.time.calendarStructure;
 
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
 
-    public AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, MultiLanguageString description,
+    public AcademicTrimesterCE(AcademicCalendarEntry parentEntry, LocalizedString title, LocalizedString description,
             DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         super();

@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -32,14 +32,14 @@ public abstract class Alert extends Alert_Base {
         setWhenCreated(new DateTime());
     }
 
-    protected void init(final MultiLanguageString subject, final MultiLanguageString body) {
+    protected void init(final LocalizedString subject, final LocalizedString body) {
         checkParameters(subject, body);
         super.setSubject(subject);
         super.setBody(body);
         super.setActive(Boolean.TRUE);
     }
 
-    private void checkParameters(MultiLanguageString subject, MultiLanguageString body) {
+    private void checkParameters(LocalizedString subject, LocalizedString body) {
         String[] args = {};
         if (subject == null) {
             throw new DomainException("error.alert.Alert.subject.cannot.be.null", args);
@@ -51,12 +51,12 @@ public abstract class Alert extends Alert_Base {
     }
 
     @Override
-    public void setSubject(MultiLanguageString subject) {
+    public void setSubject(LocalizedString subject) {
         throw new DomainException("error.alert.Alert.cannot.modify.subject");
     }
 
     @Override
-    public void setBody(MultiLanguageString body) {
+    public void setBody(LocalizedString body) {
         throw new DomainException("error.alert.Alert.cannot.modify.body");
     }
 
@@ -66,20 +66,20 @@ public abstract class Alert extends Alert_Base {
     }
 
     @Override
-    public MultiLanguageString getBody() {
+    public LocalizedString getBody() {
         throw new DomainException("error.org.fenixedu.academic.domain.alert.Alert.use.getFormattedBody.instead");
     }
 
     @Override
-    public MultiLanguageString getSubject() {
+    public LocalizedString getSubject() {
         throw new DomainException("error.org.fenixedu.academic.domain.alert.Alert.use.getFormattedSubject.instead");
     }
 
-    public MultiLanguageString getFormattedBody() {
+    public LocalizedString getFormattedBody() {
         return super.getBody();
     }
 
-    public MultiLanguageString getFormattedSubject() {
+    public LocalizedString getFormattedSubject() {
         return super.getSubject();
     }
 

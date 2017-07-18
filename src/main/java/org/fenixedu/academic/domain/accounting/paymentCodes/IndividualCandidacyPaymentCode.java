@@ -114,7 +114,8 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
         return (IndividualCandidacyPaymentCode) Bennu.getInstance().getPaymentCodesSet().stream()
-                .filter((IndividualCandidacyPaymentCode.class)::isInstance).filter(PaymentCode::isAvailableForReuse).findFirst()
+                .filter((IndividualCandidacyPaymentCode.class)::isInstance).filter(PaymentCode::isAvailableForReuse)
+                .sorted(PaymentCode.COMPARATOR_BY_END_DATE).findFirst()
                 .orElse(null);
     }
 

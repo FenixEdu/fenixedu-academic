@@ -31,7 +31,7 @@ import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
@@ -62,9 +62,9 @@ public class SummariesManagementBean implements Serializable {
 
     private Integer studentsNumber;
 
-    private MultiLanguageString title;
+    private LocalizedString title;
 
-    private MultiLanguageString summaryText;
+    private LocalizedString summaryText;
 
     private LessonPlanning lessonPlannigReference;
 
@@ -91,7 +91,7 @@ public class SummariesManagementBean implements Serializable {
         setTaught(true);
     }
 
-    public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
+    public SummariesManagementBean(LocalizedString title, LocalizedString summaryText, Integer studentsNumber,
             SummaryType summaryType, Professorship professorship, String teacherName, Teacher teacher, Shift shift,
             Lesson lesson, YearMonthDay summaryDate, Space summaryRoom, Partial summaryTime, Summary summary,
             Professorship professorshipLogged, ShiftType lessonType, Boolean taught) {
@@ -227,19 +227,19 @@ public class SummariesManagementBean implements Serializable {
         this.summaryDate = date;
     }
 
-    public MultiLanguageString getSummaryText() {
+    public LocalizedString getSummaryText() {
         return summaryText;
     }
 
-    public void setSummaryText(MultiLanguageString summary) {
+    public void setSummaryText(LocalizedString summary) {
         this.summaryText = summary;
     }
 
-    public MultiLanguageString getTitle() {
+    public LocalizedString getTitle() {
         return title;
     }
 
-    public void setTitle(MultiLanguageString title) {
+    public void setTitle(LocalizedString title) {
         this.title = title;
     }
 

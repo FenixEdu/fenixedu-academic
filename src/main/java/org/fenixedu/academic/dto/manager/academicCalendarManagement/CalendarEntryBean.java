@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
@@ -30,9 +30,9 @@ import org.joda.time.YearMonthDay;
 
 public class CalendarEntryBean implements Serializable {
 
-    private MultiLanguageString title;
+    private LocalizedString title;
 
-    private MultiLanguageString description;
+    private LocalizedString description;
 
     private DateTime begin;
 
@@ -144,19 +144,19 @@ public class CalendarEntryBean implements Serializable {
         this.endDateToDisplay = endDateToDisplay;
     }
 
-    public MultiLanguageString getTitle() {
+    public LocalizedString getTitle() {
         return title;
     }
 
-    public void setTitle(MultiLanguageString title) {
+    public void setTitle(LocalizedString title) {
         this.title = title;
     }
 
-    public MultiLanguageString getDescription() {
+    public LocalizedString getDescription() {
         return description;
     }
 
-    public void setDescription(MultiLanguageString description) {
+    public void setDescription(LocalizedString description) {
         this.description = description;
     }
 

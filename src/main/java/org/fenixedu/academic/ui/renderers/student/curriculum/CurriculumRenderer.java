@@ -24,7 +24,9 @@ import java.util.TreeSet;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Grade;
+import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.OptionalEnrolment;
+import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
@@ -32,6 +34,10 @@ import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -45,6 +51,8 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class CurriculumRenderer extends InputRenderer {
+
+    private static final Logger logger = LoggerFactory.getLogger(CurriculumRenderer.class);
 
     private String studentCurricularPlanClass = "scplan";
 
@@ -299,21 +307,27 @@ public class CurriculumRenderer extends InputRenderer {
             enrolmentRow.setClasses(getEnrolmentRowClass());
 
             generateCodeAndNameCell(enrolmentRow, entry, level, allowSelection);
+            
             if (entry instanceof ExternalEnrolment) {
                 generateExternalEnrolmentLabelCell(enrolmentRow, (ExternalEnrolment) entry, level);
             }
+            
             generateGradeCell(enrolmentRow, entry);
 
             if (isVisibleEctsConvertedGrade()) {
-                if (entry instanceof ExternalEnrolment) {
-                    generateConvertedGradeCell(enrolmentRow, (ExternalEnrolment) entry);
+                String ectsGrade = null;
+                try {
+                    if (entry instanceof IEnrolment) {
+                        IEnrolment enrolment = (IEnrolment) entry;
+                        ectsGrade = enrolment.getEctsGrade(curriculum.getStudentCurricularPlan(), new DateTime()).getValue();
+                    } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
+                        Dismissal dismissal = (Dismissal) entry;
+                        ectsGrade = dismissal.getEctsGrade(new DateTime()).getValue();
+                    }
+                }catch(NoEctsComparabilityTableFound noEctsException) {
+                    logger.warn("There is no ects table for {}", entry.getExternalId());
                 }
-                if (entry instanceof Enrolment) {
-                    generateConvertedGradeCell(enrolmentRow, (Enrolment) entry);
-                }
-                if (entry instanceof Dismissal) {
-                    generateConvertedGradeCell(enrolmentRow, (Dismissal) entry);
-                }
+                generateConvertedGradeCell(enrolmentRow, ectsGrade);
             }
 
             generateWeightCell(enrolmentRow, entry);
@@ -354,19 +368,8 @@ public class CurriculumRenderer extends InputRenderer {
             generateCellWithText(enrolmentRow, grade.isEmpty() ? "-" : grade.getValue(), getGradeCellClass());
         }
 
-        private void generateConvertedGradeCell(HtmlTableRow enrolmentRow, final Enrolment entry) {
-            final Grade convertedGrade = entry.getEctsGrade(entry.getStudentCurricularPlan(), new DateTime());
-            generateCellWithText(enrolmentRow, convertedGrade.isEmpty() ? "-" : convertedGrade.getValue(), getGradeCellClass());
-        }
-
-        private void generateConvertedGradeCell(HtmlTableRow enrolmentRow, final Dismissal entry) {
-            final Grade convertedGrade = entry.getEctsGrade(new DateTime());
-            generateCellWithText(enrolmentRow, convertedGrade.isEmpty() ? "-" : convertedGrade.getValue(), getGradeCellClass());
-        }
-
-        private void generateConvertedGradeCell(HtmlTableRow enrolmentRow, ExternalEnrolment entry) {
-            final Grade convertedGrade = entry.getEctsGrade(curriculum.getStudentCurricularPlan(), new DateTime());
-            generateCellWithText(enrolmentRow, convertedGrade.isEmpty() ? "-" : convertedGrade.getValue(), getGradeCellClass());
+        private void generateConvertedGradeCell(HtmlTableRow enrolmentRow, final String grade) {
+            generateCellWithText(enrolmentRow, Strings.isNullOrEmpty(grade) ? "-" : grade, getGradeCellClass());
         }
 
         private void generateWeightCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {

@@ -26,7 +26,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.academic.util.LocaleUtils;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -56,12 +57,12 @@ public class Country extends Country_Base {
         setDefaultCountry(false);
     }
 
-    public Country(final MultiLanguageString localizedName, final MultiLanguageString countryNationality, final String code,
+    public Country(final LocalizedString localizedName, final LocalizedString countryNationality, final String code,
             final String threeLetterCode) {
         this();
         setCode(code);
         setCountryNationality(countryNationality);
-        setName(localizedName.getPreferedContent());
+        setName(LocaleUtils.getPreferedContent(localizedName));
         setLocalizedName(localizedName);
         setThreeLetterCode(threeLetterCode);
     }
@@ -105,7 +106,7 @@ public class Country extends Country_Base {
             if (!country.getName().equalsIgnoreCase(PORTUGAL)) {
                 result.add(country);
             } else {
-                if (country.getCountryNationality().getContent(MultiLanguageString.pt).equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
+                if (country.getCountryNationality().getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
                     result.add(country);
                 }
             }
@@ -178,7 +179,7 @@ public class Country extends Country_Base {
 
     @Deprecated
     public String getNationality() {
-        return getCountryNationality().getPreferedContent();
+        return LocaleUtils.getPreferedContent(getCountryNationality());
     }
 
     public synchronized static Set<Country> getCPLPCountries() {

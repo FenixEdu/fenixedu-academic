@@ -63,6 +63,7 @@
 			$.ajax({
 				url : url,
 				type : "PUT",
+				headers: { '${csrf.headerName}' :  '${csrf.token}' } ,
 				success : function(result) {
 					var responsibleFor = eval(result);
 					professorship.data('responsible', responsibleFor);
@@ -82,6 +83,7 @@
 				$.ajax({
 					url : url,
 					type: "DELETE",
+					headers: { '${csrf.headerName}' :  '${csrf.token}' } ,
 					success : function(res) {
 							professorship.remove();
 					},

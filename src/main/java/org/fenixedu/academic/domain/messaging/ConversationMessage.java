@@ -20,18 +20,18 @@ package org.fenixedu.academic.domain.messaging;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class ConversationMessage extends ConversationMessage_Base implements Comparable<ConversationMessage> {
 
-    public ConversationMessage(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
+    public ConversationMessage(ConversationThread conversationThread, Person creator, LocalizedString body) {
         super();
         setCreationDate(new DateTime());
         init(conversationThread, creator, body);
     }
 
-    private void init(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
+    private void init(ConversationThread conversationThread, Person creator, LocalizedString body) {
         setConversationThread(conversationThread);
         setBody(body);
         setCreator(creator);
@@ -47,7 +47,7 @@ public class ConversationMessage extends ConversationMessage_Base implements Com
     }
 
     @Override
-    public void setBody(MultiLanguageString body) {
+    public void setBody(LocalizedString body) {
         if (body == null) {
             throw new DomainException("conversationMessage.body.cannot.be.null");
         }

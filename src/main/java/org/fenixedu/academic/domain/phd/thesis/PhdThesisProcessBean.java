@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -68,7 +68,7 @@ public class PhdThesisProcessBean implements Serializable {
 
     private LocalDate stateDate;
 
-    private MultiLanguageString presidentTitle;
+    private LocalizedString presidentTitle;
 
     public PhdThesisProcessBean() {
         this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
@@ -285,11 +285,11 @@ public class PhdThesisProcessBean implements Serializable {
         this.stateDate = stateDate;
     }
 
-    public MultiLanguageString getPresidentTitle() {
+    public LocalizedString getPresidentTitle() {
         return presidentTitle;
     }
 
-    public void setPresidentTitle(MultiLanguageString presidentTitle) {
+    public void setPresidentTitle(LocalizedString presidentTitle) {
         this.presidentTitle = presidentTitle;
     }
 }

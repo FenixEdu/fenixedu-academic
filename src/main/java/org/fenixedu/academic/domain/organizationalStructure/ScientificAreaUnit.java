@@ -32,7 +32,7 @@ import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
@@ -44,7 +44,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
         super.setType(PartyTypeEnum.SCIENTIFIC_AREA);
     }
 
-    public static ScientificAreaUnit createNewInternalScientificArea(MultiLanguageString name, String unitNameCard,
+    public static ScientificAreaUnit createNewInternalScientificArea(LocalizedString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
             Boolean canBeResponsibleOfSpaces, Space campus) {
@@ -60,7 +60,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
             Space campus) {

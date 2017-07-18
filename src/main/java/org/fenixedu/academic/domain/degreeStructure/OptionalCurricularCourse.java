@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
 
@@ -95,18 +95,18 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
 
     @Override
-    public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
-        return new MultiLanguageString();
+    public LocalizedString getObjectivesI18N(ExecutionSemester period) {
+        return new LocalizedString();
     }
 
     @Override
-    public MultiLanguageString getProgramI18N(ExecutionSemester period) {
-        return new MultiLanguageString();
+    public LocalizedString getProgramI18N(ExecutionSemester period) {
+        return new LocalizedString();
     }
 
     @Override
-    public MultiLanguageString getEvaluationMethodI18N(ExecutionSemester period) {
-        return new MultiLanguageString();
+    public LocalizedString getEvaluationMethodI18N(ExecutionSemester period) {
+        return new LocalizedString();
     }
 
     @Override

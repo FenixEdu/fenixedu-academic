@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalUnitBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.CreateUnit;
-import org.fenixedu.academic.util.MultiLanguageString;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -40,7 +40,7 @@ public class CreateExternalUnit {
             return DepartmentUnit.createNewOfficialExternalDepartmentUnit(externalUnitBean.getUnitName(),
                     externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
         } else {
-            return new CreateUnit().run(externalUnitBean.getParentUnit(), new MultiLanguageString(Locale.getDefault(),
+            return new CreateUnit().run(externalUnitBean.getParentUnit(), new LocalizedString(Locale.getDefault(),
                     externalUnitBean.getUnitName()), null, null, externalUnitBean.getUnitCode(), new YearMonthDay(), null,
                     externalUnitBean.getUnitType(), null, null, null, null, null, null, null, null);
         }
