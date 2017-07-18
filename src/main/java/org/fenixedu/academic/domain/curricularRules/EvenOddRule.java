@@ -104,7 +104,7 @@ public class EvenOddRule extends EvenOddRule_Base {
 
     public String getEvenOddString() {
         return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"),
-                "label." + (getEven() ? "even" : "odd"))).toString();
+                "label." + (getEven() ? "even" : "odd"))).getContent();
     }
 
 }

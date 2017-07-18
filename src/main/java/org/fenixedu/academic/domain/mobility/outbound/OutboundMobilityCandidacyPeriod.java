@@ -220,7 +220,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
 
                 final Row candidacyRow = spreadsheetCandidates.addRow();
                 candidacyRow.setCell(getString("label.mobility.program"), registrationProtocol.getDescription().getContent());
-                candidacyRow.setCell(getString("label.country"), country == null ? "" : country.getLocalizedName().toString());
+                candidacyRow.setCell(getString("label.country"), country == null ? "" : country.getLocalizedName().getContent());
                 candidacyRow.setCell(getString("label.university"), universityUnit.getPresentationName());
                 candidacyRow.setCell(getString("label.degrees"), group.getDescription());
                 candidacyRow.setCell(getString("label.vacancies"), contest.getVacancies());

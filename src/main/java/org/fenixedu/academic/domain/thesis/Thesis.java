@@ -670,7 +670,7 @@ public class Thesis extends Thesis_Base {
         Set<Person> orientationPersons = getOrientationPersons();
         persons.addAll(orientationPersons);
 
-        final Recipient recipient = new Recipient("Membros da tese " + getTitle().toString(), Person.convertToUserGroup(persons));
+        final Recipient recipient = new Recipient("Membros da tese " + getTitle().getContent(), Person.convertToUserGroup(persons));
         final String studentNumber = getStudent().getNumber().toString();
         final String title = getFinalFullTitle().getContent();
         final String subject = getMessage("message.thesis.reject.submission.email.subject", studentNumber);

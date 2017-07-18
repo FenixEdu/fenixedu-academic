@@ -241,7 +241,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             spreadsheet.addCell(registration.getRegistrationProtocol().getCode());
             Degree degree = registration.getDegree();
             spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
-                    .toString());
+                    .getContent());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrollmentState().getDescription());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEvaluationSeason().getName().getContent());
             if (detailed) {
