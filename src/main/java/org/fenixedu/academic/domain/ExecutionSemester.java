@@ -394,11 +394,11 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             if (getSemester() == 1) {
                 OccupationPeriod lessonsPeriodFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
                 lessonsPeriod =
-                        (lessonsPeriod == null || lessonsPeriodFirstSemester.isGreater(lessonsPeriod)) ? lessonsPeriodFirstSemester : lessonsPeriod;
+                        (lessonsPeriod == null || (lessonsPeriodFirstSemester != null && lessonsPeriodFirstSemester.isGreater(lessonsPeriod))) ? lessonsPeriodFirstSemester : lessonsPeriod;
             } else {
                 OccupationPeriod lessonsPeriodSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
                 lessonsPeriod =
-                        (lessonsPeriod == null || lessonsPeriodSecondSemester.isGreater(lessonsPeriod)) ? lessonsPeriodSecondSemester : lessonsPeriod;
+                        (lessonsPeriod == null || (lessonsPeriodSecondSemester != null && lessonsPeriodSecondSemester.isGreater(lessonsPeriod))) ? lessonsPeriodSecondSemester : lessonsPeriod;
             }
         }
 
