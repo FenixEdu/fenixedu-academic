@@ -43,10 +43,6 @@ public interface ITreasuryBridgeAPI {
     public static String ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT = "ACADEMIC_SERVICE_REQUEST_NEW_SITUATION_EVENT";
     public static String ACADEMIC_SERVICE_REQUEST_REJECT_OR_CANCEL_EVENT = "ACADEMIC_SERVICE_REQUEST_REJECT_OR_CANCEL_EVENT";
 
-    public void registerNewAcademicServiceRequestSituationHandler();
-
-    public void registerAcademicServiceRequestCancelOrRejectHandler();
-
     public IAcademicServiceRequestAndAcademicTaxTreasuryEvent academicTreasuryEventForAcademicServiceRequest(
             final AcademicServiceRequest academicServiceRequest);
 
@@ -61,12 +57,6 @@ public interface ITreasuryBridgeAPI {
     public static String EXTRACURRICULAR_ENROLMENT = "EXTRACURRICULAR_ENROLMENT";
     public static String IMPROVEMENT_ENROLMENT = "IMPROVEMENT_ENROLMENT";
     public static String NORMAL_ENROLMENT = "NORMAL_ENROLMENT";
-
-    public void registerStandaloneEnrolmentHandler();
-
-    public void registerExtracurricularEnrolmentHandler();
-
-    public void registerImprovementEnrolmentHandler();
 
     public void standaloneUnenrolment(final Enrolment standaloneEnrolment);
 
