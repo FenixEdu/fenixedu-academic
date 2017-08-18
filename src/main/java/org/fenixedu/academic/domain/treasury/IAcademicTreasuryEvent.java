@@ -2,6 +2,7 @@ package org.fenixedu.academic.domain.treasury;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.LocalDate;
@@ -54,6 +55,10 @@ public interface IAcademicTreasuryEvent {
 
     public BigDecimal getExemptedAmount();
 
+    public String getExemptionTypeName();
+
+    public String getExemptionTypeName(Locale locale);
+
     public LocalDate getDueDate();
 
     public String getExemptionReason();
@@ -65,7 +70,7 @@ public interface IAcademicTreasuryEvent {
     public List<IPaymentReferenceCode> getPaymentReferenceCodesList();
 
     public boolean isOnlinePaymentsActive();
-    
+
     public void annulDebts(final String reason);
 
 }
