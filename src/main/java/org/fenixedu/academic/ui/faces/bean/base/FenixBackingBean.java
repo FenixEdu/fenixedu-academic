@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.ui.faces.components.UIViewState;
@@ -158,16 +157,6 @@ public class FenixBackingBean {
             parameterValue = null;
         }
         return parameterValue;
-    }
-
-    private String formatMessage(String message, final String... args) {
-        if (message != null && args != null) {
-            for (int i = 0; args.length > i; i++) {
-                String substring = "{" + i + "}";
-                message = StringUtils.replace(message, substring, args[i]);
-            }
-        }
-        return message;
     }
 
     protected Double getAndHoldDoubleParameter(final String parameterName) {

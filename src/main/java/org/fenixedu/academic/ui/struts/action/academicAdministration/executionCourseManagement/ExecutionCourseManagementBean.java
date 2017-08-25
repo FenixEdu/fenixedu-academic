@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.interfaces.HasExecutionDegree;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 public class ExecutionCourseManagementBean implements java.io.Serializable, HasExecutionDegree {
 

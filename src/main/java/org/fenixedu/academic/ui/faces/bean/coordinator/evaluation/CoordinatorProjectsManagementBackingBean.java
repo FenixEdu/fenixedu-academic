@@ -39,14 +39,6 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     protected String endHour;
     protected String description;
 
-    private String getBeginString() {
-        return getBeginDate() + " " + getBeginHour();
-    }
-
-    private String getEndString() {
-        return getEndDate() + " " + getEndHour();
-    }
-
     public String createProject() {
 //        try {
 //            CreateProject.runCreateProject(getExecutionCourseID(), getName(),

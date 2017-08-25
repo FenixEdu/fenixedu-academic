@@ -56,7 +56,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -1096,21 +1095,9 @@ public class StudentLine implements java.io.Serializable {
     }
 
     private Registration getActiveRegistration(Student student) {
-        List<Registration> activeRegistrations = student.getActiveRegistrations();
-
-        if (activeRegistrations.isEmpty()) {
-            return student.getLastRegistration();
-        }
-
-        for (Registration registration : activeRegistrations) {
-            if (registration.getDegree().getDegreeType().isEmpty()) {
-                continue;
-            }
-
-            return registration;
-        }
-
-        return student.getLastRegistration();
+        return student.getActiveRegistrationStream()
+            .filter(r -> r.getDegree().getDegreeType().isEmpty())
+            .findAny().orElse(student.getLastRegistration());
     }
 
 }

@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.student.EnrolmentModel;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 public class GratuityEventWrapper implements Wrapper {
 

@@ -55,7 +55,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
 import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
@@ -750,13 +749,7 @@ public class Lesson extends Lesson_Base {
             final HourMinuteSecond b = getBeginHourMinuteSecond();
             final HourMinuteSecond e = getEndHourMinuteSecond();
             for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
-                final DateTime start =
-                        new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
-                                b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
-                final DateTime end =
-                        new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
-                                e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
-                dates.add(new Interval(start, end));
+                dates.add(new Interval(toDateTime(yearMonthDay, b), toDateTime(yearMonthDay, e)));
             }
         }
         return dates;
@@ -785,13 +778,7 @@ public class Lesson extends Lesson_Base {
         final HourMinuteSecond b = getBeginHourMinuteSecond();
         final HourMinuteSecond e = getEndHourMinuteSecond();
         for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
-            final DateTime start =
-                    new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
-                            b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
-            final DateTime end =
-                    new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
-                            e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
-            if (new Interval(start, end).overlaps(interval)) {
+            if (new Interval(toDateTime(yearMonthDay, b), toDateTime(yearMonthDay, e)).overlaps(interval)) {
                 return true;
             }
         }
@@ -1209,6 +1196,11 @@ public class Lesson extends Lesson_Base {
         return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
     }
 
+    private static DateTime toDateTime(final YearMonthDay ymd, final HourMinuteSecond hms) {
+        return new DateTime(ymd.getYear(), ymd.getMonthOfYear(), ymd.getDayOfMonth(),
+                hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute(), 0);
+    }
+
     public Set<Interval> getAllLessonIntervals() {
         Set<Interval> intervals = new HashSet<Interval>();
         for (LessonInstance instance : getLessonInstancesSet()) {
@@ -1218,11 +1210,7 @@ public class Lesson extends Lesson_Base {
             YearMonthDay startDateToSearch = getLessonStartDay();
             YearMonthDay endDateToSearch = getLessonEndDay();
             for (YearMonthDay day : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
-                intervals.add(new Interval(day.toLocalDate().toDateTime(
-                        new LocalTime(getBeginHourMinuteSecond().getHour(), getBeginHourMinuteSecond().getMinuteOfHour(),
-                                getBeginHourMinuteSecond().getSecondOfMinute())), day.toLocalDate().toDateTime(
-                        new LocalTime(getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(),
-                                getEndHourMinuteSecond().getSecondOfMinute()))));
+                intervals.add(new Interval(toDateTime(day,  getBeginHourMinuteSecond()), toDateTime(day, getEndHourMinuteSecond())));
             }
         }
         return intervals;

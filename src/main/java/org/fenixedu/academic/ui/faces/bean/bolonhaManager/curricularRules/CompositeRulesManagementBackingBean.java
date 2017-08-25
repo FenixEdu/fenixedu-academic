@@ -51,10 +51,6 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
         getViewState().setAttribute("selectedCurricularRuleIDs", selectedCurricularRuleIDs);
     }
 
-    private void removeSelectedCurricularRuleIDs() {
-        getViewState().removeAttribute("selectedCurricularRuleIDs");
-    }
-
     public String getSelectedLogicOperator() {
         if (getViewState().getAttribute("selectedLogicOperator") == null) {
             setSelectedLogicOperator("AND");

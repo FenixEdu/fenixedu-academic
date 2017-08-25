@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.struts.action.student;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -44,9 +45,9 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.hash.Hashing;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "label.title.sync", path = "sync",
         bundle = "MessagingResources", titleKey = "label.title.sync")
@@ -75,7 +76,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
+        List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrationStream().collect(Collectors.toList());
         if (registrations.size() == 1) {
             return forwardToShow(registrations.iterator().next(), mapping, request);
         } else {

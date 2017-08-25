@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
@@ -153,13 +152,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     private StudentCurricularPlan getActiveRegistration(final StudentCurricularPlan scp) {
-        if (!scp.getRegistration().isActive()) {
-            List<Registration> activeRegistrations = scp.getRegistration().getStudent().getActiveRegistrations();
-            if (activeRegistrations.size() > 0) {
-                return activeRegistrations.get(0).getLastStudentCurricularPlan();
-            }
-        }
-        return scp;
+        return scp.getRegistration().isActive() ? scp :
+            scp.getRegistration().getStudent().getActiveRegistrationStream()
+                .map(r -> r.getLastStudentCurricularPlan())
+                .findAny().orElse(scp);
     }
 
     protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {

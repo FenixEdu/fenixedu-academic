@@ -27,7 +27,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.InlinePredicate;
 import org.joda.time.DateTime;

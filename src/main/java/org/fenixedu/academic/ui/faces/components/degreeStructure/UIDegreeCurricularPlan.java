@@ -314,14 +314,6 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
     }
 
-    private void encodeSumsLoadFooterElement(List<Double> sums, String acronym, int order) throws IOException {
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(BundleUtil.getString(Bundle.BOLONHA, acronym)).append("-");
-        writer.endElement("span");
-        writer.append(String.valueOf(sums.get(order))).append(" ");
-    }
-
     private void encodeEmptySemesterInfo() throws IOException {
         writer.startElement("tr", this);
         writer.startElement("td", this);

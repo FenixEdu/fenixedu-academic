@@ -35,7 +35,6 @@ import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeC
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;

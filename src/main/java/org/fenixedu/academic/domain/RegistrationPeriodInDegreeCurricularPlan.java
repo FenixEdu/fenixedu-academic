@@ -23,10 +23,6 @@ import org.joda.time.DateTime;
 
 public class RegistrationPeriodInDegreeCurricularPlan extends RegistrationPeriodInDegreeCurricularPlan_Base {
 
-    private RegistrationPeriodInDegreeCurricularPlan() {
-        super();
-    }
-
     public RegistrationPeriodInDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
             final ExecutionYear executionYear, final DateTime startDate, final DateTime endDate) {
         super();

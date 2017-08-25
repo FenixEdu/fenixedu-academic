@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularYear;
@@ -277,11 +277,8 @@ public class StudentGroup extends FenixGroup {
     }
 
     private static Stream<Registration> getRegistrations() {
-        Set<Registration> registrations = new HashSet<>();
-        RoleType.STUDENT.actualGroup().getMembers().forEach(user -> {
-            registrations.addAll(user.getPerson().getStudent().getActiveRegistrations());
-        });
-        return registrations.stream();
+        return RoleType.STUDENT.actualGroup().getMembers()
+                .flatMap(u -> u.getPerson().getStudent().getActiveRegistrationStream());
     }
 
     private static Stream<User> registrationsToUsers(Stream<Registration> registrations) {

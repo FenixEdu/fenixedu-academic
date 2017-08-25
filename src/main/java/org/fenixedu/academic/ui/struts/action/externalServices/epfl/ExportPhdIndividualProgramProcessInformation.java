@@ -21,7 +21,6 @@ package org.fenixedu.academic.ui.struts.action.externalServices.epfl;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +33,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExternalUser;
 import org.fenixedu.academic.domain.Photograph;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessNumber;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import org.fenixedu.academic.ui.struts.action.base.FenixAction;
@@ -186,18 +183,6 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
             throws IOException {
         final String url = "http://fenix.ist.utl.pt/phd/epfl/applications/notAuthorized";
         return new ActionForward(url, true);
-    }
-
-    private PhdIndividualProgramProcess readProcessByNumber(int year, String number) {
-        Set<PhdIndividualProgramProcessNumber> processList = PhdIndividualProgramProcessNumber.readByYear(year);
-
-        for (PhdIndividualProgramProcessNumber process : processList) {
-            if (process.getNumber().toString().equals(number)) {
-                return process.getProcess();
-            }
-        }
-
-        return null;
     }
 
 }

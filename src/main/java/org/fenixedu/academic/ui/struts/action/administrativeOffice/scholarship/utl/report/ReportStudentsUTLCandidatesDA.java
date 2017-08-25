@@ -66,41 +66,41 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
         }
 
         POIFSFileSystem fs = new POIFSFileSystem(bean.getXlsFile());
-        HSSFWorkbook wb = new HSSFWorkbook(fs);
-        HSSFSheet sheet = wb.getSheetAt(0);
+        try (HSSFWorkbook wb = new HSSFWorkbook(fs)) {
+            HSSFSheet sheet = wb.getSheetAt(0);
 
-        if (sheet == null) {
-            addErrorMessage(request, "error", "error.academicAdminOffice.scholarship.utl.report.invalid.spreadsheet",
-                    new String[0]);
-            return prepare(mapping, actionForm, request, response);
-        }
-
-        ReportStudentsUTLCandidates report = null;
-
-        if (bean.getForFirstYear()) {
-            report = new ReportStudentsUTLCandidatesForFirstYear(bean.getExecutionYear(), sheet);
-        } else {
-            report = new ReportStudentsUTLCandidates(bean.getExecutionYear(), sheet);
-        }
-
-        request.setAttribute("report", report);
-
-        List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
-        List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
-
-        erroneousStudentLines.addAll(report.getErroneousStudentLines());
-
-        for (StudentLine studentLine : report.getCorrectStudentLines()) {
-            if (studentLine.isAbleToReadAllValues()) {
-                correctStudentLines.add(studentLine);
-            } else {
-                erroneousStudentLines.add(studentLine);
+            if (sheet == null) {
+                addErrorMessage(request, "error", "error.academicAdminOffice.scholarship.utl.report.invalid.spreadsheet",
+                        new String[0]);
+                return prepare(mapping, actionForm, request, response);
             }
+
+            ReportStudentsUTLCandidates report = null;
+
+            if (bean.getForFirstYear()) {
+                report = new ReportStudentsUTLCandidatesForFirstYear(bean.getExecutionYear(), sheet);
+            } else {
+                report = new ReportStudentsUTLCandidates(bean.getExecutionYear(), sheet);
+            }
+
+            request.setAttribute("report", report);
+
+            List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
+            List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
+
+            erroneousStudentLines.addAll(report.getErroneousStudentLines());
+
+            for (StudentLine studentLine : report.getCorrectStudentLines()) {
+                if (studentLine.isAbleToReadAllValues()) {
+                    correctStudentLines.add(studentLine);
+                } else {
+                    erroneousStudentLines.add(studentLine);
+                }
+            }
+
+            request.setAttribute("correctStudentLines", correctStudentLines);
+            request.setAttribute("erroneousStudentLines", erroneousStudentLines);
         }
-
-        request.setAttribute("correctStudentLines", correctStudentLines);
-        request.setAttribute("erroneousStudentLines", erroneousStudentLines);
-
         return mapping.findForward("showReport");
     }
 

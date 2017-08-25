@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.accounting.events.specializationDegree.Speci
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.student.EnrolmentModel;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 public class EventWrapper implements Wrapper {
     private final Event event;

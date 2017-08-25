@@ -55,7 +55,6 @@ import org.fenixedu.academic.domain.phd.ThesisSubjectOrder;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyReferee;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Partial;
 import org.slf4j.Logger;

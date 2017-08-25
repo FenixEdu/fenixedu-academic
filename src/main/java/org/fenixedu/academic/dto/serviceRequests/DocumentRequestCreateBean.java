@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 

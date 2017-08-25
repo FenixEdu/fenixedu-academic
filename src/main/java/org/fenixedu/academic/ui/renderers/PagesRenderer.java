@@ -281,10 +281,6 @@ public class PagesRenderer extends InputRenderer {
         this.subSchema = subSchema;
     }
 
-    private Schema translateSchema(String name) {
-        return RenderKit.getInstance().findSchema(name);
-    }
-
     @Override
     public String getClasses() {
         return this.renderer.getClasses();

@@ -22,7 +22,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
+import org.joda.time.ReadablePartial;
 
 public class Holiday extends Holiday_Base {
     public Holiday() {
@@ -30,7 +30,7 @@ public class Holiday extends Holiday_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public Holiday(Partial date, Locality locality) {
+    public Holiday(final Partial date, final Locality locality) {
         this();
 
         setDate(date);
@@ -43,23 +43,15 @@ public class Holiday extends Holiday_Base {
         super.deleteDomainObject();
     }
 
-    public static boolean isHoliday(LocalDate date) {
+    public static boolean isHoliday(final LocalDate date) {
         return isHoliday(date, null);
     }
 
-    public static boolean isHoliday(LocalDate date, Space campus) {
-        for (Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
-            if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getLocality()))
-                    && holiday.getDate().isMatch(date)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isHoliday(YearMonthDay date, Space campus) {
-        for (Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
-            if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getLocality()))
+    public static boolean isHoliday(final ReadablePartial date, final Space campus) {
+        final Locality campusLocality = campus.getLocality();
+        for (final Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
+            final Locality locality = holiday.getLocality();
+            if ((locality == null || (campus != null && locality == campusLocality))
                     && holiday.getDate().isMatch(date)) {
                 return true;
             }

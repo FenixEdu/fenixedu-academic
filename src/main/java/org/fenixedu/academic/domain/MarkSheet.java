@@ -258,10 +258,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    private ExecutionDegree getExecutionDegree(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
-        return curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(executionSemester.getExecutionYear());
-    }
-
     protected void init(CurricularCourse curricularCourse, ExecutionSemester executionSemester, Teacher responsibleTeacher,
             Date evaluationDate, EvaluationSeason season, MarkSheetState markSheetState, Boolean submittedByTeacher,
             Person creator) {

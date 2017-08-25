@@ -19,15 +19,15 @@
 
 package org.fenixedu.academic.ui.spring.controller.manager;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.Country;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.springframework.stereotype.Service;
-import pt.ist.fenixframework.Atomic;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import pt.ist.fenixframework.Atomic;
 
 @Service
 public class CountryService {

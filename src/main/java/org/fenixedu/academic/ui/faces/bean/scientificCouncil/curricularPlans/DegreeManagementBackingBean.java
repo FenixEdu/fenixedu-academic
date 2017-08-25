@@ -52,7 +52,6 @@ import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.
 import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.EditDegree;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;

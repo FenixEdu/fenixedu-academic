@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Comparator;
 import java.util.Set;
 
@@ -36,7 +34,6 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;

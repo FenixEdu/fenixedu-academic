@@ -140,15 +140,6 @@ public class UIAutoComplete extends UIInput {
         return textFieldId.replace(".", "\\\\.").replaceAll(":", "\\\\\\\\:");
     }
 
-    private void encodeAutoCompleteDiv(ResponseWriter writer, String clientId, String autoCompleteStyleClass) throws IOException {
-
-        writer.startElement("div", this);
-        writer.writeAttribute("class", autoCompleteStyleClass, null);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("name", clientId, null);
-        writer.endElement("div");
-    }
-
     private void encodeAutoCompleteInclusionScriptsIfRequired(ResponseWriter writer, Map requestMap, String contextPath)
             throws IOException {
         if (requestMap.containsKey(INIT_SCRIPT_FLAG_REQUEST_KEY) == false) {

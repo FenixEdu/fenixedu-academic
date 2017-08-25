@@ -315,33 +315,6 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         return mapping.findForward("fillPersonalData");
     }
 
-    private ActionForward returnToPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        request.setAttribute("candidacyBean", getCandidacyBean());
-
-        return mapping.findForward("fillPersonalData");
-    }
-
-    private ActionForward prepareFillPhdProgramData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        request.setAttribute("candidacyBean", getCandidacyBean());
-
-        return mapping.findForward("fillPhdProgramData");
-    }
-
-    private ActionForward fillPhdProgramDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        request.setAttribute("candidacyBean", getCandidacyBean());
-
-        return mapping.findForward("fillPhdProgramData");
-    }
-
-    private ActionForward fillPhdProgramDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        request.setAttribute("candidacyBean", getCandidacyBean());
-        return mapping.findForward("fillPhdProgramData");
-    }
-
     public ActionForward createApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

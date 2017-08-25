@@ -169,15 +169,6 @@ public final class RenderTimeTableTag extends TagSupport {
         return (SKIP_BODY);
     }
 
-    private boolean hasLessonBefore8(final List<InfoShowOccupation> infoLessonList) {
-        for (final InfoShowOccupation infoShowOccupation : infoLessonList) {
-            if (infoShowOccupation.getFirstHourOfDay() < 8) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Method generateTimeTable.
      *

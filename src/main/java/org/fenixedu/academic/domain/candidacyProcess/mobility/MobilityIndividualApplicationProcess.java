@@ -58,11 +58,11 @@ import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.I18N;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -1183,37 +1183,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     }
 
-    static private class EnrolOnFirstSemester extends Activity<MobilityIndividualApplicationProcess> {
-
-        @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isAllowedToManageProcess(process, userView)) {
-                throw new PreConditionNotValidException();
-            }
-
-            if (process.getCandidacy().getRegistration() == null) {
-                throw new PreConditionNotValidException();
-            }
-
-            if (!process.isStudentAcceptedAndNotified()) {
-                throw new PreConditionNotValidException();
-            }
-
-            if (!process.isStudentNotifiedWithReceptionEmail()) {
-                throw new PreConditionNotValidException();
-            }
-
-        }
-
-        @Override
-        protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                User userView, Object object) {
-            process.enrol();
-            return process;
-        }
-
-    }
-
     static private class RevertCandidacyToStandBy extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
@@ -1340,10 +1309,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final MobilityIndividualApplicationProcess candidacyProcess) {
         return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
-    }
-
-    private void enrol() {
-        getCandidacy().enrol();
     }
 
     public DateTime getMostRecentSentEmailAcceptedStudentActionWhenOccured() {

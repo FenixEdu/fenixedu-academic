@@ -35,7 +35,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.domain.Avatar;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;

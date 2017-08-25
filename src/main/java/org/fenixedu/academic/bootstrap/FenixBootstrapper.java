@@ -28,14 +28,11 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.bootstrap.FenixBootstrapper.SchoolSetupSection;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.CurricularYear;
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.EvaluationConfiguration;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
@@ -43,15 +40,12 @@ import org.fenixedu.academic.domain.contacts.PartyContactValidationState;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.PartyType;
 import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.PlanetUnit;
 import org.fenixedu.academic.domain.organizationalStructure.SchoolUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -59,8 +53,6 @@ import org.fenixedu.academic.domain.serviceRequests.InstitutionRegistryCodeGener
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.I18N;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.bootstrap.BootstrapError;
 import org.fenixedu.bennu.core.bootstrap.annotations.Bootstrap;
@@ -69,7 +61,6 @@ import org.fenixedu.bennu.core.bootstrap.annotations.Field;
 import org.fenixedu.bennu.core.bootstrap.annotations.Section;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
@@ -80,10 +71,10 @@ import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.fenixedu.spaces.domain.SpaceClassification;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.standards.geographic.Planet;
-
 import com.google.common.collect.Lists;
 import com.google.gson.JsonParser;
+
+import pt.ist.standards.geographic.Planet;
 
 @Bootstrapper(sections = { SchoolSetupSection.class, PortalSection.class, AdminUserSection.class }, name = "bootstrapper.name",
         bundle = Bundle.APPLICATION, after = PortalBootstrapper.class)
@@ -233,70 +224,6 @@ public class FenixBootstrapper {
             return SchoolUnit.createNewSchoolUnit(new LocalizedString(Locale.getDefault(), universityName), null, null,
                     universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
         }
-
-        private void createServiceUnits(final AggregateUnit serviceUnits) {
-            AdministrativeOffice administrativeOffice = new AdministrativeOffice();
-            Unit.createNewUnit(new LocalizedString(Locale.getDefault(), "Office"), null, null, null, new YearMonthDay(),
-                    null, serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
-                    null, administrativeOffice, Boolean.FALSE, null);
-            new AdministrativeOfficeServiceAgreementTemplate(administrativeOffice);
-        }
-
-        private void createDepartmentUnits(final AggregateUnit departmentUnits) {
-            for (int i = 0; i < 5; i++) {
-                createDepartment(departmentUnits, i);
-            }
-        }
-
-        private void createDepartment(final AggregateUnit departmentUnits, final int i) {
-            final Department department = new Department();
-            department.setCode(getDepartmentCode(i));
-            final String departmentName = getDepartmentName(i);
-            department.setName(departmentName);
-            department.setRealName(departmentName);
-            department.setCompetenceCourseMembersGroup(getCompetenceCourseMembersGroup());
-
-            final DepartmentUnit departmentUnit = createDepartmentUnut(departmentUnits, 3020 + i, department);
-            department.setDepartmentUnit(departmentUnit);
-
-            createCompetenceCourseGroupUnit(departmentUnit);
-        }
-
-        private int areaCounter = 0;
-
-        private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
-            final ScientificAreaUnit scientificAreaUnit =
-                    ScientificAreaUnit.createNewInternalScientificArea(new LocalizedString(Locale.getDefault(),
-                            "Scientific Area"), null, null, "Code" + areaCounter++, new YearMonthDay(), null, departmentUnit,
-                            AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE,
-                            null);
-
-            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new LocalizedString(Locale.getDefault(),
-                    "Competence Courses"), null, null, null, new YearMonthDay(), null, scientificAreaUnit, AccountabilityType
-                    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
-        }
-
-        private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber,
-                final Department department) {
-            return DepartmentUnit.createNewInternalDepartmentUnit(new LocalizedString(Locale.getDefault(), "Department Name "
-                    + someNumber), null, Integer.valueOf(2100 + someNumber), "DU" + someNumber,
-                    new YearMonthDay().minusMonths(1), null, departmentUnits,
-                    AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null,
-                    Boolean.FALSE, null);
-        }
-
-        private org.fenixedu.bennu.core.groups.Group getCompetenceCourseMembersGroup() {
-            return RoleType.TEACHER.actualGroup().or(Group.managers());
-        }
-
-        private String getDepartmentName(final int i) {
-            return "Department " + i;
-        }
-
-        private String getDepartmentCode(final int i) {
-            return "DEP" + i;
-        }
-
     }
 
     private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {

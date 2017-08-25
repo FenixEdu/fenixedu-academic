@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.predicate;
 
-import java.util.stream.Collectors;
-
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.MarkSheet;
 import org.fenixedu.academic.domain.Teacher;

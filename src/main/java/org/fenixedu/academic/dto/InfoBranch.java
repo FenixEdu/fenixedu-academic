@@ -22,7 +22,6 @@ import java.util.StringTokenizer;
 
 import org.fenixedu.academic.domain.Branch;
 import org.fenixedu.academic.domain.branch.BranchType;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.I18N;
 
 /**

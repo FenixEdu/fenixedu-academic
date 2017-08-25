@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.OptionalEnrolment;
@@ -119,16 +118,8 @@ public class CurriculumRenderer extends InputRenderer {
         this.enrolmentRowClass = enrolmentRowClass;
     }
 
-    private String getDismissalRowClass() {
-        return dismissalRowClass;
-    }
-
     public void setDismissalRowClass(String dismissalRowClass) {
         this.dismissalRowClass = dismissalRowClass;
-    }
-
-    private String getTemporaryDismissalRowClass() {
-        return temporaryDismissalRowClass;
     }
 
     public void setTemporaryDismissalRowClass(String temporaryDismissalRowClass) {
@@ -141,10 +132,6 @@ public class CurriculumRenderer extends InputRenderer {
 
     private String[] getCellClasses() {
         return this.cellClasses.split(",");
-    }
-
-    private String getTabCellClass() {
-        return getCellClasses()[0];
     }
 
     private String getLabelCellClass() {

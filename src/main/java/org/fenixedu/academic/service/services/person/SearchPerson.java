@@ -373,17 +373,8 @@ public class SearchPerson implements Serializable {
             return (searchParameter == null) || (parameter != null && simpleNnormalizeAndCompare(parameter, searchParameter));
         }
 
-        private boolean verifyParameter(String parameter, String searchParameter) {
-            return (searchParameter == null) || (parameter != null && normalizeAndCompare(parameter, searchParameter));
-        }
-
         private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) {
             String personParameter = parameter;
-            return (personParameter.indexOf(searchParameter) == -1) ? false : true;
-        }
-
-        private boolean normalizeAndCompare(String parameter, String searchParameter) {
-            String personParameter = StringNormalizer.normalize(parameter.trim());
             return (personParameter.indexOf(searchParameter) == -1) ? false : true;
         }
 

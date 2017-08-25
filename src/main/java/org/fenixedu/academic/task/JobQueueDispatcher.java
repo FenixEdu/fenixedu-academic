@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.QueueJob;
 import org.fenixedu.academic.domain.QueueJobResult;
 import org.fenixedu.academic.domain.QueueJobResultFile;
 import org.fenixedu.academic.domain.QueueJobWithFile;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;

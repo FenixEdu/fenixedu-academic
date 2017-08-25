@@ -302,23 +302,6 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         return false;
     }
 
-    private static void addAcception(String acronym) {
-        if (logger.isDebugEnabled()) {
-            logger.info("addAcception, called with " + acronym);
-        }
-
-        StringBuilder temp = new StringBuilder(acronym);
-
-        for (String element : splitsName) {
-            if (isValidAcception(element)) {
-                temp.append(element);
-                if (logger.isDebugEnabled()) {
-                    logger.info("addAcception, appending " + element);
-                }
-            }
-        }
-    }
-
     private static boolean isValidAcception(String string) {
         if (acceptSet.contains(StringUtils.upperCase(string))) {
             if (logger.isDebugEnabled()) {

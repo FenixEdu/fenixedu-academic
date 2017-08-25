@@ -89,9 +89,4 @@ public class UIBreadCrumbs extends UIInput {
         responseWriter.endElement("a");
     }
 
-    private void writeBR(final ResponseWriter responseWriter) throws IOException {
-        responseWriter.startElement("br", this);
-        responseWriter.endElement("br");
-    }
-
 }

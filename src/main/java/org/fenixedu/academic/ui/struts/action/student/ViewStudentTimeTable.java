@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.struts.action.student;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,7 +62,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
 
-        List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
+        List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrationStream().collect(Collectors.toList());
         if (registrations.size() == 1) {
             return forwardToShowTimeTable(registrations.get(0), mapping, request, ExecutionSemester.readActualExecutionSemester());
         } else {

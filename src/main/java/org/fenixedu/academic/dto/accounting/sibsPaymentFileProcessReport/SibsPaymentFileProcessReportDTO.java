@@ -242,10 +242,6 @@ public class SibsPaymentFileProcessReportDTO {
         return specializationGratuityTotalAmount;
     }
 
-    private void addPhdGratuityAmount(final Money amount) {
-        this.phdGratuityTotalAmout = this.phdGratuityTotalAmout.add(amount);
-    }
-
     public Money getPhdGratuityTotalAmout() {
         return phdGratuityTotalAmout;
     }

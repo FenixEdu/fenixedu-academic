@@ -350,10 +350,6 @@ public class Grouping extends Grouping_Base {
         });
     }
 
-    private boolean isShiftTypeEqual(ShiftType shiftType) {
-        return ((shiftType != null && getShiftType() != null && getShiftType().compareTo(shiftType) == 0) || (shiftType == null && getShiftType() == null));
-    }
-
     private boolean isShiftTypeDifferent(ShiftType shiftType) {
         return (((shiftType == null && getShiftType() != null) || (shiftType != null && getShiftType() == null)) || getShiftType()
                 .compareTo(shiftType) != 0);

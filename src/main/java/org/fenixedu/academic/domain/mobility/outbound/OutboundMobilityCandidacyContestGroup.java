@@ -402,19 +402,6 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         }
     }
 
-    private void unselectCandidates(final OutboundMobilityCandidacyPeriod period) {
-        for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
-            if (contest.getOutboundMobilityCandidacyPeriod() == period) {
-                for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
-                    final OutboundMobilityCandidacySubmission submission = candidacy.getSubmissionFromSelectedCandidacy();
-                    if (submission != null) {
-                        candidacy.unselect();
-                    }
-                }
-            }
-        }
-    }
-
     private boolean intersect(final OutboundMobilityCandidacyContestGroup otherGroup) {
         return CollectionUtils.containsAny(getExecutionDegreeSet(), otherGroup.getExecutionDegreeSet());
     }

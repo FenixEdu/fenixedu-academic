@@ -178,10 +178,6 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
         }
     }
 
-    private List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
-        return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
-    }
-
     private List<SecondCycleCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
         final List<SecondCycleCandidacyProcess> result = new ArrayList<SecondCycleCandidacyProcess>();
         for (final SecondCycleCandidacyPeriod period : executionInterval.getSecondCycleCandidacyPeriods()) {

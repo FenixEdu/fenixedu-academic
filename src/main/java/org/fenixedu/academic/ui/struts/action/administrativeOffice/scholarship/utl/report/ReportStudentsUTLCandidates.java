@@ -153,16 +153,6 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
         addHeaderCell(sheet, getHeaderInBundle("documentNumber"), 6);
     }
 
-    private void fillRegimeTable(HSSFWorkbook wb) {
-        HSSFSheet sheet = wb.createSheet("Regime");
-
-        for (int i = 0; i <= 7; i++) {
-            HSSFRow row = sheet.createRow(i);
-            row.createCell(0).setCellValue(false);
-            row.createCell(1).setCellValue(false);
-        }
-    }
-
     protected void testIt(final StudentLine studentLine) {
         String institutionCode = studentLine.getInstitutionCode();
         String institutionName = studentLine.getInstitutionName();
@@ -398,11 +388,6 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
     protected void addCellValue(HSSFRow row, String value, int cellNumber) {
         HSSFCell cell = row.createCell(cellNumber);
         cell.setCellValue(value);
-    }
-
-    private void addCellFormula(HSSFRow row, String value, int cellNumber) {
-        HSSFCell cell = row.createCell(cellNumber);
-        cell.setCellFormula(value);
     }
 
     public List<StudentLine> getCorrectStudentLines() {

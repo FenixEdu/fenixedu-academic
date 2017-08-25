@@ -90,9 +90,6 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
 
     private static enum ExternalDegreeModuleType {
         CURRICULAR_COURSE;
-        public String getName() {
-            return this.name();
-        }
     }
 
     static public List<ExternalCurricularCourseResultBean> buildFrom(final Unit unit) {

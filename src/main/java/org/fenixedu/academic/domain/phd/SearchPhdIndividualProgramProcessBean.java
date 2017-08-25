@@ -27,7 +27,6 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriod;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType;
 import org.fenixedu.academic.util.predicates.AndPredicate;
