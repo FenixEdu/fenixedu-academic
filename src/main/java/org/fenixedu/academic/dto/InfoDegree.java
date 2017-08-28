@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.I18N;
 
 public class InfoDegree extends InfoObject implements Comparable {

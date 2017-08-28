@@ -137,9 +137,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     public List<SelectItem> getRegistrationsSelectItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        for (final Registration registration : getPerson().getStudent().getActiveRegistrations()) {
-            result.add(new SelectItem(registration.getExternalId(), registration.getDegreeNameWithDegreeCurricularPlanName()));
-        }
+        getPerson().getStudent().getActiveRegistrationStream().
+            forEach(r -> result.add(new SelectItem(r.getExternalId(), r.getDegreeNameWithDegreeCurricularPlanName())));
 
         if (!result.isEmpty() && registration == null) {
             setRegistrationID(getPerson().getStudent().getLastActiveRegistration().getExternalId());
@@ -158,11 +157,9 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
     public Registration getStudent() {
         if (registration == null || !registration.getExternalId().equals(getRegistrationID())) {
-            for (final Registration activeRegistration : getPerson().getStudent().getActiveRegistrations()) {
-                if (activeRegistration.getExternalId().equals(getRegistrationID())) {
-                    registration = activeRegistration;
-                    break;
-                }
+            final Registration reg = getPerson().getStudent().getActiveRegistrationStream().filter(r -> r.getExternalId().equals(getRegistrationID())).findAny().orElse(null);
+            if (reg != null) {
+                registration = reg;
             }
         }
         return registration;

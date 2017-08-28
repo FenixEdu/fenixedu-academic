@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceReques
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 public class AcademicServiceRequestEventWrapper implements Wrapper {
 

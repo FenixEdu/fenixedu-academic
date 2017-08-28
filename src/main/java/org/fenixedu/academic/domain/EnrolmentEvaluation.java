@@ -146,18 +146,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         setExecutionPeriod(executionSemester);
     }
 
-    private int compareMyExamDateToAnotherExamDate(Date examDate) {
-        if (this.getExamDate() == null) {
-            return -1;
-        }
-        if (examDate == null) {
-            return 1;
-        }
-
-        return this.getExamDate().compareTo(examDate);
-
-    }
-
     public EnrollmentState getEnrollmentStateByGrade() {
         return getGrade().getEnrolmentState();
     }

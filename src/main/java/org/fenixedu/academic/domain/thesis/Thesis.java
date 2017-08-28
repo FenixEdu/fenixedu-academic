@@ -1634,10 +1634,6 @@ public class Thesis extends Thesis_Base {
         return getOrientation().stream().filter(p -> p.getPerson() != null).map(p -> p.getPerson()).collect(Collectors.toSet());
     }
 
-    private List<Person> getOrientationPersonsList() {
-        return getOrientation().stream().filter(p -> p.getPerson() != null).map(p -> p.getPerson()).collect(Collectors.toList());
-    }
-
     public void addExternal(ThesisParticipationType type, String name, String email) {
         new ThesisEvaluationParticipant(this, name, email, type);
     }

@@ -1,5 +1,7 @@
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.util.Bundle;
@@ -9,10 +11,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.GroupStrategy;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
-
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).

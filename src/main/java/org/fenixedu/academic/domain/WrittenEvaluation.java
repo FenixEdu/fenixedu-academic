@@ -628,13 +628,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Student student) {
-        for (Registration registration : student.getActiveRegistrations()) {
-            final WrittenEvaluationEnrolment evaluationEnrolment = getWrittenEvaluationEnrolmentFor(registration);
-            if (evaluationEnrolment != null) {
-                return evaluationEnrolment;
-            }
-        }
-        return null;
+        return student.getActiveRegistrationStream()
+                .map(r -> getWrittenEvaluationEnrolmentFor(r))
+                .filter(wee -> wee != null)
+                .findAny().orElse(null);
     }
 
     public boolean isInEnrolmentPeriod() {

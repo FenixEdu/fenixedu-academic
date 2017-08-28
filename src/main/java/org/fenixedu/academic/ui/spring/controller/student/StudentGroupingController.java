@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.spring.controller.student;
 
-import com.google.gson.JsonArray;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -46,12 +45,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
-
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @SpringApplication(description = "link.student.group", path = "enroll-spring", group = "anyone", hint = "Student",
         title = "label.enroll")

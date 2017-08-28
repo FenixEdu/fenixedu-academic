@@ -18,7 +18,8 @@
  */
 package org.fenixedu.academic.ui.struts.action.externalSupervision.consult;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,7 +54,7 @@ public class ShowStudentTimeTable extends ViewStudentTimeTable {
 
         request.setAttribute("student", student);
 
-        List<Registration> registrations = person.getStudent().getActiveRegistrations();
+        Set<Registration> registrations = person.getStudent().getActiveRegistrationStream().collect(Collectors.toSet());
         if (registrations.size() == 0) {
             return forwardToShowTimeTableForSupervisor(person.getStudent().getLastRegistration(), mapping, request);
         } else if (registrations.size() == 1) {

@@ -152,7 +152,7 @@ public class Exam extends Exam_Base {
     public static List<Exam> getAllByDate(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
         List<Exam> result = new ArrayList<Exam>();
 
-        outter: for (Exam exam : Exam.readExams()) {
+        for (Exam exam : Exam.readExams()) {
             if (!DateFormatUtil.equalDates("dd/MM/yyyy", examDay.getTime(), exam.getDayDate())) {
                 continue;
             }

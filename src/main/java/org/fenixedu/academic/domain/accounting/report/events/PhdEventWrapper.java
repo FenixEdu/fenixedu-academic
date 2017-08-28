@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.accounting.report.events;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.debts.PhdEvent;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 public class PhdEventWrapper implements Wrapper {
     PhdEvent event;

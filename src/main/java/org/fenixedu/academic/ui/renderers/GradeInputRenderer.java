@@ -120,10 +120,6 @@ public class GradeInputRenderer extends InputRenderer {
             return gradeScale;
         }
 
-        public void setGradeScale(GradeScale gradeScale) {
-            this.gradeScale = gradeScale;
-        }
-
     }
 
     private static class HtmlGradeTextInput extends HtmlTextInput {

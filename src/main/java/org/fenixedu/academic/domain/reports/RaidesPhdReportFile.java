@@ -19,15 +19,11 @@
 package org.fenixedu.academic.domain.reports;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -48,7 +44,6 @@ import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,32 +107,6 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         }
 
         return phdIndividualProgramProcessList;
-    }
-
-    private Set<StudentCurricularPlan> getStudentCurricularPlansToProcess(ExecutionYear executionYear) {
-        final Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
-
-        collectStudentCurricularPlansFor(executionYear, result);
-
-        if (executionYear.getPreviousExecutionYear() != null) {
-            collectStudentCurricularPlansFor(executionYear.getPreviousExecutionYear(), result);
-        }
-
-        return result;
-    }
-
-    private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
-            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet());
-        }
-    }
-
-    private String getReportName(final String prefix, final ExecutionYear executionYear) {
-
-        final StringBuilder result = new StringBuilder();
-        result.append(new LocalDateTime().toString("yyyyMMddHHmm"));
-        result.append("_").append(prefix).append("_").append(executionYear.getName().replace('/', '_'));
-        return result.toString();
     }
 
     private void fillSpreadsheet(Spreadsheet spreadsheet) {

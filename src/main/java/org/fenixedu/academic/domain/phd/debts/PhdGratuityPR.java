@@ -134,15 +134,6 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         return amountToPay;
     }
 
-    private boolean hasFineExemption(PhdGratuityEvent phdGratuityEvent) {
-        for (Exemption exemption : phdGratuityEvent.getExemptionsSet()) {
-            if (exemption instanceof PhdGratuityFineExemption) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private Money adjustGratuityWithExmptions(PhdGratuityEvent phdGratuityEvent, Money gratuity) {
         if (phdGratuityEvent.getExemptionsSet().size() > 0) {
             for (Exemption exemption : phdGratuityEvent.getExemptionsSet()) {
@@ -162,12 +153,6 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         }
 
         throw new DomainException("error.phd.debts.PhdGratuityPR.cannot.find.period");
-    }
-
-    private Money getFine(LocalDate programStartDate, DateTime when, Money value) {
-        PhdGratuityPaymentPeriod phdGratuityPeriod = getPhdGratuityPeriod(programStartDate);
-
-        return phdGratuityPeriod.fine(getFineRate(), getGratuity(), when);
     }
 
     @Override

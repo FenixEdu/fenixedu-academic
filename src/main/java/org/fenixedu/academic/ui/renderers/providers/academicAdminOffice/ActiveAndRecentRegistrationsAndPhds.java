@@ -61,11 +61,9 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
                 }
             }
         }
-        for (Registration registration : student.getActiveRegistrations()) {
-            if (!registration.getDegreeType().isEmpty() && registration.isAllowedToManageRegistration()) {
-                phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(registration));
-            }
-        }
+        student.getActiveRegistrationStream()
+            .filter(r -> !r.getDegreeType().isEmpty() && r.isAllowedToManageRegistration())
+            .forEach(r -> phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(r)));
 
         for (Registration concludedRegistration : student.getConcludedRegistrations()) {
             if (!concludedRegistration.getDegreeType().isEmpty() && concludedRegistration.isBolonha()

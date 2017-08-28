@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
-import org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentEnrollApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -165,7 +164,4 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         return getLoggedPerson(request).getStudent();
     }
 
-    private CycleEnrolmentBean getCycleEnrolmentBeanFromViewState() {
-        return getRenderedObject();
-    }
 }

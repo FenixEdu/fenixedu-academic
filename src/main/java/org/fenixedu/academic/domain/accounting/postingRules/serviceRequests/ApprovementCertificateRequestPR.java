@@ -28,10 +28,6 @@ import org.joda.time.DateTime;
 
 public class ApprovementCertificateRequestPR extends ApprovementCertificateRequestPR_Base {
 
-    private ApprovementCertificateRequestPR() {
-        super();
-    }
-
     public ApprovementCertificateRequestPR(DateTime startDate, DateTime endDate,
             ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
             Money maximumAmount) {

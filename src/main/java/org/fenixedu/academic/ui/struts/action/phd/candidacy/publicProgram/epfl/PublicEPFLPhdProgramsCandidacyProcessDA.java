@@ -579,31 +579,6 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         return bean;
     }
 
-    private List<PhdProgramDocumentUploadBean> createHabilitationCertificateDocuments(final PhdProgramCandidacyProcessBean bean) {
-        final List<PhdProgramDocumentUploadBean> result =
-                new ArrayList<PhdProgramDocumentUploadBean>(bean.getQualifications().size());
-        if (bean.hasAnyQualification()) {
-            bean.sortQualificationsByAttendedEnd();
-            for (final QualificationBean qualification : bean.getQualifications()) {
-                final PhdProgramDocumentUploadBean uploadBean =
-                        createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
-                uploadBean.setRemarks(qualification.getType().getLocalizedName());
-                result.add(uploadBean);
-            }
-        }
-        return result;
-    }
-
-    private List<PhdProgramDocumentUploadBean> createPhdGuidingLetters(final PhdProgramCandidacyProcessBean bean) {
-        final List<PhdProgramDocumentUploadBean> result = new ArrayList<PhdProgramDocumentUploadBean>(bean.getGuidings().size());
-        if (bean.hasAnyGuiding()) {
-            for (int i = 0; i < bean.getGuidings().size(); i++) {
-                result.add(createDocumentBean(PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER));
-            }
-        }
-        return result;
-    }
-
     public ActionForward createCandidacyStepThreeInvalid(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));

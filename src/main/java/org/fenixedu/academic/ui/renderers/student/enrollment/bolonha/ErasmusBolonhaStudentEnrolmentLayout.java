@@ -23,8 +23,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
@@ -61,20 +59,6 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
     protected boolean isAcademicRelationsOfficeMember() {
         final Person person = AccessControl.getPerson();
         return RoleType.INTERNATIONAL_RELATION_OFFICE.isMember(person.getUser()) || canPerformStudentEnrolments;
-    }
-
-    private boolean contains(List<CurricularCourse> curricularCourseList, final IDegreeModuleToEvaluate degreeModule) {
-        if (!CurricularCourse.class.isAssignableFrom(degreeModule.getClass())) {
-            return false;
-        }
-
-        return CollectionUtils.find(curricularCourseList, new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((CurricularCourse) degreeModule).isEquivalent((CurricularCourse) arg0);
-            }
-        }) != null;
     }
 
     @Override

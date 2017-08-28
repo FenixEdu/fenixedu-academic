@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 /**
  * @author T�nia Pous�o Created on 30/Out/2003

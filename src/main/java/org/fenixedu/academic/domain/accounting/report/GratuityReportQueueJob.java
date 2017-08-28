@@ -239,12 +239,6 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
             return event.getWhenOccured().toString("dd/MM/yyyy");
         }
 
-        public Money getOriginalTotalAmount() {
-            // TODO
-
-            return Money.ZERO;
-        }
-
         public Money getTotalAmount() {
             return event.getTotalAmountToPay();
         }

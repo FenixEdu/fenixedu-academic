@@ -713,18 +713,17 @@ public class PersonalInformationBean implements Serializable {
     }
 
     public String getFormattedValues() {
-        Formatter result = new Formatter();
-
-        final Student student = getStudent();
-        result.format("Student Number: %d\n", student.getNumber());
-        result.format("Name: %s\n", student.getPerson().getName());
-        if (hasPhdIndividualProgramProcess()) {
-            result.format("Degree: %s\n", getPhdIndividualProgramProcess().getDisplayName());
-        } else {
-            result.format("Degree: %s\n", getRegistration().getDegree().getPresentationName());
+        try (Formatter result = new Formatter()) {
+            final Student student = getStudent();
+            result.format("Student Number: %d\n", student.getNumber());
+            result.format("Name: %s\n", student.getPerson().getName());
+            if (hasPhdIndividualProgramProcess()) {
+                result.format("Degree: %s\n", getPhdIndividualProgramProcess().getDisplayName());
+            } else {
+                result.format("Degree: %s\n", getRegistration().getDegree().getPresentationName());
+            }
+            return result.toString();
         }
-
-        return result.toString();
     }
 
     @Override

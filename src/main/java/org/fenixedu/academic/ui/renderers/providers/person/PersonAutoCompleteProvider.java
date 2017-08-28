@@ -39,9 +39,4 @@ public class PersonAutoCompleteProvider implements AutoCompleteProvider<Person> 
         return result;
     }
 
-    private boolean match(final String stringToMatch, final String content) {
-        final String normalizedContent = StringNormalizer.normalize(content);
-        return normalizedContent.indexOf(stringToMatch) >= 0;
-    }
-
 }

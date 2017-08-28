@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -171,32 +170,6 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         dynaActionForm.set("other", null);
 
         return mapping.findForward("showWeeklyWorkLoad");
-    }
-
-    private static class Week {
-        private int weekOffset;
-        private Interval interval;
-
-        public int getWeekOffset() {
-            return weekOffset;
-        }
-
-        public void setWeekOffset(int weekOffset) {
-            this.weekOffset = weekOffset;
-        }
-
-        public Interval getInterval() {
-            return interval;
-        }
-
-        public void setInterval(Interval interval) {
-            this.interval = interval;
-        }
-
-    }
-
-    private SortedSet<Week> getWeeks(final ExecutionSemester executionSemester) {
-        return null;
     }
 
     private Attends findFirstAttends(final HttpServletRequest request, final ExecutionSemester selectedExecutionPeriod)

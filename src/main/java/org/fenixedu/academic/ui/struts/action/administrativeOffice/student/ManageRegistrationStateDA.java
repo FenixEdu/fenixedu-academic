@@ -26,13 +26,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationStateLog;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.dto.VariantBean;
 import org.fenixedu.academic.dto.student.RegistrationStateBean;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -43,7 +41,6 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
-import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -78,13 +75,6 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 
         public RegistrationStateCreator(Registration registration) {
             super(registration);
-        }
-
-        private RegistrationStateCreator(Registration reg, Person responsible, DateTime creation, RegistrationStateType stateType) {
-            this(reg);
-            setResponsible(responsible);
-            setStateDateTime(creation);
-            setStateType(stateType);
         }
 
         @Override

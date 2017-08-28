@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.student;
 
-import pt.ist.fenixframework.Atomic;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,6 +35,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -133,7 +134,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
+import pt.ist.fenixframework.Atomic;
 
 public class Registration extends Registration_Base {
 
@@ -927,6 +928,17 @@ public class Registration extends Registration_Base {
         return !getExternalEnrolmentsSet().isEmpty();
     }
 
+    final public Stream<ExecutionYear> getEnrolmentsExecutionYearStream() {
+        return getStudentCurricularPlansSet().stream()
+            .flatMap(scp -> scp.getEnrolmentStream())
+            .map(e -> e.getExecutionYear())
+            .distinct();
+    }
+
+    /**
+     * @deprecated use getEnrolmentsExecutionYearStream instead
+     */
+    @Deprecated
     final public Collection<ExecutionYear> getEnrolmentsExecutionYears() {
         final Set<ExecutionYear> result = new HashSet<ExecutionYear>();
 
@@ -939,21 +951,20 @@ public class Registration extends Registration_Base {
     }
 
     final public int getNumberOfYearsEnrolledUntil(ExecutionYear executionYear) {
-        int count = 0;
-        for (ExecutionYear year : getEnrolmentsExecutionYears()) {
-            if (year.isBeforeOrEquals(executionYear)) {
-                count++;
-            }
-        }
-        return count;
+        return Math.toIntExact(getEnrolmentsExecutionYearStream()
+            .filter(y -> y.isBeforeOrEquals(executionYear))
+            .count());
     }
 
     final public SortedSet<ExecutionYear> getSortedEnrolmentsExecutionYears() {
-        final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
-        result.addAll(getEnrolmentsExecutionYears());
-        return result;
+        final Supplier<TreeSet<ExecutionYear>> supplier = () -> new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
+        return getEnrolmentsExecutionYearStream().collect(Collectors.toCollection(supplier));
     }
 
+    /**
+     * @deprecated method is never used... delete it
+     */
+    @Deprecated
     public Set<ExecutionYear> getAllRelatedRegistrationsEnrolmentsExecutionYears(Set<ExecutionYear> result) {
         if (result == null) {
             result = new HashSet<ExecutionYear>();
@@ -1388,6 +1399,10 @@ public class Registration extends Registration_Base {
         return result.size();
     }
 
+    /**
+     * @deprecated method is never used... delete it
+     */
+    @Deprecated
     final public Integer getNumberOfExecutionCoursesWithEnroledShiftsFor(final ExecutionSemester executionSemester) {
         return getAttendingExecutionCoursesFor(executionSemester).size()
                 - countNumberOfDistinctExecutionCoursesOfShiftsFor(executionSemester);

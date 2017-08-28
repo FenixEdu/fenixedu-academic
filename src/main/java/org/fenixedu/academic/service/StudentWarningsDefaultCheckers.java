@@ -1,6 +1,5 @@
 package org.fenixedu.academic.service;
 
-import java.text.Collator;
 import java.util.Collection;
 import java.util.TreeSet;
 import java.util.function.Function;

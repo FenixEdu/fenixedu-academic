@@ -22,7 +22,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.PhoneUtil;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 

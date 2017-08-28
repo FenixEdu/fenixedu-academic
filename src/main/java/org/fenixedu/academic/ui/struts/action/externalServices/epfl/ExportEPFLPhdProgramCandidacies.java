@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.person.Gender;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 public class ExportEPFLPhdProgramCandidacies {
 

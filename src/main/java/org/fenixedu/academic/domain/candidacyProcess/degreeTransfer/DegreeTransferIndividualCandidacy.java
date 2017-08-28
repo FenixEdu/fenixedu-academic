@@ -255,7 +255,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     public void exportValues(StringBuilder result) {
         super.exportValues(result);
 
-        Formatter formatter = new Formatter(result);
+        try (Formatter formatter = new Formatter(result)) {
 
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"), getCandidacyProcess()
                 .getProcessCode());
@@ -291,6 +291,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
         formatter.format("%s: %f\n",
                 BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.seriesCandidacyGrade"),
                 getSeriesCandidacyGrade() != null ? getSeriesCandidacyGrade() : BigDecimal.ZERO);
+        }
 
     }
 

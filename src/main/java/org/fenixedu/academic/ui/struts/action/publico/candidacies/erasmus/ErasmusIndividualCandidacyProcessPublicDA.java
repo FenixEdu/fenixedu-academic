@@ -689,10 +689,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         return backToViewCandidacyInternal(mapping, form, request, response);
     }
 
-    private static final String f(String format, Object... args) {
-        return String.format(format, args);
-    }
-
     public ActionForward chooseCountry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ActionForward actionForwardError = verifySubmissionPreconditions(mapping);

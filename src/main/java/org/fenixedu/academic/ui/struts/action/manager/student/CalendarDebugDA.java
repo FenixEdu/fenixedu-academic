@@ -51,16 +51,7 @@ public class CalendarDebugDA extends FenixAction {
             User u = User.findByUsername(info);
             HashMap<Registration, String> hm = new HashMap<>();
             if (u.getPerson().getStudent() != null) {
-                for (Registration registration : u.getPerson().getStudent().getActiveRegistrations()) {
-                    hm.put(registration,
-                            "<b>Classes: </b>"
-                                    + StringEscapeUtils.escapeHtml(ICalStudentTimeTable.getUrl("syncClasses", registration,
-                                            request))
-                                    + "<br/>"
-                                    + "<b>Exams: </b>"
-                                    + StringEscapeUtils.escapeHtml(ICalStudentTimeTable
-                                            .getUrl("syncExams", registration, request)) + "<br/>");
-                }
+                u.getPerson().getStudent().getActiveRegistrationStream().forEach(r -> hm.put(r, content(request, hm, r)));
             }
             request.setAttribute("list", hm);
         } else {
@@ -69,5 +60,16 @@ public class CalendarDebugDA extends FenixAction {
 
         request.setAttribute("user", info);
         return mapping.findForward("CalendarData");
+    }
+
+    private String content(HttpServletRequest request, HashMap<Registration, String> hm, Registration registration) {
+        try {
+            return "<b>Classes: </b>"
+                    + StringEscapeUtils.escapeHtml(ICalStudentTimeTable.getUrl("syncClasses", registration, request)) + "<br/>"
+                    + "<b>Exams: </b>"
+                    + StringEscapeUtils.escapeHtml(ICalStudentTimeTable.getUrl("syncExams", registration, request)) + "<br/>";
+        } catch (Exception e) {
+            throw new Error(e);
+        }
     }
 }

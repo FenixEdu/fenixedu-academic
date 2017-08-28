@@ -121,12 +121,6 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
         return changeRequest;
     }
 
-    private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
-        String competenceCourseID = request.getParameter("competenceCourseID");
-        CompetenceCourse course = (CompetenceCourse) FenixFramework.getDomainObject(competenceCourseID);
-        return course;
-    }
-
     private void putChangeRequestInRequest(HttpServletRequest request, Department department) {
         List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
         for (CompetenceCourse courses : department.getDepartmentUnit().getCompetenceCourses()) {

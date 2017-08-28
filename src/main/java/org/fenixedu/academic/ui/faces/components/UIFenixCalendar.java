@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.faces.component.NamingContainer;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -148,10 +147,6 @@ public class UIFenixCalendar extends UIInput {
         writer.endElement("table");
         writer.startElement("br", this);
         writer.endElement("br");
-    }
-
-    private String getFieldKey(FacesContext context, String key) {
-        return new String(this.getClientId(context) + NamingContainer.SEPARATOR_CHAR + key);
     }
 
     private void encodeMonthRow(ResponseWriter writer, Calendar date, Locale locale) throws IOException {

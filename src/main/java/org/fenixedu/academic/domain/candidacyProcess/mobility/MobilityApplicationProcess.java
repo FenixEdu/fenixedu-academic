@@ -249,17 +249,6 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         return result;
     }
 
-    private void addCandidacy(final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result,
-            final SecondCycleIndividualCandidacyProcess process) {
-        SortedSet<SecondCycleIndividualCandidacyProcess> values = result.get(process.getCandidacySelectedDegree());
-        if (values == null) {
-            result.put(process.getCandidacySelectedDegree(), values =
-                    new TreeSet<SecondCycleIndividualCandidacyProcess>(
-                            SecondCycleIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON));
-        }
-        values.add(process);
-    }
-
     private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
         if (executionInterval == null) {
             throw new DomainException("error.SecondCycleCandidacyProcess.invalid.executionInterval");

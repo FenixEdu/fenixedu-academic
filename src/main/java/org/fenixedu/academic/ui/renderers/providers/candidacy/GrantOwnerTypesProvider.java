@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.renderers.providers.candidacy;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.GrantOwnerType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
@@ -40,7 +41,7 @@ public class GrantOwnerTypesProvider implements DataProvider {
             boolean isFirstOrSecondCycle = false;
 
             isThirdCycle = student.hasActivePhdProgramProcess();
-            for (Registration registration : student.getActiveRegistrations()) {
+            for (Registration registration : student.getActiveRegistrationStream().collect(Collectors.toSet())) {
                 isThirdCycle |= registration.isDEA();
                 isFirstOrSecondCycle |= registration.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
                 isFirstOrSecondCycle |= registration.isMasterDegreeOrBolonhaMasterDegree();

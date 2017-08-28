@@ -20,7 +20,6 @@ package org.fenixedu.academic.ui.struts.action.academicAdministration.executionC
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -45,7 +44,6 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoCurricularCourse;
-import org.fenixedu.academic.dto.InfoDegree;
 import org.fenixedu.academic.dto.InfoExecutionDegree;
 import org.fenixedu.academic.dto.comparators.ComparatorByNameForInfoExecutionDegree;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -311,20 +309,4 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         return itemToDelete;
     }
 
-    //not used
-    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
-
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
-
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                    && !(infoExecutionDegree.equals(infoExecutionDegree2))) {
-                return true;
-            }
-
-        }
-        return false;
-    }
 }

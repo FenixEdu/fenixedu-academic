@@ -364,10 +364,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         return getGratuityPaymentPlan().getFirstInstallment();
     }
 
-    private Installment getLastInstallment() {
-        return getGratuityPaymentPlan().getLastInstallment();
-    }
-
     public DegreeCurricularPlanServiceAgreement getDegreeCurricularPlanServiceAgreement() {
         return (DegreeCurricularPlanServiceAgreement) getPerson().getServiceAgreementFor(getServiceAgreementTemplate());
 

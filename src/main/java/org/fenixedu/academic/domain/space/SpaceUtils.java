@@ -57,7 +57,6 @@ import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
 import org.fenixedu.spaces.domain.occupation.Occupation;
-import org.fenixedu.spaces.domain.occupation.SharedOccupation;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -382,10 +381,7 @@ public class SpaceUtils {
         if (isBuilding(space)) {
             return space;
         }
-        if (space.getParent() == null || !space.getParent().isActive()) {
-            return null;
-        }
-        return getSpaceBuilding(space.getParent());
+        return space.getParent() == null || !space.getParent().isActive() ? null : getSpaceBuilding(space.getParent());
     }
 
     public static Space getSpaceFloor(Space space) {
@@ -408,20 +404,14 @@ public class SpaceUtils {
         if (isFloor(space)) {
             return space;
         }
-        if (space.getParent() == null) {
-            return null;
-        }
-        return getSpaceFloorWithIntermediary(space.getParent());
+        return space.getParent() == null ? null : getSpaceFloorWithIntermediary(space.getParent());
     }
 
     public static Space getSpaceCampus(Space space) {
         if (isCampus(space)) {
             return space;
         }
-        if (space.getParent() == null) {
-            return null;
-        }
-        return getSpaceCampus(space.getParent());
+        return space.getParent() == null ? null : getSpaceCampus(space.getParent());
     }
 
     public static Collection<Occupation> getResourceAllocationsForCheck(Space space) {
