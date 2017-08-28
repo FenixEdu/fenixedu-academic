@@ -99,11 +99,8 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 
     @Override
     public String getDescription() {
-        if (getInstallment().getPaymentPlan().hasSingleInstallment()) {
-            return BundleUtil.getString(Bundle.ENUMERATION, PaymentCodeType.TOTAL_GRATUITY.getQualifiedName());
-        }
-
-        return super.getDescription();
+        final Installment installment = getInstallment();
+        return installment.getDescription().toString();
 
     }
 
