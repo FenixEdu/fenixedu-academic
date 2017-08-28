@@ -46,7 +46,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
             throws Exception {
         this.slotAccessor = slotAccessor;
         this.acronymAccessor = acronymAccessor;
-        this.objects = new TreeSet<T>(Comparator.comparing(slotAccessor));
+        this.objects = new TreeSet<T>(Comparator.comparing(acronymAccessor));
         this.objects.addAll(objects);
     }
 

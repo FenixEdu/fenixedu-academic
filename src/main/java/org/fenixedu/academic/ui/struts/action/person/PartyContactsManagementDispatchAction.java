@@ -277,8 +277,14 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws IOException {
         PhysicalAddressBean physicalAddressBean = getRenderedObject("physicalAddressBean");
         final PhysicalAddressValidationBean validationBean = physicalAddressBean.getValidationBean();
+        try {
         validationBean.getValidation().setFile(validationBean.getFileName(), validationBean.getFileName(),
                 validationBean.readStream());
+        } catch (DomainException e) {
+            RenderUtils.invalidateViewState();
+            addActionMessageLiteral(request, e.getLocalizedMessage());
+            return forwardToInputValidationCode(mapping, actionForm, request, response, physicalAddressBean.getContact());
+        }
         return backToShowInformation(mapping, actionForm, request, response);
     }
 
