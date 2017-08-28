@@ -499,7 +499,7 @@
 						<% } %>
 					</td>
 				<% } %>
-				<td><%= country == null ? "" : country.getLocalizedName().toString() %></td>
+				<td><%= country == null ? "" : country.getLocalizedName().getContent() %></td>
 				<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
 				<% if (outboundMobilityContextBean.getMobilityPrograms().size() > 1) { %>
 					<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %></td>
