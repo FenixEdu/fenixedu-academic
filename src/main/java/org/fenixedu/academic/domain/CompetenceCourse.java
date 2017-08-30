@@ -90,9 +90,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
         // unique acronym creation
         try {
+            Set<CompetenceCourse> competenceCourses = (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses();
+            competenceCourses.remove(this);
             final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator =
                     new UniqueAcronymCreator<CompetenceCourse>(CompetenceCourse::getName, CompetenceCourse::getAcronym,
-                            (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses());
+                            competenceCourses);
             competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this).getLeft());
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
