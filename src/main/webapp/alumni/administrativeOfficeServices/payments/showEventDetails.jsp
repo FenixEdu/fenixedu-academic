@@ -56,7 +56,7 @@
 
 <logic:notEmpty name="accountingEventPaymentCodes">
 <p class="mtop1 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.sibsPayments" /></strong></p>
-	<fr:view name="accountingEventPaymentCodes" schema="AccountingEventPaymentCode.view">
+	<fr:view name="accountingEventPaymentCodes" schema="StudentAccountingEventPaymentCode.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thcenter tdcenter thlight mtop025" />
 			<fr:property name="columnClasses" value=",," />
