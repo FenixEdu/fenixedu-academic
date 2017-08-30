@@ -48,7 +48,7 @@ public class Holiday extends Holiday_Base {
     }
 
     public static boolean isHoliday(final ReadablePartial date, final Space campus) {
-        final Locality campusLocality = campus.getLocality();
+        final Locality campusLocality = campus == null ? null : campus.getLocality();
         for (final Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
             final Locality locality = holiday.getLocality();
             if ((locality == null || (campus != null && locality == campusLocality))
