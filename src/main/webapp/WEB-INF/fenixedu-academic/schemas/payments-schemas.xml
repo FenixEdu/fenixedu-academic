@@ -423,6 +423,14 @@
 <schema name="AccountingEventPaymentCode.view" type="org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode" bundle="APPLICATION_RESOURCES" extends="PaymentCode.view">
 </schema>
 
+<schema name="StudentAccountingEventPaymentCode.view" type="org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode" bundle="APPLICATION_RESOURCES">
+    <slot name="description" key="label.org.fenixedu.academic.domain.accounting.PaymentCode.type" />
+    <slot name="entityCode" key="label.org.fenixedu.academic.domain.accounting.PaymentCode.entityCode" />
+    <slot name="formattedCode" key="label.org.fenixedu.academic.domain.accounting.PaymentCode.formattedCode" />
+    <slot name="minAmount" key="label.org.fenixedu.academic.domain.accounting.PaymentCode.minAmount" />
+    <slot name="endDate" key="label.org.fenixedu.academic.domain.accounting.PaymentCode.endDate" />
+</schema>
+
 <schema name="CreditNote.view" type="org.fenixedu.academic.domain.accounting.CreditNote" bundle="APPLICATION_RESOURCES">
 	<slot name="whenCreated" layout="no-time" />
 	<slot name="year" />
