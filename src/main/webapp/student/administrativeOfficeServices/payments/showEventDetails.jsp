@@ -71,7 +71,7 @@
 	For this reason, students will not be penalized for not complying with the payment schedule of the 1st installment.
 	<br/>
  --%>
-	<fr:view name="accountingEventPaymentCodes" schema="AccountingEventPaymentCode.view">
+	<fr:view name="accountingEventPaymentCodes" schema="StudentAccountingEventPaymentCode.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thcenter tdcenter thlight mtop025" />
 			<fr:property name="columnClasses" value=",," />
