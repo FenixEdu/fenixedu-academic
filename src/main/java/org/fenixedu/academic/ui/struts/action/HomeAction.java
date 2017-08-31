@@ -25,6 +25,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.domain.MenuContainer;
 import org.fenixedu.bennu.portal.domain.MenuItem;
 import org.fenixedu.bennu.portal.domain.PortalConfiguration;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -35,21 +36,21 @@ public class HomeAction extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        final MenuItem initialMenuEntry = findTopLevelContainer();
-        if (initialMenuEntry == null) {
-            response.sendRedirect(request.getContextPath());
-        } else {
-            response.sendRedirect(request.getContextPath() + initialMenuEntry.getFullPath());
-        }
-
+        final String path = findFirstFuntionalityPath(request);
+        response.sendRedirect(path);
         return null;
     }
 
-    private MenuItem findTopLevelContainer() {
-        for (MenuItem item : PortalConfiguration.getInstance().getMenu().getOrderedChild()) {
-            if (item.isAvailableForCurrentUser() && item.isVisible()) {
-                return item;
+    public static String findFirstFuntionalityPath(final HttpServletRequest request) {
+        final MenuItem initialMenuEntry = findTopLevelContainer(PortalConfiguration.getInstance().getMenu());
+        final String contextPath = request.getContextPath();
+        return initialMenuEntry == null ? contextPath : contextPath + initialMenuEntry.getFullPath();
+    }
+
+    private static MenuItem findTopLevelContainer(final MenuContainer container) {
+        for (final MenuItem item : container.getOrderedChild()) {
+            if (item.isVisible() && item.isAvailableForCurrentUser()) {
+                return item instanceof MenuContainer ? findTopLevelContainer((MenuContainer) item) : item;
             }
         }
         return null;
