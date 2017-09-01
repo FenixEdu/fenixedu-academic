@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -32,7 +33,7 @@ import org.fenixedu.academic.dto.GenericPair;
 
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
-    static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
+    static final public double MAXIMUM_NUMBER_OF_CREDITS = FenixEduAcademicConfiguration.getConfiguration().getMaximumNumberOfCreditsForEnrolment();
 
     static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2;
 
