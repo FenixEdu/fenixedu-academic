@@ -122,6 +122,9 @@ public class FenixEduAcademicConfiguration {
                 description = "identifies the execution period after which mark sheet are to be managed in the fenix system.",
                 defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
+
+        @ConfigurationProperty(key="maximum.number.of.credits.for.enrolment", defaultValue = "40.5")
+        public double getMaximumNumberOfCreditsForEnrolment();
     }
 
     public static ConfigurationProperties getConfiguration() {
