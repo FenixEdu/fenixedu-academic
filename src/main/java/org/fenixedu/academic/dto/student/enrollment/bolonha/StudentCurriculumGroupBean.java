@@ -32,6 +32,8 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 
+import pt.ist.fenixframework.FenixFramework;
+
 public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     private static final long serialVersionUID = 1L;
@@ -194,7 +196,12 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     public List<StudentCurriculumGroupBean> getEnrolledCurriculumGroupsSortedByOrder(final ExecutionSemester executionSemester) {
-        final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>(enrolledCurriculumGroups);
+        final List<StudentCurriculumGroupBean> result = new ArrayList<>();
+        for (final StudentCurriculumGroupBean bena : enrolledCurriculumGroups) {
+            if (FenixFramework.isDomainObjectValid(bena.getCurriculumModule())) {
+                result.add(bena);
+            }
+        }
         Collections.sort(result, new ComparatorByCurriculumGroupOrder(executionSemester));
 
         return result;
