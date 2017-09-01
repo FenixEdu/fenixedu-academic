@@ -71,6 +71,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.FenixFramework;
 
 public class BolonhaStudentEnrolmentLayout extends Layout {
 
@@ -440,21 +441,24 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     protected void generateEnrolments(final StudentCurriculumGroupBean studentCurriculumGroupBean, final HtmlTable groupTable) {
         for (final StudentCurriculumEnrolmentBean studentEnrolmentBean : studentCurriculumGroupBean
                 .getEnrolledCurriculumCourses()) {
-            if (studentEnrolmentBean.getCurriculumModule().isTemporary()) {
-                generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(), getRenderer()
-                        .getTemporaryEnrolmentNameClasses(), getRenderer().getTemporaryEnrolmentYearClasses(), getRenderer()
-                        .getTemporaryEnrolmentSemesterClasses(), getRenderer().getTemporaryEnrolmentEctsClasses(), getRenderer()
-                        .getTemporaryEnrolmentCheckBoxClasses());
-            } else if (studentEnrolmentBean.getCurriculumModule().isImpossible()) {
-                generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(), getRenderer()
-                        .getImpossibleEnrolmentNameClasses(), getRenderer().getImpossibleEnrolmentYearClasses(), getRenderer()
-                        .getImpossibleEnrolmentSemesterClasses(), getRenderer().getImpossibleEnrolmentEctsClasses(),
-                        getRenderer().getImpossibleEnrolmentCheckBoxClasses());
-            } else {
-                generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(),
-                        getRenderer().getEnrolmentNameClasses(), getRenderer().getEnrolmentYearClasses(), getRenderer()
-                                .getEnrolmentSemesterClasses(), getRenderer().getEnrolmentEctsClasses(), getRenderer()
-                                .getEnrolmentCheckBoxClasses());
+            final Enrolment curriculumModule = studentEnrolmentBean.getCurriculumModule();
+            if (FenixFramework.isDomainObjectValid(curriculumModule)) {
+                if (curriculumModule.isTemporary()) {
+                    generateEnrolment(groupTable, curriculumModule, getRenderer()
+                            .getTemporaryEnrolmentNameClasses(), getRenderer().getTemporaryEnrolmentYearClasses(), getRenderer()
+                            .getTemporaryEnrolmentSemesterClasses(), getRenderer().getTemporaryEnrolmentEctsClasses(), getRenderer()
+                            .getTemporaryEnrolmentCheckBoxClasses());
+                } else if (curriculumModule.isImpossible()) {
+                    generateEnrolment(groupTable, curriculumModule, getRenderer()
+                            .getImpossibleEnrolmentNameClasses(), getRenderer().getImpossibleEnrolmentYearClasses(), getRenderer()
+                            .getImpossibleEnrolmentSemesterClasses(), getRenderer().getImpossibleEnrolmentEctsClasses(),
+                            getRenderer().getImpossibleEnrolmentCheckBoxClasses());
+                } else {
+                    generateEnrolment(groupTable, curriculumModule,
+                            getRenderer().getEnrolmentNameClasses(), getRenderer().getEnrolmentYearClasses(), getRenderer()
+                            .getEnrolmentSemesterClasses(), getRenderer().getEnrolmentEctsClasses(), getRenderer()
+                            .getEnrolmentCheckBoxClasses());
+                }
             }
         }
     }
