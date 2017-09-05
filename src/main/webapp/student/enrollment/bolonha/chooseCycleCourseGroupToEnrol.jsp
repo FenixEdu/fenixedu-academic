@@ -36,7 +36,7 @@
 		<bean:message  key="label.enrollment.cycleCourseGroup.noCycleDestinationAffinities" bundle="STUDENT_RESOURCES"/>
 	</span>
 	<br/><br/>
-	<fr:form action="<%="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=" + registrationId%>">
+	<fr:form action="<%="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=" + registrationId + "&executionSemesterID=" + executionSemesterID%>">
 		<html:cancel altKey="cancel.cancel" bundle="HTMLALT_RESOURCES">
 			<bean:message  key="label.back" bundle="APPLICATION_RESOURCES"/>
 		</html:cancel>
