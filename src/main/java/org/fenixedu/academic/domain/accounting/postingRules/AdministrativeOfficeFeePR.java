@@ -131,6 +131,8 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
                 payedAmounts.put(entryDTO.getEntryType(), payedAmount);
             } else {
                 payedAmounts.put(entryDTO.getEntryType(), Money.ZERO);
+                entryDTO.setPayedAmount(payedAmount);
+                entryDTO.setDebtAmount(entryDTO.getAmountToPay());
             }
         }
 

@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
@@ -73,7 +72,6 @@ public class FixedAmountPR extends FixedAmountPR_Base {
         }
 
         final EntryDTO entryDTO = entryDTOs.iterator().next();
-        checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
         return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
                 entryDTO.getAmountToPay(), transactionDetail));
@@ -83,14 +81,6 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     @Override
     public void setFixedAmount(Money fixedAmount) {
         throw new DomainException("error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
-    }
-
-    protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
-        if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
-                    event.getDescriptionForEntryType(getEntryType()));
-        }
     }
 
     @Override
