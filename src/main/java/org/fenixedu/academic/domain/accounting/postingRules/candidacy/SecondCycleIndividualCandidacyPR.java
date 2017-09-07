@@ -84,8 +84,4 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
                         .subtract(payedAmount)));
     }
 
-    @Override
-    protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
-    }
-
 }
