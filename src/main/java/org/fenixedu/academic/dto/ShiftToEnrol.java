@@ -39,6 +39,7 @@ public class ShiftToEnrol extends DataTranferObject {
     private ShiftType seminaryType;
     private ShiftType trainingType;
     private ShiftType tutorialOrientationType;
+    private ShiftType otherType;
 
     private Shift theoricShift;
 
@@ -53,6 +54,7 @@ public class ShiftToEnrol extends DataTranferObject {
     private Shift seminaryShift;
     private Shift trainingShift;
     private Shift tutorialOrientationShift;
+    private Shift otherShift;
 
     private boolean enrolled;
 
@@ -176,6 +178,14 @@ public class ShiftToEnrol extends DataTranferObject {
         this.tutorialOrientationType = tutorialOrientationType;
     }
 
+    public ShiftType getOtherType() {
+        return otherType;
+    }
+
+    public void setOtherType(ShiftType otherType) {
+        this.otherType = otherType;
+    }
+
     public Shift getFieldWorkShift() {
         return fieldWorkShift;
     }
@@ -214,6 +224,14 @@ public class ShiftToEnrol extends DataTranferObject {
 
     public void setTutorialOrientationShift(Shift tutorialOrientationShift) {
         this.tutorialOrientationShift = tutorialOrientationShift;
+    }
+
+    public Shift getOtherShift() {
+        return otherShift;
+    }
+
+    public void setOtherShift(Shift otherShift) {
+        this.otherShift = otherShift;
     }
 
 }
