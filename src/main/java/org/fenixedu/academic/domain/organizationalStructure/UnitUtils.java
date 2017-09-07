@@ -41,10 +41,22 @@ public class UnitUtils {
         return allExternalUnits;
     }
 
-    public static Unit readExternalInstitutionUnitByName(String name) {
-        for (Unit unit : readAllExternalInstitutionUnits()) {
-            if (unit.getName().equals(name)) {
-                return unit;
+    public static Unit readExternalInstitutionUnitByName(final String name) {
+        return readExternalInstitutionUnitByName(readExternalInstitutionUnit(), name);
+    }
+
+    private static Unit readExternalInstitutionUnitByName(final Unit unit, final String name) {
+        if (unit.getName().equals(name)) {
+            return unit;
+        }
+        for (final Accountability acc : unit.getChildsSet()) {
+            final Party child = acc.getChildParty();
+            if (child instanceof Unit) {
+                final Unit childUnit = (Unit) child;
+                final Unit result = readExternalInstitutionUnitByName(childUnit, name);
+                if (result != null) {
+                    return result;
+                }
             }
         }
         return null;

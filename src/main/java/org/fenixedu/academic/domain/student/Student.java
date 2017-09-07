@@ -126,8 +126,12 @@ public class Student extends Student_Base {
     }
 
     public static Student readStudentByNumber(final Integer number) {
-        return Bennu.getInstance().getStudentNumbersSet().stream().filter(sn -> sn.getNumber().equals(number))
-                .map(StudentNumber::getStudent).findAny().orElse(null);
+        for (final StudentNumber sn : Bennu.getInstance().getStudentNumbersSet()) {
+            if (sn.getNumber().equals(number)) {
+                return sn.getStudent();
+            }
+        }
+        return null;
     }
 
     public String getName() {
@@ -287,13 +291,14 @@ public class Student extends Student_Base {
     }
 
     public static Integer generateStudentNumber() {
-        int nextNumber = 0;
+        int max = 0;
         for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
-            if (studentNumber.getNumber().intValue() > nextNumber) {
-                nextNumber = studentNumber.getNumber().intValue();
+            int n = studentNumber.getNumber().intValue();
+            if (n > max) {
+                max = n;
             }
         }
-        return Integer.valueOf(nextNumber + 1);
+        return Integer.valueOf(max + 1);
     }
 
     public ResidenceCandidacies getResidenceCandidacyForCurrentExecutionYear() {

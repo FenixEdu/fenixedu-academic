@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
@@ -50,11 +49,14 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     public final Integer createCandidacyNumber() {
-        if (Bennu.getInstance().getCandidaciesSet().size() == 0) {
-            return Integer.valueOf(1);
+        int max = 1;
+        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
+            final int n = candidacy.getNumber().intValue();
+            if (n > max) {
+                max = n;
+            }
         }
-        Candidacy candidacy = Collections.max(Bennu.getInstance().getCandidaciesSet(), new BeanComparator("number"));
-        return candidacy.getNumber() + 1;
+        return max + 1;
     }
 
     public CandidacySituation getActiveCandidacySituation() {

@@ -45,8 +45,17 @@ public class IdDocument extends IdDocument_Base {
                 idDocuments.add(idDocument);
             }
         }
-
         return idDocuments;
+    }
+
+    public static IdDocument findFirst(final String idDocumentValue, final IDDocumentType documentType) {
+        final IdDocumentTypeObject typeObject = IdDocumentTypeObject.readByIDDocumentType(documentType);
+        for (final IdDocument idDocument : typeObject.getIdDocumentsSet()) {
+            if (idDocument.getValue().equalsIgnoreCase(idDocumentValue)) {
+                return idDocument;
+            }
+        }
+        return null;
     }
 
     public void setIdDocumentType(IDDocumentType documentType) {

@@ -121,8 +121,8 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     public PostingRule getPostingRuleByEventTypeAndDate(EventType eventType, DateTime when) {
-        for (final PostingRule postingRule : getActivePostingRules(when)) {
-            if (postingRule.getEventType() == eventType) {
+        for (final PostingRule postingRule : super.getPostingRulesSet()) {
+            if (postingRule.getEventType() == eventType && postingRule.isActiveForDate(when)) {
                 return postingRule;
             }
         }
