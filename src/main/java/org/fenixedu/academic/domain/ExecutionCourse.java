@@ -86,6 +86,7 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
     public static final String CREATED_SIGNAL = "academic.executionCourse.create";
+    public static final String EDITED_SIGNAL = "academic.executionCourse.create";
     public static final String ACRONYM_CHANGED_SIGNAL = "academic.executionCourse.acronym.edit";
 
     public static List<ExecutionCourse> readNotEmptyExecutionCourses() {
@@ -185,6 +186,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (entryPhase != null) {
             setEntryPhase(entryPhase);
         }
+        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
+    
     }
 
     public void editCourseLoad(ShiftType type, BigDecimal unitQuantity, BigDecimal totalQuantity) {

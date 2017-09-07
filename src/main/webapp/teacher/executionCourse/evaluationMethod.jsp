@@ -60,14 +60,15 @@
 	</ul>
 	</logic:equal>
 
-    <c:forEach var="lang" items="${evaluationMethods.locales}">
-        <h3 class="mtop15">
-            ${lang.displayName}
-        </h3>
-
-        <blockquote>
-            ${evaluationMethods.getContent(lang)}
-        </blockquote>
-    </c:forEach>
+	<c:forEach var="locale" items="${portal.supportedLocales}">
+		<c:if test="${not empty evaluationMethods.getContent(locale)}">
+			<h3 class="mtop15">
+					${locale.displayName}
+			</h3>
+			<blockquote>
+					${evaluationMethods.getContent(locale)}
+			</blockquote>
+		</c:if>
+	</c:forEach>
 
 </logic:present>
