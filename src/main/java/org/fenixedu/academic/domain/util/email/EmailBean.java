@@ -195,8 +195,10 @@ public class EmailBean implements Serializable {
             message.append(getMessage());
             message.append("\n\n---\n");
             message.append(BundleUtil.getString(Bundle.APPLICATION, "message.email.footer.prefix"));
+            message.append(" ");
             message.append(getSender().getFromName());
-            message.append(BundleUtil.getString(Bundle.APPLICATION, "message.email.footer.prefix.suffix"));
+            message.append(" ");
+            message.append(BundleUtil.getString(Bundle.APPLICATION, "message.email.footer.prefix.suffix").toLowerCase());
             for (final Recipient recipient : getRecipients()) {
                 message.append("\n\t");
                 message.append(recipient.getToName());
