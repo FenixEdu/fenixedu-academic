@@ -128,11 +128,24 @@
 						<a
 							href="${studentsAndGroupsByShiftLink.concat('shift/').concat(studentGroup.shift.externalId)} ">
 							<c:out value="${studentGroup.shift.nome }" /> </a>
-						<button class="btn btn-default btn-xs pull-right"
+						<div class="pull-right">
+						<p><button class="btn btn-default btn-xs pull-right"
 							data-toggle="modal" data-target="#editShift">
 							<span class="glyphicon glyphicon-edit"></span>
 							${fr:message('resources.ApplicationResources', 'link.editGroupShift')}
 						</button>
+						</p>
+							<form role="form" class="form-horizontal" style="display: inline"
+								  id="delete" method="post" action="${deleteStudentGroupLink }"
+								  enctype="multipart/form-data">
+									${csrf.field()}
+								<button type="submit" class="btn btn-xs btn-danger pull-right">
+									<span class="glyphicon glyphicon-remove"></span>
+										${fr:message('resources.ApplicationResources', 'link.deleteGroup')}
+								</button>
+							</form>
+						</div>
+
 						</p>
 					</div>
 
@@ -177,16 +190,6 @@
 <c:if
 	test="${(not empty studentsWithoutStudentGroup) || (not empty studentGroup.attendsSet)}">
 	<div class="form-group">
-		<form role="form" class="form-horizontal" style="display: inline"
-			id="delete" method="post" action="${deleteStudentGroupLink }"
-			enctype="multipart/form-data">
-				${csrf.field()}
-			<button type="submit" class="btn btn-danger">
-				<span class="glyphicon glyphicon-remove"></span>
-				${fr:message('resources.ApplicationResources', 'link.deleteGroup')}
-			</button>
-		</form>
-
 		<form:form modelAttribute="attends"  style="display: inline" role="form" method="post"
 			action="${editStudentGroupAttendsUrl }" enctype="multipart/form-data">
 			${csrf.field()}
