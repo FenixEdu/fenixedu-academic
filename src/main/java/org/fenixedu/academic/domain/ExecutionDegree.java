@@ -696,18 +696,24 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public List<ShiftDistributionEntry> getNextFreeShiftDistributions() {
-
-        final ArrayList<ShiftDistributionEntry> entries = new ArrayList<ShiftDistributionEntry>(getShiftDistributionEntriesSet());
+        final List<ShiftDistributionEntry> entries = new ArrayList<>(getShiftDistributionEntriesSet());
         Collections.sort(entries, ShiftDistributionEntry.NUMBER_COMPARATOR);
 
+        final List<ShiftDistributionEntry> result = new ArrayList<>();
+        Integer number = null;
         for (final ShiftDistributionEntry shiftDistributionEntry : entries) {
             if (!shiftDistributionEntry.getDistributed()) {
-                return ShiftDistributionEntry.readByAbstractNumber(shiftDistributionEntry.getAbstractStudentNumber(),
-                        getExecutionYear());
+                if (number == null) {
+                    number = shiftDistributionEntry.getAbstractStudentNumber();
+                }
+                if (shiftDistributionEntry.getAbstractStudentNumber().equals(number)) {
+                    result.add(shiftDistributionEntry);
+                } else if (number != null) {
+                    break;
+                }
             }
         }
-
-        return Collections.emptyList();
+        return result;
     }
 
     public Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {
