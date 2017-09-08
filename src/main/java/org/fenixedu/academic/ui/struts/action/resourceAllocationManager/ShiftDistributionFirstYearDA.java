@@ -76,7 +76,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
     private static final Logger logger = LoggerFactory.getLogger(ShiftDistributionFirstYearDA.class);
 
     private final Integer FIRST_CURRICULAR_YEAR = Integer.valueOf(1);
-    private final int MAX_NUMBER_OF_STUDENTS = 210;
+    private final int MAX_NUMBER_OF_STUDENTS = 250;
     private final int STUDENTS_PER_LINE = 20;
 
     private static final String COLUMN_SEPARATOR = "\t";
