@@ -599,12 +599,8 @@ public class Person extends Person_Base {
 
     public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber,
             final IDDocumentType idDocumentType) {
-        for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
-            if (idDocument.getIdDocumentType().getValue() == idDocumentType) {
-                return idDocument.getPerson();
-            }
-        }
-        return null;
+        final IdDocument document = IdDocument.findFirst(documentIdNumber, idDocumentType);
+        return document == null ? null : document.getPerson();
     }
 
     public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth, final Collection<Person> persons) {

@@ -24,21 +24,7 @@ public enum CandidacyOperationType {
 
     REGISTRATION,
 
-    PRINT_SCHEDULE,
-
-    PRINT_REGISTRATION_DECLARATION,
-
-    PRINT_SYSTEM_ACCESS_DATA,
-
-    PRINT_UNDER_23_TRANSPORTS_DECLARATION,
-
-    PRINT_MEASUREMENT_TEST_DATE,
-
-    PRINT_ALL_DOCUMENTS,
-
-    CANCEL,
-
-    PRINT_GRATUITY_PAYMENT_CODES;
+    CANCEL;
 
     public String getName() {
         return name();
