@@ -36,7 +36,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents;
@@ -46,18 +45,14 @@ import org.fenixedu.academic.domain.candidacy.CandidacySummaryFile;
 import org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.candidacy.workflow.CandidacyOperation;
-import org.fenixedu.academic.domain.candidacy.workflow.PrintAllDocumentsOperation;
 import org.fenixedu.academic.domain.candidacy.workflow.form.ResidenceInformationForm;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.workflow.Form;
 import org.fenixedu.academic.domain.util.workflow.Operation;
-import org.fenixedu.academic.dto.InfoShowOccupation;
 import org.fenixedu.academic.service.services.candidacy.ExecuteStateOperation;
 import org.fenixedu.academic.service.services.candidacy.LogFirstTimeCandidacyTimestamp;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.student.ReadStudentTimeTable;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.candidate.ViewCandidaciesDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
@@ -83,8 +78,7 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumR
         @Forward(name = "printRegistrationDeclaration", path = "/candidate/degree/printRegistrationDeclaration.jsp"),
         @Forward(name = "printSystemAccessData", path = "/candidate/degree/printSystemAccessData.jsp"),
         @Forward(name = "printUnder23TransportsDeclation", path = "/candidate/degree/printUnder23TransportsDeclaration.jsp"),
-        @Forward(name = "printMeasurementTestDate", path = "/candidate/degree/printMeasurementTestDate.jsp"),
-        @Forward(name = "printAllDocuments", path = "/candidate/degree/printAllDocuments.jsp") })
+        @Forward(name = "printMeasurementTestDate", path = "/candidate/degree/printMeasurementTestDate.jsp") })
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeCandidacyManagementDispatchAction.class);
@@ -180,93 +174,20 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
         final User userView = getUserView(request);
 
-        if (candidacyOperation == null) {
-            // possible due to first-time candidacy summary generation link in manager portal
-            candidacyOperation = new PrintAllDocumentsOperation(RoleType.STUDENT, getCandidacy(request));
-        } else {
+        if (candidacyOperation != null) {
             ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
         }
 
-        if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
-            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration(), null);
-            request.setAttribute("person", getCandidacy(request).getPerson());
-            request.setAttribute("infoLessons", infoLessons);
-            return mapping.findForward("printSchedule");
-
-        } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_REGISTRATION_DECLARATION) {
-            request.setAttribute("registration", getCandidacy(request).getRegistration());
-            request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-            return mapping.findForward("printRegistrationDeclaration");
-
-        } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_UNDER_23_TRANSPORTS_DECLARATION) {
-            request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
-            request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
-            request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-            return mapping.findForward("printUnder23TransportsDeclation");
-
-        } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_MEASUREMENT_TEST_DATE) {
-            request.setAttribute("registration", getCandidacy(request).getRegistration());
-            return mapping.findForward("printMeasurementTestDate");
-
-        } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_ALL_DOCUMENTS) {
-            StudentCandidacy candidacy = getCandidacy(request);
-            request.setAttribute("candidacy", candidacy);
-            request.setAttribute("registration", candidacy.getRegistration());
-            request.setAttribute("executionYear", candidacy.getExecutionDegree().getExecutionYear());
-            request.setAttribute("person", candidacy.getRegistration().getPerson());
-            request.setAttribute("campus", candidacy.getRegistration().getCampus().getName());
-            request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-                    administrativeOfficeFeeAndInsurancePaymentCode(candidacy.getAvailablePaymentCodesSet()));
-            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(candidacy.getAvailablePaymentCodesSet()));
-            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(candidacy.getAvailablePaymentCodesSet()));
-            request.setAttribute(
-                    "firstInstallmentEndDate",
-                    calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
-                            .getAvailablePaymentCodesSet()));
-            request.setAttribute("sibsEntityCode", FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode());
-
-            final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
-            request.setAttribute("infoLessons", infoLessons);
-
-//            FIXME: Cannot continue to be supported this way, tutorship is an optional dependency 
-//            List<Tutorship> activeTutorships = Tutorship.getActiveTutorships(candidacy.getRegistration().getStudent());
-//            if (!activeTutorships.isEmpty()) {
-//                Tutorship tutorship = activeTutorships.iterator().next();
-//                request.setAttribute("tutor", tutorship.getTeacher().getPerson());
-//            }
-
-            return mapping.findForward("printAllDocuments");
-
-        } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SYSTEM_ACCESS_DATA) {
-            request.setAttribute("person", userView.getPerson());
-            return mapping.findForward("printSystemAccessData");
-
-        } else if (candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
+        if (candidacyOperation != null && candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
             request.setAttribute(
                     "aditionalInformation",
                     getResources(request).getMessage("label.candidacy.username.changed.message",
                             userView.getPerson().getUsername(), Unit.getInstitutionAcronym()));
-        } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
-            request.setAttribute("registration", getCandidacy(request).getRegistration());
-            request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodesSet());
-            request.setAttribute("sibsEntityCode", FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode());
-            request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-                    administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodesSet()));
-            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
-                    .getAvailablePaymentCodesSet()));
-            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
-                    .getAvailablePaymentCodesSet()));
-
-            request.setAttribute(
-                    "firstInstallmentEndDate",
-                    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request)
-                            .getAvailablePaymentCodesSet()));
-
-            return mapping.findForward("printGratuityPaymentCodes");
-
         }
 
-        request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getExternalId());
+        if (candidacyOperation != null) {
+            request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getExternalId());
+        }
 
         return showCandidacyDetails(mapping, form, request, response);
 

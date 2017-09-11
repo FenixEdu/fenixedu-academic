@@ -52,8 +52,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Mapping(path = "/firstTimeCandidacyDocuments", module = "student")
-@Forwards({ @Forward(name = "showCandidacyDetails", path = "/student/candidacy/showCandidacyDetails.jsp"),
-        @Forward(name = "printAllDocuments", path = "/student/candidacy/printAllDocuments.jsp") })
+@Forwards({ @Forward(name = "showCandidacyDetails", path = "/student/candidacy/showCandidacyDetails.jsp") })
 public class FirstTimeEnrolmentDocuments extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(FirstTimeEnrolmentDocuments.class);
