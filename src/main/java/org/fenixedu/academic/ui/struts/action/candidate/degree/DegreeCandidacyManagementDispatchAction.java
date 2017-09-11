@@ -73,12 +73,7 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumR
         @Forward(name = "showCandidacyDetails", path = "/candidate/degree/showCandidacyDetails.jsp"),
         @Forward(name = "fillData", path = "/candidate/degree/fillData.jsp"),
         @Forward(name = "showData", path = "/candidate/degree/showData.jsp"),
-        @Forward(name = "showOperationFinished", path = "/candidate/degree/showOperationFinished.jsp"),
-        @Forward(name = "printSchedule", path = "/commons/student/timeTable/classTimeTable.jsp"),
-        @Forward(name = "printRegistrationDeclaration", path = "/candidate/degree/printRegistrationDeclaration.jsp"),
-        @Forward(name = "printSystemAccessData", path = "/candidate/degree/printSystemAccessData.jsp"),
-        @Forward(name = "printUnder23TransportsDeclation", path = "/candidate/degree/printUnder23TransportsDeclaration.jsp"),
-        @Forward(name = "printMeasurementTestDate", path = "/candidate/degree/printMeasurementTestDate.jsp") })
+        @Forward(name = "showOperationFinished", path = "/candidate/degree/showOperationFinished.jsp") })
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeCandidacyManagementDispatchAction.class);
