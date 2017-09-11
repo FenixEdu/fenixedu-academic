@@ -108,6 +108,8 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
         IndividualCandidacyPaymentCode paymentCode = getAvailablePaymentCodeForReuse();
         paymentCode.reuse(startDate, endDate, minAmount, maxAmount, null);
+        paymentCode.setType(paymentCodeType);
+        paymentCode.setPerson(null);
 
         return paymentCode;
     }
