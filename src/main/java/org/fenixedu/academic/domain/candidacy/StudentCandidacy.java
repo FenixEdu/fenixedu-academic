@@ -83,7 +83,9 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
             throw new DomainException("error.candidacy.DegreeCandidacy.person.cannot.be.null");
         }
 
-        if (person.hasDegreeCandidacyForExecutionDegree(executionDegree)) {
+        if (person.getCandidaciesSet().stream().filter(DegreeCandidacy.class::isInstance).map(DegreeCandidacy.class::cast)
+                .filter(degreeCandidacy -> degreeCandidacy.isActive() && degreeCandidacy.getRegistration().isActive())
+                .anyMatch(degreeCandidacy -> degreeCandidacy.getExecutionDegree() == executionDegree)) {
             throw new DomainException("error.candidacy.DegreeCandidacy.candidacy.already.created");
         }
 
@@ -215,9 +217,8 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     @Override
     public boolean isConcluded() {
         final CandidacySituation activeSituation = getActiveCandidacySituation();
-        return activeSituation != null
-                && (activeSituation.getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
-                        .getCandidacySituationType() == CandidacySituationType.CANCELLED);
+        return activeSituation != null && (activeSituation.getCandidacySituationType() == CandidacySituationType.REGISTERED
+                || getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
 
     public boolean cancelCandidacy() {
