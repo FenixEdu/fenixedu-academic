@@ -34,7 +34,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents;
@@ -42,9 +41,7 @@ import org.fenixedu.academic.domain.accounting.paymentCodes.InstallmentPaymentCo
 import org.fenixedu.academic.domain.candidacy.CandidacySummaryFile;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.dto.InfoShowOccupation;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.student.ReadStudentTimeTable;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -55,32 +52,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Mapping(path = "/firstTimeCandidacyDocuments", module = "student")
-@Forwards({ @Forward(name = "showCandidacyDetails", path = "/student/candidacy/showCandidacyDetails.jsp"),
-        @Forward(name = "printAllDocuments", path = "/student/candidacy/printAllDocuments.jsp") })
+@Forwards({ @Forward(name = "showCandidacyDetails", path = "/student/candidacy/showCandidacyDetails.jsp") })
 public class FirstTimeEnrolmentDocuments extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(FirstTimeEnrolmentDocuments.class);
 
     public ActionForward generateDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        StudentCandidacy candidacy = getDomainObject(request, "candidacyID");
-        request.setAttribute("candidacy", candidacy);
-        request.setAttribute("registration", candidacy.getRegistration());
-        request.setAttribute("executionYear", candidacy.getExecutionDegree().getExecutionYear());
-        request.setAttribute("person", candidacy.getRegistration().getPerson());
-        request.setAttribute("campus", candidacy.getRegistration().getCampus().getName());
-        request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-                administrativeOfficeFeeAndInsurancePaymentCode(candidacy.getAvailablePaymentCodesSet()));
-        request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(candidacy.getAvailablePaymentCodesSet()));
-        request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(candidacy.getAvailablePaymentCodesSet()));
-        request.setAttribute("firstInstallmentEndDate",
-                calculateFirstInstallmentEndDate(candidacy.getRegistration(), candidacy.getAvailablePaymentCodesSet()));
-        request.setAttribute("sibsEntityCode", FenixEduAcademicConfiguration.getConfiguration().getSibsEntityCode());
-
-        final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
-        request.setAttribute("infoLessons", infoLessons);
-
-        return mapping.findForward("printAllDocuments");
+        return showCandidacyDetails(mapping, actionForm, request, response);
     }
 
     public ActionForward showCandidacyDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
