@@ -367,4 +367,12 @@ public class ResidenceInformationForm extends Form {
     public String getFormDescription() {
         return "label.candidacy.workflow.residenceInformationForm.description";
     }
+
+    @Override
+    public String getSchemaName() {
+        if (getCountryOfResidence() != null && !getCountryOfResidence().isDefaultCountry()) {
+            return getClass().getSimpleName() + ".foreignAddress";
+        }
+        return getClass().getSimpleName();
+    }
 }
