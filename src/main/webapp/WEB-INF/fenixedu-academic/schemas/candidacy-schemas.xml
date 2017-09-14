@@ -491,10 +491,10 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
     </slot>
     <slot name="socialSecurityNumber">
-    	<property name="size" value="9"/>
-		<property name="maxLength" value="9"/>
+    	<property name="size" value="11"/>
+		<property name="maxLength" value="11"/>
 		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{9})?"/>
+            <property name="regexp" value="(\d{9}|PT\d{9})?"/>
             <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
             <property name="key" value="true"/>
             <property name="bundle" value="CANDIDATE_RESOURCES" />
