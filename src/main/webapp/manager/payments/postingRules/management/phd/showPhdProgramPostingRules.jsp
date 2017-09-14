@@ -64,7 +64,7 @@
 					order="1"
 					/>
 		<fr:link	name="delete" label="label.delete,APPLICATION_RESOURCES"
-					link="<%= "/phdPostingRules.do?method=deleteDegreeCurricularPlanPostingRule&amp;postingRuleId=${externalId}&amp;phdProgramId=" + phdProgramId %>"
+					link="<%= "/phdPostingRules.do?method=deletePhdProgramPostingRule&amp;postingRuleId=${externalId}&amp;phdProgramId=" + phdProgramId %>"
 					condition="mostRecent" 
 					order="2" 
 					confirmation="label.payments.postingRules.confirmDeletePostingRule,MANAGER_RESOURCES" />

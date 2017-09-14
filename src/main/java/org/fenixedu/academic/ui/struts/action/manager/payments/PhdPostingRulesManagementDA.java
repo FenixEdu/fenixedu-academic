@@ -34,6 +34,8 @@ import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.debts.PhdGratuityPR;
 import org.fenixedu.academic.domain.phd.debts.PhdGratuityPaymentPeriod;
 import org.fenixedu.academic.domain.phd.debts.PhdGratuityPriceQuirk;
+import org.fenixedu.academic.service.services.accounting.PostingRulesManager;
+import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -47,8 +49,8 @@ import org.joda.time.Partial;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 
-@Mapping(path = "/phdPostingRules", module = "manager",
-        formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class, functionality = PostingRulesManagementDA.class)
+@Mapping(path = "/phdPostingRules", module = "manager", formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class,
+        functionality = PostingRulesManagementDA.class)
 @Forwards({
         @Forward(name = "showPhdProgramPostingRules",
                 path = "/manager/payments/postingRules/management/phd/showPhdProgramPostingRules.jsp"),
@@ -282,7 +284,8 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
         return mapping.findForward("addPhdProgramPostingRule");
     }
 
-    public ActionForward addQuirk(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward addQuirk(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
         final CreateGratuityPhdPRPeriodBean period = getRenderedObject("period");
         final CreateGratuityPhdPRQuickBean quirks = getRenderedObject("quirks");
@@ -323,14 +326,12 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
         if (bean.getPeriods().size() == 0) {
             throw new RuntimeException("error.empty.periods");
         }
-        PhdGratuityPR postingRule =
-                new PhdGratuityPR(bean.getStartDate(), bean.getEndDate(), phdProgram.getServiceAgreementTemplate(), new Money(
-                        bean.getGratuity()), bean.getFineRate());
+        PhdGratuityPR postingRule = new PhdGratuityPR(bean.getStartDate(), bean.getEndDate(),
+                phdProgram.getServiceAgreementTemplate(), new Money(bean.getGratuity()), bean.getFineRate());
 
         for (CreateGratuityPhdPRPeriodBean periodBean : bean.getPeriods()) {
-            PhdGratuityPaymentPeriod period =
-                    new PhdGratuityPaymentPeriod(periodBean.getPeriodStartDate(), periodBean.getPeriodEndDate(),
-                            periodBean.getLimitePaymentDay());
+            PhdGratuityPaymentPeriod period = new PhdGratuityPaymentPeriod(periodBean.getPeriodStartDate(),
+                    periodBean.getPeriodEndDate(), periodBean.getLimitePaymentDay());
             postingRule.addPhdGratuityPaymentPeriods(period);
             period.setRootDomainObject(Bennu.getInstance());
         }
@@ -382,6 +383,19 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
         request.setAttribute("postingRule", getRenderedObject("postingRule"));
 
         return mapping.findForward("editPhdProgramPostingRule");
+    }
+
+    public ActionForward deletePhdProgramPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+
+        try {
+            PostingRulesManager.deletePostingRule(getPostingRule(request));
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }
+
+        return showPhdProgramPostingRules(mapping, form, request, response);
+
     }
 
 }
