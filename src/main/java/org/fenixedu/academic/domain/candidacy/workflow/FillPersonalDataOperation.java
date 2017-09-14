@@ -312,7 +312,8 @@ public class FillPersonalDataOperation extends CandidacyOperation {
                 getResidenceInformationForm().getDistrictSubdivisionOfResidence() != null ? getResidenceInformationForm()
                         .getDistrictSubdivisionOfResidence().getName() : null;
         String districtOfResidence =
-                getResidenceInformationForm().getDistrictSubdivisionOfResidence().getDistrict() != null ? getResidenceInformationForm()
+                (districtSubdivisionOfResidence != null && getResidenceInformationForm().getDistrictSubdivisionOfResidence()
+                        .getDistrict() != null) ? getResidenceInformationForm()
                         .getDistrictSubdivisionOfResidence().getDistrict().getName() : null;
         final PhysicalAddressData physicalAddressData =
                 new PhysicalAddressData(getResidenceInformationForm().getAddress(), getResidenceInformationForm().getAreaCode(),
