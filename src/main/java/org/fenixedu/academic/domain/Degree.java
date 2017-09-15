@@ -659,7 +659,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getPresentationNameI18N(executionYear).getContent();
     }
 
-    protected String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
+    public String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
         return getPresentationNameI18N(executionYear).getContent(locale);
     }
 
