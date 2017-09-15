@@ -133,8 +133,6 @@ public interface ITreasuryBridgeAPI {
      */
     // @formatter:on
 
-    public List<IAcademicTreasuryEvent> getAllAcademicTreasuryEventsList(final Person person, final ExecutionYear executionYear);
-
     public List<IAcademicTreasuryEvent> getAllAcademicTreasuryEventsList(final Person person);
 
     // @formatter:off
