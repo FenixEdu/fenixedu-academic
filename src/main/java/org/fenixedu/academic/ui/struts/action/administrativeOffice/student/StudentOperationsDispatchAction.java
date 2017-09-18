@@ -97,9 +97,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
         ExecutionDegree executionDegree = null;
         if (executionDegreeBean.getDegreeCurricularPlan() != null) {
-            executionDegree =
-                    executionDegreeBean.getDegreeCurricularPlan()
-                            .getExecutionDegreeByYear(executionDegreeBean.getExecutionYear());
+            executionDegree = executionDegreeBean.getDegreeCurricularPlan()
+                    .getExecutionDegreeByYear(executionDegreeBean.getExecutionYear());
         }
 
         executionDegreeBean.setExecutionDegree(executionDegree);
@@ -117,7 +116,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                 (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree").getMetaObject().getObject();
         IngressionInformationBean ingressionInformationBean =
                 (IngressionInformationBean) RenderUtils.getViewState("chooseIngression").getMetaObject().getObject();
-        ingressionInformationBean.clearIngressionAndEntryPhase();
 
         RenderUtils.invalidateViewState();
 
@@ -139,7 +137,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                 (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree").getMetaObject().getObject();
         IngressionInformationBean ingressionInformationBean =
                 (IngressionInformationBean) RenderUtils.getViewState("chooseIngression").getMetaObject().getObject();
-        ingressionInformationBean.clearAgreement();
 
         RenderUtils.invalidateViewState();
 
@@ -148,6 +145,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
         if (ingressionInformationBean.getIngressionType() != null
                 && !ingressionInformationBean.getIngressionType().hasEntryPhase()) {
+            ingressionInformationBean.clearEntryPhase();
             request.setAttribute("choosePersonBean", new ChoosePersonBean());
         }
 
@@ -161,7 +159,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                 (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree").getMetaObject().getObject();
         IngressionInformationBean ingressionInformationBean =
                 (IngressionInformationBean) RenderUtils.getViewState("chooseIngression").getMetaObject().getObject();
-        ingressionInformationBean.clearAgreement();
 
         RenderUtils.invalidateViewState("executionDegree");
         RenderUtils.invalidateViewState("chooseIngression");
@@ -188,8 +185,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                 (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree").getMetaObject().getObject();
         IngressionInformationBean ingressionInformationBean =
                 (IngressionInformationBean) RenderUtils.getViewState("chooseIngression").getMetaObject().getObject();
-        PrecedentDegreeInformationBean precedentDegreeInformationBean =
-                RenderUtils.getViewState("precedentDegreeInformation") == null ? new PrecedentDegreeInformationBean() : (PrecedentDegreeInformationBean) RenderUtils
+        PrecedentDegreeInformationBean precedentDegreeInformationBean = RenderUtils.getViewState(
+                "precedentDegreeInformation") == null ? new PrecedentDegreeInformationBean() : (PrecedentDegreeInformationBean) RenderUtils
                         .getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
         request.setAttribute("executionDegreeBean", executionDegreeBean);
@@ -219,8 +216,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                 if (!persons.isEmpty()
                         || !Person.findByDateOfBirth(dateOfBirth,
                                 Person.findPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()
-                        || (choosePersonBean.getStudentNumber() != null && Student.readStudentByNumber(choosePersonBean
-                                .getStudentNumber()) != null)) {
+                        || (choosePersonBean.getStudentNumber() != null
+                                && Student.readStudentByNumber(choosePersonBean.getStudentNumber()) != null)) {
                     // show similar persons
                     RenderUtils.invalidateViewState();
                     request.setAttribute("choosePersonBean", choosePersonBean);
@@ -239,12 +236,11 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         if (person != null) {
             personBean = new PersonBean(person);
 
-            personBean.setStudentNumber(person.getStudent() != null ? person.getStudent().getNumber() : choosePersonBean
-                    .getStudentNumber());
+            personBean.setStudentNumber(
+                    person.getStudent() != null ? person.getStudent().getNumber() : choosePersonBean.getStudentNumber());
         } else {
-            personBean =
-                    new PersonBean(choosePersonBean.getName(), identificationNumber, choosePersonBean.getDocumentType(),
-                            dateOfBirth, choosePersonBean.getStudentNumber());
+            personBean = new PersonBean(choosePersonBean.getName(), identificationNumber, choosePersonBean.getDocumentType(),
+                    dateOfBirth, choosePersonBean.getStudentNumber());
         }
 
         request.setAttribute("personBean", personBean);
@@ -296,11 +292,12 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         request.setAttribute("precedentDegreeInformationBean", pdiBean);
         request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
         RenderUtils.invalidateViewState();
-        
+
         return mapping.findForward("fillNewPersonData");
     }
 
-    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
         request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
@@ -320,8 +317,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         request.setAttribute("personBean", personBean);
 
         Object originInformation = getRenderedObject("originInformation");
-        request.setAttribute("originInformationBean", originInformation != null ? originInformation : new OriginInformationBean(
-                (PersonBean) personBean));
+        request.setAttribute("originInformationBean",
+                originInformation != null ? originInformation : new OriginInformationBean((PersonBean) personBean));
 
         final PrecedentDegreeInformationBean precedentDegreeBean = getRenderedObject("precedentDegreeInformation");
         request.setAttribute("precedentDegreeInformationBean", precedentDegreeBean);
@@ -366,12 +363,11 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
 
         try {
-            Registration registration =
-                    CreateStudent.run((PersonBean) getRenderedObject("person"),
-                            (ExecutionDegreeBean) getRenderedObject("executionDegree"),
-                            (PrecedentDegreeInformationBean) getRenderedObject("precedentDegreeInformation"),
-                            (IngressionInformationBean) getRenderedObject("chooseIngression"),
-                            (OriginInformationBean) getRenderedObject("originInformation"));
+            Registration registration = CreateStudent.run((PersonBean) getRenderedObject("person"),
+                    (ExecutionDegreeBean) getRenderedObject("executionDegree"),
+                    (PrecedentDegreeInformationBean) getRenderedObject("precedentDegreeInformation"),
+                    (IngressionInformationBean) getRenderedObject("chooseIngression"),
+                    (OriginInformationBean) getRenderedObject("originInformation"));
             request.setAttribute("registration", registration);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());

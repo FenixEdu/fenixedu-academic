@@ -134,16 +134,10 @@ public class IngressionInformationBean implements Serializable {
         this.entryPhase = entryPhase;
     }
 
-    public void clearIngressionAndEntryPhase() {
-        this.ingressionType = null;
+    public void clearEntryPhase() {
         this.entryPhase = null;
         this.studiesStartDate = null;
         this.homologationDate = null;
-    }
-
-    public void clearAgreement() {
-        this.registrationProtocol = RegistrationProtocol.getDefault();
-        this.agreementInformation = null;
     }
 
     public YearMonthDay getHomologationDate() {

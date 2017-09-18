@@ -22,6 +22,7 @@ import java.util.Comparator;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -73,12 +74,31 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
     }
 
     public static RegistrationProtocol getDefault() {
-        for (final RegistrationProtocol protocol : Bennu.getInstance().getRegistrationProtocolsSet()) {
-            if (protocol.isEnrolmentByStudentAllowed() && !protocol.isAlien()) {
-                return protocol;
+        return Bennu.getInstance().getRegistrationProtocolsSet().stream().filter(RegistrationProtocol::getDefaultStatus)
+                .findFirst().orElse(null);
+    }
+
+    @Override
+    public void setDefaultStatus(final boolean input) {
+        if (input) {
+
+            final RegistrationProtocol current = getDefault();
+            if (current != null) {
+                throw new DomainException("error.RegistrationProtocol.default.duplicate", current.getDescription().getContent(),
+                        getDescription().getContent());
+            }
+
+            if (!isEnrolmentByStudentAllowed()) {
+                throw new DomainException("error.RegistrationProtocol.default.required.EnrolmentByStudentAllowed",
+                        getDescription().getContent());
+            }
+
+            if (isAlien()) {
+                throw new DomainException("error.RegistrationProtocol.default.not.Alien", getDescription().getContent());
             }
         }
-        return null;
+
+        super.setDefaultStatus(input);
     }
 
     public boolean isAlien() {
