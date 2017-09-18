@@ -105,6 +105,17 @@
 
 <div class="row">
 	<div class="col-md-12">
+		<c:if test="${empty grouping.shiftType && empty studentsWithoutStudentGroup && empty studentGroup.attendsSet}">
+			<form role="form" class="form-horizontal" style="display: inline"
+				  id="delete" method="post" action="${deleteStudentGroupLink }"
+				  enctype="multipart/form-data">
+					${csrf.field()}
+				<button type="submit" class="btn btn-danger">
+					<span class="glyphicon glyphicon-remove"></span>
+						${fr:message('resources.ApplicationResources', 'link.deleteGroup')}
+				</button>
+			</form>
+		</c:if>
 		<c:if test="${not empty grouping.shiftType}">
 			<div class="well">
 				<div class="row">
@@ -135,17 +146,18 @@
 							${fr:message('resources.ApplicationResources', 'link.editGroupShift')}
 						</button>
 						</p>
-							<form role="form" class="form-horizontal" style="display: inline"
-								  id="delete" method="post" action="${deleteStudentGroupLink }"
-								  enctype="multipart/form-data">
-									${csrf.field()}
-								<button type="submit" class="btn btn-xs btn-danger pull-right">
-									<span class="glyphicon glyphicon-remove"></span>
-										${fr:message('resources.ApplicationResources', 'link.deleteGroup')}
-								</button>
-							</form>
+							<c:if test="${ empty studentsWithoutStudentGroup && empty studentGroup.attendsSet}">
+								<form role="form" class="form-horizontal" style="display: inline"
+									  id="delete" method="post" action="${deleteStudentGroupLink }"
+									  enctype="multipart/form-data">
+										${csrf.field()}
+									<button type="submit" class="btn btn-xs btn-danger pull-right">
+										<span class="glyphicon glyphicon-remove"></span>
+											${fr:message('resources.ApplicationResources', 'link.deleteGroup')}
+									</button>
+								</form>
+							</c:if>
 						</div>
-
 						</p>
 					</div>
 
@@ -183,13 +195,27 @@
 	</div>
 </div>
 <c:if test="${ empty studentGroup.attendsSet}">
-	<div class="alert alert-info" role="alert">
-		${fr:message('resources.ApplicationResources', 'message.infoSiteStudentGroupList.not.available')}
+<div class="row">
+	<div class="col-sm-12">
+		<div class="alert alert-info" role="alert">
+			${fr:message('resources.ApplicationResources', 'message.infoSiteStudentGroupList.not.available')}
+		</div>
 	</div>
+</div>
 </c:if>
 <c:if
 	test="${(not empty studentsWithoutStudentGroup) || (not empty studentGroup.attendsSet)}">
 	<div class="form-group">
+		<form role="form" class="form-horizontal" style="display: inline"
+			  id="delete" method="post" action="${deleteStudentGroupLink }"
+			  enctype="multipart/form-data">
+				${csrf.field()}
+			<button type="submit" class="btn btn-xs btn-danger">
+				<span class="glyphicon glyphicon-remove"></span>
+					${fr:message('resources.ApplicationResources', 'link.deleteGroup')}
+			</button>
+		</form>
+
 		<form:form modelAttribute="attends"  style="display: inline" role="form" method="post"
 			action="${editStudentGroupAttendsUrl }" enctype="multipart/form-data">
 			${csrf.field()}
