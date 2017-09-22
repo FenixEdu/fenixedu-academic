@@ -80,7 +80,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
         Boolean cv;
         Boolean transcript;
         Boolean englishLevel;
-        spreadsheet.setHeaders(new String[] { "N.º Processo", "IST ID", "Nome", "Data Nascimento", "Nacionalidade",
+        spreadsheet.setHeaders(new String[] { "N.º Processo", "IST ID", "Nome", "Genero", "Data Nascimento", "Nacionalidade",
                 "Universidade", "País da Universidade", "Programa", "Email", "Curso", "Data de chegada", "Data de partida",
                 "Estado", "Documentação Entregue Completa", "Foto", "Fotocópia do Passaporte ou do Cartão de Identificação",
                 "Acordo", "CV", "Registo Académico", "Nível Inglês" });
@@ -113,71 +113,70 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
                 row.setCell(1, "");
             }
             row.setCell(2, erasmusIndividualCandidacyProcess.getPersonalDetails().getName());
-            row.setCell(3, personalDetails.getDateOfBirthYearMonthDay() != null ? personalDetails.getDateOfBirthYearMonthDay()
+            row.setCell(3, personalDetails.getGender().toLocalizedString());
+            row.setCell(4, personalDetails.getDateOfBirthYearMonthDay() != null ? personalDetails.getDateOfBirthYearMonthDay()
                     .toString("dd/MM/yyyy") : "N/A");
-            row.setCell(4, erasmusIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
-                    .getContent());
+            row.setCell(5,
+                    erasmusIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
 
-            row.setCell(5, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
-                    .getMobilityAgreement().getUniversityUnit().getName());
             row.setCell(6, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
+                    .getMobilityAgreement().getUniversityUnit().getName());
+            row.setCell(7, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
                     .getMobilityAgreement().getUniversityUnit().getCountry().getName());
-            row.setCell(7, erasmusIndividualCandidacyProcess.getMobilityProgram().getRegistrationProtocol().getDescription()
+            row.setCell(8, erasmusIndividualCandidacyProcess.getMobilityProgram().getRegistrationProtocol().getDescription()
                     .getContent());
-            row.setCell(8, getEmail(erasmusIndividualCandidacyProcess));
-            row.setCell(9, erasmusIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getNameI18N().getContent());
-            row.setCell(
-                    10,
-                    erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getDateOfArrival()
-                            .toString("dd/MM/yyyy"));
-            row.setCell(11, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getDateOfDeparture()
+            row.setCell(9, getEmail(erasmusIndividualCandidacyProcess));
+            row.setCell(10, erasmusIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getNameI18N().getContent());
+            row.setCell(11, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getDateOfArrival()
                     .toString("dd/MM/yyyy"));
-            row.setCell(12, erasmusIndividualCandidacyProcess.getErasmusCandidacyStateDescription());
+            row.setCell(12, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getDateOfDeparture()
+                    .toString("dd/MM/yyyy"));
+            row.setCell(13, erasmusIndividualCandidacyProcess.getErasmusCandidacyStateDescription());
             if (erasmusIndividualCandidacyProcess.getPhoto() != null) {
-                row.setCell(14, "Sim");
-                photo = true;
-            } else {
-                row.setCell(14, "Não");
-            }
-            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
-                    IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) != null) {
                 row.setCell(15, "Sim");
-                photocopy = true;
+                photo = true;
             } else {
                 row.setCell(15, "Não");
             }
             if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
-                    IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) != null) {
+                    IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) != null) {
                 row.setCell(16, "Sim");
-                agree = true;
+                photocopy = true;
             } else {
                 row.setCell(16, "Não");
             }
             if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
-                    IndividualCandidacyDocumentFileType.CV_DOCUMENT) != null) {
+                    IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) != null) {
                 row.setCell(17, "Sim");
-                cv = true;
+                agree = true;
             } else {
                 row.setCell(17, "Não");
             }
             if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
-                    IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS) != null) {
+                    IndividualCandidacyDocumentFileType.CV_DOCUMENT) != null) {
                 row.setCell(18, "Sim");
-                transcript = true;
+                cv = true;
             } else {
                 row.setCell(18, "Não");
             }
             if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
-                    IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION) != null) {
+                    IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS) != null) {
                 row.setCell(19, "Sim");
-                englishLevel = true;
+                transcript = true;
             } else {
                 row.setCell(19, "Não");
             }
-            if (photo && photocopy && agree && cv && transcript && englishLevel) {
-                row.setCell(13, "Sim");
+            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
+                    IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION) != null) {
+                row.setCell(20, "Sim");
+                englishLevel = true;
             } else {
-                row.setCell(13, "Não");
+                row.setCell(20, "Não");
+            }
+            if (photo && photocopy && agree && cv && transcript && englishLevel) {
+                row.setCell(14, "Sim");
+            } else {
+                row.setCell(14, "Não");
             }
         }
 
