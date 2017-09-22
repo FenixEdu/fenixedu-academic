@@ -128,7 +128,9 @@ public class AuthorizationsManagementBean implements Serializable {
     }
 
     public void addNewAuthorization() {
-        groups.add(0, new AuthorizationGroupBean());
+        if ((!groups.isEmpty() && groups.get(0).getRule() != null) || groups.isEmpty()) {
+            groups.add(0, new AuthorizationGroupBean());
+        }
     }
 
     private AuthorizationGroupBean getBeanByOid(String parameter) {

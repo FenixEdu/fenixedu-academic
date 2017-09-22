@@ -90,7 +90,7 @@
 					<div class="authorization-edit">
 						<fr:edit name="group">
 							<fr:schema type="org.fenixedu.academic.ui.struts.action.academicAdministration.AuthorizationGroupBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-								<fr:slot name="party" layout="autoComplete" key="label.academicAdministration.authorizations.member">
+								<fr:slot name="party" layout="autoComplete" key="label.academicAdministration.authorizations.member" validator="org.fenixedu.academic.ui.renderers.validators.RequiredAutoCompleteSelectionValidator">
 									<fr:property name="size" value="50" />
 									<fr:property name="labelField" value="presentationName" />
 									<fr:property name="indicatorShown" value="true" />
