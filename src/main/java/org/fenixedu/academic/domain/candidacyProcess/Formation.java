@@ -93,4 +93,10 @@ public class Formation extends Formation_Base {
         formatter.close();
     }
 
+    @Override
+    public void delete() {
+        setIndividualCandidacy(null);
+        setConclusionExecutionYear(null);
+        super.delete();
+    }
 }
