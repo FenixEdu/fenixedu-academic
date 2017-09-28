@@ -55,6 +55,7 @@
 	<br/>
 	<br/>
 
+
 	<%
 		final ManageSecondCycleThesisSearchBean bean = (ManageSecondCycleThesisSearchBean) request.getAttribute("manageSecondCycleThesisSearchBean");
 		final ThesisPresentationStateCountMap map = bean.getThesisPresentationStateCountMap();
@@ -73,6 +74,10 @@
 		}
 	%>
 	<br/>
+    <html:link action="<%= "/manageSecondCycleThesis.do?method=exportToExcel&amp;xecutionYearOid=" + bean.getExecutionYear().getExternalId() %>">
+        <bean:message key="label.export.dissertation.info.to.excel" bundle="APPLICATION_RESOURCES"/>
+    </html:link>
+    <br/>
 	<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 		<tr>
 			<th>

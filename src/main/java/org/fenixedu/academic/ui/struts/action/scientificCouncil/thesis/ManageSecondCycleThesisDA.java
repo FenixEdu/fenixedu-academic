@@ -18,19 +18,27 @@
  */
 package org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.SortedSet;
+import java.util.stream.Stream;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.domain.thesis.ThesisFile;
@@ -44,19 +52,24 @@ import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
 import org.fenixedu.academic.service.services.thesis.CreateThesisAbstractFile;
 import org.fenixedu.academic.service.services.thesis.CreateThesisDissertationFile;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState;
 import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean;
 import org.fenixedu.academic.util.report.ReportsUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.spreadsheet.SheetData;
+import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
+import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
+
+import com.google.common.io.ByteStreams;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-
-import com.google.common.io.ByteStreams;
 
 @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list-new", titleKey = "navigation.list.jury.proposals.new")
 @Mapping(path = "/manageSecondCycleThesis", module = "scientificCouncil")
@@ -433,6 +446,95 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
             return showThesisDetails(mapping, request, thesis);
         }
+    }
+
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final ExecutionYear executionYear = getDomainObject(request, "xecutionYearOid");
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=dissertacoes" + executionYear.getYear().replace("/", "") + ".xls");
+        final ServletOutputStream writer = response.getOutputStream();
+
+        exportDissertations(writer, executionYear);
+
+        writer.flush();
+        response.flushBuffer();
+        return null;
+    }
+
+    private <T> Iterable<T> toIterable(final Stream<T> stream) {
+        return () -> stream.iterator();
+    }
+
+    private Iterable<Thesis> iteratableOfThesis(final ExecutionYear executionYear) {
+        return toIterable(rootDomainObject.getThesesSet().stream()
+                .filter(t -> t.getEnrolment() != null)
+                .filter(t -> t.getEnrolment().getExecutionYear() == executionYear));
+    }
+
+    private Iterable<ThesisEvaluationParticipant> iteratableOfThesisParticipation(final ExecutionYear executionYear) {
+        return toIterable(rootDomainObject.getThesesSet().stream()
+                .filter(t -> t.getEnrolment() != null)
+                .filter(t -> t.getEnrolment().getExecutionYear() == executionYear)
+                .flatMap(t -> t.getParticipationsSet().stream()));
+    }
+
+    private void exportDissertations(final ServletOutputStream writer, final ExecutionYear executionYear) throws IOException {
+        final SpreadsheetBuilder builder = new SpreadsheetBuilder();
+
+        final SheetData<Thesis> thesisSheetData = new SheetData<Thesis>(iteratableOfThesis(executionYear)) {
+            @Override
+            protected void makeLine(final Thesis thesis) {
+                final Enrolment enrolment = thesis.getEnrolment();
+
+                final ThesisPresentationState thesisPresentationState =
+                        ThesisPresentationState.getThesisPresentationState(thesis);
+
+                final Degree degree = enrolment.getStudentCurricularPlan().getDegree();
+                final DegreeType degreeType = degree.getDegreeType();
+                final Student student = thesis.getStudent();
+                final Person person = student.getPerson();
+                final User user = person.getUser();
+
+                addCell("ThesisId", thesis.getExternalId());
+                addCell("Username", user.getUsername());
+                addCell("Name", person.getName());
+                addCell("DegreeType", degreeType.getName().getContent());
+                addCell("Degree", degree.getPresentationName(executionYear));
+                addCell("DegreeCode", degree.getSigla());
+                addCell("Thesis", thesis.getTitle().getContent());
+                addCell("ThesisState", thesisPresentationState.getName());
+
+                addCell("DiscussionDate", thesis.getDiscussed() == null ? "" : thesis.getDiscussed().toString("yyyy-MM-dd"));
+                addCell("Resumo", thesis.getThesisAbstractPt());
+                addCell("Abstract", thesis.getThesisAbstractEn());
+                addCell("Grade", thesis.getMark());
+            }
+        };
+
+        final SheetData<ThesisEvaluationParticipant> participantSheetData = new SheetData<ThesisEvaluationParticipant>(iteratableOfThesisParticipation(executionYear)) {
+            @Override
+            protected void makeLine(final ThesisEvaluationParticipant participant) {
+                final Thesis thesis = participant.getThesis();
+                final Person person = participant.getPerson();
+
+                addCell("ThesisId", thesis.getExternalId());
+                addCell("Type", participant.getType());
+                addCell("PercentageDistribution", participant.getPercentageDistribution());
+                addCell("Username", person == null ? "" : person.getUsername());
+                addCell("Name", participant.getName());
+                addCell("Affiliation", participant.getAffiliation());
+                addCell("Category", participant.getCategory());
+            }
+        };
+
+        builder.addSheet("Dissertations", thesisSheetData);
+        builder.addSheet("EvaluationParticipants", participantSheetData);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        builder.build(WorkbookExportFormat.EXCEL, baos);
+
+        writer.write(baos.toByteArray());
     }
 
 }
