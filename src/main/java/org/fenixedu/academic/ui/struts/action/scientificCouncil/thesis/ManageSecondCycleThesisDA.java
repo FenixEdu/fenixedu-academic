@@ -450,7 +450,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ExecutionYear executionYear = getDomainObject(request, "xecutionYearOid");
+        final ExecutionYear executionYear = getDomainObject(request, "executionYearOid");
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=dissertacoes" + executionYear.getYear().replace("/", "") + ".xls");
