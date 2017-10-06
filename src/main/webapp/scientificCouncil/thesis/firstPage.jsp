@@ -74,7 +74,7 @@
 		}
 	%>
 	<br/>
-    <html:link action="<%= "/manageSecondCycleThesis.do?method=exportToExcel&amp;xecutionYearOid=" + bean.getExecutionYear().getExternalId() %>">
+    <html:link action="<%= "/manageSecondCycleThesis.do?method=exportToExcel&amp;executionYearOid=" + bean.getExecutionYear().getExternalId() %>">
         <bean:message key="label.export.dissertation.info.to.excel" bundle="APPLICATION_RESOURCES"/>
     </html:link>
     <br/>
