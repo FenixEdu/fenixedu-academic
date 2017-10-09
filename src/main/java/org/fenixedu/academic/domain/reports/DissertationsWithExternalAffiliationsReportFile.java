@@ -62,13 +62,15 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
         spreadsheet.setHeader("Sigla Curso");
         spreadsheet.setHeader("Tese");
         spreadsheet.setHeader("Estado da tese");
-        spreadsheet.setHeader("Affiliacao Orientador");
-        spreadsheet.setHeader("Distribuicao Creditos Orientador");
-        spreadsheet.setHeader("Affiliacao Corientador");
-        spreadsheet.setHeader("Distribuicao Creditos Corientador");
+        spreadsheet.setHeader("Affiliacao");
+        spreadsheet.setHeader("Distribuicao Creditos");
+        spreadsheet.setHeader("Primeira vez inscrito");
 
         for (final Thesis thesis : getRootDomainObject().getThesesSet()) {
             final Enrolment enrolment = thesis.getEnrolment();
+            if (enrolment == null) {
+                continue;
+            }
             final ExecutionSemester executionPeriod = enrolment.getExecutionPeriod();
             if (executionPeriod.getExecutionYear() == executionYear) {
                 final ThesisPresentationState thesisPresentationState =
@@ -87,7 +89,14 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
                 row.setCell(thesisPresentationState.getName());
 
                 addTeacherRows(thesis, row, ThesisParticipationType.ORIENTATOR);
-                addTeacherRows(thesis, row, ThesisParticipationType.COORIENTATOR);
+
+                if (enrolment.getIsFirstTime() == null) {
+                    row.setCell("Indeterminado");
+                } else if (enrolment.getIsFirstTime() == true) {
+                    row.setCell("Sim");
+                } else {
+                    row.setCell("Nao");
+                }
             }
         }
     }
@@ -97,7 +106,7 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
         final StringBuilder odsb = new StringBuilder();
         for (final ThesisEvaluationParticipant thesisEvaluationParticipant : thesis.getAllParticipants(thesisParticipationType)) {
             if (oasb.length() > 0) {
-                oasb.append(" ");
+                oasb.append(" | ");
             }
             final String affiliation = thesisEvaluationParticipant.getAffiliation();
             if (affiliation != null) {
@@ -106,7 +115,7 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
                 oasb.append("--");
             }
             if (odsb.length() > 0) {
-                odsb.append(" ");
+                odsb.append(" | ");
             }
             final double credistDistribution = getCreditsDistribution(thesisEvaluationParticipant);
             odsb.append(Double.toString(credistDistribution));
