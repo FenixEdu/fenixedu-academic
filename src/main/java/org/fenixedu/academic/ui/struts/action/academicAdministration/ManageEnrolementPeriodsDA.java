@@ -59,6 +59,7 @@ import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.service.services.manager.CreateEnrolmentPeriods;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -284,6 +285,13 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
                                 addIfNotUsedInPeriod(possible, dcp);
                             }
                         }
+                    }
+
+                    if (EnrolmentPeriodType.REINGRESSION.equals(type)) {
+                        Bennu.getInstance().getDegreeCurricularPlansSet().stream()
+                                .filter(dcp -> dcp.getDegreeType().equals(degreeType))
+                                .filter(dcp -> !possible.contains(dcp))
+                                .forEach(dcp -> addIfNotUsedInPeriod(possible, dcp));
                     }
                 } else {
                     for (DegreeCurricularPlan dcp : DegreeCurricularPlan.readPreBolonhaDegreeCurricularPlans()) {
