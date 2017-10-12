@@ -192,7 +192,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
                             + curricularCourse.getDegreeCurricularPlan().getName() + ")_" + executionYear.getYear();
 
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=" + filename.replace(" ", "_") + ".xls");
+            response.setHeader("Content-disposition", "attachment; filename=\"" + filename.replace(" ", "_") + ".xls\"");
             ServletOutputStream writer = response.getOutputStream();
 
             exportToXls(searchStudentByCriteria(executionYear, curricularCourse, semester), writer, executionYear,
