@@ -146,13 +146,12 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
     private void addCandidacy(final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result,
             final SecondCycleIndividualCandidacyProcess process) {
-        SortedSet<SecondCycleIndividualCandidacyProcess> values = result.get(process.getCandidacySelectedDegree());
-        if (values == null) {
-            result.put(process.getCandidacySelectedDegree(), values =
-                    new TreeSet<SecondCycleIndividualCandidacyProcess>(
-                            SecondCycleIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON));
+        for (Degree degree : process.getSelectedDegrees()) {
+            SortedSet<SecondCycleIndividualCandidacyProcess> values =
+                result.computeIfAbsent(degree, key -> (new TreeSet<SecondCycleIndividualCandidacyProcess>(
+                        SecondCycleIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON)));
+            values.add(process);
         }
-        values.add(process);
     }
 
     public List<SecondCycleIndividualCandidacyProcess> getAcceptedSecondCycleIndividualCandidacies() {
