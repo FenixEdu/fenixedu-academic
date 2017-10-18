@@ -31,7 +31,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean;
@@ -44,6 +43,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.student.administrativeOfficeServices.CreateStudent;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminStudentsApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -370,7 +370,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                     (OriginInformationBean) getRenderedObject("originInformation"));
             request.setAttribute("registration", registration);
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage());
+            addActionMessage(request, e.getLocalizedMessage());
             return prepareShowCreateStudentConfirmation(mapping, actionForm, request, response);
         }
 
