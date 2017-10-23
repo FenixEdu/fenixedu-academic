@@ -176,7 +176,7 @@
 		<property name="maxLength" value="15"/>
     </slot>
     <slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -242,7 +242,7 @@
 		<property name="maxLength" value="255"/>
 	</slot>
 	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -391,7 +391,7 @@
 	<slot name="beginDate" />
 	<slot name="endDate" />
 	<slot name="country" layout="format">
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 	</slot>
 	<slot name="businessArea" layout="format">
 		<property name="format" value="${description}"/>
@@ -416,7 +416,7 @@
 	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="endDate" />
 	<slot name="country" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -435,7 +435,7 @@
 	</slot>
 	<slot name="focusArea" layout="menu-select-postback">	
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramFocusAreasProviderForEditDetails" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
         <property name="sortBy" value="name"/>
         <property name="destination" value="editDetailsPostback"/>
 	</slot>
@@ -557,17 +557,17 @@
 		type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
 	<slot name="focusArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramFocusAreasProvider" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
         <property name="sortBy" value="name"/>
 	</slot>
 	<slot name="program" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
 		<property name="sortBy" value="name" /> 
 	</slot>
 	<slot name="externalPhdProgram" layout="menu-select-postback" key="label.epfl.phd.program">
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
-		<property name="format" value="${name}"/>
+		<property name="format" value="${name.content}"/>
 		<property name="sortBy" value="name" />
 		<property name="defaultText" value="label.not.applicable.or.chosen.by.thesis" />
 		<property name="key" value="true"/>
@@ -854,17 +854,17 @@
 <schema name="Public.PhdIndividualProgramProcessBean.editDetails" type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
 	<slot name="focusArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramFocusAreasProvider" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
         <property name="sortBy" value="name"/>
 	</slot>
 	<slot name="phdProgram" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
 		<property name="sortBy" value="name" /> 
 	</slot>
 	<slot name="externalPhdProgram" layout="menu-select-postback" key="label.epfl.phd.program">
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
-		<property name="format" value="${name}"/>
+		<property name="format" value="${name.content}"/>
 		<property name="sortBy" value="name" />
 		<property name="defaultText" value="label.not.applicable.or.chosen.by.thesis" />
 		<property name="key" value="true"/>
@@ -950,7 +950,7 @@
 	</slot>
 	<slot name="refereeCountry" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 		<property name="sortBy" value="localizedName=asc" />
 	</slot>
 	<slot name="email" read-only="true" />
@@ -1411,7 +1411,7 @@
 <schema name="PhdMigrationIndividualProcessDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
 	<slot name="phdProgram" layout="menu-select" required="true">
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.PhdProgramsFilteredProvider" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
 	</slot>
 	<slot name="title" >
 		<property name="size" value="60" />

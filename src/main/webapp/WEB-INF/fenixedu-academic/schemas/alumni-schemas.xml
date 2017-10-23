@@ -412,7 +412,7 @@
 		</slot>
 		<slot name="parentInstitution" key="label.formation.institution.parent" layout="menu-select-postback" >
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
-			<property name="format" value="${partyName}"/>
+			<property name="format" value="${partyName.content}"/>
 			<property name="sortBy" value="partyName"/>
 			<property name="destination" value="updateInstitutionTypePostback" />
 		</slot>
@@ -425,13 +425,13 @@
 		</slot>
 		<slot name="parentInstitution" key="label.formation.institution.parent" layout="menu-select-postback" bundle="ALUMNI_RESOURCES">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
-			<property name="format" value="${partyName}"/>
+			<property name="format" value="${partyName.content}"/>
 			<property name="sortBy" value="partyName"/>
 			<property name="destination" value="updateInstitutionTypePostback" />
 		</slot>
 		<slot name="childInstitution" key="label.formation.institution.child" layout="menu-select" bundle="ALUMNI_RESOURCES">
 			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.alumni.AlumniFormationChildInstitutionProvider"/>
-			<property name="format" value="${partyName}"/>
+			<property name="format" value="${partyName.content}"/>
 			<property name="sortBy" value="partyName"/>
 		</slot>
 	</schema>
@@ -496,7 +496,7 @@
 			<property name="format" value="${description}"/>
 		</slot>
 		<slot name="institution" key="label.formation.institution" layout="null-as-method">
-			<property name="format" value="${partyName}"/>
+			<property name="format" value="${partyName.content}"/>
 			<property name="alternativeMethod" value="baseInstitution"/>
 		</slot>
 		<slot name="beginYear" key="label.formation.begin" />
