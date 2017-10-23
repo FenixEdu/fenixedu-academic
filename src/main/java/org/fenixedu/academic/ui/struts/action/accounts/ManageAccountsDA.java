@@ -113,7 +113,7 @@ public class ManageAccountsDA extends FenixDispatchAction {
             request.setAttribute("matches", searchParametersBean.search());
             return mapping.findForward("manageAccounts");
         } catch (DomainException e) {
-            addActionMessage(request, e.getLocalizedMessage());
+            addActionMessage(request, e.getMessage(), e.getArgs());
             request.setAttribute("personBean", bean);
             return mapping.findForward("createPersonFillInfo");
         }
@@ -212,7 +212,7 @@ public class ManageAccountsDA extends FenixDispatchAction {
             
             return viewPerson(person, mapping, request);
         } catch (DomainException e) {
-            addActionMessage(request, e.getLocalizedMessage());
+            addActionMessage(request, e.getMessage(), e.getArgs());
             
             return editPersonalDataInvalid(mapping, form, request, response);
         }

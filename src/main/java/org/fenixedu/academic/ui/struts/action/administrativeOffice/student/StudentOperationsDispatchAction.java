@@ -370,7 +370,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                     (OriginInformationBean) getRenderedObject("originInformation"));
             request.setAttribute("registration", registration);
         } catch (DomainException e) {
-            addActionMessage(request, e.getLocalizedMessage());
+            addActionMessage(request, e.getMessage(), e.getArgs());
             return prepareShowCreateStudentConfirmation(mapping, actionForm, request, response);
         }
 
