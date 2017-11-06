@@ -34,12 +34,12 @@ import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceReques
 import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -255,8 +255,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
             final List<AdministrativeOfficeDocument> documents =
                     AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
 
-            final AdministrativeOfficeDocument[] array = {};
-            byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
+            byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(documents);
 
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;
@@ -290,21 +289,21 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     }
 
     @Override
-    public String getDegreeName(ExecutionYear year) {
-
+    public Degree getDegree() {
         /**
          * TODO: phd-refactor
          * all individual processes must have a registration therefore degree comes always from registration
          */
 
-        Degree degree;
-
         if (getPhdIndividualProgramProcess().getRegistration() != null) {
-            degree = getPhdIndividualProgramProcess().getRegistration().getDegree();
-        } else {
-            degree = getPhdIndividualProgramProcess().getPhdProgram().getDegree();
+            return getPhdIndividualProgramProcess().getRegistration().getDegree();
         }
+        
+        return getPhdIndividualProgramProcess().getPhdProgram().getDegree();
+    }
 
-        return degree.getNameI18N(year).getContent(getLanguage());
+    @Override
+    public String getDegreeName(ExecutionYear year) {
+        return getDegree().getNameI18N(year).getContent(getLanguage());
     }
 }

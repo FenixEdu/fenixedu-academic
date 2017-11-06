@@ -26,7 +26,9 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -51,10 +53,10 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
+
+import pt.ist.fenixframework.Atomic;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base implements
         IProgramConclusionRequest {
@@ -71,8 +73,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         super.setAverage(bean.getAverage());
         super.setDetailed(bean.getDetailed());
         super.setMobilityProgram(bean.getMobilityProgram());
-        super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
-        super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
         super.setTechnicalEngineer(bean.getTechnicalEngineer());
         super.setInternshipAbolished(bean.getInternshipAbolished());
         super.setInternshipApproved(bean.getInternshipApproved());
@@ -225,11 +225,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     @Override
-    public void setIgnoreExternalEntries(Boolean ignoreExternalEntries) {
-        throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
-    }
-
-    @Override
     public void setTechnicalEngineer(Boolean technicalEngineer) {
         throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
     }
@@ -295,8 +290,11 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         return getBean().getConclusionDate();
     }
 
+    final public Grade getFinalAverageGrade() {
+        return getBean().getFinalGrade();
+    }
     final public Integer getFinalAverage() {
-        return getBean().getFinalGrade().getIntegerValue();
+        return getFinalAverageGrade().getIntegerValue();
     }
 
     final public double getEctsCredits() {
@@ -355,16 +353,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     public String getGraduateTitle(Locale locale) {
-        final StringBuilder res = new StringBuilder();
-
         if (!getProgramConclusion().getGraduationTitle().isEmpty()) {
-            res.append(", ").append(
-                    BundleUtil.getString(Bundle.ACADEMIC, getLanguage(),
-                            "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
-            res.append(" ").append(getRegistration().getGraduateTitle(getProgramConclusion(), getLanguage()));
+            return getRegistration().getGraduateTitle(getProgramConclusion(), getLanguage());
         }
-
-        return res.toString();
+        return StringUtils.EMPTY;
     }
 
 }

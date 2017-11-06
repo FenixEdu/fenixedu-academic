@@ -31,6 +31,8 @@ import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonObject;
+
 abstract public class FenixReport implements Serializable, ReportDescription {
 
     private static final Logger logger = LoggerFactory.getLogger(FenixReport.class);
@@ -43,6 +45,8 @@ abstract public class FenixReport implements Serializable, ReportDescription {
     private final Locale locale;
 
     private final Locale language;
+
+    private final JsonObject payload;
 
     static final protected String EMPTY_STR = StringUtils.EMPTY;
 
@@ -65,6 +69,7 @@ abstract public class FenixReport implements Serializable, ReportDescription {
     }
 
     private FenixReport(final Collection<?> dataSource, final Locale locale) {
+        this.payload = new JsonObject();
         this.dataSource = dataSource == null ? new ArrayList<Object>() : dataSource;
         this.locale = locale;
         this.language = locale;
@@ -122,4 +127,7 @@ abstract public class FenixReport implements Serializable, ReportDescription {
 
     }
 
+    public JsonObject getPayload() {
+        return payload;
+    }
 }

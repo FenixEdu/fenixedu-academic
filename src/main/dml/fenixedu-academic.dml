@@ -610,6 +610,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         LocalizedString links;
         LocalizedString operationalRegime;
         LocalizedString schoolCalendar;
+        LocalizedString associatedInstitutions;
     }
 
     class DegreeInfoCandidacy  {
@@ -2749,8 +2750,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                         String branch;
                         YearMonthDay exceptionalConclusionDate;
                         MobilityProgram mobilityProgram;
-                        Boolean ignoreExternalEntries;
-                        Boolean ignoreCurriculumInAdvance;
                     }
     
                     class serviceRequests.documentRequests.EnrolmentCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {

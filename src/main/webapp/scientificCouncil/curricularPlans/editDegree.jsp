@@ -74,6 +74,24 @@
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{scouncilBundle['associatedInstitutions']} (pt):</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText alt="#{htmlAltBundle['inputText.associatedInstitutions']}" id="associatedInstitutions" binding="#{DegreeManagement.associatedInstitutionsInputComponent}" size="130" disabled="#{DegreeManagement.ableToEditName == false}"/>
+			<h:message for="associatedInstitutions" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{scouncilBundle['associatedInstitutions']} (en):</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText alt="#{htmlAltBundle['inputText.associatedInstitutions']}" id="associatedInstitutionsEn" binding="#{DegreeManagement.associatedInstitutionsEnInputComponent}" size="130" disabled="#{DegreeManagement.ableToEditName == false}"/>
+			<h:message for="associatedInstitutionsEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
 
 		<h:outputText value="</table><br/>" escape="false"/>
 		<h:outputText value="<table class='tstyle5 thlight thright'>" escape="false"/>

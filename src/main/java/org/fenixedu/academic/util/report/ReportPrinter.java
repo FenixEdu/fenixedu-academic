@@ -43,17 +43,17 @@ public interface ReportPrinter {
             public Collection<?> getDataSource() {
                 return dataSource;
             }
+
         });
     }
 
     public static interface ReportDescription {
 
-        public String getKey();
+        String getKey();
 
-        public Map<String, Object> getParameters();
+        Map<String, Object> getParameters();
 
-        public Collection<?> getDataSource();
-
+        Collection<?> getDataSource();
     }
 
     public static class ReportResult {

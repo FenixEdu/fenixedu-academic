@@ -194,14 +194,14 @@ public class Diploma extends AdministrativeOfficeDocument {
                     .append(SINGLE_SPACE);
         }
 
-        result.append(degreeType.getPrefix(getLocale())).append(
+        result.append(degreeType.getPrefix(getLocale())).append(" ").append(
                 getDocumentRequest().getProgramConclusion().getDescription().getContent(getLocale()));
     }
 
     private void forDFA(StringBuilder result, final DiplomaRequest diplomaRequest, final Registration registration) {
         final DegreeType degreeType = registration.getDegreeType();
 
-        result.append(degreeType.getPrefix()).append(degreeType.getName().getContent());
+        result.append(degreeType.getPrefix()).append(" ").append(degreeType.getName().getContent());
         if (degreeType.hasExactlyOneCycleType()) {
             result.append(" (")
                     .append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), degreeType.getCycleType().getQualifiedName()))

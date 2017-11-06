@@ -30,20 +30,22 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CreateDegree {
 
     @Atomic
-    public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
+    public static void run(LocalizedString name, String acronym, LocalizedString associatedInstitutions, DegreeType degreeType, Double ectsCredits,
             GradeScale gradeScale, String prevailingScientificArea, AdministrativeOffice administrativeOffice)
             throws FenixServiceException {
         check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
-        if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
+        if (name == null || name.isEmpty() || acronym == null || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -55,16 +57,13 @@ public class CreateDegree {
             }
             ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-            if ((degree.getNameFor(currentExecutionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name) || degree
-                    .getNameFor(currentExecutionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN).equalsIgnoreCase(nameEn))
-                    && degree.getDegreeType().equals(degreeType)) {
+            if (LocaleUtils.equalInAnyLanguage(degree.getNameFor(currentExecutionYear), name) && degree.getDegreeType().equals(degreeType)) {
                 throw new FenixServiceException("error.existing.degree.name.and.type");
             }
         }
 
         Degree degree =
-                new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea,
-                        administrativeOffice);
+                new Degree(name, acronym, associatedInstitutions, degreeType, ectsCredits, gradeScale, prevailingScientificArea, administrativeOffice);
         Signal.emit(Degree.CREATED_SIGNAL, new DomainObjectEvent<Degree>(degree));
     }
 

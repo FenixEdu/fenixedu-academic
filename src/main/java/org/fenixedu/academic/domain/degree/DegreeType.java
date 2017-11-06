@@ -31,7 +31,6 @@ import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.CycleTypes;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -139,8 +138,7 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
             result.append(BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.one")).append(" ");
             return result.toString();
         }
-        final String string = BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.two");
-        result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : " ");
+        result.append(BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.two"));
         return result.toString();
     }
 

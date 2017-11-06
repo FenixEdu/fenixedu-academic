@@ -478,11 +478,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
         final StringBuilder result = new StringBuilder();
         if (remainingCredits != BigDecimal.ZERO) {
-            result.append(LINE_BREAK);
+                result.append(LINE_BREAK);
 
-            final String remainingCreditsInfo =
+                final String remainingCreditsInfo =
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.remainingCreditsInfo");
-            result.append(FenixStringTools.multipleLineRightPadWithSuffix(remainingCreditsInfo + ":", LINE_LENGTH, END_CHAR,
+                result.append(FenixStringTools.multipleLineRightPadWithSuffix(remainingCreditsInfo + ":", LINE_LENGTH, END_CHAR,
                     remainingCredits + getCreditsDescription()));
 
             result.append(LINE_BREAK);
@@ -578,14 +578,19 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 MessageFormat.format(departmentAndInstitute, getI18NText(getAdministrativeOffice().getName()), institutionName));
 
         addParameter("administrativeOfficeCoordinator", coordinator);
-        final Locality locality = getAdministrativeOffice().getCampus().getLocality();
-        String location = locality != null ? locality.getName() : null;
+        String location = getLocation();
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
         String dateYYYY = new LocalDate().toString("yyyy", getLocale());
+
         stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.signerLocation");
         addParameter("signerLocation",
                 MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
+    }
+
+    protected String getLocation() {
+        final Locality locality = getAdministrativeOffice().getCampus().getLocality();
+        return locality != null ? locality.getName() : null;
     }
 
     protected String getCoordinatorGender(final Person coordinator) {
