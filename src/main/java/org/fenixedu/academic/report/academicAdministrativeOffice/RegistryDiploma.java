@@ -21,6 +21,7 @@ package org.fenixedu.academic.report.academicAdministrativeOffice;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -41,6 +42,8 @@ import com.google.common.base.Joiner;
 public class RegistryDiploma extends AdministrativeOfficeDocument {
     private static final long serialVersionUID = 7788392282506503345L;
 
+    private Optional<String> associatedInstitutions;
+
     protected RegistryDiploma(final IDocumentRequest documentRequest) {
         super(documentRequest);
     }
@@ -53,12 +56,16 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
         super.fillReport();
+
+        associatedInstitutions = getDocumentRequest().getAssociatedInstitutionsContent();
+
         IRegistryDiplomaRequest request = getDocumentRequest();
         Person person = request.getPerson();
 
         setHeader();
-
-        addParameter("institution", getInstitutionName());
+        
+        addParameter("institution", associatedInstitutions.orElseGet(this::getInstitutionName));
+        
         addParameter("university", getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())
                 .getPartyName().getContent(Locale.getDefault()));
 
@@ -147,7 +154,8 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             studentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.studentHolderFemale");
         }
 
-        String secondParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.secondParagraph");
+        String secondParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), associatedInstitutions.isPresent() ? "label.phd.registryDiploma.secondParagraph.associated.institutions" :
+                                                                                          "label.phd.registryDiploma.secondParagraph");
 
         String country;
         if (person.getCountry() != null) {
@@ -158,11 +166,8 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         ExecutionYear year = getDocumentRequest().getConclusionYear();
 
-        addParameter(
-                "secondParagraph",
-                MessageFormat.format(secondParagraph, studentGender,
-                        BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()),
-                        person.getDocumentIdNumber(), country, getProgramConclusionDescription(year)));
+        addParameter("secondParagraph", MessageFormat.format(secondParagraph, studentGender, BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()),
+            person.getDocumentIdNumber(), country, getProgramConclusionDescription(year)));
     }
 
     protected void setFooter() {

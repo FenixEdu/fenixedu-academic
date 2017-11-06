@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.joda.time.DateTime;
 
 public abstract class DocumentRequest extends DocumentRequest_Base implements IDocumentRequest {
@@ -184,8 +183,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
     public byte[] generateDocument() {
         List<AdministrativeOfficeDocument> documents =
                 AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
-        final AdministrativeOfficeDocument[] array = {};
-        byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
+        byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(documents);
         DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
         return data;
     }

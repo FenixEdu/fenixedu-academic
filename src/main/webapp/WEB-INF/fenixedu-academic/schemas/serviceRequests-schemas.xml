@@ -157,7 +157,6 @@
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average" />
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />	
 	<slot name="mobilityProgram" key="label.mobilityProgram"/>
-	<slot name="ignoreExternalEntries" key="label.ignoreExternalEntries"/>
 	<slot name="technicalEngineer" key="label.documentRequestsManagement.searchDocumentRequests.technicalEngineer"></slot>
 	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished"></slot>
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>

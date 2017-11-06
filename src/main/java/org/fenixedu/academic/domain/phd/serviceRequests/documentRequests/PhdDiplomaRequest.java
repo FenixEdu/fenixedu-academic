@@ -21,6 +21,8 @@ package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdDiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -33,12 +35,12 @@ import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreate
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -211,6 +213,11 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     }
 
     @Override
+    public ExecutionYear getConclusionYear() {
+        return getPhdIndividualProgramProcess().getConclusionYear();
+    }
+
+    @Override
     public Integer getFinalAverage() {
         return null;
     }
@@ -228,6 +235,20 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     @Override
     public String getGraduateTitle(Locale locale) {
         return getPhdIndividualProgramProcess().getGraduateTitle(locale);
+    }
+
+    @Override
+    public Degree getDegree() {
+        /**
+         * TODO: phd-refactor
+         * all individual processes must have a registration therefore degree comes always from registration
+         */
+
+        if (getPhdIndividualProgramProcess().getRegistration() != null) {
+            return getPhdIndividualProgramProcess().getRegistration().getDegree();
+        }
+
+        return getPhdIndividualProgramProcess().getPhdProgram().getDegree();
     }
 
     public PhdThesisFinalGrade getThesisFinalGrade() {
@@ -270,10 +291,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
         try {
             final List<AdministrativeOfficeDocument> documents =
                     AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
-
-            final AdministrativeOfficeDocument[] array = {};
-            byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
-
+            byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(documents);
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;
         } catch (Exception e) {
@@ -281,5 +299,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
             throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
         }
     }
+
+
 
 }

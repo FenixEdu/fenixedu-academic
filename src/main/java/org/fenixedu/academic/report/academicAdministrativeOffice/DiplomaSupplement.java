@@ -72,6 +72,8 @@ import com.google.common.base.Strings;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
+    private Optional<String> associatedInstitutions;
+
     protected DiplomaSupplement(final IDocumentRequest documentRequest, final Locale locale) {
         super(documentRequest, locale);
     }
@@ -90,6 +92,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     protected void fillReport() {
         addParameter("bundle", ResourceBundle.getBundle(getBundle(), getLocale()));
         addParameter("name", StringFormatter.prettyPrint(getDocumentRequest().getPerson().getName().trim()));
+
+        associatedInstitutions = getDocumentRequest().getAssociatedInstitutionsContent();
 
         // Group 1
         fillGroup1();
@@ -205,10 +209,21 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 BundleUtil.getString(Bundle.ENUMERATION, locale, AcademicalInstitutionType.class.getSimpleName() + "."
                         + institutionsUniversityUnit.getInstitutionType().getName()));
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
-        addParameter("institutionStatus",
-                BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName())
-                        + SINGLE_SPACE + BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of") + SINGLE_SPACE
-                        + institutionsUniversityUnit.getName());
+
+
+        String institutionsWhereStudiesWereTaught = associatedInstitutions.orElseGet(() ->
+            new StringBuilder()
+                .append(Bennu.getInstance().getInstitutionUnit().getName())
+                .append(",")
+                .append(SINGLE_SPACE)
+                .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
+                .append(SINGLE_SPACE)
+                .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
+                .append(SINGLE_SPACE)
+                .append(institutionsUniversityUnit.getName()).toString()
+        );
+
+        addParameter("institutionsWhereStudiesWereTaught", institutionsWhereStudiesWereTaught);
 
         addParameter("prevailingScientificArea", getDocumentRequest().getPrevailingScientificArea(getLocale()));
         if (CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle())) {

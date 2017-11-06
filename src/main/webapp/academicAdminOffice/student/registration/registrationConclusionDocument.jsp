@@ -73,7 +73,7 @@
 <%
 	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
 	request.setAttribute("finalGrade", registrationConclusionBean.getFinalGrade());
-	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(registrationConclusionBean.getFinalGrade().getIntegerValue()));
+	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(registrationConclusionBean.getFinalGrade()));
 	request.setAttribute("degreeFinalizationEcts", String.valueOf(registrationConclusionBean.getEctsCredits()));
 	request.setAttribute("creditsDescription", registration.getDegreeType().getCreditsDescription());
 	
