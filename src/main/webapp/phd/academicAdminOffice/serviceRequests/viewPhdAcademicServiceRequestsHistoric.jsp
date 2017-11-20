@@ -45,35 +45,20 @@
 <h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="requests.historic"/></h3>
 <bean:define id="historicalAcademicServiceRequests" name="phdIndividualProgramProcess" property="historicalAcademicServiceRequests"/>
 <logic:notEmpty name="historicalAcademicServiceRequests">
-	<fr:view name="historicalAcademicServiceRequests" >
-		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceRequest">
-			<fr:slot name="requestDate" readOnly="true" key="label.requestDate" layout="no-time" />
-			<fr:slot name="activeSituationDate" readOnly="true" key="last.modification" layout="no-time" />
-			<fr:slot name="urgentRequest" key="label.org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>	
-			<fr:slot name="campus" key="campus" layout="null-as-label">
-				<fr:property name="label" value="-"/>
-				<fr:property name="subLayout" value="spaceInformation-presentationName-label" />
-			</fr:slot>	    
-			<fr:slot name="serviceRequestNumberYear"  />
-			<fr:slot name="description" readOnly="true" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.description"/>
-			<fr:slot name="executionYear" layout="null-as-label">
-		        <fr:property name="label" value="-"/>
-		        <fr:property name="subLayout" value="values"/>
-		        <fr:property name="subSchema" value="org.fenixedu.academic.domain.ExecutionYear.view"/>
-			</fr:slot>
-			<fr:slot name="freeProcessed" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />
-			<fr:slot name="language"/>	
-			<fr:slot name="academicServiceRequestSituationType" key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
-		</fr:schema>
+	<fr:view name="historicalAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mtop0" />
 			<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
 			<fr:property name="linkFormat(view)" value="/phdAcademicServiceRequestManagement.do?method=viewAcademicServiceRequest&amp;phdAcademicServiceRequestId=${externalId}&amp;fromHistory=true"/>
 			<fr:property name="key(view)" value="view"/>
+            <fr:property name="linkFormat(print)" value="/phdDocumentRequestManagement.do?method=downloadLastGeneratedDocument&amp;phdAcademicServiceRequestId=${externalId}&amp;fromHistory=true"/>
+            <fr:property name="key(print)" value="print"/>
+            <fr:property name="visibleIf(print)" value="downloadPossible"/>
 			<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
 <logic:empty name="historicalAcademicServiceRequests">
 	<p>
 		<em>
