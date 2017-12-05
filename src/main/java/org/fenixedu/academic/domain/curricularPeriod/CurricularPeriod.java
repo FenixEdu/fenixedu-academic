@@ -222,23 +222,10 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
                 throw new DomainException("error.childTypeGreaterThanParentType");
             }
 
-            float childsWeight = child.getAcademicPeriod().getWeight();
-            for (CurricularPeriod period : parent.getChildsSet()) {
-                childsWeight += period.getAcademicPeriod().getWeight();
-            }
-
-            if (childsWeight > parent.getAcademicPeriod().getWeight()) {
-                throw new DomainException("error.childWeightOutOfLimit");
-            }
-
             // re-order childs
             Integer order = child.getChildOrder();
             if (order == null) {
                 child.setChildOrder(parent.getChildsSet().size() + 1);
-            } else {
-                if (parent.getChildByOrder(order) != null) {
-                    throw new DomainException("error.childAlreadyExists");
-                }
             }
         }
     }
