@@ -757,6 +757,10 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
         request.setAttribute("documentBean", bean);
 
+        if (bean.getType() == PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK) {
+            bean.setJuryElement(getJuryElement(request));
+        }
+
         return mapping.findForward("replaceDocument");
     }
 
