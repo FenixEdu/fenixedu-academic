@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.util.email;
 
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
@@ -37,7 +38,7 @@ public class DepartmentMemberBasedSender extends DepartmentMemberBasedSender_Bas
 
     @Atomic
     public static DepartmentMemberBasedSender newInstance(final Unit unit) {
-        return new DepartmentMemberBasedSender(unit, Sender.getNoreplyMail(), UnitGroup.recursiveWorkers(unit));
+        return new DepartmentMemberBasedSender(unit, Bennu.getInstance().getSystemSender().getFromAddress(), UnitGroup.recursiveWorkers(unit));
     }
 
 }

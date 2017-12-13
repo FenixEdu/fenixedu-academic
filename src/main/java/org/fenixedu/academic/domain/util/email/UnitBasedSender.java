@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
@@ -90,7 +91,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Atomic
     public static UnitBasedSender newInstance(Unit unit) {
-        return new UnitBasedSender(unit, Sender.getNoreplyMail(), UnitGroup.recursiveWorkers(unit));
+        return new UnitBasedSender(unit, Bennu.getInstance().getSystemSender().getFromAddress(), UnitGroup.recursiveWorkers(unit));
     }
 
 }
