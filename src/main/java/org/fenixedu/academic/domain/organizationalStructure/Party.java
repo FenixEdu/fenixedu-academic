@@ -481,23 +481,23 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public boolean isDepartmentUnit() {
-        return false;
+        return PartyTypeEnum.DEPARTMENT == getType();
     }
 
     public boolean isCompetenceCourseGroupUnit() {
-        return false;
+        return PartyTypeEnum.COMPETENCE_COURSE_GROUP == getType();
     }
 
     public boolean isScientificAreaUnit() {
-        return false;
+        return PartyTypeEnum.SCIENTIFIC_AREA == getType();
     }
 
     public boolean isAdministrativeOfficeUnit() {
-        return false;
+        return PartyTypeEnum.ADMINISTRATIVE_OFFICE_UNIT == getType();
     }
 
     public boolean isDegreeUnit() {
-        return false;
+        return PartyTypeEnum.DEGREE_UNIT == getType();
     }
 
     public boolean isAcademicalUnit() {
@@ -505,27 +505,27 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public boolean isSchoolUnit() {
-        return false;
+        return PartyTypeEnum.SCHOOL == getType();
     }
 
     public boolean isUniversityUnit() {
-        return false;
+        return PartyTypeEnum.UNIVERSITY == getType();
     }
 
     public boolean isPlanetUnit() {
-        return false;
+        return PartyTypeEnum.PLANET == getType();
     }
 
     public boolean isCountryUnit() {
-        return false;
+        return PartyTypeEnum.COUNTRY == getType();
     }
 
     public boolean isSectionUnit() {
-        return false;
+        return PartyTypeEnum.SECTION == getType();
     }
 
     public boolean isAggregateUnit() {
-        return false;
+        return PartyTypeEnum.AGGREGATE_UNIT == getType();
     }
 
     public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
