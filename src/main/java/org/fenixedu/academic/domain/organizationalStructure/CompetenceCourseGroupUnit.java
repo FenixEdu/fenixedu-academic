@@ -92,26 +92,26 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         return competenceCourse.getCompetenceCourseGroupUnit().equals(this);
     }
 
+    @Deprecated
     public ScientificAreaUnit getScientificAreaUnit() {
-        if (hasAnyParentUnits()) {
-            if (getParentUnits().size() > 1) {
-                throw new DomainException("competence.course.group.should.have.only.one.scientific.area");
+        for (final Unit parent : getParentUnits()) {
+            if (parent instanceof ScientificAreaUnit) {
+                return (ScientificAreaUnit) parent;
             }
-
-            return (ScientificAreaUnit) getParentUnits().iterator().next();
         }
         return null;
     }
 
+    @Deprecated
     @Override
     public DepartmentUnit getDepartmentUnit() {
-        ScientificAreaUnit area = getScientificAreaUnit();
-        if (area.hasAnyParentUnits()) {
-            if (area.getParentUnits().size() > 1) {
-                throw new DomainException("scientific.area.should.have.only.one.department");
+        final ScientificAreaUnit area = getScientificAreaUnit();
+        if (area != null) {
+            for (final Unit parent : area.getParentUnits()) {
+                if (parent instanceof DepartmentUnit) {
+                    return (DepartmentUnit) parent;
+                }
             }
-
-            return (DepartmentUnit) area.getParentUnits().iterator().next();
         }
         return null;
     }
@@ -138,8 +138,8 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
             if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
                 result.add(competenceInformation.getCompetenceCourse());
             }
-            if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit(
-                    ExecutionSemester.readLastExecutionSemester()) == this) {
+            if (competenceInformation.getCompetenceCourse()
+                    .getCompetenceCourseGroupUnit(ExecutionSemester.readLastExecutionSemester()) == this) {
                 result.add(competenceInformation.getCompetenceCourse());
             }
         }

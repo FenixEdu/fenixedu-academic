@@ -21,7 +21,6 @@ package org.fenixedu.academic.service.services.bolonhaManager;
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -29,7 +28,9 @@ public class DeleteCompetenceCourseInformationChangeRequest {
 
     @Atomic
     public static void run(CompetenceCourseInformationChangeRequest request) {
-        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
+        if (!request.isLoggedPersonAllowedToEdit()) {
+            check(null);
+        }
         request.delete();
     }
 }

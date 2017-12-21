@@ -54,6 +54,7 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.CompetenceCoursePredicates;
+import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.academic.util.UniqueAcronymCreator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
@@ -331,44 +332,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean isLoggedPersonAllowedToView() {
-        Person person = AccessControl.getPerson();
-        if (isApproved()) {
-            return true;
-        }
-        if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
-            return true;
-        }
-        if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
-            return false;
-        }
-        return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
+        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToViewCompetenceCourse(this);
     }
 
     public boolean isLoggedPersonAllowedToViewChangeRequests() {
-        Person person = AccessControl.getPerson();
-        if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
-            return true;
-        }
-        if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
-            return false;
-        }
-        for (CompetenceCourseInformation information : getCompetenceCourseInformationsSet()) {
-            if (information.getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person)) {
-                return true;
-            }
-        }
-        return false;
+        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToViewChangeRequests(this, null);
     }
 
     public boolean isLoggedPersonAllowedToCreateChangeRequests(ExecutionSemester semester) {
-        Person person = AccessControl.getPerson();
-        if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
-            return true;
-        }
-        if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
-            return false;
-        }
-        return getDepartmentUnit(semester).getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
+        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToManageChangeRequests(this, semester);
     }
 
     public boolean isRequestDraftAvailable(ExecutionSemester semester) {

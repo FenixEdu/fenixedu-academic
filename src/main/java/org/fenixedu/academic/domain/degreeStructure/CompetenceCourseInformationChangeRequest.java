@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
@@ -175,7 +176,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     @Atomic
     public void reject(Person analisedBy) {
-        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
+        if (!CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(this)) {
+            check(null);
+        }
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");
         }
@@ -185,7 +188,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     @Atomic
     public void approve(Person analisedBy) {
-        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
+        if (!CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(this)) {
+            check(null);
+        }
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");
         }
@@ -247,15 +252,8 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     public boolean isLoggedPersonAllowedToEdit() {
-        Person person = AccessControl.getPerson();
-        if (RoleType.SCIENTIFIC_COUNCIL.isMember(person.getUser())) {
-            return true;
-        }
-        if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
-            return false;
-        }
-        return getCompetenceCourse().getDepartmentUnit(getExecutionPeriod()).getDepartment()
-                .isUserMemberOfCompetenceCourseMembersGroup(person);
+        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToManageChangeRequests(getCompetenceCourse(),
+                getExecutionPeriod());
     }
 
 }

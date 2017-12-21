@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.BolonhaManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +47,7 @@ import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.academic.service.services.bolonhaManager.DeleteCompetenceCourseInformationChangeRequest;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.BolonhaManager.BolonhaManagerApplication.CompetenceCourseManagementApp;
@@ -57,7 +55,6 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -85,25 +82,19 @@ import pt.ist.fenixframework.Atomic;
 public class ManageCompetenceCourseInformationVersions extends FenixDispatchAction {
 
     @EntryPoint
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         CompetenceCourseInformationRequestBean requestBean = getOrCreateRequestBean(request);
-        List<Department> departments = Bennu.getInstance().getDepartmentsSet().stream()
-                .filter(dep -> dep.getCompetenceCourseMembersGroup().isMember(Authenticate.getUser()))
-                .sorted(Department.COMPARATOR_BY_NAME)
-                .collect(Collectors.toList());
+
+        final List<Department> departments =
+                Bennu.getInstance().getDepartmentsSet().stream()
+                        .filter(dep -> CompetenceCourseManagementAccessControl
+                                .isLoggedPersonAllowedToManageDepartmentCompetenceCourseInformations(dep))
+                        .collect(Collectors.toList());
+
         request.setAttribute("departments", departments);
-        Department department = getDepartment(request, departments);
-        request.setAttribute(
-                "department", department);
-        request.setAttribute("competenceCourseMembersGroupMembers", department == null ? null : department
-                .getCompetenceCourseMembersGroup().getMembers().collect(Collectors.toSet()));
         request.setAttribute("requestBean", requestBean);
         return mapping.findForward("showCourses");
-    }
-
-    private Department getDepartment(HttpServletRequest request, List<Department> departments) {
-        Department department = getDomainObject(request, "departmentID");
-        return department != null ? department : departments.isEmpty() ? null : departments.get(0);
     }
 
     private CompetenceCourseInformationRequestBean getOrCreateRequestBean(HttpServletRequest request) {
@@ -329,7 +320,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     @Atomic
     private static void createCompetenceCourseInformationChangeRequest(CompetenceCourseInformationRequestBean bean,
             CompetenceCourseLoadBean loadBean, Person requestor) {
-        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
+//        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
         CompetenceCourse course = bean.getCompetenceCourse();
         ExecutionSemester period = bean.getExecutionPeriod();
         CompetenceCourseInformationChangeRequest request = course.getChangeRequestDraft(period);
