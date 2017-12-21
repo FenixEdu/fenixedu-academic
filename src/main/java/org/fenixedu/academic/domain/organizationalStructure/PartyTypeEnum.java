@@ -64,7 +64,7 @@ public enum PartyTypeEnum {
     }
 
     public String getLocalizedName() {
-        return BundleUtil.getString(Bundle.ENUMERATION, getClass().getName() + "." + name());
+        return BundleUtil.getString(Bundle.ENUMERATION, name());
     }
 
 }
