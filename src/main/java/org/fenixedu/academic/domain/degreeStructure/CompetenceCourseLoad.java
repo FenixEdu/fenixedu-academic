@@ -33,29 +33,29 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     public CompetenceCourseLoad(CompetenceCourseLoad existingLoad) {
         this(existingLoad.getTheoreticalHours(), existingLoad.getProblemsHours(), existingLoad.getLaboratorialHours(),
                 existingLoad.getSeminaryHours(), existingLoad.getFieldWorkHours(), existingLoad.getTrainingPeriodHours(),
-                existingLoad.getTutorialOrientationHours(), existingLoad.getAutonomousWorkHours(), existingLoad.getEctsCredits(),
-                existingLoad.getLoadOrder(), existingLoad.getAcademicPeriod());
+                existingLoad.getTutorialOrientationHours(), existingLoad.getOtherHours(), existingLoad.getAutonomousWorkHours(),
+                existingLoad.getEctsCredits(), existingLoad.getLoadOrder(), existingLoad.getAcademicPeriod());
     }
 
     public CompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
-            Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
+            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours,
+            Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
         this();
         setInformation(theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours,
-                tutorialOrientationHours, autonomousWorkHours, ectsCredits, order, academicPeriod);
+                tutorialOrientationHours, otherHours, autonomousWorkHours, ectsCredits, order, academicPeriod);
     }
 
     public void edit(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
-            Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
+            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours,
+            Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
 
         setInformation(theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours,
-                tutorialOrientationHours, autonomousWorkHours, ectsCredits, order, academicPeriod);
+                tutorialOrientationHours, otherHours, autonomousWorkHours, ectsCredits, order, academicPeriod);
     }
 
     private void setInformation(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
-            Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
+            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours,
+            Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
 
         setTheoreticalHours(theoreticalHours == null ? Double.valueOf(0) : theoreticalHours);
         setProblemsHours(problemsHours == null ? Double.valueOf(0) : problemsHours);
@@ -64,6 +64,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
         setFieldWorkHours(fieldWorkHours == null ? Double.valueOf(0) : fieldWorkHours);
         setTrainingPeriodHours(trainingPeriodHours == null ? Double.valueOf(0) : trainingPeriodHours);
         setTutorialOrientationHours(tutorialOrientationHours == null ? Double.valueOf(0) : tutorialOrientationHours);
+        setOtherHours(otherHours == null ? Double.valueOf(0) : otherHours);
         setAutonomousWorkHours(autonomousWorkHours == null ? Double.valueOf(0) : autonomousWorkHours);
         setEctsCredits(ectsCredits);
         setLoadOrder(order);

@@ -138,6 +138,9 @@
 
 		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="<li>#{bolonhaBundle['tutorialOrientation']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="#{competenceCourseLoad.tutorialOrientationHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		
+		<h:outputText rendered="#{competenceCourseLoad.otherHours != 0.0}" value="<li>#{bolonhaBundle['other']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.otherHours != 0.0}" value="#{competenceCourseLoad.otherHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
 		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<li>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.semester']}</li>" escape="false"/>

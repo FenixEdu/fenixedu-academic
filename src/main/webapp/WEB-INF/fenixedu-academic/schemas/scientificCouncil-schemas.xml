@@ -156,6 +156,7 @@
     <slot name="fieldWorkHours" key="fieldWork" />
     <slot name="trainingPeriodHours" key="trainingPeriod" />
     <slot name="tutorialOrientationHours" key="tutorialOrientation" />
+    <slot name="otherHours" key="other" />
     <slot name="autonomousWorkHours" key="autonomousWork" />
     <slot name="ectsCredits" />
 </schema>
@@ -168,6 +169,7 @@
     <slot name="secondFieldWorkHours" key="fieldWork" />
     <slot name="secondTrainingPeriodHours" key="trainingPeriod" />
     <slot name="secondTutorialOrientationHours" key="tutorialOrientation" />
+    <slot name="secondOtherHours" key="other" />
     <slot name="secondAutonomousWorkHours" key="autonomousWork" />
     <slot name="secondEctsCredits" key="ectsCredits" />
 </schema>

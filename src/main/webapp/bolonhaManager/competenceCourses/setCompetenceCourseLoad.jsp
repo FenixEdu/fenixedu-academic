@@ -148,6 +148,12 @@
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>
 					
+					<h:outputText value="#{bolonhaBundle['other']}: "/>
+					<h:panelGroup>
+						<h:inputText alt="#{htmlAltBundle['inputText.otherHours']}" maxlength="5" size="5" value="#{courseLoad.otherHours}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+					</h:panelGroup>					
+					
 					<h:outputText value="#{bolonhaBundle['autonomousWork']}: " style="font-weight: bold"/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.autonomousWorkHours']}" maxlength="5" size="5" value="#{courseLoad.autonomousWorkHours}"/>

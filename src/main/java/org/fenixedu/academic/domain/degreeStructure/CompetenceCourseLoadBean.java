@@ -67,6 +67,7 @@ public class CompetenceCourseLoadBean implements Serializable {
         setFieldWorkHours(request.getFieldWorkHours());
         setTrainingPeriodHours(request.getTrainingPeriodHours());
         setTutorialOrientationHours(request.getTutorialOrientationHours());
+        setOtherHours(request.getOtherHours());
         setAutonomousWorkHours(request.getAutonomousWorkHours());
         setEctsCredits(request.getEctsCredits());
 
@@ -77,6 +78,7 @@ public class CompetenceCourseLoadBean implements Serializable {
         setSecondFieldWorkHours(request.getSecondFieldWorkHours());
         setSecondTrainingPeriodHours(request.getSecondTrainingPeriodHours());
         setSecondTutorialOrientationHours(request.getSecondTutorialOrientationHours());
+        setSecondOtherHours(request.getSecondOtherHours());
         setSecondAutonomousWorkHours(request.getSecondAutonomousWorkHours());
         setSecondEctsCredits(request.getSecondEctsCredits());
     }
@@ -267,7 +269,7 @@ public class CompetenceCourseLoadBean implements Serializable {
     }
 
     public Double getSecondOtherHours() {
-        return secondOtherHours;
+        return (isSameInformationForBothPeriods()) ? getOtherHours() : secondOtherHours;
     }
 
     public void setSecondOtherHours(Double secondOtherHours) {

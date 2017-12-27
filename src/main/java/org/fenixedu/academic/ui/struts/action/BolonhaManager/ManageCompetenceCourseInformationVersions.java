@@ -330,11 +330,12 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                     bean.getEvaluationMethodEn(), bean.getCompetenceCourseLevel(), requestor, loadBean.getTheoreticalHours(),
                     loadBean.getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(),
                     loadBean.getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(),
-                    loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(),
-                    loadBean.getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(),
-                    loadBean.getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(),
-                    loadBean.getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(),
-                    loadBean.getSecondEctsCredits(), bean.getReferences(), null);
+                    loadBean.getOtherHours(), loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(),
+                    loadBean.getSecondTheoreticalHours(), loadBean.getSecondProblemsHours(),
+                    loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(), loadBean.getSecondFieldWorkHours(),
+                    loadBean.getSecondTrainingPeriodHours(), loadBean.getSecondTutorialOrientationHours(),
+                    loadBean.getSecondOtherHours(), loadBean.getSecondAutonomousWorkHours(), loadBean.getSecondEctsCredits(),
+                    bean.getReferences(), null);
         } else {
             new CompetenceCourseInformationChangeRequest(bean.getName(), bean.getNameEn(), bean.getJustification(),
                     bean.getRegime(), bean.getObjectives(), bean.getObjectivesEn(), bean.getProgram(), bean.getProgramEn(),
@@ -342,11 +343,12 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                     bean.getCompetenceCourseLevel(), bean.getExecutionPeriod(), requestor, loadBean.getTheoreticalHours(),
                     loadBean.getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(),
                     loadBean.getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(),
-                    loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(),
-                    loadBean.getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(),
-                    loadBean.getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(),
-                    loadBean.getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(),
-                    loadBean.getSecondEctsCredits(), bean.getReferences(), null);
+                    loadBean.getOtherHours(), loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(),
+                    loadBean.getSecondTheoreticalHours(), loadBean.getSecondProblemsHours(),
+                    loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(), loadBean.getSecondFieldWorkHours(),
+                    loadBean.getSecondTrainingPeriodHours(), loadBean.getSecondTutorialOrientationHours(),
+                    loadBean.getSecondOtherHours(), loadBean.getSecondAutonomousWorkHours(), loadBean.getSecondEctsCredits(),
+                    bean.getReferences(), null);
         }
     }
 
@@ -407,7 +409,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                 || loadBean.getProblemsHours() == null || loadBean.getLaboratorialHours() == null
                 || loadBean.getSeminaryHours() == null || loadBean.getFieldWorkHours() == null
                 || loadBean.getTrainingPeriodHours() == null || loadBean.getTutorialOrientationHours() == null
-                || loadBean.getAutonomousWorkHours() == null || loadBean.getEctsCredits() == null) {
+                || loadBean.getOtherHours() == null || loadBean.getAutonomousWorkHours() == null
+                || loadBean.getEctsCredits() == null) {
             return false;
         }
 

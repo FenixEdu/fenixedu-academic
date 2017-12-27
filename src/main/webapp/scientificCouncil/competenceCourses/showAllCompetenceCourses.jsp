@@ -118,6 +118,9 @@
 	
 			<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="<li>#{scouncilBundle['tutorialOrientation']}: " escape="false"/>
 			<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="#{competenceCourseLoad.tutorialOrientationHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			
+			<h:outputText rendered="#{competenceCourseLoad.otherHours != 0.0}" value="<li>#{scouncilBundle['other']}: " escape="false"/>
+			<h:outputText rendered="#{competenceCourseLoad.otherHours != 0.0}" value="#{competenceCourseLoad.otherHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>			
 	
 			<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<li>#{scouncilBundle['autonomousWork']}: " escape="false"/>
 			<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>

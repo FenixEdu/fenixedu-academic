@@ -132,6 +132,9 @@
     <slot name="tutorialOrientationHours" key="tutorialOrientation">
    		<property name="size" value="2"/>
 	</slot>
+    <slot name="otherHours" key="other">
+   		<property name="size" value="2"/>
+	</slot>	
 	<slot name="autonomousWorkHours" key="autonomousWork">
 		<property name="size" value="2"/>
 	</slot>
@@ -166,6 +169,9 @@
     <slot name="tutorialOrientationHours" key="tutorialOrientation">
    		<property name="size" value="2"/>
 	</slot>
+    <slot name="otherHours" key="other">
+   		<property name="size" value="2"/>
+	</slot>	
 	<slot name="autonomousWorkHours" key="autonomousWork">
 		<property name="size" value="2"/>
 	</slot>
@@ -196,6 +202,9 @@
     <slot name="secondTutorialOrientationHours" key="tutorialOrientation">
 			<property name="size" value="2"/>
 	</slot>
+    <slot name="secondOtherHours" key="other">
+			<property name="size" value="2"/>
+	</slot>	
 	<slot name="secondAutonomousWorkHours" key="autonomousWork">
 			<property name="size" value="2"/>
 	</slot>

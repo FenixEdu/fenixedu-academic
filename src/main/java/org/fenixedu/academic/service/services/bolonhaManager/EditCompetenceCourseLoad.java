@@ -39,8 +39,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditCompetenceCourseLoad {
 
     @Atomic
-    public static void run(String competenceCourseID, RegimeType regimeType, Integer numberOfPeriods, List<CourseLoad> courseLoads)
-            throws FenixServiceException {
+    public static void run(String competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
+            List<CourseLoad> courseLoads) throws FenixServiceException {
         check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
         final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
         if (competenceCourse == null) {
@@ -52,7 +52,7 @@ public class EditCompetenceCourseLoad {
             if (courseLoad.getAction().equals("create") && competenceCourse.getCompetenceCourseLoads().size() < numberOfPeriods) {
                 competenceCourse.addCompetenceCourseLoad(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),
                         courseLoad.getLaboratorialHours(), courseLoad.getSeminaryHours(), courseLoad.getFieldWorkHours(),
-                        courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
+                        courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(), courseLoad.getOtherHours(),
                         courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder(), academicPeriod);
             } else {
                 final CompetenceCourseLoad competenceCourseLoad = FenixFramework.getDomainObject(courseLoad.getIdentification());
@@ -61,7 +61,7 @@ public class EditCompetenceCourseLoad {
                     competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),
                             courseLoad.getLaboratorialHours(), courseLoad.getSeminaryHours(), courseLoad.getFieldWorkHours(),
                             courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
-                            courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(),
+                            courseLoad.getOtherHours(), courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(),
                             Integer.valueOf(courseLoad.getOrder()), academicPeriod);
 
                 } else if (competenceCourseLoad != null && courseLoad.getAction().equals("delete")) {

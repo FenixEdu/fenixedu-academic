@@ -33,6 +33,7 @@ public class CourseLoad implements Serializable {
     private Double fieldWorkHours = Double.valueOf(0);
     private Double trainingPeriodHours = Double.valueOf(0);
     private Double tutorialOrientationHours = Double.valueOf(0);
+    private Double otherHours = Double.valueOf(0);
     private Double autonomousWorkHours = Double.valueOf(0);
     private Double ectsCredits = Double.valueOf(0);
 
@@ -60,6 +61,7 @@ public class CourseLoad implements Serializable {
         setFieldWorkHours(competenceCourseLoad.getFieldWorkHours());
         setTrainingPeriodHours(competenceCourseLoad.getTrainingPeriodHours());
         setTutorialOrientationHours(competenceCourseLoad.getTutorialOrientationHours());
+        setOtherHours(competenceCourseLoad.getOtherHours());
         setAutonomousWorkHours(competenceCourseLoad.getAutonomousWorkHours());
         setEctsCredits(competenceCourseLoad.getEctsCredits());
         setOrder(competenceCourseLoad.getLoadOrder().intValue());
@@ -135,6 +137,14 @@ public class CourseLoad implements Serializable {
 
     public void setTutorialOrientationHours(Double tutorialOrientationHours) {
         this.tutorialOrientationHours = tutorialOrientationHours;
+    }
+
+    public Double getOtherHours() {
+        return otherHours;
+    }
+
+    public void setOtherHours(Double otherHours) {
+        this.otherHours = otherHours;
     }
 
     public String getIdentification() {

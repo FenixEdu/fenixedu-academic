@@ -134,6 +134,9 @@
 
 		<h:outputText value="<li>#{bolonhaBundle['tutorialOrientation']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		
+		<h:outputText value="<li>#{bolonhaBundle['other']}: " escape="false"/>
+		<h:outputText value="#{competenceCourseLoad.otherHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>		
 
 		<h:outputText value="<li>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.semester']}</li>" escape="false"/>

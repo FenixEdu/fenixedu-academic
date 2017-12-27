@@ -2300,6 +2300,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Double fieldWorkHours;
         Double trainingPeriodHours;
         Double tutorialOrientationHours;
+        Double otherHours;
         Double autonomousWorkHours;
         Double ectsCredits;
         
@@ -2310,6 +2311,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Double secondFieldWorkHours;
         Double secondTrainingPeriodHours;
         Double secondTutorialOrientationHours;
+        Double secondOtherHours;
         Double secondAutonomousWorkHours;
         Double secondEctsCredits;
         

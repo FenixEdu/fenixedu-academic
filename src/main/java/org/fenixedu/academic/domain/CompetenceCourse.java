@@ -113,11 +113,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
             Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
-            Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
+            Double otherHours, Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
         checkIfCanEdit(false);
-        getMostRecentCompetenceCourseInformation().addCompetenceCourseLoads(
-                new CompetenceCourseLoad(theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours,
-                        trainingPeriodHours, tutorialOrientationHours, autonomousWorkHours, ectsCredits, order, academicPeriod));
+        getMostRecentCompetenceCourseInformation().addCompetenceCourseLoads(new CompetenceCourseLoad(theoreticalHours,
+                problemsHours, laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours,
+                otherHours, autonomousWorkHours, ectsCredits, order, academicPeriod));
     }
 
     public BibliographicReference getBibliographicReference(Integer oid) {
