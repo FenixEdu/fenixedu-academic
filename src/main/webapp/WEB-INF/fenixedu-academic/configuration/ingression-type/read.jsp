@@ -60,7 +60,7 @@
 				<c:out value="${ingressionType.description.content}"/>
 			</td>
 		</tr>
-		<c:forEach var="key" items="${'hasEntryPhase,directAccessFrom1stCycle,externalDegreeChange,firstCycleAttribution,handicappedContingent,internal2ndCycleAccess,internal3rdCycleAccess,internalDegreeChange,isolatedCurricularUnits,middleAndSuperiorCourses,over23,reIngression,transfer'.split(',')}">
+		<c:forEach var="key" items="${'hasEntryPhase,directAccessFrom1stCycle,externalDegreeChange,firstCycleAttribution,handicappedContingent,internal2ndCycleAccess,internal3rdCycleAccess,internalDegreeChange,isolatedCurricularUnits,middleAndSuperiorCourses,over23,reIngression,transfer,requiresUnfinishedSourceDegreeInformation'.split(',')}">
 		<tr>
 			<th class="col-sm-3"><spring:message code="label.IngressionType.${key}"/></th> 
 			<td>

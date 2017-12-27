@@ -53,7 +53,7 @@ ${portal.toolkit()}
 			<input class="form-control" type="text" name="description" value="<c:out value='${ingressionType.description.json()}'/>" bennu-localized-string required-any />
 		</div>
 	</div>
-	<c:forEach var="key" items="${'hasEntryPhase,directAccessFrom1stCycle,externalDegreeChange,firstCycleAttribution,handicappedContingent,internal2ndCycleAccess,internal3rdCycleAccess,internalDegreeChange,isolatedCurricularUnits,middleAndSuperiorCourses,over23,reIngression,transfer'.split(',')}">
+	<c:forEach var="key" items="${'hasEntryPhase,directAccessFrom1stCycle,externalDegreeChange,firstCycleAttribution,handicappedContingent,internal2ndCycleAccess,internal3rdCycleAccess,internalDegreeChange,isolatedCurricularUnits,middleAndSuperiorCourses,over23,reIngression,transfer,requiresUnfinishedSourceDegreeInformation'.split(',')}">
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<div class="checkbox">

@@ -2080,6 +2080,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 		LocalizedString description (REQUIRED);
 		
 		boolean hasEntryPhase;
+		boolean requiresUnfinishedSourceDegreeInformation;
 		
 		// These predicates correspond to some of the old enumeration values used in the business code
 		// The code must assure that only one IngressionType instance has one of these fields as true

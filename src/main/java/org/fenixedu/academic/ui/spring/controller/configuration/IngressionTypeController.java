@@ -46,9 +46,8 @@ public class IngressionTypeController {
 
     @RequestMapping
     public String list(Model model) {
-        model.addAttribute("ingressionTypes",
-                Bennu.getInstance().getIngressionTypesSet().stream().sorted(Comparator.comparing(IngressionType::getDescription))
-                        .collect(Collectors.toList()));
+        model.addAttribute("ingressionTypes", Bennu.getInstance().getIngressionTypesSet().stream()
+                .sorted(Comparator.comparing(IngressionType::getDescription)).collect(Collectors.toList()));
         return "fenixedu-academic/configuration/ingression-type/search";
     }
 
@@ -79,8 +78,8 @@ public class IngressionTypeController {
 
     @RequestMapping(value = "/{ingressionType}/edit", method = RequestMethod.POST)
     public String edit(@PathVariable IngressionType ingressionType, @RequestParam String code,
-            @RequestParam LocalizedString description, @RequestParam(required = false) boolean hasEntryPhase, @RequestParam(
-                    required = false) boolean directAccessFrom1stCycle,
+            @RequestParam LocalizedString description, @RequestParam(required = false) boolean hasEntryPhase,
+            @RequestParam(required = false) boolean directAccessFrom1stCycle,
             @RequestParam(required = false) boolean externalDegreeChange,
             @RequestParam(required = false) boolean firstCycleAttribution,
             @RequestParam(required = false) boolean handicappedContingent,
@@ -89,7 +88,8 @@ public class IngressionTypeController {
             @RequestParam(required = false) boolean internalDegreeChange,
             @RequestParam(required = false) boolean isolatedCurricularUnits,
             @RequestParam(required = false) boolean middleAndSuperiorCourses, @RequestParam(required = false) boolean over23,
-            @RequestParam(required = false) boolean reIngression, @RequestParam(required = false) boolean transfer, Model model,
+            @RequestParam(required = false) boolean reIngression, @RequestParam(required = false) boolean transfer,
+            @RequestParam(required = false) boolean requiresUnfinishedSourceDegreeInformation, Model model,
             RedirectAttributes redirectAttributes) {
 
         try {
@@ -99,6 +99,7 @@ public class IngressionTypeController {
                 ingressionType.editState(hasEntryPhase, directAccessFrom1stCycle, externalDegreeChange, firstCycleAttribution,
                         handicappedContingent, internal2ndCycleAccess, internal3rdCycleAccess, internalDegreeChange,
                         isolatedCurricularUnits, middleAndSuperiorCourses, over23, reIngression, transfer);
+                ingressionType.setRequiresUnfinishedSourceDegreeInformation(requiresUnfinishedSourceDegreeInformation);
             });
         } catch (DomainException e) {
             ControllerHelper.addErrorMessage(e.getLocalizedMessage(), model);
@@ -126,18 +127,19 @@ public class IngressionTypeController {
             @RequestParam(required = false) boolean internalDegreeChange,
             @RequestParam(required = false) boolean isolatedCurricularUnits,
             @RequestParam(required = false) boolean middleAndSuperiorCourses, @RequestParam(required = false) boolean over23,
-            @RequestParam(required = false) boolean reIngression, @RequestParam(required = false) boolean transfer, Model model,
+            @RequestParam(required = false) boolean reIngression, @RequestParam(required = false) boolean transfer,
+            @RequestParam(required = false) boolean requiresUnfinishedSourceDegreeInformation, Model model,
             RedirectAttributes redirectAttributes) throws Exception {
         try {
-            IngressionType ingressionType =
-                    atomic(() -> {
-                        IngressionType ingression = IngressionType.createIngressionType(code, description);
-                        ingression.editState(hasEntryPhase, directAccessFrom1stCycle, externalDegreeChange,
-                                firstCycleAttribution, handicappedContingent, internal2ndCycleAccess, internal3rdCycleAccess,
-                                internalDegreeChange, isolatedCurricularUnits, middleAndSuperiorCourses, over23, reIngression,
-                                transfer);
-                        return ingression;
-                    });
+            IngressionType ingressionType = atomic(() -> {
+                IngressionType ingression = IngressionType.createIngressionType(code, description);
+                ingression.editState(hasEntryPhase, directAccessFrom1stCycle, externalDegreeChange, firstCycleAttribution,
+                        handicappedContingent, internal2ndCycleAccess, internal3rdCycleAccess, internalDegreeChange,
+                        isolatedCurricularUnits, middleAndSuperiorCourses, over23, reIngression, transfer);
+                ingression.setRequiresUnfinishedSourceDegreeInformation(requiresUnfinishedSourceDegreeInformation);
+
+                return ingression;
+            });
             return "redirect:/academic/configuration/ingression-type/" + ingressionType.getExternalId();
         } catch (DomainException e) {
             ControllerHelper.addErrorMessage(e.getLocalizedMessage(), model);
