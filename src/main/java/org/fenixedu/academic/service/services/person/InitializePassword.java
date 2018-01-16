@@ -43,7 +43,8 @@ public class InitializePassword {
     private static final Logger logger = LoggerFactory.getLogger(InitializePassword.class);
     private static final Client HTTP_CLIENT = ClientBuilder.newClient();
     private static final String ALREADY_INITIALIZED = "internationalRegistration.error.alreadyInitialized";
-    private static final String ERROR_REGISTERING = "internationalRegistration.error.registering";
+    private static final String KEY_RETURN = "key.return.argument";
+
     private static final Map<String, String> ERRORS = new HashMap<String, String>() {{
         put("NOT_ASCII_PASSWORD", "internationalRegistration.error.not.ascii");
         put("CIISTADMIN_KERBEROS_PASSWORD_TOO_SHORT", "internationalRegistration.error.too.short");
@@ -66,9 +67,12 @@ public class InitializePassword {
         }
 
         if (output == null || output.getErrno() != 0) {
-            String errorMessage = ERRORS.getOrDefault(output.getError(), ERROR_REGISTERING);
+            String errorMessage = ERRORS.get(output.getError());
             logger.debug(output.getErrno() + " : " + output.getError());
-            throw new PasswordInitializationException(errorMessage);
+            if (errorMessage != null) {
+                throw new PasswordInitializationException(errorMessage);
+            }
+            throw new PasswordInitializationException(KEY_RETURN, output.getError());
         }
 
     }

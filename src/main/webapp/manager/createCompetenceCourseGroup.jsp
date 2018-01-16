@@ -30,6 +30,17 @@
 <html:xhtml/>
 
 <h2>Create Competence Course Group</h2>
+
+<logic:messagesPresent message="true">
+    <p>
+        <span class="error0"><!-- Error messages go here -->
+            <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
+                <bean:write name="message"/>
+            </html:messages>
+        </span>
+    <p>
+</logic:messagesPresent>
+
 <fr:edit id="admOffice" name="bean" action="/manageAssociatedObjects.do?method=createCompetenceCourseGroup">
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
@@ -45,5 +56,6 @@
         <fr:property name="classes"
                      value="tstyle5 thleft thlight thmiddle mto p05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        <fr:destination name="cancel" path="/manageAssociatedObjects.do?method=list"/>
     </fr:layout>
 </fr:edit>
