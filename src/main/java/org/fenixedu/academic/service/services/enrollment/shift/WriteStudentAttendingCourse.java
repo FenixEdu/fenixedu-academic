@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.service.services.enrollment.shift;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.student.Registration;
@@ -40,7 +43,14 @@ public class WriteStudentAttendingCourse {
         if (registration == null) {
             throw new FenixServiceException("error.registration.not.exist");
         }
-        registration.addAttendsTo(readExecutionCourse(executionCourseId));
+
+        ExecutionCourse executionCourse = readExecutionCourse(executionCourseId);
+
+        if (registration.getStudent().getRegistrationStream().filter(r -> !r.equals(registration)).anyMatch(r -> r.attends(executionCourse))) {
+            throw new FenixServiceException("error.registration.executionCourse.alreadyAttends");
+        }
+
+        registration.addAttendsTo(executionCourse);
     }
 
     private ExecutionCourse readExecutionCourse(String executionCourseId) throws FenixServiceException {
