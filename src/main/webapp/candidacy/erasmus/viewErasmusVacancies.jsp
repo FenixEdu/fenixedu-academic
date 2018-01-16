@@ -53,7 +53,7 @@
 			<fr:slot name="mobilityProgram" layout="menu-select-postback">
 				<fr:property name="destination" value="postback" />
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.MobilityProgramAllProvider" />
-				<fr:property name="format" value="${name}" />
+				<fr:property name="format" value="${name.content}" />
 				<fr:property name="sortBy" value="name"/>
 			</fr:slot>
 			
