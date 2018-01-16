@@ -511,7 +511,11 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
         row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getName());
         row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
         row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
-        row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
+        if (degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry() != null) {
+            row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
+        } else {
+            row.setCell("-");
+        }
         row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getPrecedentInstitution().getName());
         row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getPrecedentDegreeDesignation());
         row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
