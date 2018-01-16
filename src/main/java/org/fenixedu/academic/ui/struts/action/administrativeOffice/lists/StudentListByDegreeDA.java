@@ -276,7 +276,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             filename += "_" + executionYear.getYear();
 
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+            response.setHeader("Content-disposition", "attachment; filename=\"" + filename + ".xls\"");
             ServletOutputStream writer = response.getOutputStream();
 
             final String param = request.getParameter("extendedInfo");

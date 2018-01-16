@@ -2265,14 +2265,14 @@
  
 <schema name="ErasmusIndividualCandidacyProcess.home.institution.edit" type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="selectedCountry" key="label.erasmus.country" layout="menu-select-postback">
-		<property name="format" value="${localizedName}" />
+		<property name="format" value="${localizedName.content}" />
 		<property name="destination" value="chooseCountryPostback"/>
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.CountriesForVacanciesProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	
 	<slot name="selectedUniversity" key="label.erasmus.university" layout="menu-select">
-		<property name="format" value="${nameI18n}" />
+		<property name="format" value="${nameI18n.content}" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
@@ -2286,7 +2286,7 @@
 	<slot name="otherSchoolLevel" />
 	
 	<slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select">
-		<property name="format" value="${localizedName}" />
+		<property name="format" value="${localizedName.content}" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
@@ -2304,14 +2304,14 @@
 
 <schema name="ErasmusIndividualCandidacyProcess.home.institution.backend.edit" type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="selectedCountry" key="label.erasmus.country" layout="menu-select-postback">
-		<property name="format" value="${localizedName}" />
+		<property name="format" value="${localizedName.content}" />
 		<property name="destination" value="chooseCountryPostback"/>
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.CountriesForVacanciesProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	
 	<slot name="selectedUniversity" key="label.erasmus.university" layout="menu-select-postback">
-		<property name="format" value="${nameI18n}" />
+		<property name="format" value="${nameI18n.content}" />
 		<property name="destination" value="chooseUniversityPostback"/>
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -2364,14 +2364,14 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="selectedCountry" key="label.erasmus.country" layout="menu-select-postback">
-		<property name="format" value="${localizedName}" />
+		<property name="format" value="${localizedName.content}" />
 		<property name="destination" value="chooseCountryPostback"/>
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.CountriesForVacanciesProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	
 	<slot name="selectedUniversity" key="label.erasmus.university" layout="menu-select-postback">
-		<property name="format" value="${nameI18n}" />
+		<property name="format" value="${nameI18n.content}" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<property name="destination" value="chooseUniversityPostback"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -2556,7 +2556,7 @@
 
 	<slot name="countryOfResidence" key="label.countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>		
@@ -2592,7 +2592,7 @@
 	</slot>
 	
 	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">
-		<property name="format" value="${nameI18N}" />
+		<property name="format" value="${nameI18N.content}" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.DegreeCourseInformationBean" />
 	</slot>	
 </schema>
@@ -2605,7 +2605,7 @@
 	</slot>
 	
 	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">
-		<property name="format" value="${nameI18N}" />
+		<property name="format" value="${nameI18N.content}" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.candidacy.erasmus.DegreeCourseInformationBean" />
 	</slot>	
 </schema>
@@ -2775,7 +2775,7 @@
 
 <schema name="ErasmusVacancy.insert.choose.country.university" type="org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusVacancyBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="country" key="label.erasmus.country" layout="menu-select-postback">
-		<property name="format" value="${localizedName}" />
+		<property name="format" value="${localizedName.content}" />
 		<property name="sortBy" value="localizedName" />
 		<property name="destination" value="chooseCountryPostback"/>
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider" />
@@ -2783,7 +2783,7 @@
 	</slot>
 	
 	<slot name="university" key="label.erasmus.university" layout="menu-select">
-		<property name="format" value="${nameI18n}" />
+		<property name="format" value="${nameI18n.content}" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.struts.action.internationalRelatOffice.candidacy.erasmus.ErasmusCandidacyProcessDA$UniversityUnitsProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>	
