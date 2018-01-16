@@ -245,7 +245,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Person person, String observation) {
 
         if (!isTemporary()) {
-            throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary");
+            throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary", getEnrolment().getStudent().getPerson().getUsername());
         }
 
         if (!hasGrade()) {
