@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
 
 import com.google.common.io.ByteStreams;
 
@@ -42,6 +43,8 @@ public class PhdProgramDocumentUploadBean implements Serializable {
     private String remarks;
 
     private PhdIndividualProgramProcess individualProgramProcess;
+
+    private ThesisJuryElement juryElement;
 
     private boolean required = false;
 
@@ -116,6 +119,14 @@ public class PhdProgramDocumentUploadBean implements Serializable {
 
     public void setIndividualProgramProcess(final PhdIndividualProgramProcess individualProgramProcess) {
         this.individualProgramProcess = individualProgramProcess;
+    }
+
+    public ThesisJuryElement getJuryElement() {
+        return juryElement;
+    }
+
+    public void setJuryElement(ThesisJuryElement juryElement) {
+        this.juryElement = juryElement;
     }
 
     public boolean isRequired() {
