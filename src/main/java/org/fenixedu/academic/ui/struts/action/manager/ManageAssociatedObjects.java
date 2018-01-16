@@ -70,7 +70,7 @@ import pt.ist.fenixframework.FenixFramework;
 @StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "manage-associated-objects",
         titleKey = "title.manage.associated.objects")
 @Mapping(path = "/manageAssociatedObjects", module = "manager")
-@Forwards({ @Forward(name = "show", path = "/manager/listAssociatedObjects.jsp"),
+@Forwards({ 
         @Forward(name = "list", path = "/manager/listAssociatedObjects.jsp"),
         @Forward(name = "createDepartment", path = "/manager/createDepartment.jsp"),
         @Forward(name = "createEmptyDegree", path = "/manager/createEmptyDegree.jsp"),
@@ -79,7 +79,8 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "createCompetenceCourseGroup", path = "/manager/createCompetenceCourseGroup.jsp"),
         @Forward(name = "associatePersonUnit", path = "/manager/associatePersonUnit.jsp"),
         @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp"),
-        @Forward(name = "createDegreeType", path = "/manager/createDegreeType.jsp") })
+        @Forward(name = "createDegreeType", path = "/manager/createDegreeType.jsp") 
+})
 public class ManageAssociatedObjects extends FenixDispatchAction {
     public static class AssociatedObjectsBean implements Serializable {
         private boolean active;
@@ -571,7 +572,14 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("admOffice");
 
-        createScientificArea(bean);
+        try {
+            createScientificArea(bean);
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute("bean", bean);
+
+            return mapping.findForward("createScientificArea");
+        }
 
         return list(mapping, form, request, response);
     }
