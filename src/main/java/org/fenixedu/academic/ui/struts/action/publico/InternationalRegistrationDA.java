@@ -85,7 +85,7 @@ public class InternationalRegistrationDA extends FenixDispatchAction {
         try {
             InitializePassword.run(person.getUser(), registrationForm.getPassword());
         } catch (PasswordInitializationException e) {
-            return setError(request, mapping, e.getMessage(), "international-registration", e);
+            return setError(request, mapping, e.getKey(), "international-registration", e.getArgs());
         } catch (Exception e) {
             return setError(request, mapping, "internationalRegistration.error.registering", "international-registration", e);
         }
