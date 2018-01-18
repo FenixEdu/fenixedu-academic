@@ -11,7 +11,7 @@ import com.google.gson.JsonParser;
 
 public class LocaleUtils {
 
-    public static final Locale EN = new Locale("en", "UK");
+    public static final Locale EN = new Locale("en", "GB");
 
     public static final Locale PT = new Locale("pt", "PT");
 
