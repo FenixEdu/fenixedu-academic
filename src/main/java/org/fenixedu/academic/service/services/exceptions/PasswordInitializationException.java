@@ -18,19 +18,16 @@
  */
 package org.fenixedu.academic.service.services.exceptions;
 
-public class PasswordInitializationException extends FenixServiceException {
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
-    private static final long serialVersionUID = 1L;
+public class PasswordInitializationException extends DomainException {
 
-    public PasswordInitializationException() {
-        super();
+    public PasswordInitializationException(String key, String... args) {
+        super(key, args);
+
     }
 
-    public PasswordInitializationException(String message) {
-        super(message);
-    }
-
-    public PasswordInitializationException(String message, Throwable cause) {
-        super(message, cause);
+    public PasswordInitializationException(String key, Throwable cause, String... args) {
+        super(key, cause, args);
     }
 }

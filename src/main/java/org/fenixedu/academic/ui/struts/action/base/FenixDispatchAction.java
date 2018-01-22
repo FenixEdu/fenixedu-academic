@@ -101,7 +101,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
      * forward.
      */
     protected ActionForward setError(HttpServletRequest request, ActionMapping mapping, String errorMessage, String forwardPage,
-            Object actionArg) {
+            Object... actionArg) {
 
         addErrorMessage(request, errorMessage, errorMessage, actionArg);
         if (forwardPage != null) {

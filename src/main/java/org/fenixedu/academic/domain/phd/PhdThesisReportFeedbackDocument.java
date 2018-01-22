@@ -68,6 +68,20 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     }
 
     @Override
+    public PhdThesisReportFeedbackDocument replaceDocument(PhdIndividualProgramDocumentType documentType, String remarks,
+            byte[] content, String filename, Person uploader) {
+        if (!this.getClass().equals(PhdThesisReportFeedbackDocument.class)) {
+            throw new DomainException("error.phd.PhdThesisReportFeedbackDocument.override.replaceDocument.method.on.this.class");
+        }
+
+        if (!getDocumentType().equals(documentType)) {
+            throw new DomainException("error.phd.PhdThesisReportFeedbackDocument.type.must.be.equal");
+        }
+
+        return new PhdThesisReportFeedbackDocument(getJuryElement(), remarks, content, filename, uploader);
+    }
+
+    @Override
     public void delete() {
         setJuryElement(null);
         super.delete();
