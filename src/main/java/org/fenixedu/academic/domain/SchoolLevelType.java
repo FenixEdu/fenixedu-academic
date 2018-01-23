@@ -24,9 +24,9 @@ import java.util.List;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
-import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-
 import com.google.common.collect.Lists;
+
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum SchoolLevelType implements IPresentableEnum {
 
@@ -106,7 +106,7 @@ public enum SchoolLevelType implements IPresentableEnum {
 
         @Override
         public List<String> getEquivalentDegreeClassifications() {
-            return Lists.newArrayList("L1", "PM", "LI");
+            return Lists.newArrayList("L1");
         }
     },
 
@@ -234,6 +234,30 @@ public enum SchoolLevelType implements IPresentableEnum {
         @Override
         public List<String> getEquivalentDegreeClassifications() {
             return Lists.newArrayList("E");
+        }
+    },
+
+    PREPARATORY_INTEGRATED_MASTER_DEGREE(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
+
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("PM");
+        }
+    },
+
+    FIRST_CYCLE_INTEGRATED_MASTER_DEGREE(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
+
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("LI");
         }
     };
 
